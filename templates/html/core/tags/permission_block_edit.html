@@ -1,0 +1,10 @@
+<form action="{{ path }}?permission" method="post" class="permission-form">
+{% csrf_token %}
+    <div class="permission-users">
+      {{ form.as_p()|htsafe }}
+    </div>
+    <div class="permission-links">
+        <input type="submit" value="{% trans %}Save{% endtrans %}" style="font-weight: 700;"/>
+        <input type="submit" name="cancel" value="Cancel"/>
+    </div>
+</form>

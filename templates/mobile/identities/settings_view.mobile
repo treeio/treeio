@@ -1,0 +1,73 @@
+{% extends "mobile/identities/page.mobile" %}
+
+{% block title %}{% trans %}Settings{% endtrans %} | {% trans %}Identities{% endtrans %}{% endblock %}
+
+{% block class_admin_settings %}sidebar-link-active{% endblock %}
+
+{% block module_title %}{% trans %}Settings{% endtrans %}{% endblock %}
+
+{% block sidebar_right %}
+{% endblock %}
+
+{% block module_content %}
+
+{% if contact_types %}
+<div class="clear">
+    <span class="content-label-head">{% trans %}Contact Types{% endtrans %}:</span>
+</div>
+{% for itype in contact_types %}
+<div class="content-list-item content-list-item-{{ loop.cycle('odd', 'even') }}">
+    <div class="content-list-tick">
+    </div>
+    <span class="content-list-item-name">
+        <a href="{% url identities_index_by_type itype.slug %}">{{ itype }}</a>
+        <span class="content-list-item-group">
+            &nbsp;
+        </span>
+    </span>
+    <span class="content-list-item-actions">
+        {% if user.get_profile().has_permission(itype, mode='w') %}
+        <a href="{% url identities_type_edit itype.id %}" class="inline-link edit-link">{% trans %}Edit{% endtrans %}</a>
+        {% endif %}
+    </span>
+</div>
+{% endfor %}
+
+{% endif %}
+
+{% if contact_fields %}
+<br />
+<div class="clear">
+    <span class="content-label-head">{% trans %}Contact Fields{% endtrans %}:</span>
+</div>
+{% for ifield in contact_fields %}
+<div class="content-list-item content-list-item-{{ loop.cycle('odd', 'even') }}">
+    <div class="content-list-tick">
+    </div>
+    <span class="content-list-item-name">
+        <a href="{% url identities_field_view ifield.id %}">{{ ifield|title() }}</a>
+        <span class="content-list-item-group">
+            &nbsp;
+        </span>
+    </span>
+    <span class="content-list-item-actions">
+        {% if user.get_profile().has_permission(ifield, mode='w') %}
+        <a href="{% url identities_field_edit ifield.id %}" class="inline-link edit-link">{% trans %}Edit{% endtrans %}</a>
+        {% endif %}
+    </span>
+</div>
+{% endfor %}
+
+{% endif %}
+
+<br />
+<br />
+<form action="" method="post" class="content-form" enctype="multipart/form-data">
+{% csrf_token %}
+    <div style="padding: 0">
+        <input type="file" name="file" size="20">
+        <input type="submit" name="import" value="Import Contacts" />
+    </div>
+</form>
+{% endblock %}
+

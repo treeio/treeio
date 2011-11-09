@@ -1,0 +1,71 @@
+{% extends "html/page.html" %}
+
+{% block title %}{% trans %}My Watchlist{% endtrans %} | {% trans %}News{% endtrans %}{% endblock %}
+
+{% block content %}
+
+<table>
+    <tr>
+      <td class="module-sidebar">
+        
+  		  {{ logo_block_container() }}
+  		  <div>
+          <a href="{% url news_top %}" class="sidebar-link {% block class_top %}{% endblock %}">{% trans %}Top News{% endtrans %}</a>
+          <a href="{% url news_index %}" class="sidebar-link {% block class_all %}{% endblock %}">{% trans %}All Activity{% endtrans %}</a>
+          <a href="{% url news_social %}" class="sidebar-link {% block class_social %}{% endblock %}">{% trans %}Social Posts{% endtrans %}</a>
+          <a href="{% url news_my_watchlist %}" class="sidebar-link {% block class_my_watchlist %}{% endblock %}">{% trans %}My Watchlist{% endtrans %}</a>
+          <a href="{% url news_my_activity %}" class="sidebar-link {% block class_my_activity %}{% endblock %}">{% trans %}My Activity{% endtrans %}</a>
+          
+          <span class="sidebar-header">{% trans %}News by Module{% endtrans %}</span>
+          {% for module in modules %}
+            {% if active_module and module == active_module %}
+            <a href="{% url news_index_by_module module.name %}" class="sidebar-link sidebar-link-active">{{ module.title }}</a>
+            {% else %}
+            <a href="{% url news_index_by_module module.name %}" class="sidebar-link">{{ module.title }}</a>
+            {% endif %}
+          {% endfor %}
+		  </div>
+
+        </td>
+        <td class="module-content">
+
+        <div class="module-content-fill">
+
+            <div class="title-block">
+
+                <div class="title">
+                    {% block module_title %}{% trans %}News{% endtrans %}{% endblock %}
+                </div>
+                <div class="subtitle-block">
+                    {% block module_subtitle %}{% endblock %}
+                </div>
+                <div class="module-top-menu-inline">
+                    {% block module_topmenu %}
+                    {% endblock %}
+                </div>
+                {{ help_link() }}
+
+            </div>
+            <table>
+
+                <tr>
+                    <td class="module-content-inner">
+                    <!-- module_content_inner -->
+			        {% block rss_link %}
+                      <a class="ajax-link-out news-rss-link" href="{{ rss_link() }}"><img class="margin-bottom" src="/static/icons/rss.png"/> {% trans %}Subscribe{% endtrans %}</a>
+		            {% endblock %}
+                    {% block module_content %}{% endblock %}
+                    <!-- /module_content_inner -->
+                    </td>
+                    <td class="module-sidebar-right">
+                    {% block sidebar_right %}{% endblock %}
+                    </td>
+                </tr>
+            </table>
+        </div>
+        </td>
+    </tr>
+</table>
+<div class="clear">
+</div>
+{% endblock %}

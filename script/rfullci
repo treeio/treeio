@@ -1,0 +1,35 @@
+#!/bin/bash
+
+log=`mktemp`
+
+message="(AUTO) Full check-in. No message supplied"
+
+[ ! "$1" == "" ] && message="$1" || echo '== WARNING: No log message provided! Use ./rfullci "<log messsage>"'
+
+echo "-- Dumping database..."
+
+# Dump database
+
+mysqldump -u treeio -p treeio_dev > sql/mysql-treeio-current.sql
+
+# Dump fixtures
+
+python manage.py dumpdata --exclude=auth --exclude=contenttypes --exclude=south > initial_data.json
+[ ! $? == 0 ] && git checkout -- sql/mysql-treeio-current.sql && echo "!! ERROR: Database dump failed. SQL dump reverted. Try doing ./script/rdbinit." && exit 1
+
+# Apply all changes
+
+echo "-- Applying all changes (git push)..."
+git add --all
+git commit --all -m "$message"
+git push
+
+[ ! $? == 0 ] && echo "!! ERROR: git push failed" && exit 1
+
+# Print results
+echo "-- Done."
+echo ""
+echo "-- Change report:"
+echo ""
+cat $log
+rm -f $log

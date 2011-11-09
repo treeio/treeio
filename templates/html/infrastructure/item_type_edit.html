@@ -1,0 +1,33 @@
+{% extends "html/infrastructure/page.html" %}
+
+{% block title %}{{ item_type|htsafe }} | {% trans %}Infrastructure{% endtrans %}{% endblock %}
+
+{% block module_title %}{{ item_type }}{% endblock %}
+{% block module_subtitle %}{% trans %}Infrastructure Type{% endtrans %}{% endblock %}
+
+{% block item_types_sidebar -%}
+{% for itype in types %}
+<a href="{% url infrastructure_type_view itype.id %}" class="sidebar-link {% if itype == item_type %}sidebar-link-active{% endif %}">{{ itype }}</a>
+{% endfor %}
+{%- endblock %}
+
+{% block module_topmenu %}
+<a href="{% url infrastructure_item_add_typed item_type.id %}" class="top-menu add-link">{% trans %}New{% endtrans %} {{ item_type }}</a>
+<a href="{% url infrastructure_type_view item_type.id %}" class="top-menu view-link">{% trans %}View{% endtrans %}</a>
+<a href="{% url infrastructure_type_edit item_type.id %}" class="top-menu edit-link-active">{% trans %}Edit{% endtrans %}</a>
+<a href="{% url infrastructure_type_delete item_type.id %}" class="top-menu delete-link">{% trans %}Delete{% endtrans %}</a>
+{% endblock %}
+
+{% block module_content %}
+
+<form action="" method="post" class="content-form">
+{% csrf_token %}
+    <ul class="content-form-fields">
+        {{ form.as_ul()|htsafe }}
+    </ul>
+    <div class="content-form-submit">
+        <input type="submit" name="save" value="{% trans %}Save{% endtrans %}" />
+		<input type="submit" name="cancel" value="{% trans %}Cancel{% endtrans %}" class="cancel" />
+    </div>
+</form>
+{% endblock %}

@@ -1,0 +1,5 @@
+[
+{% for contact in contacts -%}
+{"label": "{{ contact.__unicode__().replace('\"', '\\\"')|htsafe }}", "value": "{{ contact.id }}"}{% if not loop.last %},{% endif %}
+{% endfor -%}
+]

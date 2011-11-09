@@ -1,0 +1,13 @@
+{% extends "mobile/base_widget.mobile" %}
+
+{% block widget_title %}{% trans %}New messages{% endtrans %}{% endblock %}
+
+{% block widget_content %}
+
+	{% if messages %}
+	{{ messaging_message_list(messages, nomass=True) }}
+	{% else %}
+	<div class="content-list-item"><em>{% trans %}No new messages{% endtrans %}</em></div>
+	{% endif %}
+	
+{% endblock %}

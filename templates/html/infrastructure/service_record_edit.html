@@ -1,0 +1,26 @@
+{% extends "html/infrastructure/page.html" %}
+
+{% block title %}{% trans %}Edit Service Record{% endtrans %} | {% trans %}Infrastructure{% endtrans %}{% endblock %}
+
+{% block module_title %}{{ service_record }}{% endblock %}
+{% block module_subtitle %}{% trans %}Service Record{% endtrans %}{% endblock %}
+
+{% block module_topmenu %}
+<a href="{% url infrastructure_service_record_view  service_record.id %}" class="top-menu view-link">{% trans %}View{% endtrans %}</a>
+<a href="{% url infrastructure_service_record_edit service_record.id %}" class="top-menu edit-link-active">{% trans %}Edit{% endtrans %}</a>
+<a href="{% url infrastructure_service_record_delete service_record.id %}" class="top-menu delete-link">{% trans %}Delete{% endtrans %}</a>
+{% endblock %}
+
+{% block module_content %}
+
+<form action="" method="post" class="content-form">
+{% csrf_token %}
+    <ul class="content-form-service_records">
+        {{ htform(form).as_ul()|htsafe }}
+    </ul>
+    <div class="content-form-submit">
+        <input type="submit" name="save" value="{% trans %}Save{% endtrans %}" />
+		<input type="submit" name="cancel" value="{% trans %}Cancel{% endtrans %}" class="cancel" />
+    </div>
+</form>
+{% endblock %}

@@ -1,0 +1,20 @@
+<ul data-role="listview" data-inset="true" data-theme="c">
+	{% for group in groups %}
+	<li>
+	{% set contact = group.get_contact() %}
+	<div class="content-list-item content-list-item-{{ loop.cycle('odd', 'even') }}">
+	    <div class="content-list-tick"></div>
+		<span class="content-list-item-name">
+			<a href="{% url identities_group_view group.id %}">{{ group }}</a>
+		</span>
+		<span class="content-list-item-actions">
+			{#
+			{% if user.get_profile().has_permission(contact, mode='w') %}
+				<a href="{% url identities_contact_edit contact.id %}" class="inline-link edit-link">{% trans %}Edit{% endtrans %}</a>
+			{% endif %}
+			#}
+		</span>
+	</div>
+	</li>
+	{% endfor %}
+</ul>

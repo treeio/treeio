@@ -1,0 +1,18 @@
+{% extends "mobile/identities/page.mobile" %}
+
+{% block title %}{% trans %}Users{% endtrans %} | {% trans %}Identities{% endtrans %}{% endblock %}
+
+{% block module_title %}{% trans %}Users{% endtrans %}{% endblock %}
+
+{% block module_topmenu %}
+{% endblock %}
+
+{% block class_users %}sidebar-link-active{% endblock %}
+
+{% block module_content %}
+
+{{ identities_user_list(paginate(users)) }}
+
+{{ pager(users) }}
+
+{% endblock %}

@@ -1,0 +1,35 @@
+{% extends "html/core/index.html" %}
+
+{% block title %}{% trans %}Search{% endtrans %}{% endblock %}
+
+{% block module_title %}{% trans %}Search{% endtrans %}{% endblock %}
+
+{% block module_topmenu %}{% endblock %}
+
+{% block module_content %}
+<div class="module-content-inner">
+
+    {% if query %}
+		{{ show_hint('search', query) }}
+		<br />
+    {% endif %}
+
+	{% if objects %}
+		{{ core_generic_list(paginate(objects)) }}
+		
+		{{ pager(objects) }}
+    {% else %}
+    <div class="spaced-h">
+        <p>
+            {% trans %}Sorry, your search for {% endtrans %}<strong>'{{ query }}'</strong> had no results.
+        </p>
+		<p>{% trans %}Suggestions{% endtrans %}:</p>
+		<ul>
+			<li>{% trans %}Check your spelling{% endtrans %}.</li>
+			<li>{% trans %}Use fewer words (results have to match the exact phrase you type){% endtrans %}.</li>
+		</ul>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}
+

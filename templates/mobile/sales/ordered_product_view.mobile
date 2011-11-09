@@ -1,0 +1,50 @@
+{% extends "mobile/sales/page.mobile" %}
+
+{% block title %}{% trans %}Ordered Product{% endtrans %} | {% trans %}Sales{% endtrans %}{% endblock %}
+
+{% block class_index %}sidebar-link-active{% endblock %}
+
+{% block module_title %}{{ ordered_product }}{% endblock %}
+
+{% block module_subtitle %}{% trans %}Ordered Product{% endtrans %}{% endblock %}
+
+{% block module_topmenu %}
+<a href="{% url sales_ordered_product_view ordered_product.id %}" class="top-menu view-link-active">{% trans %}View{% endtrans %}</a>
+{% if request.user.get_profile().has_permission(ordered_product.order, mode='w') %}
+<a href="{% url sales_ordered_product_edit ordered_product.id %}" class="top-menu edit-link">{% trans %}Edit{% endtrans %}</a>
+<a href="{% url sales_ordered_product_delete ordered_product.id %}" class="top-menu delete-link">{% trans %}Delete{% endtrans %}</a>
+{% endif %}
+{% endblock %}
+
+{% block sidebar_right %}
+{% endblock %}
+
+{% block module_content %}
+
+<div>
+    <span class="content-label">{% trans %}Order{% endtrans %}:</span>
+    <span class="content-value"><a href="{% url sales_order_view ordered_product.order_id %}"></a>{{ ordered_product.order.reference }}</a></span>
+</div>
+{% if ordered_product.subscription %}
+<div>
+    <span class="content-label">{% trans %}Subscription{% endtrans %}:</span>
+    <span class="content-value"> <a href="{% url sales_subscription_view ordered_product.subscription_id %}" class="popup-link">{{ ordered_product.subscription }}</a> <span class="lighter small"><em>{% trans %}Active{% endtrans %}: {% if ordered_product.subscription.active %}{% trans %}Yes{% endtrans %}{% else %}{% trans %}No{% endtrans %}{% endif %}</em></span></span>
+</div>
+{% endif %}
+
+<div>
+    <span class="content-label">{% trans %}Product{% endtrans %}:</span>
+    <span class="content-value"><a href="{% url sales_product_view ordered_product.product_id %}" class="popup-link">{{ ordered_product.product }}</a></span>
+</div>
+<div>
+    <span class="content-label">{% trans %}Quantity{% endtrans %}:</span>
+    <span class="content-value">{{ ordered_product.quantity }}</span>
+</div>
+{% if ordered_product.discount %}
+<div>
+    <span class="content-label">{% trans %}Discount{% endtrans %}:</span>
+    <span class="content-value">{{ ordered_product.discount }}</span>
+</div>
+{% endif %}
+
+{% endblock %}

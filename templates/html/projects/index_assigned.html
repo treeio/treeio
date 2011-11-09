@@ -1,0 +1,102 @@
+{% extends "html/projects/page.html" %}
+
+{% block title %}{% trans %}Project Management{% endtrans %}{% endblock %}
+
+{% block class_assigned %}sidebar-link-active{% endblock %}
+
+{% block sidebar_right %}
+
+<span class="sidebar-header-first">{% trans %}Filter by{% endtrans %}</span>
+<form action="" method="get" class="content-filter-form">
+    <ul class="content-filter-form-fields">
+        {{ filters.as_ul()|htsafe }}
+    </ul>
+    <input type="submit" value="{% trans %}Submit{% endtrans %}">
+</form>
+<br />
+
+<span class="sidebar-header-right">{% trans %}Download as:{% endtrans %}<br />
+    {% if '?' in request.get_full_path() %}<a class="pdf-block-link" href="{{ request.get_full_path()|replace('.ajax','').replace('?','.pdf?') }}"{% else %}<a class="pdf-block-link" href="{{ request.get_full_path()|replace('.ajax','') }}.pdf"{% endif %} target="_self">PDF</a>
+    <a class="csv-block-link" {% if '?' in request.get_full_path() %}href="{{ request.get_full_path()|replace('.ajax','').replace('?','.csv?') }}"{% else %}href="{{ request.get_full_path()|replace('.ajax','') }}.csv"{% endif %} target="_self">CSV</a>
+ </span>
+{% endblock %}
+
+{% block module_content %}
+
+  {% if projects %}
+	<form action="" method="post">
+{% csrf_token %}
+	  <ul class="mass-form">
+	      <input type="hidden" name="massform" value="massform" />
+	       {{ massform.as_ul()|htsafe }}
+	      <li>
+	          <input type="submit" value="{% trans %}Save{% endtrans %}" />
+	      </li>
+	  </ul>
+  
+  {% for project in paginate(projects, 5) %}
+  {% if not loop.first %}<br />{% endif %}
+    <span class="content-label-head project-header">
+      <a href="{% url projects_project_view project.id %}" class="title">{{ project }}</a>
+      <span class="spaced-h lightest smallest">{% trans %}Project{% endtrans %}</span>
+      <span class="spaced-h smaller">
+      <a href="{% url projects_project_view project.id %}" class="inline-link view-link">{% trans %}View{% endtrans %}</a>
+      <a href="{% url projects_project_edit project.id %}" class="inline-link edit-link popup-link">{% trans %}Edit{% endtrans %}</a>
+        <a href="{% url projects_milestone_add_typed project.id %}" class="inline-link add-link popup-link">{% trans %}Add Milestone{% endtrans %}</a>
+        <a href="{% url projects_task_add_typed project.id %}" class="inline-link add-link popup-link">{% trans %}Add Task{% endtrans %}</a>
+        {{ last_updated(project) }}{{ attachments_count(project) }}
+      </span>
+    </span>
+    <div class="projects-area" style="border: 0;">
+    {% for milestone in milestones if milestone.project==project %}
+    <span class="large light content-label-head">
+        <input type="checkbox" name="mass-milestone-{{ milestone.id }}" value="{{ milestone.id }}" class="group-control" />
+        <a href="{% url projects_milestone_view milestone.id %}" class="projects-milestone">{{ milestone.name }}</a>
+        <span class="spaced-h smaller">
+            <a href="{% url projects_task_add_to_milestone milestone.id %}" id="add_task" class="inline-link add-link popup-link">{% trans %}Add Task{% endtrans %}</a>
+        </span>
+    </span>
+    {% set render_tasks = htsort(tasks).filter(milestone__id=milestone.id) %}
+    {% if render_tasks %}
+    {{ projects_task_list(render_tasks[:10], by_milestone=True) }}
+	{% if render_tasks|length > 10 %}
+	<div class="spaced-v">
+       <div class="content-list-tick"></div>
+	   <a href="{% url projects_milestone_view milestone.id %}" class="spaced-h light small">{% trans %}Show More{% endtrans %} &rarr;</a>
+	</div>
+	{% endif %}
+    {% else %}
+    <div class="content-list-item lighter spaced-v spaced-h">
+        <em>{% trans %}No Active Tasks{% endtrans %}</em>
+    </div>
+    {% endif %}
+    <br />
+    {% endfor %}
+
+    {% set render_tasks = htsort(tasks).filter(milestone__isnull=True, project=project) %}
+    {% if render_tasks %}
+    <span class="large lighter content-label-head">
+        <input type="checkbox" name="mass-project-{{ project.id }}" value="unclassified" class="group-control" />
+        <em>{% trans %}Unclassified Tasks{% endtrans %}</em>
+    </span>
+    {{ projects_task_list(render_tasks[:10], by_milestone=True, by_project=True) }}
+    {% if render_tasks|length > 10 %}
+    <div class="spaced-v">
+       <div class="content-list-tick"></div>
+    	<a href="{% url projects_project_view project.id %}" class="spaced-h light small">{% trans %}Show More{% endtrans %} &rarr;</a>
+    </div>
+    {% endif %}
+    {% endif %}
+    </div>
+    
+    {% endfor %}
+    
+    {{ pager(projects, 5) }}
+	
+	</form> 
+  {% else %}
+  {{ show_hint('projects') }}
+  {% endif %}
+
+{% endblock %}
+

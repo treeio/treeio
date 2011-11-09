@@ -1,0 +1,38 @@
+{% extends "json/knowledge/page.json" %}
+{% block module_content %}
+
+	{
+	"user": {{ user_block() }},
+	"messages": 
+		[
+		{% for message in messages %}
+			{
+			"id": {{ message.id }},
+			"url": "http://{{ site_domain }}{% url messaging_message_view message.id %}",
+			{% if message.title -%}
+			"title": "{{ message.title.replace('\n', '\\\\n').replace('\r', '').replace('\"', '\\\"')|htsafe }}",
+	        {% else -%}
+	        "title": null,
+	        {% endif -%}
+			"body": "{{ message.body.replace('\n', '\\n').replace('\r', '').replace('\"', '\\\"')|htsafe }}",
+			{% if message.author -%}
+			"author": "{{ message.author }}",
+	        {% else -%}
+	        "author": null,
+	        {% endif -%}
+			{% if message.reply_to -%}
+			"reply_to": "{{ message.reply_to }}",
+	        {% else -%}
+	        "reply_to": null,
+	        {% endif -%}
+			"stream": "{{ message.stream }}"
+			{% if loop.last -%}
+		    }
+		    {% else -%}
+		    },
+		    {% endif -%}
+		{% endfor %}
+		]
+	}
+
+{% endblock %}

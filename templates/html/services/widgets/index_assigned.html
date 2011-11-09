@@ -1,0 +1,17 @@
+{% extends "html/base_widget.html" %}
+
+{% block widget_title %}{% trans %}Assigned to me{% endtrans %}{% endblock %}
+
+{% block widget_content %}
+
+{% if tickets %}
+  {{ services_ticket_list(tickets, nomass=True, skip_group=True, by_assigned=True, noheader=True) }}
+{% else %}
+  <div class="content-list-item spaced-v spaced-h lighter">
+      <em>{% trans %}No Active Tickets{% endtrans %}</em>.
+      <a href="{% url services_ticket_add %}" class="popup-link"><strong>{% trans %}Create a Ticket{% endtrans %}</strong></a>
+  </div>
+{% endif %}
+
+
+{% endblock %}

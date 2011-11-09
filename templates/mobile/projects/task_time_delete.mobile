@@ -1,0 +1,66 @@
+{% extends "mobile/projects/page.mobile" %}
+
+{% block title %} {{ task_time_slot.get_time_string() }} | {{ task|safe }} | {% trans %}Project Management{% endtrans %}{% endblock %}
+
+{% block module_title %}{{ task_time_slot.get_time_string() }} by {{ task_time_slot.user }}{% endblock %}
+
+{% block module_subtitle %}{% trans %}Task Time Slot{% endtrans %}{% endblock %}
+
+{% block module_topmenu %}
+		<a href="{% url projects_task_time_slot_view task_time_slot.id %}" class="top-menu view-link">{% trans %}View{% endtrans %}</a>
+		{% if user.get_profile().has_permission(task, mode='w') or user.get_profile().has_permission(slot, mode='w') %}
+		<a href="{% url projects_task_time_slot_edit task_time_slot.id %}" class="top-menu edit-link">{% trans %}Edit{% endtrans %}</a>
+		<a href="{% url projects_task_time_slot_delete task_time_slot.id %}" class="top-menu delete-link-active">{% trans %}Delete{% endtrans %}</a>
+		{% endif %}
+{% endblock %}
+
+{% block module_content %}
+
+	<div
+		<span class="larger">{% trans %}Delete this Time Slot{% endtrans %}?</span><br />
+	    <form action="" method="post" class="content-form">
+{% csrf_token %}
+        	<ul class="content-form-fields">
+        		<li>
+					<label for="trash">
+					<input id="trash" type="checkbox" name="trash" checked="checked" />
+						{% trans %}Move to Trash{% endtrans %}
+					</label>
+				</li>
+				<li class="ui-grid-a">
+				<div class="ui-block-a">
+					<input data-theme="b" type="submit" name="delete" value="Yes, Delete" style="font-weight: 700;" />&nbsp;&nbsp;
+	        	</div>
+            	<div class="ui-block-b">
+	        		<input type="submit" name="cancel" value="Cancel" />
+	        	</div>
+				</li>
+			</ul>
+	    </form>
+	</div>
+
+	<div>
+		<span class="content-label">{% trans %}Author{% endtrans %}:</span>
+		<span class="content-value">{{ task_time_slot.user }}</span>
+	</div>
+	
+	<div>
+		<span class="content-label">{% trans %}Started{% endtrans %}:</span>
+		<span class="content-value">{{ task_time_slot.time_from.strftime("%d/%m/%Y") }}</span>
+	</div>
+	
+	{% if task_time_slot.time_to %}
+	<div>
+		<span class="content-label">{% trans %}Finished{% endtrans %}:</span>
+		<span class="content-value">{{ task_time_slot.time_to.strftime("%d/%m/%Y") }}</span>
+	</div>
+	{% endif %}
+	
+	{% if task_time_slot.details %}
+	<div>
+		<span class="content-label">{% trans %}Details{% endtrans %}:</span>
+		<span class="content-details">{{ task_time_slot.details|safe }}</span>
+	</div>
+	{% endif %}
+
+{% endblock %}

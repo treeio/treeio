@@ -1,0 +1,5 @@
+[
+{% for agent in agents -%}
+{"label": "{{ agent }}", "value": "{{ agent.id }}"}{% if not loop.last %},{% endif %}
+{% endfor -%}
+]

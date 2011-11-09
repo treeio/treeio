@@ -1,0 +1,65 @@
+{% extends "html/events/page.html" %}
+
+{% block title %}{% trans %}Month{% endtrans %} | {% trans %}Calendar{% endtrans %}{% endblock %}
+
+{% block module_title %}{% trans %}Calendar{% endtrans %}{% endblock %}
+
+{% block class_month %}sidebar-link-active{% endblock %}
+
+{% block module_content %}
+
+<form action="" method="get">
+    <ul class="calendar-goto-form-fields">
+        {{ gotoform|htsafe }}
+    </ul>
+    <input type="submit" value="{% trans %}Submit{% endtrans %}">
+    {% if not istoday %}
+    <span style="padding-left: 3em;">
+        {% trans %}Go to{% endtrans %} <a href="{% url events_month %}">{% trans %}Today{% endtrans %}</a>
+    </span>
+    {% endif %}
+</form>
+<div class="calendar-month-header">
+    <div class="calendar-month-prev">
+        <a href="{% url events_month %}?date_year={{ date_previous.year }}&date_month={{ date_previous.month }}" class="lighter">&larr;&nbsp;{{ date_previous|htdate('F Y') }}</a>
+    </div>
+    {{ date_current|htdate('F Y') }}
+    <div class="calendar-month-next">
+        <a href="{% url events_month %}?date_year={{ date_next.year }}&date_month={{ date_next.month }}" class="lighter">{{ date_next|htdate('F Y') }}&nbsp;&rarr;</a>
+    </div>
+</div>
+<table class="calendar-month-table">
+    <tr>
+        <th scope="col" class="row-labels"></th>
+        {% for day in dates[0] %}
+        <th scope="col">{{ day|htdate('l') }}</th>
+        {% endfor %}
+    </tr>
+    {% for week in dates %}
+    <tr>
+        <td class="calendar-row-label"><a href="{% url events_week %}">{{ week[0].isocalendar()[1] }}</a></td>
+        {% for date in week %}
+        {% if now.date() == date %}
+        <td class="calendar-month-day calendar-month-day-today content-list-item">
+        {% else %}
+        {% if date_current.month == date.month %}
+        <td class="calendar-month-day content-list-item">
+        {% else %}
+        <td class="calendar-month-day calendar-month-day-outside content-list-item">
+        {% endif %}
+        {% endif %}
+        <div class="calendar-month-day-label">
+            {{ date.day }}
+        <span class="content-list-item-actions" style="position: relative; float: left;">
+            <a href="{% url events_event_add_to_date date.isoformat() %}" class="inline-link add-link" style="padding: 0; width: 16px; height: 16px;"></a>
+        </span>
+        </div>
+        {{ events.render_for_date(date) }}
+
+        </td>
+        {% endfor %}
+    </tr>
+    {% endfor %}
+
+</table>
+{% endblock %}

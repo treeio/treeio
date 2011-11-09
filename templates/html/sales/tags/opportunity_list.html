@@ -1,0 +1,71 @@
+{% if opportunities %}
+    <table class="sales_table">
+
+        <!-- Table header -->
+
+        <thead>
+            <tr>
+                <th scope="col"></th>
+                <th scope="col"><a href="{{ htsortlink('contact') }}" class="sort-link">{% trans %}Contact{% endtrans %}</a></th>
+                <th scope="col"><a href="{{ htsortlink('status') }}" class="sort-link">{% trans %}Status{% endtrans %}</a></th>
+                <th scope="col"><a href="{{ htsortlink('assigned') }}" class="sort-link">{% trans %}Assigned{% endtrans %}</a></th>
+                <th scope="col"><a href="{{ htsortlink('products_interested') }}" class="sort-link">{% trans %}Products Interested{% endtrans %}</a></th>
+                <th scope="col"><a href="{{ htsortlink('expected_date') }}" class="sort-link">{% trans %}Date{% endtrans %}</a></th>
+                <th scope="col"><a href="{{ htsortlink('last_updated') }}" class="sort-link">{% trans %}Last updated{% endtrans %}</a></th>
+                <th scope="col"></th>
+            </tr>
+        </thead>
+        <!-- Table body -->
+
+        <tbody>
+
+        {% for opportunity in opportunities %}
+    
+            <tr class="content-list-item content-list-item-{{ loop.cycle('odd', 'even') }}">
+                <td>
+                       <input type="checkbox" name="mass-opportunity-{{ opportunity.id }}" value="{{ opportunity.id }}" class="group-mass-opportunities" />
+                </td>
+                <td>
+                <a href="{% url sales_opportunity_view opportunity.id %}"><strong>{{ opportunity.contact }}</strong></a>{{ attachments_count(opportunity) }}
+                </td>
+                <td>
+                <a class="lighter smaller spaced-h"> <a href="{% url sales_status_view opportunity.status_id %}">{{ opportunity.status }}</a>
+                </td>
+                <td>
+                {% set assigned = opportunity.assigned.all()[:3] %}
+                {% if assigned %}
+                {% for assignee in assigned %}
+                <a href="{% url identities_user_view assignee.id %}" class="popup-link">{{ assignee }}</a>
+                {% if not loop.last %}, {% endif %}
+                {% if loop.index == 3 %}...{% endif %}
+                {% endfor %}
+                {% else %}
+                Unassigned
+                {% endif %}
+                </td>
+                <td>
+                {% for product in opportunity.products_interested.all()[:3] %}
+                <a href="{% url sales_product_view product.id %}" class ="popup-link">{{ product }}</a>
+                {% if not loop.last %}, {% endif %}
+                {% if loop.index == 3 %}...{% endif %}
+                {% endfor %}
+                </td>
+                <td>
+                {% if opportunity.closed_date %}Closed {{ opportunity.closed_date }}
+                {% elif opportunity.expected_date %}Expected {{ opportunity.expected_date }}{% endif %}
+                </td>
+                <td>{{ last_updated(opportunity) }}</td>
+                <td>
+                {% if user.get_profile().has_permission(opportunity, mode='w') %}
+                <span class="content-list-item-actions table-link">
+                <a href="{% url sales_opportunity_edit opportunity.id %}" class="inline-link edit-link">{% trans %}Edit{% endtrans %}</a>
+                </span>
+                {% endif %}
+                </td>
+                
+            </tr>
+            {% endfor %}
+
+        </tbody>
+    </table>
+{% endif %}

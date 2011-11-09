@@ -1,0 +1,13 @@
+parent,project,milestone,status,name,details,assigned,caller,start_date,end_date,priority
+{% if task.parent %}{{task.parent|replace(',','')|replace('"','')|replace('
+','')|safe}},{% else %},{% endif %}{% if task.project %}{{task.project|replace(',','')|replace('"','')|replace('
+','')|safe}},{% else %},{% endif %}{% if task.milestone %}{{task.milestone|replace(',','')|replace('"','')|replace('
+','')|safe}},{% else %},{% endif %}{% if task.status %}{{task.status|replace(',','')|replace('"','')|replace('
+','')|safe}},{% else %},{% endif %}{% if task.name %}{{task.name|replace(',','')|replace('"','')|replace('
+','')|safe}},{% else %},{% endif %}{% if task.details %}{{task.details|replace(',','')|replace('"','')|replace('
+','')|safe}},{% else %},{% endif %}{% if task.assigned %}{% for x in task.assigned.all() %}{{x|replace(',','')|replace('"','')|replace('
+','')|safe}};{% endfor %},{% endif %}{% if task.caller %}{{task.caller|replace(',','')|replace('"','')|replace('
+','')|safe}},{% else %},{% endif %}{% if task.start_date %}{{task.start_date|replace(',','')|replace('"','')|replace('
+','')|safe}},{% else %},{% endif %}{% if task.end_date %}{{task.end_date|replace(',','')|replace('"','')|replace('
+','')|safe}},{% else %},{% endif %}{% if task.priority %}{{task.priority|replace(',','')|replace('"','')|replace('
+','')|safe}}{% endif %}

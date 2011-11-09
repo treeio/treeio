@@ -1,0 +1,58 @@
+{% extends "html/messaging/page.html" %}
+
+{% block title %}{% trans %}Messaging{% endtrans %}{% endblock %}
+
+{% block module_title %}{{ message }}{% endblock %}
+
+{% block module_subtitle %}{% trans %}Message{% endtrans %}{% endblock %}
+
+{% block sidebar_right %}
+
+<span class="sidebar-header-first">{% trans %}Filter by{% endtrans %}</span>
+<span class="sidebar-header-first">{% trans %}Permissions{% endtrans %}</span>
+<div class="sidebar-block">
+    {{ permission_block(message) }}
+</div>
+<span class="sidebar-header-right">{% trans %}Links{% endtrans %}</span>
+<div class="sidebar-block">
+    {{ link_block(message) }}
+</div>
+<span class="sidebar-header-right">{% trans %}Subscribers{% endtrans %}</span>
+<div class="sidebar-block">
+    {{ subscription_block(message) }}
+</div>
+{% endblock %}
+
+{% block module_topmenu %}
+{% if message.reply_to %}
+<a href="{% url messaging_message_view message.reply_to.id %}" class="top-menu view-link">{% trans %}View{% endtrans %}</a>
+{% else %}
+<a href="{% url messaging_message_view message.id %}" class="top-menu view-link">{% trans %}View{% endtrans %}</a>
+{% endif %}
+{% if user.get_profile().has_permission(message, mode='w') %}
+<a href="{% url messaging_message_delete message.id %}" class="top-menu delete-link-active">{% trans %}Delete{% endtrans %}</a>
+{% endif %}
+{% endblock %}
+
+{% block module_content %}
+
+<div class="delete-object">
+    <span class="larger">{% trans %}Delete this Message{% endtrans %}?</span>
+    <br />
+    <form action="" method="post" class="content-form">
+{% csrf_token %}
+        <ul class="content-form-fields">
+            <li>
+                <label for="trash">
+                    <input id="trash" type="checkbox" name="trash" checked="checked" />
+                    {% trans %}Move to Trash{% endtrans %}
+                </label>
+            </li>
+            <li>
+                <input type="submit" name="delete" value="{% trans %}Yes, Delete{% endtrans %}" />&nbsp;&nbsp;
+                <input type="submit" name="cancel" value="{% trans %}Cancel{% endtrans %}" class="cancel" />
+            </li>
+        </ul>
+    </form>
+</div>
+{% endblock %}

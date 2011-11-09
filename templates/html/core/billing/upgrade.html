@@ -1,0 +1,103 @@
+{% extends "html/core/page.html" %}
+
+{% block title %}{% trans %}Upgrade{% endtrans %} | {% trans %}Billing{% endtrans %} | {% trans %}Administration{% endtrans %}{% endblock %}
+
+{% block module_title %}{% trans %}Billing{% endtrans %}{% endblock %}
+
+{% block module_topmenu %}
+    <a href="{% url core_billing_upgrade %}" class="top-menu add-link-active">{% trans %}Upgrade Account{% endtrans %}</a>
+    <a href="{% url core_billing_information %}" class="top-menu edit-link">{% trans %}Billing Information{% endtrans %}</a>
+{% endblock %}
+
+{% block class_billing %}sidebar-link-active{% endblock %}
+
+
+{% block module_content %}
+
+    	<script type="text/javascript">
+
+
+		$(document).ready(function(){
+			var discount = 0;
+
+			$("#id_users").keyup(prorate);
+			$("#id_coupon").keyup(prorate);
+		});
+
+		var upgrade = "yes";
+		function prorate() {
+
+            var p_users=$('#id_users').val();
+			var p_coupon=$('#id_coupon').val();
+
+			$.ajax({
+				url: "{% url core_billing_prorate %}",
+				type: "GET",
+				global: false,
+				dataType: "html",
+				async:false,
+				data: ({users: p_users, coupon: p_coupon}),
+				success: function(p_price) {
+					$('#prorated-price').html(p_price);
+				}
+			});
+		}
+	</script>
+
+<div class="admin-style">
+    {% if messages %}
+		<p class="yellow">
+            {% for message in messages %}
+			{{ message|htsafe }}
+            {% endfor %}
+		</p>
+		{% endif %}
+
+    <p class="label-margin clearfix">
+    {% if not has_billing %}
+    <h2>{% trans %}Please{% endtrans %} <a href="{% url core_billing_information %}">{% trans %}update your billing details{% endtrans %}</a> {% trans %}in order to upgrade.{% endtrans %}</h2>
+    {% endif %}
+    </p>
+    
+
+    <div class="hint_box">
+    	<div class="hint_content">
+    		<img class="left" src="/static/images/checklist.png"/>
+			<div class="hint_message">
+		    	<span class="hint_title">{% trans %}Account Information{% endtrans %}</span>
+		      	<div class="content-box">
+		      		<h3>You have <strong>{{ quota - active_users }}</strong> of your <strong>{{ quota }}</strong> available users left. ({{ disabled_users }} currently disabled).</h3>
+		       		<h3>Additional users are priced at $15 per user/month.</h3>
+		    		<div id="prorated-price"></div>
+		    	</div>
+			</div>
+		</div>
+    </div>
+
+
+
+    <hr class="space"/>
+    <div class="hint_box">
+     	<div class="hint_content">
+     		<img class="left" src="/static/images/gifts.png"/>
+			<div class="hint_message">
+				<span class="hint_title">{% trans %}Add Users{% endtrans %}</span>
+				<div class="content-box">
+					<form action="" method="post" class="content-form">
+					{% csrf_token %}
+	
+				    <ul class="content-form-fields">
+				        {{ form.as_ul()|htsafe }}
+				    </ul>
+				    <div class="label-margin content-form-submit">
+				        <input type="submit" name="save" value="{% trans %}Upgrade{% endtrans %}">
+				    </div>
+	
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+
+</div>
+{% endblock %}

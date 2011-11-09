@@ -1,0 +1,28 @@
+{% extends "mobile/messaging/page.mobile" %}
+
+{% block title %}{% trans %}Compose{% endtrans %} | {% trans %}Messaging{% endtrans %}{% endblock %}
+
+{% block module_topmenu %}
+<a href="{% url messaging_message_compose %}" class="top-menu add-link-active">{% trans %}New Message{% endtrans %}</a>
+<a href="{% url messaging_stream_add %}" class="top-menu add-link">{% trans %}New Stream{% endtrans %}</a>
+{% endblock %}
+
+{% block module_content %}
+
+<p>
+    <form action="" method="post" class="content-form">
+{% csrf_token %}
+        <ul class="content-form-fields">
+            {{ form.as_ul()|htsafe }}
+        </ul>
+        <div class="content-form-submit ui-grid-a">
+        <div class="ui-block-a">
+            <input data-theme="b" type="submit" name="save" value="{% trans %}Send Message{% endtrans %}" class="submit" />
+        </div>
+    	<div class="ui-block-b">
+            <input type="submit" name="cancel" value="{% trans %}Cancel{% endtrans %}" class="cancel" />
+        </div>
+        </div>
+    </form>
+</p>
+{% endblock %}

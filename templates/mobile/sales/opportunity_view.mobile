@@ -1,0 +1,134 @@
+{% extends "mobile/sales/page.mobile" %}
+
+{% block title %}{% trans %}Opportunity{% endtrans %} | {% trans %}Sales{% endtrans %}{% endblock %}
+
+{% block module_title %}{{ opportunity.contact }}{% endblock %}
+
+{% block module_subtitle %}{% trans %}Opportunity{% endtrans %}{% endblock %}
+
+{% block module_topmenu %}
+	<a href="{% url sales_opportunity_view opportunity.id %}" class="top-menu view-link-active">{% trans %}View{% endtrans %}</a>
+	{% if request.user.get_profile().is_admin('treeio.sales') %}
+	<a href="{% url sales_opportunity_edit opportunity.id %}" class="top-menu edit-link">{% trans %}Edit{% endtrans %}</a>
+	<a href="{% url sales_opportunity_delete opportunity.id %}" class="top-menu delete-link">{% trans %}Delete{% endtrans %}</a>
+	<a href="{% url sales_order_add_with_opportunity opportunity.id %}" class="top-menu add-link">{% trans %}Convert To Order{% endtrans %}</a>
+	{% endif %}
+{% endblock %}
+
+{% block sidebar_right %}
+
+	<span class="sidebar-header-first">{% trans %}Permissions{% endtrans %}</span>
+	<div class="sidebar-block">
+		{{ permission_block(opportunity) }}
+	</div>
+
+	<span class="sidebar-header-right">{% trans %}Links{% endtrans %}</span>
+	<div class="sidebar-block">
+		{{ link_block(opportunity) }}
+	</div>
+	
+	<span class="sidebar-header-right">{% trans %}Subscribers{% endtrans %}</span>
+	<div class="sidebar-block">
+		{{ subscription_block(opportunity) }}
+	</div>
+	
+	<span class="sidebar-header-right">{% trans %}Export to{% endtrans %} 
+	{% if '?' in request.get_full_path() %}<a href="{{ request.get_full_path()|replace('.ajax','').replace('?','.csv?') }}"{% else %}<a href="{{ request.get_full_path()|replace('.ajax','') }}.csv"{% endif %} target="_self">CSV</a>, 
+	{% if '?' in request.get_full_path() %}<a href="{{ request.get_full_path()|replace('.ajax','').replace('?','.xls?') }}"{% else %}<a href="{{ request.get_full_path()|replace('.ajax','') }}.xls"{% endif %} target="_self">XLS</a></span>
+
+{% endblock %}
+
+
+{% block module_content %}
+
+	{% if opportunity.assigned %}
+	<div>
+	<span class="content-label">{% trans %}Assigned to{% endtrans %}:</span>
+	<span class="content-value">
+		{% for assignee in opportunity.assigned.all() %}
+		<a href="{% url identities_user_view assignee.id %}" class="popup-link">{{ assignee }}</a><br />
+		{% endfor %}
+	</span>
+	{% else %}
+	<span class="content-value">
+	{% trans %}Anyone{% endtrans %}<br />
+	</span>
+	</div>
+	{% endif %}
+
+	{% if opportunity.lead %}
+	<div>
+		<span class="content-label">{% trans %}Lead{% endtrans %}:</span>
+		<span class="content-value"><a href="{% url sales_lead_view opportunity.lead.id %}" class="popup-link">{{ opportunity.lead }}</a></span>
+	{% endif %}
+	{% if opportunity.contact %}
+	<div>
+		<span class="content-label">{% trans %}Contact{% endtrans %}:</span>
+		<span class="content-value"><a href="{% url identities_contact_view opportunity.contact.id %}" class="popup-link">{{ opportunity.contact }}</a></span>
+	</div>
+	{% endif %}
+
+	{% if opportunity.source %}
+	<div>
+		<span class="content-label">{% trans %}Source{% endtrans %}:</span>
+		<span class="content-value"><a href="{% url sales_source_view opportunity.source.id %}" class="popup-link">{{ opportunity.source }}</a></span>
+	</div>
+	{% endif %}
+
+	<div>
+		<span class="content-label">{% trans %}Products Interested{% endtrans %}:</span>
+		{% for product in opportunity.products_interested.all() %}
+		<span class="content-value"><a href="{% url sales_product_view product.id %}" class="popup-link">{{ product }}</a></span>
+		{% endfor %}
+	</div>
+	
+	{% if opportunity.expected_date %}
+	<div>
+		<span class="content-label">{% trans %}Expected Date{% endtrans %}:</span>
+		<span class="content-value">{{ opportunity.expected_date }}</span>
+	</div>
+	{% endif %}
+	
+	{% if opportunity.closed_date %}
+	<div>
+		<span class="content-label">{% trans %}Closed Date{% endtrans %}:</span>
+		<span class="content-value">{{ opportunity.closed_date }}</span>
+	</div>
+	{% endif %}
+	
+	<div>
+		<span class="content-label">{% trans %}Status{% endtrans %}:</span>
+		<span class="content-value"><a href="{% url sales_status_view opportunity.status.id %}">{{ opportunity.status }}</a></span>
+	</div>
+	
+	{% if opportunity.probability %}
+	<div>
+		<span class="content-label">{% trans %}Probability{% endtrans %}:</span>
+		<span class="content-value">{{ opportunity.probability }}%</span>
+	</div>
+	{% endif %}
+	
+	{% if opportunity.amount %}
+	<div>
+		<span class="content-label">{% trans %}Amount{% endtrans %}:</span>
+		<span class="content-value">{{ opportunity.amount }}</span>
+	</div>
+	{% endif %}
+
+	{% if opportunity.probability and opportunity.amount %}
+	<div>
+		<span class="content-label">{% trans %}Weighted Amount{% endtrans %}:</span>
+		<span class="content-value">{{ opportunity.amount * (opportunity.probability / 100) }}</span>
+	</div>
+	{% endif %}
+	
+	{% if opportunity.details %}
+	<div>
+		<span class="content-label">{% trans %}Details{% endtrans %}:</span>
+		<span class="content-details">{{ opportunity.details|htsafe }}</span>
+	</div>
+	{% endif %}
+	
+	</div>
+
+{% endblock %}

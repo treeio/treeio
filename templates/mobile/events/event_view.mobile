@@ -1,0 +1,57 @@
+{% extends "mobile/events/page.mobile" %}
+
+{% block title %}{{ event|htsafe }} | {% trans %}Calendar{% endtrans %}{% endblock %}
+
+{% block module_title %}{{ event|htsafe }}{% endblock %}
+
+{% block module_subtitle %}{% trans %}Event{% endtrans %}{% endblock %}
+
+{% block module_topmenu %}
+<a class="top-menu view-link-active" href="{% url events_event_view event.id %}">{% trans %}View{% endtrans %}</a>
+{% if user.get_profile().has_permission(event, mode='w') %}
+<a class="top-menu edit-link" href="{% url events_event_edit event.id %}">{% trans %}Edit{% endtrans %}</a>
+<a class="top-menu delete-link" href="{% url events_event_delete event.id %}">{% trans %}Delete{% endtrans %}</a>
+{% endif %}
+{% endblock %}
+
+{% block sidebar_right %}
+{% endblock %}
+
+{% block module_content %}
+
+<div>
+    <span class="content-label">{% trans %}Name{% endtrans %}:</span>
+    <span class="content-value">{{ event.name|htsafe }}</span>
+</div>
+{% if event.location %}
+<div>
+    <span class="content-label">{% trans %}Location{% endtrans %}:</span>
+    <span class="content-value">{{ event.location|htsafe }}</span>
+</div>
+{% endif %}
+
+{% if event.start %}
+<div>
+    <span class="content-label">{% trans %}Start{% endtrans %}:</span>
+    <span class="content-value">{{ event.start|htdatetime }}</span>
+</div>
+{% endif %}
+
+<div>
+    <span class="content-label">{% trans %}End{% endtrans %}:</span>
+    <span class="content-value">{{ event.end|htdatetime }}</span>
+</div>
+
+<div class="spaced-v spaced-h">
+  <br />
+  {{ tags_box(event) }}
+</div>
+
+{% if event.details %}
+<div>
+    <span class="content-label-head">{% trans %}Details{% endtrans %}:</span>
+    <span class="content-details">{{ event.details|htsafe }}</span>
+</div>
+{% endif %}
+
+{% endblock %}

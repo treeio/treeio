@@ -1,0 +1,14 @@
+<ul data-role="listview" data-inset="true" data-theme="c">
+{% for document in documents %}
+<li>
+	<a href="{% url documents_document_view document.id %}">
+		<img class="ui-li-icon" src="/static/icons/documents/doc.png"/><h3>{{ document }}</h3>
+		<p>{{ document.body|striptags|truncate(80, True) }}</p>
+		
+		<p class="ui-li-aside">
+			{{ document.last_updated|humanize_datetime }}
+		</p>
+	</a>
+</li>
+{% endfor %}
+</ul>

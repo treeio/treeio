@@ -1,0 +1,73 @@
+{% extends "mobile/identities/page.mobile" %}
+
+{% block title %}{{ group|htsafe }} | {% trans %}Identities{% endtrans %}{% endblock %}
+
+{% block module_title %}{{ group }}{% endblock %}
+{% block module_subtitle %}{% trans %}Group{% endtrans %}{% endblock %}
+
+{% block module_topmenu %}
+<a href="{% url identities_group_view group.id %}" class="top-menu view-link view-link-active">{% trans %}View{% endtrans %}</a>
+{% endblock %}
+
+{% block sidebar_right %}
+{% endblock %}
+
+{% block module_content %}
+
+<div>
+    <span class="content-label">{% trans %}Path{% endtrans %}:</span>
+    <span class="content-value">{{ object_tree_path(group) }}</span>
+</div>
+<br />
+
+{% for contact in contacts %}
+<div>
+    <span class="content-label-head">
+        <a href="{% url identities_contact_view contact.id %}"><strong>{% trans %}Contact{% endtrans %}:</strong></a>
+    </span>
+    <span class="content-details"></span>
+</div>
+<div>
+    <span class="content-label">{% trans %}Name{% endtrans %}:</span>
+    <span class="content-value"><a href="{% url identities_contact_view contact.id %}">{{ contact.name }}</a></span>
+</div>
+{% for value in contact.contactvalue_set.all() %}
+{% if value.value %}
+<div>
+    <span class="content-label">{{ value.field.label }}:</span>
+    {% if value.field.field_type == 'picture' %}
+    <img src="{{ value|htsafe }}" alt="{{ value.field.label }}" />
+    {% elif value.field.field_type == 'url' %}
+    <span class="content-value"><a href="{{ value|htsafe }}" class="ajax-link-out">{{ value }}</a></span>
+    {% elif value.field.field_type == 'details' %}
+    <span class="content-details">{{ value|htsafe }}</span>
+    {% else %}
+    <span class="content-value">{{ value|htsafe }}</span>
+    {% endif %}
+</div>
+{% endif %}
+{% endfor %}
+
+{% endfor %}
+
+{% if subgroups %}
+<br />
+<div>
+    <span class="content-label-head large">{% trans %}Groups{% endtrans %}:</span>
+</div>
+{{ identities_group_list(subgroups, group) }}
+
+{% endif %}
+
+{% if members %}
+<br />
+<div>
+    <span class="content-label-head large">{% trans %}Members{% endtrans %}:</span>
+</div>
+{{ identities_user_list(paginate(members), group) }}
+
+{{ pager(members) }}
+
+{% endif %}
+
+{% endblock %}

@@ -1,0 +1,29 @@
+{% extends "mobile/core/dashboard/index.mobile" %}
+
+{% block module_topmenu %}
+    <a href="{% url core_dashboard_widget_add %}" class="top-menu add-link-active">{% trans %}Add Widget{% endtrans %}</a>
+	<a href="{% url core_trash %}" class="top-menu trash-link {% if trash %}trash-full-link{% endif %}">{% trans %}Trash{% endtrans %}</a>
+{% endblock %}
+
+{% block module_content %}
+<div class="module-content-inner">
+<!-- module_content_inner -->
+
+{% for name in widgets %}
+	<div class="content-list-item content-list-item-{{ loop.cycle('odd', 'even') }}">
+	    <div class="content-list-tick"></div>
+		<span class="content-list-item-name">
+            <a href="{% url core_dashboard_widget_add_selected widgets[name]['module_name'], name %}" class="top-menu add-link">{{ widgets[name]['title'] }}</a>
+            <span class="small spaced-h">{{ widgets[name]['module_title'] }}</span>
+		</span>
+		<span class="content-list-item-actions">
+			{#<a href="{% url core_dashboard_widget_add_selected widgets[name]['module_name'], name %}" class="inline-link add-link">{% trans %}Add{% endtrans %}</a>#}
+		</span>
+	</div>
+{% endfor %}
+
+<div class="clear"></div>
+
+<!-- /module_content_inner -->
+</div>
+{% endblock %}

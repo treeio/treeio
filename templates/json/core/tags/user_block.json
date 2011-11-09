@@ -1,0 +1,13 @@
+{
+ "id": {{ user.id }},
+ "name": "{{ user }}",
+ "username": "{{ user.user.username }}",
+ "groups": [
+     {"id": {{ user.default_group.id }},
+      "name": "{{ user.default_group.name }}"}
+     {%- for group in user.other_groups.all() -%},
+     {"id": {{ group.id }},
+      "name": "{{ group.name }}"}
+     {%- endfor %}
+ ]
+}

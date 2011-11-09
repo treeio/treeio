@@ -1,0 +1,48 @@
+{% extends "mobile/projects/page.mobile" %}
+
+{% block title %} {{ task_time_slot.get_time_string() }} | {{ task|htsafe }} | {% trans %}Project Management{% endtrans %}{% endblock %}
+
+{% block module_title %}{{ task_time_slot.get_time_string() }} by {{ task_time_slot.user }}{% endblock %}
+
+{% block module_subtitle %}{% trans %}Task Time Slot{% endtrans %}{% endblock %}
+
+{% block module_topmenu %}
+<a href="{% url projects_task_time_slot_view task_time_slot.id %}" class="top-menu view-link-active">{% trans %}View{% endtrans %}</a>
+{% if user.get_profile().has_permission(task, mode='w') or user.get_profile().has_permission(slot, mode='w') %}
+<a href="{% url projects_task_time_slot_edit task_time_slot.id %}" class="top-menu edit-link">{% trans %}Edit{% endtrans %}</a>
+<a href="{% url projects_task_time_slot_delete task_time_slot.id %}" class="top-menu delete-link">{% trans %}Delete{% endtrans %}</a>
+{% endif %}
+{% endblock %}
+
+{% block sidebar_right %}
+{% endblock %}
+
+{% block module_content %}
+
+<div>
+    <span class="content-label">{% trans %}Task{% endtrans %}:</span>
+    <span class="content-value"><a href="{% url projects_task_view task_time_slot.task_id %}">{{ task_time_slot.task }}</a></span>
+</div>
+<div>
+    <span class="content-label">{% trans %}Author{% endtrans %}:</span>
+    <span class="content-value"><a href="{% url identities_user_view task_time_slot.user_id %}">{{ task_time_slot.user }}</a></span>
+</div>
+<div>
+    <span class="content-label">{% trans %}Started{% endtrans %}:</span>
+    <span class="content-value">{{ task_time_slot.time_from|htdatetime }}</span>
+</div>
+{% if task_time_slot.time_to %}
+<div>
+    <span class="content-label">{% trans %}Finished{% endtrans %}:</span>
+    <span class="content-value">{{ task_time_slot.time_to|htdatetime}}</span>
+</div>
+{% endif %}
+
+{% if task_time_slot.details %}
+<div>
+    <span class="content-label">{% trans %}Details{% endtrans %}:</span>
+    <span class="content-details">{{ task_time_slot.details|htsafe }}</span>
+</div>
+{% endif %}
+
+{% endblock %}

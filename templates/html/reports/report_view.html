@@ -1,0 +1,47 @@
+{% extends "html/reports/page.html" %}
+
+{% block title %}{% trans %}Reports{% endtrans %}{% endblock %}
+
+{% block module_title %}{{ report.name|htsafe }}{% endblock %}
+{% block module_subtitle %}{% trans %}Report{% endtrans %}{% endblock %}
+
+{% block module_topmenu %}
+<a class="top-menu view-link-active" href="{% url reports_report_view report.id %}">{% trans %}View{% endtrans %}</a>
+<a class="top-menu edit-link" href="{% url reports_report_edit report.id %}">{% trans %}Edit{% endtrans %}</a>
+<a class="top-menu delete-link" href="{% url reports_report_delete report.id %}">{% trans %}Delete{% endtrans %}</a>
+<a class="top-menu add-link popup-link" href="{% url reports_chart_add report.id %}">{% trans %}Add Chart{% endtrans %}</a>
+{{ last_updated(report) }}
+{% endblock %}
+
+{% block sidebar_right %}
+<span class="sidebar-header-right">{% trans %}Permissions{% endtrans %}</span>
+<div class="sidebar-block">
+    {{ permission_block(report) }}
+</div>
+<span class="sidebar-header-right">{% trans %}Links{% endtrans %}</span>
+<div class="sidebar-block">
+    {{ link_block(report) }}
+</div>
+<span class="sidebar-header-right">{% trans %}Subscribers{% endtrans %}</span>
+<div class="sidebar-block">
+    {{ subscription_block(report) }}
+</div>
+<span class="sidebar-header-right">{% trans %}Download as:{% endtrans %}<br />{% if '?' in request.get_full_path() %}<a class="pdf-block-link" href="{{ request.get_full_path()|replace('.ajax','').replace('?','.pdf?') }}"{% else %}<a class="pdf-block-link" href="{{ request.get_full_path()|replace('.ajax','') }}.pdf"{% endif %} target="_self">PDF</a>
+</span>
+{% endblock %}
+
+
+{% block module_content %}
+    
+  {{ attachments(report) }}<br/>
+
+{% for c in charts %}
+{{display_chart(c)|safe}}
+{% endfor %}
+
+    <span class="large light content-label-head">
+
+    </span>
+{{ report_content|htsafe }}
+
+{% endblock %}

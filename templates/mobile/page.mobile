@@ -1,0 +1,15 @@
+{% extends "mobile/base.mobile" %}
+
+{% block page %}
+		
+	<div id="container">
+	    <div data-role="content">	
+            <div id="module-{{ modules_active() }}" class="module-block">
+	        <!-- module_content -->
+	        {% block content %}{% endblock %}
+            <!-- /module_content -->
+            </div>
+	    </div>
+	</div>	
+			
+{% endblock %}

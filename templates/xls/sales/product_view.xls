@@ -1,0 +1,13 @@
+name,product_type,parent,code,supplier,supplier_code,buy_price,sell_price,stock_quantity,active,runout_action
+{% if product.name %}{{product.name|replace(',','')|replace('"','')|replace('
+','')|safe}},{% else %},{% endif %}{% if product.product_type %}{{product.product_type|replace(',','')|replace('"','')|replace('
+','')|safe}},{% else %},{% endif %}{% if product.parent %}{{product.parent|replace(',','')|replace('"','')|replace('
+','')|safe}},{% else %},{% endif %}{% if product.code %}{{product.code|replace(',','')|replace('"','')|replace('
+','')|safe}},{% else %},{% endif %}{% if product.supplier %}{{product.supplier|replace(',','')|replace('"','')|replace('
+','')|safe}},{% else %},{% endif %}{% if product.supplier_code %}{{product.supplier_code|replace(',','')|replace('"','')|replace('
+','')|safe}},{% else %},{% endif %}{% if product.buy_price %}{{product.buy_price|replace(',','')|replace('"','')|replace('
+','')|safe}},{% else %},{% endif %}{% if product.sell_price %}{{product.sell_price|replace(',','')|replace('"','')|replace('
+','')|safe}},{% else %},{% endif %}{% if product.stock_quantity %}{{product.stock_quantity|replace(',','')|replace('"','')|replace('
+','')|safe}},{% else %},{% endif %}{% if product.active %}{{product.active|replace(',','')|replace('"','')|replace('
+','')|safe}},{% else %},{% endif %}{% if product.runout_action %}{{product.runout_action|replace(',','')|replace('"','')|replace('
+','')|safe}},{% else %},{% endif %}

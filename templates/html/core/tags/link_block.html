@@ -1,0 +1,23 @@
+{% if object %}
+<div class="object-links">
+    {% for link in links %}
+    {% set url = link.get_absolute_url() %}
+    {% if url %}
+    <a href="{{ url }}" class="popup-link">{{ link }}</a>
+    {% else %}
+    {{ link }}
+    {% endif %}
+    <span class="smaller lighter">{{ link.get_human_type() }}</span>
+    {% if request.user.get_profile().has_permission(object, mode='w') or request.user.get_profile().id == subscription.id %}
+    <a href="{{ request.path }}?link_delete={{ link.id }}" class="inline-link delete-link" style="padding-left: 8px;">&nbsp;</a>
+    {% endif %}
+    <br />
+    {% endfor %}
+</div>
+<div class="object-links-links">
+    {% if request.user.get_profile().has_permission(object, mode='w') %}
+    <a href="{{ request.path }}?link_add" class="inline-link add-link" style="margin: 0">{% trans %}Add{% endtrans %}</a>
+    {% endif %}
+</div>
+{% endif %}
+

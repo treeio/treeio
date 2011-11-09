@@ -1,0 +1,22 @@
+#!/bin/bash
+
+log=`mktemp`
+
+message="(AUTO) Full check-in. No message supplied"
+
+[ ! "$1" == "" ] && message="$1" || echo '== WARNING: No log message provided! Use ./rfullci "<log messsage>"'
+
+# Apply all changes
+echo "-- Applying all changes (git push)..."
+git add --all
+git commit --all -m "$message"
+git push
+[ ! $? == 0 ] && echo "!! ERROR: git push failed" && exit 1
+
+# Print results
+echo "-- Done."
+echo ""
+echo "-- Change report:"
+echo ""
+cat $log
+rm -f $log

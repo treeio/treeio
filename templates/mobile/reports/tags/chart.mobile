@@ -1,0 +1,25 @@
+<script type="text/javascript">
+var {{id}};
+$(document).ready(function() {
+      {{id}} = new Highcharts.Chart(
+        {{rendered_options|htsafe}}
+        );
+});
+</script>
+<a href="#" id="chart-toggle{{id}}">{{chart.name}} Chart</a>
+<a class="delete-link popup-link" href="{% url reports_chart_delete chart_id %}">Delete</a>
+<a class="edit-link popup-link" href="{% url reports_chart_edit chart_id %}">Edit</a>
+<div id = "{{id}}"></div>
+
+<script type="text/javascript">
+  $(document).ready(function() {
+  // hides charts as soon as the DOM is ready
+          {#$('#{{id}}').hide();#}
+   
+  $('#chart-toggle{{id}}').click(function() {
+      $('#{{id}}').toggle(400);
+    return false;
+  });
+  
+  });
+</script>

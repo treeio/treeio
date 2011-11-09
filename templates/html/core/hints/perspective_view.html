@@ -1,0 +1,9 @@
+{% extends "html/core/hints/base.html" %}
+
+{% block hint_content %}
+<img class="left" src="/static/icons/hints/admin.gif"/>
+<div class="hint_message">
+<span class="hint_title">{% trans %}Some of your changes haven't been saved{% endtrans %}.</span>
+<h3>{{ object }}</h3>
+</div>
+{% endblock %}

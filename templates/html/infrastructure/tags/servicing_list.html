@@ -1,0 +1,26 @@
+{% for record in service_records %}
+<div class="content-list-item content-list-item-{{ loop.cycle('odd', 'even') }}">
+    <div class="content-list-tick">
+    </div>
+    <span class="content-list-item-name">
+        <a href="{% url infrastructure_service_record_view record.id %}">{{ record }}</a>
+        {% if record.supplier %}<a href="{% url identities_contact_view record.supplier_id %}" class="author-link small spaced-h popup-link">{{ record.supplier }}</a>{% endif %}
+        {% if not skip_group %}
+        {% for item in record.items.all()[0:6] %}
+        <a href="{% url infrastructure_item_view item.id %}" class="group-link popup-link small spaced-h">{{ item }}</a>
+        {% if loop.last and record.items.count() > 6 %} ... {% endif %}
+        {% endfor %}
+        {% endif %}
+        <span class="content-list-item-group">
+            {%- if record.expiry_date %}
+            Expires: {{ record.expiry_date }}
+            {%- endif %}
+        </span>
+    </span>
+    <span class="content-list-item-actions">
+        {% if user.get_profile().has_permission(record, mode='w') %}
+        <a href="{% url infrastructure_service_record_edit record.id %}" class="inline-link edit-link">{% trans %}Edit{% endtrans %}</a>
+        {% endif %}
+    </span>
+</div>
+{% endfor %}

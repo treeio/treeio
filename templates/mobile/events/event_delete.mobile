@@ -1,0 +1,79 @@
+{% extends "mobile/events/page.mobile" %}
+
+{% block title %}{{ event|htsafe }} | {% trans %}Calendar{% endtrans %}{% endblock %}
+
+{% block module_title %}{{ event|htsafe }}{% endblock %}
+
+{% block module_subtitle %}{% trans %}Event{% endtrans %}{% endblock %}
+
+{% block module_topmenu %}
+<a class="top-menu view-link" href="{% url events_event_view event.id %}">{% trans %}View{% endtrans %}</a>
+<a class="top-menu edit-link" href="{% url events_event_edit event.id %}">{% trans %}Edit{% endtrans %}</a>
+<a class="top-menu delete-link-active" href="{% url events_event_delete event.id %}">{% trans %}Delete{% endtrans %}</a>
+{% endblock %}
+
+{% block sidebar_right %}
+<td class="module-sidebar-right">
+<span class="sidebar-header-first">{% trans %}Permissions{% endtrans %}</span>
+<div class="sidebar-block">
+    {{ permission_block(event) }}
+</div>
+<span class="sidebar-header-right">{% trans %}Links{% endtrans %}</span>
+<div class="sidebar-block">
+    {{ link_block(event) }}
+</div>
+<span class="sidebar-header-right">{% trans %}Subscribers{% endtrans %}</span>
+<div class="sidebar-block">
+    {{ subscription_block(event) }}
+</div>
+</td>
+{% endblock %}
+
+{% block module_content %}
+
+<div>
+    <span class="larger">{% trans %}Delete this Event{% endtrans %}?</span>
+    <br />
+    <form action="" method="post" class="content-form">
+{% csrf_token %}
+        <ul class="content-form-fields">
+            <li>
+                <label for="trash">
+                    <input id="trash" type="checkbox" name="trash" checked="checked" />
+                    {% trans %}Move to Trash{% endtrans %}
+                </label>
+            </li>
+            <li class="ui-grid-a">
+            <div class="ui-block-a">
+                <input data-theme="b" type="submit" name="delete" value="{% trans %}Yes, Delete{% endtrans %}" style="font-weight: 700;" />&nbsp;&nbsp;
+            </div>
+            <div class="ui-block-b">
+                <input type="submit" name="cancel" value="{% trans %}Cancel{% endtrans %}" class="cancel" />
+            </div>
+            </li>
+        </ul>
+    </form>
+</div>
+<div>
+    <span class="content-label">{% trans %}Name{% endtrans %}:</span>
+    <span class="content-value">{{ event.name|htsafe }}</span>
+</div>
+{% if event.start %}
+<div>
+    <span class="content-label">{% trans %}Start{% endtrans %}:</span>
+    <span class="content-value">{{ event.start|htdate }}</span>
+</div>
+{% endif %}
+
+<div>
+    <span class="content-label">{% trans %}End{% endtrans %}:</span>
+    <span class="content-value">{{ event.end|htdate }}</span>
+</div>
+{% if event.details %}
+<div>
+    <span class="content-label">{% trans %}Details{% endtrans %}:</span>
+    <span class="content-details">{{ event.details|htsafe }}</span>
+</div>
+{% endif %}
+
+{% endblock %}

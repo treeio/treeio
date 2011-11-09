@@ -1,0 +1,81 @@
+{% extends "mobile/core/page.mobile" %}
+
+{% block title %}{{ profile|htsafe }} | {% trans %}Administration{% endtrans %}{% endblock %}
+
+{% block module_title %}{{ profile }}{% endblock %}
+{% block module_subtitle %}{% trans %}User{% endtrans %}{% endblock %}
+
+{% block module_topmenu %}
+<a href="{% url core_admin_user_view profile.id %}" class="top-menu view-link view-link">{% trans %}View{% endtrans %}</a>
+<a href="{% url core_admin_user_edit profile.id %}" class="top-menu edit-link">{% trans %}Edit{% endtrans %}</a>
+<a href="{% url core_admin_user_password profile.id %}" class="top-menu password-link">{% trans %}Change Password{% endtrans %}</a>
+<a href="{% url core_admin_user_delete profile.id %}" class="top-menu delete-link-active">{% trans %}Delete{% endtrans %}</a>
+{% endblock %}
+
+{% block sidebar_right %}
+<span class="sidebar-header-right">{% trans %}Download as:{% endtrans %}<br />{% if '?' in request.get_full_path() %}<a class="pdf-block-link" href="{{ request.get_full_path()|replace('.ajax','').replace('?','.pdf?') }}"{% else %}<a class="pdf-block-link" href="{{ request.get_full_path()|replace('.ajax','') }}.pdf"{% endif %} target="_self">PDF</a>
+      </span>
+{% endblock %}
+
+{% block module_content %}
+
+{% if message %}
+
+<div class="hint_box">
+  <div class="hint_content">
+    <img class="left" src="/static/icons/hints/admin.gif"/>
+    <span class="hint_title">{% trans %}Sorry, you can not delete this user{% endtrans %}.</span>
+    <h3>{{ message }}</h3>
+  </div>
+</div>
+<br />
+
+{% else %}
+
+<div>
+    <span class="larger">{% trans %}Delete this User{% endtrans %}?</span>
+    <br />
+    <form action="" method="post" class="content-form">
+{% csrf_token %}
+        <p>
+            {% trans %}WARNING: All Objects belonging to this User will be deleted{% endtrans %}.
+        </p>
+        <ul class="content-form-fields">
+            <li class="ui-grid-a">
+            <div class="ui-block-a">
+                <input data-theme="b" type="submit" name="delete" value="{% trans %}Yes, Delete{% endtrans %}" style="font-weight: 700;" />&nbsp;&nbsp;
+            </div>
+            <div class="ui-block-b">
+                <input type="submit" name="cancel" value="{% trans %}Cancel{% endtrans %}" class="cancel" />
+            </div>
+            </li>
+        </ul>
+    </form>
+</div>
+
+{% endif %}
+
+<div>
+    <span class="content-label">{% trans %}Username{% endtrans %}:</span>
+    <span class="content-value"><strong>{{ profile.user }}</strong></span>
+</div>
+{% if profile.default_group %}
+<div>
+    <span class="content-label">{% trans %}Default Group{% endtrans %}:</span>
+    <span class="content-value">{{ object_tree_path(profile.default_group) }}</span>
+</div>
+{% endif %}
+<div>
+    {% if profile.other_groups.count() %}
+    <span class="content-label">{% trans %}Other Groups{% endtrans %}:</span>
+    <span class="content-value">
+        {% for group in profile.other_groups.all() %}
+        <a href="{% url core_admin_group_view group.id %}">{{ group }}</a>
+        <br />
+        {% endfor %}
+    </span>
+    {% endif %}
+</div>
+
+
+{% endblock %}

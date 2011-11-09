@@ -1,0 +1,21 @@
+{% extends "mobile/account/page.mobile" %}
+
+{% block title %}{{ profile|htsafe }} | {% trans %}Account{% endtrans %}{% endblock %}
+
+{% block class_watchlist %}sidebar-link-active{% endblock %}
+
+{% block module_title %}{{ profile }}{% endblock %}
+{% block module_subtitle %}{% trans %}User{% endtrans %}{% endblock %}
+
+{% block module_topmenu %}
+{% endblock %}
+
+{% block module_content %}
+
+<span class="content-label-head">
+  My Watchlist:
+</span>
+
+{{ core_watchlist(watchlist, paginate=True) }}
+
+{% endblock %}

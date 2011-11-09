@@ -1,0 +1,87 @@
+{% extends "mobile/messaging/page.mobile" %}
+
+{% block title %}{{ stream|htsafe }} | {% trans %}Messaging{% endtrans %}{% endblock %}
+
+{% block module_title %}{{ stream }}{% endblock %}
+{% block module_subtitle %}{% trans %}Stream{% endtrans %}{% endblock %}
+
+{% block module_topmenu %}
+<a href="{% url messaging_stream_view stream.id %}" class="top-menu view-link-active">{% trans %}View{% endtrans %}</a>
+{% if user.get_profile().has_permission(stream, mode='w') %}
+<a href="{% url messaging_stream_edit stream.id %}" class="top-menu edit-link">{% trans %}Edit{% endtrans %}</a>
+<a href="{% url messaging_stream_delete stream.id %}" class="top-menu delete-link">{% trans %}Delete{% endtrans %}</a>
+{% endif %}
+{% endblock %}
+
+{% block sidebar_right %}
+
+<span class="sidebar-header-first">{% trans %}Permissions{% endtrans %}</span>
+<div class="sidebar-block">
+    {{ permission_block(stream) }}
+</div>
+<span class="sidebar-header-right">{% trans %}Links{% endtrans %}</span>
+<div class="sidebar-block">
+    {{ link_block(stream) }}
+</div>
+<span class="sidebar-header-right">{% trans %}Subscribers{% endtrans %}</span>
+<div class="sidebar-block">
+    {{ subscription_block(stream) }}
+</div>
+<span class="sidebar-header-right">{% trans %}Download as:{% endtrans %}<br />{% if '?' in request.get_full_path() %}<a class="pdf-block-link" href="{{ request.get_full_path()|replace('.ajax','').replace('?','.pdf?') }}"{% else %}<a class="pdf-block-link" href="{{ request.get_full_path()|replace('.ajax','') }}.pdf"{% endif %} target="_self">PDF</a>
+  </span></span>
+{% endblock %}
+
+{% block module_content %}
+
+{% if messages %}
+
+<form action="" method="post">
+{% csrf_token %}
+    <ul class="mass-form">
+        <input type="hidden" name="massform" value="massform" />
+        <input type="checkbox" name="mass-unclassified" value="unclassified" class="group-control" />
+         {{ massform.as_ul()|htsafe }}
+        <li>
+            <input type="submit" value="{% trans %}Save{% endtrans %}" />
+        </li>
+    </ul>
+    {{ messaging_message_list(paginate(messages)) }}
+
+    {{ pager(messages) }}
+</form>
+{% else %}
+<div class="content-list-item spaced-v spaced-h lighter">
+    <em>{% trans %}No Messages{% endtrans %}.</em>
+	<a href="{% url messaging_message_compose %}" class="popup-link"><strong>{% trans %}Compose a Message{% endtrans %}</strong></a>
+</div>
+{% endif %}
+
+{% if form %}
+<br />
+<div>
+    <span class="content-label-head">{% trans %}Write a Message{% endtrans %}:</span>
+</div>
+
+<div class="message">
+        <div class="message-details">
+            <div class="message-bubble">
+                <form action="" method="post" class="content-form">
+{% csrf_token %}
+                    <ul class="content-form-fields">
+                      <li>
+                        {{ form.as_ul()|htsafe }}
+                      </li>
+                    </ul>
+                    <div class="content-form-submit">
+                        <input type="submit" value="{% trans %}Send Message{% endtrans %}">
+                    </div>
+                </form>
+                <span class="message-tail"></span>
+            </div>
+        </div>
+        <div class="clear">
+        </div>
+    </div>
+{% endif %}
+
+{% endblock %}

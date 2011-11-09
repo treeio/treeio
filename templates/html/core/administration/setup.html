@@ -1,0 +1,46 @@
+{% extends "html/core/page.html" %}
+
+{% block title %}{% trans %}Setup{% endtrans %} | {% trans %}Administration{% endtrans %}{% endblock %}
+
+{% block class_setup %}sidebar-link-active{% endblock %}
+
+{% block module_title %}{% trans %}Setup Guide{% endtrans %}{% endblock %}
+
+{% block module_topmenu %}{% endblock %}
+
+{% block module_content %}
+<div class="hint_box">
+    <div class="hint_content">
+    <img class="left" src="/static/icons/hints/admin.gif"/>
+    <div class="hint_message">
+        <span class="hint_title">{% trans %}Quick Setup Guide{% endtrans %}.</span>
+        <h3>{% trans %}Start off in three easy steps{% endtrans %}</h3>
+    </div>
+    </div>
+</div>
+
+<form method="post" action="{% url core_setup %}">
+{% for module in modules if module.major %}
+    <div class="setup-module-box {% if module.display %}setup-module-box-active{% endif %} setup-module-{{ module.name|replace('.', '-') }}">
+        <div class="hidejs">
+            <input type="checkbox" name="{{ module.name }}" id="module-{{ module.name|replace('.', '-') }}" {% if module.display %}checked="checked"{% endif %} />
+        </div>
+        <label for="module-{{ module.name|replace('.', '-') }}">
+            {{ module }}
+        </label>
+    </div>
+{% endfor %}
+<hr size="1" />
+{% for module in modules if not module.major %}
+    <div class="setup-module-box {% if module.display %}setup-module-box-active{% endif %} setup-module-{{ module.name|replace('.', '-') }}">
+        <div class="hidejs">
+            <input type="checkbox" name="{{ module.name }}" id="module-{{ module.name|replace('.', '-') }}" {% if module.display %}checked="checked"{% endif %} />
+        </div>
+        <label for="module-{{ module.name|replace('.', '-') }}">
+            {{ module }}
+        </label>
+    </div>
+{% endfor %}
+</form>
+
+{% endblock %}

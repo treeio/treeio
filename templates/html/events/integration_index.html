@@ -1,0 +1,129 @@
+{% extends "html/events/page.html" %}
+
+{% block title %}{% trans %}Events{% endtrans %} | {% trans %}Calendar{% endtrans %}{% endblock %}
+
+{% block module_title %}{% trans %}Calendar{% endtrans %}{% endblock %}
+{% block module_subtitle %}{% trans %}Integration{% endtrans %}{% endblock %}
+
+{% block class_integration %}sidebar-link-active{% endblock %}
+
+{% block module_topmenu %}
+{#<a href="{% url events_integration_add resource.id %}" class="top-menu add-link">{% trans %}Add Resource{% endtrans %}</a>#}
+{% endblock %}
+
+{% block module_content %}
+
+<script type="text/javascript">
+    var nuvius_profile_url = "{{ nuvius_profile_url(services='35rw') }}";
+    var nuvius_profile_check_url = "{% url nuvius_profile_check %}";
+    var nuvius_base_url = "{{ nuvius_base_url() }}";
+</script>
+{% if message %}
+<div class="notification notify-{{ message['type'] }}">
+    <div class="notification-head">
+        {{ message['title'] }}
+    </div>
+    <div class="notification-body">
+        {{ message['text'] }}
+        <br />
+        <br />
+    </div>
+</div>
+{% endif %}
+
+{{ show_hint('events') }}
+
+<div class="content-label-head">
+    {% trans %}Active Resources{% endtrans %}:
+</div>
+{% if active_resources %}
+{% for res in active_resources %}
+<div class="content-list-item content-list-item-{{ loop.cycle('odd', 'even') }}">
+    <div class="content-list-tick">
+    </div>
+    <span class="content-list-item-name">
+        {% set resource = res.loads() %}
+        <a href="{% url events_integration_view res.id %}">{{ resource.resource_name }}</a>
+    </span>
+    <span class="content-list-item-group">
+    </span>
+    <span class="content-list-item-actions">
+        <a href="{% url events_integration_view res.id %}" class="inline-link delete-link">{% trans %}Disconnect{% endtrans %}</a>
+    </span>
+</div>
+{% endfor %}
+<br />
+<div class="spaced-h large">
+    <form action='{% url events_integration_sync %}' method='post'>
+	{% csrf_token %}
+        <input type='submit' name='sync' value='{% trans %}Update Now{% endtrans %}' />
+    </form>
+</div>
+{% else %}
+<div class="content-list-item spaced-h spaced-v">
+    <em>{% trans %}None{% endtrans %}</em>
+</div>
+{% endif %}
+<br />
+<br />
+
+<div class="content-label-head">
+    {% trans %}Available Resources{% endtrans %}:
+</div>
+{% if profile %}
+{% if available_resources %}
+{% for resource in available_resources %}
+<div class="content-list-item content-list-item-{{ loop.cycle('odd', 'even') }}">
+    <div class="content-list-tick">
+    </div>
+    <span class="content-list-item-name">
+        <a href="{% url events_integration_add resource.id.raw %}">{{ resource.name }}</a>
+    </span>
+    <span class="content-list-item-group">
+    </span>
+    <span class="content-list-item-actions">
+        <a href="{% url events_integration_add resource.id.raw %}" class="inline-link add-link">{% trans %}Connect{% endtrans %}</a>
+    </span>
+</div>
+{% endfor %}
+{% else %}
+{% if response.data.result_name.raw == 'access' %}
+<div class="content-list-item spaced-h spaced-v">
+    <span class="heavy">Tree.io does not have access to your profile.</span>
+    <a href="javascript:treeio.nuvius.fetch_access();" class="inline-link add-link ajax-link-out">{% trans %}Grant access{% endtrans %}</a>
+</div>
+{% else %}
+<div class="content-list-item spaced-h spaced-v">
+    <em>{% trans %}None{% endtrans %}</em>
+</div>
+{% endif %}
+{% endif %}
+<br />
+<br />
+<br />
+<div class="showjs small">
+    {% trans %}Powered by{% endtrans %} <strong><a href="{{ nuvius_base_url() }}">Nuvius</a></strong>.
+    {% trans %}Your Nuvius profile is{% endtrans %}
+    <a href="{{ nuvius_base_url() }}/profile/" class="nuvius-link"  id="nuvius-username">{% if profile and profile['username'] %}{{ profile['username'] }}{% else %}Anonymous User{% endif %}</a>
+    (<a href="{% url nuvius_profile_reset %}?next={% url events_integration_index %}">{% trans %}reset{% endtrans %}</a>)
+</div>
+{% else %}
+<script type="text/javascript">
+    $( function() {
+        treeio.nuvius.fetch_profile()
+    });
+</script>
+<div class="content-list-item spaced-h spaced-v showjs">
+    {% trans %}Loading{% endtrans %}...
+</div>
+<div class="content-list-item spaced-h spaced-v hidejs">
+    {% trans %}This page requires JavaScript{% endtrans %}
+</div>
+<br />
+<br />
+<br />
+<div class="showjs small">
+    {% trans %}Powered by{% endtrans %} <strong><a href="{{ nuvius_base_url() }}">Nuvius</a></strong>.
+</div>
+{% endif %}
+{% endblock %}

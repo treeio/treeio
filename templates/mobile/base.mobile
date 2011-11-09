@@ -1,0 +1,45 @@
+<!DOCTYPE html>  
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <link rel="icon" href="/static/favicon.ico" type="image/x-icon" />
+
+    <title>Tree.io</title>
+    <meta name="description" content="{% block meta_description %} {% endblock %}" />
+    <meta name="keywords" content="{% block meta_keywords %} {% endblock %}" />
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1"> 
+	
+	<link rel="stylesheet" href="/static/mobile/jquery.mobile-1.0b3.min.css" />
+	<link rel="stylesheet" href="/static/mobile/mobile.min.css" />
+	
+	<script src="/static/mobile/jquery-1.6.2.min.js"></script>
+	<script src="/static/mobile/jquery.mobile-1.0b3.js"></script>
+    {#<script src="/static/mobile/mobile.js"></script>
+    <script src="/static/mobile/jquery.mobile.scrollview.js"></script>#}
+
+</head>
+
+<body>  
+	<div data-role="page" data-theme="c">
+	
+		<div id="header">
+		    <div id="logo-block">
+		      <a rel="external" href="/m/" class="logo"><img alt="Tree.io logo" src="{% url core_logo_image_ie %}" class="logo"></a>
+			</div>
+		</div>
+
+        <div data-role="header" data-theme="b">
+			<h1>{% block title %}{% endblock %}</h1>
+		</div>
+		
+		{% block page %}{% endblock %}
+		
+
+		<div data-role="footer" data-theme="c">
+			<a rel="external" href="/?nomobile=yes" data-role="button">{% trans %}Return to full site{% endtrans %}</a>
+			<a rel=external href="/m{% url user_logout %}">{% trans %}Log out{% endtrans %}</a>
+		</div>
+
+	</div>
+</body>
+</html>

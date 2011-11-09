@@ -1,0 +1,26 @@
+{% extends "mobile/services/page.mobile" %}
+
+{% block title %}{% trans %}Service Catalogue{% endtrans %} | {% trans %}Service Support{% endtrans %}{% endblock %}
+
+{% block class_service_catalogue %}sidebar-link-active{% endblock %}
+
+{% block module_title %}{% trans %}Service Catalogue{% endtrans %}{% endblock %}
+
+{% block module_topmenu %}
+{% if user.get_profile().is_admin('treeio.services') %}
+<a href="{% url services_service_add %}" class="top-menu add-link">{% trans %}New Service{% endtrans %}</a>
+{% endif %}
+{% endblock %}
+
+{% block sidebar_right %}
+{% endblock %}
+
+{% block module_content %}
+
+{% if services %}
+  {{ services_service_list(services) }}
+{% else %}
+  {{ show_hint('service_catalogue') }}
+{% endif %}
+
+{% endblock %}

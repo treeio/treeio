@@ -1,0 +1,5 @@
+name,details,start,end
+{% for event in events %}{% if event.name %}{{event.name|replace(',','')|replace('"','')|replace('
+','')|safe}},{% else %},{% endif %}{% if event.details %}{{event.details|replace(',','')|replace('\n', '').replace('\r', '').replace('"', '\"')|replace('
+','')|safe}},{% else %},{% endif %}{% if event.start %}{{event.start.strftime("%d %B %Y, %H:%M")}},{% else %},{% endif %}{% if event.end %}{{event.end.strftime("%d %B %Y, %H:%M")}}{% else %},{% endif %}
+{% endfor %}

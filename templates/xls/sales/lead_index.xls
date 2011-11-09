@@ -1,0 +1,10 @@
+contact,source,products_interested,contact_method,assigned,status,details
+{% for lead in leads %}{% if lead.contact %}{{lead.contact|replace(',','')|replace('"','')|replace('
+','')|safe}},{% else %},{% endif %}{% if lead.source %}{{lead.source|replace(',','')|replace('"','')|replace('
+','')|safe}},{% else %},{% endif %}{% if lead.products_interested %}{% for x in lead.products_interested.all() %}{{x|replace(',','')|replace('"','')|replace('
+','')|safe}};{% endfor %},{% endif %}{% if lead.contact_method %}{{lead.contact_method|replace(',','')|replace('"','')|replace('
+','')|safe}},{% else %},{% endif %}{% if lead.assigned %}{% for x in lead.assigned.all() %}{{x|replace(',','')|replace('"','')|replace('
+','')|safe}};{% endfor %},{% endif %}{% if lead.status %}{{lead.status|replace(',','')|replace('"','')|replace('
+','')|safe}},{% else %},{% endif %}{% if lead.details %}{{lead.details|replace(',','')|replace('\n', '').replace('\r', '').replace('"', '\"')|replace('
+','')|safe}}{% else %},{% endif %}
+{% endfor %}

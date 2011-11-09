@@ -1,0 +1,12 @@
+reference,datetime,client,opportunity,payment,source,assigned,status,details
+{% for saleorder in orders %}{% if saleorder.reference %}{{saleorder.reference|replace(',','')|replace('"','')|replace('
+','')|safe}},{% else %},{% endif %}{% if saleorder.datetime %}{{saleorder.datetime|replace(',','')|replace('"','')|replace('
+','')|safe}},{% else %},{% endif %}{% if saleorder.client %}{{saleorder.client|replace(',','')|replace('"','')|replace('
+','')|safe}},{% else %},{% endif %}{% if saleorder.opportunity %}{{saleorder.opportunity|replace(',','')|replace('"','')|replace('
+','')|safe}},{% else %},{% endif %}{% if saleorder.payment %}{{saleorder.payment|replace(',','')|replace('"','')|replace('
+','')|safe}},{% else %},{% endif %}{% if saleorder.source %}{{saleorder.source|replace(',','')|replace('"','')|replace('
+','')|safe}},{% else %},{% endif %}{% if saleorder.assigned %}{% for x in saleorder.assigned.all() %}{{x|replace(',','')|replace('"','')|replace('
+','')|safe}};{% endfor %},{% endif %}{% if saleorder.status %}{{saleorder.status|replace(',','')|replace('"','')|replace('
+','')|safe}},{% else %},{% endif %}{% if saleorder.details %}{{saleorder.details|replace(',','')|replace('\n', '').replace('\r', '').replace('"', '\"')|replace('
+','')|safe}}{% else %},{% endif %}
+{% endfor %}

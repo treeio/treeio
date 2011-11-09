@@ -1,0 +1,36 @@
+{% extends "mobile/messaging/page.mobile" %}
+
+{% block title %}{% trans %}Inbox{% endtrans %} | {% trans %}Messaging{% endtrans %}{% endblock %}
+
+{% block index_inbox %}sidebar-link-active{% endblock %}
+
+{% block module_subtitle %}{% trans %}Inbox{% endtrans %}{% endblock %}
+
+{% block sidebar_right %}
+{% endblock %}
+
+{% block module_content %}
+
+{% if messages %}
+
+<form action="" method="post">
+{% csrf_token %}
+    <ul class="mass-form">
+        <input type="hidden" name="massform" value="massform" />
+        <input type="checkbox" name="mass-unclassified" value="unclassified" class="group-control" />
+        {{ massform.as_ul()|htsafe }}
+        <li>
+            <input type="submit" value="{% trans %}Save{% endtrans %}" />
+        </li>
+    </ul>
+    {{ messaging_message_list(paginate(messages)) }}
+
+    {{ pager(messages) }}
+</form>
+{% else %}
+<div class="content-list-item spaced-v spaced-h lighter">
+    <em>{% trans %}No Messages{% endtrans %}</em>.
+</div>
+{% endif %}
+	
+{% endblock %}

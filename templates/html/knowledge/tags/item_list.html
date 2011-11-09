@@ -1,0 +1,22 @@
+{% for item in items %}
+<div class="content-list-item content-list-item-{{ loop.cycle('odd', 'even') }}">
+    <div class="content-list-tick">
+        <input type="checkbox" name="mass-item-{{ item.id }}" value="{{ item.id }}" class="group-mass-unclassified" />
+    </div>
+    <span class="content-list-item-name">
+        <a href="{% url knowledge_item_view item.folder.treepath, item.treepath %}">{{ item.name|truncate(length=60) }}</a>
+        <span class="content-list-item-group">
+            {% if not skip_group == 'folder' %}
+            {%- if item.folder %}
+            <a href="{% url knowledge_folder_view item.folder.treepath %}" class="group-link">{{ item.folder }}</a>
+            {%- endif %}
+            {% endif %}
+        </span>
+    </span>
+    <span class="content-list-item-actions">
+        {% if user.get_profile().has_permission(item, mode='w') %}
+        <a href="{% url knowledge_item_edit item.id %}" class="inline-link edit-link">{% trans %}Edit{% endtrans %}</a>
+        {% endif %}
+    </span>
+</div>
+{% endfor %}

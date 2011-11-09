@@ -1,0 +1,20 @@
+{% extends "html/base_widget.html" %}
+
+{% block widget_title %}{% trans %}New messages{% endtrans %}{% endblock %}
+
+{% block widget_content %}
+
+{% if messages %}
+<div style="overflow: hidden;">
+{{ messaging_message_list(messages, nomass=True) }}
+</div>
+{% else %}
+<div class="content-list-item">
+  <div class="spaced-h spaced-v">
+    <em>{% trans %}No new messages{% endtrans %}</em>.
+    <a href="{% url messaging_message_compose %}" class="popup-link"><strong>{% trans %}Compose a Message{% endtrans %}</strong></a>
+  </div>
+</div>
+{% endif %}
+
+{% endblock %}

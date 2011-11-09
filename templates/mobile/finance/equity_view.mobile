@@ -1,0 +1,54 @@
+{% extends "mobile/finance/page.mobile" %}
+
+{% block title %}{{ equity|htsafe }} | {% trans %}Equity{% endtrans %} | {% trans %}Finance{% endtrans %}{% endblock %}
+
+{% block module_title %}{{ equity }}{% endblock %}
+{% block module_subtitle %}{% trans %}Equity{% endtrans %}{% endblock %}
+
+{% block module_topmenu %}
+<a class="top-menu view-link-active" href="{% url finance_equity_view equity.id %}">{% trans %}View{% endtrans %}</a>
+<a class="top-menu edit-link" href="{% url finance_equity_edit equity.id %}">{% trans %}Edit{% endtrans %}</a>
+<a class="top-menu delete-link" href="{% url finance_equity_delete equity.id %}">{% trans %}Delete{% endtrans %}</a>
+{% endblock %}
+
+{% block sidebar_right %}
+{% endblock %}
+
+{% block module_content %}
+
+<span class="content-label">{% trans %}Equity Type{% endtrans %}:</span>
+<span class="content-value">
+    {{ equity.equity_type|title() }}
+</span>
+<div>
+    <span class="content-label">{% trans %}Issue Price{% endtrans %}:</span>
+    <span class="content-value">{{ equity.issue_price|number_format|currency_format }}</span>
+</div>
+<div>
+    <span class="content-label">{% trans %}Sell Price{% endtrans %}:</span>
+    <span class="content-value">{{ equity.sell_price|number_format|currency_format }}</span>
+</div>
+<div>
+    <span class="content-label">{% trans %}Purchase Date{% endtrans %}:</span>
+    <span class="content-value">{{ equity.purchase_date|htdate }}</span>
+</div>
+<div>
+    <span class="content-label">{% trans %}Quantity{% endtrans %}:</span>
+    <span class="content-value">{{ equity.amount }}</span>
+</div>
+<div>
+    <span class="content-label">{% trans %}Issuer{% endtrans %}:</span>
+    <span class="content-value"><a href="{% url identities_contact_view equity.issuer.id %}" class="popup-link">{{ equity.issuer }}</a></span>
+</div>
+<div>
+    <span class="content-label">{% trans %}Owner{% endtrans %}:</span>
+    <span class="content-value"><a href="{% url identities_contact_view equity.owner.id %}" class="popup-link">{{ equity.owner }}</a></span>
+</div>
+{% if equity.details %}
+<div>
+    <span class="content-label">{% trans %}Details{% endtrans %}:</span>
+    <span class="content-details">{{ equity.details|htsafe }}</span>
+</div>
+{% endif %}
+
+{% endblock %}

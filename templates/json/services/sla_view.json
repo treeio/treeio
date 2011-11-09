@@ -1,0 +1,49 @@
+{% extends "json/services/page.json" %}
+{% block module_content %}
+   {"sla":
+         {
+          "id": {{ sla.id }},
+          "url": "http://{{ site_domain }}{% url services_sla_view sla.id %}",
+          "name": "{{ sla }}",
+          "service": {
+                      "id": {{ sla.service_id }},
+                      "url": "http://{{ site_domain }}{% url services_service_view sla.service_id %}",
+                      "name": "{{ sla.service }}"
+                     },
+          {% if sla.client -%}
+          "client": {
+                     "id": {{ sla.client_id }},
+                     "url": "http://{{ site_domain }}{% url identities_contact_view sla.client_id %}",
+                     "name": "{{ sla.client }}"
+                    },
+          {% else -%}
+          "client": null,
+          {% endif -%}
+          "provider": {
+                       "id": {{ sla.provider_id }},
+                       "url": "http://{{ site_domain }}{% url identities_contact_view sla.provider_id %}",
+                       "name": ""
+                      },
+          {% if sla.response_time -%}
+          "response_time": {{ sla.response_time }},
+          {% else -%}
+          "response_time": null,
+          {% endif -%}
+          {% if sla.uptime_rate -%}
+          "uptime_rate": {{ sla.uptime_rate }},
+          {% else -%}
+          "uptime_rate": null,
+          {% endif -%}
+          {% if sla.available_from -%}
+          "available_from": "{{ sla.available_from }}",
+          {% else -%}
+          "available_from": null
+          {% endif -%}
+          {% if sla.available_to -%}
+          "available_to": "{{ sla.available_to }}"
+          {% else -%}
+          "available_to": null,
+          {% endif -%}
+         }
+   }
+{%- endblock %}

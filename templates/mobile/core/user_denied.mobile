@@ -1,0 +1,27 @@
+{% extends "mobile/base.mobile" %}
+
+{% block page %}
+
+{% if user.username %}
+{{ modules_header_block() }}
+{% endif %}
+
+<div id="container">
+    <div id="content">
+        <!-- module_content -->
+        <div class="module-block">
+          <div class="module-content-inner">
+            <!-- module_content_inner -->
+            {{ show_hint('user_denied') }}
+            {% if message %}
+            <p>
+                {{ message }}
+            </p>
+            {% endif %}
+            <!-- /module_content_inner -->
+          </div>
+        </div>
+        <!-- /module_content -->
+    </div>
+</div>
+{% endblock %}

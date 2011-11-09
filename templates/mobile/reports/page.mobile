@@ -1,0 +1,54 @@
+{% extends "mobile/page.mobile" %}
+
+{% block title %}{% trans %}Reports{% endtrans %}{% endblock %}
+
+{% block content %}
+
+<div data-role="collapsible" data-collapsed="true" data-theme="a">
+<h3>{% trans %}Menu{% endtrans %}</h3>
+
+<div class="module-sidebar">
+		{% block reports %}
+        <a href="{% url reports %}" class="sidebar-link {% block index_page %}{% endblock %}">{% trans %}All Reports{% endtrans %}</a>
+        <a href="{% url reports_index_owned %}" class="sidebar-link {% block index_owned %}{% endblock %}">{% trans %}Owned by me{% endtrans %}</a>
+        {% endblock %}
+		
+</div>
+</div>
+
+<div class="module-content">
+	
+	<div class="module-content-fill">
+	
+		<div class="title-block">
+
+                <div class="title">
+                    {% block module_title %}{% trans %}Reports{% endtrans %}{% endblock %}
+                </div>
+                <div class="subtitle-block">
+                    {% block module_subtitle %}{% endblock %}
+                </div>
+                <div class="module-top-menu-inline">
+                    {% block module_topmenu %}
+                    {% endblock %}
+                </div>
+                {{ help_link() }}
+
+            </div>
+			<div class="module-content-inner">
+			<!-- module_content_inner -->
+			{% block module_content %}{% endblock %}
+			<!-- /module_content_inner -->
+			</div>
+			
+			<div class="module-sidebar-right">
+			{% block sidebar_right %}{% endblock %}
+			</div>
+
+	</div>
+
+</div>
+
+<div class="clear"></div>
+
+{% endblock %}

@@ -1,0 +1,23 @@
+{% extends "json/documents/page.json" %}
+{% block module_content %}
+
+	{
+	"files":
+		[
+		{% for file in files %}
+			{
+			"id": {{ file.id }},
+			"url": "http://{{ site_domain }}{% url documents_file_view file.id %}",
+			"name": "{{ file }}",
+			"folder": "{{ file.folder }}"
+			{% if loop.last -%}
+		    }
+		    {% else -%}
+		    },
+		    {% endif -%}
+		{% endfor %}
+		]
+	}
+{% endblock %}
+
+		

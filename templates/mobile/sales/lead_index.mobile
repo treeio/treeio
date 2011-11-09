@@ -1,0 +1,42 @@
+{% extends "mobile/sales/page.mobile" %}
+
+{% block title %}{% trans %}Leads{% endtrans %} | {% trans %}Sales{% endtrans %}{% endblock %}
+
+{% block class_lead_index %}sidebar-link-active{% endblock %}
+
+{% block module_title %}{% trans %}Leads{% endtrans %}{% endblock %}
+
+{% block module_topmenu %}
+	<a href="{% url sales_lead_add %}" class="top-menu add-link">{% trans %}New Lead{% endtrans %}</a>
+{% endblock %}
+
+{% block sidebar_right %}
+{% endblock %}
+
+{% block module_content %}
+
+{% if leads %} 
+
+<form action="" method="post">
+{% csrf_token %}
+	<div class="clear">
+		<span class="content-label-head">
+            <ul class="mass-form">
+                <input type="checkbox" name="mass-leads" class="group-control" {% if not leads %}disabled="true"{% endif %} />
+                <input type="hidden" name="massform" value="massform" />
+                <em>{% trans %}With selected{% endtrans %}</em>: {{ massform.as_ul()|htsafe }}
+                <li><input type="submit" value="Save" /></li>
+            </ul>
+        </span>
+	</div>
+
+    {{ sales_lead_list(paginate(htsort(leads))) }}
+    {{ pager(htsort(leads)) }}
+	
+	</form>
+	
+    {% else %}
+    {{ show_hint('sales_leads') }}
+    {% endif %}
+	
+{% endblock %}

@@ -1,0 +1,79 @@
+{% for record in updates %}
+<div class="news-record news-record-type-{{ record.record_type }}">
+    <div class="contact-picture-frame news-record-author news-record-author-{{ record.record_type }}">
+    {% if record.author %}
+      {% set contact = record.author.get_contact() %}
+      {% if contact %}
+        {% set picture = contact.get_picture() %}
+        <a href="{% url identities_contact_view contact.id %}" class="popup-link"><img class="contact-picture left" src="{{ picture|htsafe }}" alt="" /></a>
+      {% else %}
+        <a href="{% url identities_user_view record.author.id %}" class="popup-link"><img class="contact-picture left" src="/static/messaging/pic.png" alt="" /></a>
+      {% endif %}
+    {% elif record.sender and record.sender.object_type == 'treeio.identities.models.Contact' %}
+      {% set contact = record.sender.get_related_object() %}
+      {% if contact %}
+        {% set picture = contact.get_picture() %}
+        <a href="{% url identities_contact_view contact.id %}" class="popup-link"><img class="contact-picture left" src="{{ picture|htsafe }}" alt="" /></a>
+      {% endif %}
+    {% endif %}
+    </div>
+    <div class="news-record-label">
+        <span class="news-record-author news-record-author-{{ record.record_type }}">
+          {% if record.author %}
+          <a href="{% url identities_user_view record.author.id %}" class="popup-link">{{ record.author }}</a>
+          {% elif record.sender %}
+          {% set sender = record.sender.get_related_object() %}
+          {% if sender %}
+          <a href="{{ sender.get_absolute_url() }}" class="popup-link">{{ sender }}</a>
+          {% endif %}
+          {% endif %}
+        </span>
+        &nbsp;&middot;&nbsp;
+        <span class="small">
+        {% set about = record.about.all() %}
+        {% if about %}
+          {% for object in about %}
+            {% set related = object.get_related_object() %}
+            {% if related %}
+              <img class="news-icon" src="/static/icons/news/{{ related.get_object_module()|lower }}.gif" alt="" />
+              {% set url = object.get_absolute_url() %}
+              {% if url %}
+              <a href="{{ url }}" class="popup-link">{{ object.get_human_type() }}: {{ object }}</a>
+              {% else %}
+              {{ object }}
+              {% endif %}
+              {% if not loop.last %},{% endif %}
+            {% endif %}
+          {% endfor %}
+        {% else %}
+        <img class="news-icon" src="/static/icons/news/status.gif" alt="" />
+        {% endif %}
+        </span>
+        {% if record.record_type != 'manual' and record.record_type != 'share' %}
+        <span class="news-record-inline news-record-body-{{ record.record_type }}">
+        {{ record.get_full_message()|htsafe }}
+        </span>
+        {% endif %}
+    </div>
+    {% if record.record_type == 'manual' or record.record_type == 'share' %}
+    <div class="news-record-body news-record-body-{{ record.record_type }}">
+        {{ record.body|htsafe|urlize }}
+    </div>
+    {% endif %}
+  
+    <div class="news-record-details">
+		<div class="div_container">
+	  		<div class="comments">
+				<span class="lighter small">{{ record.date_created|humanize_datetime }}</span>
+        		&nbsp;&nbsp;
+		       	{{ comments_likes(record) }}
+			</div>
+	  		<div class="attachments">
+		       	{{ attachments(record) }}
+			</div>
+			<hr class="space"/>
+		</div>
+    </div>
+
+</div>
+{% endfor %}

@@ -1,0 +1,8 @@
+<ul data-role="listview" data-inset="true" data-theme="c">
+{% for group in groups %}
+<li>
+{% set contact = group.get_contact() %}
+	<a href="{% url core_admin_group_view group.id %}">{{ group }}</a>
+</li>
+{% endfor %}
+</ul>

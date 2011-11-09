@@ -1,0 +1,94 @@
+{% extends "html/infrastructure/page.html" %}
+
+{% block title %}{% trans %}Service Record View{% endtrans %} | {% trans %}Infrastructure{% endtrans %}{% endblock %}
+
+{% block class_index %}sidebar-link-active{% endblock %}
+
+{% block module_title %}{{ service_record }}{% endblock %}
+{% block module_subtitle %}{% trans %}Service Record{% endtrans %}{% endblock %}
+
+{% block sidebar_right %}
+
+<span class="sidebar-header-first">{% trans %}Export to{% endtrans %}
+    {% if '?' in request.get_full_path() %}<a href="{{ request.get_full_path()|replace('.ajax','').replace('?','.csv?') }}"{% else %}<a href="{{ request.get_full_path()|replace('.ajax','') }}.csv"{% endif %} target="_self">CSV</a>,
+    {% if '?' in request.get_full_path() %}<a href="{{ request.get_full_path()|replace('.ajax','').replace('?','.xls?') }}"{% else %}<a href="{{ request.get_full_path()|replace('.ajax','') }}.xls"{% endif %} target="_self">XLS</a></span>
+{% endblock %}
+
+{% block module_topmenu %}
+<a href="{% url infrastructure_service_record_view  service_record.id %}" class="top-menu view-link-active">{% trans %}View{% endtrans %}</a>
+<a href="{% url infrastructure_service_record_edit service_record.id %}" class="top-menu edit-link">{% trans %}Edit{% endtrans %}</a>
+<a href="{% url infrastructure_service_record_delete service_record.id %}" class="top-menu delete-link">{% trans %}Delete{% endtrans %}</a>
+{% endblock %}
+
+{% block module_content %}
+
+{% if service_record.supplier %}
+<div>
+    <span class="content-label">{% trans %}Supplier{% endtrans %}:</span>
+    <span class="content-value"><a href="{% url identities_contact_view service_record.supplier_id %}" class="popup-link">{{ service_record.supplier }}</a></span>
+</div>
+{% endif %}
+
+{% if service_record.start_date %}
+<div>
+    <span class="content-label">{% trans %}Start Date{% endtrans %}:</span>
+    <span class="content-value">{{ service_record.start_date.strftime("%Y %b %d, %H:%M") }}</span>
+</div>
+{% endif %}
+
+{% if service_record.expiry_date %}
+<div>
+    <span class="content-label">{% trans %}Expiry Date{% endtrans %}:</span>
+    <span class="content-value">{{ service_record.expiry_date.strftime("%Y %b %d, %H:%M") }}</span>
+</div>
+{% endif %}
+
+{% if service_record.items %}
+<div>
+    <span class="content-label">{% trans %}Items Covered{% endtrans %}:</span>
+    <span class="content-value">
+        {% for item in service_record.items.all() %}
+        <a href="{% url infrastructure_item_view item.id %}">{{ item }}</a>
+        <br />
+        {% endfor %}
+    </span>
+    {% else %}
+    <span class="content-value">
+        {% trans %}No items covered{% endtrans %}.
+        <br />
+    </span>
+</div>
+{% endif %}
+
+{% if service_record.details %}
+<div>
+    <span class="content-label-head">{% trans %}Details{% endtrans %}:</span>
+    <span class="content-details">{{ service_record.details|htsafe }}</span>
+</div>
+{% endif %}
+
+{% if service_record.payments %}
+<br />
+<div>
+    <span class="content-label-head">
+        {% trans %}Payment History{% endtrans %}:
+    </span>
+    {% for payment in service_record.payments.all() %}
+
+    <div class="content-list-item content-list-item-{{ loop.cycle('odd', 'even') }}" title="{{ payment }}">
+        <div class="content-list-tick">
+        </div>
+        <span class="content-list-item-name">
+            <a href="{% url finance_transaction_view payment.id %}" class="popup-link">{{ payment.name }}</a> |
+            {{ payment.datetime }}
+            <span class="content-list-item-group">
+                {{ payment.value }}
+            </span>
+        </span>
+    </div>
+    {% endfor %}
+</div>
+
+{% endif %}
+
+{% endblock %}

@@ -1,0 +1,69 @@
+{% extends "html/finance/page.html" %}
+
+{% block title %}{% trans %}Assets{% endtrans %} | {% trans %}Finance{% endtrans %}{% endblock %}
+
+{% block module_title %}{% trans %}Assets{% endtrans %}{% endblock %}
+
+{% block class_assets %}sidebar-link-active{% endblock %}
+
+{% block module_topmenu %}
+<a class="top-menu add-link" href="{% url finance_asset_add %}">{% trans %}New Asset{% endtrans %}</a>
+<a href="{% url core_trash %}" class="top-menu trash-link {% if trash %}trash-full-link{% endif %}">{% trans %}Trash{% endtrans %}</a>
+{% endblock %}
+
+{% block sidebar_right %}
+
+<span class="sidebar-header-first">{% trans %}Filter by{% endtrans %}</span>
+<form action="" method="get" class="content-filter-form">
+    <ul class="content-filter-form-fields">
+        {{ filters.as_ul()|htsafe }}
+    </ul>
+    <input type="submit" value="{% trans %}Submit{% endtrans %}">
+</form>
+<br />
+
+<span class="sidebar-header-right">{% trans %}Download as:{% endtrans %}<br />{% if '?' in request.get_full_path() %}<a class="pdf-block-link" href="{{ request.get_full_path()|replace('.ajax','').replace('?','.pdf?') }}"{% else %}<a class="pdf-block-link" href="{{ request.get_full_path()|replace('.ajax','') }}.pdf"{% endif %} target="_self">PDF</a>
+  <a class="csv-block-link" {% if '?' in request.get_full_path() %}href="{{ request.get_full_path()|replace('.ajax','').replace('?','.csv?') }}"{% else %}href="{{ request.get_full_path()|replace('.ajax','') }}.csv"{% endif %} target="_self">CSV</a></span></span>
+{% endblock %}
+
+{% block module_content %}
+
+{% if assets %}
+
+<table id="finance_table">
+
+    <!-- Table header -->
+
+    <thead>
+        <tr>
+            <th scope="col">{% trans %}Name{% endtrans %}</th>
+            <th scope="col">{% trans %}Purchase Date{% endtrans %}</th>
+            <th scope="col">{% trans %}Type{% endtrans %}</th>
+            <th scope="col">{% trans %}Owner{% endtrans %}</th>
+            <th scope="col">{% trans %}Value in {% endtrans %}{{ currency_print() }}</th>
+            <th scope="col">{% trans %}Depreciation{% endtrans %}</th>
+        </tr>
+    </thead>
+    <!-- Table body -->
+
+    <tbody>
+        {% for asset in paginate(assets) %}
+
+        <tr class="content-list-item-{{ loop.cycle('odd', 'even') }}">
+            <td><a href="{% url finance_asset_view asset.id %}">{{ asset.name|truncate(length=60) }}</a></td>
+            <td>{{ asset.purchase_date|htdate }}</td>
+            <td>{{ asset.asset_type|title() }}</td>
+            <td><a href="{% url identities_contact_view asset.owner_id %}" class="popup-link">{{ asset.owner }}</a></td>
+            <td>{{ asset.current_value|number_format }}</td>
+            <td>{% if asset.get_depreciation() %}{{ asset.get_depreciation()|currency_format }}{% else %}None{% endif %}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{{ pager(assets) }}
+
+{% else %}
+{{ show_hint('finance_assets') }}
+{% endif %}
+
+{% endblock %}

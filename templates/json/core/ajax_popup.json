@@ -1,0 +1,7 @@
+{"popup": {
+    "popup_id": "{{ popup_id }}",
+    "url": "{{ url }}",
+    "title": "{{ title|htsafe }}",
+    "subtitle": "{{ subtitle|htsafe }}",
+    "content": "{{ content|safe }}"}
+}

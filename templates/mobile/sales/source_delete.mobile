@@ -1,0 +1,79 @@
+{% extends "mobile/sales/page.mobile" %}
+
+{% block title %}{% trans %}Sales{% endtrans %}{% endblock %}
+
+{% block module_title %}{{ source }}{% endblock %}
+
+{% block module_subtitle %}{% trans %}Delete Source{% endtrans %}{% endblock %}
+
+{% block module_topmenu %}
+<a href="{% url sales_source_add %}" class="top-menu add-link">{% trans %}New Source{% endtrans %}</a>
+<a href="{% url sales_source_view source.id %}" class="top-menu view-link">{% trans %}View{% endtrans %}</a>
+<a href="{% url sales_source_edit source.id %}" class="top-menu edit-link">{% trans %}Edit{% endtrans %}</a>
+<a href="{% url sales_source_delete source.id %}" class="top-menu delete-link-active">{% trans %}Delete{% endtrans %}</a>
+{% endblock %}
+
+{% block sale_order_sources %}
+{% if sources %}
+<span class="sidebar-header">{% trans %}By Status{% endtrans %}</span>
+{% for isource in sources %}
+<a href="{% url sales_source_view isource.id %}" class="sidebar-link {% if isource == source %}sidebar-link-active{% endif %}">{{ isource }}</a>
+{% endfor %}
+{% endif %}
+{% endblock %}
+
+{% block sidebar_right %}
+{% endblock %}
+
+{% block module_content %}
+
+<div>
+    <span class="larger">{% trans %}Delete this Source?{% endtrans %}</span>
+    <br />
+    <form action="" method="post" class="content-form">
+{% csrf_token %}
+        <ul class="content-form-fields">
+            <li>
+                <label for="trash">
+                    <input id="trash" type="checkbox" name="trash" checked="checked" />
+                    {% trans %}Move to Trash{% endtrans %}
+                </label>
+            </li>
+            <li class="ui-grid-a">
+            <div class="ui-block-a">
+                <input data-theme="b" type="submit" name="delete" value="{% trans %}Yes, Delete{% endtrans %}" style="font-weight: 700;" />&nbsp;&nbsp;
+            </div>
+            <div class="ui-block-b">
+                <input type="submit" name="cancel" value="{% trans %}Cancel{% endtrans %}" class="cancel" />
+            </div>
+            </li>
+        </ul>
+    </form>
+</div>
+<div>
+    <span class="content-label">{% trans %}Active{% endtrans %}:</span>
+    <span class="content-value">{% if source.active %}{% trans %}Yes{% endtrans %}{% else %}{% trans %}No{% endtrans %}{% endif %}</span>
+</div>
+<div>
+    <span class="content-label">{% trans %}Hidden{% endtrans %}:</span>
+    <span class="content-value">{% if source.hidden %}{% trans %}Yes{% endtrans %}{% else %}{% trans %}No{% endtrans %}{% endif %}</span>
+</div>
+{% if source.details %}
+<div>
+    <span class="content-label">{% trans %}Details{% endtrans %}:</span>
+    <span class="content-details">{{ source.details }}</span>
+</div>
+{% endif %}
+
+{% if orders %}
+<br />
+<div class="clear">
+    <span class="content-label-head">{% trans %}Orders{% endtrans %}:</span>
+</div>
+{{ sales_order_list(orders) }}
+
+{{ pager(orders) }}
+
+{% endif %}
+
+{% endblock %}

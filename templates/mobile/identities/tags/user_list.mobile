@@ -1,0 +1,15 @@
+<ul data-role="listview" data-inset="true" data-theme="c">
+	{% for user in users %}
+	<li>
+	{% set contact = user.get_contact() %}
+	<div class="content-list-item content-list-item-{{ loop.cycle('odd', 'even') }}">
+	    <div class="content-list-tick"></div>
+		<span class="content-list-item-name">
+			<a href="{% url identities_user_view user.id %}">{{ user.get_username() }}</a>
+		</span>
+		<span class="content-list-item-actions">
+		</span>
+	</div>
+	</li>
+	{% endfor %}
+</ul>

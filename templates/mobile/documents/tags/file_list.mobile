@@ -1,0 +1,14 @@
+<ul data-role="listview" data-inset="true" data-theme="c">
+{% for file in files %}
+<li>
+	<a href="{% url documents_file_view file.id %}">
+		<img class="ui-li-icon" src="/static/icons/documents/file.png"/><h3>{{ file }}</h3>
+		<p>{{ file.get_file_type() }} {% trans %}File{% endtrans %}</p>
+		
+		<p class="ui-li-aside">
+			{{ file.last_updated|humanize_datetime }}
+		</p>
+	</a>
+</li>
+{% endfor %}
+</ul>

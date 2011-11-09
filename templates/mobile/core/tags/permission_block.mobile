@@ -1,0 +1,38 @@
+{% if object.trash %}
+<div class="spaced-v spaced-h">
+    <div class="object-trash">
+        Trashed
+    </div>
+    {% if request.user.get_profile().has_permission(object, mode='w') %}
+    <div class="object-trash-links">
+        <a href="{% url core_trash_object_untrash object.id %}" class="inline-link add-link">{% trans %}Untrash{% endtrans %}</a>
+    </div>
+    {% endif %}
+    <br />
+</div>
+{% endif %}
+
+{% set viewers=object.read_access.all() %}
+{% if viewers %}
+<div class="permission-users">
+    {% trans %}Read only{% endtrans %}:<br />
+    {% for item in viewers %}
+    <a href="{{ item.get_absolute_url() }}" class="popup-link">{{ item }}</a><br />
+    {% endfor %}
+</div>
+{% endif %}
+{% set owners=object.full_access.all() %}
+{% if owners %}
+<div class="permission-users">
+    {% trans %}Full access{% endtrans %}:<br />
+    {% for item in owners %}
+    <a href="{{ item.get_absolute_url() }}" class="popup-link">{{ item }}</a><br />
+    {% endfor %}
+</div>
+{% endif %}
+
+{% if request.user.get_profile().has_permission(object, mode='w') %}
+<div class="permission-links">
+    <a href="{{ path }}?permission" class="inline-link edit-link">{% trans %}Edit{% endtrans %}</a>
+</div>
+{% endif %}

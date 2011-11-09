@@ -1,0 +1,84 @@
+{% extends "json/sales/page.json" %}
+{% block module_content %}
+    {"opportunity":
+         {
+         "name": "{{ opportunity.contact }}",
+         "url": "http://{{ site_domain }}{% url sales_opportunity_view opportunity.id %}",
+         "permissions": {{ permission_block(opportunity) }},
+         {% if opportunity.lead -%}
+         "lead": {
+                    "id": {{ opportunity.lead_id }},
+                    "url": "http://{{ site_domain }}{% url sales_lead_view opportunity.lead_id %}",
+                    "name": "{{ opportunity.lead }}"
+                   },
+         {% else -%}
+         "lead": null,
+         {% endif -%}
+		 {% if opportunity.contact -%}
+         "contact": {
+                    "id": {{ opportunity.contact_id }},
+                    "url": "http://{{ site_domain }}{% url identities_contact_view opportunity.contact_id %}",
+                    "name": "{{ opportunity.contact }}"
+                   },
+         {% else -%}
+         "contact": null,
+         {% endif -%}
+         "products_interested": [
+            {%- for product in opportunity.products_interested.all() %}
+               {
+                "id": {{ product.id }},
+                "url": "http://{{ site_domain }}{% url sales_product_view product.id %}",
+                "name": "{{ product }}"
+               {% if loop.last %}}{% else %}},{% endif %}
+            {%- endfor -%}
+         ],
+         "status": {
+                    "id": {{ opportunity.status_id }},
+                    "url": "http://{{ site_domain }}{% url sales_status_view opportunity.status_id %}",
+                    "name": "{{ opportunity.status }}"
+                   },
+         {%- if opportunity.expected_date %}
+         "expected_date": {{ opportunity.expected_date }},
+         {% else -%}
+         "expected_date": null,
+         {% endif -%}
+		 
+		 {%- if opportunity.closed_date %}
+         "closed_date": {{ opportunity.closed_date }},
+         {% else -%}
+         "closed_date": null,
+         {% endif -%}
+		 
+		 {%- if opportunity.probability %}
+         "probability": {{ opportunity.probability }},
+         {% else -%}
+         "probability": null,
+         {% endif -%}
+		 
+		 {%- if opportunity.amount %}
+         "amount": {{ opportunity.amount }},
+         {% else -%}
+         "amount": null,
+         {% endif -%}
+		 
+		 {%- if opportunity.probability and opportunity.amount %}
+         "weighted amount": {{ opportunity.amount * (opportunity.probability / 100) }},
+         {% else -%}
+         "weighted amount": null,
+         {% endif -%}
+		 
+         {% if opportunity.source -%}
+         "source": {
+                 "id": {{ opportunity.source_id }},
+                 "url": "http://{{ site_domain }}{% url sales_source_view opportunity.source_id %}",
+                 "name": "{{ opportunity.source }}"
+                },
+         {% else -%}
+         "source": null
+         {% endif -%}
+        
+         "details": "{{ opportunity.details }}"
+
+         }
+    }
+{% endblock %}

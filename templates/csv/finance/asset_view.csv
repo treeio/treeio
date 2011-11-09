@@ -1,0 +1,12 @@
+name,type,initial_value,lifetime,endlife_value,depreciation_type,depreciation_rate,depreciation,purchase_date,current_value,owner
+{% if asset.name %}{{asset.name|replace(',','')|replace('"','')|replace('
+','')|safe}},{% else %},{% endif %}{% if asset.asset_type %}{{asset.asset_type|title()|replace(',','')|replace('"','')|replace('
+','')|safe}},{% else %},{% endif %}{% if asset.initial_value %}{{asset.initial_value|replace(',','')|replace('"','')|replace('
+','')|safe}},{% else %},{% endif %}{% if asset.lifetime %}{{asset.lifetime|replace(',','')|replace('"','')|replace('
+','')|safe}},{% else %},{% endif %}{% if asset.endlife_value %}{{asset.endlife_value|replace(',','')|replace('"','')|replace('
+','')|safe}},{% else %},{% endif %}{% if asset.depreciation_type %}{{asset.depreciation_type|title()|replace(',','')|replace('"','')|replace('
+','')|safe}},{% else %},{% endif %}{% if asset.depreciation_rate %}{{asset.depreciation_rate|replace(',','')|replace('"','')|replace('
+','')|safe}},{% else %},{% endif %}{% if asset.get_depreciation() %}{{asset.get_depreciation()|replace(',','')|replace('"','')|replace('
+','')|safe}},{% else %},{% endif %}{% if asset.purchase_date %}{{asset.purchase_date|replace(',','')}},{% else %},{% endif %}{{asset.set_current_value()|replace(',','')|replace('"','')|replace('
+','')|safe}},{% if asset.owner %}{{asset.owner|replace(',','')|replace('"','')|replace('
+','')|safe}}{% else %},{% endif %}

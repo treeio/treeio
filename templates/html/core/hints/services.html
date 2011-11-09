@@ -1,0 +1,10 @@
+{% extends "html/core/hints/base.html" %}
+
+{% block hint_content %}
+<img class="left" src="/static/icons/hints/services.gif"/>
+<div class="hint_message">
+<span class="hint_title">{{ user }}, {% trans %}to get started with support{% endtrans %}:</span>
+<h3><a href="{% url services_queue_add %}" class="popup-link"><strong>{% trans %}Create a Queue{% endtrans %}</strong></a>
+<br /> - {% trans %}you can even link it to a Message Stream to get tickets automatically created from messaging!{% endtrans %}
+</div>
+{% endblock %}

@@ -1,0 +1,50 @@
+{% extends "mobile/identities/page.mobile" %}
+
+{% block title %}{{ field|htsafe }} | {% trans %}Identities{% endtrans %}{% endblock %}
+
+{% block module_title %}{{ field }}{% endblock %}
+{% block module_subtitle %}{% trans %}Identities Field{% endtrans %}{% endblock %}
+
+{% block identities_fields_sidebar -%}
+{% for ifield in fields %}
+<a href="{% url identities_field_view ifield.id %}" class="sidebar-link {% if ifield == field %}sidebar-link-active{% endif %}">{{ ifield }}</a>
+{% endfor %}
+{%- endblock %}
+
+{% block module_topmenu %}
+<a href="{% url identities_field_view field.id %}" class="top-menu view-link-active">{% trans %}View{% endtrans %}</a>
+{% if user.get_profile().has_permission(field, mode='w') %}
+<a href="{% url identities_field_edit field.id %}" class="top-menu edit-link">{% trans %}Edit{% endtrans %}</a>
+<a href="{% url identities_field_delete field.id %}" class="top-menu delete-link">{% trans %}Delete{% endtrans %}</a>
+{% endif %}
+{% endblock %}
+
+{% block module_content %}
+
+<div>
+    <span class="content-label">{% trans %}Label{% endtrans %}:</span>
+    <span class="content-value">{{ field.label }}</span>
+</div>
+<div>
+    <span class="content-label">{% trans %}Field Type{% endtrans %}:</span>
+    <span class="content-value">{{ field.field_type|title() }}</span>
+</div>
+<div>
+    <span class="content-label">{% trans %}Required{% endtrans %}:</span>
+    <span class="content-value">{{ field.required }}</span>
+</div>
+{% if field.allowed_values %}
+<div>
+    <span class="content-label">{% trans %}Allowed Values{% endtrans %}:</span>
+    <span class="content-value">{{ field.allowed_values }}</span>
+</div>
+{% endif %}
+
+{% if field.details %}
+<div>
+    <span class="content-label">{% trans %}Details{% endtrans %}:</span>
+    <span class="content-details">{{ field.details|htsafe }}</span>
+</div>
+{% endif %}
+
+{% endblock %}

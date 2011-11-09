@@ -1,0 +1,8 @@
+subscription,product,quantity,discount,order,fulfilled
+{% if ordered_product.subscription %}{{ordered_product.subscription|replace(',','')|replace('"','')|replace('
+','')|safe}},{% else %},{% endif %}{% if ordered_product.product %}{{ordered_product.product|replace(',','')|replace('"','')|replace('
+','')|safe}},{% else %},{% endif %}{% if ordered_product.quantity %}{{ordered_product.quantity|replace(',','')|replace('"','')|replace('
+','')|safe}},{% else %},{% endif %}{% if ordered_product.discount %}{{ordered_product.discount|replace(',','')|replace('"','')|replace('
+','')|safe}},{% else %},{% endif %}{% if ordered_product.order %}{{ordered_product.order|replace(',','')|replace('"','')|replace('
+','')|safe}},{% else %},{% endif %}{% if ordered_product.fulfilled %}{{ordered_product.fulfilled|replace(',','')|replace('"','')|replace('
+','')|safe}}{% else %},{% endif %}

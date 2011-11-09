@@ -1,0 +1,4 @@
+#!/bin/bash
+cd ./.ve/lib/python*/site-packages/django/
+patch -p1 < ../../../../../bin/django-related-fields.patch
+

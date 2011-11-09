@@ -1,0 +1,22 @@
+<ul data-role="listview" data-inset="true" data-theme="c" data-filter="true" data-filter-placeholder="">
+{% for g in contacts|group_by_letter %}
+<li data-role="list-divider" data-groupingtheme="d">{{g.0|upper}}</li>
+{% for contact in g.1 %}
+	<li>
+		<a href="{% url identities_contact_view contact.id %}">
+			
+			<img class="ui-li-icon" src="/static/icons/identities-active.png"/>
+	        
+			{{ contact }}
+			<p>
+				{{ contact.get_email() }}
+			</p>
+			<p class="ui-li-aside">
+				{{ contact.contact_type }}
+			</p>
+			
+		</a>
+	</li>
+{% endfor %}
+{% endfor %}
+</ul>

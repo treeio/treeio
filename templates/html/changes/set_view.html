@@ -1,0 +1,59 @@
+{% extends "html/changes/page.html" %}
+
+{% block title %}{{ changeset|htsafe }} | {% trans %}Change Sets{% endtrans %} | {% trans %}Change Control{% endtrans %}{% endblock %}
+
+{% block module_title %}{{ changeset }}{% endblock %}
+{% block module_subtitle %}{% trans %}Change Set{% endtrans %}{% endblock %}
+
+{% block module_topmenu %}
+<a href="{% url changes_set_view changeset.id %}" class="top-menu view-link-active">{% trans %}View{% endtrans %}</a>
+{% if request.user.get_profile().has_permission(changeset.object, mode='w') %}
+<a href="{% url changes_set_edit changeset.id %}" class="top-menu edit-link">{% trans %}Edit{% endtrans %}</a>
+<a href="{% url changes_set_delete changeset.id %}" class="top-menu delete-link">{% trans %}Delete{% endtrans %}</a>
+{% endif %}
+{% endblock %}
+
+{% block module_content %}
+
+<div>
+    <span class="content-label">{% trans %}Object{% endtrans %}:</span>
+    <span class="content-value">
+        {%- set url = changeset.object.get_absolute_url() -%}
+        {%- set obj_type = changeset.object.get_human_type() -%}
+        {%- if url -%}
+        <a href="{{ url }}" class="popup-link">{{ changeset.object }}{% if obj_type %} ({{ obj_type }}){% endif %}</a>
+        {%- else -%}
+        {{ changeset.object }}{% if obj_type %} ({{ obj_type }}){% endif %}
+        {%- endif -%}
+    </span>
+</div>
+<div>
+    <span class="content-label">{% trans %}Status{% endtrans %}:</span>
+    <span class="content-value"><a href="{% url changes_status_view changeset.status_id %}">{{ changeset.status }}</a></span>
+</div>
+{% if changeset.author %}
+<div>
+    <span class="content-label">{% trans %}Author{% endtrans %}:</span>
+    <span class="content-value"><a href="{% url identities_user_view changeset.author_id %}" class="popup-link">{{ changeset.author }}</a></span>
+</div>
+{% endif %}
+{% if changeset.resolved_by %}
+<div>
+    <span class="content-label">{% trans %}Resolved By{% endtrans %}:</span>
+    <span class="content-value"><a href="{% url identities_user_view changeset.resolved_by_id %}" class="popup-link">{{ changeset.resolved_by }}</a></span>
+</div>
+{% endif %}
+{% if changeset.resolved_on %}
+<div>
+    <span class="content-label">{% trans %}Resolution Date{% endtrans %}:</span>
+    <span class="content-value">{{ changeset.resolved_on }}</span>
+</div>
+{% endif %}
+{% if changeset.details %}
+<div>
+    <span class="content-label-head">{% trans %}Details{% endtrans %}:</span>
+    <span class="content-value-details">{{ changeset.details|htsafe }}</span>
+</div>
+{% endif %}
+
+{% endblock %}

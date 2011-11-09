@@ -1,0 +1,41 @@
+{% extends "mobile/sales/page.mobile" %}
+
+{% block title %}{% trans %}Opportunities{% endtrans %} | {% trans %}Sales{% endtrans %}{% endblock %}
+
+{% block class_opportunity_owned %}sidebar-link-active{% endblock %}
+
+{% block module_title %}{% trans %}Opportunities{% endtrans %}{% endblock %}
+
+{% block module_topmenu %}
+	<a href="{% url sales_opportunity_add %}" class="top-menu add-link">{% trans %}New Opportunity{% endtrans %}</a>
+{% endblock %}
+
+{% block sidebar_right %}
+{% endblock %}
+
+{% block module_content %}
+
+{% if opportunities %}
+
+<form action="" method="post">
+{% csrf_token %}
+	<div class="clear">
+		<span class="content-label-head">
+            <ul class="mass-form">
+                <input type="checkbox" name="mass-opportunities" class="group-control" {% if not opportunities %}disabled="true"{% endif %} />
+                <input type="hidden" name="massform" value="massform" />
+                <em>{% trans %}With selected{% endtrans %}</em>: {{ massform.as_ul()|htsafe }}
+                <li><input type="submit" value="Save" /></li>
+            </ul>
+        </span>
+	</div>
+	
+    {{ sales_opportunity_list(paginate(htsort(opportunities))) }}
+    {{ pager(htsort(opportunities)) }}
+	
+	</form>
+	
+{% else %}
+{{ show_hint('sales_opportunities') }}
+{% endif %}
+{% endblock %}

@@ -1,0 +1,10 @@
+{% extends "html/core/hints/base.html" %}
+
+{% block hint_content %}
+<img class="left" src="/static/icons/hints/dashboard.gif"/>
+<div class="hint_message">
+<span class="hint_title">{{ user }}, {% trans %}you can add widgets to your dashboard{% endtrans %}!</span>
+<h3><a href="{% url core_dashboard_widget_add_selected 'treeio.core', 'widget_welcome' %}"><strong>{% trans %}Add a "Quick Start" Widget{% endtrans %}</strong></a></h3>
+<br />
+</div>
+{% endblock %}

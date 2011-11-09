@@ -1,0 +1,20 @@
+{% extends "json/documents/page.json" %}
+{% block module_content %}
+
+	{
+	"document":
+		{
+			"id": {{ document.id }},
+			"url": "http://{{ site_domain }}{% url documents_document_view document.id %}",
+			"title": "{{ document }}",
+			"folder": "{{ document.folder }}",
+			{% if document.body -%}
+			"body": "{{ document.body.replace('\n', '').replace('\r', '')|htsafe }}"
+	        {% else -%}
+	        "body": null,
+	        {% endif -%}
+		}
+	}
+{% endblock %}
+
+		

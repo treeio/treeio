@@ -1,0 +1,17 @@
+{% for setting in settings %}
+<div class="content-list-item content-list-item-{{ loop.cycle('odd', 'even') }}">
+    <div class="content-list-tick">
+        <input type="checkbox" name="mass-setting-{{ setting.id }}" value="{{ setting.id }}" class="group-mass-unclassified" />
+    </div>
+    <span class="content-list-item-name">
+        <a href="{% url notification_setting_view setting.id %}">{{ setting }}</a>
+        <span class="content-list-item-group">
+        	<span class="small">{{ setting.last_datetime|humanize_datetime }}</span>
+        </span>
+        <br />
+    </span>
+    <span class="content-list-item-actions">
+        <a href="{% url notification_setting_edit setting.id %}" class="inline-link edit-link">{% trans %}Edit{% endtrans %}</a>
+    </span>
+</div>
+{% endfor %}

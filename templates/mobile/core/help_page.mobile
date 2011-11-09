@@ -1,0 +1,51 @@
+{% extends "mobile/page.mobile" %}
+
+{% block title %}{% trans %}Help{% endtrans %}{% endblock %}
+
+{% block content %}
+
+<table>
+    <tr>
+        <td class="module-sidebar">
+
+        <a href="{% url core_help_page_view %}" class="sidebar-link {% block class_help %}{% endblock %}">{% trans %}User Guide{% endtrans %}</a>
+        
+        </td>
+        <td class="module-content">
+
+        <div class="module-content-fill">
+
+            <div class="title-block">
+
+                <div class="title">
+                    {% block module_title %}{% trans %}Help{% endtrans %}{% endblock %}
+                </div>
+                <div class="subtitle-block">
+                    {% block module_subtitle %}{% endblock %}
+                </div>
+                <div class="module-top-menu-inline">
+                    {% block module_topmenu %}
+                    {% endblock %}
+                </div>
+
+            </div>
+            <table>
+
+                <tr>
+                    <td class="module-content-inner">
+                    <!-- module_content_inner -->
+                    {{ body|safe }}
+                    <!-- /module_content_inner -->
+                    </td>
+                    <td class="module-sidebar-right">
+                    {% block sidebar_right %}{% endblock %}
+                    </td>
+                </tr>
+            </table>
+        </div>
+        </td>
+    </tr>
+</table>
+<div class="clear">
+</div>
+{% endblock %}

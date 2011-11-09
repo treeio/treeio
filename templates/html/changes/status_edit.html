@@ -1,0 +1,26 @@
+{% extends "html/changes/page.html" %}
+
+{% block title %}{{ status|htsafe }} | {% trans %}Change Sets{% endtrans %} | {% trans %}Change Control{% endtrans %}{% endblock %}
+
+{% block module_title %}{{ status }}{% endblock %}
+{% block module_subtitle %}{% trans %}Change Status{% endtrans %}{% endblock %}
+
+{% block module_topmenu %}
+<a href="{% url changes_set_add %}" class="top-menu add-link">{% trans %}New Change Set{% endtrans %}</a>
+<a href="{% url changes_status_view status.id %}" class="top-menu view-link">{% trans %}View{% endtrans %}</a>
+<a href="{% url changes_status_edit status.id %}" class="top-menu edit-link-active">{% trans %}Edit{% endtrans %}</a>
+<a href="{% url changes_status_delete status.id %}" class="top-menu delete-link">{% trans %}Delete{% endtrans %}</a>
+{% endblock %}
+
+{% block module_content %}
+
+<form action="" method="post" class="content-form">
+{% csrf_token %}
+    <ul class="content-form-fields">
+        {{ form.as_ul()|htsafe }}
+    </ul>
+    <div class="content-form-submit">
+        <input type="submit" value="{% trans %}Save{% endtrans %}">
+    </div>
+</form>
+{% endblock %}

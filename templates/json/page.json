@@ -1,0 +1,6 @@
+{% extends "json/base.json" %}
+{% block page -%}
+  "module_title": "{% block module_title %}{% endblock %}",
+  "module_subtitle": "{% block module_subtitle %}{% endblock %}",
+{%- block content %}{% endblock -%}
+{%- endblock %}

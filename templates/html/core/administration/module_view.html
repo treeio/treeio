@@ -1,0 +1,78 @@
+{% extends "html/core/page.html" %}
+
+{% block title %}{{ module }} | {% trans %}Modules{% endtrans %} | {% trans %}Administration{% endtrans %}{% endblock %}
+
+{% block class_modules %}sidebar-link-active{% endblock %}
+
+{% block module_title %}{{ module }}{% endblock %}
+{% block module_subtitle %}{% trans %}Module{% endtrans %}{% endblock %}
+
+{% block module_topmenu %}
+
+<a href="{% url core_admin_module_view module.id %}" class="top-menu view-link-active">{% trans %}View{% endtrans %}</a>
+{% endblock %}
+
+{% block sidebar_right %}
+
+<span class="sidebar-header-first">{% trans %}Permissions{% endtrans %}</span>
+<div class="sidebar-block">
+    {{ permission_block(module) }}
+</div>
+<span class="sidebar-header-right">{% trans %}Links{% endtrans %}</span>
+<div class="sidebar-block">
+    {{ link_block(module) }}
+</div>
+<span class="sidebar-header-right">{% trans %}Subscribers{% endtrans %}</span>
+<div class="sidebar-block">
+    {{ subscription_block(module) }}
+</div>
+{% endblock %}
+
+{% block module_content %}
+
+<div>
+    <span class="content-label">{% trans %}Title{% endtrans %}:</span>
+    <span class="content-value">{{ module.title }}</span>
+</div>
+<div>
+    <span class="content-label">{% trans %}Name{% endtrans %}:</span>
+    <span class="content-value">{{ module.name }}</span>
+</div>
+<div>
+    <span class="content-label">{% trans %}System{% endtrans %}:</span>
+    <span class="content-value">{% if module.system %}Yes{% else %}No{% endif %}</span>
+</div>
+<div>
+    <span class="content-label">{% trans %}Display{% endtrans %}:</span>
+    <span class="content-value">{% if module.display %}Yes{% else %}No{% endif %}</span>
+</div>
+{% if module.perspective_set.count() %}
+<br />
+<div>
+    <span class="content-label-head">{% trans %}Used in Perspectives{% endtrans %}:</span>
+</div>
+{% for perspective in module.perspective_set.all() %}
+<div class="content-list-item content-list-item-{{ loop.cycle('odd', 'even') }}">
+    <div class="content-list-tick"></div>
+    <span class="content-list-item-name">
+        <a href="{% url core_admin_perspective_view perspective.id %}"><strong>{{ perspective }}</strong></a>
+        <br />
+    </span>
+    <span class="content-list-item-actions">
+        {% if user.get_profile().has_permission(perspective, mode='w') %}
+        <a href="{% url core_admin_perspective_edit perspective.id %}" class="inline-link edit-link">{% trans %}Edit{% endtrans %}</a>
+        {% endif %}
+    </span>
+</div>
+{% endfor %}
+<br />
+{% endif %}
+
+{% if module.details %}
+<div>
+    <span class="content-label">{% trans %}Details{% endtrans %}:</span>
+    <span class="content-details">{{ module.details|htsafe }}</span>
+</div>
+{% endif %}
+
+{% endblock %}

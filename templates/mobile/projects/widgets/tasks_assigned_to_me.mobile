@@ -1,0 +1,14 @@
+{% extends "mobile/base_widget.mobile" %}
+
+{% block widget_title %}{% trans %}Tasks assigned to me{% endtrans %}{% endblock %}
+
+{% block widget_content %}
+
+    {% set render_tasks = tasks.filter(assigned=request.user.get_profile()) %}
+    {% if render_tasks %}
+    {{ projects_task_list(render_tasks, None, nomass=True) }}
+	{% else %}
+	<div class="content-list-item lighter"><em>{% trans %}No Active Tasks{% endtrans %}</em></div>
+    {% endif %}
+	
+{% endblock %}

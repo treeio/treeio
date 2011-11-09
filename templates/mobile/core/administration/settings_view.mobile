@@ -1,0 +1,44 @@
+{% extends "mobile/core/page.mobile" %}
+
+{% block title %}{% trans %}Settings{% endtrans %} | {% trans %}Administration{% endtrans %}{% endblock %}
+
+{% block class_settings %}sidebar-link-active{% endblock %}
+
+{% block module_title %}{% trans %}Settings{% endtrans %}{% endblock %}
+
+{% block module_topmenu %}
+<a href="{% url core_settings_view %}" class="top-menu view-link-active">{% trans %}View{% endtrans %}</a>
+<a href="{% url core_settings_edit %}" class="top-menu edit-link">{% trans %}Edit{% endtrans %}</a>
+{% endblock %}
+
+{% block module_content %}
+
+<div>
+    <span class="content-label">{% trans %}Default Perspective{% endtrans %}:</span>
+    <span class="content-value">
+        {% if default_perspective %}
+        <a href="{% url core_admin_perspective_view default_perspective.id %}">{{ default_perspective }}</a>
+        {% endif %}
+    </span>
+</div>
+<div>
+    <span class="content-label">{% trans %}Language{% endtrans %}:</span>
+    <span class="content-value">
+        {% for code, name in all_languages %}
+        {% if code == language %}{{ name }}{% endif %}
+        {% endfor %}
+    </span>
+</div>
+<div>
+    <span class="content-label">{% trans %}Default Time Zone{% endtrans %}:</span>
+    <span class="content-value">
+        {% for zone, title in all_timezones %}
+        {% if zone == default_timezone %}{{ title }}{% endif %}
+        {% endfor %}
+    </span>
+</div>
+<div>
+    <span class="content-label">{% trans %}Logo{% endtrans %}:</span>
+    <span class="content-value">{% if logopath %}<a href="{% url core_logo_image %}" target="_blank">{{ logopath }}{% else %}{% trans %}Default{% endtrans %}{% endif %}</span>
+</div>
+{% endblock %}

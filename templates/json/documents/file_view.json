@@ -1,0 +1,15 @@
+{% extends "json/documents/page.json" %}
+{% block module_content %}
+
+	{
+	"file":
+		{
+			"id": {{ file.id }},
+			"url": "http://{{ site_domain }}{% url documents_file_view file.id %}",
+			"name": "{{ file }}",
+			"folder": "{{ file.folder }}"
+		}
+	}
+{% endblock %}
+
+		

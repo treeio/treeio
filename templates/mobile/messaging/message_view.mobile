@@ -1,0 +1,109 @@
+{% extends "mobile/messaging/page.mobile" %}
+
+{% block title %}{% trans %}Messaging{% endtrans %}{% endblock %}
+
+{% block module_title %}{{message.title|truncate(length=50)}}{% endblock %}
+
+{% block module_subtitle %}{% trans %}Message{% endtrans %}{% endblock %}
+
+{% block sidebar_right %}
+
+<span class="sidebar-header-first">{% trans %}Permissions{% endtrans %}</span>
+<div class="sidebar-block">
+    {{ permission_block(message) }}
+</div>
+<span class="sidebar-header-right">{% trans %}Links{% endtrans %}</span>
+<div class="sidebar-block">
+    {{ link_block(message) }}
+</div>
+<span class="sidebar-header-right">{% trans %}Subscribers{% endtrans %}</span>
+<div class="sidebar-block">
+    {{ subscription_block(message) }}
+</div>
+<span class="sidebar-header-right">{% trans %}Download as:{% endtrans %}<br />{% if '?' in request.get_full_path() %}<a class="pdf-block-link" href="{{ request.get_full_path()|replace('.ajax','').replace('?','.pdf?') }}"{% else %}<a class="pdf-block-link" href="{{ request.get_full_path()|replace('.ajax','') }}.pdf"{% endif %} target="_self">PDF</a>
+  </span></span>
+{% endblock %}
+
+{% block module_topmenu %}
+<a href="{% url messaging_message_view message.id %}" class="top-menu view-link-active">{% trans %}View{% endtrans %}</a>
+{% if user.get_profile().has_permission(message, mode='w') %}
+<a href="{% url messaging_message_delete message.id %}" class="top-menu delete-link">{% trans %}Delete{% endtrans %}</a>
+{% endif %}
+{% endblock %}
+
+{% block module_content %}
+
+<div class="message">
+    <div class="message-details">
+        <div class="message-bubble">
+            <a href="{% url identities_contact_view message.author.id %}" class="popup-link"><strong>{{ message.author }}</strong></a>
+            <span class="message-time">{{ message.date_created|htdatetime }}</span>
+            <p class="message-overflow">
+                <span class="ligher">{{ message.body|htsafe }}</span>
+            </p>
+            {% if user.get_profile().has_permission(message, mode='w') %}
+            <div class="message-edit">
+                <a href="{% url messaging_message_delete message.id %}">{% trans %}Delete{% endtrans %}</a> {% trans %}this message{% endtrans %}
+            </div>
+            {% endif %}
+            <span class="message-tail"></span>
+        </div>
+    </div>
+    <div class="clear">
+    </div>
+</div>
+<div class="messages-container">
+    {% for message in messages %}
+    <div class="message">
+        <div class="message-details">
+            <div class="message-bubble">
+                <a href="{% url identities_contact_view message.author.id %}" class="popup-link"><strong>{{ message.author }}</strong></a>
+                <span class="message-time">{{ message.date_created|htdatetime }}</span>
+                <br />
+                <p>
+                    <span class="ligher">{{ message.body|htsafe }}</span>
+                </p>
+                {% if user.get_profile().has_permission(message, mode='w') %}
+                <div class="message-edit">
+                    <a href="{% url messaging_message_delete message.id %}">{% trans %}Delete{% endtrans %}</a> {% trans %}this message{% endtrans %}
+                </div>
+                {% endif %}
+                <span class="message-tail"></span>
+            </div>
+        </div>
+        <div class="clear">
+        </div>
+    </div>
+    {% endfor %}
+    <div>
+        <span class="content-label-head">{% trans %}Post a reply{% endtrans %}:</span>
+    </div>
+    <div class="message">
+        <div class="message-details">
+            <div class="message-bubble">
+                {% if contact %}
+                <a href="{% url identities_contact_view contact.id %}" class="popup-link"><strong>{{ contact }}</strong></a>
+                {% else %}
+                <strong>{{ request.user.get_profile() }}</strong>
+                {% endif %}
+                <br /><br />
+                <form action="" method="post" class="content-form">
+{% csrf_token %}
+                    <ul class="content-form-fields">
+                      <li>
+                        {{ form.as_ul()|htsafe }}
+                      </li>
+                    </ul>
+                    <div class="content-form-submit">
+                        <input type="submit" value="{% trans %}Send Reply{% endtrans %}">
+                    </div>
+                </form>
+                <span class="message-tail"></span>
+            </div>
+        </div>
+        <div class="clear">
+        </div>
+    </div>
+</div>
+
+{% endblock %}

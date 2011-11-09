@@ -1,0 +1,19 @@
+name,supplier,start date,expiry date,details{#,payments,items#}
+{% for record in service_records %}{{record|replace(',','')|replace('"','')|replace('
+','')|safe}},{% if record.supplier %}{{record.supplier|replace(',','')|replace('"','')|replace('
+','')|safe}},{% else %},{% endif %}{% if record.start_date %}{{record.start_date.strftime("%Y %b %d, %H:%M") }},{% else %},{% endif %}{% if record.expiry_date %}{{record.expiry_date.strftime("%Y %b %d, %H:%M") }},{% else %},{% endif %}{% if record.details %}{{record.details|replace(',','')|replace('\n', '').replace('\r', '').replace('"', '\"')|replace('
+','')|safe}}{% endif %}
+{% endfor %}
+{#
+{% if service_record.payments %}
+{% for payment in service_record.payments.all() %}
+{{ payment.name|replace(',','') }}
+{{ payment.datetime }}
+{{ payment.value|replace(',','') }}
+{% endfor %}
+{% endif %}
+
+{% for item in record.items.all() %}
+{{ item }}
+{% endfor %}
+#}

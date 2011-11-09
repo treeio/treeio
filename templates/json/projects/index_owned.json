@@ -1,0 +1,68 @@
+{% extends "json/projects/page.json" %}
+{% block module_content %}
+
+	{
+	"user": {{ user_block() }},
+	"tasks": 
+		[
+		{% for task in tasks %}
+			{
+			"id": {{ task.id }},
+			"url": "http://{{ site_domain }}{% url projects_task_view task.id %}",
+			"name": "{{ task.name }}",
+			"project": "{{ task.project }}",
+			{% if task.parent -%}
+			"parent": "{{ task.parent }}",
+			{% else %}
+			"parent": null,
+			{% endif %}
+			{% if task.milestone -%}
+			"milestone": "{{ task.milestone }}",
+			{% else %}
+			"milestone": null,
+			{% endif %}
+			"status": "{{ task.status }}",
+			{% if task.details -%}
+			"details": "{{ task.details.replace('\n', '').replace('\r', '')|htsafe }}"
+			{% else %}
+			"details": null,
+			{% endif %}
+			"assinged": [
+				{%- for assignee in task.assigned.all() %}
+						{
+						"id": {{ assignee.id }},
+						"url": "http://{{ site_domain }}{% url identities_contact_view assignee.id %}",
+						"name": "{{ assignee }}"
+						{% if loop.last %}}{% else %}},{% endif %}
+				{%- endfor -%}
+					],
+			{% if task.caller -%}
+			"caller": {
+		            "id": {{ task.caller_id }},
+		            "url": "http://{{ site_domain }}{% url identities_contact_view task.caller_id %}",
+		            "name": "{{ task.caller }}"
+		           },
+		    {% else -%}
+		    "caller": null,
+		    {% endif -%}
+			{% if task.start_date %}
+			"start_date": {{ task.start_date }},
+			{% else %}
+			"start_date": null,
+			{% endif %}
+			{% if task.end_date %}
+			"end_date": {{ task.end_date }},
+			{% else %}
+			"end_date": null,
+			{% endif %}
+			"priority": {{ task.priority }}
+			{% if loop.last -%}
+		    }
+		    {% else -%}
+		    },
+		    {% endif -%}
+		{% endfor %}
+	]
+	}
+
+{% endblock %}

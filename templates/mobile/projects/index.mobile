@@ -1,0 +1,65 @@
+{% extends "mobile/projects/page.mobile" %}
+
+{% block title %}{% trans %}Project Management{% endtrans %}{% endblock %}
+
+{% block index_page %}sidebar-link-active{% endblock %}
+
+{% block sidebar_right %}
+{% endblock %}
+
+{% block module_content %}
+
+  {% if projects %}
+	<form action="" method="post">
+	{% csrf_token %}
+	  <ul class="mass-form">
+	      <input type="hidden" name="massform" value="massform" />
+	       {{ massform.as_ul()|htsafe }}
+	      <li>
+	          <input type="submit" value="{% trans %}Save{% endtrans %}" />
+	      </li>
+	  </ul>
+  
+  {% for project in paginate(projects, 3) %}
+  {% if not loop.first %}<br />{% endif %}
+  <div class="ui-body ui-body-b">
+    <h2>{% trans %}Project{% endtrans %}: {{ project }}</h2>
+    <div class="projects-area" style="border: 0;">
+    {% for milestone in milestones.filter(project=project)[:3] %}
+    <span class="large light content-label-head">
+        <input type="checkbox" name="mass-milestone-{{ milestone.id }}" value="{{ milestone.id }}" class="group-control" />
+        <a href="{% url projects_milestone_view milestone.id %}" class="projects-milestone"><h3>{% trans %}Milestone{% endtrans %}: {{ milestone.name }}</h3></a>
+    </span>
+    {% set render_tasks = tasks.filter(milestone__id=milestone.id)[:6] %}
+    {% if render_tasks %}
+    {{ projects_task_list(render_tasks, by_milestone=True, by_project=True) }}
+    {% else %}
+    <div class="content-list-item lighter spaced-v spaced-h">
+        <em>{% trans %}No Active Tasks{% endtrans %}</em>
+    </div>
+    {% endif %}
+    <br />
+    {% endfor %}
+
+    {% set render_tasks = tasks.filter(milestone__isnull=True, project=project)[:6] %}
+    {% if render_tasks %}
+    <span class="large lighter content-label-head">
+        <input type="checkbox" name="mass-project-{{ project.id }}" value="unclassified" class="group-control" />
+        <em>{% trans %}Unclassified Tasks{% endtrans %}</em>
+    </span>
+    {{ projects_task_list(render_tasks, by_milestone=True, by_project=True) }}
+    {% endif %}
+    </div>  
+    
+    </div>
+    {% endfor %}
+    
+    {{ pager(projects, 3) }}
+	
+	</form> 
+  {% else %}
+  {{ show_hint('projects') }}
+  {% endif %}
+
+{% endblock %}
+

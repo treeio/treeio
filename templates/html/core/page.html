@@ -1,0 +1,58 @@
+{% extends "html/page.html" %}
+
+{% block title %}{% trans %}Administration{% endtrans %}{% endblock %}
+
+{% block content %}
+
+<table>
+    <tr>
+        <td class="module-sidebar">
+       	{{ logo_block_container() }}
+       	{# <a href="{% url core_setup %}" class="sidebar-link {% block class_setup %}{% endblock %}">{% trans %}Setup Guide{% endtrans %}</a> #}
+        <a href="{% url core_admin_index_perspectives %}" class="sidebar-link {% block class_perspectives %}{% endblock %}">{% trans %}Perspectives{% endtrans %}</a>
+        <a href="{% url core_admin_index_modules %}" class="sidebar-link {% block class_modules %}{% endblock %}">{% trans %}Modules{% endtrans %}</a>
+        <a href="{% url core_admin_index_users %}" class="sidebar-link {% block class_users %}{% endblock %}">{% trans %}Users{% endtrans %}</a>
+        <a href="{% url core_admin_index_groups %}" class="sidebar-link {% block class_groups %}{% endblock %}">{% trans %}Groups{% endtrans %}</a>
+		<a href="{% url core_admin_user_invite %}" class="sidebar-link {% block class_invites %}{% endblock %}">{% trans %}Invite People{% endtrans %}</a>
+        <span class="sidebar-header">{% trans %}Settings{% endtrans %}</span>
+        <a href="{% url core_settings_view %}" class="sidebar-link {% block class_settings %}{% endblock %}">{% trans %}Global Settings{% endtrans %}</a>
+        </td>
+        <td class="module-content">
+
+        <div class="module-content-fill">
+
+            <div class="title-block">
+
+                <div class="title">
+                    {% block module_title %}{% trans %}Administration{% endtrans %}{% endblock %}
+                </div>
+                <div class="subtitle-block">
+                    {% block module_subtitle %}{% endblock %}
+                </div>
+                <div class="module-top-menu-inline">
+                    {% block module_topmenu %}
+                    {% endblock %}
+                </div>
+                {{ help_link('administration/') }}
+
+            </div>
+            <table>
+
+                <tr>
+                    <td class="module-content-inner">
+                    <!-- module_content_inner -->
+                    {% block module_content %}{% endblock %}
+                    <!-- /module_content_inner -->
+                    </td>
+                    <td class="module-sidebar-right">
+                    {% block sidebar_right %}{% endblock %}
+                    </td>
+                </tr>
+            </table>
+        </div>
+        </td>
+    </tr>
+</table>
+<div class="clear">
+</div>
+{% endblock %}

@@ -1,0 +1,79 @@
+{% extends "mobile/finance/page.mobile" %}
+
+{% block title %}{{ liability|htsafe }} | {% trans %}Liability{% endtrans %} | {% trans %}Finance{% endtrans %}{% endblock %}
+
+{% block module_title %}{{ liability.name }}{% endblock %}
+{% block module_subtitle %}{% trans %}Liability{% endtrans %}{% endblock %}
+
+{% block module_topmenu %}
+<a class="top-menu view-link-active" href="{% url finance_liability_view liability.id %}">{% trans %}View{% endtrans %}</a>
+<a class="top-menu edit-link" href="{% url finance_liability_edit liability.id %}">{% trans %}Edit{% endtrans %}</a>
+<a class="top-menu delete-link" href="{% url finance_liability_delete liability.id %}">{% trans %}Delete{% endtrans %}</a>
+{% endblock %}
+
+{% block sidebar_right %}
+{% endblock %}
+
+{% block module_content %}
+
+{% if liability.category %}
+<div>
+    <span class="content-label">{% trans %}Category{% endtrans %}:</span>
+    <span class="content-value">
+        <a href="{% url finance_category_view liability.category_id %}" class="popup-link">{{ liability.category|title() }}</a>
+    </span>
+</div>
+{% endif %}
+<div>
+    <span class="content-label">{% trans %}Source{% endtrans %}:</span>
+    <span class="content-value"><a href="{% url identities_contact_view liability.source.id %}" class="popup-link">{{ liability.source }}</a></span>
+</div>
+<div>
+    <span class="content-label">{% trans %}Target{% endtrans %}:</span>
+    <span class="content-value"><a href="{% url identities_contact_view liability.target.id %}" class="popup-link">{{ liability.target }}</a></span>
+</div>
+<div>
+    <span class="content-label">{% trans %}Bank Account{% endtrans %}:</span>
+    <span class="content-value"><a href = "{% url finance_account_view liability.account_id %}" class="popup-link">{{ liability.account }}</a></span>
+</div>
+{% if liability.due_date %}
+<div>
+    <span class="content-label">{% trans %}Due Date{% endtrans %}:</span>
+    <span class="content-value">{{ liability.due_date|htdate }}</span>
+</div>
+{% endif %}
+
+{% if liability.value_display != liability.value %}
+<div>
+    <span class="content-label">{% trans %}Value in{% endtrans %} {{currency_print(liability.value_currency)}}:</span>
+    <span class="content-value">{{ liability.value_display|number_format|currency_format(liability.value_currency)}}</span>
+</div>
+{% endif %}
+
+<div>
+    <span class="content-label">{% trans %}Value in{% endtrans %} {{currency_print()}}:</span>
+    <span class="content-value">{{ liability.value|number_format|currency_format }}</span>
+</div>
+
+<br />
+
+<div class="content-label-head">
+    {% trans %}Payments{% endtrans %}:
+    <a href="{% url finance_transaction_add liability.id %}" id="add_transaction" class="inline-link add-link popup-link">{% trans %}Add{% endtrans %}</a>
+</div>
+{% if transactions %}
+
+{{ finance_transaction_list(paginate(transactions)) }}
+
+{{ pager(transactions) }}
+
+{% endif %}
+
+{% if liability.details %}
+<div>
+    <span class="content-label">{% trans %}Details{% endtrans %}:</span>
+    <span class="content-details">{{ liability.details|htsafe }}</span>
+</div>
+{% endif %}
+
+{% endblock %}

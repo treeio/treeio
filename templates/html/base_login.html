@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+    <head>
+        <link rel="icon" href="/static/favicon.ico" type="image/x-icon" />
+		<link rel="stylesheet" href="/static/print.min.css" media="print" />
+		{# Debug 
+		<link rel="stylesheet" href="/static/treeio3.css" media="all" />
+		<link rel="stylesheet" href="/static/js/css/jquery.gritter.css" media="all" />
+		<link rel="stylesheet" href="/static/js/css/jquery-ui-1.css" media="all" />
+		<link rel="stylesheet" href="/static/js/css/datepicker.css" media="all" />
+		<link rel="stylesheet" href="/static/js/colorbox/colorbox.css" type="text/css" media="screen, projection" />
+		<link rel="stylesheet" href="/static/jquery.flexbox.css" type="text/css" />
+		<link rel="stylesheet" type="text/css" href="/static/js/css/jquery.ganttView.css" />
+		#}
+		{# Production #} 	
+		<link rel="stylesheet" href="/static/26a.min.css" media="all" /> 
+	
+        <title>{% block title %}{% endblock %}. Tree.io</title>
+        <meta name="description" content="{% block meta_description %} {% endblock %}" />
+        <meta name="keywords" content="{% block meta_keywords %} {% endblock %}" />
+        <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+        <!--[if lt IE 8]>
+        <link rel="stylesheet" href="/static/ie.css" media="all" />
+        <![endif]-->
+
+        {% block headfiles %}{% endblock %}
+    </head>
+    <body>
+        <div id="page-container">
+            <div id="page">
+				<br /><br />
+                {% block page %}
+                {% endblock %}
+
+            </div>
+        </div>
+    </body>
+</html>

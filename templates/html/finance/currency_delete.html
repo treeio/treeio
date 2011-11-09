@@ -1,0 +1,50 @@
+{% extends "html/finance/page.html" %}
+
+{% block title %}{% trans %}Delete{% endtrans %} | {{ currency|htsafe }} | {% trans %}Currency{% endtrans %} | {% trans %}Finance{% endtrans %}{% endblock %}
+
+{% block module_title %}{{ currency.name }}{% endblock %}
+{% block module_subtitle %}{% trans %}Currency{% endtrans %}{% endblock %}
+
+{% block module_topmenu %}
+<a href="{% url finance_currency_view currency.id %}" class="top-menu view-link">{% trans %}View{% endtrans %}</a>
+<a href="{% url finance_currency_edit currency.id %}" class="top-menu edit-link">{% trans %}Edit{% endtrans %}</a>
+<a href="{% url finance_currency_delete currency.id %}" class="top-menu delete-link-active">{% trans %}Delete{% endtrans %}</a>
+{% endblock %}
+
+{% block module_content %}
+
+<div class="delete-object">
+    <span class="larger">{% trans %}Delete this Currency{% endtrans %}?</span>
+    <br />
+    <form action="" method="post" class="content-form">
+{% csrf_token %}
+        <ul class="content-form-fields">
+            <li>
+                <label for="trash">
+                    <input id="trash" type="checkbox" name="trash" checked="checked" />
+                    {% trans %}Move to Trash{% endtrans %}
+                </label>
+            </li>
+            <li>
+                <input type="submit" name="delete" value="{% trans %}Yes, Delete{% endtrans %}" />&nbsp;&nbsp;
+                <input type="submit" name="cancel" value="{% trans %}Cancel{% endtrans %}" class="cancel" />
+            </li>
+        </ul>
+    </form>
+</div>
+
+<div>
+    <span class="content-label">{% trans %}Name{% endtrans %}:</span>
+    <span class="content-value">{{currency.name}}</span>
+</div>
+<div>
+    <span class="content-label">{% trans %}Symbol{% endtrans %}:</span>
+    <span class="content-value">{% if currency.symbol %}{{currency.symbol}}{% else %}{% trans %}None Set{% endtrans %}{% endif %}</span>
+</div>
+<div>
+    <span class="content-label">{% trans %}Code{% endtrans %}:</span>
+    <span class="content-value">{{currency.name}}</span>
+</div>
+
+
+{% endblock %}

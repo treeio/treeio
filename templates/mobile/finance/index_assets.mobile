@@ -1,0 +1,35 @@
+{% extends "mobile/finance/page.mobile" %}
+
+{% block title %}{% trans %}Assets{% endtrans %} | {% trans %}Finance{% endtrans %}{% endblock %}
+
+{% block module_title %}{% trans %}Assets{% endtrans %}{% endblock %}
+
+{% block class_assets %}sidebar-link-active{% endblock %}
+
+{% block module_topmenu %}
+<a class="top-menu add-link" href="{% url finance_asset_add %}">{% trans %}New Asset{% endtrans %}</a>
+{% endblock %}
+
+{% block sidebar_right %}
+{% endblock %}
+
+{% block module_content %}
+
+{% if assets %}
+
+<ul data-role="listview" data-inset="true" data-theme="c">
+{% for asset in paginate(assets) %}
+	<li>
+		<a href="{% url finance_asset_view asset.id %}">{{ asset.name|truncate(length=60) }}
+		<p class="ui-li-aside">{% trans %}Purchase Date{% endtrans %}: {{ asset.purchase_date|htdate }}</p>
+		</a>
+	</li>
+{% endfor %}
+</ul>
+{{ pager(assets) }}
+
+{% else %}
+{{ show_hint('finance_assets') }}
+{% endif %}
+
+{% endblock %}

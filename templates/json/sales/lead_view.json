@@ -1,0 +1,59 @@
+{% extends "json/sales/page.json" %}
+{% block module_content %}
+    {"lead":
+         {
+
+         "url": "http://{{ site_domain }}{% url sales_lead_view lead.id %}",
+         {% if lead.contact -%}
+         "contact": {
+                    "id": {{ lead.contact_id }},
+                    "url": "http://{{ site_domain }}{% url identities_contact_view lead.contact_id %}",
+                    "name": "{{ lead.contact }}"
+                   },
+         {% else -%}
+         "contact": null,
+         {% endif -%}
+         "assigned": [
+            {%- for assignee in lead.assigned.all() %}
+               {
+                "id": {{ assignee.id }},
+                "url": "http://{{ site_domain }}{% url identities_user_view assignee.id %}",
+                "name": "{{ assignee }}"
+               {% if loop.last %}}{% else %}},{% endif %}
+            {%- endfor -%}
+         ],
+         "status": {
+                    "id": {{ lead.status_id }},
+                    "url": "http://{{ site_domain }}{% url sales_status_view lead.status_id %}",
+                    "name": "{{ lead.status }}"
+                   },
+         {%- if lead.contact_method %}
+         "contact_method": "{{ lead.contact_method }}"
+                  },
+         {% else -%}
+         "contact_method": null,
+         {% endif -%}
+         "products_interested": {
+		 {% for product in lead.products_inetrested -%}
+                     "id": {{ product.id }},
+                     "url": "http://{{ site_domain }}{% url sales_product_view product.id %}",
+                     "name": "{{ product }}"
+                    },
+         {% endfor -%}
+		 {% if lead.source -%}
+         "source": {
+                 "id": {{ lead.source_id }},
+                 "url": "http://{{ site_domain }}{% url sales_source_view lead.source_id %}",
+                 "name": "{{ lead.source }}"
+                },
+         {% else -%}
+         "source": null
+         {% endif -%}
+		 
+        
+         "details": "{{ lead.details }}"
+		 
+
+         }
+    }
+{% endblock %}

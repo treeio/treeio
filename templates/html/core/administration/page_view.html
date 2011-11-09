@@ -1,0 +1,41 @@
+{% extends "html/core/page.html" %}
+
+{% block title %}{% trans %}Static Pages{% endtrans %} | {% trans %}Administration{% endtrans %}{% endblock %}
+
+{% block module_title %}{{ page }}{% endblock %}
+{% block module_subtitle %}{% trans %}Page{% endtrans %}{% endblock %}
+
+{% block module_topmenu %}
+<a href="{% url core_admin_page_view page.id %}" class="top-menu view-link-active">{% trans %}View{% endtrans %}</a>
+<a href="{% url core_admin_page_edit page.id %}" class="top-menu edit-link">{% trans %}Edit{% endtrans %}</a>
+<a href="{% url core_admin_page_delete page.id %}" class="top-menu delete-link">{% trans %}Delete{% endtrans %}</a>
+{% endblock %}
+
+{% block sidebar_right %}
+<span class="sidebar-header-right">{% trans %}Download as:{% endtrans %}<br />{% if '?' in request.get_full_path() %}<a class="pdf-block-link" href="{{ request.get_full_path()|replace('.ajax','').replace('?','.pdf?') }}"{% else %}<a class="pdf-block-link" href="{{ request.get_full_path()|replace('.ajax','') }}.pdf"{% endif %} target="_self">PDF</a>
+      </span>
+{% endblock %}
+
+{% block module_content %}
+
+<div>
+    <span class="content-label">{% trans %}Name{% endtrans %}:</span>
+    <span class="content-value"><strong>{{ page.name }}</strong></span>
+</div>
+<div>
+    <span class="content-label">{% trans %}Title{% endtrans %}:</span>
+    <span class="content-value">{{ page.title }}</span>
+</div>
+<div>
+    <span class="content-label">{% trans %}Folder{% endtrans %}:</span>
+    <span class="content-value"><a href="{% url core_admin_pagefolder_view page.folder_id %}">{{ page.folder }}</a></span>
+</div>
+<div>
+    <span class="content-label">{% trans %}Published{% endtrans %}:</span>
+    <span class="content-value">{% if page.published %}{% trans %}Yes{% endtrans %}{% else %}{% trans %}No{% endtrans %}{% endif %}</span>
+</div>
+<div>
+    <span class="content-label">{% trans %}Body{% endtrans %}:</span>
+    <span class="content-details">{{ page.body|htsafe }}</span>
+</div>
+{% endblock %}

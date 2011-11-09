@@ -1,0 +1,58 @@
+{% extends "html/core/page.html" %}
+
+{% block title %}{% trans %}Perspectives{% endtrans %} | {% trans %}Administration{% endtrans %}{% endblock %}
+
+{% block class_perspectives %}sidebar-link-active{% endblock %}
+
+{% block module_title %}{% trans %}Perspectives{% endtrans %}{% endblock %}
+
+{% block module_topmenu %}
+<a href="{% url core_admin_perspective_add %}" class="top-menu add-link">{% trans %}New Perspective{% endtrans %}</a>
+{% endblock %}
+
+{% block sidebar_right %}
+
+{#
+<span class="sidebar-header-first">{% trans %}Filter by{% endtrans %}</span>
+<form action="" method="get" class="content-filter-form">
+    <ul class="content-filter-form-fields">
+        {{ filters }}
+    </ul>
+    <input type="submit" value="{% trans %}Submit{% endtrans %}">
+</form>
+#}
+
+{% endblock %}
+
+{% block module_content %}
+
+{% if message %}
+
+{{ show_hint('perspective_view', message) }}
+<br />
+
+{% endif %}
+
+{% for perspective in perspectives %}
+<div class="content-list-item content-list-item-{{ loop.cycle('odd', 'even') }}">
+    <div class="content-list-tick">
+    </div>
+    <span class="content-list-item-name">
+        <a href="{% url core_admin_perspective_view perspective.id %}"><strong>{{ perspective }}</strong></a>
+        <br />
+        {% for module in perspective.modules.all() %}
+        <a href="{% url core_admin_module_view module.id %}" class="author-link small spaced-h">{{ module }}</a>
+        {% endfor %}
+        <span class="content-list-item-group">
+            &nbsp;
+        </span>
+    </span>
+    <span class="content-list-item-actions">
+        {% if user.get_profile().has_permission(perspective, mode='w') %}
+        <a href="{% url core_admin_perspective_edit perspective.id %}" class="inline-link edit-link">{% trans %}Edit{% endtrans %}</a>
+        {% endif %}
+    </span>
+</div>
+{% endfor %}
+
+{% endblock %}

@@ -1,0 +1,7 @@
+name,date,source,target,account,value
+{{transaction.name|replace(',','')|replace('"','')|replace('
+','')|safe}},{% if transaction.date_created %}{{transaction.date_created|replace(',','')}},{% else %},{% endif %}{% if transaction.source %}{{transaction.source|replace(',','')|replace('"','')|replace('
+','')|safe}},{% else %},{% endif %}{% if transaction.target %}{{transaction.target|replace(',','')|replace('"','')|replace('
+','')|safe}},{% else %},{% endif %}{% if transaction.account %}{{transaction.account|replace(',','')|replace('"','')|replace('
+','')|safe}},{% else %},{% endif %}{% if transaction.value %}{{transaction.value|replace(',','')|replace('"','')|replace('
+','')|safe}}{% else %},{% endif %}

@@ -1,0 +1,28 @@
+<script>
+    var treeio_attachment_record_text = {
+        attach: '&nbsp;·&nbsp;{% trans %}Attach a file{% endtrans %}',
+        drop: '{% trans %}Drop files here to upload{% endtrans %}',
+        cancel: '{% trans %}Cancel{% endtrans %}',
+        failed: '{% trans %}Failed{% endtrans %}'
+    };
+</script>
+
+<span class="attachment-record-uploader" object="{{ object.id }}" action="{% url ajax_upload_record object.id %}" csrf="{{ csrf_token }}">
+    <noscript>
+        <p>Please enable JavaScript to use file uploader.</p>
+        <!-- or put a simple form for upload here -->
+    </noscript>
+</span>
+
+<div class="attachment-record-block" object="{{ object.id }}">
+    {% for attachment in attachments %}
+        {% if attachment.uploaded_by == request.user.get_profile() %}<a class="delete-attachment ajax-link-out" attachment="{{ attachment.id }}" title="{% trans %}Delete{% endtrans %}"><img class="margin-bottom" src="/static/icons/delete.png"/></a>{% endif %}
+        <a class="attachment ajax-link-out" target=".." href="{% url core_attachment_download attachment.id %}">
+            <img class="margin-bottom" src="/static/icons/documents/{{ attachment.get_icon() }}.png"/>
+
+            {{ attachment }}
+        </a>
+		{% if not loop.last %}, {% endif %}
+
+    {% endfor %}
+</div>

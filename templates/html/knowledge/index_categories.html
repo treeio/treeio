@@ -1,0 +1,36 @@
+{% extends "html/knowledge/page.html" %}
+
+{% block title %}{% trans %}Categories{% endtrans %} | {% trans %}Knowledge Base{% endtrans %}{% endblock %}
+
+{% block categories_page %}sidebar-link-active{% endblock %}
+
+{% block module_content %}
+
+{% if categories %}
+{% for category in categories %}
+<div class="content-list-item content-list-item-{{ loop.cycle('odd', 'even') }}">
+    <div class="content-list-tick">
+    </div>
+    <span class="content-list-item-name">
+        {% set items = category.knowledgeitem_set.count() %}
+        {% if items %}
+        <a href="{% url knowledge_category_view category.treepath %}">{{ category }} ({{ items }})</a>
+        {% else %}
+        <a href="{% url knowledge_category_view category.treepath %}">{{ category }}</a>
+        {% endif %}
+    </span>
+    <span class="content-list-item-actions">
+        {% if user.get_profile().has_permission(category, mode='w') %}
+        <a href="{% url knowledge_category_edit category.id %}" class="inline-link edit-link">{% trans %}Edit{% endtrans %}</a>
+        {% endif %}
+    </span>
+</div>
+{% endfor %}
+{% else %}
+<div class="content-list-item spaced-h spaced-v">
+    <em>{% trans %}No Categories Available{% endtrans %}</em>
+</div>
+{% endif %}
+
+{% endblock %}
+

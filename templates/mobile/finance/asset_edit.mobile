@@ -1,0 +1,33 @@
+{% extends "mobile/finance/page.mobile" %}
+
+{% block title %}{% trans %}Edit{% endtrans %} | {{ asset|htsafe }} | {% trans %}Finance{% endtrans %}{% endblock %}
+
+{% block module_title %}{{ asset.name }}{% endblock %}
+{% block module_subtitle %}{% trans %}Asset{% endtrans %}{% endblock %}
+
+{% block module_topmenu %}
+<a href="{% url finance_asset_view asset.id %}" class="top-menu view-link">{% trans %}View{% endtrans %}</a>
+<a href="{% url finance_asset_edit asset.id %}" class="top-menu edit-link-active">{% trans %}Edit{% endtrans %}</a>
+<a href="{% url finance_asset_delete asset.id %}" class="top-menu delete-link">{% trans %}Delete{% endtrans %}</a>
+{% endblock %}
+
+{% block sidebar_right %}
+{% endblock %}
+
+{% block module_content %}
+
+<form action="" method="post" class="content-form">
+{% csrf_token %}
+    <ul class="content-form-fields">
+        {{ htform(form).as_ul()|htsafe }}
+    </ul>
+    <div class="content-form-submit ui-grid-a">
+    <div class="ui-block-a">
+        <input data-theme="b" type="submit" name="save" value="{% trans %}Save{% endtrans %}" />
+    </div>
+    <div class="ui-block-b">
+        <input type="submit" name="cancel" value="{% trans %}Cancel{% endtrans %}" class="cancel" />
+    </div>
+    </div>
+</form>
+{% endblock %}

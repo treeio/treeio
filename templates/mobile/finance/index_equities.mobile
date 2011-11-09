@@ -1,0 +1,37 @@
+{% extends "mobile/finance/page.mobile" %}
+
+{% block title %}{% trans %}Equities{% endtrans %} | {% trans %}Finance{% endtrans %}{% endblock %}
+
+{% block module_title %}{% trans %}Equities{% endtrans %}{% endblock %}
+
+{% block class_equities %}sidebar-link-active{% endblock %}
+
+{% block module_topmenu %}
+<a class="top-menu add-link" href="{% url finance_equity_add %}">{% trans %}New Equity{% endtrans %}</a>
+{% endblock %}
+
+{% block sidebar_right %}
+{% endblock %}
+
+{% block module_content %}
+
+{% if equities %}
+
+<ul data-role="listview" data-inset="true" data-theme="c">
+    {% for equity in paginate(equities) %}
+	<li>
+	    <a href = "{% url finance_equity_view equity.id %}"><h3>{{ equity.equity_type|title() }}</h3>
+	        <p class="ui-li-aside">{% trans %}Purchase Date{% endtrans %}: {{ equity.purchase_date|htdate }}</p>
+	        <p>{% trans %}Quantity{% endtrans %}: {{ equity.amount }}</p>
+	        <p>{% trans %}Sell Price in {% endtrans %}{{ currency_print() }}{{ equity.sell_price|number_format }}</p>
+	    </a>
+    </li>
+    {% endfor %}
+</ul>
+{{ pager(equities) }}
+
+{% else %}
+{{ show_hint('finance_equities') }}
+{% endif %}
+
+{% endblock %}

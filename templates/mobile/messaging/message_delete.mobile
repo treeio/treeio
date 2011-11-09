@@ -1,0 +1,48 @@
+{% extends "mobile/messaging/page.mobile" %}
+
+{% block title %}{% trans %}Messaging{% endtrans %}{% endblock %}
+
+{% block module_title %}{{ message }}{% endblock %}
+
+{% block module_subtitle %}{% trans %}Message{% endtrans %}{% endblock %}
+
+{% block sidebar_right %}
+{% endblock %}
+
+{% block module_topmenu %}
+{% if message.reply_to %}
+<a href="{% url messaging_message_view message.reply_to.id %}" class="top-menu view-link">{% trans %}View{% endtrans %}</a>
+{% else %}
+<a href="{% url messaging_message_view message.id %}" class="top-menu view-link">{% trans %}View{% endtrans %}</a>
+{% endif %}
+{% if user.get_profile().has_permission(message, mode='w') %}
+<a href="{% url messaging_message_delete message.id %}" class="top-menu delete-link-active">{% trans %}Delete{% endtrans %}</a>
+{% endif %}
+{% endblock %}
+
+{% block module_content %}
+
+<div>
+    <span class="larger">{% trans %}Delete this Message{% endtrans %}?</span>
+    <br />
+    <form action="" method="post" class="content-form">
+{% csrf_token %}
+        <ul class="content-form-fields">
+            <li>
+                <label for="trash">
+                    <input id="trash" type="checkbox" name="trash" checked="checked" />
+                    {% trans %}Move to Trash{% endtrans %}
+                </label>
+            </li>
+            <li class="ui-grid-a">
+            <div class="ui-block-a">
+                <input data-theme="b" type="submit" name="delete" value="{% trans %}Yes, Delete{% endtrans %}" style="font-weight: 700;" />&nbsp;&nbsp;
+            </div>
+            <div class="ui-block-b">
+                <input type="submit" name="cancel" value="{% trans %}Cancel{% endtrans %}" class="cancel" />
+            </div>
+            </li>
+        </ul>
+    </form>
+</div>
+{% endblock %}

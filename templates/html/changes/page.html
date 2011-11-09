@@ -1,0 +1,71 @@
+{% extends "html/page.html" %}
+
+{% block title %}{% trans %}Change Control{% endtrans %}{% endblock %}
+
+{% block content %}
+
+<table>
+    <tr>
+      <td class="module-sidebar">
+
+      <div id="logo-block-container">
+        <div id="logo-block">
+            <a title="{% trans %}Home{% endtrans %}" href="/">
+            <img alt="Tree.io" src="{% url core_logo_image_ie %}" class="logo"></a>
+        </div>
+      </div>  
+      <div>
+        
+        <a href="{% url changes_index %}" class="sidebar-link {% block class_index %}{% endblock %}">{% trans %}All Change Sets{% endtrans %}</a>
+        <a href="{% url changes_index_owned %}" class="sidebar-link {% block class_owned %}{% endblock %}">{% trans %}Owned by me{% endtrans %}</a>
+        <a href="{% url changes_index_resolved %}" class="sidebar-link {% block class_resolved %}{% endblock %}">{% trans %}Resolved by me{% endtrans %}</a>
+        <span class="sidebar-header">{% trans %}By Status{% endtrans %}</span>
+        {% for istatus in all_statuses %}
+        <a href="{% url changes_status_view istatus.id %}" class="sidebar-link {% if istatus == status %}sidebar-link-active{% endif %}">{{ istatus }}</a>
+        {% endfor %}
+
+        <span class="sidebar-header">{% trans %}Administration{% endtrans %}</span>
+        <a href="{% url changes_settings_view %}" class="sidebar-link {% block class_settings %}{% endblock %}">{% trans %}Settings{% endtrans %}</a>
+        
+      </div>
+      </td>
+      <td class="module-content">
+
+        <div class="module-content-fill">
+
+            <div class="title-block">
+
+                <div class="title">
+                    {% block module_title %}{% trans %}Changes{% endtrans %}{% endblock %}
+                </div>
+                <div class="subtitle-block">
+                    {% block module_subtitle %}{% endblock %}
+                </div>
+                <div class="module-top-menu-inline">
+                    {% block module_topmenu %}
+                    <a href="{% url changes_set_add %}" class="top-menu add-link">{% trans %}New Change Set{% endtrans %}</a>
+                    {% endblock %}
+                </div>
+                {{ help_link() }}
+
+            </div>
+            <table>
+
+                <tr>
+                    <td class="module-content-inner">
+                    <!-- module_content_inner -->
+                    {% block module_content %}{% endblock %}
+                    <!-- /module_content_inner -->
+                    </td>
+                    <td class="module-sidebar-right">
+                    {% block sidebar_right %}{% endblock %}
+                    </td>
+                </tr>
+            </table>
+        </div>
+        </td>
+    </tr>
+</table>
+<div class="clear">
+</div>
+{% endblock %}

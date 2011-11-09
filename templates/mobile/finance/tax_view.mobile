@@ -1,0 +1,32 @@
+{% extends "mobile/finance/page.mobile" %}
+
+{% block title %}{{ tax|htsafe }} | {% trans %}Tax{% endtrans %} | {% trans %}Finance{% endtrans %}{% endblock %}
+
+{% block module_title %}{{ tax.name }}{% endblock %}
+{% block module_subtitle %}{% trans %}Tax{% endtrans %}{% endblock %}
+
+{% block module_topmenu %}
+<a class="top-menu view-link-active" href="{% url finance_tax_view tax.id %}">{% trans %}View{% endtrans %}</a>
+<a class="top-menu edit-link" href="{% url finance_tax_edit tax.id %}">{% trans %}Edit{% endtrans %}</a>
+<a class="top-menu delete-link" href="{% url finance_tax_delete tax.id %}">{% trans %}Delete{% endtrans %}</a>
+{% endblock %}
+
+{% block sidebar_right %}
+{% endblock %}
+
+{% block module_content %}
+
+<div>
+    <span class="content-label">{% trans %}Name{% endtrans %}:</span>
+    <span class="content-value">{{tax.name}}</span>
+</div>
+<div>
+    <span class="content-label">{% trans %}Rate{% endtrans %}:</span>
+    <span class="content-value">{{tax.rate}}</span>
+</div>
+{% if tax.compound %}
+<div>
+    <span class="content-label">{% trans %}Compound Tax{% endtrans %}:</span>
+</div>
+{% endif %}
+{% endblock %}

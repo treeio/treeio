@@ -1,0 +1,71 @@
+{% extends "mobile/documents/page.mobile" %}
+
+{% block title %}{{ link|htsafe }} | {% trans %}Documents{% endtrans %}{% endblock %}
+
+{% block module_title %}{{ link }}{% endblock %}
+
+{% block module_subtitle %}{% trans %}Web Link{% endtrans %}{% endblock %}
+
+{% block module_topmenu %}
+<a class="top-menu view-link-active" href="{% url documents_weblink_view link.id %}">{% trans %}View{% endtrans %}</a>
+{% if user.get_profile().has_permission(link, mode='w') %}
+<a class="top-menu edit-link" href="{% url documents_weblink_edit link.id %}">{% trans %}Edit{% endtrans %}</a>
+<a class="top-menu delete-link" href="{% url documents_weblink_delete link.id %}">{% trans %}Delete{% endtrans %}</a>
+{% endif %}
+{% endblock %}
+
+{% block sidebar_right %}
+
+<span class="sidebar-header-first">{% trans %}Permissions{% endtrans %}</span>
+<div class="sidebar-block">
+    {{ permission_block(link) }}
+</div>
+<span class="sidebar-header-right">{% trans %}Links{% endtrans %}</span>
+<div class="sidebar-block">
+    {{ link_block(link) }}
+</div>
+<span class="sidebar-header-right">{% trans %}Subscribers{% endtrans %}</span>
+<div class="sidebar-block">
+    {{ subscription_block(link) }}
+</div>
+<span class="sidebar-header-right">{% trans %}Download as:{% endtrans %}<br />{% if '?' in request.get_full_path() %}<a class="pdf-block-link" href="{{ request.get_full_path()|replace('.ajax','').replace('?','.pdf?') }}"{% else %}<a class="pdf-block-link" href="{{ request.get_full_path()|replace('.ajax','') }}.pdf"{% endif %} target="_self">PDF</a>
+  </span></span>
+{% endblock %}
+
+{% block module_content %}
+
+{% if link.title %}
+<div>
+    <span class="content-label">{% trans %}Title{% endtrans %}:</span>
+    <span class="content-value">{{ link }}</span>
+</div>
+{% endif %}
+
+{% if link.folder %}
+<div>
+    <span class="content-label">{% trans %}Folder{% endtrans %}:</span>
+    <span class="content-value"><a href="{% url documents_folder_view link.folder.id %}">{{ link.folder }}</a></span>
+</div>
+{% endif %}
+
+<div>
+    <span class="content-label">{% trans %}Date created{% endtrans %}:</span>
+    <span class="content-value">{{ link.date_created.strftime("%Y %b %d, %H:%M") }}</span>
+</div>
+<div>
+    <span class="content-label">{% trans %}Last updated{% endtrans %}:</span>
+    <span class="content-value">{{ link.last_updated.strftime("%Y %b %d, %H:%M") }}</span>
+</div>
+{% if link.url %}
+<div>
+    <span class="content-label">{% trans %}URL{% endtrans %}:</span>
+    <span class="content-value"><a href="{{ link.url|htsafe }}" class="ajax-link-out">{{ link.url }}</a></span>
+</div>
+{% endif %}
+
+<div class="spaced-v spaced-h">
+  <br />
+  {{ tags_box(link) }}
+</div>
+
+{% endblock %}

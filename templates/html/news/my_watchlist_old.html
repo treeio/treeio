@@ -1,0 +1,22 @@
+{% extends "html/news/page.html" %}
+
+{% block title %}{% trans %}News{% endtrans %}{% endblock %}
+
+{% block class_my_watchlist %}sidebar-link-active{% endblock %}
+
+{% block sidebar_right %}
+
+<span class="sidebar-header-right">{% trans %}Download as:{% endtrans %}<br />{% if '?' in request.get_full_path() %}<a class="pdf-block-link" href="{{ request.get_full_path()|replace('.ajax','').replace('?','.pdf?') }}"{% else %}<a class="pdf-block-link" href="{{ request.get_full_path()|replace('.ajax','') }}.pdf"{% endif %} target="_self">PDF</a>
+      </span>
+{% endblock %}
+
+{% block module_content %}
+
+<span class="content-label-head">
+  My Watchlist:
+</span>
+
+{{ core_watchlist(watchlist, paginate=True) }}
+
+
+{% endblock %}

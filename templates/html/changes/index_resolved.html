@@ -1,0 +1,41 @@
+{% extends "html/changes/page.html" %}
+
+{% block title %}{% trans %}Change Control{% endtrans %}{% endblock %}
+
+{% block class_resolved %}sidebar-link-active{% endblock %}
+
+{% block sidebar_right %}
+
+<span class="sidebar-header-first">{% trans %}Filter by{% endtrans %}</span>
+<form action="" method="get" class="content-filter-form">
+    <ul class="content-filter-form-fields">
+        {{ filters.as_ul()|htsafe }}
+    </ul>
+    <input type="submit" value="{% trans %}Submit{% endtrans %}">
+</form>
+{% endblock %}
+
+{% block module_content %}
+
+{% if changesets %}
+<form action="" method="post">
+{% csrf_token %}
+    <ul class="mass-form">
+        <input type="hidden" name="massform" value="massform" />
+        <input type="checkbox" name="mass-unclassified" value="unclassified" class="group-control" />
+         {{ massform.as_ul()|htsafe }}
+        <li>
+            <input type="submit" value="{% trans %}Save{% endtrans %}" />
+        </li>
+    </ul>
+    {{ changes_set_list(paginate(changesets)) }}
+    {{ pager(changesets) }}
+</form>
+{% else %}
+<div class="content-list-item spaced-h spaced-v">
+    <em>{% trans %}No Change Sets{% endtrans %}.</em>
+	<a href="{% url changes_set_add %}" class="popup-link"><strong>{% trans %}Create a Change Set{% endtrans %}</strong></a>
+</div>
+{% endif %}
+
+{% endblock %}

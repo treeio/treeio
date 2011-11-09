@@ -1,0 +1,21 @@
+{% for item in path %}
+    {% set url = item.get_absolute_url() %}
+    {% if url %}
+        <a href="{{ url }}">
+        {% if loop.last and not skipself %}
+        <strong>{{ item }}</strong>
+        {% else %}
+        {{ item }}
+        {% endif %}
+        </a>
+    {% else %}
+        {% if loop.last and not skipself %}
+        <strong>{{ item }}</strong>
+        {% else %}
+        {{ item }}
+        {% endif %}
+    {% endif %}
+    {% if not loop.last %}
+     /
+    {% endif %}
+{% endfor %}

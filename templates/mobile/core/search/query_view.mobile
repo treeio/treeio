@@ -1,0 +1,47 @@
+{% extends "mobile/core/index.mobile" %}
+
+{% block title %}{% trans %}Search{% endtrans %}{% endblock %}
+
+{% block module_title %}{% trans %}Search{% endtrans %}{% endblock %}
+
+{% block module_content %}
+<div class="module-content-inner">
+    
+    {% if query %}
+    <div class="spaced-h">
+        {% trans %}You've searched for{% endtrans %} <a href="{% url core_search_query %}?q={{ query }}"><strong>{{ query }}</strong></a>
+        <br /><br />
+    </div>
+    {% endif %}
+    
+    {% if hits %}
+	{% for hit in hits %}
+	<div class="content-list-item content-list-item-{{ loop.cycle('odd', 'even') }}">
+	    <div class="content-list-tick"></div>
+		<span class="content-list-item-name">
+            {% if hit.url %}
+			<a href="{{ hit.url }}">{{ hit.name }}</a>
+            {% else %}
+            <em>{{ hit.name }}</em>
+            {% endif %}
+    		<span class="lighter small">
+    			{{ hit.type }}
+    		</span>
+		</span>
+		<span class="content-list-item-actions">
+		    {% if hit.url %}
+			<a href="{{ hit.url }}" class="inline-link view-link">{% trans %}View{% endtrans %}</a>
+            {% endif %}
+		</span>
+	</div>
+	{% endfor %}
+    {% else %}
+    <div class="spaced-h">
+        <p>
+        {% trans %}There's nothing found{% endtrans %}.
+        </p>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}
+

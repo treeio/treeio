@@ -1,0 +1,46 @@
+{% extends "json/services/page.json" %}
+{% block module_content %}
+   {"service":
+         {
+          "id": {{ service.id }},
+          "url": "http://{{ site_domain }}{% url services_service_view service.id %}",
+          "name": "{{ service }}",
+          {% if service.parent -%}
+          "parent": {
+                     "id": {{ queue.parent_id }},
+                     "url": "http://{{ site_domain }}{% url services_queue_view queue.parent_id %}",
+                     "name": "{{ queue.parent }}"
+                    },
+          {% else -%}
+          "parent": null,
+          {% endif -%}
+          "services": [
+          {% for service in service.child_set.all() %}
+              {
+               "id": {{ service.id }},
+               "url": "http://{{ site_domain }}{% url services_service_view service.id %}",
+               "name": "{{ service }}"
+              {% if loop.last -%}
+              }
+              {% else -%}
+              },
+              {% endif -%}
+          {% endfor %}
+          ],
+          "slas": [
+          {% for sla in service.servicelevelagreement_set.all() -%}
+             {
+             "id": {{ sla.id }},
+             "url": "http://{{ site_domain }}{% url services_sla_view sla.id %}",
+             "name": "{{ sla }}"
+             {% if loop.last -%}
+             }
+             {% else -%}
+             },
+             {% endif -%}
+          {% endfor -%}
+          ],
+          "details": "{{ service.details }}"
+          }
+   }
+{%- endblock %}

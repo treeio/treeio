@@ -1,0 +1,35 @@
+{% extends "mobile/identities/page.mobile" %}
+
+{% block title %}{% trans %}New Field{% endtrans %} | {% trans %}Identities{% endtrans %}{% endblock %}
+
+{% block module_title %}{% trans %}Settings{% endtrans %}{% endblock %}
+
+{% block asset_fields_sidebar -%}
+{% for ifield in fields %}
+<a href="{% url identities_field_view ifield.id %}" class="sidebar-link {% if ifield == asset_field %}sidebar-link-active{% endif %}">{{ ifield }}</a>
+{% endfor %}
+{%- endblock %}
+
+{% block module_topmenu %}
+<a href="{% url identities_type_add %}" class="top-menu add-link">{% trans %}New Type{% endtrans %}</a>
+<a href="{% url identities_field_add %}" class="top-menu add-link-active">{% trans %}New Field{% endtrans %}</a>
+<a href="{% url identities_settings_view %}" class="top-menu view-link">{% trans %}View{% endtrans %}</a>
+{% endblock %}
+
+{% block module_content %}
+
+<form action="" method="post" class="content-form">
+{% csrf_token %}
+    <ul class="content-form-fields">
+        {{ form.as_ul()|htsafe }}
+    </ul>
+    <div class="content-form-submit ui-grid-a">
+    <div class="ui-block-a">
+        <input data-theme="b" type="submit" name="save" value="{% trans %}Create Field{% endtrans %}" />
+    </div>
+    <div class="ui-block-b">
+        <input type="submit" name="cancel" value="{% trans %}Cancel{% endtrans %}" class="cancel" />
+    </div>
+    </div>
+</form>
+{% endblock %}

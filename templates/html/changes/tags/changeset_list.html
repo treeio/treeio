@@ -1,0 +1,27 @@
+{% for changeset in changesets %}
+<div class="content-list-item content-list-item-{{ loop.cycle('odd', 'even') }}">
+    <div class="content-list-tick">
+        <input type="checkbox" name="mass-changeset-{{ changeset.id }}" value="{{ changeset.id }}" class="group-mass-unclassified" />
+    </div>
+    <span class="content-list-item-name">
+        <a href="{% url changes_set_view changeset.id %}">{{ changeset }}</a>
+        {% if changeset.author %}
+        <a href="{% url identities_user_view changeset.author.id %}" class="author-link small popup-link">{{ changeset.author }}</a>
+        {% endif %}
+        <span class="content-list-item-group">
+            {% set url = changeset.object.get_absolute_url() %}
+            {% set obj_type = changeset.object.get_human_type() %}
+            {% if url %}
+            <a href="{{ url }}" class="group-link popup-link">{{ changeset.object }}{% if obj_type %} ({{ obj_type }}){% endif %}</a>
+            {% else %}
+            <span class="spaced-h">{{ changeset.object }}{% if obj_type %} ({{ obj_type }}){% endif %}</span>
+            {% endif %}
+        </span>
+    </span>
+    <span class="content-list-item-actions">
+        {% if user.get_profile().has_permission(changeset.object, mode='w') %}
+        <a href="{% url changes_set_edit changeset.id %}" class="inline-link edit-link">{% trans %}Edit{% endtrans %}</a>
+        {% endif %}
+    </span>
+</div>
+{% endfor %}

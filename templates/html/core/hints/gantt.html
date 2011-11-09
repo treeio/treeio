@@ -1,0 +1,9 @@
+{% extends "html/core/hints/base.html" %}
+
+{% block hint_content %}
+<img class="left" src="/static/icons/hints/chart.gif"/>
+<div class="hint_message">
+<span class="hint_title">{% trans %}Gantt Chart can't be created for this project{% endtrans %}!</span>
+<h3>{% trans %}Please add Start and End dates to your Milestones and Tasks{% endtrans %}</h3>
+</div>
+{% endblock %}

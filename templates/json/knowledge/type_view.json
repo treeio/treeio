@@ -1,0 +1,36 @@
+{% extends "json/knowledge/page.json" %}
+{% block module_content %}
+
+	{
+	"type":
+		{
+			"id": {{ type.id }},
+			"url": "http://{{ site_domain }}{% url knowledge_type_view type.id %}",
+			"name": "{{ type }}",
+			{% if type.details -%}
+			"details": "{{ type.details.replace('\n', '').replace('\r', '')|htsafe }}",
+		    {% else -%}
+		    "details": null,
+		    {% endif -%}
+			{% if type.parent -%}
+			"parent": "{{ type.parent }}",
+		    {% else -%}
+		    "parent": null,
+		    {% endif -%}
+			"subtypes":
+				[
+				{% for subtype in subtype %}
+					{
+					"id": {{ subtype.id }},
+					"url": "http://{{ site_domain }}{% url knowledge_type_view subtype.id %}",
+					"name": "{{ subtype }}"
+					{% if loop.last -%}
+				    }
+				    {% else -%}
+				    },
+				    {% endif -%}
+				{% endfor %}
+				]
+		}
+	}
+{% endblock %}

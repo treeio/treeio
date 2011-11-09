@@ -1,0 +1,66 @@
+{% extends "html/page.html" %}
+
+{% block title %}{% trans %}Knowledge base{% endtrans %}{% endblock %}
+
+{% block content %}
+
+<table>
+    <tr>
+      <td class="module-sidebar">
+          
+      {{ logo_block_container() }}  
+      <div>
+	    <a href="{% url knowledge_index %}" class="sidebar-link {% block index_page %}{% endblock %}">{% trans %}All Items{% endtrans %}</a>
+        <a href="{% url knowledge_categories %}" class="sidebar-link {% block categories_page %}{% endblock %}">{% trans %}Categories{% endtrans %}</a>
+        <span class="sidebar-header">{% trans %}Folders{% endtrans %}</span>
+        {% for ifolder in folders %}
+        {% if not ifolder.parent %}
+        <a href="{% url knowledge_folder_view ifolder.treepath %}" class="sidebar-link {% if folder and ifolder == folder.get_root() %}sidebar-link-active{% endif %}">{{ ifolder.name }}</a>
+        {% endif %}
+        {% endfor %}
+        
+      </div>
+      </td>
+      <td class="module-content">
+
+        <div class="module-content-fill">
+
+            <div class="title-block">
+
+                <div class="title">
+                    {% block module_title %}{% trans %}Knowledge Base{% endtrans %}{% endblock %}
+                </div>
+                <div class="subtitle-block">
+                    {% block module_subtitle %}{% endblock %}
+                </div>
+                <div class="module-top-menu-inline">
+                    {% block module_topmenu %}
+                    <a href="{% url knowledge_item_add %}" class="top-menu add-link">{% trans %}New Item{% endtrans %}</a>
+                    <a href="{% url knowledge_folder_add %}" class="top-menu add-link popup-link">{% trans %}New Folder{% endtrans %}</a>
+                    <a href="{% url knowledge_category_add %}" class="top-menu add-link popup-link">{% trans %}New Category{% endtrans %}</a>
+                    <a href="{% url core_trash %}" class="top-menu trash-link {% if trash %}trash-full-link{% endif %}">{% trans %}Trash{% endtrans %}</a>
+                    {% endblock %}
+                </div>
+                {{ help_link() }}
+
+            </div>
+            <table>
+
+                <tr>
+                    <td class="module-content-inner">
+                    <!-- module_content_inner -->
+                    {% block module_content %}{% endblock %}
+                    <!-- /module_content_inner -->
+                    </td>
+                    <td class="module-sidebar-right">
+                    {% block sidebar_right %}{% endblock %}
+                    </td>
+                </tr>
+            </table>
+        </div>
+        </td>
+    </tr>
+</table>
+<div class="clear">
+</div>
+{% endblock %}

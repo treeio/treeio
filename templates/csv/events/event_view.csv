@@ -1,0 +1,4 @@
+name,details,start,end
+{% if event.name %}{{event.name|replace(',','')|replace('"','')|replace('
+','')|safe}},{% else %},{% endif %}{% if event.details %}{{event.details|replace(',','')|replace('\n', '').replace('\r', '').replace('"', '\"')|replace('
+','')|safe}},{% else %},{% endif %}{% if event.start %}{{event.start}},{% else %},{% endif %}{% if event.end %}{{event.end}}{% else %},{% endif %}

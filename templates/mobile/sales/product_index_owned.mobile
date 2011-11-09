@@ -1,0 +1,42 @@
+{% extends "mobile/sales/page.mobile" %}
+
+{% block title %}{% trans %}Products{% endtrans %} | {% trans %}Sales{% endtrans %}{% endblock %}
+
+{% block class_product_owned %}sidebar-link-active{% endblock %}
+
+{% block module_title %}{% trans %}Products{% endtrans %}{% endblock %}
+
+{% block module_topmenu %}
+<a href="{% url sales_product_add %}" class="top-menu add-link">{% trans %}New Product{% endtrans %}</a>
+<a href="{% url sales_subscription_add %}" class="top-menu add-link">{% trans %}New Subscription{% endtrans %}</a>
+{% endblock %}
+
+{% block sidebar_right %}
+{% endblock %}
+
+{% block module_content %}
+
+{% if products %}
+<form action="" method="post">
+{% csrf_token %}
+    <div class="clear large light content-label-head">
+        <ul class="mass-form">
+            <input type="checkbox" name="mass-products" class="group-control" />
+            <input type="hidden" name="massform" value="massform" />
+             {{ massform.as_ul()|htsafe }}
+            <li>
+                <input type="submit" value="{% trans %}Save{% endtrans %}" />
+            </li>
+        </ul>
+    </div>
+    
+	{{ sales_product_list(paginate(products)) }}
+    {{ pager(products) }}
+	
+</form>
+
+{% else %}
+{{ show_hint('sales_products') }}
+{% endif %}
+
+{% endblock %}

@@ -1,0 +1,26 @@
+{% extends "mobile/services/page.mobile" %}
+
+{% block title %}{% trans %}Agents{% endtrans %} | {% trans %}Service Support{% endtrans %}{% endblock %}
+
+{% block class_agent_index %}sidebar-link-active{% endblock %}
+
+{% block module_title %}{% trans %}Agents{% endtrans %}{% endblock %}
+
+{% block module_topmenu %}
+<a href="{% url services_agent_add %}" class="top-menu add-link">{% trans %}New Agent{% endtrans %}</a>
+{% endblock %}
+
+{% block sidebar_right %}
+{% endblock %}
+
+{% block module_content %}
+
+<ul data-role="listview" data-inset="true" data-theme="c">
+{% for agent in agents %}
+<li>
+	<a href="{% url services_agent_view agent.id %}">{{ agent }}</a>
+</li>
+{% endfor %}
+
+{% endblock %}
+</ul>

@@ -1,0 +1,8 @@
+<ul data-role="listview" data-inset="true" data-theme="c">
+{% for user in users %}
+<li>
+{% set contact = user.get_contact() %}
+    <a href="{% url core_admin_user_view user.id %}">{{ user.get_username() }}</a>
+</li>
+{% endfor %}
+</ul>

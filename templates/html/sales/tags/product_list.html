@@ -1,0 +1,70 @@
+{% if products %}
+    <table class="sales_table">
+
+        <!-- Table header -->
+
+        <thead>
+            <tr>
+                <th scope="col"></th>
+                <th scope="col"><a href="{{ htsortlink('code') }}" class="sort-link">{% trans %}Code{% endtrans %}</a></th>
+                <th scope="col"><a href="{{ htsortlink('name') }}" class="sort-link">{% trans %}Name{% endtrans %}</a></th>
+                <th scope="col"><a href="{{ htsortlink('active') }}" class="sort-link">{% trans %}Active{% endtrans %}</a></th>
+                <th scope="col"><a href="{{ htsortlink('supplier') }}" class="sort-link">{% trans %}Supplier{% endtrans %}</a></th>
+                <th scope="col"><a href="{{ htsortlink('stock_quantity') }}" class="sort-link">{% trans %}Stock quantity{% endtrans %}</a></th>
+                <th scope="col"><a href="{{ htsortlink('buy_price') }}" class="sort-link">{% trans %}Buy price{% endtrans %}</a></th>
+                <th scope="col"><a href="{{ htsortlink('sell_price') }}" class="sort-link">{% trans %}Sell price{% endtrans %}</a></th>
+                <th scope="col"><a href="{{ htsortlink('last_updated') }}" class="sort-link">{% trans %}Last updated{% endtrans %}</a></th>
+                <th scope="col"></th>
+            </tr>
+        </thead>
+        <!-- Table body -->
+
+        <tbody>
+
+            {% for product in products %}
+
+         <tr class="content-list-item content-list-item-{{ loop.cycle('odd', 'even') }}">
+                <td>
+                      <input type="checkbox" name="mass-product-{{ product.id }}" value="{{ product.id }}" class="group-mass-products" />
+                </td>
+                <td>
+                    <span class="smaller lighter">{{ product.code }}</span> 
+                </td>
+                <td>
+                   <b><a href="{% url sales_product_view product.id %}">{{ product.name }}</a></b>  {{ attachments_count(product) }}
+                </td>
+                <td>
+                    {% if product.active %}Active{% else %}Inactive{% endif %}
+                </td>
+                <td>
+                  {% if product.supplier %}
+                    <a href="{% url identities_contact_view product.supplier.id %}" class="author-link popup-link">{{ product.supplier }}</a>
+                  {% else %}
+				            -
+				          {% endif %}
+                </td>
+                <td>
+                  {{ product.stock_quantity }}
+                </td>
+                <td>
+                  {{ product.buy_price|number_format()|currency_format }}
+                </td>
+                <td>
+                    {{ product.sell_price|number_format()|currency_format }}
+                </td>
+                
+
+                <td>
+                    {{ last_updated(product) }}
+                </td>
+                <td>
+                  {% if user.get_profile().has_permission(product, mode='w') %}
+                  <span class="content-list-item-actions table-link"><a href="{% url sales_product_edit product.id %}" class="inline-link edit-link popup-link">{% trans %}Edit{% endtrans %}</a></span>
+                  {% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+
+        </tbody>
+    </table>
+{% endif %}

@@ -1,0 +1,51 @@
+{% extends "html/core/page.html" %}
+
+{% block title %}{% trans %}Invite People{% endtrans %} | {% trans %}Administration{% endtrans %}{% endblock %}
+
+{% block module_title %}{% trans %}Invite People{% endtrans %}{% endblock %}
+
+{% block class_invites %}sidebar-link-active{% endblock %}
+
+{% block module_content %}
+
+<div class="hint_box">
+	
+	<div class="hint_content">
+
+		{# 
+		   If submitted show message 
+		   If exceeded number of users show upgrade options
+		   Otherwise show invite form
+		#}
+		
+		{% if invited %}
+    	<img class="left" src="/static/icons/hints/invite.gif"/>
+		<span class="hint_title">{% trans %}Done! We have sent invitations to the following addresses{% endtrans %}:</span>
+		<br />
+		<p>
+		{% for email in invited %}
+		<strong>{{ email }}</strong>{% if not loop.last %},{% endif %}
+		{% endfor %}
+		</p>
+		{% else %}
+		<img class="left" src="/static/icons/hints/invite.gif"/>
+		<div class="hint_message">
+		<h3>{% trans %}Create accounts for your co-workers, clients, collaborators or friends{% endtrans %}.</h3>
+		
+		<form action="" method="post" class="content-form">
+		{% csrf_token %}
+		    <ul class="content-form-fields">
+		        <textarea id="id_emails" class="no-editor" name="emails" cols="50" rows="3"></textarea>
+				<br />{% trans %}Type a list of email addresses, separated by a comma{% endtrans %}.
+		    </ul>
+		    <div class="content-form-submit special">
+		        <input type="submit" value="{% trans %}Send Invitations{% endtrans %}">
+		    </div>
+		</form>
+		</div>
+		{% endif %}
+		
+	</div>
+</div>
+
+{% endblock %}

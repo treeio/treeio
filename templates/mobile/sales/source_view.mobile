@@ -1,0 +1,55 @@
+{% extends "mobile/sales/page.mobile" %}
+
+{% block title %}{% trans %}Sales{% endtrans %}{% endblock %}
+
+{% block module_title %}{{ status }}{% endblock %}
+
+{% block module_subtitle %}{% trans %}Order Status{% endtrans %}{% endblock %}
+
+{% block module_topmenu %}
+<a href="{% url sales_status_add %}" class="top-menu add-link">{% trans %}New Status{% endtrans %}</a>
+<a href="{% url sales_status_view status.id %}" class="top-menu view-link-active">{% trans %}View{% endtrans %}</a>
+{% if request.user.get_profile().is_admin('treeio.sales') %}
+<a href="{% url sales_status_edit status.id %}" class="top-menu edit-link">{% trans %}Edit{% endtrans %}</a>
+<a href="{% url sales_status_delete status.id %}" class="top-menu delete-link">{% trans %}Delete{% endtrans %}</a>
+{% endif %}
+{% endblock %}
+
+{% block sidebar_right %}
+{% endblock %}
+
+{% block module_content %}
+
+<div>
+    <span class="content-label">{% trans %}Active{% endtrans %}:</span>
+    <span class="content-value">{% if status.active %}{% trans %}Yes{% endtrans %}{% else %}{% trans %}No{% endtrans %}{% endif %}</span>
+</div>
+<div>
+    <span class="content-label">{% trans %}Hidden{% endtrans %}:</span>
+    <span class="content-value">{% if status.hidden %}{% trans %}Yes{% endtrans %}{% else %}{% trans %}No{% endtrans %}{% endif %}</span>
+</div>
+<div>
+    <span class="content-label">{% trans %}Available For{% endtrans %}:</span>
+    {% if status.use_leads %}
+    <span class="content-value">{% trans %}Leads{% endtrans %},</span>
+    {% endif %}
+    {% if status.use_opportunities %}
+    <span class="content-value">{% trans %}Opportunities{% endtrans %},</span>
+    {% endif %}
+    {% if status.use_sales %}
+    <span class="content-value">{% trans %}Orders{% endtrans %}</span>
+    {% endif %}
+</div>
+{% if status.details %}
+<div>
+    <span class="content-label">{% trans %}Details{% endtrans %}:</span>
+    <span class="content-details">{{ status.details|htsafe }}</span>
+</div>
+{% endif %}
+<br/>
+<div class="clear">
+    <span class="content-label-head">{% trans %}Orders With Status{% endtrans %} {{ status }}: {% if not orders %}{% trans %}None{% endtrans %}</span>
+</div>{% else %}</span></div>{{ sales_order_list(orders) }}
+{% endif %}
+
+{% endblock %}

@@ -1,0 +1,56 @@
+{% extends "mobile/services/page.mobile" %}
+
+{% block title %}{% trans %}Service Support{% endtrans %}{% endblock %}
+
+{% block class_assigned %}sidebar-link-active{% endblock %}
+
+{% block sidebar_right %}
+{% endblock %}
+
+{% block module_content %}
+
+<form action="" method="post">
+{% csrf_token %}
+  {% if queues %}
+  <ul class="mass-form">
+      <input type="hidden" name="massform" value="massform" />
+       {{ massform.as_ul()|htsafe }}
+      <li>
+          <input type="submit" value="{% trans %}Save{% endtrans %}" />
+      </li>
+  </ul>
+    {% for queue in queues %}
+    <span class="large light content-label-head">
+        <input type="checkbox" name="mass-queue-{{ queue.id }}" value="{{ queue.id }}" class="group-control" />
+        <a href="{% url services_queue_view queue.id %}" class="services-queue">{{ queue }}</a>
+        <span class="spaced-h smaller">
+            <a href="{% url services_ticket_add_by_queue queue.id %}" id="add_ticket" class="inline-link add-link popup-link">{% trans %}Add{% endtrans %}</a>
+        </span>
+    </span>
+    {% set render_tickets = tickets.filter(queue=queue) %}
+    {% if render_tickets %}
+    {{ services_ticket_list(render_tickets, queue) }}
+    {% else %}
+    <div class="content-list-item spaced-v spaced-h lighter">
+        <em>{% trans %}No Active Tickets{% endtrans %}</em>.
+        {% if agent %}
+        <a href="{% url services_ticket_add_by_queue queue.id %}" class="popup-link"><strong>{% trans %}Create a Ticket{% endtrans %}</strong></a>
+        {% endif %}
+    </div>
+    {% endif %}
+    <br />
+    {% endfor %}
+
+    {% set render_tickets = tickets.filter(queue__isnull=True) %}
+    {% if render_tickets %}
+    <span class="large light content-label-head">
+        <em>{% trans %}Unclassified Tickets{% endtrans %}</em>
+    </span>
+    {{ services_ticket_list(tickets) }}
+    {% endif %}
+  {% else %}
+  {{ show_hint('services') }}
+  {% endif %}
+
+</form>
+{% endblock %}

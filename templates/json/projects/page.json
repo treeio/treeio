@@ -1,0 +1,7 @@
+{% extends "json/page.json" %}
+{% block title %}Project Management / Hardtree{% endblock %}
+{% block module_title %}Project Management{% endblock %}
+{% block module_subtitle %}Projects{% endblock %}
+{% block content %}
+	"content": {% block module_content %}{% endblock %}
+{%- endblock %}

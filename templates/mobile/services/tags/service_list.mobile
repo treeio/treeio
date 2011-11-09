@@ -1,0 +1,7 @@
+<ul data-role="listview" data-inset="true" data-theme="c">
+	{% for service in services %}
+	<li>
+		<a href="{% url services_service_view service.id %}">{{ service }}</a>
+	</li>
+	{% endfor %}
+</ul>

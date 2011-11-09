@@ -1,0 +1,15 @@
+<div id="menu">
+    <ul data-role="listview" data-inset="true" data-theme="c">
+	    <li data-role="list-divider">{% trans %}Tree.io menu{% endtrans %}</li> 
+	    
+	    {% for module in modules if module.name != "treeio.knowledge" and module.name != "treeio.infrastructure" -%}
+		
+	    <li>
+	    	<a href="{{ module.url }}"><img class="ui-li-icon" src="/static/icons/{{ module.name|replace('treeio', '')|replace('.', '')}}-active.png" />{{ module }}</a>
+	    </li>
+	
+		{%- endfor %}
+
+    </ul>
+</div>
+	

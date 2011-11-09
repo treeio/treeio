@@ -1,0 +1,67 @@
+{% extends "json/projects/page.json" %}
+{% block module_content %}
+
+{"task":
+	{	
+	"id": {{ task.id }},
+	"url": "http://{{ site_domain }}{% url projects_task_view task.id %}",
+	"name": "{{ task }}",
+     {% if task.caller -%}
+	 "caller": {
+	            "id": {{ task.caller_id }},
+	            "url": "http://{{ site_domain }}{% url identities_contact_view task.caller_id %}",
+	            "name": "{{ task.caller }}"
+	           },
+	 {% else -%}
+	 "caller": null,
+	 {% endif -%}
+	 "assigned": [
+	    {%- for assignee in task.assigned.all() %}
+	       {
+	        "id": {{ assignee.id }},
+	        "url": "http://{{ site_domain }}{% url identities_user_view assignee.id %}",
+	        "name": "{{ assignee }}"
+	       {% if loop.last %}}{% else %}},{% endif %}
+	    {%- endfor -%}
+	 ],
+	 "status": {
+	            "id": {{ task.status_id }},
+	            "url": "http://{{ site_domain }}{% url projects_index_by_status task.status_id %}",
+	            "name": "{{ task.status }}"
+	           },
+	 "project": "{{ task.project}}",
+	 {% if task.parent -%}
+	 "parent": "{{ task.parent }}",
+	 {% endif %}
+	 {% if task.milestone -%}
+	 "milestone": "{{ task.milestone }}",
+	 {% endif %}
+	 "date created": "{{ task.date_created }}",
+	 {% if task.end_date -%}
+	 "end date": "{{ task.end_date }}",
+	 {% endif %}
+	 {% if task.details -%}
+	 "details": "{{ task.details.replace('\n', '').replace('\r', '')|htsafe }}"
+	 {% endif %}
+	 {% if task.subtasks -%}
+	 "queues": [
+				{%- for subtask in subtasks %}
+				{
+				 "id": {{ subtask.id }},
+				 "url": "http://{{ site_domain }}{% url projects_task_view subtask.id %}",
+				 "name": "{{ subtask }}"
+				{% if loop.last -%}
+				}
+				{% else -%}
+				},
+				{% endif -%}
+				{% endfor -%}
+				]
+	 {% endif %}
+	 {% if task.priority -%}
+	 "priority": "{{ task.priority }}"
+	 {% endif %}
+}
+}
+
+{% endblock %}

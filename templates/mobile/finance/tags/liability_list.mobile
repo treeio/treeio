@@ -1,0 +1,13 @@
+<ul data-role="listview" data-inset="true" data-theme="c">
+{% for liability in liabilities %}
+	<li>
+		<a href="{% url finance_receivable_view liability.id %}">
+			<h3>{{ liability.name|truncate(length=60) }}</h3>
+			<p>{% trans %}Source{% endtrans %}: {{ liability.source }}</p>
+			<p class="ui-li-aside">
+				{% if liability.due_date %}{{ liability.due_date|htdate('SHORT_DATE_FORMAT') }}{% endif %}
+			</p>
+		</a>
+	</li>
+{% endfor %}
+</ul>

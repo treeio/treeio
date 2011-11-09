@@ -1,0 +1,29 @@
+{% extends "mobile/documents/page.mobile" %}
+
+{% block title %}{% trans %}Web Links{% endtrans %} | {% trans %}Documents{% endtrans %}{% endblock %}
+
+{% block module_title %}{% trans %}Web Links{% endtrans %}{% endblock %}
+
+{% block index_weblinks %}sidebar-link-active{% endblock %}
+
+{% block sidebar_right %}
+{% endblock %}
+
+{% block module_content %}
+
+<form action="" method="post">
+{% csrf_token %}
+    <ul class="mass-form">
+        <input type="hidden" name="massform" value="massform" />
+        <input type="checkbox" name="mass-unclassified" value="unclassified" class="group-control" />
+        {{ massform.as_ul()|htsafe }}
+        <li>
+            <input type="submit" value="{% trans %}Save{% endtrans %}" />
+        </li>
+    </ul>
+    {{ documents_weblink_list(paginate(links)) }}
+
+    {{ pager(links) }}
+</form>
+
+{% endblock %}

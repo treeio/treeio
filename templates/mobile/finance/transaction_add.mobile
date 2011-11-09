@@ -1,0 +1,27 @@
+{% extends "mobile/finance/page.mobile" %}
+
+{% block title %}{% trans %}New Transaction{% endtrans %} | {% trans %}Finance{% endtrans %}{% endblock %}
+
+{% block module_title %}{% trans %}Transactions{% endtrans %}{% endblock %}
+
+{% block module_topmenu %}
+<a href="{% url finance_transaction_add %}" class="top-menu add-link-active">{% trans %}New Transaction{% endtrans %}</a>
+{% endblock %}
+
+{% block module_content %}
+
+<form action="" method="post" class="content-form">
+{% csrf_token %}
+    <ul class="content-form-fields">
+        {{ htform(form).as_ul()|htsafe }}
+    </ul>
+    <div class="content-form-submit ui-grid-a">
+    <div class="ui-block-a">
+        <input data-theme="b" type="submit" name="save" value="{% trans %}Create Transaction{% endtrans %}" />
+    </div>
+    <div class="ui-block-b">
+        <input type="submit" name="cancel" value="{% trans %}Cancel{% endtrans %}" class="cancel" />
+    </div>
+    </div>
+</form>
+{% endblock %}

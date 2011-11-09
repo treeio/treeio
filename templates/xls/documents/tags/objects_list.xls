@@ -1,0 +1,6 @@
+title,folder,body
+{% for object in objects %}{% set document = object.get_related_object() %}{{document|replace(',','')|replace('"','')|replace('
+','')|safe}},{% if document.folder %}{{document.folder|replace(',','')|replace('"','')|replace('
+','')|safe}},{% else %},{% endif %}{% if document.body %}{{document.body|replace(',','')|replace('\n', '').replace('\r', '').replace('"', '\"')|replace('
+','')|safe}}{% else %},{% endif %}
+{% endfor %}

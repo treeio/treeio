@@ -1,0 +1,80 @@
+{% extends "html/page.html" %}
+
+{% block title %}{% trans %}Project Management{% endtrans %}{% endblock %}
+
+{% block content %}
+
+<table>
+    <tr>
+        <td class="module-sidebar">
+         
+		{{ logo_block_container() }}
+		<div>
+        <a href="{% url projects_index %}" class="sidebar-link {% block index_page %}{% endblock %}">{% trans %}All Tasks{% endtrans %}</a>
+        <a href="{% url projects_index_owned %}" class="sidebar-link {% block class_owned %}{% endblock %}">{% trans %}Called by me{% endtrans %}</a>
+        <a href="{% url projects_index_assigned %}" class="sidebar-link {% block class_assigned %}{% endblock %}">{% trans %}Assigned to me{% endtrans %}</a>
+        <a href="{% url projects_tasks_in_progress %}" class="sidebar-link {% block class_in_progress %}{% endblock %}">{% trans %}Tasks in progress{% endtrans %}</a>
+        <span class="sidebar-header">{% trans %}Projects{% endtrans %}</span>
+        {% for iproject in projects %}
+        {% if not iproject.parent %}
+        <a href="{% url projects_project_view iproject.id %}" class="sidebar-link {% if iproject == project %}sidebar-link-active{% endif %}">{{ iproject }}</a>
+        {% endif %}
+        {% endfor %}
+        {% block project_task_statuses %}
+        {% if statuses %}
+        <span class="sidebar-header">{% trans %}By status{% endtrans %}</span>
+        {% for status in statuses %}
+        <a href="{% url projects_index_by_status status.id %}" class="sidebar-link">{{ status }}</a>
+        {% endfor %}
+        {% endif %}
+        {% endblock %}
+
+        {% if request.user.get_profile().is_admin('treeio.projects') %}
+        <span class="sidebar-header">{% trans %}Administration{% endtrans %}</span>
+        <a href="{% url projects_settings_view %}" class="sidebar-link {% block class_admin_settings %}{% endblock %}">{% trans %}Settings{% endtrans %}</a>
+        {% endif %}
+		
+		</div>
+		
+        </td>
+        <td class="module-content">
+
+        <div class="module-content-fill">
+
+            <div class="title-block">
+
+                <div class="title">
+                    {% block module_title %}{% trans %}Projects{% endtrans %}{% endblock %}
+                </div>
+                <div class="subtitle-block">
+                    {% block module_subtitle %}{% endblock %}
+                </div>
+                <div class="module-top-menu-inline">
+                    {% block module_topmenu %}
+                    <a href="{% url project_add %}" class="top-menu add-link popup-link">{% trans %}New Project{% endtrans %}</a>
+                    <a href="{% url core_trash %}" class="top-menu trash-link {% if trash %}trash-full-link{% endif %}">{% trans %}Trash{% endtrans %}</a>
+                    {% endblock %}
+                </div>
+                {{ help_link() }}
+
+            </div>
+            <table>
+
+                <tr>
+                    <td class="module-content-inner">
+                    <!-- module_content_inner -->
+                    {% block module_content %}{% endblock %}
+                    <!-- /module_content_inner -->
+                    </td>
+                    <td class="module-sidebar-right">
+                    {% block sidebar_right %}{% endblock %}
+                    </td>
+                </tr>
+            </table>
+        </div>
+        </td>
+    </tr>
+</table>
+<div class="clear">
+</div>
+{% endblock %}

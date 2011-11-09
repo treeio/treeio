@@ -1,0 +1,33 @@
+{% extends "mobile/finance/page.mobile" %}
+
+{% block title %}{% trans %}Edit{% endtrans %} | {{ equity|htsafe }} | {% trans %}Equity{% endtrans %} | {% trans %}Finance{% endtrans %}{% endblock %}
+
+{% block module_title %}{{ equity }}{% endblock %}
+{% block module_subtitle %}{% trans %}Equity{% endtrans %}{% endblock %}
+
+{% block module_topmenu %}
+<a class="top-menu view-link" href="{% url finance_equity_view equity.id %}">{% trans %}View{% endtrans %}</a>
+<a class="top-menu edit-link-active" href="{% url finance_equity_edit equity.id %}">{% trans %}Edit{% endtrans %}</a>
+<a class="top-menu delete-link" href="{% url finance_equity_delete equity.id %}">{% trans %}Delete{% endtrans %}</a>
+{% endblock %}
+
+{% block sidebar_right %}
+{% endblock %}
+
+{% block module_content %}
+
+<form action="" method="post" class="content-form">
+{% csrf_token %}
+    <ul class="content-form-fields">
+        {{ htform(form).as_ul()|htsafe }}
+    </ul>
+    <div class="content-form-submit ui-grid-a">
+    <div class="ui-block-a">
+        <input data-theme="b" type="submit" name="save" value="{% trans %}Save{% endtrans %}" />
+    </div>
+    <div class="ui-block-b">
+        <input type="submit" name="cancel" value="{% trans %}Cancel{% endtrans %}" class="cancel" />
+    </div>
+    </div>
+</form>
+{% endblock %}

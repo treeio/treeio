@@ -1,0 +1,15 @@
+<ul data-role="listview" data-inset="true" data-theme="c">
+{% for product in products %}
+	<li>
+	    <a href="{% url sales_product_view product.id %}">
+	        <h3>{{ product.name }}</h3>
+	        {%- if product.stock_quantity %}
+		        <p>
+					{% trans %}Stock{% endtrans %}:
+			        {{ product.stock_quantity }}
+		        </p>
+	        {%- endif %}
+		</a>
+	</li>
+{% endfor %}
+</ul>

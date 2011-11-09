@@ -1,0 +1,5 @@
+title,folder,body
+{{document|replace(',','')|replace('"','')|replace('
+','')|safe}},{% if document.folder %}{{document.folder|replace(',','')|replace('"','')|replace('
+','')|safe}},{% else %},{% endif %}{% if document.body %}{{document.body|replace(',','')|replace('"','')|replace('
+','')|safe}}{% else %},{% endif %}

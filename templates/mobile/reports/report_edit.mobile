@@ -1,0 +1,82 @@
+{% extends "mobile/reports/page.mobile" %}
+
+{% block title %}{% trans %}Reports{% endtrans %}{% endblock %}
+
+{% block module_title %}
+{% if report %}
+{{ report|htsafe }}
+{% else %}
+{% trans %}Reports{% endtrans %}
+{% endif %}
+{% endblock %}
+
+{% block report_index %}sidebar-link-active{% endblock %}
+
+{% block module_subtitle %}{% if report %}{% trans %}Report{% endtrans %}{% endif %}{% endblock %}
+
+{% block module_topmenu %}
+<a class="top-menu view-link" href="{% url reports_report_view report.id %}">{% trans %}View{% endtrans %}</a>
+<a class="top-menu edit-link-active" href="{% url reports_report_edit report.id %}">{% trans %}Edit{% endtrans %}</a>
+<a class="top-menu delete-link" href="{% url reports_report_delete report.id %}">{% trans %}Delete{% endtrans %}</a>
+{% endblock %}
+
+{% block module_content %}
+
+<form action="{% url reports_report_edit report.id %}" method="post">
+{% csrf_token %}
+  <br>
+  <div>
+    <ul class="content-form-fields">
+      <li>
+        <label class="required" for="id_report_name">Title:</label>
+        <input id="id_report_name" type="text" value="{{report}}" name="report_name">
+    </ul>
+  </div>
+    <span class="content-label-head">
+</span>
+    <table id="reports_table">
+        <thead>
+            <tr>
+                <th scope="col" style="width: 80px;">{% trans %}Display{% endtrans %}</th>
+                <th scope="col">{% trans %}Field Name{% endtrans %}</th>
+                
+                <th scope="col">{% trans %}Filter{% endtrans %}</th>
+                <th scope="col">{% trans %}Group{% endtrans %}</th>
+                {#<th scope="col">{% trans %}Join{% endtrans %}</th>#}
+                
+            </tr>
+        </thead>
+        {% for field in model.fields %}
+        <tr class="content-list-item-{{ loop.cycle('odd', 'even') }}">
+            <td>
+            <input type="checkbox" name="field-{{field.name}}" value="{{field.name}}" {% if field.display %}checked="yes"{% endif %}></td>
+            <td>{{ field.get_human_name() }}</td>
+            
+            <td><a class="popup-link" href="{% url reports_report_filter report.id, field.name %}">
+            <img src="/static/modules/filter.png" alt="filter" /></a></td>
+            
+            
+            <td><a href="{% url reports_report_group report.id, field.name %}">
+            <img src="/static/modules/{% if field.groupby == 0 %}group{% else %}grouped{% endif %}.png" alt="group" /></a></td>
+            
+            {#<td><a href="{% url reports_report_join report.id, field.name%}">
+            <img src="/static/modules/join.png" alt="join" /></a></td>#}
+            
+        </tr>
+        {% set cycle = loop.cycle %}
+        {% for f in field.filters %}
+        {% set index = loop.index %}
+          <tr class="content-list-item-{{ cycle }}">
+          <td></td><td></td><td>{{f['display']}}<a href="{% url reports_report_filter_remove report.id, field.name, index %}"> (x)</a></td><td> </td>
+        </tr>
+        {% endfor %}
+        {% endfor %}
+    </table>
+    <br />
+    <input type="hidden" name="report" value="{{report.id}}">
+    <div class="content-form-submit">
+      <input type="submit" name="commit" value="{% trans %}Save{% endtrans %}">
+    </div>
+</form>
+
+{% endblock %}

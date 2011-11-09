@@ -1,0 +1,44 @@
+{% extends "html/base_widget.html" %}
+
+{% block widget_title %}{% trans %}Calendar: This Week{% endtrans %}{% endblock %}
+
+{% block widget_content %}
+
+
+<div class="calendar-week-header" style="width: 100%;">
+    <span class="smaller">
+    {{ start_date|htdate }} &mdash; {{ end_date|htdate }}
+    </span>
+</div>
+<table class="calendar-month-table" style="width: 100%;">
+    <tr>
+        {% for day in dates[0] %}
+        <th scope="col">{{ day|htdate('l') }}</th>
+        {% endfor %}
+    </tr>
+    <tr>
+        {% for date in week %}
+        {% if now.date() == date %}
+        <td class="calendar-month-day calendar-month-day-today content-list-item">
+        {% else %}
+        {% if date_current.month == date.month %}
+        <td class="calendar-month-day content-list-item">
+        {% else %}
+        <td class="calendar-month-day calendar-month-day-outside content-list-item">
+        {% endif %}
+        {% endif %}
+        <div class="calendar-month-day-label">
+            {{ date.day }}
+        <span class="content-list-item-actions" style="position: relative; float: left;">
+            <a href="{% url events_event_add_to_date date.isoformat() %}" class="inline-link add-link" style="padding: 0; width: 16px; height: 16px;"></a>
+        </span>
+        </div>
+        {{ events.render_for_date(date) }}
+
+        </td>
+        {% endfor %}
+    </tr>
+
+</table>
+
+{% endblock %}

@@ -1,0 +1,7 @@
+<ul data-role="listview" data-inset="true" data-theme="c">
+	{% for module in modules %}
+	<li>
+		<a href="{% url core_admin_module_view module.id %}">{{ module }}</a>
+	</li>
+	{% endfor %}
+</ul>

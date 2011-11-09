@@ -1,0 +1,13 @@
+lead,contact,products_interested,source,expected_date,closed_date,assigned,status,probability,amount,details
+{% if opportunity.lead %}{{opportunity.lead|replace(',','')|replace('"','')|replace('
+','')|safe}},{% else %},{% endif %}{% if opportunity.contact %}{{opportunity.contact|replace(',','')|replace('"','')|replace('
+','')|safe}},{% else %},{% endif %}{% if opportunity.products_interested %}{% for x in opportunity.products_interested.all() %}{{x|replace(',','')|replace('"','')|replace('
+','')|safe}};{% endfor %},{% endif %}{% if opportunity.source %}{{opportunity.source|replace(',','')|replace('"','')|replace('
+','')|safe}},{% else %},{% endif %}{% if opportunity.expected_date %}{{opportunity.expected_date|replace(',','')|replace('"','')|replace('
+','')|safe}},{% else %},{% endif %}{% if opportunity.closed_date %}{{opportunity.closed_date|replace(',','')|replace('"','')|replace('
+','')|safe}},{% else %},{% endif %}{% if opportunity.assigned %}{% for x in opportunity.assigned.all() %}{{x|replace(',','')|replace('"','')|replace('
+','')|safe}};{% endfor %},{% endif %}{% if opportunity.status %}{{opportunity.status|replace(',','')|replace('"','')|replace('
+','')|safe}},{% else %},{% endif %}{% if opportunity.probability %}{{opportunity.probability|replace(',','')|replace('"','')|replace('
+','')|safe}},{% else %},{% endif %}{% if opportunity.amount %}{{opportunity.amount|replace(',','')|replace('"','')|replace('
+','')|safe}},{% else %},{% endif %}{% if opportunity.details %}{{opportunity.details|replace(',','')|replace('\n', '').replace('\r', '').replace('"', '\"')|replace('
+','')|safe}}{% else %},{% endif %}

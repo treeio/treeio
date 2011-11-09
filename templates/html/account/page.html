@@ -1,0 +1,55 @@
+{% extends "html/page.html" %}
+
+{% block title %}{% trans %}Account{% endtrans %}{% endblock %}
+
+{% block content %}
+
+<table>
+    <tr>
+        <td class="module-sidebar">
+	
+		{{ logo_block_container() }}
+		<div>
+        <a href="{% url account_view %}" class="sidebar-link {% block class_account %}{% endblock %}">{% trans %}My Account{% endtrans %}</a>
+        <a href="{% url account_watchlist %}" class="sidebar-link {% block class_watchlist %}{% endblock %}">{% trans %}My Watchlist{% endtrans %}</a>
+        <span class="sidebar-header">{% trans %}Settings{% endtrans %}</span>
+        <a href="{% url account_settings_view %}" class="sidebar-link {% block class_settings %}{% endblock %}">{% trans %}Account Settings{% endtrans %}</a>
+        </div>
+		</td>
+        <td class="module-content">
+
+        <div class="module-content-fill">
+
+            <div class="title-block">
+
+                <div class="title">
+                    {% block module_title %}Account{% endblock %}
+                </div>
+                <div class="subtitle-block">
+                    {% block module_subtitle %}{% endblock %}
+                </div>
+                <div class="module-top-menu-inline">
+                    {% block module_topmenu %}
+                    {% endblock %}
+                </div>
+                {{ help_link() }}
+
+            </div>
+            <table>
+
+                <tr>
+                    <td class="module-content-inner">
+                    <!-- module_content_inner -->
+                    {% block module_content %}{% endblock %}
+                    <!-- /module_content_inner -->
+                    </td>
+                    <td class="module-sidebar-right">
+                    {% block sidebar_right %}{% endblock %}
+                    </td>
+                </tr>
+            </table>
+        </div>
+        </td>
+    </tr>
+</table>
+{% endblock %}

@@ -1,0 +1,39 @@
+{% extends "mobile/finance/page.mobile" %}
+
+{% block title %}{% trans %}Liabilities{% endtrans %} | {% trans %}Finance{% endtrans %}{% endblock %}
+
+{% block module_title %}{% trans %}Liabilities{% endtrans %}{% endblock %}
+
+{% block class_liabilities %}sidebar-link-active{% endblock %}
+
+{% block module_topmenu %}
+<a href="{% url finance_liability_add %}" class="top-menu add-link">{% trans %}New Liability{% endtrans %}</a>
+{% endblock %}
+
+{% block sidebar_right %}
+{% endblock %}
+
+{% block module_content %}
+{% if liabilities %}
+
+<form action="" method="post">
+{% csrf_token %}
+    <div class="content-label-head">
+        <ul class="mass-form">
+            <input type="checkbox" name="mass-liabilities" class="group-control" {% if not liabilities %}disabled="true"{% endif %} />
+            <input type="hidden" name="massform" value="massform" />
+             {{ massform.as_ul()|htsafe }}
+            <li>
+                <input type="submit" value="{% trans %}Save{% endtrans %}" />
+            </li>
+        </ul>
+    </div>
+    {{ finance_liability_list(paginate(liabilities)) }}
+
+    {{ pager(liabilities) }}
+
+</form>
+{% else %}
+{{ show_hint('finance_liabilities') }}
+{% endif %}
+{% endblock %}

@@ -1,0 +1,23 @@
+<ul data-role="listview" data-inset="true" data-theme="c">
+{% for message in messages %}
+<li>
+	<a href="{% url messaging_message_view message.id %}">
+		<img class="ui-li-icon" src="/static/icons/messaging-active.png"/>
+		<p class="ui-li-aside">
+			{{ message.date_created|humanize_datetime }}
+		</p>
+		
+		<h3>{{ message.author }}:</h3>
+		{% if message.title %}
+			<p>
+				{{ message.title|truncate(100, True) }}
+			</p>
+		{% else %}
+			<p>
+				{{ message.get_stripped_body()|truncate(100, True) }}
+			</p>
+		{% endif %}
+	</a>
+</li>
+{% endfor %}
+</ul>

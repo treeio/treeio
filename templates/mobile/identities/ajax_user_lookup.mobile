@@ -1,0 +1,4 @@
+{% for user in users %}
+{{ user }}|{{ user.id }}
+{% endfor %}
+

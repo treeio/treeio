@@ -1,0 +1,108 @@
+{% extends "mobile/sales/page.mobile" %}
+
+{% block title %}{% trans %}Order{% endtrans %} {{ order }} | {% trans %}Sales{% endtrans %}{% endblock %}
+
+{% block module_title %}{% trans %}Order{% endtrans %} {{ order }}{% endblock %}
+
+{% block module_subtitle %}{% trans %}Sale Order{% endtrans %}{% endblock %}
+
+{% block module_topmenu %}
+<a href="{% url sales_order_view order.id %}" class="top-menu view-link">{% trans %}View{% endtrans %}</a>
+<a href="{% url sales_order_invoice_view order.id %}" class="top-menu view-link">{% trans %}Invoice{% endtrans %}</a>
+<a href="{% url sales_order_edit order.id %}" class="top-menu edit-link">{% trans %}Edit{% endtrans %}</a>
+<a href="{% url sales_order_delete order.id %}" class="top-menu delete-link-active">{% trans %}Delete{% endtrans %}</a>
+{#<a href="{% url sales_ordered_product_add order.id %}" class="top-menu add-link">{% trans %}Add Ordered Product{% endtrans %}</a>#}
+{% endblock %}
+
+{% block module_content %}
+
+<div>
+    <span class="larger">{% trans %}Delete this Sale Order?{% endtrans %}</span>
+    <br />
+    <form action="" method="post" class="content-form">
+{% csrf_token %}
+        <ul class="content-form-fields">
+            <li>
+                <label for="trash">
+                    <input id="trash" type="checkbox" name="trash" checked="checked" />
+                    {% trans %}Move to Trash{% endtrans %}
+                </label>
+            </li>
+            <li class="ui-grid-a">
+            <div class="ui-block-a">
+                <input data-theme="b" type="submit" name="delete" value="{% trans %}Yes, Delete{% endtrans %}" style="font-weight: 700;" />&nbsp;&nbsp;
+            </div>
+            <div class="ui-block-b">
+                <input type="submit" name="cancel" value="{% trans %}Cancel{% endtrans %}" class="cancel" />
+            </div>
+            </li>
+        </ul>
+    </form>
+</div>
+{% if order.assigned %}
+<div>
+    <span class="content-label">{% trans %}Assigned to{% endtrans %}:</span>
+    <span class="content-value">
+        {% for assignee in order.assigned.all() %}
+        <a href="{% url identities_user_view assignee.id %}">{{ assignee }}</a>
+        <br />
+        {% endfor %}
+    </span>
+    {% else %}
+    <span class="content-value">
+        Anyone
+        <br />
+    </span>
+</div>
+{% endif %}
+
+{% if order.client %}
+<div>
+    <span class="content-label">{% trans %}Client{% endtrans %}:</span>
+    <span class="content-value"><a href="{% url identities_contact_view order.client_id %}">{{ order.client }}</a></span>
+</div>
+{% endif %}
+
+{% if order.opportunity %}
+<div>
+    <span class="content-label">{% trans %}Opportunity{% endtrans %}:</span>
+    <span class="content-value"><a href="{% url sales_opportunity_view order.opportunity.id %}">{{ order.opportunity }}</a></span>
+</div>
+{% endif %}
+
+<div>
+    <span class="content-label">{% trans %}Date created{% endtrans %}:</span>
+    <span class="content-value">{{ order.date_created|htdatetime }}</span>
+</div>
+{% if order.quantity %}
+<div>
+    <span class="content-label">{% trans %}Quantity{% endtrans %}:</span>
+    <span class="content-value">{{ order.quantity }}</span>
+</div>
+{% endif %}
+
+{% if order.payment %}
+<div>
+    <span class="content-label">{% trans %}Payment{% endtrans %}:</span>
+    <span class="content-value">{{ order.payment.value }}</span>
+</div>
+{% endif %}
+
+<div>
+    <span class="content-label">{% trans %}Status{% endtrans %}:</span>
+    <span class="content-value">{{ order.status }}</span>
+</div>
+{% if order.source %}
+<div>
+    <span class="content-label">{% trans %}Source{% endtrans %}:</span>
+    <span class="content-value">{{ order.source }}</span>
+</div>
+{% endif %}
+{% if order.details %}
+<div>
+    <span class="content-label">{% trans %}Details{% endtrans %}:</span>
+    <span class="content-details">{{ order.details|htsafe }}</span>
+</div>
+{% endif %}
+
+{% endblock %}

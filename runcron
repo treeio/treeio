@@ -1,0 +1,3 @@
+#!/bin/bash
+cd /srv/vhosts/treeio.com/treeio/treeio
+python manage.py runcron --loglevel=debug --noloop --settings=settings-prod

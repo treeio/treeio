@@ -1,0 +1,39 @@
+{% extends "html/identities/page.html" %}
+
+{% block title %}{{ type|htsafe }} | {% trans %}Identities{% endtrans %}{% endblock %}
+
+{% block module_title %}{{ type }}{% endblock %}
+{% block module_subtitle %}{% trans %}Contact Type{% endtrans %}{% endblock %}
+
+{% block module_topmenu %}
+<a href="{% url identities_contact_add_typed type.id %}" class="top-menu add-link">{% trans %}New{% endtrans %} {{ type.name }}</a>
+<a href="{% url identities_type_view type.id %}" class="top-menu view-link">{% trans %}View{% endtrans %}</a>
+<a href="{% url identities_type_edit type.id %}" class="top-menu edit-link">{% trans %}Edit{% endtrans %}</a>
+<a href="{% url identities_type_delete type.id %}" class="top-menu delete-link-active">{% trans %}Delete{% endtrans %}</a>
+{% endblock %}
+
+{% block module_content %}
+
+<div class="delete-object">
+    <span class="larger">{% trans %}Delete this Contact Type?{% endtrans %}</span>
+    <br />
+    <form action="" method="post" class="content-form">
+{% csrf_token %}
+        <ul class="content-form-fields">
+            <p>
+                {% trans %}WARNING: All Contacts of this Type will be deleted{% endtrans %}.
+            </p>
+            <li>
+                <label for="trash">
+                    <input id="trash" type="checkbox" name="trash" checked="checked" />
+                    {% trans %}Move to Trash{% endtrans %}
+                </label>
+            </li>
+            <li>
+                <input type="submit" name="delete" value="{% trans %}Yes, Delete{% endtrans %}" />&nbsp;&nbsp;
+                <input type="submit" name="cancel" value="{% trans %}Cancel{% endtrans %}" class="cancel" />
+            </li>
+        </ul>
+    </form>
+</div>
+{% endblock %}

@@ -1,0 +1,18 @@
+{% extends "html/identities/page.html" %}
+
+{% block title %}{% trans %}Groups{% endtrans %} | {% trans %}Identities{% endtrans %}{% endblock %}
+
+{% block module_title %}{% trans %}Groups{% endtrans %}{% endblock %}
+
+{% block module_topmenu %}
+{% endblock %}
+
+{% block class_groups %}sidebar-link-active{% endblock %}
+
+{% block module_content %}
+
+{{ identities_group_list(paginate(groups)) }}
+
+{{ pager(groups) }}
+
+{% endblock %}

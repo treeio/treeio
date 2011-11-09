@@ -1,0 +1,41 @@
+{% if messages %}
+    <table class="generic_table">
+        <tbody>
+        {% for message in messages %}
+            {% set isread = message.is_read(user.get_profile()) %}
+            <tr class="content-list-item content-list-item-{{ loop.cycle('odd', 'even') }} {% if not isread %}message-unread{% endif %}">
+                {% if not nomass %}
+                <td>
+                    <input type="checkbox" name="mass-message-{{ message.id }}" value="{{ message.id }}" class="group-mass-unclassified" />
+                </td>
+                {% endif %}
+                <td>
+                    <div class="message-list-field">
+                    <a href="{% url messaging_message_view message.id %}" class="author-link" {% if not isread %}style="color: #000;"{% endif %}>{{ message.author }}</a>
+                    </div>
+                </td>
+                <td>
+                    <div class="message-list-field">
+                    {% if message.title %}
+                    <a href="{% url messaging_message_view message.id %}">{{ message.title|truncate(100, True) }}</a>
+                    <span class="spaced-h">
+                        <a class="small lighter" href="{% url messaging_message_view message.id %}">{{ message.get_stripped_body()|truncate(100, True) }}</a>
+                    </span>
+                    {% else %}
+                    <a href="{% url messaging_message_view message.id %}">{{ message.get_stripped_body()|truncate(100, True) }}</a>
+                    {% endif %}
+                    </div>
+                </td>
+                <td style="min-width: 80px;">
+                    <div class="message-list-field">
+                    <span class="small">{{ message.date_created|humanize_datetime }}</span>
+                    {% if message.stream %}
+                    <a href="{% url messaging_stream_view message.stream.id %}" class="group-link">{{ message.stream }}</a>
+                    {% endif %}
+                    </div>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endif %}

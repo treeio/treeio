@@ -1,0 +1,240 @@
+{% extends "html/projects/page.html" %}
+
+{% block title %}{{ project|htsafe }} | {% trans %}Project Management{% endtrans %}{% endblock %}
+
+{% block module_title %}{{ project }}{% endblock %}
+
+{% block module_subtitle %}{% trans %}Project{% endtrans %}{% endblock %}
+
+{% block module_topmenu %}
+<a href="{% url projects_project_add_typed project.id %}" class="top-menu add-link">{% trans %}New Project{% endtrans %}</a>
+<a href="{% url projects_milestone_add_typed project.id %}" class="top-menu add-link">{% trans %}New Milestone{% endtrans %}</a>
+<a href="{% url projects_task_add_typed project.id %}" class="top-menu add-link">{% trans %}New Task{% endtrans %}</a>
+<a href="{% url projects_gantt_view project.id %}" class="top-menu gantt-link">{% trans %}Gantt Chart{% endtrans %}</a>
+<a href="{% url projects_project_view project.id %}" class="top-menu view-link-active">{% trans %}View{% endtrans %}</a>
+{% if user.get_profile().has_permission(project, mode='w') %}
+<a href="{% url projects_project_edit project.id %}" class="top-menu edit-link">{% trans %}Edit{% endtrans %}</a>
+<a href="{% url projects_project_delete project.id %}" class="top-menu delete-link">{% trans %}Delete{% endtrans %}</a>
+{% endif %}
+{{ last_updated(project) }}
+{% endblock %}
+
+{% block sidebar_right %}
+
+<span class="sidebar-header-first">{% trans %}Filter by{% endtrans %}</span>
+<form action="" method="get" class="content-filter-form">
+    <ul class="content-filter-form-fields">
+        {{ filters.as_ul()|htsafe }}
+    </ul>
+    <input type="submit" value="{% trans %}Submit{% endtrans %}">
+</form>
+<br />
+<span class="sidebar-header-right">{% trans %}Permissions{% endtrans %}</span>
+<div class="sidebar-block">
+    {{ permission_block(project) }}
+</div>
+<span class="sidebar-header-right">{% trans %}Links{% endtrans %}</span>
+<div class="sidebar-block">
+    {{ link_block(project) }}
+</div>
+<span class="sidebar-header-right">{% trans %}Subscribers{% endtrans %}</span>
+<div class="sidebar-block">
+    {{ subscription_block(project) }}
+</div>
+<span class="sidebar-header-right">{% trans %}Download as:{% endtrans %}<br />
+    {% if '?' in request.get_full_path() %}<a class="pdf-block-link" href="{{ request.get_full_path()|replace('.ajax','').replace('?','.pdf?') }}"{% else %}<a class="pdf-block-link" href="{{ request.get_full_path()|replace('.ajax','') }}.pdf"{% endif %} target="_self">PDF</a>
+    <a class="csv-block-link" {% if '?' in request.get_full_path() %}href="{{ request.get_full_path()|replace('.ajax','').replace('?','.csv?') }}"{% else %}href="{{ request.get_full_path()|replace('.ajax','') }}.csv"{% endif %} target="_self">CSV</a>
+ </span>
+{% endblock %}
+
+{% block module_content %}
+
+{% if project.parent %}
+<div>
+    <span class="content-label">{% trans %}Path{% endtrans %}:</span>
+    <span class="content-value">{{ object_tree_path(project) }}</span>
+</div>
+{% endif %}
+
+{% if project.manager %}
+<div>
+    <span class="content-label">{% trans %}Project manager{% endtrans %}:</span>
+    <span class="content-value">
+      <a href="{% url identities_contact_view project.manager.id %}" class="popup-link"><strong>{{ project.manager }}</strong></a>
+    </span>
+</div>
+{% endif %}
+
+{% if project.client %}
+<div>
+    <span class="content-label">{% trans %}Client{% endtrans %}:</span>
+    <span class="content-value"><a href="{% url identities_contact_view project.client.id %}" class="popup-link">{{ project.client }}</a></span>
+</div>
+{% endif %}
+
+<div>
+  <span class="content-label">{% trans %}Progress{% endtrans %}:</span>
+  <span class="content-value">
+    <div class="meter-wrap">
+        <div class="meter-value" style="width: {{ tasks_progress }}%;">
+            <div class="meter-text">
+                {{ tasks_progress }}%
+            </div>
+        </div>
+    </div>
+  </span>
+</div>
+
+{% if project.details %}
+<div>
+    <span class="content-label">{% trans %}Details{% endtrans %}:</span>
+    <span class="content-details">{{ project.details|htsafe }}</span>
+</div>
+{% endif %}
+
+{{ attachments(project) }}
+
+{% if subprojects %}
+<br />
+<div>
+    <span class="content-label-head">{% trans %}Sub Projects{% endtrans %}:</span>
+</div>
+{% for subproject in subprojects %}
+<div class="content-list-item content-list-item-{{ loop.cycle('odd', 'even') }}">
+    <div class="content-list-tick">
+    </div>
+    <span class="content-list-item-name">
+        <a href="{% url projects_project_view subproject.id %}" class="large"><strong>{{ subproject }}</strong></a>
+    </span>
+    <span class="content-list-item-group">
+    </span>
+    <span class="content-list-item-actions">
+        {% if user.get_profile().has_permission(project, mode='w') %}
+        <a href="{% url projects_project_edit subproject.id %}" class="inline-link edit-link">{% trans %}Edit{% endtrans %}</a>
+        {% endif %}
+    </span>
+</div>
+{% endfor %}
+{% endif %}
+
+<br />
+<div class="content-label-head">
+    {% trans %}Tasks{% endtrans %}:
+</div>
+
+{% if milestones or tasks %}
+  <br />
+  <form action="" method="post">
+{% csrf_token %}
+  <ul class="mass-form">
+      <input type="hidden" name="massform" value="massform" />
+       {{ massform.as_ul()|htsafe }}
+      <li>
+          <input type="submit" value="{% trans %}Save{% endtrans %}" />
+      </li>
+  </ul>
+    {% for milestone in milestones %}
+    <span class="large light content-label-head">
+        <input type="checkbox" name="mass-milestone-{{ milestone.id }}" value="{{ milestone.id }}" class="group-control" />
+        <a href="{% url projects_milestone_view milestone.id %}" class="projects-milestone">{{ milestone.name }}</a>
+        <span class="spaced-h smaller">
+            <a href="{% url projects_task_add_to_milestone milestone.id %}" id="add_task" class="inline-link add-link popup-link">{% trans %}Add{% endtrans %}</a>
+        </span>
+    </span>
+    {% set render_tasks = tasks.filter(milestone=milestone) %}
+    {% if render_tasks %}
+    {{ projects_task_list(htsort(render_tasks), by_milestone=True) }}
+    {% else %}
+    <div class="content-list-item lighter spaced-v spaced-h">
+        <em>{% trans %}No Active Tasks{% endtrans %}</em>.
+    <a href="{% url projects_task_add_to_milestone milestone.id %}" class="popup-link"><strong>{% trans %}Create a Task{% endtrans %}</strong></a>
+    </div>
+    {% endif %}
+    <br />
+    {% endfor %}
+
+    {% set render_tasks = tasks.filter(milestone__isnull=True) %}
+    {% if render_tasks %}
+    <span class="large light content-label-head">
+        <input type="checkbox" name="mass-unclassified" value="unclassified" class="group-control" />
+        <em>{% trans %}Unclassified Tasks{% endtrans %}</em>
+    </span>
+    {{ projects_task_list(htsort(render_tasks), by_project=False) }}
+    {% endif %}
+  </form>
+
+{% else %}
+<div class="content-list-item lighter spaced-v spaced-h">
+    <em>{% trans %}No Milestones{% endtrans %}.</em>
+    <a href="{% url projects_milestone_add_typed project.id %}" class="popup-link"><strong>{% trans %}Create a Milestone{% endtrans %}</strong></a>
+</div>
+{% endif %}
+
+    <div class="clear"></div>
+    <br />
+<div>
+    <span class="content-label-head">{% trans %}History{% endtrans %}:</span>
+</div>
+{% set updates = project.updates.all().order_by('date_created') %}
+{% for record in updates %}
+<div class="news-record news-record-type-{{ record.record_type }}">
+    {% set contact = record.author.get_contact() %}
+    <div class="contact-picture-frame news-record-author news-record-author-{{ record.record_type }}">
+    {% if contact %}
+      {% set picture = contact.get_picture() %}
+      <a href="{% url identities_user_view record.author.id %}" class="popup-link"><img class="contact-picture left" src="{{ picture|htsafe }}" alt="" /></a>
+    {% else %}
+      <a href="{% url identities_user_view record.author.id %}" class="popup-link"><img class="contact-picture left" src="/static/messaging/pic.png" alt="" /></a>
+    {% endif %}
+    </div>
+    <div class="news-record-label">
+        <span class="news-record-author news-record-author-{{ record.record_type }}">
+        <a href="{% url identities_user_view record.author.id %}" class="popup-link">{{ record.author }}</a>
+        </span>
+        {% if record.record_type != 'manual' and record.record_type != 'share' %}
+        <span class="news-record-inline news-record-body-{{ record.record_type }}">
+        {{ record.get_full_message()|htsafe }}
+        </span>
+        {% endif %}
+    </div>
+    {% if record.record_type == 'manual' or record.record_type == 'share' %}
+    <div class="news-record-body news-record-body-{{ record.record_type }}">
+        {{ record.body|htsafe }}
+    </div>
+    {% endif %}
+  
+    <div class="news-record-details">
+		<div class="div_container">
+	  		<div class="comments">
+				<span class="lighter small">{{ record.date_created|htdatetime }}</span>
+        		&nbsp;&nbsp;
+		       	{{ comments_likes(record) }}
+			</div>
+	  		<div class="attachments">
+		       	{{ attachments(record) }}
+			</div>
+			<hr class="space"/>
+		</div>
+    </div>
+</div>
+{% endfor %}
+
+{% if record_form %}
+<div>
+    <form action="" method="post" class="content-form">
+{% csrf_token %}
+        <br />
+        <ul class="content-form-fields">
+            <li>
+                <textarea id="id_body" rows="10" cols="40" name="body"></textarea>
+            </li>
+        </ul>
+        <div class="content-form-submit">
+            <input type="submit" value="{% trans %}Update Project{% endtrans %}">
+        </div>
+    </form>
+</div>
+{% endif %}
+
+
+{% endblock %}

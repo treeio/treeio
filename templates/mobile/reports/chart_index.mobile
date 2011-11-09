@@ -1,0 +1,75 @@
+{% extends "mobile/reports/page.mobile" %}
+
+{% block title %}{% trans %}Charts{% endtrans %}{% endblock %}
+{% block module_title %}{% trans %}Charts{% endtrans %}{% endblock %}
+{% block index_page %}sidebar-link-active{% endblock %}
+
+{% block sidebar_right %}
+{% endblock %}
+
+{% block module_topmenu %}
+<a href="{% url reports_chart_add %}" class="top-menu add-link popup-link">{% trans %}New Chart{% endtrans %}</a>
+{% endblock %}
+
+{% block module_content %}
+
+{% if reports %}
+
+<form action="" method="post">
+{% csrf_token %}
+    <div class="clear content-label-head">
+        <ul class="mass-form">
+            <input type="checkbox" name="mass-charts" class="group-control" {% if not charts %}disabled="true"{% endif %} />
+            <input type="hidden" name="massform" value="massform" />
+             {{ massform.as_ul()|htsafe }}
+            <li>
+                <input type="submit" value="{% trans %}Save{% endtrans %}" />
+            </li>
+        </ul>
+    </div>
+
+    <table id="reports_table">
+
+        <!-- Table header -->
+
+        <thead>
+            <tr>
+                <th scope="col">{% trans %}Select{% endtrans %}</th>
+                <th scope="col">{% trans %}Related Report{% endtrans %}</th>
+                <th scope="col">{% trans %}Chart ID{% endtrans %}</th>
+                <th scope="col">{% trans %}Date Created{% endtrans %}</th>
+        <th scope="col">{% trans %}Edit{% endtrans %}</th>
+            </tr>
+        </thead>
+        <!-- Table body -->
+
+        <tbody>
+
+            {% for report in paginate(reports) %}
+
+            <tr class="content-list-item-{{ loop.cycle('odd', 'even') }}">
+                <td>
+                <div class="content-list-tick">
+                    <input type="checkbox" name="mass-chart-{{ chart.id }}" value="{{ chart.id }}" class="group-mass-charts" />
+                </div></td>
+                <td><a href="{% url reports_report_view report.id %}">{{chart.report.name}}</a></td>
+                <td><a href="{% url identities_user_view report.user.id %}">{{chart.id}}</a></td>
+                <td>{{chart.date_created.strftime("%d %B %Y, %H:%M")}}</td>
+        <td>
+              {% if user.get_profile().has_permission(report, mode='w') %}
+              <a href="{% url reports_chart_edit chart.id %}" class="inline-link edit-link popup-link">{% trans %}Edit{% endtrans %}</a>
+              {% endif %}
+          </td>
+            </tr>
+            {% endfor %}
+
+        </tbody>
+    </table>
+</form>
+{{ pager(charts) }}
+
+{% else %}
+{#{{ show_hint('charts') }}#}
+{% endif %}
+
+{% endblock %}

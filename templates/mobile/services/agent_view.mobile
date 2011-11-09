@@ -1,0 +1,48 @@
+{% extends "mobile/services/page.mobile" %}
+
+{% block title %}{{ view_agent|htsafe }} | {% trans %}Services{% endtrans %} | {% trans %}Service Support{% endtrans %}{% endblock %}
+
+{% block module_title %}{{ view_agent }}{% endblock %}
+{% block module_subtitle %}{% trans %}Agent{% endtrans %}{% endblock %}
+
+{% block module_topmenu %}
+
+<a href="{% url services_agent_view view_agent.id %}" class="top-menu view-link-active">{% trans %}View{% endtrans %}</a>
+{% if user.get_profile().has_permission(view_agent, mode='w') %}
+<a href="{% url services_agent_edit view_agent.id %}" class="top-menu edit-link">{% trans %}Edit{% endtrans %}</a>
+<a href="{% url services_agent_delete view_agent.id %}" class="top-menu delete-link">{% trans %}Delete{% endtrans %}</a>
+{% endif %}
+
+{% endblock %}
+
+{% block sidebar_right %}
+{% endblock %}
+
+{% block module_content %}
+
+<div>
+    <span class="content-label">{% trans %}User{% endtrans %}:</span>
+    <span class="content-value"><a href="{% url identities_user_view view_agent.related_user_id %}" class="popup-link">{{ view_agent.related_user.get_username() }}</a></span>
+</div>
+<div>
+    <span class="content-label">{% trans %}Active{% endtrans %}:</span>
+    <span class="content-value">{% if view_agent.active %}{% trans %}Yes{% endtrans %}{% else %}{% trans %}No{% endtrans %}{% endif %}</span>
+</div>
+<div>
+    <span class="content-label">{% trans %}Occupied{% endtrans %}:</span>
+    <span class="content-value">{% if view_agent.occupied %}{% trans %}Yes{% endtrans %}{% else %}{% trans %}No{% endtrans %}{% endif %}</span>
+</div>
+{% if view_agent.available_from or view_agent.available_to %}
+<div>
+    <span class="content-label">{% trans %}Available{% endtrans %}:</span>
+    <span class="content-value">
+        {% if view_agent.available_from %}
+        <span class="light small">{% trans %}From{% endtrans %}</span> {{ view_agent.available_from.strftime("%H:%M") }}{% endif %}
+        {% if view_agent.available_to %}
+        <span class="light small">{% trans %}Until{% endtrans %}</span> {{ view_agent.available_to.strftime("%H:%M") }}{% endif %}
+    </span>
+</div>
+</div>
+{% endif %}
+
+{% endblock %}

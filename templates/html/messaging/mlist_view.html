@@ -1,0 +1,99 @@
+{% extends "html/messaging/page.html" %}
+
+{% block title %}{{ mlist|htsafe }} | {% trans %}Messaging{% endtrans %}{% endblock %}
+
+{% block module_title %}{{ mlist }}{% endblock %}
+{% block module_subtitle %}{% trans %}Mailing List{% endtrans %}{% endblock %}
+
+{% block headfiles %}
+<!-- TinyMCE editor -->
+<script type="text/javascript" src="/static/tinymce/jscripts/tiny_mce/tiny_mce.js"></script>
+<script type="text/javascript" src="/static/js/wysiwyg.js"></script>
+{% endblock %}
+
+{% block module_topmenu %}
+<a href="{% url messaging_mlist_view mlist.id %}" class="top-menu view-link-active">{% trans %}View{% endtrans %}</a>
+{% if user.get_profile().has_permission(mlist, mode='w') %}
+<a href="{% url messaging_mlist_edit mlist.id %}" class="top-menu edit-link">{% trans %}Edit{% endtrans %}</a>
+<a href="{% url messaging_mlist_delete mlist.id %}" class="top-menu delete-link">{% trans %}Delete{% endtrans %}</a>
+{% endif %}
+{% endblock %}
+
+{% block sidebar_right %}
+
+<span class="sidebar-header-first">{% trans %}Permissions{% endtrans %}</span>
+<div class="sidebar-block">
+    {{ permission_block(mlist) }}
+</div>
+<span class="sidebar-header-right">{% trans %}Links{% endtrans %}</span>
+<div class="sidebar-block">
+    {{ link_block(mlist) }}
+</div>
+<span class="sidebar-header-right">{% trans %}Subscribers{% endtrans %}</span>
+<div class="sidebar-block">
+    {{ subscription_block(mlist) }}
+</div>
+<span class="sidebar-header-right">{% trans %}Download as:{% endtrans %}<br />{% if '?' in request.get_full_path() %}<a class="pdf-block-link" href="{{ request.get_full_path()|replace('.ajax','').replace('?','.pdf?') }}"{% else %}<a class="pdf-block-link" href="{{ request.get_full_path()|replace('.ajax','') }}.pdf"{% endif %} target="_self">PDF</a>
+  </span></span>
+{% endblock %}
+
+{% block module_content %}
+
+{% if messages %}
+
+<form action="" method="post">
+{% csrf_token %}
+    <ul class="mass-form">
+        <input type="hidden" name="massform" value="massform" />
+        <input type="checkbox" name="mass-unclassified" value="unclassified" class="group-control" />
+        <em>{% trans %}With selected{% endtrans %}</em>: {{ massform.as_ul()|htsafe }}
+        <li>
+            <input type="submit" value="{% trans %}Save{% endtrans %}" />
+        </li>
+    </ul>
+    {{ messaging_message_list(paginate(messages)) }}
+
+    {{ pager(messages) }}
+</form>
+{% else %}
+<div class="content-list-item spaced-v spaced-h lighter">
+    <em>{% trans %}No Messages{% endtrans %}.</em>
+  <a href="{% url messaging_message_compose %}" class="popup-link"><strong>{% trans %}Compose a Message{% endtrans %}</strong></a>
+</div>
+{% endif %}
+
+{% if form %}
+<br />
+<div>
+    <span class="content-label-head">{% trans %}Write a Message{% endtrans %}:</span>
+</div>
+<br />
+
+<form action="" method="post" class="content-form">
+{% csrf_token %}
+    <div style="display:none">
+        <label for="id_mlist">
+            {% trans %}Mailing List{% endtrans %}:
+        </label>
+        {{ form.mlist|htsafe }}
+    </div>
+    <label for="id_title" class="nojs">
+        {% trans %}Subject{% endtrans %}:
+        <br />
+    </label>
+    {{ form.title|htsafe }}
+    <br />
+    <label for="id_body" class="nojs">
+        {% trans %}Your message{% endtrans %}:
+        <br />
+    </label>
+    <ul class="content-form-fields">
+        {{ form.body|htsafe }}
+    </ul>
+    <div class="content-form-submit">
+        <input type="submit" value="{% trans %}Post{% endtrans %}">
+    </div>
+</form>
+{% endif %}
+
+{% endblock %}

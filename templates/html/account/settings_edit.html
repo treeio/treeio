@@ -1,0 +1,27 @@
+{% extends "html/account/page.html" %}
+
+{% block title %}{% trans %}Settings{% endtrans %} | {% trans %}Account{% endtrans %}{% endblock %}
+
+{% block class_settings %}sidebar-link-active{% endblock %}
+
+{% block module_title %}{% trans %}Account{% endtrans %}{% endblock %}
+{% block module_subtitle %}{% trans %}Settings{% endtrans %}{% endblock %}
+
+{% block module_topmenu %}
+<a href="{% url account_settings_view %}" class="top-menu view-link">{% trans %}View{% endtrans %}</a>
+<a href="{% url account_settings_edit %}" class="top-menu edit-link-active">{% trans %}Edit{% endtrans %}</a>
+{% endblock %}
+
+{% block module_content %}
+
+<form action="" method="post" class="content-form">
+{% csrf_token %}
+    <ul class="content-form-fields">
+        {{ form|htsafe }}
+    </ul>
+    <div class="content-form-submit">
+        <input type="submit" name="save" value="{% trans %}Save{% endtrans %}">
+		<input type="submit" name="cancel" value="{% trans %}Cancel{% endtrans %}" class="cancel" />
+    </div>
+</form>
+{% endblock %}

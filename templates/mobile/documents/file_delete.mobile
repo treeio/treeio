@@ -1,0 +1,56 @@
+{% extends "mobile/documents/page.mobile" %}
+
+{% block title %}{{ file|htsafe }} | {% trans %}Documents{% endtrans %}{% endblock %}
+
+{% block module_title %}{{ file }}{% endblock %}
+
+{% block module_subtitle %}{% trans %}File{% endtrans %}{% endblock %}
+
+{% block module_topmenu %}
+<a class="top-menu view-link" href="{% url documents_file_view file.id %}">{% trans %}View{% endtrans %}</a>
+{% if user.get_profile().has_permission(file, mode='w') %}
+<a class="top-menu edit-link" href="{% url documents_file_edit file.id %}">{% trans %}Edit{% endtrans %}</a>
+<a href="{% url documents_file_delete file.id %}" class="top-menu delete-link-active">{% trans %}Delete{% endtrans %}</a>
+{% endif %}
+{% endblock %}
+
+{% block module_content %}
+
+<div>
+    <span class="larger">{% trans %}Delete this File{% endtrans %}?</span>
+    <br />
+    <form action="" method="post" class="content-form">
+{% csrf_token %}
+        <ul class="content-form-fields">
+            <li>
+                <label for="trash">
+                    <input id="trash" type="checkbox" name="trash" checked="checked" />
+                    {% trans %}Move to Trash{% endtrans %}
+                </label>
+            </li>
+            <li class="ui-grid-a">
+            <div class="ui-block-a">
+                <input data-theme="b" type="submit" name="delete" value="{% trans %}Yes, Delete{% endtrans %}" style="font-weight: 700;" />&nbsp;&nbsp;
+            </div>
+            <div class="ui-block-b">
+                <input type="submit" name="cancel" value="{% trans %}Cancel{% endtrans %}" class="cancel" />
+            </div>
+            </li>
+        </ul>
+    </form>
+</div>
+{% if file.name %}
+<div>
+    <span class="content-label">{% trans %}Name{% endtrans %}:</span>
+    <span class="content-value">{{ file.name }}</span>
+</div>
+{% endif %}
+
+{% if file.folder %}
+<div>
+    <span class="content-label">{% trans %}Folder{% endtrans %}:</span>
+    <span class="content-value"><a href="{% url documents_folder_view file.folder.id %}">{{ file.folder }}</a></span>
+</div>
+{% endif %}
+
+{% endblock %}

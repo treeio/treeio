@@ -1,0 +1,5 @@
+[
+{% for tag in tags -%}
+{"label": "{{ tag.name }}", "value": "{{ tag.id }}"}{% if not loop.last %},{% endif %}
+{% endfor -%}
+]

@@ -1,0 +1,6 @@
+{% extends "json/page.json" %}
+{% block title %}Service Support / Hardtree{% endblock %}
+{% block module_title %}Service Support{% endblock %}
+{% block content %}
+  "data": {% block module_content %}{% endblock %}
+{%- endblock %}

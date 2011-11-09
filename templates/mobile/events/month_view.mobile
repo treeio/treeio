@@ -1,0 +1,11 @@
+{% extends "mobile/events/page.mobile" %}
+
+{% block title %}{% trans %}Month{% endtrans %} | {% trans %}Calendar{% endtrans %}{% endblock %}
+
+{% block module_title %}{% trans %}Calendar{% endtrans %}{% endblock %}
+
+{% block class_month %}sidebar-link-active{% endblock %}
+
+{% block module_content %}
+
+{% endblock %}

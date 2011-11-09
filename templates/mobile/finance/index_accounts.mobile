@@ -1,0 +1,38 @@
+{% extends "mobile/finance/page.mobile" %}
+
+{% block title %}{% trans %}Settings{% endtrans %} | {% trans %}Finance{% endtrans %}{% endblock %}
+
+{% block class_accounts %}sidebar-link-active{% endblock %}
+
+{% block module_title %}{% trans %}Accounts{% endtrans %}{% endblock %}
+
+{% block module_topmenu %}
+<a href="{% url finance_account_add %}" class="top-menu add-link">{% trans %}New Account{% endtrans %}</a>
+{% endblock %}
+
+{% block sidebar_right %}
+{% endblock %}
+
+{% block module_content %}
+
+{% if accounts %}
+<ul data-role="listview" data-inset="true" data-theme="c">
+{% for account in paginate(accounts) %}
+<li>
+    <a href="{% url finance_account_view account.id %}">
+    	<h3>{{ account }} ({{ account.owner }})</h3>
+        <p>{{ account.details|striptags|truncate(30) }}</p>
+        <p class="ui-li-aside">{% trans %}Balance{% endtrans %}: {{ account.get_balance()|number_format|currency_format(account.balance_currency) }}</p>
+	</a>
+</li>
+{% endfor %}
+</ul>
+{% else %}
+<div class="content-list-item spaced-h spaced-v">
+    <em>{% trans %}No Accounts{% endtrans %}</em>
+</div>
+{% endif %}
+
+{{ pager(accounts) }}
+
+{% endblock %}

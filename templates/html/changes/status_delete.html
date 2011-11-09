@@ -1,0 +1,51 @@
+{% extends "html/changes/page.html" %}
+
+{% block title %}{{ status|htsafe }} | {% trans %}Change Sets{% endtrans %} | {% trans %}Change Control{% endtrans %}{% endblock %}
+
+{% block module_title %}{{ status }}{% endblock %}
+{% block module_subtitle %}{% trans %}Change Status{% endtrans %}{% endblock %}
+
+{% block module_topmenu %}
+<a href="{% url changes_set_add %}" class="top-menu add-link">{% trans %}New Change Set{% endtrans %}</a>
+<a href="{% url changes_status_view status.id %}" class="top-menu view-link">{% trans %}View{% endtrans %}</a>
+<a href="{% url changes_status_edit status.id %}" class="top-menu edit-link">{% trans %}Edit{% endtrans %}</a>
+<a href="{% url changes_status_delete status.id %}" class="top-menu delete-link-active">{% trans %}Delete{% endtrans %}</a>
+{% endblock %}
+
+{% block module_content %}
+
+<div class="delete-object">
+    <span class="larger">{% trans %}Delete this Change Set Status{% endtrans %}?</span>
+    <br />
+    <form action="" method="post" class="content-form">
+{% csrf_token %}
+        <ul class="content-form-fields">
+            <li>
+                <label for="trash">
+                    <input id="trash" type="checkbox" name="trash" checked="checked" />
+                    {% trans %}Move to Trash{% endtrans %}
+                </label>
+            </li>
+            <li>
+                <input type="submit" name="delete" value="{% trans %}Yes, Delete{% endtrans %}" />&nbsp;&nbsp;
+                <input type="submit" name="cancel" value="{% trans %}Cancel{% endtrans %}" class="cancel" />
+            </li>
+        </ul>
+    </form>
+</div>
+<div>
+    <span class="content-label">{% trans %}Active{% endtrans %}:</span>
+    <span class="content-value">{% if status.active %}Yes{% else %}No{% endif %}</span>
+</div>
+<div>
+    <span class="content-label">{% trans %}Hidden{% endtrans %}:</span>
+    <span class="content-value">{% if status.hidden %}Yes{% else %}No{% endif %}</span>
+</div>
+{% if status.details %}
+<div>
+    <span class="content-label">{% trans %}Details{% endtrans %}:</span>
+    <span class="content-details">{{ status.details|htsafe }}</span>
+</div>
+{% endif %}
+
+{% endblock %}

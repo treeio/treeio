@@ -1,0 +1,124 @@
+{% extends "html/infrastructure/page.html" %}
+
+{% block title %}{{ item|htsafe }} | {% trans %}Infrastructure{% endtrans %}{% endblock %}
+
+{% block module_title %}{{ item }}{% endblock %}
+{% block module_subtitle %}{{ item.item_type }}{% endblock %}
+
+{% block sidebar_right %}
+
+<span class="sidebar-header-first">{% trans %}Permissions{% endtrans %}</span>
+<div class="sidebar-block">
+    {{ permission_block(item) }}
+</div>
+<span class="sidebar-header-right">{% trans %}Links{% endtrans %}</span>
+<div class="sidebar-block">
+    {{ link_block(item) }}
+</div>
+<span class="sidebar-header-right">{% trans %}Subscribers{% endtrans %}</span>
+<div class="sidebar-block">
+    {{ subscription_block(item) }}
+</div>
+<span class="sidebar-header-first">{% trans %}Export to{% endtrans %}
+    {% if '?' in request.get_full_path() %}<a href="{{ request.get_full_path()|replace('.ajax','').replace('?','.csv?') }}"{% else %}<a href="{{ request.get_full_path()|replace('.ajax','') }}.csv"{% endif %} target="_self">CSV</a>,
+    {% if '?' in request.get_full_path() %}<a href="{{ request.get_full_path()|replace('.ajax','').replace('?','.xls?') }}"{% else %}<a href="{{ request.get_full_path()|replace('.ajax','') }}.xls"{% endif %} target="_self">XLS</a></span>
+{% endblock %}
+
+{% block module_topmenu %}
+<a href="{% url infrastructure_item_view item.id %}" class="top-menu view-link-active">{% trans %}View{% endtrans %}</a>
+<a href="{% url infrastructure_item_edit item.id %}" class="top-menu edit-link edit-link">{% trans %}Edit{% endtrans %}</a>
+<a href="{% url infrastructure_item_delete item.id %}" class="top-menu edit-link delete-link">{% trans %}Delete{% endtrans %}</a>
+{{ last_updated(item) }}
+{% endblock %}
+
+{% block module_content %}
+
+{# Model fields #}
+<div>
+    <span class="content-label">{% trans %}Name{% endtrans %}:</span>
+    <span class="content-value"><strong>{{ item.name }}</strong></span>
+</div>
+<div>
+    <span class="content-label">{% trans %}Status{% endtrans %}:</span>
+    <span class="content-value"><a href="{% url infrastructure_status_view item.status_id %}">{{ item.status }}</a></span>
+</div>
+{% if item.parent %}
+<div>
+    <span class="content-label">{% trans %}Parent{% endtrans %}:</span>
+    <span class="content-value"><a href="{% url infrastructure_item_view item.parent_id %}">{{ item.parent }}</a></span>
+</div>
+{% endif %}
+{% if item.manufacturer %}
+<div>
+    <span class="content-label">{% trans %}Manufacturer{% endtrans %}:</span>
+    <span class="content-value"><a href="{% url identities_contact_view item.manufacturer.id %}" class="popup-link">{{ item.manufacturer }}</a></span>
+</div>
+{% endif %}
+{% if item.supplier %}
+
+<div>
+    <span class="content-label">{% trans %}Supplier{% endtrans %}:</span>
+    <span class="content-value"><a href="{% url identities_contact_view item.supplier_id %}" class="popup-link">{{ item.supplier }}</a></span>
+</div>
+{% endif %}
+{% if item.location %}
+<div>
+    <span class="content-label">{% trans %}Location{% endtrans %}:</span>
+    <span class="content-value">{{ item.location }}</span>
+</div>
+{% endif %}
+{% if item.owner %}
+<div>
+    <span class="content-label">{% trans %}Owner{% endtrans %}:</span>
+    <span class="content-value"><a href="{% url identities_contact_view item.owner_id %}" class="popup-link">{{ item.owner }}</a></span>
+</div>
+{% endif %}
+{% if item.asset %}
+<div>
+    <span class="content-label">{% trans %}Asset{% endtrans %}:</span>
+    <span class="content-value"><a href="{% url finance_asset_view item.asset_id %}" class="popup-link">{{ item.asset }}</a></span>
+</div>
+{% endif %}
+
+{# Custom ItemField <-> ItemValue fields #}
+
+{% for value in item.itemvalue_set.all() %}
+{% if value.value %}
+<div>
+    <span class="content-label">{{ value.field.label }}:</span>
+    {% if value.field.field_type == 'picture' %}
+    <img src="{{ value|htsafe }}" alt="{{ value.field.label }}" />
+    {% elif value.field.field_type == 'url' %}
+    <span class="content-value"><a href="{{ value|htsafe }}" class="ajax-link-out">{{ value }}</a></span>
+    {% elif value.field.field_type == 'details' %}
+    <span class="content-details">{{ value|htsafe }}</span>
+    {% else %}
+    <span class="content-value">{{ value|htsafe }}</span>
+    {% endif %}
+</div>
+{% endif %}
+{% endfor %}
+
+{{ attachments(item) }}
+
+{% set servicerecords = item.get_active_servicing() %}
+{% if servicerecords %}
+<br />
+<div>
+    <span class="content-label-head">{% trans %}Active Service Records{% endtrans %}:</span>
+</div>
+{{ infrastructure_servicing_list(servicerecords, item) }}
+{% endif %}
+
+{% set servicerecords = item.get_servicing() %}
+{% if servicerecords %}
+<br />
+<div>
+    <span class="content-label-head">{% trans %}Service Records{% endtrans %}:</span>
+</div>
+{{ infrastructure_servicing_list(servicerecords, item) }}
+{% endif %}
+
+<div class="clear">
+</div>
+{% endblock %}

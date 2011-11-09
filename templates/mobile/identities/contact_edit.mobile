@@ -1,0 +1,33 @@
+{% extends "mobile/identities/page.mobile" %}
+
+{% block title %}{% trans %}Edit{% endtrans %} | {{ contact|htsafe }} | {% trans %}Identities{% endtrans %}{% endblock %}
+
+{% block module_title %}{{ contact }}{% endblock %}
+{% block module_subtitle %}{{ contact.contact_type }}{% endblock %}
+
+{% block module_topmenu %}
+<a href="{% url identities_contact_view contact.id %}" class="top-menu view-link">{% trans %}View{% endtrans %}</a>
+<a href="{% url identities_contact_edit contact.id %}" class="top-menu edit-link edit-link-active">{% trans %}Edit{% endtrans %}</a>
+<a href="{% url identities_contact_delete contact.id %}" class="top-menu delete-link">{% trans %}Delete{% endtrans %}</a>
+{% endblock %}
+
+{% block sidebar_right %}
+{% endblock %}
+
+{% block module_content %}
+
+<form action="" method="post" class="content-form" enctype="multipart/form-data">
+{% csrf_token %}
+    <ul class="content-form-fields">
+        {{ form.as_ul()|htsafe }}
+    </ul>
+    <div class="content-form-submit ui-grid-a">
+    <div class="ui-block-a">
+        <input data-theme="b" type="submit" name="save" value="{% trans %}Save{% endtrans %}" />
+    </div>
+    <div class="ui-block-b">
+        <input type="submit" name="cancel" value="{% trans %}Cancel{% endtrans %}" class="cancel" />
+    </div>
+    </div>
+</form>
+{% endblock %}

@@ -1,0 +1,74 @@
+{% extends "html/projects/page.html" %}
+
+{% block title %} {{ task_time_slot.get_time_string() }} | {{ task|htsafe }} | {% trans %}Project Management{% endtrans %}{% endblock %}
+
+{% block module_title %}{{ task_time_slot.get_time_string() }} by {{ task_time_slot.user }}{% endblock %}
+
+{% block module_subtitle %}{% trans %}Task Time Slot{% endtrans %}{% endblock %}
+
+{% block module_topmenu %}
+<a href="{% url projects_task_time_slot_view task_time_slot.id %}" class="top-menu view-link">{% trans %}View{% endtrans %}</a>
+{% if user.get_profile().has_permission(task, mode='w') or user.get_profile().has_permission(slot, mode='w') %}
+<a href="{% url projects_task_time_slot_edit task_time_slot.id %}" class="top-menu edit-link-active">{% trans %}Edit{% endtrans %}</a>
+<a href="{% url projects_task_time_slot_delete task_time_slot.id %}" class="top-menu delete-link">{% trans %}Delete{% endtrans %}</a>
+{% endif %}
+{% endblock %}
+
+{% block sidebar_right %}
+
+{% if user.get_profile().has_permission(task, mode='w') %}
+<span class="sidebar-header-first">{% trans %}Quick Status{% endtrans %}</span>
+<div class="sidebar-block">
+    {% for status in statuses %}
+    {% if status.hidden %}
+    {% if status.active %}
+    <a href="{% url projects_task_set_status task.id, status.id %}" class="projects-action projects-action-failed
+    {%- if status == task.status -%}-active{%- endif -%}">{{ status }}</a>
+    <br />
+    {% else %}
+    <a href="{% url projects_task_set_status task.id, status.id %}" class="projects-action projects-action-closed
+    {%- if status == task.status -%}-active{%- endif -%}">{{ status }}</a>
+    <br />
+    {% endif %}
+    {% else %}
+    {% if status.active %}
+    <a href="{% url projects_task_set_status task.id, status.id %}" class="projects-action projects-action-open
+    {%- if status == task.status -%}-active{%- endif -%}">{{ status }}</a>
+    <br />
+    {% else %}
+    <a href="{% url projects_task_set_status task.id, status.id %}" class="projects-action projects-action-pending
+    {%- if status == task.status -%}-active{%- endif -%}">{{ status }}</a>
+    <br />
+    {% endif %}
+    {% endif %}
+    {% endfor %}
+</div>
+{% endif %}
+
+<span class="sidebar-header-first">{% trans %}Permissions{% endtrans %}</span>
+<div class="sidebar-block">
+    {{ permission_block(task) }}
+</div>
+<span class="sidebar-header-right">{% trans %}Links{% endtrans %}</span>
+<div class="sidebar-block">
+    {{ link_block(task) }}
+</div>
+<span class="sidebar-header-right">{% trans %}Subscribers{% endtrans %}</span>
+<div class="sidebar-block">
+    {{ subscription_block(task) }}
+</div>
+{% endblock %}
+
+{% block module_content %}
+
+<form action="" method="post" class="content-form">
+{% csrf_token %}
+    <ul class="content-form-fields">
+        {{ form.as_ul()|htsafe }}
+    </ul>
+    <div class="content-form-submit">
+        <input type="submit" value="{% trans %}Save{% endtrans %}">
+        <input type="submit" name="cancel" value="Cancel" />
+    </div>
+</form>
+{% endblock %}

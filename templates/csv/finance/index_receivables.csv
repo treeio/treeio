@@ -1,0 +1,10 @@
+name,source,target,category,account,due_date,value,details
+{% for liability in liabilities %}{% if liability.name %}{{liability.name|replace(',','')|replace('"','')|replace('
+','')|safe}},{% else %},{% endif %}{% if liability.source %}{{liability.source|replace(',','')|replace('"','')|replace('
+','')|safe}},{% else %},{% endif %}{% if liability.target %}{{liability.target|replace(',','')|replace('"','')|replace('
+','')|safe}},{% else %},{% endif %}{% if liability.category %}{{liability.category|replace(',','')|replace('"','')|replace('
+','')|safe}},{% else %},{% endif %}{% if liability.account %}{{liability.account|replace(',','')|replace('"','')|replace('
+','')|safe}},{% else %},{% endif %}{% if liability.due_date %}{{liability.due_date|replace(',','')}},{% else %},{% endif %}{% if liability.value %}{{liability.value|replace(',','')|replace('"','')|replace('
+','')|safe}},{% else %},{% endif %}{% if liability.details %}{{liability.details|replace(',','')|replace('\n', '').replace('\r', '').replace('"', '\"')|replace('
+','')|safe}}{% else %},{% endif %}
+{% endfor %}

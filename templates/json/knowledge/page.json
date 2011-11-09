@@ -1,0 +1,7 @@
+{% extends "json/page.json" %}
+{% block title %}Knowledge Base / Hardtree{% endblock %}
+{% block module_title %}Knowledge Base{% endblock %}
+{% block module_subtitle %}Knowledge{% endblock %}
+{% block content %}
+	"content": {% block module_content %}{% endblock %}
+{%- endblock %}

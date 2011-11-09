@@ -1,0 +1,46 @@
+{% extends "mobile/finance/page.mobile" %}
+
+{% block title %}{% trans %}Delete{% endtrans %} | {{ category|htsafe }} | {% trans %}Category{% endtrans %} | {% trans %}Finance{% endtrans %}{% endblock %}
+
+{% block module_title %}{{ category }}{% endblock %}
+{% block module_subtitle %}{% trans %}Category{% endtrans %}{% endblock %}
+
+{% block module_topmenu %}
+<a href="{% url finance_category_view category.id %}" class="top-menu view-link">{% trans %}View{% endtrans %}</a>
+<a href="{% url finance_category_edit category.id %}" class="top-menu edit-link">{% trans %}Edit{% endtrans %}</a>
+<a href="{% url finance_category_delete category.id %}" class="top-menu delete-link-active">{% trans %}Delete{% endtrans %}</a>
+{% endblock %}
+
+{% block module_content %}
+
+<div>
+    <span class="larger">{% trans %}Delete this Category{% endtrans %}?</span>
+    <br />
+    <form action="" method="post" class="content-form">
+{% csrf_token %}
+        <ul class="content-form-fields">
+            <li>
+                <label for="trash">
+                    <input id="trash" type="checkbox" name="trash" checked="checked" />
+                    {% trans %}Move to Trash{% endtrans %}
+                </label>
+            </li>
+            <li class="ui-grid-a">
+            <div class="ui-block-a">
+                <input type="submit" name="delete" value="{% trans %}Yes, Delete{% endtrans %}" style="font-weight: 700;" />&nbsp;&nbsp;
+            </div>
+            <div class="ui-block-b">
+                <input type="submit" name="cancel" value="{% trans %}Cancel{% endtrans %}" class="cancel" />
+            </div>
+            </li>
+        </ul>
+    </form>
+</div>
+{% if category.details %}
+<div>
+    <span class="content-label">{% trans %}Details{% endtrans %}:</span>
+    <span class="content-details">{{ category.details }}</span>
+</div>
+{% endif %}
+
+{% endblock %}

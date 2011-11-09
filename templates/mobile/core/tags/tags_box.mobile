@@ -1,0 +1,21 @@
+<span class="tags-box">
+  <img src="/static/icons/tags.gif" alt="Tags" class="margin-bottom"/>
+  {% if form %}
+  <form action="{{ editlink }}" method="post" class="tags-form">
+{% csrf_token %}
+    <input type="hidden" name="tags_object" value="{{ object.id }}">
+    {{ form.tags|safe }}
+    {{ form.multicomplete_tags|safe }}
+  </form>
+  {% else %}
+  <span class="tags-box-link" link="{{ editlink }}">
+  {% if tags %}
+    {% for tag in tags %}
+      <span class="tags-tag">{{ tag }}</span>{% if not loop.last %},{% endif %}
+    {% endfor %}
+    </span>
+  {% else %}
+    <span>{% trans %}Add Tags{% endtrans %}</span>
+  {% endif %}
+  {% endif %}
+</span>

@@ -1,0 +1,29 @@
+{% extends "html/identities/page.html" %}
+
+{% block title %}{{ location|htsafe }} | {% trans %}Identities{% endtrans %}{% endblock %}
+
+{% block module_title %}{{ location }}{% endblock %}
+{% block module_subtitle %}{% trans %}Location{% endtrans %}{% endblock %}
+
+{% block module_topmenu %}
+<a href="{% url identities_location_view location.id %}" class="top-menu view-link-active">{% trans %}View{% endtrans %}</a>
+<a href="{% url identities_location_edit location.id %}" class="top-menu edit-link edit-link">{% trans %}Edit{% endtrans %}</a>
+<a href="{% url identities_location_delete location.id %}" class="top-menu edit-link delete-link">{% trans %}Delete{% endtrans %}</a>
+{% endblock %}
+
+{% block module_content %}
+
+<div>
+    <span class="content-label">{% trans %}Name{% endtrans %}:</span>
+    <span class="content-value"><strong>{{ location.name }}</strong></span>
+</div>
+{% if location.parent %}
+<div>
+    <span class="content-label">{% trans %}Parent{% endtrans %}:</span>
+    <span class="content-value"><a href="{% url identities_location_view location.parent_id %}">{{ location.parent }}</a></span>
+</div>
+{% endif %}
+
+<div class="clear">
+</div>
+{% endblock %}

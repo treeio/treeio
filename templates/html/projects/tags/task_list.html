@@ -1,0 +1,106 @@
+{% if tasks %}
+<table class="generic_table">
+
+    <!-- Table header -->
+    {% if not noheader %}
+    <thead>
+        <tr>
+            <th scope="col"></th>
+            <th scope="col" style="width:{% if by_milestone or by_assigned %}45{% elif not by_project or in_progress %}40{% else %}30{% endif %}%">
+                <a href="{{ htsortlink('name') }}" class="sort-link">{% trans %}Name{% endtrans %}</a>
+            </th>
+            <th score="col"><a href="{{ htsortlink('status') }}" class="sort-link">{% trans %}Status{% endtrans %}</a></th>
+            {% if not by_project and not by_milestone %}
+            <th scope="col"><a href="{{ htsortlink('project') }}" class="sort-link">{% trans %}Project{% endtrans %}</a></th>
+            {% endif %}
+            {% if not by_milestone %}
+            <th scope="col"><a href="{{ htsortlink('milestone') }}" class="sort-link">{% trans %}Milestone{% endtrans %}</a></th>
+            {% endif %}
+            {% if not by_assigned %}
+            <th scope="col"><a href="{{ htsortlink('assigned') }}" class="sort-link">{% trans %}Assigned{% endtrans %}</a></th>
+            {% endif %}
+            <th scope="col"><a href="{{ htsortlink('end_date') }}" class="sort-link">{% trans %}Due Date{% endtrans %}</a></th>
+            <th scope="col"><a href="{{ htsortlink('last_updated') }}" class="sort-link">{% trans %}Last updated{% endtrans %}</a></th>
+            <th scope="col"></th>
+        </tr>
+    </thead>
+    {% endif %}
+    <!-- Table body -->
+
+    <tbody>
+        {% for task in tasks %}
+
+        <tr class="content-list-item content-list-item-{{ loop.cycle('odd', 'even') }}">
+            <td class="content-smaller-tick">
+                <div class="content-list-tick projects-task-priority-{{ task.priority }}">    
+                {% if nomass %}
+                
+                {% else %}
+                {% if task.milestone_id %}
+                <input type="checkbox" name="mass-task-{{ task.id }}" value="{{ task.id }}" class="group-mass-milestone-{{ task.milestone_id }}" />
+                {% else %}
+                {% if by_project %}
+                <input type="checkbox" name="mass-task-{{ task.id }}" value="{{ task.id }}" class="group-mass-project-{{ task.project_id }}" />
+                {% else %}
+                <input type="checkbox" name="mass-task-{{ task.id }}" value="{{ task.id }}" class="group-mass-unclassified" />
+                {% endif %}
+                {% endif %}
+                {% endif %}
+                </div>
+            </td>
+            {% set hidden = task.status.hidden %}
+            <td>
+                <a href="{% url projects_task_view task.id %}" {% if hidden %}class="light"{% endif %}>{{ task.name }}</a>{{ attachments_count(task) }}
+                {% if in_progress %}
+                {% set render_time_slots = time_slots.filter(task=task, time_from__isnull=False, time_to__isnull=True) %}
+                {% if render_time_slots %}
+                <br />
+                {{ projects_time_slot_list(render_time_slots, no_dates=True) }}
+                {% endif %}
+                {% endif %}
+            </td>
+            <td>
+                {% if hidden %}
+                <span class="lighter"><em>{{ task.status }}</em></span>
+                {% else %}
+                <span>{{ task.status }}</span>
+                {% endif %}
+            </td>
+            {% if not by_project and not by_milestone %}
+            <td>
+                <a href="{% url projects_project_view task.project_id %}" class="group-link">{{ task.project.name }}</a>
+            </td>
+            {% endif %}
+            {% if not by_milestone %}
+            <td>
+                {% if task.milestone %}
+                <a href="{% url projects_milestone_view task.milestone_id %}" class="group-link">{{ task.milestone.name }}</a>
+                {% endif %}
+            </td>
+            {% endif %}
+            {% if not by_assigned %}
+            <td>
+                {% for assignee in task.assigned.all() %}
+                    <a href="{% url identities_user_view assignee.id %}" class="popup-link">{{ assignee }}</a>
+                    {%- if not loop.last %},{% endif %}
+                {% endfor %}
+            </td>
+            {% endif %}
+            <td>
+                {{ task.end_date|htdatetime('SHORT_DATETIME_FORMAT') }}
+            </td>
+            <td>
+                {{ last_updated(task) }}
+            </td>
+            <td>
+                {% if user.get_profile().has_permission(task, mode='w') %}
+                <span class="content-list-item-actions table-link">
+                <a href="{% url projects_task_edit task.id %}" class="inline-link edit-link">{% trans %}Edit{% endtrans %}</a>
+                </span>
+                {% endif %}
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endif %}

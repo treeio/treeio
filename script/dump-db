@@ -1,0 +1,12 @@
+#!/bin/bash
+
+echo "-- Dumping database..."
+
+# Dump database
+
+mysqldump -u treeio -p treeio > sql/mysql-treeio-current.sql
+
+# Dump fixtures
+
+python manage.py dumpdata --exclude=auth --exclude=contenttypes --exclude=south > initial_data.json
+

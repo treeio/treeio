@@ -1,0 +1,38 @@
+{% extends "html/events/page.html" %}
+
+{% block title %}{% trans %}Upcoming Events{% endtrans %} | {% trans %}Calendar{% endtrans %}{% endblock %}
+
+{% block module_title %}{% trans %}Calendar{% endtrans %}{% endblock %}
+
+{% block class_upcoming %}sidebar-link-active{% endblock %}
+
+{% block sidebar_right %}
+<td class="module-sidebar-right">
+
+<span class="sidebar-header-first">{% trans %}Export to{% endtrans %}
+    {% if '?' in request.get_full_path() %}<a href="{{ request.get_full_path()|replace('.ajax','').replace('?','.csv?') }}"{% else %}<a href="{{ request.get_full_path()|replace('.ajax','') }}.csv"{% endif %} target="_self">CSV</a>,
+    {% if '?' in request.get_full_path() %}<a href="{{ request.get_full_path()|replace('.ajax','').replace('?','.xls?') }}"{% else %}<a href="{{ request.get_full_path()|replace('.ajax','') }}.xls"{% endif %} target="_self">XLS</a></span>
+</td>
+{% endblock %}
+
+{% block module_content %}
+{% if events %}
+<form action="" method="post">
+{% csrf_token %}
+    <ul class="mass-form">
+        <input type="hidden" name="massform" value="massform" />
+        <input type="checkbox" name="mass-unclassified" value="unclassified" class="group-control" />
+         {{ massform.as_ul()|htsafe }}
+        <li>
+            <input type="submit" value="{% trans %}Save{% endtrans %}" />
+        </li>
+    </ul>
+
+	{{ events_event_list(paginate(events)) }}
+    {{ pager(events) }}
+</form>
+{% else %}
+{{ show_hint('events_all') }}
+{% endif %}
+
+{% endblock %}

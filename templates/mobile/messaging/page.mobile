@@ -1,0 +1,76 @@
+{% extends "mobile/page.mobile" %}
+
+{% block title %}{% trans %}Messaging{% endtrans %}{% endblock %}
+
+{% block content %}
+
+<div data-role="collapsible" data-collapsed="true" data-theme="a">
+<h3>{% trans %}Menu{% endtrans %}</h3>
+
+<div class="module-sidebar">
+		<a href="{% url messaging_index %}" class="sidebar-link {% block index_page %}{% endblock %}">{% trans %}All{% endtrans %}</a>
+        <a href="{% url messaging_inbox %}" class="sidebar-link {% block index_inbox %}{% endblock %}">{% trans %}Inbox{% endtrans %}</a>
+        <a href="{% url messaging_unread %}" class="sidebar-link {% block index_unread %}{% endblock %}">{% trans %}Unread{% endtrans %} {{ messaging_unread() }}</a>
+        <a href="{% url messaging_sent %}" class="sidebar-link {% block index_sent %}{% endblock %}">{% trans %}Sent{% endtrans %}</a>
+        <span class="sidebar-header">{% trans %}Streams{% endtrans %}</span>
+        {% for istream in streams %}
+        {% if user.get_profile().has_permission(istream, mode='x') %}
+        <a href="{% url messaging_stream_view istream.id %}" class="sidebar-link {% if istream == stream %}sidebar-link-active{% endif %}">{{ istream.name|truncate(length=20) }}</a>
+        {% endif %}
+        {% endfor %}
+        {# 
+        <span class="sidebar-header">{% trans %}Mailing Lists{% endtrans %}</span>
+        {% for ilist in mlists %}
+        {% if user.get_profile().has_permission(ilist, mode='x') %}
+        <a href="{% url messaging_mlist_view ilist.id %}" class="sidebar-link {% if ilist == mlist %}sidebar-link-active{% endif %}">{{ ilist.name|truncate(length=20) }}</a>
+        {% endif %}
+        {% endfor %}
+        #}
+        
+        {% if request.user.get_profile().is_admin('treeio.messaging') %}
+        <span class="sidebar-header">{% trans %}Administration{% endtrans %}</span>
+        <a href="{% url messaging_settings_view %}" class="sidebar-link {% block class_admin_settings %}{% endblock %}">{% trans %}Settings{% endtrans %}</a>
+        {% endif %}
+
+</div>
+</div>
+
+<div class="module-content">
+	
+	<div class="module-content-fill">
+	
+		<div class="title-block">
+			
+			<div class="title">{% block module_title %}{% trans %}Messaging{% endtrans %}{% endblock %}</div>
+			
+			<div class="subtitle-block">{% block module_subtitle %}{% endblock %}</div>
+			
+			<div class="module-top-menu-inline">
+			{% block module_topmenu %}
+				<a href="{% url messaging_message_compose %}" class="top-menu add-link">{% trans %}New Message{% endtrans %}</a>
+				<a href="{% url messaging_stream_add %}" class="top-menu add-link">{% trans %}New Stream{% endtrans %}</a>
+			{% endblock %}
+			</div>
+			{{ help_link() }}
+			
+		</div>
+		
+
+			<div class="module-content-inner">
+			<!-- module_content_inner -->
+			{% block module_content %}{% endblock %}
+            <!-- /module_content_inner -->
+			</div>
+			
+			<div class="module-sidebar-right">
+			{% block sidebar_right %}{% endblock %}
+			</div>
+
+		
+	</div>
+
+</div>
+
+<div class="clear"></div>
+
+{% endblock %}

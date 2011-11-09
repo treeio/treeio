@@ -1,0 +1,49 @@
+{% extends "mobile/core/page.mobile" %}
+
+{% block title %}{{ perspective|htsafe }} | {% trans %}Perspectives{% endtrans %} | {% trans %}Administration{% endtrans %}{% endblock %}
+
+{% block class_perspectives %}sidebar-link-active{% endblock %}
+
+{% block module_title %}{{ perspective }}{% endblock %}
+{% block module_subtitle %}{% trans %}Perspective{% endtrans %}{% endblock %}
+
+{% block module_topmenu %}
+
+<a href="{% url core_admin_perspective_view perspective.id %}" class="top-menu view-link">{% trans %}View{% endtrans %}</a>
+<a href="{% url core_admin_perspective_edit perspective.id %}" class="top-menu edit-link-active">{% trans %}Edit{% endtrans %}</a>
+<a href="{% url core_admin_perspective_delete perspective.id %}" class="top-menu delete-link">{% trans %}Delete{% endtrans %}</a>
+{% endblock %}
+
+{% block sidebar_right %}
+
+<span class="sidebar-header-first">{% trans %}Permissions{% endtrans %}</span>
+<div class="sidebar-block">
+    {{ permission_block(perspective) }}
+</div>
+<span class="sidebar-header-right">{% trans %}Links{% endtrans %}</span>
+<div class="sidebar-block">
+    {{ link_block(perspective) }}
+</div>
+<span class="sidebar-header-right">{% trans %}Subscribers{% endtrans %}</span>
+<div class="sidebar-block">
+    {{ subscription_block(perspective) }}
+</div>
+{% endblock %}
+
+{% block module_content %}
+
+<form action="" method="post" class="content-form">
+{% csrf_token %}
+    <ul class="content-form-fields">
+        {{ form.as_ul()|htsafe }}
+    </ul>
+    <div class="content-form-submit ui-grid-a">
+    <div class="ui-block-a">
+        <input data-theme="b" type="submit" name="save" value="{% trans %}Save{% endtrans %}" />
+    </div>
+    <div class="ui-block-b">
+        <input type="submit" name="cancel" value="{% trans %}Cancel{% endtrans %}" class="cancel" />
+    </div>
+    </div>
+</form>
+{% endblock %}

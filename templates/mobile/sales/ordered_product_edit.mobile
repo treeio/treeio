@@ -1,0 +1,123 @@
+{% extends "mobile/sales/page.mobile" %}
+
+{% block title %}{% trans %}Ordered Product{% endtrans %} | {% trans %}Sales{% endtrans %}{% endblock %}
+
+{% block class_index %}sidebar-link-active{% endblock %}
+
+{% block module_title %}{{ ordered_product }}{% endblock %}
+
+{% block module_subtitle %}{% trans %}Ordered Product{% endtrans %}{% endblock %}
+
+{% block module_topmenu %}
+<a href="{% url sales_ordered_product_view ordered_product.id %}" class="top-menu view-link">{% trans %}View{% endtrans %}</a>
+{% if request.user.get_profile().has_permission(ordered_product.order, mode='w') %}
+<a href="{% url sales_ordered_product_edit ordered_product.id %}" class="top-menu edit-link-active">{% trans %}Edit{% endtrans %}</a>
+<a href="{% url sales_ordered_product_delete ordered_product.id %}" class="top-menu delete-link">{% trans %}Delete{% endtrans %}</a>
+{% endif %}
+{% endblock %}
+
+{% if order.assigned %}
+<div>
+    <span class="content-label">{% trans %}Assigned to{% endtrans %}:</span>
+    <span class="content-value">
+        {% for assignee in order.assigned.all() %}
+        <a href="{% url identities_user_view assignee.id %}">{{ assignee }}</a>
+        <br />
+        {% endfor %}
+    </span>
+    {% else %}
+    <span class="content-value">
+        {% trans %}Anyone{% endtrans %}
+        <br />
+    </span>
+</div>
+{% endif %}
+
+{% if order.client %}
+<div>
+    <span class="content-label">{% trans %}Client{% endtrans %}:</span>
+    <span class="content-value"><a href="{% url identities_contact_view order.client.id %}">{{ order.client }}</a></span>
+</div>
+{% endif %}
+
+{% if order.opportunity %}
+<div>
+    <span class="content-label">{% trans %}Opportunity{% endtrans %}:</span>
+    <span class="content-value"><a href="{% url sales_opportunity_view order.opportunity.id %}">{{ order.opportunity }}</a></span>
+</div>
+{% endif %}
+
+<div>
+    <span class="content-label">{% trans %}Date created{% endtrans %}:</span>
+    <span class="content-value">{{ order.date_created.strftime("%Y %b %d, %H:%M") }}</span>
+</div>
+{% if order.quantity %}
+<div>
+    <span class="content-label">{% trans %}Quantity{% endtrans %}:</span>
+    <span class="content-value">{{ order.quantity }}</span>
+</div>
+{% endif %}
+
+{% if order.payment %}
+<div>
+    <span class="content-label">{% trans %}Payment{% endtrans %}:</span>
+    <span class="content-value">{{ order.payment.value }}</span>
+</div>
+{% endif %}
+
+<div>
+    <span class="content-label">{% trans %}Status{% endtrans %}:</span>
+    <span class="content-value"><a href="#">{{ order.status }}</a></span>
+</div>
+{% if order.source %}
+<div>
+    <span class="content-label">{% trans %}Source{% endtrans %}:</span>
+    <span class="content-value"><a href="#">{{ order.source }}</a></span>
+</div>
+{% endif %}
+{% if order.details %}
+<div>
+    <span class="content-label">{% trans %}Details{% endtrans %}:</span>
+    <span class="content-details">{{ order.details|htsafe }}</span>
+</div>
+{% endif %}
+
+<br />
+
+<div>
+    <span class="content-label">{% trans %}Ordered Products{% endtrans %}:</span>
+    {% for product in ordered_products %}
+
+    <div class="content-list-item content-list-item-{{ loop.cycle('odd', 'even') }}" title="{{ product }}">
+        <span class="content-list-item-name">
+            <a href="{% url sales_product_view product.product_id %}">{{ product }}</a>
+            {% if product.code %}({{ product.code }}){% endif %}
+            x {{ product.quantity }}
+            <span class="content-list-item-group">
+                {% if product.subscription %}
+                <a href="{% url sales_subscription_view product.subscription.id %}">({% trans %}Subscription{% endtrans %} {% if product.subscription.active %}{% trans %}Active{% endtrans %}{% else %}{% trans %}Inactive{% endtrans %}{% endif %})</a>
+                {% endif %}
+                {{ product.product.sell_price }} {% if product.discount %}{% trans %}Discount{% endtrans %}: {{ product.discount }} {% endif %}
+            </span>
+        </span>
+        <span class="content-list-item-actions">
+            {% if user.get_profile().has_permission(product, mode='w') %}
+            <a href="{% url sales_product_edit product.product_id %}" class="inline-link edit-link">{% trans %}Edit{% endtrans %}</a>
+            {% endif %}
+        </span>
+    </div>
+    {% endfor %}
+</div>
+{% block module_content %}
+
+<form action="" method="post" class="content-form">
+{% csrf_token %}
+    <ul class="content-form-fields">
+        {{ form.as_ul()|htsafe }}
+    </ul>
+    <div class="content-form-submit">
+        <input type="submit" value="{% trans %}Save{% endtrans %}">
+        <input type="submit" value="Add Another">
+    </div>
+</form>
+{% endblock %}

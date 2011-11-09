@@ -1,0 +1,59 @@
+{% extends "html/finance/page.html" %}
+
+{% block title %}{% trans %}Settings{% endtrans %} | {% trans %}Finance{% endtrans %}{% endblock %}
+
+{% block class_accounts %}sidebar-link-active{% endblock %}
+
+{% block module_title %}{% trans %}Accounts{% endtrans %}{% endblock %}
+
+{% block module_topmenu %}
+<a href="{% url finance_account_add %}" class="top-menu add-link">{% trans %}New Account{% endtrans %}</a>
+{% endblock %}
+
+{% block sidebar_right %}
+
+<span class="sidebar-header-first">{% trans %}Filter by{% endtrans %}</span>
+<form action="" method="get" class="content-filter-form">
+    <ul class="content-filter-form-fields">
+        {{ filters.as_ul()|htsafe }}
+    </ul>
+    <input type="submit" value="{% trans %}Submit{% endtrans %}">
+</form>
+<br />
+
+<span class="sidebar-header-right">{% trans %}Download as:{% endtrans %}<br />{% if '?' in request.get_full_path() %}<a class="pdf-block-link" href="{{ request.get_full_path()|replace('.ajax','').replace('?','.pdf?') }}"{% else %}<a class="pdf-block-link" href="{{ request.get_full_path()|replace('.ajax','') }}.pdf"{% endif %} target="_self">PDF</a>
+  <a class="csv-block-link" {% if '?' in request.get_full_path() %}href="{{ request.get_full_path()|replace('.ajax','').replace('?','.csv?') }}"{% else %}href="{{ request.get_full_path()|replace('.ajax','') }}.csv"{% endif %} target="_self">CSV</a></span></span>
+{% endblock %}
+
+{% block module_content %}
+
+{% if accounts %}
+
+{% for account in paginate(accounts) %}
+<div class="content-list-item content-list-item-{{ loop.cycle('odd', 'even') }}">
+    <div class="content-list-tick">
+    </div>
+    <span class="content-list-item-name">
+        <a href="{% url finance_account_view account.id %}">{{ account }}</a>
+        <a href="{% url identities_contact_view account.owner_id %}" class="popup-link lighter smaller spaced-h">{{ account.owner }}</a>
+        {{ account.details|striptags|truncate(30) }}
+        <span class="content-list-item-group">
+            {% trans %}Balance{% endtrans %}: {{ account.get_balance()|number_format|currency_format(account.balance_currency) }}
+        </span>
+    </span>
+    <span class="content-list-item-actions">
+        {% if user.get_profile().has_permission(product, mode='w') %}
+        <a href="{% url finance_account_edit account.id %}" class="inline-link edit-link">{% trans %}Edit{% endtrans %}</a>
+        {% endif %}
+    </span>
+</div>
+{% endfor %}
+{% else %}
+<div class="content-list-item spaced-h spaced-v">
+    <em>{% trans %}No Accounts{% endtrans %}</em>
+</div>
+{% endif %}
+
+{{ pager(accounts) }}
+
+{% endblock %}

@@ -1,0 +1,48 @@
+{% extends "html/knowledge/page.html" %}
+
+{% block title %}{{ category|htsafe }} | {% trans %}Knowledge base{% endtrans %}{% endblock %}
+
+{% block module_title %}{{ category }}{% endblock %}
+
+{% block module_subtitle %}{% trans %}Category{% endtrans %}{% endblock %}
+
+{% block module_topmenu %}
+<a href="{% url knowledge_category_view category.treepath %}" class="top-menu view-link">{% trans %}View{% endtrans %}</a>
+{% if user.get_profile().has_permission(category, mode='w') %}
+<a href="{% url knowledge_category_edit category.id %}" class="top-menu edit-link">{% trans %}Edit{% endtrans %}</a>
+<a href="{% url knowledge_category_delete category.id %}" class="top-menu delete-link-active">{% trans %}Delete{% endtrans %}</a>
+{% endif %}
+{% endblock %}
+
+{% block module_content %}
+
+<div class="delete-object">
+    <span class="larger">{% trans %}Delete this Category{% endtrans %}?</span>
+    <br />
+    <form action="" method="post" class="content-form">
+{% csrf_token %}
+        <ul class="content-form-fields">
+            <li>
+                <label for="trash">
+                    <input id="trash" type="checkbox" name="trash" checked="checked" />
+                    {% trans %}Move to Trash{% endtrans %}
+                </label>
+            </li>
+            <li>
+                <input type="submit" name="delete" value="{% trans %}Yes, Delete{% endtrans %}" />&nbsp;&nbsp;
+                <input type="submit" name="cancel" value="{% trans %}Cancel{% endtrans %}" class="cancel" />
+            </li>
+        </ul>
+    </form>
+</div>
+{% set render_items = items.filter(category=category) %}
+{% if render_items %}
+{{ knowledge_item_list(render_items, category) }}
+{% else %}
+<br />
+<div class="content-list-item lighter">
+    <em>{% trans %}No Items{% endtrans %}</em>
+</div>
+{% endif %}
+
+{% endblock %}

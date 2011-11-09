@@ -1,0 +1,42 @@
+{% extends "mobile/services/page.mobile" %}
+
+{% block title %}{% trans %}Service Level Agreements{% endtrans %} | {% trans %}Service Support{% endtrans %}{% endblock %}
+
+{% block class_sla_index %}sidebar-link-active{% endblock %}
+
+{% block module_title %}{% trans %}Service Level Agreements{% endtrans %}{% endblock %}
+
+{% block module_topmenu %}
+{% if user.get_profile().is_admin('treeio.services') %}
+<a href="{% url services_sla_add %}" class="top-menu add-link">{% trans %}New Agreement{% endtrans %}</a>
+{% endif %}
+{% endblock %}
+
+{% block sidebar_right %}
+{% endblock %}
+
+{% block module_content %}
+
+{% if slas %}
+{% for sla in slas %}
+<div class="content-list-item content-list-item-{{ loop.cycle('odd', 'even') }}">
+    <div class="content-list-tick">
+    </div>
+    <span class="content-list-item-name">
+        <a href="{% url services_sla_view sla.id %}">{{ sla }}</a>
+        <span class="content-list-item-group">
+            <a href="{% url services_service_view sla.service.id %}" class="group-link">{{ sla.service }}</a>
+        </span>
+    </span>
+    <span class="content-list-item-actions">
+        {% if user.get_profile().has_permission(sla, mode='w') %}
+        <a href="{% url services_sla_edit sla.id %}" class="inline-link edit-link">{% trans %}Edit{% endtrans %}</a>
+        {% endif %}
+    </span>
+</div>
+{% endfor %}
+{% else %}
+  {{ show_hint('service_sla') }}
+{% endif %}
+
+{% endblock %}

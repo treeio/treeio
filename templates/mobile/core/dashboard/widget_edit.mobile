@@ -1,0 +1,47 @@
+{% extends "mobile/core/dashboard/index.mobile" %}
+
+{% block title %}{{ widget.widget['title']|htsafe }}{% endblock %}
+
+{% block module_title %}{{ widget.widget['title'] }}{% endblock %}
+{% block module_subtitle %}{% trans %}Widget{% endtrans %}{% endblock %}
+
+{% block module_topmenu %}
+    <a href="{% url core_dashboard_widget_edit widget.id %}" class="top-menu edit-link-active">{% trans %}Edit{% endtrans %}</a>
+{% endblock %}
+
+{% block module_content %}
+<div class="module-content-inner">
+    
+    {% set widget_block=widget.widget %}
+    
+    <div class="widget-block" style="width: {{ widget_block['size'] }}px" align="left">
+        <div class="widget-links">
+            <a href="{% url core_dashboard_widget_edit widget.id %}" class="inline-link edit-link-active">&nbsp;</a>
+            <a href="{% url core_dashboard_widget_delete widget.id %}" class="inline-link delete-link">&nbsp;</a>
+        </div>
+        <div class="widget-title">
+            {{ widget_block['title'] }}
+        </div>
+        <div class="widget-content">{{ widget_block['content']|htsafe }}</div>
+    </div>
+    
+    <div class="clear"></div>
+    
+	<div>
+		<span class="content-label">{% trans %}Module{% endtrans %}:</span>
+		<span class="content-value">{{ widget.widget['module_title'] }}</span>
+	</div>
+    <form action="" method="post" class="content-form">
+{% csrf_token %}
+        <ul class="content-form-fields">
+		{{ form.as_ul()|htsafe }} 
+      	</ul>
+		<div class="content-form-submit">
+        	<input type="submit" value="Save">
+		</div>
+    </form>
+
+<div class="clear"></div>
+
+</div>
+{% endblock %}

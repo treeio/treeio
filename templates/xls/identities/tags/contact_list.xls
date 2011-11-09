@@ -1,0 +1,6 @@
+name,type,{% for field in contact_fields %}{{ field.name }}{% if loop.last %} {% else -%},{% endif %}{% endfor %}
+{% for contact in contacts %}{{contact.name|replace(',','')|replace('"','')|replace('
+','')|safe}},{{contact.contact_type|replace(',','')|replace('"','')|replace('
+','')|safe}}{% for field in contact_fields %}{% set inserted = False %}{% for val in contact.contactvalue_set.all() %}{% if val.field == field %},{{val.value|replace(',','')|replace('"','')|replace('
+','')|safe}}{% set inserted = True %}{% endif %}{% endfor %}{% if inserted == False %}{% endif %}{% endfor %}
+{% endfor %}

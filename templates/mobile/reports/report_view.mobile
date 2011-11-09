@@ -1,0 +1,26 @@
+{% extends "mobile/reports/page.mobile" %}
+
+{% block title %}{% trans %}Reports{% endtrans %}{% endblock %}
+
+{% block module_title %}{{ report.name|htsafe }}{% endblock %}
+{% block module_subtitle %}{% trans %}Report{% endtrans %}{% endblock %}
+
+{% block module_topmenu %}
+<a class="top-menu view-link-active" href="{% url reports_report_view report.id %}">{% trans %}View{% endtrans %}</a>
+<a class="top-menu edit-link" href="{% url reports_report_edit report.id %}">{% trans %}Edit{% endtrans %}</a>
+<a class="top-menu delete-link" href="{% url reports_report_delete report.id %}">{% trans %}Delete{% endtrans %}</a>
+<a class="top-menu add-link popup-link" href="{% url reports_chart_add report.id %}">{% trans %}Add Chart{% endtrans %}</a>
+
+{% endblock %}
+
+{% block sidebar_right %}
+{% endblock %}
+
+{% block module_content %}
+
+<script src="/static/mobile/scrollview.js"></script>
+
+<div data-scroll="true" class="scroll-view">
+{{ report_content|htsafe }}
+</div>
+{% endblock %}

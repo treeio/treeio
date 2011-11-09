@@ -1,0 +1,27 @@
+{% if leads %}
+    <ul data-role="listview" data-inset="true" data-theme="c">
+
+            {% for lead in leads %}
+
+            <li>
+                <a href="{% url sales_lead_view lead.id %}">
+                
+                	<h3>{{ lead.contact }}</h3>
+                
+	                <p>{% trans %}Products Interested{% endtrans %} - 
+	                {% for product in lead.products_interested.all()[:3] %}
+	                {{ product }}
+	                {% if not loop.last %}, {% endif %}
+	                {% if loop.index == 3 %}...{% endif %}
+	                {% endfor %}
+	                </p>
+	                
+	                <p class="ui-li-aside">
+	                	{{ lead.status }}
+	                </p>
+                </a>
+            </li>
+            {% endfor %}
+
+    </ul>
+{% endif %}

@@ -1,0 +1,13 @@
+{% extends "mobile/identities/page.mobile" %}
+
+{% block title %}{% trans %}Identities{% endtrans %}{% endblock %}
+
+{% block module_content %}
+
+<form action="" method="get" class="content-form">
+    <div style="padding: 0">
+        <input type="submit" name="export" value="Export Contacts" />
+        <input type="submit" name="import" value="Import Contacts" />
+    </div>
+</form>
+{% endblock %}

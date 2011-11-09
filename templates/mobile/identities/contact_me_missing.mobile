@@ -1,0 +1,26 @@
+{% extends "mobile/identities/page.mobile" %}
+
+{% block class_me %}sidebar-link-active{% endblock %}
+
+{% block title %}{% trans %}Identities{% endtrans %}{% endblock %}
+
+{% block module_title %}{% trans %}No Contact{% endtrans %}{% endblock %}
+{% block module_subtitle %}{% endblock %}
+
+{% block module_topmenu %}
+{% endblock %}
+
+{% block sidebar_right %}
+{% endblock %}
+
+{% block module_content %}
+
+<div class="spaced-h">
+    <p>
+        {% trans %}Sorry, you do not have a Contact Card{% endtrans %}.
+        {% if request.user.get_profile().is_admin('treeio.identities') %}
+        {% trans %}Maybe you want to{% endtrans %} <a href="{% url identities_contact_add %}" class="inline-link add-link popup-link">{% trans %}Add</a> one{% endtrans %}?
+        {% endif %}
+    </p>
+</div>
+{% endblock %}

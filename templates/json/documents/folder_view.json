@@ -1,0 +1,88 @@
+{% extends "json/documents/page.json" %}
+{% block module_content %}
+
+	{
+	"folder":
+		{
+			"id": {{ folder.id }},
+			"url": "http://{{ site_domain }}{% url documents_folder_view folder.id %}",
+			"name": "{{ folder }}",
+			{% if folder.parent -%}
+			"parent": "{{ folder.parent }}",
+	        {% else -%}
+	        "parent": null,
+	        {% endif -%}
+			"documents": 
+				[
+				{% for document in documents %}
+					{
+					"id": {{ document.id }},
+					"url": "http://{{ site_domain }}{% url documents_document_view document.id %}",
+					"title": "{{ document }}",
+					"folder": "{{ document.folder }}",
+					{% if document.body -%}
+					"body": "{{ document.body.replace('\n', '').replace('\r', '')|htsafe }}"
+			        {% else -%}
+			        "body": null,
+			        {% endif -%}
+					{% if loop.last -%}
+				    }
+				    {% else -%}
+				    },
+				    {% endif -%}
+				{% endfor %}
+				],
+			"files":
+				[
+				{% for file in files %}
+					{
+					"id": {{ file.id }},
+					"url": "http://{{ site_domain }}{% url documents_file_view file.id %}",
+					"name": "{{ file }}",
+					"folder": "{{ file.folder }}"
+					{% if loop.last -%}
+				    }
+				    {% else -%}
+				    },
+				    {% endif -%}
+				{% endfor %}
+				],
+			"weblinks":
+				[
+				{% for link in links %}
+					{
+					"id": {{ link.id }},
+					"url": "http://{{ site_domain }}{% url documents_weblink_view link.id %}",
+					"title": "{{ link }}",
+					"folder": "{{ link.folder }}",
+					{% if link.url -%}
+					"url": "{{ link.url }}"
+			        {% else -%}
+			        "url": null,
+			        {% endif -%}
+					{% if loop.last -%}
+				    }
+				    {% else -%}
+				    },
+				    {% endif -%}
+				{% endfor %}
+				],
+			"subfolders":
+				[
+				{% for subfolder in subfolders %}
+					{
+					"id": {{ subfolder.id }},
+					"url": "http://{{ site_domain }}{% url documents_folder_view subfolder.id %}",
+					"name": "{{ subfolder }}"
+					{% if loop.last -%}
+				    }
+				    {% else -%}
+				    },
+				    {% endif -%}
+				{% endfor %}
+				]
+		}
+	}
+{% endblock %}
+
+		

@@ -1,0 +1,17 @@
+@page {
+  size: a4 landscape;
+  margin: 1cm;
+  @frame report {
+    margin: 1cm;
+    padding: 1cm;
+  }
+}
+
+table th {
+  font-weight: bold;
+  font-style: italic;
+}
+
+table tr {
+  width: 4cm;
+}

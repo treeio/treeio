@@ -1,0 +1,34 @@
+<table id="finance_table">
+
+    <!-- Table header -->
+
+    <thead>
+        <tr>
+            <th scope="col"></th>
+            <th scope="col"><a href="{{ htsortlink('datetime') }}" class="sort-link">{% trans %}Date{% endtrans %}</a></th>
+            <th scope="col"><a href="{{ htsortlink('name') }}" class="sort-link">{% trans %}Description{% endtrans %}</a></th>
+            <th scope="col"><a href="{{ htsortlink('source') }}" class="sort-link">{% trans %}Source{% endtrans %}</a></th>
+            <th scope="col"><a href="{{ htsortlink('target') }}" class="sort-link">{% trans %}Target{% endtrans %}</a></th>
+            <th scope="col"><a href="{{ htsortlink('account') }}" class="sort-link">{% trans %}Bank Account{% endtrans %}</a></th>
+            <th scope="col"><a href="{{ htsortlink('value') }}" class="sort-link">{% trans %}Value in {% endtrans %}{{ currency_print() }}</a></th>
+        </tr>
+    </thead>
+    <!-- Table body -->
+
+    <tbody>
+        {% for transaction in transactions %}
+
+        <tr class="content-list-item content-list-item-{{ loop.cycle('odd', 'even') }}">
+            <td>
+                <input type="checkbox" name="mass-transaction-{{ transaction.id }}" value="{{ transaction.id }}" class="group-mass-transactions" />
+            </td>
+            <td>{{ transaction.datetime|htdatetime('SHORT_DATETIME_FORMAT') }}</td>
+            <td><a href="{% url finance_transaction_view transaction.id %}"><strong>{{ transaction.name|truncate(length=60) }}</strong></a></td>
+            <td><a href="{% url identities_contact_view transaction.source_id %}" class="popup-link">{{ transaction.source }}</a></td>
+            <td><a href="{% url identities_contact_view transaction.target_id %}" class="popup-link">{{ transaction.target }}</a></td>
+            <td><a href="{% url finance_account_view transaction.account_id %}" class="popup-link">{{ transaction.account }}</a></td>
+            <td>{{ transaction.value|number_format }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>

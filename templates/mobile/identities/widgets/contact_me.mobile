@@ -1,0 +1,36 @@
+{% extends "mobile/base_widget.mobile" %}
+
+{% block widget_title %}{% trans %}My Card{% endtrans %}{% endblock %}
+
+{% block widget_content %}
+
+	<div>
+		<span class="content-label">{% trans %}Name{% endtrans %}:</span>
+		<span class="content-value">{{ contact.name }}</span>
+	</div>
+	{% if contact.related_user %}
+	<div>
+		<span class="content-label">{% trans %}User{% endtrans %}:</span>
+		<span class="content-value"><a href="{% url identities_user_view contact.related_user_id %}">{{ contact.related_user.get_username() }}</a></span>
+	</div>
+	{% endif %}
+	{% if contact.related_group %}
+	<div>
+		<span class="content-label">{% trans %}Group{% endtrans %}:</span>
+		<span class="content-value"><a href="{% url identities_group_view contact.related_group_id %}">{{ contact.related_group }}</a></span>
+	</div>
+	{% endif %}
+	{% for value in contact.contactvalue_set.all() %}
+	{% if value.value %}
+	<div>
+		<span class="content-label">{{ value.field.label }}:</span>
+		{% if value.field.field_type == 'picture' %}
+		<img src="{{ value|htsafe }}" alt="{{ value.field.label }}" />
+		{% else %}
+		<span class="content-value">{{ value|htsafe }}</span>
+		{% endif %}
+	</div>
+	{% endif %}
+	{% endfor %}
+	
+{% endblock %}

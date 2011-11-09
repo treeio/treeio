@@ -1,0 +1,5 @@
+title,folder,body
+{{link|replace(',','')|replace('"','')|replace('
+','')|safe}},{% if link.folder %}{{link.folder|replace(',','')|replace('"','')|replace('
+','')|safe}},{% else %},{% endif %}{% if link.url %}{{link.url|replace(',','')|replace('"','')|replace('
+','')|safe}}{% else %},{% endif %}

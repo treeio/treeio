@@ -1,0 +1,30 @@
+{% extends "mobile/identities/page.mobile" %}
+
+{% block title %}{% trans %}New Contact{% endtrans %} | {% trans %}Identities{% endtrans %}{% endblock %}
+{% block module_title %}{% trans %}Identities{% endtrans %}{% endblock %}
+
+{% block module_topmenu %}
+<a href="{% url identities_contact_add %}" class="top-menu add-link add-link-active">{% trans %}New Contact{% endtrans %}</a>
+{% endblock %}
+
+{% block module_content %}
+
+{% if types %}
+<p>
+    {% trans %}Please choose the type of Contact you wish to create{% endtrans %}:
+</p>
+<div class="spaced-list">
+    <div class="module-top-menu-inline">
+        {% for type in types %}
+        <a href="{% url identities_contact_add_typed type.id %}" class="top-menu add-link">{{ type }}</a>
+        {% endfor %}
+    </div>
+</div>
+{% else %}
+<p>
+    {% trans %}Sorry, you can not create new Contacts. You don't have access to any of the available Contact Types{% endtrans %}
+</p>
+{% endif %}
+
+{% endblock %}
+

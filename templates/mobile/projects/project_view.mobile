@@ -1,0 +1,144 @@
+{% extends "mobile/projects/page.mobile" %}
+
+{% block title %}{{ project|htsafe }} | {% trans %}Project Management{% endtrans %}{% endblock %}
+
+{% block module_title %}{{ project }}{% endblock %}
+
+{% block module_subtitle %}{% trans %}Project{% endtrans %}{% endblock %}
+
+{% block module_topmenu %}
+<a href="{% url projects_project_add_typed project.id %}" class="top-menu add-link">{% trans %}New Project{% endtrans %}</a>
+<a href="{% url projects_milestone_add_typed project.id %}" class="top-menu add-link">{% trans %}New Milestone{% endtrans %}</a>
+<a href="{% url projects_task_add_typed project.id %}" class="top-menu add-link">{% trans %}New Task{% endtrans %}</a>
+<a href="{% url projects_project_view project.id %}" class="top-menu view-link-active">{% trans %}View{% endtrans %}</a>
+{% if user.get_profile().has_permission(project, mode='w') %}
+<a href="{% url projects_project_edit project.id %}" class="top-menu edit-link">{% trans %}Edit{% endtrans %}</a>
+<a href="{% url projects_project_delete project.id %}" class="top-menu delete-link">{% trans %}Delete{% endtrans %}</a>
+{% endif %}
+{% endblock %}
+
+{% block sidebar_right %}
+{% endblock %}
+
+{% block module_content %}
+
+{% if project.parent %}
+<div>
+    <span class="content-label">{% trans %}Path{% endtrans %}:</span>
+    <span class="content-value">{{ object_tree_path(project) }}</span>
+</div>
+{% endif %}
+
+{% if project.manager %}
+<div>
+    <span class="content-label">{% trans %}Project manager{% endtrans %}:</span>
+    <span class="content-value">
+      <a href="{% url identities_contact_view project.manager.id %}" class="popup-link"><strong>{{ project.manager }}</strong></a>
+    </span>
+</div>
+{% endif %}
+
+{% if project.client %}
+<div>
+    <span class="content-label">{% trans %}Client{% endtrans %}:</span>
+    <span class="content-value"><a href="{% url identities_contact_view project.client.id %}" class="popup-link">{{ project.client }}</a></span>
+</div>
+{% endif %}
+
+<div>
+  <span class="content-label">{% trans %}Progress{% endtrans %}:</span>
+  <span class="content-value">
+    <div class="meter-wrap">
+        <div class="meter-value" style="width: {{ tasks_progress }}%;">
+            <div class="meter-text">
+                {{ tasks_progress }}%
+            </div>
+        </div>
+    </div>
+  </span>
+</div>
+
+{% if project.details %}
+<div>
+    <span class="content-label">{% trans %}Details{% endtrans %}:</span>
+    <span class="content-details">{{ project.details|htsafe }}</span>
+</div>
+{% endif %}
+
+{% if subprojects %}
+<br />
+<div>
+    <span class="content-label-head">{% trans %}Sub Projects{% endtrans %}:</span>
+</div>
+{% for subproject in subprojects %}
+<div class="content-list-item content-list-item-{{ loop.cycle('odd', 'even') }}">
+    <div class="content-list-tick">
+    </div>
+    <span class="content-list-item-name">
+        <a href="{% url projects_project_view subproject.id %}" class="large"><strong>{{ subproject }}</strong></a>
+    </span>
+    <span class="content-list-item-group">
+    </span>
+    <span class="content-list-item-actions">
+        {% if user.get_profile().has_permission(project, mode='w') %}
+        <a href="{% url projects_project_edit subproject.id %}" class="inline-link edit-link">{% trans %}Edit{% endtrans %}</a>
+        {% endif %}
+    </span>
+</div>
+{% endfor %}
+{% endif %}
+
+<br />
+<div class="content-label-head">
+    {% trans %}Tasks{% endtrans %}:
+</div>
+
+{% if milestones or tasks %}
+  <br />
+  <form action="" method="post">
+{% csrf_token %}
+  <ul class="mass-form">
+      <input type="hidden" name="massform" value="massform" />
+       {{ massform.as_ul()|htsafe }}
+      <li>
+          <input type="submit" value="{% trans %}Save{% endtrans %}" />
+      </li>
+  </ul>
+    {% for milestone in milestones %}
+    <span class="large light content-label-head">
+        <input type="checkbox" name="mass-milestone-{{ milestone.id }}" value="{{ milestone.id }}" class="group-control" />
+        <a href="{% url projects_milestone_view milestone.id %}" class="projects-milestone">{{ milestone.name }}</a>
+        <span class="spaced-h smaller">
+            <a href="{% url projects_task_add_to_milestone milestone.id %}" id="add_task" class="inline-link add-link popup-link">{% trans %}Add{% endtrans %}</a>
+        </span>
+    </span>
+    {% set render_tasks = tasks.filter(milestone=milestone) %}
+    {% if render_tasks %}
+    {{ projects_task_list(htsort(render_tasks), by_milestone=True) }}
+    {% else %}
+    <div class="content-list-item lighter spaced-v spaced-h">
+        <em>{% trans %}No Active Tasks{% endtrans %}</em>.
+    <a href="{% url projects_task_add_to_milestone milestone.id %}" class="popup-link"><strong>{% trans %}Create a Task{% endtrans %}</strong></a>
+    </div>
+    {% endif %}
+    <br />
+    {% endfor %}
+
+    {% set render_tasks = tasks.filter(milestone__isnull=True) %}
+    {% if render_tasks %}
+    <span class="large light content-label-head">
+        <input type="checkbox" name="mass-unclassified" value="unclassified" class="group-control" />
+        <em>{% trans %}Unclassified Tasks{% endtrans %}</em>
+    </span>
+    {{ projects_task_list(htsort(render_tasks), by_project=False) }}
+    {% endif %}
+  </form>
+
+{% else %}
+<div class="content-list-item lighter spaced-v spaced-h">
+    <em>{% trans %}No Milestones{% endtrans %}.</em>
+    <a href="{% url projects_milestone_add_typed project.id %}" class="popup-link"><strong>{% trans %}Create a Milestone{% endtrans %}</strong></a>
+</div>
+{% endif %}
+
+{% endblock %}

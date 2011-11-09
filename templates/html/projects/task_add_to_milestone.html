@@ -1,0 +1,30 @@
+{% extends "html/projects/page.html" %}
+
+{% block title %}{% trans %}New Task{% endtrans %} | {% trans %}Project Management{% endtrans %}{% endblock %}
+
+{% block module_title %}{{ milestone }}{% endblock %}
+
+{% block module_subtitle %}{% trans %}Milestone{% endtrans %}{% endblock %}
+
+{% block module_topmenu %}
+<a href="{% url projects_task_add_to_milestone milestone.id %}" class="top-menu add-link-active">{% trans %}New Task{% endtrans %}</a>
+<a href="{% url projects_milestone_view milestone.id %}" class="top-menu view-link">{% trans %}View{% endtrans %}</a>
+{% if user.get_profile().has_permission(milestone, mode='w') %}
+<a href="{% url projects_milestone_edit milestone.id %}" class="top-menu edit-link">{% trans %}Edit{% endtrans %}</a>
+<a href="{% url projects_milestone_delete milestone.id %}" class="top-menu delete-link">{% trans %}Delete{% endtrans %}</a>
+{% endif %}
+{% endblock %}
+
+{% block module_content %}
+
+<form action="" method="post" class="content-form">
+{% csrf_token %}
+    <ul class="content-form-fields">
+        {{ htform(form).as_ul()|htsafe }}
+    </ul>
+    <div class="content-form-submit">
+        <input type="submit" name="save" value="{% trans %}Create Task{% endtrans %}" />
+		<input type="submit" name="cancel" value="{% trans %}Cancel{% endtrans %}" class="cancel" />
+    </div>
+</form>
+{% endblock %}

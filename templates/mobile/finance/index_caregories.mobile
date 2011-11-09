@@ -1,0 +1,44 @@
+{% extends "mobile/finance/page.mobile" %}
+
+{% block title %}{% trans %}Categories{% endtrans %} | {% trans %}Finance{% endtrans %}{% endblock %}
+
+{% block module_title %}{% trans %}Categories{% endtrans %}{% endblock %}
+
+{% block categories_page %}sidebar-link-active{% endblock %}
+
+{% block module_topmenu %}
+<a href="{% url finance_category_add %}" class="top-menu add-link">{% trans %}New Category{% endtrans %}</a>
+{% endblock %}
+
+{% block sidebar_right %}
+{% endblock %}
+
+{% block module_content %}
+
+{% if categories %}
+{% for category in categories %}
+<div class="content-list-item content-list-item-{{ loop.cycle('odd', 'even') }}">
+    <div class="content-list-tick">
+    </div>
+    <span class="content-list-item-name">
+        {% set item1 = category.transaction_set.count() %}
+        {% set item2 = category.liability_set.count() %}
+        {% set items = item1 + item2 %}
+        {% if items %}
+        <a href="{% url finance_category_view category.id %}">{{ category }} ({{ items }})</a>
+        {% else %}
+        <a href="{% url finance_category_view category.id %}">{{ category }}</a>
+        {% endif %}
+    </span>
+    <span class="content-list-item-actions">
+        {% if user.get_profile().has_permission(category, mode='w') %}
+        <a href="{% url finance_category_edit category.id %}" class="inline-link edit-link">{% trans %}Edit{% endtrans %}</a>
+        {% endif %}
+    </span>
+</div>
+{% endfor %}
+{% else %}
+{{ show_hint('finance_categories') }}
+{% endif %}
+
+{% endblock %}

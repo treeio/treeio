@@ -1,0 +1,46 @@
+{% extends "mobile/news/page.mobile" %}
+
+{% block title %}{% trans %}News{% endtrans %}{% endblock %}
+
+{% block class_all %}sidebar-link-active{% endblock %}
+
+{% block sidebar_right %}
+{% endblock %}
+
+{% block module_content %}
+{% if not updates %}
+  {{ show_hint('news') }}
+  <br />
+{% endif %}
+
+<div class="content-label-head">
+  {% trans %}What are you working on?{% endtrans %}
+</div>
+<br />
+<div class="news-record-post">
+    <div class="news-record-label">
+        <a href="{% url identities_user_view profile.id %}" class="popup-link"><strong>{{ profile }}</strong></a>
+    </div>
+    <div class="news-record-body">
+      <form action="" method="post" class="content-form">
+{% csrf_token %}
+          <ul class="content-form-fields">
+              <li>
+                  <textarea id="id_body" rows="3" cols="50" name="body" class="news-share-field no-editor"></textarea>
+              </li>
+          </ul>
+          <div class="news-form-submit">
+              <input type="submit" value="{% trans %}Share{% endtrans %}">
+          </div>
+      </form>
+    </div>
+</div>
+
+{% if updates %}
+<br />
+{{ news_update_list(paginate(updates), 30) }}
+
+{{ pager(updates, 30) }}
+{% endif %}
+
+{% endblock %}

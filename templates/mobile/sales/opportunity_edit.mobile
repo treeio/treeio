@@ -1,0 +1,35 @@
+{% extends "mobile/sales/page.mobile" %}
+
+{% block title %}{% trans %}Sales Support{% endtrans %}{% endblock %}
+
+{% block module_title %}{{ opportunity }}{% endblock %}
+
+{% block module_subtitle %}{% trans %}Opportunity Edit{% endtrans %}{% endblock %}
+
+{% block module_topmenu %}
+<a href="{% url sales_opportunity_add %}" class="top-menu add-link">{% trans %}New Opportunity{% endtrans %}</a>
+<a href="{% url sales_opportunity_view opportunity.id %}" class="top-menu view-link">{% trans %}View{% endtrans %}</a>
+<a href="{% url sales_opportunity_edit opportunity.id %}" class="top-menu edit-link-active">{% trans %}Edit{% endtrans %}</a>
+<a href="{% url sales_opportunity_delete opportunity.id %}" class="top-menu delete-link">{% trans %}Delete{% endtrans %}</a>
+{% endblock %}
+
+{% block sidebar_right %}
+{% endblock %}
+
+{% block module_content %}
+
+<form action="" method="post" class="content-form">
+{% csrf_token %}
+    <ul class="content-form-fields">
+        {{ htform(form).as_ul()|htsafe }}
+    </ul>
+    <div class="content-form-submit ui-grid-a">
+    <div class="ui-block-a">
+        <input data-theme="b" type="submit" name="save" value="{% trans %}Save{% endtrans %}" />
+    </div>
+    <div class="ui-block-b">
+        <input type="submit" name="cancel" value="{% trans %}Cancel{% endtrans %}" class="cancel" />
+    </div>
+    </div>
+</form>
+{% endblock %}

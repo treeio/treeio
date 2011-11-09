@@ -1,0 +1,5 @@
+[
+{% for entity in entities -%}
+{"label": "{{ entity.__unicode__().replace('\"', '\\\"')|htsafe }}", "value": "{{ entity.id }}"}{% if not loop.last %},{% endif %}
+{% endfor -%}
+]

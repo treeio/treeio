@@ -1,0 +1,30 @@
+{% extends "mobile/finance/page.mobile" %}
+
+{% block title %}{% trans %}Edit{% endtrans %} | {{ category|htsafe }} | {% trans %}Category{% endtrans %} | {% trans %}Finance{% endtrans %}{% endblock %}
+
+{% block module_title %}{{ category }}{% endblock %}
+{% block module_subtitle %}{% trans %}Category{% endtrans %}{% endblock %}
+
+{% block module_topmenu %}
+<a href="{% url finance_category_view category.id %}" class="top-menu view-link">{% trans %}View{% endtrans %}</a>
+<a href="{% url finance_category_edit category.id %}" class="top-menu edit-link-active">{% trans %}Edit{% endtrans %}</a>
+<a href="{% url finance_category_delete category.id %}" class="top-menu delete-link">{% trans %}Delete{% endtrans %}</a>
+{% endblock %}
+
+{% block module_content %}
+
+<form action="" method="post" class="content-form">
+{% csrf_token %}
+    <ul class="content-form-fields">
+        {{ form.as_ul()|htsafe }}
+    </ul>
+    <div class="content-form-submit ui-grid-a">
+    <div class="ui-block-a">
+        <input data-theme="b" type="submit" name="save" value="{% trans %}Save{% endtrans %}" />
+    </div>
+    <div class="ui-block-b">
+        <input type="submit" name="cancel" value="{% trans %}Cancel{% endtrans %}" class="cancel" />
+    </div>
+    </div>
+</form>
+{% endblock %}

@@ -1,0 +1,25 @@
+{% if object %}
+<div class="subscription-users">
+    {% for subscription in subscriptions %}
+    <a href="{% url identities_user_view subscription.id %}">{{ subscription }}</a>
+    {% if request.user.get_profile().has_permission(object, mode='w') or request.user.get_profile().id == subscription.id %}
+    <a href="{{ request.path }}?unsubscribe={{ subscription.id }}" class="inline-link delete-link" style="padding-left: 8px;">&nbsp;</a>
+    {% endif %}
+    <br />
+    {% endfor %}
+</div>
+<div class="subscription-links">
+    {% if not subscribed %}
+    <a href="{{ request.path }}?subscribe" class="inline-link subscribe-link" style="margin: 0">{% trans %}Subscribe{% endtrans %}</a>
+    {% endif %}
+    <a href="{{ request.path }}?subscribe_add" class="inline-link add-link-active" style="margin: 0">{% trans %}Add{% endtrans %}</a>
+</div>
+<form action="{{ request.path }}?subscribe_add" method="post" class="subscription-add">
+{% csrf_token %}
+    <ul class="content-form-fields">
+    {{ form.as_ul()|safe }}
+    </ul>
+    <input type="submit" value="Add" style="font-weight: 700;" />
+    <input type="submit" name="cancel" value="Cancel" />
+</form>
+{% endif %}

@@ -1,0 +1,84 @@
+{% extends "mobile/finance/page.mobile" %}
+
+{% block title %}{% trans %}Delete{% endtrans %} / {{ equity|htsafe }} | {% trans %}Equity{% endtrans %} | {% trans %}Finance{% endtrans %}{% endblock %}
+
+{% block module_title %}{{ equity }}{% endblock %}
+{% block module_subtitle %}{% trans %}Equity{% endtrans %}{% endblock %}
+
+{% block module_topmenu %}
+	<a href="{% url finance_equity_view equity.id %}" class="top-menu view-link">{% trans %}View{% endtrans %}</a>
+	<a href="{% url finance_equity_edit equity.id %}" class="top-menu edit-link">{% trans %}Edit{% endtrans %}</a>
+	<a href="{% url finance_equity_delete equity.id %}" class="top-menu delete-link-active">{% trans %}Delete{% endtrans %}</a>
+{% endblock %}
+
+{% block module_content %}
+
+	<div>
+		<span class="larger">{% trans %}Delete this Equity{% endtrans %}?</span><br />
+	    <form action="" method="post" class="content-form">
+{% csrf_token %}
+        	<ul class="content-form-fields">
+        		<li>
+					<label for="trash">
+					<input id="trash" type="checkbox" name="trash" checked="checked" />
+						{% trans %}Move to Trash{% endtrans %}
+					</label>
+				</li>
+				<li class="ui-grid-a">
+				<div class="ui-block-a">
+					<input data-theme="b" type="submit" name="delete" value="Yes, Delete" style="font-weight: 700;" />&nbsp;&nbsp;
+	        	</div>
+            	<div class="ui-block-b">
+	        		<input type="submit" name="cancel" value="Cancel" />
+	        	</div>
+				</li>
+			</ul>
+	    </form>
+	</div>
+
+<div>
+	<span class="content-label">{% trans %}Equity Type{% endtrans %}:</span>
+	<span class="content-value">
+	{{ equity.equity_type|title() }}
+	</span>
+	
+	<div>
+		<span class="content-label">{% trans %}Issue Price{% endtrans %}:</span>
+		<span class="content-value">{{ equity.issue_price }}</span>
+	</div>
+	
+	<div>
+		<span class="content-label">{% trans %}Sell Price{% endtrans %}:</span>
+		<span class="content-value">{{ equity.sell_price }}</span>
+	</div>
+
+	<div>
+		<span class="content-label">{% trans %}Purchase Date{% endtrans %}:</span>
+		<span class="content-value">{{ equity.purchase_date }}</span>
+	</div>
+	
+	<div>
+		<span class="content-label">{% trans %}Amount{% endtrans %}:</span>
+		<span class="content-value">{{ equity.amount }}</span>
+	</div>
+
+	<div>
+		<span class="content-label">{% trans %}Issuer{% endtrans %}:</span>
+		<span class="content-value"><a href="{% url identities_contact_view equity.issuer.id %}">{{ equity.issuer }}</a></span>
+	</div>
+	
+	<div>
+		<span class="content-label">{% trans %}Owner{% endtrans %}:</span>
+		<span class="content-value"><a href="{% url identities_contact_view equity.owner.id %}">{{ equity.owner }}</a></span>
+	</div>
+	
+	{% if equity.details %}
+	<div>
+		<span class="content-label">{% trans %}Details{% endtrans %}:</span>
+		<span class="content-details">{{ equity.details|htsafe }}</span>
+	</div>
+	{% endif %}
+	
+	<br />
+
+{% endblock %}

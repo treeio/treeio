@@ -1,0 +1,64 @@
+{% extends "json/documents/page.json" %}
+{% block module_content %}
+
+	{
+	"user": {{ user_block() }},
+	"documents": 
+		[
+		{% for document in documents %}
+			{
+			"id": {{ document.id }},
+			"url": "http://{{ site_domain }}{% url documents_document_view document.id %}",
+			"title": "{{ document }}",
+			"folder": "{{ document.folder }}",
+			{% if document.body -%}
+			"body": "{{ document.body.replace('\n', '').replace('\r', '')|htsafe }}"
+	        {% else -%}
+	        "body": null,
+	        {% endif -%}
+			{% if loop.last -%}
+		    }
+		    {% else -%}
+		    },
+		    {% endif -%}
+		{% endfor %}
+		],
+	"files":
+		[
+		{% for file in files %}
+			{
+			"id": {{ file.id }},
+			"url": "http://{{ site_domain }}{% url documents_file_view file.id %}",
+			"name": "{{ file }}",
+			"folder": "{{ file.folder }}"
+			{% if loop.last -%}
+		    }
+		    {% else -%}
+		    },
+		    {% endif -%}
+		{% endfor %}
+		],
+	"weblinks":
+		[
+		{% for link in links %}
+			{
+			"id": {{ link.id }},
+			"url": "http://{{ site_domain }}{% url documents_weblink_view link.id %}",
+			"title": "{{ link }}",
+			"folder": "{{ link.folder }}",
+			{% if link.url -%}
+			"url": "{{ link.url }}"
+	        {% else -%}
+	        "url": null,
+	        {% endif -%}
+			{% if loop.last -%}
+		    }
+		    {% else -%}
+		    },
+		    {% endif -%}
+		{% endfor %}
+		]
+	}
+{% endblock %}
+
+		

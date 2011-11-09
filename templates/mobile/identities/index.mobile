@@ -1,0 +1,19 @@
+{% extends "mobile/identities/page.mobile" %}
+
+{% block title %}{% trans %}Contacts{% endtrans %}{% endblock %}
+
+{% block class_all %}sidebar-link-active{% endblock %}
+
+{% block sidebar_right %}
+{% endblock %}
+
+{% block module_content %}
+{% if contacts %}
+
+    {{ identities_contact_list(contacts) }}
+
+
+{% endif %}
+
+{% endblock %}
+

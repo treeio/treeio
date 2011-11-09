@@ -1,0 +1,42 @@
+{% extends "html/identities/page.html" %}
+
+{% block title %}{% trans %}Edit{% endtrans %} | {{ contact|htsafe }} | {% trans %}Identities{% endtrans %}{% endblock %}
+
+{% block module_title %}{{ contact }}{% endblock %}
+{% block module_subtitle %}{{ contact.contact_type }}{% endblock %}
+
+{% block module_topmenu %}
+<a href="{% url identities_contact_view contact.id %}" class="top-menu view-link">{% trans %}View{% endtrans %}</a>
+<a href="{% url identities_contact_edit contact.id %}" class="top-menu edit-link edit-link-active">{% trans %}Edit{% endtrans %}</a>
+<a href="{% url identities_contact_delete contact.id %}" class="top-menu delete-link">{% trans %}Delete{% endtrans %}</a>
+{% endblock %}
+
+{% block sidebar_right %}
+
+<span class="sidebar-header-first">{% trans %}Permissions{% endtrans %}</span>
+<div class="sidebar-block">
+    {{ permission_block(contact) }}
+</div>
+<span class="sidebar-header-right">{% trans %}Links{% endtrans %}</span>
+<div class="sidebar-block">
+    {{ link_block(contact) }}
+</div>
+<span class="sidebar-header-right">{% trans %}Subscribers{% endtrans %}</span>
+<div class="sidebar-block">
+    {{ subscription_block(contact) }}
+</div>
+{% endblock %}
+
+{% block module_content %}
+
+<form action="" method="post" class="content-form" enctype="multipart/form-data">
+{% csrf_token %}
+    <ul class="content-form-fields">
+        {{ form.as_ul()|htsafe }}
+    </ul>
+    <div class="content-form-submit">
+        <input type="submit" name="save" value="{% trans %}Save{% endtrans %}" />
+		<input type="submit" name="cancel" value="{% trans %}Cancel{% endtrans %}" class="cancel" />
+    </div>
+</form>
+{% endblock %}

@@ -1,0 +1,95 @@
+{% extends "mobile/identities/page.mobile" %}
+
+{% block title %}{{ profile|htsafe }} | {% trans %}Identities{% endtrans %}{% endblock %}
+
+{% block module_title %}{{ profile }}{% endblock %}
+{% block module_subtitle %}{% trans %}User{% endtrans %}{% endblock %}
+
+{% block module_topmenu %}
+<a href="{% url identities_user_view profile.id %}" class="top-menu view-link view-link-active">{% trans %}View{% endtrans %}</a>
+{% endblock %}
+
+{% block sidebar_right %}
+{% endblock %}
+
+{% block module_content %}
+
+<div>
+    <span class="content-label">{% trans %}Username{% endtrans %}:</span>
+    <span class="content-value"><strong>{{ profile.user }}</strong></span>
+</div>
+{% if profile.default_group %}
+<div>
+    <span class="content-label">{% trans %}Default Group{% endtrans %}:</span>
+    <span class="content-value">{{ object_tree_path(profile.default_group) }}</span>
+</div>
+{% endif %}
+<div>
+    {% if profile.other_groups.count() %}
+    <span class="content-label">{% trans %}Other Groups{% endtrans %}:</span>
+    <span class="content-value">
+        {% for group in profile.other_groups.all() %}
+        <a href="{% url identities_group_view group.id %}">{{ group }}</a>
+        <br />
+        {% endfor %}
+    </span>
+    {% endif %}
+</div>
+<br />
+
+{% for contact in contacts %}
+<div>
+    <span class="content-label">
+        <a href="{% url identities_contact_view contact.id %}"><strong>{% trans %}Contact{% endtrans %}:</strong></a>
+    </span>
+    <span class="content-details"></span>
+</div>
+
+{% set picture = contact.get_picture() %}
+<div class="contact-profile-picture-frame">
+<img class="contact-profile-picture" src="{{ picture|htsafe }}" alt="" align="left" />
+</div>
+
+<div class="left">
+<div>
+    <span class="larger">{{ contact.name }}</span>
+</div>
+{% if contact.parent %}
+<div>
+    <span class="large">{% trans %}Path{% endtrans %}: {{ object_tree_path(contact) }}</span>
+</div>
+{% endif %}
+{% if contact.related_user %}
+{% if contact.related_user.is_user() %}
+    <span class="large">{% trans %}User{% endtrans %}: <img src="/static/icons/identities/user.gif"/> <a href="{% url identities_user_view contact.related_user_id %}">{{ contact.related_user.user.name }}</a></span>
+{% else %}
+    <span class="large">{% trans %}Group{% endtrans %}: <a href="{% url identities_group_view contact.related_user_id %}">{{ contact.related_user.group.name }}</a></span>
+{% endif %}
+{% endif %}
+
+<hr class="space"/>
+{% for value in contact.contactvalue_set.all() %}
+{% if value.value %}
+<div>
+    
+    {% if value.field.field_type == 'picture' %}
+    {#<img src="{{ value|htsafe }}" alt="{{ value.field.label }}" />#}
+    {% elif value.field.field_type == 'url' %}
+	<span class="heavy">{{ value.field.label }}:</span>
+    <span class=""><a href="{{ value|htsafe }}" class="ajax-link-out">{{ value }}</a></span>
+    {% elif value.field.field_type == 'details' %}
+	<span class="heavy">{{ value.field.label }}:</span>
+    <span class="">{{ value|htsafe }}</span>
+    {% else %}
+	<span class="heavy">{{ value.field.label }}:</span>
+    <span class="">{{ value|htsafe }}</span>
+    {% endif %}
+</div>
+{% endif %}
+{% endfor %}
+</div>
+<hr class="space"/>
+
+{% endfor %}
+
+{% endblock %}

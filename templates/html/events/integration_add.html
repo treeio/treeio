@@ -1,0 +1,70 @@
+{% extends "html/events/page.html" %}
+
+{% block title %}{% trans %}Events{% endtrans %} | {% trans %}Calendar{% endtrans %}{% endblock %}
+
+{% block module_title %}{% trans %}Calendar{% endtrans %}{% endblock %}
+{% block module_subtitle %}{% trans %}Integration{% endtrans %}{% endblock %}
+
+{% block class_integration %}sidebar-link-active{% endblock %}
+
+{% block module_topmenu %}
+{% endblock %}
+
+{% block module_content %}
+
+{% if resource and 'application' in resource.raw %}
+
+<div>
+    <span class="content-label">{% trans %}Name{% endtrans %}:</span>
+    <span class="content-value heavy">{{ resource.application.name }}</span>
+</div>
+{% for location in resource.application.locations %}
+<div>
+    <span class="content-label">{% trans %}URL{% endtrans %}:</span>
+    <span class="content-value"><a href="{{ location.uri }}">{{ location.uri }}</a></span>
+</div>
+{% endfor %}
+
+<br />
+<br />
+
+{% if data.result_name == 'success' %}
+<div class="spaced-h large">
+    <form action='{% url events_integration_add resource_id %}' method='post'>
+        {% csrf_token %}
+	<input type='submit' name='add' value='{% trans %}Connect{% endtrans %} {{ resource.application.name }}' />
+    </form>
+</div>
+{% elif data.result_name == 'redirect' %}
+<div class="notification notify-info">
+    <div class="notification-head">
+        <span class="heavy">{{ resource.application.name }}</span> {% trans %}needs your approval{% endtrans %}
+    </div>
+    <div class="notification-body">
+        {% trans %}Please proceed to {% endtrans %}{{ resource.application.name }}:
+        <span class="spaced-h">
+            <a href="{{ data.result }}" class="top-menu add-link heavy">Connect {{ resource.application.name }}</a>
+        </span>
+        <br />
+        <br />
+    </div>
+</div>
+{% else %}
+<div class="notification notify-warning">
+    <div class="notification-head">
+        <span class="heavy">{{ resource.application.name }}</span>
+    </div>
+    <div class="notification-body">
+        {% trans %}Sorry, there has been a problem adding {% endtrans %}{{ resource.application.name }}.<br />
+        <span class="spaced-h">
+            {% trans %}Please try again later.{% endtrans %}
+        </span>
+        <br />
+        <br />
+    </div>
+</div>
+{% endif %}
+
+{% endif %}
+
+{% endblock %}

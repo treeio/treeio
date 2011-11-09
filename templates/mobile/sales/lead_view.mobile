@@ -1,0 +1,149 @@
+{% extends "mobile/sales/page.mobile" %}
+
+{% block title %}{{ lead|htsafe }} | {% trans %}Leads{% endtrans %} | {% trans %}Sales Support{% endtrans %}{% endblock %}
+
+{% block module_title %}{{ lead }}{% endblock %}
+
+{% block module_subtitle %}{% trans %}Lead{% endtrans %}{% endblock %}
+
+{% block module_topmenu %}
+<a href="{% url sales_lead_view lead.id %}" class="top-menu view-link-active">{% trans %}View{% endtrans %}</a>
+{% if request.user.get_profile().has_permission(lead, mode='w') %}
+<a href="{% url sales_lead_edit lead.id %}" class="top-menu edit-link">{% trans %}Edit{% endtrans %}</a>
+<a href="{% url sales_lead_delete lead.id %}" class="top-menu delete-link">{% trans %}Delete{% endtrans %}</a>
+<a href="{% url sales_opportunity_add_with_lead lead.id %}" class="top-menu add-link">{% trans %}Convert To Opportunity{% endtrans %}</a>
+<a href="{% url sales_order_add_with_lead lead.id %}" class="top-menu add-link">{% trans %}Convert To Order{% endtrans %}</a>
+{% endif %}
+{% endblock %}
+
+{% block sidebar_right %}
+{% endblock %}
+
+{% block module_content %}
+
+<div>
+    <span class="content-label">{% trans %}Assigned to{% endtrans %}:</span>
+    {% if lead.assigned.count() %}
+	<span class="content-value">
+        {% for assignee in lead.assigned.all() %}
+        <a href="{% url identities_user_view assignee.id %}" class="popup-link">{{ assignee }}</a>
+        <br />
+        {% endfor %}
+	{% else %}
+		<span class="content-value">Unassigned</span>
+{% endif %}
+</div>
+
+{% if lead.contact %}
+<div>
+    <span class="content-label">{% trans %}Contact{% endtrans %}:</span>
+    <span class="content-value"><a href="{% url identities_contact_view lead.contact.id %}" class="popup-link">{{ lead.contact }}</a></span>
+</div>
+{% endif %}
+
+{% if lead.source %}
+<div>
+    <span class="content-label">{% trans %}Source{% endtrans %}:</span>
+    <span class="content-value"><a href="{% url sales_source_view lead.source.id %}">{{ lead.source }}</a></span>
+</div>
+{% endif %}
+
+<div>
+    <span class="content-label">{% trans %}Products Interested{% endtrans %}:</span>
+	{% for product in lead.products_interested.all() %}
+    <span class="content-value"><a href="{% url sales_product_view product.id %}" class="popup-link">{{ product }}</a></span>
+    {% else %}
+	<span class="content-value">None</span>
+	{% endfor %}
+</div>
+<div>
+    <span class="content-label">{% trans %}Contact Method{% endtrans %}:</span>
+    <span class="content-value">{{ lead.contact_method|title() }}</span>
+</div>
+<div>
+    <span class="content-label">{% trans %}Status{% endtrans %}:</span>
+    <span class="content-value"><a href="{% url sales_status_view lead.status.id %}">{{ lead.status }}</a></span>
+</div>
+{% if lead.details %}
+<div>
+    <span class="content-label">{% trans %}Details{% endtrans %}:</span>
+    <span class="content-details">{{ lead.details|htsafe }}</span>
+</div>
+{% endif %}
+
+<div class="spaced-v spaced-h">
+  <br />
+  {{ tags_box(lead) }}
+</div>
+
+<br />
+
+<div>
+    <span class="content-label-head">{% trans %}History{% endtrans %}:</span>
+</div>
+{% set updates = lead.updates.all().order_by('date_created') %}
+{% for record in updates %}
+<div class="services-record">
+    <div class="services-record-label">
+        {% set contact = record.author.get_contact() %}
+        <div class="contact-picture-frame">
+        {% if contact %}
+          {% set picture = contact.get_picture() %}
+          <a href="{% url identities_user_view record.author.id %}"><img class="contact-picture" src="{{ picture|htsafe }}" alt="" align="left" /></a>
+        {% else %}
+          <a href="{% url identities_user_view record.author.id %}"><img class="contact-picture" src="/static/messaging/pic.png" alt="" align="left" /></a>
+        {% endif %}
+        </div>
+        {% if record.record_type == 'manual' %}
+        <a href="{% url identities_user_view record.author.id %}" class="popup-link"><strong>{{ record.author }}</strong></a>
+        <span class="spaced-h small light">{{ record.date_created|htdatetime }}</span>
+        {% else %}
+        <a href="{% url identities_user_view record.author.id %}" class="popup-link">{{ record.author }}</a> <span class="small"><em>[{% trans %}Auto{% endtrans %}]</em></span>
+        <span class="spaced-h small light">{{ record.date_created|htdatetime }}</span>
+        {% endif %}
+    </div>
+    <div class="services-record-details">
+        {% if record.record_type == 'status' or record.record_type == 'auto' %}
+        <span class="lighter"><em>{{ record.body|htsafe }}</em></span>
+        {% else %}
+        {{ record.get_full_message()|htsafe }}
+        {% endif %}
+    </div>
+</div>
+{% endfor %}
+
+{% if record_form %}
+<div>
+    <form action="" method="post" class="content-form">
+{% csrf_token %}
+        <br />
+        <ul class="content-form-fields">
+            <li>
+                <textarea id="id_body" rows="10" cols="40" name="body"></textarea>
+            </li>
+            {% if agent %}
+            <li class="content-form-inline">
+                <label for="id_notify">
+                    {{ record_form['notify'].label }}
+                </label>
+                <input type="checkbox" id="id_notify" name="notify" />
+            </li>
+            &nbsp;&nbsp;&nbsp;
+            <li class="content-form-inline content-form-full-inline">
+                <label for="id_resolution">
+                    {{ record_form['resolution'].label }}
+                </label>
+                <input type="checkbox" id="id_resolution" name="resolution" />
+            </li>
+            {% endif %}
+        </ul>
+        <div class="content-form-submit">
+            <input type="submit" value="{% trans %}Update Lead{% endtrans %}">
+        </div>
+    </form>
+</div>
+{% endif %}
+
+
+{% endblock %}
+

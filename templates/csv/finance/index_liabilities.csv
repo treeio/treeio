@@ -1,0 +1,1 @@
+{{ finance_liability_list(liabilities) }}

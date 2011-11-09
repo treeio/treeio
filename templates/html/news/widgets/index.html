@@ -1,0 +1,64 @@
+{% extends "html/base_widget.html" %}
+
+{% block widget_title %}{% trans %}News: All Activity{% endtrans %}{% endblock %}
+
+{% block widget_content %}
+
+{% if form %}
+<div class="content-label-head">
+  {% trans %}What are you working on?{% endtrans %}
+</div>
+<br />
+<div class="news-record-post">
+    {% set contact = profile.get_contact() %}
+    <div class="contact-picture-large-frame">
+    {% if contact %}
+      {% set picture = contact.get_picture() %}
+      <a href="{% url identities_user_view profile.id %}"><img class="contact-picture-large left" src="{{ picture|htsafe }}" alt="" /></a>
+    {% else %}
+      <a href="{% url identities_user_view profile.id %}"><img class="contact-picture-large left" src="/static/messaging/pic.png" alt="" /></a>
+    {% endif %}
+    </div>
+    <div class="news-record-label">
+        <a href="{% url identities_user_view profile.id %}" class="popup-link"><strong>{{ profile }}</strong></a>
+    </div>
+    <div class="news-record-body" style="width: 90%;">
+      <form action="{% url news_widget_index %}" method="post" class="content-form">
+      {% csrf_token %}
+          <ul class="content-form-fields">
+              <li>
+                  <textarea id="id_body" rows="3" cols="40" name="body" class="news-share-field no-editor" style="width: 90%;"></textarea>
+              </li>
+              <li>
+              	<span class="spaced-h small">
+              		&nbsp;&nbsp;{% trans %}Recipients{% endtrans %}:
+              	</span>
+              	<span>
+	              	{{ form.recipients|safe }}
+	              	{{ form.multicomplete_recipients|safe }}
+	            </span>
+              </li>
+          </ul>
+          <div class="news-form-submit" style="width: 90%;">
+              <input type="submit" value="{% trans %}Share{% endtrans %}">
+          </div>
+      </form>
+    </div>
+</div>
+<br />
+{% endif %}
+
+{% if updates %}
+{{ news_update_list(updates[:20]) }}
+
+{% if updates.count() > 20 %}
+<div id="more-news">
+<p class="spaced-h" style="text-align: right; padding-right: 20px;">
+    <a href="" callback="Dajaxice.treeio.news.get_more" class="ajax-link" target="#more-news">See more &rarr;</a>
+</p>
+</div>
+{% endif %}
+{% endif %}
+
+
+{% endblock %}

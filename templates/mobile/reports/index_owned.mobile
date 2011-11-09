@@ -1,0 +1,33 @@
+{% extends "mobile/reports/page.mobile" %}
+
+{% block title %}{% trans %}Reports{% endtrans %}{% endblock %}
+
+{% block index_owned %}sidebar-link-active{% endblock %}
+
+{% block sidebar_right %}
+{% endblock %}
+
+{% block module_topmenu %}
+<a href="{% url reports_report_add %}" class="top-menu add-link popup-link">{% trans %}New Report{% endtrans %}</a>
+{% endblock %}
+
+{% block module_content %}
+
+{% if reports %}
+
+
+<ul data-role="listview" data-inset="true" data-theme="c">
+{% for report in paginate(reports) %}
+<li>
+	<a href="{% url reports_report_view report.id %}">{{report.name}}</a>
+</li>
+{% endfor %}
+</ul>
+
+{{ pager(reports) }}
+
+{% else %}
+{{ show_hint('reports') }}
+{% endif %}
+
+{% endblock %}

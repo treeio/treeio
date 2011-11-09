@@ -1,0 +1,67 @@
+{% extends "mobile/page.mobile" %}
+
+{% block title %}{% trans %}Documents{% endtrans %}{% endblock %}
+
+{% block content %}
+
+<div data-role="collapsible" data-collapsed="true" data-theme="a">
+<h3>{% trans %}Menu{% endtrans %}</h3>
+
+<div class="module-sidebar">
+
+	<a href="{% url document_index %}" class="sidebar-link {% block index_page %}{% endblock %}">{% trans %}All Items{% endtrans %}</a>
+	<a href="{% url index_documents %}" class="sidebar-link {% block index_documents %}{% endblock %}">{% trans %}Documents{% endtrans %}</a>
+	<a href="{% url index_files %}" class="sidebar-link {% block index_files %}{% endblock %}">{% trans %}Files{% endtrans %}</a>
+	<a href="{% url index_weblinks %}" class="sidebar-link {% block index_weblinks %}{% endblock %}">{% trans %}Web Links{% endtrans %}</a>
+	
+	<span class="sidebar-header">{% trans %}Folders{% endtrans %}</span>
+	{% for ifolder in folders %}
+	{% if not ifolder.parent %}
+		<a href="{% url documents_folder_view ifolder.id %}" class="sidebar-link {% if ifolder == folder %}sidebar-link-active{% endif %}">{{ ifolder.name }}</a>
+	{% endif %}
+	{% endfor %}
+</div>
+</div>
+
+<div class="module-content">
+	
+	<div class="module-content-fill">
+	
+		<div class="title-block">
+			
+			<div class="title">{% block module_title %}{% trans %}Documents{% endtrans %}{% endblock %}</div>
+			
+			<div class="subtitle-block">{% block module_subtitle %}{% endblock %}</div>
+			
+			<div class="module-top-menu-inline">
+			{% block module_topmenu %}
+				<a class="top-menu add-link" href="{% url documents_folder_add %}">{% trans %}New Folder{% endtrans %}</a>
+				<a class="top-menu add-link" href="{% url documents_document_add %}">{% trans %}New Document{% endtrans %}</a>
+				<a class="top-menu add-link" href="{% url documents_weblink_add %}">{% trans %}New Web Link{% endtrans %}</a>
+				<a class="top-menu add-link" href="{% url documents_file_upload %}">{% trans %}Upload File{% endtrans %}</a>
+			{% endblock %}
+			</div>
+            {{ help_link() }}
+			
+		</div>
+		
+
+			<div class="module-content-inner">
+            <!-- module_content_inner -->
+			{% block module_content %}{% endblock %}
+            <!-- /module_content_inner -->
+			</div>
+			
+			<div class="module-sidebar-right">
+			{% block sidebar_right %}{% endblock %}
+			</div>
+
+		
+	</div>
+
+</div>
+
+
+<div class="clear"></div>
+
+{% endblock %}

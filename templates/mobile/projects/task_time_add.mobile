@@ -1,0 +1,193 @@
+{% extends "mobile/projects/page.mobile" %}
+
+{% block title %}{{ task|htsafe }} | {% trans %}Project Management{% endtrans %}{% endblock %}
+
+{% block module_title %}{{ task }}{% endblock %}
+
+{% block module_subtitle %}{% trans %}Task{% endtrans %}{% endblock %}
+
+{% block module_topmenu %}
+<a href="{% url projects_task_view task.id %}" class="top-menu view-link">{% trans %}View{% endtrans %}</a>
+{% if user.get_profile().has_permission(task, mode='w') %}
+<a href="{% url projects_task_edit task.id %}" class="top-menu edit-link">{% trans %}Edit{% endtrans %}</a>
+<a href="{% url projects_task_delete task.id %}" class="top-menu delete-link">{% trans %}Delete{% endtrans %}</a>
+{% endif %}
+{% endblock %}
+
+{% block sidebar_right %}
+{% endblock %}
+
+{% block module_content %}
+
+<div>
+    <span class="content-label">{% trans %}Name{% endtrans %}:</span>
+    <span class="content-value">{{ task.name }}</span>
+</div>
+<div>
+    <span class="content-label">{% trans %}Assigned to{% endtrans %}:</span>
+    {% if task.assigned %}
+    <span class="content-value">
+        {% for assignee in task.assigned.all() %}
+        {{ assignee }}
+        <br />
+        {% endfor %}
+    </span>
+    {% else %}
+    <span class="content-value">
+        {% trans %}Anyone{% endtrans %}
+        <br />
+    </span>
+    {% endif %}
+</div>
+{% if task.caller %}
+<div>
+    <span class="content-label">{% trans %}Caller{% endtrans %}:</span>
+    <span class="content-value"><a href="{% url identities_contact_view task.caller.id %}">{{ task.caller }}</a></span>
+</div>
+{% endif %}
+
+{% if task.parent %}
+<div>
+    <span class="content-label">{% trans %}Parent{% endtrans %}:</span>
+    <span class="content-value"><a href="{% url projects_task_view task.parent.id %}">{{ task.parent }}</a></span>
+</div>
+{% endif %}
+
+<div>
+    <span class="content-label">{% trans %}Project{% endtrans %}:</span>
+    <span class="content-value"><a href="{% url projects_project_view task.project.id %}">{{ task.project }}</a></span>
+</div>
+{% if task.milestone %}
+<div>
+    <span class="content-label">{% trans %}Milestone{% endtrans %}:</span>
+    <span class="content-value"><a href="{% url projects_milestone_view task.milestone.id %}">{{ task.milestone }}</a></span>
+</div>
+{% endif %}
+
+<div>
+    <span class="content-label">{% trans %}Status{% endtrans %}:</span>
+    <span class="content-value"><a href="{% url projects_index_by_status task.status.id %}">{{ task.status }}</a></span>
+</div>
+{% if task.details %}
+<div>
+    <span class="content-label">{% trans %}Details{% endtrans %}:</span>
+    <span class="content-details">{{ task.details|htsafe }}</span>
+</div>
+{% endif %}
+
+{% if subtasks %}
+<br />
+<div>
+    <span class="content-label">{% trans %}Subtasks{% endtrans %}:</span>
+</div>
+{% for subtask in subtasks %}
+<div class="content-list-item content-list-item-{{ loop.cycle('odd', 'even') }}" title="{{ subtask.status }}">
+    <span class="content-list-item-name">
+        <a href="{% url projects_task_view subtask.id %}">{{ subtask.name|truncate(length=60) }}</a>
+        {% if subtask.assigned.count() %}
+        {% for assignee in subtask.assigned.all() %}
+        <a href="{% url identities_user_view assignee.id %}" class="author-link small spaced-h">{{ assignee }}</a>
+        {% endfor %}
+        {% endif %}
+        <span class="content-list-item-group">
+            {%- if subtask.project %}
+            <a href="{% url projects_project_view subtask.project.id %}" class="group-link">{{ subtask.project }}</a>
+            {%- endif %}
+        </span>
+    </span>
+    <span class="content-list-item-actions">
+        {% if user.get_profile().has_permission(subtask, mode='w') %}
+        <a href="{% url projects_task_edit subtask.id %}" class="inline-link edit-link">{% trans %}Edit{% endtrans %}</a>
+        {% endif %}
+    </span>
+</div>
+{% endfor %}
+
+{% endif %}
+
+<br />
+<div class="content-label-head">
+    <span class="projects-task-time">{% trans %}Total Work Time{% endtrans %}:</span>
+    <span class="imp heavy">{{ task.get_total_time_string() }}</span>
+</div>
+{% if user.get_profile().has_permission(task, mode='x') and not task.is_being_done_by(request.user.get_profile()) %}
+<div class="spaced-h spaced-v">
+    <form action="{% url projects_task_time_slot_start task.id %}" method="get" class="content-form content-form-inline">
+        <input type="submit" value="Start Work">
+    </form>
+    <form action="{% url projects_task_time_slot_add task.id %}" method="get" class="content-form content-form-inline">
+        <input type="submit" value="Add Work">
+    </form>
+</div>
+{% endif %}
+
+{% if user.get_profile().has_permission(task, mode='x') %}
+<form action="{% url projects_task_time_slot_add task.id %}" method="post" class="content-form">
+{% csrf_token %}
+    <ul class="content-form-fields">
+        {{ form.as_ul()|htsafe }}
+    </ul>
+    <div class="content-form-submit-small">
+        <input type="submit" name="add" value="Add">
+        <input type="submit" name="cancel" value="Cancel">
+    </div>
+</form>
+{% endif %}
+
+{% for slot in time_slots %}
+<div class="content-list-item content-list-item-{{ loop.cycle('odd', 'even') }}">
+    <span class="content-list-item-name">
+        <a href="{% url identities_user_view slot.user.id %}">{{ slot.user }}</a>
+        {% if slot.is_open() %}
+        <a class="imp heavy" href="{% url projects_task_time_slot_view slot.id %}">{{ slot.get_time_string() }}</a>
+        {% else %}
+        <a class="imp small" href="{% url projects_task_time_slot_view slot.id %}">{{ slot.get_time_string() }}</a>
+        {% endif %}
+        <span class="content-list-item-group">
+            {% if slot.is_open() %}
+            {{ slot.time_from.strftime("%Y %b %d, %H:%M") }} - <span class="heavy">{% trans %}now{% endtrans %}</span>
+            {% else %}
+            {% if slot.time_from.date() == slot.time_to.date() %}
+            {{ slot.time_from.strftime("%Y %b %d, %H:%M") }} - {{ slot.time_to.strftime("%H:%M") }}
+            {% else %}
+            {{ slot.time_from.strftime("%Y %b %d, %H:%M") }} - {{ slot.time_to.strftime("%d %B %Y, %H:%M") }}
+            {% endif %}
+            {% endif %}
+        </span>
+        <span class="time-slot-details">
+            {% if slot.time_to %}
+            {% if slot.details %}
+            <div class="spaced-v lighter">
+                {{ slot.details|htsafe }}
+            </div>
+            {% endif %}
+            {% else %}
+            {% if user.get_profile().has_permission(task, mode='x') or user.get_profile().has_permission(slot, mode='w') %}
+            <form action="{% url projects_task_time_slot_stop slot.id %}" method="post" class="content-form">
+{% csrf_token %}
+                <ul class="content-form-fields">
+                    <li>
+                        <label for="details">
+                            {% trans %}Details{% endtrans %}:
+                        </label>
+                        <textarea id="details" name="details" cols="50" rows="3">
+                        </textarea>
+                    </li>
+                </ul>
+                <div class="content-form-submit-small">
+                    <input type="submit" name="stop" value="Stop Work">
+                </div>
+            </form>
+            {% endif %}
+            {% endif %}
+        </span>
+    </span>
+    <span class="content-list-item-actions">
+        {% if user.get_profile().has_permission(task, mode='w') or user.get_profile().has_permission(slot, mode='w') %}
+        <a href="{% url projects_task_time_slot_edit slot.id %}" class="inline-link edit-link">{% trans %}Edit{% endtrans %}</a>
+        {% endif %}
+    </span>
+</div>
+{% endfor %}
+
+{% endblock %}

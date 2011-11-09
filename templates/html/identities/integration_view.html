@@ -1,0 +1,39 @@
+{% extends "html/identities/page.html" %}
+
+{% block title %}{% trans %}Integration{% endtrans %} | {% trans %}Identities{% endtrans %}{% endblock %}
+
+{% block module_title %}{% trans %}Identities{% endtrans %}{% endblock %}
+{% block module_subtitle %}{% trans %}Integration{% endtrans %}{% endblock %}
+
+{% block class_integration %}sidebar-link-active{% endblock %}
+
+{% block module_topmenu %}
+{% endblock %}
+
+{% block module_content %}
+
+{% if resource and 'application' in resource.raw %}
+
+<div>
+    <span class="content-label">{% trans %}Name{% endtrans %}:</span>
+    <span class="content-value heavy">{{ resource.application.name }}</span>
+</div>
+{% for location in resource.application.locations %}
+<div>
+    <span class="content-label">{% trans %}URL{% endtrans %}:</span>
+    <span class="content-value"><a href="{{ location.uri }}">{{ location.uri }}</a></span>
+</div>
+{% endfor %}
+
+<br />
+<br />
+
+<div class="spaced-h large">
+    <form action='{% url identities_integration_view conf_id %}' method='post'>
+    	{% csrf_token %}
+        <input type='submit' name='delete' value='{% trans %}Disconnect{% endtrans %} {{ resource.application.name }}' />
+    </form>
+</div>
+{% endif %}
+
+{% endblock %}

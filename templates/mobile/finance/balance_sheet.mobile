@@ -1,0 +1,121 @@
+{% extends "mobile/finance/page.mobile" %}
+
+{% block title %}{% trans %}Balance Sheet{% endtrans %} | {% trans %}Finance{% endtrans %}{% endblock %}
+
+{% block module_title %}{% trans %}Balance Sheet{% endtrans %}{% endblock %}
+
+{% block class_balance %}sidebar-link-active{% endblock %}
+
+{% block sidebar_right %}
+{% endblock %}
+
+{% block module_content %}
+
+{% if company %}
+
+<span class="spaced-h spaced-v">
+    {% trans %}Balance Sheet for{% endtrans %} <a href="{% url identities_contact_view company.id %}" class="popup-link">{{ company }}</a> {% trans %}as of{% endtrans %} {{ today|htdate }}
+    <br />
+</span>
+<div>
+    {% endif %}
+
+    <div class="finance-balance-head">
+        {% trans %}ASSETS{% endtrans %}
+    </div>
+</div>
+<div>
+    <div class="finance-balance-label">
+        {% trans %}Non-Current Assets{% endtrans %}
+    </div>
+</div>
+<div class="finance-balance-row">
+    <span class="finance-balance-label-inner">{% trans %}Property, Plant and Equipment{% endtrans %}</span>
+    <span class="finance-balance-value">{{ assets_fixed|number_format }}</span>
+</div>
+<div class="finance-balance-row">
+    <span class="finance-balance-label-inner">{% trans %}Intangible Assets{% endtrans %}</span>
+    <span class="finance-balance-value">{{ assets_intangible|number_format }}</span>
+</div>
+<div>
+    <div class="finance-balance-label">
+        {% trans %}Current Assets{% endtrans %}
+    </div>
+</div>
+<div class="finance-balance-row">
+    <span class="finance-balance-label-inner">{% trans %}Inventories{% endtrans %}</span>
+    <span class="finance-balance-value">{{ assets_inventories|number_format }}</span>
+</div>
+<div class="finance-balance-row">
+    <span class="finance-balance-label-inner">{% trans %}Receivables{% endtrans %}</span>
+    <span class="finance-balance-value">{{ assets_receivables|number_format }}</span>
+</div>
+<div class="finance-balance-row">
+    <span class="finance-balance-label-inner">{% trans %}Prepayments{% endtrans %}</span>
+    <span class="finance-balance-value">{{ assets_prepayments|number_format }}</span>
+</div>
+<div class="finance-balance-row">
+    <span class="finance-balance-label-inner">{% trans %}Cash and Cash equivalents{% endtrans %}</span>
+    <span class="finance-balance-value">{{ assets_cash|number_format }}</span>
+</div>
+<div class="finance-balance-row">
+    <span class="finance-balance-total">{% trans %}Total Assets{% endtrans %}</span>
+    <span class="finance-balance-value-total" {% if red %}style="color: #b32"{% endif %}>{{ assets_total|number_format|currency_format }}</span>
+</div>
+<br />
+
+<div>
+    <div class="finance-balance-head">
+        {% trans %}LIABILITIES{% endtrans %}
+    </div>
+</div>
+<div>
+    <div class="finance-balance-label">
+        {% trans %}Non-Current Liabilities{% endtrans %}
+    </div>
+</div>
+<div class="finance-balance-row">
+    <span class="finance-balance-label-inner">{% trans %}Borrowings{% endtrans %}</span>
+    <span class="finance-balance-value">{{ liabilities_borrowings|number_format }}</span>
+</div>
+<div>
+    <div class="finance-balance-label">
+        {% trans %}Current Liabilities{% endtrans %}
+    </div>
+</div>
+<div class="finance-balance-row">
+    <span class="finance-balance-label-inner">{% trans %}Payables{% endtrans %}</span>
+    <span class="finance-balance-value">{{ liabilities_payables|number_format }}</span>
+</div>
+<div class="finance-balance-row">
+    <span class="finance-balance-total">{% trans %}Total Liabilities{% endtrans %}</span>
+    <span class="finance-balance-value-subtotal">{{ liabilities_total|number_format|currency_format }}</span>
+</div>
+<br />
+
+<div>
+    <div class="finance-balance-head">
+        {% trans %}SHAREHOLDER EQUITY{% endtrans %}
+    </div>
+</div>
+<div class="finance-balance-row">
+    <span class="finance-balance-label-inner">{% trans %}Share Capital{% endtrans %}</span>
+    <span class="finance-balance-value">{{ equity_share_capital|number_format }}</span>
+</div>
+<div class="finance-balance-row">
+    <span class="finance-balance-label-inner">{% trans %}Share Premium{% endtrans %}</span>
+    <span class="finance-balance-value">{{ equity_share_premium|number_format }}</span>
+</div>
+<div class="finance-balance-row">
+    <span class="finance-balance-label-inner">{% trans %}Retained Earnings{% endtrans %}</span>
+    <span class="finance-balance-value">{{ equity_retained|number_format }}</span>
+</div>
+<div class="finance-balance-row">
+    <span class="finance-balance-total">{% trans %}Total Equity{% endtrans %}</span>
+    <span class="finance-balance-value-subtotal">{{ equity_total|number_format|currency_format }}</span>
+</div>
+<div class="finance-balance-row">
+    <span class="finance-balance-total">{% trans %}Total Equity and Liabilities{% endtrans %}</span>
+    <span class="finance-balance-value-total" {% if red %}style="color: #b32"{% endif %}>{{ equity_liabilities_total|number_format|currency_format }}</span>
+</div>
+{% endblock %}

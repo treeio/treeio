@@ -1,0 +1,9 @@
+{% if updates %}
+{{ news_update_list(updates) }}
+
+<div id="more-news">
+<p class="spaced-h" style="text-align: right; padding-right: 20px;">
+    <a href="" callback="Dajaxice.treeio.news.get_more" class="ajax-link" target="#more-news" args="{skip: {{ skip }} }">See more &rarr;</a>
+</p>
+</div>
+{% endif %}

@@ -1,0 +1,1 @@
+<a href="{{ link|lower }}" class="help-block-link popup-link" title="{% trans %}Help{% endtrans %}">{% trans %}Help{% endtrans %}</a>

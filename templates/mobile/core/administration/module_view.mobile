@@ -1,0 +1,71 @@
+{% extends "mobile/core/page.mobile" %}
+
+{% block title %}{{ module }} | {% trans %}Modules{% endtrans %} | {% trans %}Administration{% endtrans %}{% endblock %}
+
+{% block class_modules %}sidebar-link-active{% endblock %}
+
+{% block module_title %}{{ module }}{% endblock %}
+{% block module_subtitle %}{% trans %}Module{% endtrans %}{% endblock %}
+
+{% block module_topmenu %}
+
+	<a href="{% url core_admin_module_view module.id %}" class="top-menu view-link-active">{% trans %}View{% endtrans %}</a>
+	
+{% endblock %}
+
+{% block sidebar_right %}
+{% endblock %}
+
+{% block module_content %}
+
+<div>
+    <span class="content-label">{% trans %}Title{% endtrans %}:</span>
+    <span class="content-value">{{ module.title }}</span>
+</div>
+<div>
+    <span class="content-label">{% trans %}Name{% endtrans %}:</span>
+    <span class="content-value">{{ module.name }}</span>
+</div>
+<div>
+    <span class="content-label">{% trans %}System{% endtrans %}:</span>
+    <span class="content-value">{% if module.system %}Yes{% else %}No{% endif %}</span>
+</div>
+<div>
+    <span class="content-label">{% trans %}Display{% endtrans %}:</span>
+    <span class="content-value">{% if module.display %}Yes{% else %}No{% endif %}</span>
+</div>
+
+	{% if module.perspective_set.count() %}
+	<div>
+		<span class="content-label">{% trans %}Used in Perspectives{% endtrans %}:</span>
+	</div>
+	<ul data-role="listview" data-inset="true" data-theme="d">
+	{% for perspective in module.perspective_set.all() %}
+	<li>
+	<div class="content-list-item content-list-item-{{ loop.cycle('odd', 'even') }}">
+		<span class="content-list-item-name">
+			<a href="{% url core_admin_perspective_view perspective.id %}"><strong>{{ perspective }}</strong></a><br />
+		</span>
+		<span class="content-list-item-group">
+			&nbsp;
+		</span>
+		<span class="content-list-item-actions">
+			{% if user.get_profile().has_permission(perspective, mode='w') %}
+				<a href="{% url core_admin_perspective_edit perspective.id %}" class="inline-link edit-link" data-icon="gear">{% trans %}Edit{% endtrans %}</a>
+			{% endif %}
+		</span>
+	</div>
+	</li>
+	{% endfor %}
+	</ul>
+	<br />
+	{% endif %}
+	
+	{% if module.details %}
+	<div>
+		<span class="content-label">{% trans %}Details{% endtrans %}:</span>
+		<span class="content-details">{{ module.details|htsafe }}</span>
+	</div>
+	{% endif %}
+	
+{% endblock %}

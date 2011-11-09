@@ -1,0 +1,6 @@
+name,owner,balance,details
+{% if account.name %}{{account.name|replace(',','')|replace('"','')|replace('
+','')|safe}},{% else %},{% endif %}{% if account.owner %}{{account.owner|replace(',','')|replace('"','')|replace('
+','')|safe}},{% else %},{% endif %}{% if account.balance %}{{account.balance|replace(',','')|replace('"','')|replace('
+','')|safe}},{% else %},{% endif %}{% if account.details %}{{account.details|replace(',','')|replace('\n', '').replace('\r', '').replace('"', '\"')|replace('
+','')|safe}}{% else %},{% endif %}

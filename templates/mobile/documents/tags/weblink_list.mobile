@@ -1,0 +1,14 @@
+<ul data-role="listview" data-inset="true" data-theme="c">
+{% for link in links %}
+<li>
+	<a href="{% url documents_weblink_view link.id %}">
+		<img class="ui-li-icon" src="/static/icons/documents/weblink.png"/>{{ link }}
+		<p>{{ link.url|truncate(90, True) }}</p>
+		
+		<p class="ui-li-aside">
+			{{ link.last_updated|humanize_datetime }}
+		</p>
+	</a>
+</li>
+{% endfor %}
+</ul>

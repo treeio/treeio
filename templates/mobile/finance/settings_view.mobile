@@ -1,0 +1,101 @@
+{% extends "mobile/finance/page.mobile" %}
+
+{% block title %}{% trans %}Settings{% endtrans %} | {% trans %}Finance{% endtrans %}{% endblock %}
+
+{% block class_admin_settings %}sidebar-link-active{% endblock %}
+
+{% block module_title %}{% trans %}Settings{% endtrans %}{% endblock %}
+
+{% block module_topmenu %}
+<a href="{% url finance_currency_add %}" class="top-menu add-link">{% trans %}New Currency{% endtrans %}</a>
+<a href="{% url finance_category_add %}" class="top-menu add-link">{% trans %}New Category{% endtrans %}</a>
+<a href="{% url finance_settings_view %}" class="top-menu view-link-active">{% trans %}View{% endtrans %}</a>
+<a href="{% url finance_settings_edit %}" class="top-menu edit-link">{% trans %}Edit{% endtrans %}</a>
+{% endblock %}
+
+{% block module_content %}
+<div>
+    <span class="content-label">{% trans %}Base Currency{% endtrans %}:</span>
+    <span class="content-value">
+        {% if default_currency %}
+        {{ default_currency }}
+        {% else %}None{% endif %}
+    </span>
+</div>
+<div>
+    <span class="content-label">{% trans %}My Company{% endtrans %}:</span>
+    <span class="content-value">
+        {% if my_company %}
+        <a href="{% url identities_contact_view my_company.id %}" class="popup-link">{{ my_company }}</a>
+        {% endif %}
+    </span>
+</div>
+<div>
+    <span class="content-label">{% trans %}Default Account{% endtrans %}:</span>
+    <span class="content-value">
+        {% if default_account %}
+        <a href="{% url finance_account_view default_account.id %}" class="popup-link">{{ default_account }}</a>
+        {% endif %}
+    </span>
+</div>
+
+{% if categories %}
+<br />
+<div class="clear">
+    <span class="content-label-head">{% trans %}Categories{% endtrans %}:</span>
+</div>
+{% for category in categories %}
+<div class="content-list-item content-list-item-{{ loop.cycle('odd', 'even') }}">
+    <div class="content-list-tick">
+    </div>
+    <span class="content-list-item-name">
+        <a href="{% url finance_category_view category.id %}">{{ category }}</a>
+        <span class="content-list-item-group">
+            <span class="lighter small">{{ category.details|striptags|truncate(40) }}</span>
+        </span>
+    </span>
+    <span class="content-list-item-actions">
+        {% if user.get_profile().has_permission(product, mode='w') %}
+        <a href="{% url finance_category_edit category.id %}" class="inline-link edit-link">{% trans %}Edit{% endtrans %}</a>
+        {% endif %}
+    </span>
+</div>
+{% endfor %}
+
+{% endif %}
+
+{% if currencies %}
+<br />
+<div class="clear">
+    <span class="content-label-head">{% trans %}Currencies{% endtrans %}:</span>
+</div>
+{% for c in currencies %}
+<div class="content-list-item content-list-item-{{ loop.cycle('odd', 'even') }}">
+    <div class="content-list-tick">
+    </div>
+    <span class="content-list-item-name">
+        <a href="{% url finance_currency_view c.id %}">{{ c }}</a>
+        <span class="content-list-item-group">
+            <span class="lighter small">{{ c.name }}{% if c.is_default %}<strong>&nbsp;{% trans %}Base{% endtrans %}</strong>{% endif %}</span>
+        </span>
+    </span>
+    <span class="content-list-item-actions">
+        {% if user.get_profile().has_permission(product, mode='w') %}
+        <a href="{% url finance_currency_edit c.id %}" class="inline-link edit-link">{% trans %}Edit{% endtrans %}</a>
+        {% endif %}
+    </span>
+</div>
+{% endfor %}
+
+{% endif %}
+
+<br />
+<br />
+<form action="" method="post" class="content-form" enctype="multipart/form-data">
+{% csrf_token %}
+    <div style="padding: 0">
+        <input type="file" name="file" size="20">
+        <input type="submit" name="import" value="Import Transactions" />
+    </div>
+</form>
+{% endblock %}

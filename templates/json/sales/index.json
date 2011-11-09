@@ -1,0 +1,70 @@
+{% extends "json/sales/page.json" %}
+{% block module_content %}
+    {
+    "user": {{ user_block() }},
+    "orders":
+      [
+      {% for order in orders %}
+         {
+         "reference": {{ order.reference }},
+         "url": "{% url sales_order_view order.id %}",
+         {% if order.client -%}
+         "client": {
+                    "id": {{ order.client_id }},
+                    "url": "{% url identities_contact_view order.client_id %}",
+                    "name": "{{ order.client }}"
+                   },
+         {% else -%}
+         "client": null,
+         {% endif -%}
+         "assigned": [
+            {%- for assignee in order.assigned.all() %}
+               {
+                "id": {{ assignee.id }},
+                "url": "{% url identities_user_view assignee.id %}",
+                "name": "{{ assignee }}"
+               {% if loop.last %}}{% else %}},{% endif %}
+            {%- endfor -%}
+         ],
+         "status": {
+                    "id": {{ order.status_id }},
+                    "url": "{% url sales_status_view order.status_id %}",
+                    "name": "{{ order.status }}"
+                   },
+         {%- if order.opportunity %}
+         "opportunity": {
+                   "id": {{ order.opportunity_id }},
+                   "url": "{% url sales_opportunity_view order.opportunity_id %}",
+                   "name": "{{ order.opportunity }}"
+                  },
+         {% else -%}
+         "opportunity": null,
+         {% endif -%}
+         {% if order.payment -%}
+         "payment": {
+                     "id": {{ order.payment_id }},
+                     "url": "{% url sales_payment_view order.payment_id %}",
+                     "name": "{{ order.payment }}"
+                    },
+         {% else -%}
+         "payment": null,
+         {% endif -%}
+         {% if order.source -%}
+         "source": {
+                 "id": {{ order.source_id }},
+                 "url": "{% url sales_source_view order.source_id %}",
+                 "name": "{{ order.source }}"
+                }
+         {% else -%}
+         "source": null
+         {% endif -%}
+        
+		 {% if loop.last -%}
+         }
+         {% else -%}
+         },
+         {% endif -%}
+         {% endfor %}
+      ]
+    }
+{% endblock %}

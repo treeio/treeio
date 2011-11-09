@@ -1,0 +1,7 @@
+{% extends "json/page.json" %}
+{% block title %}Messaging / Hardtree{% endblock %}
+{% block module_title %}Messaging{% endblock %}
+{% block module_subtitle %}Messaging{% endblock %}
+{% block content %}
+	"content": {% block module_content %}{% endblock %}
+{%- endblock %}

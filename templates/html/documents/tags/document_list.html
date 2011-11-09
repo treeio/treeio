@@ -1,0 +1,24 @@
+{% for document in documents %}
+<div class="content-list-item content-list-item-{{ loop.cycle('odd', 'even') }}">
+    <div class="content-list-tick">
+        <input type="checkbox" name="mass-document-{{ document.id }}" value="{{ document.id }}" class="group-mass-unclassified" />
+    </div>
+    <span class="content-list-item-name">
+        <img class="margin-bottom" src="/static/icons/documents/doc.png" style="width: 16px; height: 16px;" alt="Document" />
+        <a href="{% url documents_document_view document.id %}">{{ document }}</a>
+        <span class="content-list-item-group">
+        	<span class="small">{{ document.last_updated|humanize_datetime }}</span>
+            {%- if document.folder %}
+            <a href="{% url documents_folder_view document.folder_id %}" class="group-link">{{ document.folder }}</a>
+            {%- endif %}
+        </span>
+        <br />
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="small lightest" href="{% url documents_document_view document.id %}">{{ document.body|striptags|truncate(80, True) }}</a>
+    </span>
+    <span class="content-list-item-actions">
+        {% if user.get_profile().has_permission(document, mode='w') %}
+        <a href="{% url documents_document_edit document.id %}" class="inline-link edit-link">{% trans %}Edit{% endtrans %}</a>
+        {% endif %}
+    </span>
+</div>
+{% endfor %}

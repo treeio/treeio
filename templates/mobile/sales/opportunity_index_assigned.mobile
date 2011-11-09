@@ -1,0 +1,52 @@
+{% extends "mobile/sales/page.mobile" %}
+
+{% block title %}{% trans %}Opportunities{% endtrans %} | {% trans %}Sales{% endtrans %}{% endblock %}
+
+{% block class_opportunity_assigned %}sidebar-link-active{% endblock %}
+
+{% block module_title %}{% trans %}Opportunities{% endtrans %}{% endblock %}
+
+{% block module_topmenu %}
+<a href="{% url sales_opportunity_add %}" class="top-menu add-link">{% trans %}New Opportunity{% endtrans %}</a>
+{% endblock %}
+
+{% block sidebar_right %}
+
+<span class="sidebar-header-first">{% trans %}Filter by{% endtrans %}</span>
+<form action="" method="get" class="content-filter-form">
+    <ul class="content-filter-form-fields">
+        {{ filters.as_ul()|htsafe }}
+    </ul>
+    <input type="submit" value="{% trans %}Submit{% endtrans %}">
+</form>
+<br />
+
+<span class="sidebar-header-right">{% trans %}Download as:{% endtrans %}<br />{% if '?' in request.get_full_path() %}<a class="pdf-block-link" href="{{ request.get_full_path()|replace('.ajax','').replace('?','.pdf?') }}"{% else %}<a class="pdf-block-link" href="{{ request.get_full_path()|replace('.ajax','') }}.pdf"{% endif %} target="_self">PDF</a>
+  <a class="csv-block-link" {% if '?' in request.get_full_path() %}href="{{ request.get_full_path()|replace('.ajax','').replace('?','.csv?') }}"{% else %}href="{{ request.get_full_path()|replace('.ajax','') }}.csv"{% endif %} target="_self">CSV</a></span>
+{% endblock %}
+
+{% block module_content %}
+
+
+{% if opportunities %}
+<form action="" method="post">
+{% csrf_token %}
+    <div class="clear large light content-label-head">
+        <ul class="mass-form">
+            <input type="checkbox" name="mass-opportunities" class="group-control" {% if not opportunities %}disabled="true"{% endif %} />
+            <input type="hidden" name="massform" value="massform" />
+             {{ massform.as_ul()|htsafe }}
+            <li>
+                <input type="submit" value="{% trans %}Save{% endtrans %}" />
+            </li>
+        </ul>
+    </div>
+    {{ sales_opportunity_list(paginate(htsort(opportunities))) }}
+    {{ pager(htsort(opportunities)) }}
+</form>
+
+{% else %}
+  {{ show_hint('sales_opportunities') }}
+{% endif %}
+
+{% endblock %}

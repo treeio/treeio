@@ -1,0 +1,34 @@
+{% extends "mobile/core/page.mobile" %}
+
+{% block title %}{% trans %}Static Pages{% endtrans %} | {% trans %}Administration{% endtrans %}{% endblock %}
+
+{% block module_title %}{% trans %}Static Pages{% endtrans %}{% endblock %}
+
+{% block module_topmenu %}
+<a href="{% url core_admin_page_add %}" class="top-menu add-link">{% trans %}New Page{% endtrans %}</a>
+<a href="{% url core_admin_pagefolder_add %}" class="top-menu add-link">{% trans %}New Folder{% endtrans %}</a>
+{% endblock %}
+
+{% block class_pages %}sidebar-link-active{% endblock %}
+
+{% block module_content %}
+
+{% for folder in folders %}
+<a href="{% url core_admin_pagefolder_view folder.id %}" class="large light">{{ folder }}</a>
+{% for page in pages if page.folder == folder %}
+<div class="content-list-item content-list-item-{{ loop.cycle('odd', 'even') }}">
+    <span class="content-list-item-name">
+        <a href="{% url core_admin_page_view page.id %}">{{ page }}</a>
+        <span class="content-list-item-group">
+            {{ page.last_updated }}
+        </span>
+    </span>
+    <span class="content-list-item-actions">
+        <a href="{% url core_admin_page_edit page.id %}" class="inline-link edit-link">{% trans %}Edit{% endtrans %}</a>
+    </span>
+</div>
+{% endfor %}
+
+{% endfor %}
+
+{% endblock %}

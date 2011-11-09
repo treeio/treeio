@@ -1,0 +1,30 @@
+{% extends "mobile/page.mobile" %}
+
+{% block title %}{% trans %}Trash{% endtrans %}{% endblock %}
+
+{% block content %}
+
+<div class="title-block">
+    <div class="title">
+        {% block module_title %}{% trans %}Trash{% endtrans %}{% endblock %}
+    </div>
+    <div class="subtitle-block">
+        {% block module_subtitle %}{% endblock %}
+    </div>
+    <div class="module-top-menu-inline">
+        {% block module_topmenu %}
+        <a href="{% url core_trash %}" class="top-menu {% if trash %}trash-full-link trash-full-link-active{% else %}trash-link trash-link-active{% endif %}">{% trans %}Trash{% endtrans %}</a>
+        {% endblock %}
+    </div>
+    {{ help_link() }}
+
+</div>
+<div class="module-content-home">
+    <!-- module_content_inner -->
+    {% block module_content %}{% endblock %}
+    <!-- /module_content_inner -->
+</div>
+{% endblock %}
+
+{% block footer %}
+{% endblock %}

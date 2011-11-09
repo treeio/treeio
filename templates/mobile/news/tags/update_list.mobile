@@ -1,0 +1,71 @@
+<ul data-role="listview" data-inset="true" data-theme="c">
+{% for record in updates %}
+
+<li>
+
+    {% set about = record.about.all() %}
+    {% if about %}
+      {% for object in about %}
+        {% set related = object.get_related_object() %}
+        {% if related %}
+          {% set url = object.get_absolute_url() %}
+              {% if url %}
+              <a href="{{ url }}" class="popup-link">
+              	<h3>
+					{% if record.author %}
+					{{ record.author }}:
+					{% elif record.sender %}
+					{% set sender = record.sender.get_related_object() %}
+					{% if sender %}
+					{{ sender }}
+					{% endif %}
+					{% endif %}
+				 </h3>
+              
+              <p>{{ object.get_human_type() }}: {{ object }}</p>
+              {% else %}
+              	<h3>
+					{% if record.author %}
+					{{ record.author }}:
+					{% elif record.sender %}
+					{% set sender = record.sender.get_related_object() %}
+					{% if sender %}
+					{{ sender }}
+					{% endif %}
+					{% endif %}
+				 </h3>
+              {{ object }}
+              {% endif %}
+          {% if not loop.last %},{% endif %}
+        {% endif %}
+      {% endfor %}
+    {% else %}
+		<h3>
+			{% if record.author %}
+			{{ record.author }}:
+			{% elif record.sender %}
+			{% set sender = record.sender.get_related_object() %}
+			{% if sender %}
+			{{ sender }}
+			{% endif %}
+			{% endif %}
+		 </h3>
+    {% endif %}
+
+    {% if record.record_type != 'manual' and record.record_type != 'share' %}
+    	<p>{{ record.get_full_message()|striptags }}</p>
+    {% endif %}
+
+    {% if record.record_type == 'manual' or record.record_type == 'share' %}
+        <p>{{ record.body|striptags }}</p>
+    {% endif %}
+
+	<p class="ui-li-aside">
+		{{ record.date_created|humanize_datetime }}
+	</p>
+	
+	</a>
+  
+</li>
+{% endfor %}
+</ul>

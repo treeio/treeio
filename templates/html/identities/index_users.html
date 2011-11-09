@@ -1,0 +1,21 @@
+{% extends "html/identities/page.html" %}
+
+{% block title %}{% trans %}Users{% endtrans %} | {% trans %}Identities{% endtrans %}{% endblock %}
+
+{% block module_title %}{% trans %}Users{% endtrans %}{% endblock %}
+
+{% block module_topmenu %}
+{% if request.user.get_profile().is_admin('treeio.core') %}
+<a href="{% url core_admin_user_invite %}" class="top-menu add-link popup-link">{% trans %}Invite People{% endtrans %}</a>
+{% endif %}
+{% endblock %}
+
+{% block class_users %}sidebar-link-active{% endblock %}
+
+{% block module_content %}
+
+{{ identities_user_list(paginate(users)) }}
+
+{{ pager(users) }}
+
+{% endblock %}

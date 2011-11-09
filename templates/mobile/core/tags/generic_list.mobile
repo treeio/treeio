@@ -1,0 +1,17 @@
+{% for item in objects %}
+<div class="content-list-item content-list-item-{{ loop.cycle('odd', 'even') }}">
+    <div class="content-list-tick"></div>
+    <span class="content-list-item-name">
+        <a href="{{ item.get_absolute_url() }}">{{ item.name }}</a>
+        {% if not skip_group %}
+        <span class="content-list-item-group">
+        </span>
+        {% endif %}
+    </span>
+    <span class="content-list-item-actions">
+        {% if user.get_profile().has_permission(item, mode='w') %}
+        <a href="{{ item.get_absolute_url().replace('view', 'edit') }}" class="inline-link edit-link">{% trans %}Edit{% endtrans %}</a>
+        {% endif %}
+    </span>
+</div>
+{% endfor %}

@@ -1,0 +1,58 @@
+{% extends "html/sales/page.html" %}
+
+{% block title %}{% trans %}Sales{% endtrans %}{% endblock %}
+
+{% block module_title %}{{ source }}{% endblock %}
+
+{% block module_subtitle %}{% trans %}Settings{% endtrans %}{% endblock %}
+
+{% block module_topmenu %}
+<a href="{% url sales_source_add %}" class="top-menu add-link">{% trans %}New Source{% endtrans %}</a>
+<a href="{% url sales_source_view source.id %}" class="top-menu view-link-active">{% trans %}View{% endtrans %}</a>
+{% if request.user.get_profile().is_admin('treeio.sales') %}
+<a href="{% url sales_source_edit source.id %}" class="top-menu edit-link">{% trans %}Edit{% endtrans %}</a>
+<a href="{% url sales_source_delete source.id %}" class="top-menu delete-link">{% trans %}Delete{% endtrans %}</a>
+{% endif %}
+{% endblock %}
+
+{% block sidebar_right %}
+
+<span class="sidebar-header-first">{% trans %}Permissions{% endtrans %}</span>
+<div class="sidebar-block">
+    {{ permission_block(source) }}
+</div>
+<span class="sidebar-header-right">{% trans %}Links{% endtrans %}</span>
+<div class="sidebar-block">
+    {{ link_block(source) }}
+</div>
+<span class="sidebar-header-right">{% trans %}Subscribers{% endtrans %}</span>
+<div class="sidebar-block">
+    {{ subscription_block(source) }}
+</div>
+{% endblock %}
+
+{% block module_content %}
+
+<div>
+    <span class="content-label">{% trans %}Active{% endtrans %}:</span>
+    <span class="content-value">{% if source.active %}{% trans %}Yes{% endtrans %}{% else %}{% trans %}No{% endtrans %}{% endif %}</span>
+</div>
+<div>
+    <span class="content-label">{% trans %}Hidden{% endtrans %}:</span>
+    <span class="content-value">{% if source.hidden %}{% trans %}Yes{% endtrans %}{% else %}{% trans %}No{% endtrans %}{% endif %}</span>
+</div>
+{% if source.details %}
+<div>
+    <span class="content-label">{% trans %}Details{% endtrans %}:</span>
+    <span class="content-details">{{ source.details|htsafe }}</span>
+</div>
+{% endif %}
+
+<div class="clear">
+    <span class="content-label-head">{% trans %}Orders From{% endtrans %} {{ source }}:</span>
+</div>
+{{ sales_order_list(orders) }}
+
+{{ pager(orders) }}
+
+{% endblock %}

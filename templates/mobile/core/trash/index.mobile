@@ -1,0 +1,50 @@
+{% extends "mobile/core/trash/page.mobile" %}
+
+{% block module_content %}
+<div class="module-content-inner">
+    
+    <form action="" method="post">
+{% csrf_token %}
+    <ul class="mass-form">
+        <input type="hidden" name="massform" value="massform" />
+        <input type="checkbox" name="mass-trash" class="group-control" />
+        <em>{% trans %}With selected{% endtrans %}</em>: {{ massform.as_ul()|htsafe }}
+        <li><input type="submit" value="Save" /></li>
+    </ul>
+    
+    {% if trash %}
+	{% for object in paginate(trash) %}
+	<div class="content-list-item content-list-item-{{ loop.cycle('odd', 'even') }}">
+        <div class="content-list-tick">
+            <input type="checkbox" name="mass-object-{{ object.id }}" value="{{ object.id }}" class="group-mass-trash" />
+	    </div>
+		<span class="content-list-item-name">
+		    {% set url = object.get_absolute_url() %}
+            {% if url %}
+			<a href="{{ url }}" class="popup-link">{{ object }}</a>
+            {% else %}
+            <em>{{ object }}</em>
+            {% endif %}
+    		<span class="content-list-item-group">
+    			{{ object.get_human_type() }}
+    		</span>
+		</span>
+		<span class="content-list-item-actions trash-actions">
+			{% if user.get_profile().has_permission(object, mode='w') %}
+				<a href="{% url core_trash_object_untrash object.id %}" class="inline-link add-link">{% trans %}Untrash{% endtrans %}</a>
+				<a href="{% url core_trash_object_delete object.id %}" class="inline-link delete-link">{% trans %}Delete{% endtrans %}</a>
+			{% endif %}
+		</span>
+	</div>
+	{% endfor %}
+    {{ pager(trash) }}
+    {% else %}
+    <div class="spaced-h">
+        <p>
+        {% trans %}There's nothing in Trash{% endtrans %}.
+        </p>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}
+

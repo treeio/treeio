@@ -1,0 +1,79 @@
+{% extends "mobile/page.mobile" %}
+
+{% block title %}{% trans %}Sales{% endtrans %}{% endblock %}
+
+{% block content %}
+
+<div data-role="collapsible" data-collapsed="true" data-theme="a">
+<h3>{% trans %}Menu{% endtrans %}</h3>
+
+<div class="module-sidebar">
+	
+    {% block sales_orders %}
+    <a href="{% url sales_index %}" class="sidebar-link {% block class_all %}{% endblock %}">{% trans %}All Sale Orders{% endtrans %}</a>
+    <a href="{% url sales_index_assigned %}" class="sidebar-link {% block class_assigned %}{% endblock %}">{% trans %}Assigned to me{% endtrans %}</a>
+    {% endblock %}
+
+    {% block sales_leads %}
+    <span class="sidebar-header">{% trans %}Leads{% endtrans %}</span>
+    <a href="{% url sales_lead_index %}" class="sidebar-link {% block class_lead_index %}{% endblock %}">{% trans %}All Leads{% endtrans %}</a>
+    <a href="{% url sales_lead_index_assigned %}" class="sidebar-link {% block class_lead_assigned %}{% endblock %}">{% trans %}Assigned to me{% endtrans %}</a>
+    {% endblock %}
+
+    {% block sales_opportunities %}
+    <span class="sidebar-header">{% trans %}Opportunities{% endtrans %}</span>
+    <a href="{% url sales_opportunity_index %}" class="sidebar-link {% block class_opportunity_index %}{% endblock %}">{% trans %}All Opportunities{% endtrans %}</a>
+    <a href="{% url sales_opportunity_index_assigned %}" class="sidebar-link {% block class_opportunity_assigned %}{% endblock %}">{% trans %}Assigned to me{% endtrans %}</a>
+    {% endblock %}
+
+    {% block sales_products %}
+    <span class="sidebar-header">{% trans %}Products{% endtrans %}</span>
+    <a href="{% url sales_product_index %}" class="sidebar-link {% block class_product_index %}{% endblock %}">{% trans %}All Products{% endtrans %}</a>
+    {% endblock %}
+
+    {% if request.user.get_profile().is_admin('treeio.sales') %}
+    <span class="sidebar-header">{% trans %}Administration{% endtrans %}</span>
+    <a href="{% url sales_settings_view %}" class="sidebar-link {% block class_admin_settings %}{% endblock %}">{% trans %}Settings{% endtrans %}</a>
+    {% endif %}
+	
+</div>	
+</div>
+
+<div class="module-content">
+	
+	<div class="module-content-fill">
+	
+		<div class="title-block">
+			
+			<div class="title">{% block module_title %}{% trans %}Sales{% endtrans %}{% endblock %}</div>
+			
+			<div class="subtitle-block">{% block module_subtitle %}{% endblock %}</div>
+			
+			<div class="module-top-menu-inline">
+			{% block module_topmenu %}
+				<a href="{% url sales_order_add %}" class="top-menu add-link">{% trans %}New Order{% endtrans %}</a>
+			{% endblock %}
+			</div>
+		    {{ help_link() }}
+			
+		</div>
+		
+
+			<div class="module-content-inner">
+            <!-- module_content_inner -->
+			{% block module_content %}{% endblock %}
+            <!-- /module_content_inner -->
+			</div>
+			
+			<div class="module-sidebar-right">
+			{% block sidebar_right %}{% endblock %}
+			</div>
+
+		
+	</div>
+
+</div>
+
+<div class="clear"></div>
+
+{% endblock %}

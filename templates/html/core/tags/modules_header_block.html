@@ -1,0 +1,82 @@
+<div id="menu">
+  
+    <ul class="menu">
+     {#
+       <div id="logo-block-container">
+          <div id="logo-block">
+             <a title="{% trans %}Home{% endtrans %}" href="/">
+             <img alt="Tree.io" src="{% url core_logo_image_ie %}" class="logo"></a>
+          </div>
+        </div>
+      #}
+  		
+      {% if not active %}
+      <li class="menu-item">
+          <a href="/" id="menu-treeio-home" class="active">
+            <span class="treeio-home">
+              <span class="menu-item-minor">&nbsp;</span>
+              {# <span class="menu-item-major">{% trans %}Home{% endtrans %}</span> #}
+            </span>
+          </a>
+      </li>
+      {% else %}
+      <li class="menu-item">
+          <a href="/" id="menu-treeio-home">
+            <span class="treeio-home">
+              <span class="menu-item-minor">&nbsp;</span>
+              {# <span class="menu-item-major">{% trans %}Home{% endtrans %}</span> #}
+            </span>
+          </a>
+      </li>
+      {% endif -%}
+  		
+  		{# major modules first #}
+      {% for module in modules if module.type == 'major' -%}
+      {% if module == active %}
+      <li class="menu-item">
+          <a href="{{ module.url }}" id="menu-{{ module.name|replace('.', '-')}}" class="active" title="{{ module }}">
+            <span class="{{ module.name|replace('.', '-')}}">
+              <span class="menu-item-major">{{ module }}</span>
+            </span>
+          </a>
+      </li>
+      {% else %}
+      <li class="menu-item">
+          <a href="{{ module.url }}" id="menu-{{ module.name|replace('.', '-')}}" title="{{ module }}">
+            <span class="{{ module.name|replace('.', '-')}}">
+              <span class="menu-item-major">{{ module }}</span>
+            </span>
+          </a>
+      </li>
+      {% endif %}
+      {%- endfor %}
+      <div class="clear"> </div>
+    </ul>
+    
+    <div id="menu-right">
+    <ul class="menu menu-tooltips">
+      {% for module in modules if module.type == 'minor' -%}
+      {% if module == active %}
+      <li class="menu-item">
+          <a href="{{ module.url }}" id="menu-{{ module.name|replace('.', '-')}}" class="active" title="{{ module }}">
+            <span class="{{ module.name|replace('.', '-')}}">
+              <span class="menu-item-minor">&nbsp;</span>
+            </span>
+          </a>
+      </li>
+      {% else %}
+      <li class="menu-item">
+          <a href="{{ module.url }}" id="menu-{{ module.name|replace('.', '-')}}" title="{{ module }}">
+            <span class="{{ module.name|replace('.', '-')}}">
+              <span class="menu-item-minor">&nbsp;</span>
+            </span>
+          </a>
+      </li>
+      {% endif %}
+      {%- endfor %}
+    </ul>
+    {{ user_block() }}
+    </div>
+    
+    <div class="clear"> </div>
+</div>

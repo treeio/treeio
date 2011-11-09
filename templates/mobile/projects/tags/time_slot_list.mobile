@@ -1,0 +1,38 @@
+{% for slot in time_slots %}
+<div class="content-list-item">
+    <span class="content-list-item-name time-slot-sub">
+        <span class="projects-task-time"></span>
+        <a href="{% url identities_user_view slot.user.id %}" class="popup-link">{{ slot.user }}</a>
+        {% if slot.is_open() %}
+        <a class="imp heavy" href="{% url projects_task_view slot.task.id %}">
+        {% trans %}In progress{% endtrans %}...
+        <span class="projects-timeslot" diff="{{ slot.get_time_secs() }}">{{ slot.get_time_string() }}</span></a>
+        {% else %}
+        <a class="imp small" href="{% url projects_task_view slot.task.id %}">{{ slot.get_time_string() }}</a>
+        {% endif %}
+        <span class="content-list-item-group">
+            {% if slot.is_open() %}
+            {{ slot.time_from.strftime("%Y %b %d, %H:%M") }} - <span class="heavy">now</span>
+            {% else %}
+            {% if slot.time_from.date() == slot.time_to.date() %}
+            {{ slot.time_from.strftime("%Y %b %d, %H:%M") }} - {{ slot.time_to.strftime("%H:%M") }}
+            {% else %}
+            {{ slot.time_from.strftime("%Y %b %d, %H:%M") }} - {{ slot.time_to.strftime("%d %B %Y, %H:%M") }}
+            {% endif %}
+            {% endif %}
+        </span>
+        <span class="time-slot-details">
+            {% if slot.time_to %}
+            {% if slot.details %}
+            <div class="spaced-v lighter">
+                {{ slot.details|htsafe }}
+            </div>
+            {% endif %}
+            {% else %}
+            {% endif %}
+        </span>
+    </span>
+    <span class="content-list-item-actions">
+    </span>
+</div>
+{% endfor %}

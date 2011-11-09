@@ -1,0 +1,21 @@
+{% if object %}
+<div class="subscription-users">
+    {% for subscription in subscriptions %}
+    <a href="{% url identities_user_view subscription.id %}" class="popup-link">{{ subscription }}</a>
+    {% if request.user.get_profile().has_permission(object, mode='w') or request.user.get_profile().id == subscription.id %}
+    <a href="{{ request.path }}?unsubscribe={{ subscription.id }}" class="inline-link delete-link" style="padding-left: 8px;">&nbsp;</a>
+    {% endif %}
+    <br />
+    {% endfor %}
+</div>
+{% if not subscribed or request.user.get_profile().has_permission(object, mode='w') %}
+<div class="subscription-links">
+    {% if not subscribed %}
+    <a href="{{ request.path }}?subscribe" class="inline-link subscribe-link" style="margin: 0">{% trans %}Subscribe{% endtrans %}</a>
+    {% endif %}
+    {% if request.user.get_profile().has_permission(object, mode='w') %}
+    <a href="{{ request.path }}?subscribe_add" class="inline-link add-link" style="margin: 0">{% trans %}Add{% endtrans %}</a>
+    {% endif %}
+</div>
+{% endif %}
+{% endif %}

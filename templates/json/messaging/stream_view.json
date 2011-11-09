@@ -1,0 +1,52 @@
+{% extends "json/messaging/page.json" %}
+{% block module_content %}
+
+	{
+	"stream":
+		{
+			"id": {{ stream.id }},
+			"url": "http://{{ site_domain }}{% url messaging_stream_view stream.id %}",
+			"name": "{{ stream }}",
+			{% if stream.email_incoming -%}
+			"email_incoming": "{{ stream.email_incoming }}",
+		    {% else -%}
+		    "email_incoming": null,
+		    {% endif -%}
+			{% if stream.email_outgoing -%}
+			"email_outgoing": "{{ stream.email_outgoing }}",
+		    {% else -%}
+		    "email_outgoing": null,
+		    {% endif -%}
+			"messages":
+					[
+					{% for message in messages %}
+						{
+						"id": {{ message.id }},
+						"url": "http://{{ site_domain }}{% url messaging_message_view message.id %}",
+						{% if message.title -%}
+						"title": "{{ message.title.replace('\n', '').replace('\r', '')|htsafe }}",
+					    {% else -%}
+					    "title": null,
+					    {% endif -%}
+						"body": "{{ message.body.replace('\n', '').replace('\r', '')|htsafe }}",
+						{% if message.author -%}
+						"author": "{{ message.author }}",
+					    {% else -%}
+					    "author": null,
+					    {% endif -%}
+						{% if message.reply_to -%}
+						"reply_to": "{{ message.reply_to }}",
+					    {% else -%}
+					    "reply_to": null,
+					    {% endif -%}
+						"stream": "{{ message.stream }}"
+						{% if loop.last -%}
+					    }
+					    {% else -%}
+					    },
+					    {% endif -%}
+					{% endfor %}
+					]
+		}
+	}
+{% endblock %}

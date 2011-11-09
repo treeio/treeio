@@ -1,0 +1,59 @@
+{% extends "mobile/account/page.mobile" %}
+
+{% block title %}{{ profile|htsafe }} | {% trans %}Account{% endtrans %}{% endblock %}
+
+{% block class_account %}sidebar-link-active{% endblock %}
+
+{% block module_title %}{{ profile }}{% endblock %}
+{% block module_subtitle %}{% trans %}User{% endtrans %}{% endblock %}
+
+{% block module_topmenu %}
+<a href="{% url account_password %}" class="top-menu password-link">{% trans %}Change Password{% endtrans %}</a>
+{% endblock %}
+
+{% block module_content %}
+
+<div>
+    <span class="content-label">{% trans %}Username{% endtrans %}:</span>
+    <span class="content-value"><strong>{{ profile.user }}</strong></span>
+</div>
+{% if profile.default_group %}
+<div>
+    <span class="content-label">{% trans %}Default Group{% endtrans %}:</span>
+    <span class="content-value"><a href="{% url identities_group_view profile.default_group.id %}">{{ profile.default_group }}</a></span>
+</div>
+{% endif %}
+<div>
+    {% if profile.other_groups.count() %}
+    <span class="content-label">{% trans %}Other Groups{% endtrans %}:</span>
+    <span class="content-value">
+        {% for group in profile.other_groups.all() %}
+        <a href="{% url identities_group_view group.id %}">{{ group }}</a>
+        <br />
+        {% endfor %}
+    </span>
+    {% endif %}
+</div>
+<br />
+
+{% for contact in contacts %}
+<div>
+    <span class="content-label">
+        <a href="{% url identities_contact_view contact.id %}"><strong>{% trans %}Contact{% endtrans %}:</strong></a>
+    </span>
+    <span class="content-details"></span>
+</div>
+<div>
+    <span class="content-label">{% trans %}Name{% endtrans %}:</span>
+    <span class="content-value"><a href="{% url identities_contact_view contact.id %}">{{ contact.name }}</a></span>
+</div>
+{% for value in contact.contactvalue_set.all() %}
+<div>
+    <span class="content-label">{{ value.field }}:</span>
+    <span class="content-value">{{ value|htsafe }}</span>
+</div>
+{% endfor %}
+
+{% endfor %}
+
+{% endblock %}

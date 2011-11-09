@@ -1,0 +1,129 @@
+
+  <span class="social-activity">
+    {% if comments or likes or dislikes %}
+    <span class="comments-likes-toggle" object="{{ object.id }}">
+      {% if likes %}
+      <img src="/static/icons/news/like.gif" /> {{ likes.count() }}
+      {% endif %}
+      {% if dislikes %}
+      <img src="/static/icons/news/dislike.gif" /> {{ dislikes.count() }}
+      {% endif %}
+      {% if comments %}
+      <img src="/static/icons/news/comments.gif" /> {{ comments.count() }}
+      {% endif %}
+    </span>
+    {% endif %}
+    
+    <span class="comments-likes-buttons">
+      {% if comments or likes or dislikes %}
+      <span class="light">&nbsp;&middot;&nbsp;</span>
+      {% endif %}
+      {% if ilike %}
+        <form action="" class="like-form" method="post">
+{% csrf_token %}
+          <input type="hidden" name="unlike" value="{{ object.id }}">
+          <a href="" class="like-button like-button-active ajax-link-out">{% trans %}You like this{% endtrans %}</a>
+          &nbsp;&middot;&nbsp;
+        </form>
+      {% elif idislike %}
+        <form action="" class="like-form" method="post">
+{% csrf_token %}
+          <input type="hidden" name="undislike" value="{{ object.id }}">
+          <a href="" class="like-button like-button-active ajax-link-out">{% trans %}You don't like this{% endtrans %}</a>
+          &nbsp;&middot;&nbsp;
+        </form>
+      {% else %}
+        <form action="" class="like-form" method="post">
+{% csrf_token %}
+          <input type="hidden" name="like" value="{{ object.id }}">
+          <a href="" class="like-button ajax-link-out">{% trans %}Like{% endtrans %}</a>
+          &nbsp;&middot;&nbsp;
+        </form>
+        <form action="" class="like-form" method="post">
+{% csrf_token %}
+          <input type="hidden" name="dislike" value="{{ object.id }}">
+          <a href="" class="like-button ajax-link-out">{% trans %}Dislike{% endtrans %}</a>
+          &nbsp;&middot;&nbsp;
+        </form>
+      {% endif %}
+      <a href="" class="comment-button ajax-link-out" object="{{ object.id }}">{% trans %}Comment{% endtrans %}</a>
+    </span>
+    
+    <div class="comments-likes-box comments-likes-box-{{ object.id }} {% if not icommented or not expand %}hidejs{% endif %}">
+      {% if likes %}
+      <div class="comment-likes-inner">
+        <img src="/static/icons/news/like.gif" />
+        {% for like in likes %}
+          {% if not loop.first %}
+            {% if loop.last %}{% trans %}and{% endtrans %}{% else %}, {% endif %}
+          {% endif %}
+          {% if like == profile %}
+          {% trans %}You{% endtrans %}
+          {% else %}
+          {{ like }}
+          {% endif %}
+        {% endfor %}
+        {% trans %}like this{% endtrans %}.
+      </div>
+      {% endif %}
+      {% if dislikes %}
+        <div class="comment-dislikes-inner">
+        <img src="/static/icons/news/dislike.gif" />
+        {% for dislike in dislikes %}
+          {% if not loop.first %}
+            {% if loop.last %}{% trans %}and{% endtrans %}{% else %}, {% endif %}
+          {% endif %}
+          {% if dislike == profile %}
+          {% trans %}You{% endtrans %}
+          {% else %}
+          {{ dislike }}
+          {% endif %}
+        {% endfor %}
+        {% trans %}don't like this{% endtrans %}.
+        </div>
+      {% endif %}
+      
+      {% for comment in comments %}
+      <div class="comment-box">
+        {% set contact = comment.author.get_contact() %}
+        <div class="contact-picture-frame">
+        {% if contact %}
+          {% set picture = contact.get_picture() %}
+          <a href="{% url identities_user_view comment.author.id %}" class="popup-link"><img class="contact-picture left" src="{{ picture|htsafe }}" alt="" /></a>
+        {% else %}
+          <a href="{% url identities_user_view comment.author.id %}" class="popup-link"><img class="contact-picture left" src="/static/messaging/pic.png" alt="" /></a>
+        {% endif %}
+        </div>
+        <div class="comment-body">
+          <a href="{% url identities_user_view comment.author.id %}" class="popup-link"><strong>{{ comment.author }}</strong></a>&nbsp;&nbsp;
+          {{ comment.body }}
+        </div>
+        <div class="comment-details">
+          {{ comment.date_created|humanize_datetime }}
+        </div>
+        <div class="clear"></div>
+      </div>
+      {% endfor %}
+      
+      <div class="comment-box">
+        <form action="" method="post" class="content-form">
+{% csrf_token %}
+          {% set contact = profile.get_contact() %}
+          <div class="contact-picture-frame">
+          {% if contact %}
+            {% set picture = contact.get_picture() %}
+            <a href="{% url identities_user_view profile.id %}" class="popup-link"><img class="contact-picture left" src="{{ picture|htsafe }}" alt="" /></a>
+          {% else %}
+            <a href="{% url identities_user_view profile.id %}" class="popup-link"><img class="contact-picture left" src="/static/messaging/pic.png" alt="" /></a>
+          {% endif %}
+          </div>
+          <div class="comment-form-box">
+            <input type="hidden" name="commentobject" value="{{ object.id }}" />
+            <textarea name="comment" class="no-editor comment-field"></textarea>
+            <input type="submit" value="{% trans %}Comment{% endtrans %}" class="comment-submit">
+          </div>
+        </form>
+        <div class="clear"></div>
+      </div>
+    </div>
+	</span>

@@ -1,0 +1,57 @@
+{% extends "html/finance/page.html" %}
+
+{% block title %}{% trans %}Income Statement{% endtrans %} | {% trans %}Finance{% endtrans %}{% endblock %}
+
+{% block module_title %}{% trans %}Income Statement{% endtrans %}{% endblock %}
+
+{% block class_income %}sidebar-link-active{% endblock %}
+
+{% block sidebar_right %}
+
+<span class="sidebar-header-first">{% trans %}Export to{% endtrans %}
+    {% if '?' in request.get_full_path() %}<a href="{{ request.get_full_path()|replace('.ajax','').replace('?','.csv?') }}"{% else %}<a href="{{ request.get_full_path()|replace('.ajax','') }}.csv"{% endif %} target="_self">CSV</a>,
+    {% if '?' in request.get_full_path() %}<a href="{{ request.get_full_path()|replace('.ajax','').replace('?','.xls?') }}"{% else %}<a href="{{ request.get_full_path()|replace('.ajax','') }}.xls"{% endif %} target="_self">XLS</a></span>
+{% endblock %}
+
+{% block module_content %}
+
+<div class="spaced-v large light">
+    {% trans %}Revenues{% endtrans %}
+</div>
+{% for category in categories %}
+{% if category.revenue %}
+<div>
+    <span class="content-label"><a href="{% url finance_category_view category.id %}">{{ category.name }}</a></span>
+    <span class="content-value">{{ category.revenue|number_format }}</span>
+</div>
+{% endif %}
+{% endfor %}
+
+<div>
+    <span class="content-label heavy">{% trans %}Total Revenues{% endtrans %}</span>
+    <span class="content-value heavy">{{ revenues|number_format|currency_format }}</span>
+</div>
+<div class="spaced-v large light">
+    {% trans %}Expenses{% endtrans %}
+</div>
+{% for category in categories %}
+{% if category.expense %}
+<div>
+    <span class="content-label"><a href="{% url finance_category_view category.id %}">{{ category.name }}</a></span>
+    <span class="content-value">{{ category.expense|number_format|currency_format }}</span>
+</div>
+{% endif %}
+{% endfor %}
+
+<div>
+    <span class="content-label heavy">{% trans %}Total Expenses{% endtrans %}</span>
+    <span class="content-value heavy">{{ expenses|number_format|currency_format }}</span>
+</div>
+<div class="spaced-v large light">
+    {% trans %}Totals{% endtrans %}
+</div>
+<div>
+    <span class="content-label heavy">{% trans %}Net Income{% endtrans %}</span>
+    <span class="content-value heavy">{{ total|number_format|currency_format }}</span>
+</div>
+{% endblock %}

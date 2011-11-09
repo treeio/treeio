@@ -1,0 +1,37 @@
+{% extends "mobile/documents/page.mobile" %}
+
+{% block title %}{% trans %}New Folder{% endtrans %} | {% trans %}Documents{% endtrans %}{% endblock %}
+
+{% block module_title %}{{ folder.name }}{% endblock %}
+
+{% block module_subtitle %}{% trans %}Folder{% endtrans %}{% endblock %}
+
+{% block module_topmenu %}
+<a class="top-menu add-link-active" href="{% url documents_folder_add_typed folder.id %}">{% trans %}New Folder{% endtrans %}</a>
+<a class="top-menu add-link" href="{% url documents_document_add_typed folder.id %}">{% trans %}New Document{% endtrans %}</a>
+<a class="top-menu add-link" href="{% url documents_weblink_add_typed folder.id %}">{% trans %}New Web Link{% endtrans %}</a>
+<a class="top-menu add-link" href="{% url documents_file_upload_typed folder.id %}">{% trans %}Upload File{% endtrans %}</a>
+<a class="top-menu view-link" href="{% url documents_folder_view folder.id %}">{% trans %}View{% endtrans %}</a>
+{% if user.get_profile().has_permission(folder, mode='w') %}
+<a class="top-menu edit-link" href="{% url documents_folder_edit folder.id %}">{% trans %}Edit{% endtrans %}</a>
+<a class="top-menu delete-link" href="{% url documents_folder_delete folder.id %}">{% trans %}Delete{% endtrans %}</a>
+{% endif %}
+{% endblock %}
+
+{% block module_content %}
+
+<form action="" method="post" class="content-form">
+{% csrf_token %}
+    <ul class="content-form-fields">
+        {{ form|htsafe }}
+    </ul>
+    <div class="content-form-submit ui-grid-a">
+    <div class="ui-block-a">
+        <input data-theme="b" type="submit" name="save" value="{% trans %}Create Folder{% endtrans %}" />
+    </div>
+    <div class="ui-block-b">
+        <input type="submit" name="cancel" value="{% trans %}Cancel{% endtrans %}" class="cancel" />
+    </div>
+    </div>
+</form>
+{% endblock %}

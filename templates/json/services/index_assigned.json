@@ -1,0 +1,68 @@
+{% extends "json/services/page.json" %}
+{% block module_content %}
+   {"tickets":
+      [
+      {% for ticket in tickets %}
+         {
+         "id": {{ ticket.id }},
+         "url": "http://{{ site_domain }}{% url services_ticket_view ticket.id %}",
+         "name": "{{ ticket }}",
+         {% if ticket.caller -%}
+         "caller": {
+                    "id": {{ ticket.caller_id }},
+                    "url": "http://{{ site_domain }}{% url identities_contact_view ticket.caller_id %}",
+                    "name": "{{ ticket.caller }}"
+                   },
+         {% else -%}
+         "caller": null,
+         {% endif -%}
+         "assigned": [
+            {%- for assignee in ticket.assigned.all() %}
+               {
+                "id": {{ assignee.id }},
+                "url": "http://{{ site_domain }}{% url services_agent_view assignee.id %}",
+                "name": "{{ assignee }}"
+               {% if loop.last %}}{% else %}},{% endif %}
+            {%- endfor -%}
+         ],
+         "status": {
+                    "id": {{ ticket.status_id }},
+                    "url": "http://{{ site_domain }}{% url services_status_view ticket.status_id %}",
+                    "name": "{{ ticket.status }}"
+                   },
+         {%- if ticket.queue %}
+         "queue": {
+                   "id": {{ ticket.queue_id }},
+                   "url": "http://{{ site_domain }}{% url services_queue_view ticket.queue_id %}",
+                   "name": "{{ ticket.queue }}"
+                  },
+         {% else -%}
+         "queue": null,
+         {% endif -%}
+         {% if ticket.service -%}
+         "service": {
+                     "id": {{ ticket.service_id }},
+                     "url": "http://{{ site_domain }}{% url services_service_view ticket.service_id %}",
+                     "name": "{{ ticket.service }}"
+                    },
+         {% else -%}
+         "service": null,
+         {% endif -%}
+         {% if ticket.sla -%}
+         "sla": {
+                 "id": {{ ticket.sla_id }},
+                 "url": "http://{{ site_domain }}{% url services_sla_view ticket.sla_id %}",
+                 "name": "{{ ticket.sla }}"
+                }
+         {% else -%}
+         "sla": null
+         {% endif -%}
+         {% if loop.last -%}
+         }
+         {% else -%}
+         },
+         {% endif -%}
+         {% endfor %}
+      ]
+   }
+{% endblock %}

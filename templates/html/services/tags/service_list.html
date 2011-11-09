@@ -1,0 +1,21 @@
+{% for service in services %}
+<div class="content-list-item content-list-item-{{ loop.cycle('odd', 'even') }}">
+    <div class="content-list-tick">
+    </div>
+    <span class="content-list-item-name">
+        <a href="{% url services_service_view service.id %}">{{ service }}</a>
+        {% if not skip_group %}
+        <span class="content-list-item-group">
+            {% for sla in service.servicelevelagreement_set.all() %}
+            <a href="{% url services_sla_view sla.id %}" class="group-link">{{ sla }}</a>
+            {% endfor %}
+        </span>
+        {% endif %}
+    </span>
+    <span class="content-list-item-actions">
+        {% if user.get_profile().has_permission(service, mode='w') %}
+        <a href="{% url services_service_edit service.id %}" class="inline-link edit-link">{% trans %}Edit{% endtrans %}</a>
+        {% endif %}
+    </span>
+</div>
+{% endfor %}

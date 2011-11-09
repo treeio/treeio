@@ -1,0 +1,115 @@
+{% extends "mobile/identities/contact_view.mobile" %}
+
+{% block class_me %}sidebar-link-active{% endblock %}
+
+{% block title %}{{ contact }} | {% trans %}Identities{% endtrans %}{% endblock %}
+
+{% block module_title %}{{ contact }}{% endblock %}
+{% block module_subtitle %}{% trans %}My Contact Card{% endtrans %}{% endblock %}
+
+{% block module_topmenu %}
+<a href="{% url identities_contact_view contact.id %}" class="top-menu view-link view-link-active">{% trans %}View{% endtrans %}</a>
+{% if user.get_profile().has_permission(contact, mode='w') %}
+<a href="{% url identities_contact_edit contact.id %}" class="top-menu edit-link">{% trans %}Edit{% endtrans %}</a>
+<a href="{% url identities_contact_delete contact.id %}" class="top-menu delete-link">{% trans %}Delete{% endtrans %}</a>
+{% endif %}
+{% endblock %}
+
+{% block sidebar_right %}
+{% endblock %}
+
+{% block module_content %}
+
+{% set picture = contact.get_picture() %}
+<div class="contact-profile-picture-frame">
+<img class="contact-profile-picture" src="{{ picture|htsafe }}" alt="" align="left" />
+</div>
+
+<div class="left">
+<div>
+    <span class="larger">{{ contact.name }}</span>
+</div>
+{% if contact.parent %}
+<div>
+    <span class="large">{% trans %}Path{% endtrans %}: {{ object_tree_path(contact) }}</span>
+</div>
+{% endif %}
+{% if contact.related_user %}
+{% if contact.related_user.is_user() %}
+    <span class="large">{% trans %}User{% endtrans %}: <img src="/static/icons/identities/user.gif"/> <a href="{% url identities_user_view contact.related_user_id %}">{{ contact.related_user.user.name }}</a></span>
+{% else %}
+    <span class="large">{% trans %}Group{% endtrans %}: <a href="{% url identities_group_view contact.related_user_id %}">{{ contact.related_user.group.name }}</a></span>
+{% endif %}
+{% endif %}
+
+<hr class="space"/>
+{% for value in contact_values %}
+{% if value.value %}
+<div>
+    
+    {% if value.field.field_type == 'picture' %}
+    {#<img src="{{ value|htsafe }}" alt="{{ value.field.label }}" />#}
+    {% elif value.field.field_type == 'url' %}
+	<span class="heavy">{{ value.field.label }}:</span>
+    <span class=""><a href="{{ value|htsafe }}" class="ajax-link-out">{{ value }}</a></span>
+    {% elif value.field.field_type == 'details' %}
+	<span class="heavy">{{ value.field.label }}:</span>
+    <span class="">{{ value|htsafe }}</span>
+    {% else %}
+	<span class="heavy">{{ value.field.label }}:</span>
+    <span class="">{{ value|htsafe }}</span>
+    {% endif %}
+</div>
+{% endif %}
+{% endfor %}
+
+{% if subcontacts %}
+<hr class="space"/>
+<span class="heavy">{% trans %}Child Contacts{% endtrans %}:</span>
+{{ identities_contact_list(paginate(subcontacts), 'parent') }}
+{{ pager(contacts) }}
+{% endif %}
+</div>
+
+<hr class="space"/>
+{% if current_module %}
+  <span class="content-label-head contact-objects">
+  {% for module in objects if objects[module]['count'] %}
+    {% set attr = objects[module]['objects'].keys()[0] %}
+    
+   	  {% if current_module == objects[module]['module'] %}
+      <span class="contact-objects-module-active"><a href="{% url identities_contact_view_objects contact.id, attr %}">{{ objects[module]['label'] }}</a></span>
+      {% else %}
+      <span class="contact-objects-module"><a href="{% url identities_contact_view_objects contact.id, attr %}">{{ objects[module]['label'] }}</a></span>
+      {% endif %}
+    
+    {% if not loop.last %}<span class="lightest">&nbsp;</span>{% endif %}
+  {% endfor %}
+  </span>
+  
+  <div style="padding: 4px 0 8px 8px;">
+  {% for key in objects[current_module.name]['objects'] %}
+    {% set count = objects[current_module.name]['objects'][key]['objects'].count() %}
+    {% if count > 0 %}
+      <span class="spaced-h">
+      {% if key == attribute %}
+      <strong>
+      <a href="{% url identities_contact_view_objects contact.id, key %}">{{ objects[current_module.name]['objects'][key]['label'] }} ({{ count }})</a>
+      </strong>
+      {% else %}
+      <a href="{% url identities_contact_view_objects contact.id, key %}">{{ objects[current_module.name]['objects'][key]['label'] }} ({{ count }})</a>
+      {% endif %}
+      </span>
+      {% if not loop.last %}<span class="lightest">|</span>{% endif %}
+    {% endif %}
+  {% endfor %}
+  </div>
+  {% if attribute %}
+  {% set items=objects[current_module.name]['objects'][attribute]['objects'] %}
+  {% set tag=objects[current_module.name]['objects'][attribute]['templatetag'] %}
+  {{ core_generic_list(paginate(items, 10), tag=tag) }}
+  {{ pager(items, 10) }}
+  {% endif %}
+
+{% endif %}
+{% endblock %}

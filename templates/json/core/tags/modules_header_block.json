@@ -1,0 +1,8 @@
+{"active":
+{%- if not active %}"treeio-home"{% endif -%}
+{%- for module in modules -%}
+	{%- if module == active -%}
+    "{{ module.name|replace('.', '-')}}"
+	{%- endif -%} 
+{%- endfor -%}
+}

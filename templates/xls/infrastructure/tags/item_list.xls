@@ -1,0 +1,10 @@
+item,parent,status,manufacturer,supplier,owner,item_type
+{% for item in items %}{{item|replace(',','')|replace('"','')|replace('
+','')|safe}},{% if item.parent %}{{item.parent|replace(',','')|replace('"','')|replace('
+','')|safe}},{% else %},{% endif %}{{item.status|replace(',','')|replace('"','')|replace('
+','')|safe}},{% if item.manufacturer %}{{item.manufacturer|replace(',','')|replace('"','')|replace('
+','')|safe}},{% else %},{% endif %}{% if item.supplier %}{{item.supplier|replace(',','')|replace('"','')|replace('
+','')|safe}},{% else %},{% endif %}{% if item.owner %}{{item.owner|replace(',','')|replace('"','')|replace('
+','')|safe}},{% else %},{% endif %}{% if item.item_type %}{{item.item_type|replace(',','')|replace('"','')|replace('
+','')|safe}}{% else %},{% endif %}
+{% endfor %}

@@ -1,0 +1,41 @@
+{% extends "html/infrastructure/page.html" %}
+
+{% block title %}{{ field|htsafe }} | {% trans %}Items{% endtrans %} | {% trans %}Infrastructure{% endtrans %}{% endblock %}
+
+{% block module_title %}{{ field }}{% endblock %}
+{% block module_subtitle %}{% trans %}Infrastructure Field{% endtrans %}{% endblock %}
+
+{% block infrastructure_fieldes_sidebar -%}
+{% for ifield in fieldes %}
+<a href="{% url infrastructure_field_view ifield.id %}" class="sidebar-link {% if ifield == field %}sidebar-link-active{% endif %}">{{ ifield }}</a>
+{% endfor %}
+{%- endblock %}
+
+{% block module_topmenu %}
+<a href="{% url infrastructure_field_view field.id %}" class="top-menu view-link">{% trans %}View{% endtrans %}</a>
+<a href="{% url infrastructure_field_edit field.id %}" class="top-menu edit-link">{% trans %}Edit{% endtrans %}</a>
+<a href="{% url infrastructure_field_delete field.id %}" class="top-menu delete-link-active">{% trans %}Delete{% endtrans %}</a>
+{% endblock %}
+
+{% block module_content %}
+
+<div class="delete-object">
+    <span class="larger">{% trans %}Delete this Field{% endtrans %}?</span>
+    <br />
+    <form action="" method="post" class="content-form">
+{% csrf_token %}
+        <ul class="content-form-fields">
+            <li>
+                <label for="trash">
+                    <input id="trash" type="checkbox" name="trash" checked="checked" />
+                    {% trans %}Move to Trash{% endtrans %}
+                </label>
+            </li>
+            <li>
+                <input type="submit" name="delete" value="{% trans %}Yes, Delete{% endtrans %}" />&nbsp;&nbsp;
+                <input type="submit" name="cancel" value="{% trans %}Cancel{% endtrans %}" class="cancel" />
+            </li>
+        </ul>
+    </form>
+</div>
+{% endblock %}

@@ -1,0 +1,9 @@
+{% extends "mobile/base_widget.mobile" %}
+
+{% block widget_title %}{% trans %}Assigned to me{% endtrans %}{% endblock %}
+
+{% block widget_content %}
+
+    {{ services_ticket_list(tickets, nomass=True) }}
+	
+{% endblock %}

@@ -1,0 +1,29 @@
+{% extends "mobile/page.mobile" %}
+
+{% block title %}{% trans %}Dashboard{% endtrans %}{% endblock %}
+
+{% block content %}
+
+<div class="title-block">
+	<div class="title">{% block module_title %}{% trans %}Dashboard{% endtrans %}{% endblock %}</div>
+	
+	<div class="subtitle-block">{% block module_subtitle %}{% endblock %}</div>
+	
+	<div class="module-top-menu-inline">
+	{% block module_topmenu %}
+        <a href="{% url core_dashboard_widget_add %}" class="top-menu add-link">{% trans %}Add Widget{% endtrans %}</a>
+		<a href="{% url core_trash %}" class="top-menu trash-link {% if trash %}trash-full-link{% endif %}">{% trans %}Trash{% endtrans %}</a>
+	{% endblock %}
+	</div>
+</div>
+
+<div class="module-content-home">
+    <!-- module_content_inner -->
+    {% block module_content %}{% endblock %}
+    <!-- module_content_inner -->
+</div>
+
+{% endblock %}
+
+{% block footer %}
+{% endblock %}

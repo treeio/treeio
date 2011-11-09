@@ -1,0 +1,67 @@
+{% extends "mobile/page.mobile" %}
+
+{% block title %}{% trans %}News{% endtrans %}{% endblock %}
+
+{% block content %}
+
+<div data-role="collapsible" data-collapsed="true" data-theme="a">
+<h3>{% trans %}Menu{% endtrans %}</h3>
+
+<div class="module-sidebar">
+
+	  <a href="{% url news_index %}" class="sidebar-link {% block class_all %}{% endblock %}">{% trans %}All Activity{% endtrans %}</a>
+	  <a href="{% url news_top %}" class="sidebar-link {% block class_top %}{% endblock %}">{% trans %}Top News{% endtrans %}</a>
+	  <a href="{% url news_my_watchlist %}" class="sidebar-link {% block class_my_watchlist %}{% endblock %}">{% trans %}My Watchlist{% endtrans %}</a>
+	  <a href="{% url news_my_activity %}" class="sidebar-link {% block class_my_activity %}{% endblock %}">{% trans %}My Activity{% endtrans %}</a>
+	  
+	  <span class="sidebar-header">{% trans %}News by Module{% endtrans %}</span>
+	  {% for module in modules %}
+	    {% if active_module and module == active_module %}
+	    <a href="{% url news_index_by_module module.name %}" class="sidebar-link sidebar-link-active">{{ module.title }}</a>
+	    {% else %}
+	    <a href="{% url news_index_by_module module.name %}" class="sidebar-link">{{ module.title }}</a>
+	    {% endif %}
+	  {% endfor %}
+	  
+</div>
+</div>
+
+<div class="module-content">
+	
+	<div class="module-content-fill">
+	
+		<div class="title-block">
+			
+			<div class="title">{% block module_title %}{% trans %}News{% endtrans %}{% endblock %}</div>
+			
+			<div class="subtitle-block">{% block module_subtitle %}{% endblock %}</div>
+			
+			<div class="module-top-menu-inline">
+			{% block module_topmenu %}
+				<a href="{% url messaging_message_compose %}" class="top-menu add-link">{% trans %}New Message{% endtrans %}</a>
+				<a href="{% url messaging_stream_add %}" class="top-menu add-link">{% trans %}New Stream{% endtrans %}</a>
+			{% endblock %}
+			</div>
+			{{ help_link() }}
+			
+		</div>
+		
+
+			<div class="module-content-inner">
+			<!-- module_content_inner -->
+			{% block module_content %}{% endblock %}
+            <!-- /module_content_inner -->
+			</div>
+			
+			<div class="module-sidebar-right">
+			{% block sidebar_right %}{% endblock %}
+			</div>
+
+		
+	</div>
+
+</div>
+
+<div class="clear"></div>
+
+{% endblock %}

@@ -1,0 +1,43 @@
+<div id="user-block">
+  <ul class="menu">
+  {% if user %}
+    {% if admin and user.is_admin() %}
+    <li class="menu-item">
+        <a href="{% url core_admin %}" id="menu-{{ admin.name|replace('.', '-')}}"
+        {% if active and active.name==admin.name %}class="active"{% endif %} title="{{ admin.title }}">
+        <span class="menu-item-user">{% trans %}Administration{% endtrans %}</span>
+        </a>
+    </li>
+    {% endif %}
+    <li class="menu-item">
+      {% if account %}
+        <a href="{% url account_view %}" id="menu-{{ account.name|replace('.', '-')}}"
+         class="menu-dropdown-link{% if active and active.name==account.name %} active{% endif %}"
+         dropdown="menu-dropdown-user" title="{{ account.title }}">
+            <span class="menu-item-user"><strong>{{ user }}</strong></span>
+        </a>
+        <ul class="menu-dropdown" id="menu-dropdown-user">
+          <li class="menu-dropdown-item">
+            <a href="{% url account_view %}">{% trans %}Account{% endtrans %}</a>
+          </li>
+          <li class="menu-dropdown-item">
+            <a href="{% url account_settings %}">{% trans %}Settings{% endtrans %}</a>
+          </li>
+          <li class="menu-dropdown-item">
+            <a href="{% url user_logout %}">{% trans %}Log out{% endtrans %}</a>
+          </li>
+        </ul>
+      {% else %}
+        <a id="menu-{{ account.name|replace('.', '-')}}" title="{{ account.title }}" class="menu-dropdown-link" dropdown="menu-dropdown-user" >
+            <span class="menu-item-user"><strong>{{ user }}</strong></span>
+        </a>
+        <ul class="menu-dropdown" id="menu-dropdown-user">
+          <li class="menu-dropdown-item">
+            <a href="{% url user_logout %}">{% trans %}Log out{% endtrans %}</a>
+          </li>
+        </ul>
+      {% endif %}
+    </li>
+  {% endif %}
+  </ul>
+</div>

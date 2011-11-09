@@ -1,0 +1,76 @@
+{% extends "mobile/finance/page.mobile" %}
+
+{% block title %}{% trans %}Delete{% endtrans %} | {{ transaction|htsafe }} | {% trans %}Transaction{% endtrans %} | {% trans %}Finance{% endtrans %}{% endblock %}
+
+{% block module_title %}{{ transaction }}{% endblock %}
+{% block module_subtitle %}{% trans %}Transaction{% endtrans %}{% endblock %}
+
+{% block module_topmenu %}
+<a href="{% url finance_transaction_view transaction.id %}" class="top-menu view-link">{% trans %}View{% endtrans %}</a>
+<a href="{% url finance_transaction_edit transaction.id %}" class="top-menu edit-link">{% trans %}Edit{% endtrans %}</a>
+<a href="{% url finance_transaction_delete transaction.id %}" class="top-menu delete-link-active">{% trans %}Delete{% endtrans %}</a>
+{% endblock %}
+
+{% block module_content %}
+
+<div>
+    <span class="larger">{% trans %}Delete this Transaction{% endtrans %}?</span>
+    <br />
+    <form action="" method="post" class="content-form">
+{% csrf_token %}
+        <ul class="content-form-fields">
+            <li>
+                <label for="trash">
+                    <input id="trash" type="checkbox" name="trash" checked="checked" />
+                    {% trans %}Move to Trash{% endtrans %}
+                </label>
+            </li>
+            <li class="ui-grid-a">
+            <div class="ui-block-a">
+                <input data-theme="b" type="submit" name="delete" value="{% trans %}Yes, Delete{% endtrans %}" style="font-weight: 700;" />&nbsp;&nbsp;
+            </div>
+            <div class="ui-block-b">
+                <input type="submit" name="cancel" value="{% trans %}Cancel{% endtrans %}" class="cancel" />
+            </div>
+            </li>
+        </ul>
+    </form>
+</div>
+<span class="content-label">{% trans %}Category{% endtrans %}:</span>
+<span class="content-value">
+    {{ transaction.category|title() }}
+</span>
+<div>
+    <span class="content-label">{% trans %}Source{% endtrans %}:</span>
+    <span class="content-value"><a href="{% url identities_contact_view transaction.source.id %}">{{ transaction.source }}</a></span>
+</div>
+<div>
+    <span class="content-label">{% trans %}Target{% endtrans %}:</span>
+    <span class="content-value"><a href="{% url identities_contact_view transaction.target.id %}">{{ transaction.target }}</a></span>
+</div>
+<div>
+    <span class="content-label">{% trans %}Bank Account{% endtrans %}:</span>
+    <span class="content-value"><a href = "{% url finance_account_view transaction.account_id %}">{{ transaction.account }}</a></span>
+</div>
+{% if transaction.liability %}
+<div>
+    <span class="content-label">{% trans %}Liability{% endtrans %}:</span>
+    <span class="content-value"><a href = "{% url finance_liability_view transaction.liability_id %}">{{ transaction.liability }}</a></span>
+</div>
+{% endif %}
+<div>
+    <span class="content-label">{% trans %}Date & Time{% endtrans %}:</span>
+    <span class="content-value">{{ transaction.datetime|htdatetime }}</span>
+</div>
+<div>
+    <span class="content-label">{% trans %}Value{% endtrans %}:</span>
+    <span class="content-value">{{ transaction.value }}</span>
+</div>
+{% if transaction.details %}
+<div>
+    <span class="content-label">{% trans %}Details{% endtrans %}:</span>
+    <span class="content-details">{{ transaction.details|htsafe }}</span>
+</div>
+{% endif %}
+
+{% endblock %}

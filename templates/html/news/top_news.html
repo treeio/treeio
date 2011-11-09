@@ -1,0 +1,79 @@
+{% extends "html/news/page.html" %}
+
+{% block title %}{% trans %}News{% endtrans %}{% endblock %}
+
+{% block module_subtitle %}{% trans %}Top{% endtrans %}{% endblock %}
+
+{% block class_top %}sidebar-link-active{% endblock %}
+
+{% block sidebar_right %}
+
+<span class="sidebar-header-first">{% trans %}Filter by{% endtrans %}</span>
+<form action="" method="get" class="content-filter-form">
+    <ul class="content-filter-form-fields">
+        {{ filters.as_ul()|htsafe }}
+    </ul>
+    <input type="submit" value="{% trans %}Submit{% endtrans %}">
+</form>
+<br />
+
+<span class="sidebar-header-right">{% trans %}Download as:{% endtrans %}<br />{% if '?' in request.get_full_path() %}<a class="pdf-block-link" href="{{ request.get_full_path()|replace('.ajax','').replace('?','.pdf?') }}"{% else %}<a class="pdf-block-link" href="{{ request.get_full_path()|replace('.ajax','') }}.pdf"{% endif %} target="_self">PDF</a>
+  </span></span>
+
+{% endblock %}
+
+{% block module_content %}
+{% if not updates %}
+  {{ show_hint('news') }}
+  <br />
+{% endif %}
+
+<div class="content-label-head">
+  {% trans %}What are you working on?{% endtrans %}
+</div>
+<br />
+<div class="news-record-post">
+    {% set contact = profile.get_contact() %}
+    <div class="contact-picture-large-frame">
+    {% if contact %}
+      {% set picture = contact.get_picture() %}
+      <a href="{% url identities_user_view profile.id %}"><img class="contact-picture-large left" src="{{ picture|htsafe }}" alt="" /></a>
+    {% else %}
+      <a href="{% url identities_user_view profile.id %}"><img class="contact-picture-large left" src="/static/messaging/pic.png" alt="" /></a>
+    {% endif %}
+    </div>
+    <div class="news-record-label">
+        <a href="{% url identities_user_view profile.id %}" class="popup-link"><strong>{{ profile }}</strong></a>
+    </div>
+    <div class="news-record-body">
+      <form action="" method="post" class="content-form">
+{% csrf_token %}
+          <ul class="content-form-fields">
+              <li>
+                  <textarea id="id_body" rows="3" cols="50" name="body" class="news-share-field no-editor"></textarea>
+              </li>
+              <li>
+              	<span class="spaced-h small">
+              		&nbsp;&nbsp;{% trans %}Recipients{% endtrans %}:
+              	</span>
+              	<span>
+	              	{{ form.recipients|safe }}
+	              	{{ form.multicomplete_recipients|safe }}
+	            </span>
+              </li>
+          </ul>
+          <div class="news-form-submit">
+              <input type="submit" value="{% trans %}Share{% endtrans %}">
+          </div>
+      </form>
+    </div>
+</div>
+
+{% if updates %}
+<br />
+{{ news_update_list(paginate(updates), 30) }}
+
+{{ pager(updates, 30) }}
+{% endif %}
+
+{% endblock %}

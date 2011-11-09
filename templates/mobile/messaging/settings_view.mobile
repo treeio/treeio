@@ -1,0 +1,26 @@
+{% extends "mobile/messaging/page.mobile" %}
+
+{% block title %}{% trans %}Settings{% endtrans %} | {% trans %}Messaging{% endtrans %}{% endblock %}
+
+{% block class_admin_settings %}sidebar-link-active{% endblock %}
+
+{% block module_title %}{% trans %}Messaging{% endtrans %}{% endblock %}
+{% block module_subtitle %}{% trans %}Settings{% endtrans %}{% endblock %}
+
+{% block module_topmenu %}
+<a href="{% url messaging_settings_view %}" class="top-menu view-link-active">{% trans %}View{% endtrans %}</a>
+<a href="{% url messaging_settings_edit %}" class="top-menu edit-link">{% trans %}Edit{% endtrans %}</a>
+{% endblock %}
+
+{% block module_content %}
+
+<div>
+    <span class="content-label">{% trans %}Default Contact Type{% endtrans %}:</span>
+    <span class="content-value">
+        {% if default_contact_type %}
+        <a href="{% url identities_index_by_type default_contact_type.slug %}">{{ default_contact_type }}</a>
+        {% endif %}
+    </span>
+</div>
+
+{% endblock %}

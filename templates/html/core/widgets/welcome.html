@@ -1,0 +1,81 @@
+{% extends "html/base_widget.html" %}
+
+{% block widget_content %}
+<div class="welcome">
+		<h3>{{ user.get_profile() }}, {% trans %}welcome to Tree.io{% endtrans %}!</h3>
+		<hr />
+		
+		<script type="text/javascript">
+		$(function() {
+		  $('#add-favourites').click(function() {
+		      var title = window.document.title;
+		      var href = window.location.href;
+		      if (window.sidebar) { // Mozilla Firefox Bookmark
+            window.sidebar.addPanel(title, href,"");
+          } else if( window.external ) { // IE Favorite
+            window.external.AddFavorite( href, title);
+          } else if(window.opera) { // Opera 7+
+            return false; // do nothing - the rel="sidebar" should do the trick
+          } else {
+            $('#add-favourites-message').html('{% trans %}Press Ctrl+D (or Command+D on a Mac) to bookmark this page{% endtrans %}.'); 
+          }
+          return false;
+		    }
+		  )
+		});		
+		</script>
+		
+		
+		<div class="highlight-column">
+  		<h4>{% trans %}Get Started{% endtrans %}:</h4>
+		{% if customization %}
+  		<div class="highlight" id="add-favourites">
+  		<img class="left" src="/static/icons/dashboard/bookmark.gif" />
+  		<a href="/" class="large"><strong>{% trans %}Bookmark this page{% endtrans %}</strong></a><br />
+  		<span class="light" id="add-favourites-message">{% trans %}You may want to bookmark this page so you can come back to it later{% endtrans %}.</span>
+  		</div>
+  		<hr class="space" />
+  		{% endif %}
+  		
+  		<div class="highlight">
+  		<img class="left" src="/static/icons/dashboard/case.gif" />
+  		<a href="{% url project_add %}" class="large"><strong>{% trans %}Create a Project{% endtrans %}</strong></a><br />
+  		<span class="light">{% trans %}Manage your tasks easier and more powerful than ever before{% endtrans %}.</span>
+  		</div>
+  		<hr class="space" />
+  		
+  		<div class="highlight">
+  		<img class="left" src="/static/icons/dashboard/users.gif" />
+  		<a href="{% url core_admin_user_invite %}" class="large"><strong>{% trans %}Invite other people{% endtrans %}</strong></a><br />
+  		<span class="light">{% trans %}Create accounts for your co-workers, clients, collaborators or friends{% endtrans %}.</span>
+  		</div>
+		</div>
+
+		{% if request.user.get_profile().is_admin() %}
+		
+		<div class="highlight-column">
+		 
+    	<h4>{% trans %}Manage your Tree.io{% endtrans %}:</h4>
+    	
+		{% if customization %}
+  		<div class="highlight">
+  		<img class="left" src="/static/icons/dashboard/logo.gif" />
+  		<a href="{% url core_settings_edit %}" class="large"><strong>{% trans %}Upload your logo{% endtrans %}</strong></a><br />
+  		<span class="light">{% trans %}Your logo will appear on the top left corner of every page{% endtrans %}.</span>
+  		</div>
+  		<hr class="space" />
+  		{% endif %}
+  		
+  		<div class="highlight">
+  		<img class="left" src="/static/icons/dashboard/lang.gif" />
+  		<a href="{% url core_settings_edit %}" class="large"><strong>{% trans %}Change the language{% endtrans %}</strong></a><br />
+  		<span class="light">{% trans %}Tree.io is available in multiple languages{% endtrans %}.</span>
+  		</div>
+  		<hr class="space" />
+  		
+    </div>
+		
+		{% endif %}
+		
+	</div>
+{% endblock %}

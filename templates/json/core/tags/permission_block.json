@@ -1,0 +1,7 @@
+        {"user": {
+                 "id": {{ object.user.id }},
+                 "name": "{{ object.user }}" },
+         "group": {
+                 "id": {{ object.group.id }},
+                 "name": "{{ object.group.name }}" },
+         "mode": "{{ object.get_mode() }}" }

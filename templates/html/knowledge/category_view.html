@@ -1,0 +1,74 @@
+{% extends "html/knowledge/page.html" %}
+
+{% block title %}{{ category|htsafe }} | {% trans %}Knowledge base{% endtrans %}{% endblock %}
+
+{% block module_title %}{{ category }}{% endblock %}
+
+{% block module_subtitle %}{% trans %}Category{% endtrans %}{% endblock %}
+
+{% block module_topmenu %}
+<a href="{% url knowledge_category_view category.treepath %}" class="top-menu view-link-active">{% trans %}View{% endtrans %}</a>
+{% if user.get_profile().has_permission(category, mode='w') %}
+<a href="{% url knowledge_category_edit category.id %}" class="top-menu edit-link">{% trans %}Edit{% endtrans %}</a>
+<a href="{% url knowledge_category_delete category.id %}" class="top-menu delete-link">{% trans %}Delete{% endtrans %}</a>
+{% endif %}
+{% endblock %}
+
+{% block sidebar_right %}
+
+<span class="sidebar-header-first">{% trans %}Permissions{% endtrans %}</span>
+<div class="sidebar-block">
+    {{ permission_block(category) }}
+</div>
+<span class="sidebar-header-right">{% trans %}Links{% endtrans %}</span>
+<div class="sidebar-block">
+    {{ link_block(category) }}
+</div>
+<span class="sidebar-header-right">{% trans %}Subscribers{% endtrans %}</span>
+<div class="sidebar-block">
+    {{ subscription_block(category) }}
+</div>
+{% endblock %}
+
+{% block module_content %}
+
+{% if category.name %}
+<div>
+    <span class="content-label">{% trans %}Name{% endtrans %}:</span>
+    <span class="content-value">{{ category.name }}</span>
+</div>
+{% endif %}
+
+{% if category.details %}
+<div>
+    <span class="content-label">{% trans %}Details{% endtrans %}:</span>
+    <span class="content-details">{{ category.details|htsafe }}</span>
+</div>
+{% endif %}
+
+<div>
+    <span class="content-label-head">{% trans %}Items{% endtrans %}:</span>
+</div>
+<form action="" method="post">
+{% csrf_token %}
+    {% set render_items = items.filter(category=category) %}
+    {% if render_items %}
+
+    <ul class="mass-form">
+        <input type="hidden" name="massform" value="massform" />
+        <input type="checkbox" name="mass-unclassified" value="unclassified" class="group-control" />
+         {{ massform.as_ul()|htsafe }}
+        <li>
+            <input type="submit" value="{% trans %}Save{% endtrans %}" />
+        </li>
+    </ul>
+    {{ knowledge_item_list(render_items, 'category') }}
+    {{ pager(render_items) }}
+</form>
+{% else %}
+<div class="content-list-item lighter spaced-h spaced-v">
+    <em>{% trans %}No Items{% endtrans %}</em>
+</div>
+{% endif %}
+
+{% endblock %}

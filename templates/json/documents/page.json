@@ -1,0 +1,7 @@
+{% extends "json/page.json" %}
+{% block title %}Documents / Hardtree{% endblock %}
+{% block module_title %}Documents{% endblock %}
+{% block module_subtitle %}Documents{% endblock %}
+{% block content %}
+	"content": {% block module_content %}{% endblock %}
+{%- endblock %}

@@ -1,0 +1,6 @@
+name,folder,category,body
+{{item.name|replace(',','')|replace('"','')|replace('
+','')|safe}},{{item.folder|replace(',','')|replace('"','')|replace('
+','')|safe}},{% if item.category %}{{item.category|replace(',','')|replace('"','')|replace('
+','')|safe}},{% else %},{% endif %}{% if item.body %}{{item.body|replace(',','')|replace('\n', '').replace('\r', '').replace('"', '\"')|replace('
+','')|safe}}{% else %},{% endif %}

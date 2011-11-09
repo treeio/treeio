@@ -1,0 +1,19 @@
+{% extends "mobile/core/page.mobile" %}
+
+{% block title %}{% trans %}Groups{% endtrans %} | {% trans %}Administration{% endtrans %}{% endblock %}
+
+{% block module_title %}{% trans %}Groups{% endtrans %}{% endblock %}
+
+{% block module_topmenu %}
+<a href="{% url core_admin_group_add %}" class="top-menu add-link">{% trans %}New Group{% endtrans %}</a>
+{% endblock %}
+
+{% block class_groups %}sidebar-link-active{% endblock %}
+
+{% block module_content %}
+
+{{ administration_group_list(paginate(groups)) }}
+
+{{ pager(groups) }}
+
+{% endblock %}

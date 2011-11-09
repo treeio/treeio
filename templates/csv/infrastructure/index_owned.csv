@@ -1,0 +1,1 @@
+{{ infrastructure_item_list(items) }}

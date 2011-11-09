@@ -1,0 +1,82 @@
+{% extends "mobile/documents/page.mobile" %}
+
+{% block title %}{{ folder|htsafe }} | {% trans %}Documents{% endtrans %}{% endblock %}
+
+{% block module_title %}{{ folder }}{% endblock %}
+
+{% block module_subtitle %}{% trans %}Folder{% endtrans %}{% endblock %}
+
+{% block module_topmenu %}
+<a class="top-menu add-link" href="{% url documents_folder_add_typed folder.id %}">{% trans %}New Folder{% endtrans %}</a>
+<a class="top-menu add-link" href="{% url documents_document_add_typed folder.id %}">{% trans %}New Document{% endtrans %}</a>
+<a class="top-menu add-link" href="{% url documents_weblink_add_typed folder.id %}">{% trans %}New Web Link{% endtrans %}</a>
+<a class="top-menu add-link" href="{% url documents_file_upload_typed folder.id %}">{% trans %}Upload File{% endtrans %}</a>
+<a class="top-menu view-link-active" href="{% url documents_folder_view folder.id %}">{% trans %}View{% endtrans %}</a>
+{% if user.get_profile().has_permission(folder, mode='w') %}
+<a class="top-menu edit-link" href="{% url documents_folder_edit folder.id %}">{% trans %}Edit{% endtrans %}</a>
+<a class="top-menu delete-link" href="{% url documents_folder_delete folder.id %}">{% trans %}Delete{% endtrans %}</a>
+{% endif %}
+{% endblock %}
+
+{% block sidebar_right %}
+
+<span class="sidebar-header-first">{% trans %}Permissions{% endtrans %}</span>
+<div class="sidebar-block">
+    {{ permission_block(folder) }}
+</div>
+<span class="sidebar-header-right">{% trans %}Links{% endtrans %}</span>
+<div class="sidebar-block">
+    {{ link_block(folder) }}
+</div>
+<span class="sidebar-header-right">{% trans %}Subscribers{% endtrans %}</span>
+<div class="sidebar-block">
+    {{ subscription_block(folder) }}
+</div>
+<span class="sidebar-header-right">{% trans %}Download as:{% endtrans %}<br />{% if '?' in request.get_full_path() %}<a class="pdf-block-link" href="{{ request.get_full_path()|replace('.ajax','').replace('?','.pdf?') }}"{% else %}<a class="pdf-block-link" href="{{ request.get_full_path()|replace('.ajax','') }}.pdf"{% endif %} target="_self">PDF</a>
+  </span></span>
+{% endblock %}
+
+{% block module_content %}
+
+{% if subfolders %}
+<div>
+    <span class="content-label-head">{% trans %}Folders{% endtrans %}:</span>
+</div>
+{% for subfolder in subfolders %}
+<div class="content-list-item content-list-item-{{ loop.cycle('odd', 'even') }}">
+    <span class="content-list-item-name">
+        <a href="{% url documents_folder_view subfolder.id %}">{{ subfolder }}</a>
+        <span class="content-list-item-group">
+            {%- if subfolder.parent %}
+            <a href="{% url documents_folder_view subfolder.parent_id %}" class="group-link">{{ subfolder.parent }}</a>
+            {%- endif %}
+        </span>
+    </span>
+    <span class="content-list-item-actions">
+        {% if user.get_profile().has_permission(folder, mode='w') %}
+        <a href="{% url documents_folder_edit folder.id %}" class="inline-link edit-link">{% trans %}Edit{% endtrans %}</a>
+        {% endif %}
+    </span>
+</div>
+{% endfor %}
+
+{% endif %}
+
+{% if objects %}
+<form action="" method="post">
+{% csrf_token %}
+    <ul class="mass-form">
+        <input type="hidden" name="massform" value="massform" />
+        <input type="checkbox" name="mass-unclassified" value="unclassified" class="group-control" />
+        {{ massform.as_ul()|htsafe }}
+        <li>
+            <input type="submit" value="{% trans %}Save{% endtrans %}" />
+        </li>
+    </ul>
+    {{ documents_objects_list(paginate(objects), folder) }}
+
+    {{ pager(objects) }}
+</form>
+{% endif %}
+
+{% endblock %}

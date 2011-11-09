@@ -1,0 +1,12 @@
+name,parent,status,manufacturer,supplier,owner,type,location,asset record,{% for value in item.itemvalue_set.all() %}{% if value.value %}{{ value.field.label }}{% if loop.last %} {% else -%},{% endif %}{% endif %}{% endfor %}
+{{item|replace(',','')|replace('"','')|replace('
+','')|safe}},{% if item.parent %}{{item.parent|replace(',','')|replace('"','')|replace('
+','')|safe}},{% else %},{% endif %}{{item.status|replace(',','')|replace('"','')|replace('
+','')|safe}},{% if item.manufacturer %}{{item.manufacturer|replace(',','')|replace('"','')|replace('
+','')|safe}},{% else %},{% endif %}{% if item.supplier %}{{item.supplier|replace(',','')|replace('"','')|replace('
+','')|safe}},{% else %},{% endif %}{% if item.owner %}{{item.owner|replace(',','')|replace('"','')|replace('
+','')|safe}},{% else %},{% endif %}{% if item.item_type %}{{item.item_type|replace(',','')|replace('"','')|replace('
+','')|safe}},{% else %},{% endif %}{% if item.location %}{{item.location|replace(',','')|replace('"','')|replace('
+','')|safe}},{% else %},{% endif %}{% if item.asset %}{{item.asset|replace(',','')|replace('"','')|replace('
+','')|safe}}{% else %},{% endif %}{% for value in item.itemvalue_set.all() %}{% if value.value %},{{value|replace(',','')|replace('"','')|replace('
+','')|safe}}{% endif %}{% endfor %}

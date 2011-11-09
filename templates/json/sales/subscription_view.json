@@ -1,0 +1,33 @@
+{% extends "json/sales/page.json" %}
+{% block module_content %}
+    {"subscription":
+         {
+         "name": "{{ subscription }}",
+         "url": "http://{{ site_domain }}{% url sales_subscription_view subscription.id %}",
+         "permissions": {{ permission_block(subscription) }},
+
+
+         "start": "{{ subscription.start }}",
+		 
+		 {%- if subscription.expiry %}
+         "expiry": "{{ subscription.expiry }}",
+         {% else -%}
+         "expiry": null,
+         {% endif -%}
+		 
+
+         "cycle_period": "{{ subscription.cycle_period }}",
+		 
+		 {%- if subscription.cycle_end %}
+         "cycle_end": "{{ subscription.cycle_end }}",
+         {% else -%}
+         "cycle_end": null,
+         {% endif -%}
+		 
+         "active": {{ subscription.active }},
+       
+         "details": "{{ subscription.details }}"
+
+         }
+    }
+{% endblock %}

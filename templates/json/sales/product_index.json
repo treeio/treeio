@@ -1,0 +1,79 @@
+{% extends "json/sales/page.json" %}
+{% block module_content %}
+    {
+    "user": {{ user_block() }},
+    "products":
+      [
+      {% for product in products %}
+     {
+         "name": "{{ product.name }}",
+         "url": "http://{{ site_domain }}{% url sales_product_view product.id %}",
+         "permissions": {{ permission_block(product) }},
+
+         {% if subproducts -%}
+          "subproducts": {
+		 {% for subproduct in subproducts %}
+                    "id": {{ subproduct.id }},
+                    "url": "http://{{ site_domain }}{% url sales_product_view subproduct.id %}",
+                    "name": "{{ subproduct }}"
+                   },
+		 {% if loop.last %}
+         }
+         {% else %}
+         },
+         {% endif %}
+         {% endfor %}
+         {% else %}
+         "subproducts": null,
+         {% endif %}
+         
+         "product_type": "{{ product.product_type }}",
+
+         {% if product.code %}
+         "code": {{ product.code }},
+		 {% else %}
+		 "code": null,
+		 {% endif %}		
+		 
+         {% if product.supplier -%}
+         "supplier": {
+                    "id": {{ product.supplier_id }},
+                    "url": "http://{{ site_domain }}{% url identities_contact_view product.supplier_id %}",
+                    "name": "{{ product.supplier }}"
+                   },
+         {% else -%}
+         "supplier": null,
+         {% endif -%} 
+		 
+         {% if product.supplier_code %}
+         "supplier_code": {{ product.supplier_code }},
+		 {% else %}
+		 "supplier_code": null,
+		 {% endif %}		 
+
+         {% if product.stock_quantity %}
+		 "stock_quantity": {{ product.stock_quantity }},
+		 {% else %}
+		 "stock_quantity": null,
+		 {% endif %}
+
+		 "active": {{ product.active }},
+		
+         {% if product.runout_action %}
+		 "runout_action": "{{ product.runout_action }}",
+		 {% else %}
+		 "runout_action": null,
+		 {% endif %}
+		 
+         "details": "{{ product.details }}"
+
+                
+		 {% if loop.last -%}
+         }
+         {% else -%}
+         },
+         {% endif -%}
+         {% endfor %}
+      ]
+    }
+{% endblock %}

@@ -1,0 +1,36 @@
+<!DOCTYPE html>  
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <link rel="icon" href="/static/favicon.ico" type="image/x-icon" />
+
+    <title>Tree.io</title>
+    <meta name="description" content="{% block meta_description %} {% endblock %}" />
+    <meta name="keywords" content="{% block meta_keywords %} {% endblock %}" />
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1"> 
+    
+	
+	<link rel="stylesheet" href="/static/mobile/jquery.mobile-1.0b3.min.css" />
+	<link rel="stylesheet" href="/static/mobile/mobile.min.css" />
+	
+	<script src="/static/mobile/jquery-1.6.2.min.js"></script>
+	<script src="/static/mobile/jquery.mobile-1.0b3.js"></script>
+    {#<script src="/static/mobile/mobile.js"></script>
+    <script src="/static/mobile/jquery.mobile.scrollview.js"></script>#}
+
+	{% block headfiles %}{% endblock %}
+</head>
+
+<body>  
+	<div id="page-container">
+		<div data-role="page" data-theme="d">
+			<div id="page">
+				<div data-role="content">	
+					{% block page %}
+					{% endblock %}
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

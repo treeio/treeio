@@ -1,0 +1,20 @@
+{% extends "json/documents/page.json" %}
+{% block module_content %}
+
+	{
+	"weblink":
+		{
+			"id": {{ link.id }},
+			"url": "http://{{ site_domain }}{% url documents_weblink_view link.id %}",
+			"title": "{{ link }}",
+			"folder": "{{ link.folder }}",
+			{% if link.url -%}
+			"url": "{{ link.url }}"
+	        {% else -%}
+	        "url": null,
+	        {% endif -%}
+		}
+	}
+{% endblock %}
+
+		

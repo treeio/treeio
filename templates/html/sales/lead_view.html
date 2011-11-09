@@ -1,0 +1,195 @@
+{% extends "html/sales/page.html" %}
+
+{% block title %}{{ lead|htsafe }} | {% trans %}Leads{% endtrans %} | {% trans %}Sales Support{% endtrans %}{% endblock %}
+
+{% block module_title %}{{ lead }}{% endblock %}
+
+{% block module_subtitle %}{% trans %}Lead{% endtrans %}{% endblock %}
+
+{% block module_topmenu %}
+<a href="{% url sales_lead_view lead.id %}" class="top-menu view-link-active">{% trans %}View{% endtrans %}</a>
+{% if request.user.get_profile().has_permission(lead, mode='w') %}
+<a href="{% url sales_lead_edit lead.id %}" class="top-menu edit-link">{% trans %}Edit{% endtrans %}</a>
+<a href="{% url sales_lead_delete lead.id %}" class="top-menu delete-link">{% trans %}Delete{% endtrans %}</a>
+<a href="{% url sales_opportunity_add_with_lead lead.id %}" class="top-menu add-link">{% trans %}Convert To Opportunity{% endtrans %}</a>
+<a href="{% url sales_order_add_with_lead lead.id %}" class="top-menu add-link">{% trans %}Convert To Order{% endtrans %}</a>
+{% endif %}
+{{ last_updated(lead) }}
+{% endblock %}
+
+{% block sidebar_right %}
+
+<span class="sidebar-header-first">{% trans %}Permissions{% endtrans %}</span>
+<div class="sidebar-block">
+    {{ permission_block(lead) }}
+</div>
+<span class="sidebar-header-right">{% trans %}Links{% endtrans %}</span>
+<div class="sidebar-block">
+    {{ link_block(lead) }}
+</div>
+<span class="sidebar-header-right">{% trans %}Subscribers{% endtrans %}</span>
+<div class="sidebar-block">
+    {{ subscription_block(lead) }}
+</div>
+<span class="sidebar-header-right">{% trans %}Download as:{% endtrans %}<br />{% if '?' in request.get_full_path() %}<a class="pdf-block-link" href="{{ request.get_full_path()|replace('.ajax','').replace('?','.pdf?') }}"{% else %}<a class="pdf-block-link" href="{{ request.get_full_path()|replace('.ajax','') }}.pdf"{% endif %} target="_self">PDF</a>
+  </span>
+{% endblock %}
+
+{% block module_content %}
+
+<div>
+    <span class="content-label">{% trans %}Assigned to{% endtrans %}:</span>
+    {% if lead.assigned.count() %}
+	<span class="content-value">
+        {% for assignee in lead.assigned.all() %}
+        <a href="{% url identities_user_view assignee.id %}" class="popup-link">{{ assignee }}</a>
+        <br />
+        {% endfor %}
+	{% else %}
+		<span class="content-value">Unassigned</span>
+{% endif %}
+</div>
+
+{% if lead.contact %}
+<div>
+    <span class="content-label">{% trans %}Contact{% endtrans %}:</span>
+    <span class="content-value"><a href="{% url identities_contact_view lead.contact.id %}" class="popup-link">{{ lead.contact }}</a></span>
+</div>
+{% endif %}
+
+{% if lead.source %}
+<div>
+    <span class="content-label">{% trans %}Source{% endtrans %}:</span>
+    <span class="content-value"><a href="{% url sales_source_view lead.source.id %}">{{ lead.source }}</a></span>
+</div>
+{% endif %}
+
+<div>
+    <span class="content-label">{% trans %}Products Interested{% endtrans %}:</span>
+	{% for product in lead.products_interested.all() %}
+    <span class="content-value"><a href="{% url sales_product_view product.id %}" class="popup-link">{{ product }}</a></span>
+    {% else %}
+	<span class="content-value">None</span>
+	{% endfor %}
+</div>
+<div>
+    <span class="content-label">{% trans %}Contact Method{% endtrans %}:</span>
+    <span class="content-value">{{ lead.contact_method|title() }}</span>
+</div>
+<div>
+    <span class="content-label">{% trans %}Status{% endtrans %}:</span>
+    <span class="content-value"><a href="{% url sales_status_view lead.status.id %}">{{ lead.status }}</a></span>
+</div>
+{% if lead.details %}
+<div>
+    <span class="content-label">{% trans %}Details{% endtrans %}:</span>
+    <span class="content-details">{{ lead.details|htsafe }}</span>
+</div>
+{% endif %}
+
+<div class="spaced-v spaced-h">
+  <br />
+  {{ tags_box(lead) }}
+</div>
+
+
+{{ attachments(lead) }}
+
+<br />
+
+<div>
+    <span class="content-label-head">{% trans %}History{% endtrans %}:</span>
+</div>
+{% set updates = lead.updates.all().order_by('date_created') %}
+{% for record in updates %}
+<div class="news-record news-record-type-{{ record.record_type }}">
+    <div class="contact-picture-frame news-record-author news-record-author-{{ record.record_type }}">
+    {% if record.author %}
+      {% set contact = record.author.get_contact() %}
+      {% if contact %}
+        {% set picture = contact.get_picture() %}
+        <a href="{% url identities_contact_view contact.id %}" class="popup-link"><img class="contact-picture left" src="{{ picture|htsafe }}" alt="" /></a>
+      {% else %}
+        <a href="{% url identities_user_view record.author.id %}" class="popup-link"><img class="contact-picture left" src="/static/messaging/pic.png" alt="" /></a>
+      {% endif %}
+    {% elif record.sender and record.sender.object_type == 'treeio.identities.models.Contact' %}
+      {% set contact = record.sender.get_related_object() %}
+      {% if contact %}
+        {% set picture = contact.get_picture() %}
+        <a href="{% url identities_contact_view contact.id %}" class="popup-link"><img class="contact-picture left" src="{{ picture|htsafe }}" alt="" /></a>
+      {% endif %}
+    {% endif %}
+    </div>
+    <div class="news-record-label">
+        <span class="news-record-author news-record-author-{{ record.record_type }}">
+          {% if record.author %}
+          <a href="{% url identities_user_view record.author.id %}" class="popup-link">{{ record.author }}</a>
+          {% elif record.sender %}
+          {% set sender = record.sender.get_related_object() %}
+          {% if sender %}
+          <a href="{{ sender.get_absolute_url() }}" class="popup-link">{{ sender }}</a>
+          {% endif %}
+          {% endif %}
+        </span>
+        {% if record.record_type != 'manual' and record.record_type != 'share' %}
+        <span class="news-record-inline news-record-body-{{ record.record_type }}">
+        {{ record.get_full_message()|htsafe }}
+        </span>
+        {% endif %}
+    </div>
+    {% if record.record_type == 'manual' or record.record_type == 'share' %}
+    <div class="news-record-body news-record-body-{{ record.record_type }}">
+        {{ record.body|htsafe }}
+    </div>
+    {% endif %}
+  
+    <div class="news-record-details">
+		<div class="div_container">
+	  		<div class="comments">
+				<span class="lighter small">{{ record.date_created|htdatetime }}</span>
+        		&nbsp;&nbsp;
+		       	{{ comments_likes(record) }}
+			</div>
+	  		<div class="attachments">
+		       	{{ attachments(record) }}
+			</div>
+			<hr class="space"/>
+		</div>
+    </div>
+</div>
+{% endfor %}
+
+{% if record_form %}
+<div>
+    <form action="" method="post" class="content-form">
+{% csrf_token %}
+        <br />
+        <ul class="content-form-fields">
+            <li>
+                <textarea id="id_body" rows="10" cols="40" name="body"></textarea>
+            </li>
+            {% if agent %}
+            <li class="content-form-inline">
+                <label for="id_notify">
+                    {{ record_form['notify'].label }}
+                </label>
+                <input type="checkbox" id="id_notify" name="notify" />
+            </li>
+            &nbsp;&nbsp;&nbsp;
+            <li class="content-form-inline content-form-full-inline">
+                <label for="id_resolution">
+                    {{ record_form['resolution'].label }}
+                </label>
+                <input type="checkbox" id="id_resolution" name="resolution" />
+            </li>
+            {% endif %}
+        </ul>
+        <div class="content-form-submit">
+            <input type="submit" value="{% trans %}Update Lead{% endtrans %}">
+        </div>
+    </form>
+</div>
+{% endif %}
+
+
+{% endblock %}

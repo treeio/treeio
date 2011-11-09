@@ -1,0 +1,61 @@
+{% extends "html/infrastructure/page.html" %}
+
+{% block title %}{{ location|htsafe }} | {% trans %}Infrastructure{% endtrans %}{% endblock %}
+
+{% block module_title %}{{ location }}{% endblock %}
+
+{% block module_topmenu %}
+<a href="{% url infrastructure_location_view location.id %}" class="top-menu view-link">{% trans %}View{% endtrans %}</a>
+<a href="{% url infrastructure_location_edit location.id %}" class="top-menu edit-link edit-link">{% trans %}Edit{% endtrans %}</a>
+<a href="{% url infrastructure_location_delete location.id %}" class="top-menu edit-link delete-link-active">{% trans %}Delete{% endtrans %}</a>
+{% endblock %}
+
+{% block sidebar_right %}
+
+<span class="sidebar-header-first">{% trans %}Permissions{% endtrans %}</span>
+<div class="sidebar-block">
+    {{ permission_block(location) }}
+</div>
+<span class="sidebar-header-right">{% trans %}Links{% endtrans %}</span>
+<div class="sidebar-block">
+    {{ link_block(location) }}
+</div>
+<span class="sidebar-header-right">{% trans %}Subscribers{% endtrans %}</span>
+<div class="sidebar-block">
+    {{ subscription_block(location) }}
+</div>
+{% endblock %}
+
+{% block module_content %}
+
+<div class="delete-object">
+    <span class="larger">{% trans %}Delete this Location{% endtrans %}?</span>
+    <br />
+    <form action="" method="post" class="content-form">
+{% csrf_token %}
+        <ul class="content-form-fields">
+            <li>
+                <label for="trash">
+                    <input id="trash" type="checkbox" name="trash" checked="checked" />
+                    {% trans %}Move to Trash{% endtrans %}
+                </label>
+            </li>
+            <li>
+                <input type="submit" name="delete" value="{% trans %}Yes, Delete{% endtrans %}" />&nbsp;&nbsp;
+                <input type="submit" name="cancel" value="{% trans %}Cancel{% endtrans %}" class="cancel" />
+            </li>
+        </ul>
+    </form>
+</div>
+<div>
+    <span class="content-label">{% trans %}Name{% endtrans %}:</span>
+    <span class="content-value"><strong>{{ location.name }}</strong></span>
+</div>
+{% if location.parent %}
+<div>
+    <span class="content-label">{% trans %}Parent{% endtrans %}:</span>
+    <span class="content-value"><a href="{% url infrastructure_location_view location.parent_id %}">{{ location.parent }}</a></span>
+</div>
+{% endif %}
+
+{% endblock %}

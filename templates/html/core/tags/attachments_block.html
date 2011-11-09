@@ -1,0 +1,12 @@
+
+<div class="attachment-block" object="{{ object_id }}">
+    {% for attachment in attachments %}
+        {% if attachment.uploaded_by == request.user.get_profile() %}<a class="delete-attachment ajax-link-out" attachment="{{ attachment.id }}" title="{% trans %}Delete{% endtrans %}"><img class="margin-bottom" src="/static/icons/delete.png"/></a>{% endif %}
+        <a class="attachment ajax-link-out" target="about:blank" href="{% url core_attachment_download attachment.id %}">
+            <img class="margin-bottom" src="/static/icons/documents/{{ attachment.get_icon() }}.png"/>
+            {{ attachment }}
+        </a><span class="smaller quiet">{% trans %}added by{% endtrans %} <a class="popup-link" href="{% url identities_contact_view attachment.uploaded_by.get_contact().id %}">{{ attachment.uploaded_by }}</a>, {{ attachment.created|humanize_datetime }}</span>
+		{% if not loop.last %}<br />{% endif %}
+
+    {% endfor %}
+</div>

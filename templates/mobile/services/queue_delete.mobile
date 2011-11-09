@@ -1,0 +1,120 @@
+{% extends "mobile/services/page.mobile" %}
+
+{% block title %}{% trans %}Service Support{% endtrans %}{% endblock %}
+
+{% block module_title %}{{ queue }}{% endblock %}
+{% block module_subtitle %}{% trans %}Queue{% endtrans %}{% endblock %}
+
+{% block module_topmenu %}
+<a href="{% url services_ticket_add_by_queue queue.id %}" class="top-menu add-link">{% trans %}New Ticket{% endtrans %}</a>
+<a href="{% url services_queue_view queue.id %}" class="top-menu view-link">{% trans %}View{% endtrans %}</a>
+{% if user.get_profile().has_permission(queue, mode='w') %}
+<a href="{% url services_queue_edit queue.id %}" class="top-menu edit-link">{% trans %}Edit{% endtrans %}</a>
+<a href="{% url services_queue_delete queue.id %}" class="top-menu delete-link-active">{% trans %}Delete{% endtrans %}</a>
+{% endif %}
+{% endblock %}
+
+{% block service_ticket_queues %}
+{% if queues %}
+<span class="sidebar-header">{% trans %}Queues{% endtrans %}</span>
+{% for iqueue in queues %}
+<a href="{% url services_queue_view iqueue.id %}" class="sidebar-link {% if iqueue==queue %}sidebar-link-active{% endif %}">{{ iqueue }}</a>
+{% endfor %}
+{% endif %}
+{% endblock %}
+
+{% block sidebar_right %}
+{% endblock %}
+
+{% block module_content %}
+
+<div>
+    <span class="larger">{% trans %}Delete this Queue?{% endtrans %}</span>
+    <br />
+    <form action="" method="post" class="content-form">
+{% csrf_token %}
+        <ul class="content-form-fields">
+            <li>
+                <label for="trash">
+                    <input id="trash" type="checkbox" name="trash" checked="checked" />
+                    {% trans %}Move to Trash{% endtrans %}
+                </label>
+            </li>
+            <li class="ui-grid-a">
+            <div class="ui-block-a">
+                <input data-theme="b" type="submit" name="delete" value="{% trans %}Yes, Delete{% endtrans %}" style="font-weight: 700;" />&nbsp;&nbsp;
+            </div>
+            <div class="ui-block-b">
+                <input type="submit" name="cancel" value="{% trans %}Cancel{% endtrans %}" class="cancel" />
+            </div>
+            </li>
+        </ul>
+    </form>
+</div>
+{% if queue.parent %}
+<div>
+    <span class="content-label">{% trans %}Parent{% endtrans %}:</span>
+    <span class="content-value"><a href="{% url services_queue_view queue.parent_id %}">{{ queue.parent }}</a></span>
+</div>
+{% endif %}
+<div>
+    <span class="content-label">{% trans %}Default Status{% endtrans %}:</span>
+    {% if queue.default_ticket_status %}
+    <span class="content-value"><a href="{% url services_status_view queue.default_ticket_status_id %}">{{ queue.default_ticket_status }}</a></span>
+    {% endif %}
+</div>
+{% if queue.waiting_time %}
+<div>
+    <span class="content-label">{% trans %}Waiting time{% endtrans %}:</span>
+    <span class="content-value">{{ queue.waiting_time }}</span>
+</div>
+{% endif %}
+
+{% if subqueues %}
+<br />
+<div class="clear">
+    <span class="content-label-head">{% trans %}Contains Queues{% endtrans %}:</span>
+</div>
+{% for queue in subqueues %}
+<div class="content-list-item content-list-item-{{ loop.cycle('odd', 'even') }}">
+    <span class="content-list-item-name">
+        <a href="{% url services_queue_view queue.id %}">{{ queue }}</a>
+    </span>
+    <span class="content-list-item-group">
+        &nbsp;
+    </span>
+    <span class="content-list-item-actions">
+        {% if user.get_profile().has_permission(queue, mode='w') %}
+        <a href="{% url services_queue_edit queue.id %}" class="inline-link edit-link">{% trans %}Edit{% endtrans %}</a>
+        {% endif %}
+    </span>
+</div>
+{% endfor %}
+
+{% endif %}
+
+<br />
+<div class="clear">
+    <span class="content-label-head">{% trans %}Tickets{% endtrans %}:</span>
+    {% if not tickets %}
+    <span class="content-details">&nbsp;</span>
+    {% endif %}
+</div>
+{% for ticket in tickets %}
+<div class="content-list-item content-list-item-{{ loop.cycle('odd', 'even') }}">
+    <span class="content-list-item-name">
+        <a href="{% url services_ticket_view ticket.id %}">{% if ticket.assigned.count() %}{{ ticket }}{% else %}<strong>{{ ticket.name }}</strong>{% endif %}</a>
+        {% if ticket.caller %}<a href="{% url identities_contact_view ticket.caller.id %}" class="author-link small spaced-h">{{ ticket.caller }}</a>{% endif %}
+    </span>
+    <span class="content-list-item-group">
+        &nbsp;
+    </span>
+    <span class="content-list-item-actions">
+        {% if user.get_profile().has_permission(ticket, mode='w') %}
+        <a href="{% url services_ticket_edit ticket.id %}" class="inline-link edit-link">{% trans %}Edit{% endtrans %}</a>
+        {% endif %}
+    </span>
+</div>
+{% endfor %}
+
+{% endblock %}

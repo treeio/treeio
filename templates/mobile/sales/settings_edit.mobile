@@ -1,0 +1,33 @@
+{% extends "mobile/sales/page.mobile" %}
+
+{% block title %}{% trans %}Settings{% endtrans %} | {% trans %}Sales{% endtrans %}{% endblock %}
+
+{% block class_admin_settings %}sidebar-link-active{% endblock %}
+
+{% block module_title %}{% trans %}Settings{% endtrans %}{% endblock %}
+
+{% block module_topmenu %}
+<a href="{% url sales_status_add %}" class="top-menu add-link">{% trans %}New Status{% endtrans %}</a>
+<a href="{% url sales_source_add %}" class="top-menu add-link">{% trans %}New Source{% endtrans %}</a>
+<a href="{% url sales_settings_view %}" class="top-menu view-link">{% trans %}View{% endtrans %}</a>
+<a href="{% url sales_settings_edit %}" class="top-menu edit-link-active">{% trans %}Edit{% endtrans %}</a>
+{% endblock %}
+
+{% block module_content %}
+
+<form action="" method="post" class="content-form">
+{% csrf_token %}
+    <ul class="content-form-fields">
+        {{ form.as_ul()|htsafe }}
+    </ul>
+    
+    <div class="content-form-submit ui-grid-a">
+    <div class="ui-block-a">
+        <input data-theme="b" type="submit" name="save" value="{% trans %}Save{% endtrans %}" />
+    </div>
+    <div class="ui-block-b">
+        <input type="submit" name="cancel" value="{% trans %}Cancel{% endtrans %}" class="cancel" />
+    </div>
+    </div>
+</form>
+{% endblock %}

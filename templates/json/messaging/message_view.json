@@ -1,0 +1,28 @@
+{% extends "json/messaging/page.json" %}
+{% block module_content %}
+
+	{
+	"message":
+		{
+			"id": {{ message.id }},
+			"url": "http://{{ site_domain }}{% url messaging_message_view message.id %}",
+			{% if message.title -%}
+			"title": "{{ message.title.replace('\n', '').replace('\r', '')|htsafe }}",
+		    {% else -%}
+		    "title": null,
+		    {% endif -%}
+			"body": "{{ message.body.replace('\n', '').replace('\r', '')|htsafe }}",
+			{% if message.author -%}
+			"author": "{{ message.author }}",
+		    {% else -%}
+		    "author": null,
+		    {% endif -%}
+			{% if message.reply_to -%}
+			"reply_to": "{{ message.reply_to }}",
+		    {% else -%}
+		    "reply_to": null,
+		    {% endif -%}
+			"stream": "{{ message.stream }}"
+		}
+	}
+{% endblock %}

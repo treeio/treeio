@@ -1,0 +1,10 @@
+{% extends "mobile/page.mobile" %}
+
+{% block title %}{% trans %}Tree.io Mobile{% endtrans %}{% endblock %}
+
+{% block content %}
+{{ modules_header_block() }}
+{% endblock %}
+
+{% block footer %}
+{% endblock %}

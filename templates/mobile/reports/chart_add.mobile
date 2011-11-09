@@ -1,0 +1,32 @@
+{% extends "mobile/reports/page.mobile" %}
+
+{% block title %}{% trans %}Reports{% endtrans %}{% endblock %}
+
+{% block module_title %}{% trans %}Charts{% endtrans %}{% endblock %}
+
+{% block report_index %}sidebar-link-active{% endblock %}
+
+{% block module_subtitle %}{% if report %}{% trans %}Chart{% endtrans %}{% endif %}{% endblock %}
+
+{% block module_topmenu %}
+
+<a href="#" class="top-menu add-link-active">{% trans %}New Chart{% endtrans %}</a>
+
+{% endblock %}
+
+{% block module_content %}
+
+
+<div>
+    <form action="" method="post" class="content-form">
+{% csrf_token %}
+        <ul class="content-form-fields">
+            {{ form.as_ul()|htsafe }}
+        </ul>
+        <div class="content-form-submit">
+          <input type="submit" value="{% trans %}Create Chart{% endtrans %}">
+        </div>
+    </form>
+</div>
+
+{% endblock %}

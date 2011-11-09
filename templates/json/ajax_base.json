@@ -1,0 +1,7 @@
+{"response": {
+  "url": "{{ request.path }}",
+  "notifications": {{ notifications|safe }},
+  "modules": {{ modules_header_block() }}, 
+  "content": {{ content|safe }}
+  }
+}

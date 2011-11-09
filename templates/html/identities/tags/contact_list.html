@@ -1,0 +1,43 @@
+{% for g in contacts|group_by_letter %}
+<h4 class="group-by-letter">{{g.0|upper}}</h4>
+{% for contact in g.1 %}
+<div class="content-list-item content-list-item-even }}">
+    <div class="content-list-tick">
+        <input type="checkbox" name="mass-contact-{{ contact.id }}" value="{{ contact.id }}" class="group-mass-unclassified" />
+    </div>
+    <span class="content-list-item-name">
+        {% set picture = contact.get_picture() %}
+        <div class="contact-picture-frame">
+        {% if picture %}
+          <a href="{% url identities_contact_view contact.id %}"><img class="contact-picture" src="{{ picture|htsafe }}" alt="" align="left" /></a>
+        {% else %}
+          <a href="{% url identities_contact_view contact.id %}"><img class="contact-picture" src="/static/messaging/pic.png" alt="" align="left" /></a>
+        {% endif %}
+        </div>
+        <a href="{% url identities_contact_view contact.id %}">{{ contact }}</a>
+        {% if contact.related_user %}
+          <a href="{% url identities_user_view contact.related_user_id %}" class="author-link small popup-link">{{ contact.related_user.get_entity().name }}</a>
+        {% endif %}
+        {% if not 'type' in skip_group or not 'parent' in skip_group %}
+        <span class="content-list-item-group">
+            {%- if not 'type' in skip_group and contact.contact_type %}
+            <a href="{% url identities_index_by_type contact.contact_type.id %}" class="group-link">{{ contact.contact_type }}</a>
+            {%- endif %}
+            <br />
+            {%- if not 'parent' in skip_group and contact.parent -%}
+            {# <a href="{% url identities_contact_view contact.parent_id %}" class="lighter"><i>{{ contact.parent }}</i></a> #}
+            <span class="lighter"><i>{{ object_tree_path(contact, skipself=True) }}</i></span>
+            {%- endif %}
+        </span>
+        {% endif %}
+        <br />
+        <a href="{% url identities_contact_view contact.id %}" class="small lighter"><i>{{ contact.get_email() }}</i></a>
+    </span>
+    <span class="content-list-item-actions">
+        {% if user.get_profile().has_permission(contact, mode='w') %}
+        <a href="{% url identities_contact_edit contact.id %}" class="inline-link edit-link">{% trans %}Edit{% endtrans %}</a>
+        {% endif %}
+    </span>
+</div>
+{% endfor %}
+{% endfor %}

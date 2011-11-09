@@ -1,0 +1,13 @@
+{% extends "html/base_widget.html" %}
+
+{% block widget_content %}
+<div  class="larger spaced-h spaced-v" style="color: #072">
+    <strong>
+        {{ release['days'] }} days,
+        {{ release['hours'] }} hours,
+        {{ release['minutes'] }} minutes,
+        {{ release['seconds'] % 60 }} seconds
+    </strong>
+    till Preview Release
+</div>
+{% endblock %}

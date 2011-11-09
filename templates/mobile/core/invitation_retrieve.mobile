@@ -1,0 +1,36 @@
+{% extends "mobile/base_login.mobile" %}
+
+{% block title %}Join{% endblock %}
+
+{% block page %}
+
+<div class="login-block">
+
+  <div style="text-align: center;">
+    <a href="{% url home %}"><img src="{% url core_logo_image_ie %}" alt="Tree.io" class="logo-large" /></a>
+  </div>
+    <br />
+      
+    <p style="text-align: left;" class="yellow">
+      {% if invitation.sender %}
+        {{ invitation.sender }} {% trans %}invited you to join the Tree.io service{% endtrans %}
+      {% else %}
+        {% trans %}You've been invited to join the Tree.io service{% endtrans %}
+      {% endif %}
+      <br /><br />
+      {% trans %}Please fill this form to create your account{% endtrans %}.
+      <br />
+    </p>
+    <form action="" method="post" class="content-form" autocomplete="off">
+{% csrf_token %}
+        <input type="hidden" name="email" value="{{ invitation.email }}" />
+        <input type="hidden" name="key" value="{{ invitation.key }}" />
+        <ul class="content-form-fields">
+            {{ form.as_ul()|htsafe }}
+        </ul>
+        <div class="content-form-submit" style="text-align: center; width: 100%;">
+            <input type="submit" value="{% trans %}Create Account{% endtrans %}">
+        </div>
+    </form>
+</div>
+{% endblock %}

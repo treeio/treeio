@@ -1,0 +1,30 @@
+<!DOCTYPE html>  
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <link rel="icon" href="/static/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" href="/static/style.css" media="all" />
+    <link rel="stylesheet" href="/static/js/css/jquery-ui-1.css" media="all" />
+	<link rel="stylesheet" href="/static/js/css/datepicker.css" media="all" />
+    <title>{% block title %}{% endblock %}. Tree.io</title>
+    <meta name="description" content="{% block meta_description %} {% endblock %}" />
+    <meta name="keywords" content="{% block meta_keywords %} {% endblock %}" />
+    <!--[if lt IE 7]>
+    <link rel="stylesheet" href="/static/ie.css" media="all" />
+    <![endif]-->
+
+	<base target="_parent" />
+
+</head>
+
+<body>
+    <link rel="stylesheet" href="/static/style.css" media="all" />
+    <div class="widget-title">
+        {% block widget_title %}{% endblock %}
+    </div>
+	<div class="widget-container">
+	    <!-- widget_content -->
+	    {% block widget_content %}{% endblock %}
+        <!-- /widget_content -->
+	</div>
+</body>
+</html>

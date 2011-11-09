@@ -1,0 +1,26 @@
+{% if object %}
+<div class="object-links">
+    {% for link in links %}
+    {% set url = link.get_absolute_url() %}
+    {% if url %}
+    <a href="{{ url }}" class="popup-link">{{ link }}</a>
+    {% else %}
+    {{ link }}
+    {% endif %}
+    <span class="smaller lighter">{{ link.get_human_type() }}</span>
+    {% if request.user.get_profile().has_permission(object, mode='w') or request.user.get_profile().id == subscription.id %}
+    <a href="{{ request.path }}?link_delete={{ link.id }}" class="inline-link delete-link" style="padding-left: 8px;">&nbsp;</a>
+    {% endif %}
+    <br />
+    {% endfor %}
+</div>
+<div class="object-links-links">
+    <form action="{{ request.path }}?link_add" method="post" class="link-add">
+{% csrf_token %}
+        {{ form.as_p()|htsafe }}
+        <input type="submit" value="Add" style="font-weight: 700;"/>
+        <input type="submit" name="cancel" value="Cancel"/>
+    </form>
+</div>
+{% endif %}
+

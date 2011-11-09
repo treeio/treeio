@@ -1,0 +1,76 @@
+{% extends "mobile/services/page.mobile" %}
+
+{% block title %}{% trans %}Service Support{% endtrans %}{% endblock %}
+
+{% block module_title %}{{ status }}{% endblock %}
+{% block module_subtitle %}{% trans %}Ticket Status{% endtrans %}{% endblock %}
+
+{% block module_topmenu %}
+<a href="{% url services_ticket_add %}" class="top-menu add-link">{% trans %}New Ticket{% endtrans %}</a>
+<a href="{% url services_status_view status.id %}" class="top-menu view-link-active">{% trans %}View{% endtrans %}</a>
+{% if request.user.get_profile().is_admin('treeio.services') %}
+<a href="{% url services_status_edit status.id %}" class="top-menu edit-link">{% trans %}Edit{% endtrans %}</a>
+<a href="{% url services_status_delete status.id %}" class="top-menu delete-link">{% trans %}Delete{% endtrans %}</a>
+{% endif %}
+{% endblock %}
+
+{% block service_ticket_statuses %}
+{% if statuses %}
+<span class="sidebar-header">{% trans %}By Status{% endtrans %}</span>
+{% for istatus in statuses %}
+<a href="{% url services_status_view istatus.id %}" class="sidebar-link {% if istatus == status %}sidebar-link-active{% endif %}">{{ istatus }}</a>
+{% endfor %}
+{% endif %}
+
+{% endblock %}
+
+{% block sidebar_right %}
+{% endblock %}
+
+{% block module_content %}
+
+<div>
+    <span class="content-label">{% trans %}Active{% endtrans %}:</span>
+    <span class="content-value">{% if status.active %}{% trans %}Yes{% endtrans %}{% else %}{% trans %}No{% endtrans %}{% endif %}</span>
+</div>
+<div>
+    <span class="content-label">{% trans %}Hidden{% endtrans %}:</span>
+    <span class="content-value">{% if status.hidden %}{% trans %}Yes{% endtrans %}{% else %}{% trans %}No{% endtrans %}{% endif %}</span>
+</div>
+{% if status.details %}
+<div>
+    <span class="content-label">{% trans %}Details{% endtrans %}:</span>
+    <span class="content-details">{{ status.details|htsafe }}</span>
+</div>
+{% endif %}
+
+<br />
+
+<form action="" method="post">
+{% csrf_token %}
+    <div class="clear">
+        <div class="content-label-head">
+            {% if tickets %}
+            <input type="checkbox" name="mass-status-{{ status.id }}" value="mass-status-{{ status.id }}" class="group-control" />
+            {% else %}
+            <input type="checkbox" name="mass-status-{{ status.id }}" value="mass-status-{{ status.id }}" class="group-control" disabled="true" />
+            {% endif %}
+            <span class="large">{% trans %}Tickets{% endtrans %}:</span>
+            <ul class="mass-form">
+                <input type="hidden" name="massform" value="massform" />
+                 {{ massform.as_ul()|htsafe }}
+                <li>
+                    <input type="submit" value="{% trans %}Save{% endtrans %}" />
+                </li>
+            </ul>
+        </div>
+        {% if not tickets %}
+        <div class="content-list-item spaced-v spaced-h lighter">
+            <em>{% trans %}No Tickets with {{ status }} Status{% endtrans %}</em>
+        </div>
+        {% endif %}
+    </div>
+    {{ services_ticket_list(tickets, tick_group='status') }}
+
+</form>
+{% endblock %}

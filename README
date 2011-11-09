@@ -1,0 +1,32 @@
+==========================
+Tree.io productivity suite
+==========================
+
+Tree.io is a business management suite incorporating Project Management solution, Help Desk (ticketing) feature, and a Sales and CRM module.
+
+WARNING: This is currently under heavy development, so use at your work risk!
+
+License
+=======
+
+Tree.io is licensed under the Creative Commons Attribution-NonCommercial 3.0 License.
+
+For more details see LICENSE.
+
+Installation
+============
+
+In short::
+
+	make
+    make install
+
+For more details see INSTALL
+
+Support
+=======
+
+Commercial support is available from Tree.io Ltd, London, UK.
+Please see http://tree.io/ for more details.
+
+

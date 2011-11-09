@@ -1,0 +1,7 @@
+<ul data-role="listview" data-inset="true" data-theme="c">
+{% for queue in queues %}
+	<li>
+		<a href="{% url services_queue_view queue.id %}">{{ queue }}</a>
+	</li>
+{% endfor %}
+</ul>

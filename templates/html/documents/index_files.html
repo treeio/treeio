@@ -1,0 +1,41 @@
+{% extends "html/documents/page.html" %}
+
+{% block title %}{% trans %}Files{% endtrans %} | {% trans %}Documents{% endtrans %}{% endblock %}
+
+{% block module_title %}{% trans %}Files{% endtrans %}{% endblock %}
+
+{% block index_files %}sidebar-link-active{% endblock %}
+
+{% block sidebar_right %}
+
+<span class="sidebar-header-first">{% trans %}Filter by{% endtrans %}</span>
+<form action="" method="get" class="content-filter-form">
+    <ul class="content-filter-form-fields">
+        {{ filters.as_ul()|safe }}
+    </ul>
+    <input type="submit" value="{% trans %}Submit{% endtrans %}">
+</form>
+{% endblock %}
+
+{% block module_content %}
+
+{% if files %}
+<form action="" method="post">
+{% csrf_token %}
+    <ul class="mass-form">
+        <input type="hidden" name="massform" value="massform" />
+        <input type="checkbox" name="mass-unclassified" value="unclassified" class="group-control" />
+        {{ massform.as_ul()|htsafe }}
+        <li>
+            <input type="submit" value="{% trans %}Save{% endtrans %}" />
+        </li>
+    </ul>
+    {{ documents_file_list(paginate(files)) }}
+
+    {{ pager(files) }}
+</form>
+{% else %}
+{{ show_hint('documents_files') }}
+{% endif %}
+
+{% endblock %}

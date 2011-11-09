@@ -1,0 +1,146 @@
+{% extends "mobile/sales/page.mobile" %}
+
+{% block title %}{% trans %}Order{% endtrans %} {{ order }} | {% trans %}Sales{% endtrans %}{% endblock %}
+
+{% block module_title %}{% trans %}Order{% endtrans %} {{ order }}{% endblock %}
+
+{% block module_subtitle %}{% trans %}Sale Order{% endtrans %}{% endblock %}
+
+{% block module_topmenu %}
+<a href="{% url sales_order_view order.id %}" class="top-menu view-link">{% trans %}View{% endtrans %}</a>
+<a href="{% url sales_order_invoice_view order.id %}" class="top-menu view-link-active">{% trans %}Invoice{% endtrans %}</a>
+{% if request.user.get_profile().has_permission(order, mode='w') %}
+<a href="{% url sales_order_edit order.id %}" class="top-menu edit-link">{% trans %}Edit{% endtrans %}</a>
+<a href="{% url sales_order_delete order.id %}" class="top-menu delete-link">{% trans %}Delete{% endtrans %}</a>
+{#<a href="{% url sales_ordered_product_add order.id %}" class="top-menu add-link">{% trans %}Add Ordered Product{% endtrans %}</a>#}
+{% endif %}
+{% endblock %}
+
+{% block sidebar_right %}
+{% endblock %}
+
+{% block module_content %}
+
+<br /><br />
+
+<div>
+  <div style="width: 30%; float: left;">
+    <div style="padding-left: 50px;">
+      <img src="{{ core_logo_content() }}" alt="Company Logo" class="logo-large" />
+    </div>
+  </div>
+  <div style="width: 30%; float: right; text-align: right; padding-right: 50px;">
+    {% if my_company %}
+    <div class="spaced-v large"><strong>{{ my_company.name }}</strong></div>
+    {% set contact_values = my_company.contactvalue_set.order_by('field__name') %}
+    {% for value in contact_values %}
+    {% if value.value %}
+        {% if value.field.field_type == 'picture' %}
+        {% elif value.field.field_type == 'url' %}
+        <div class="spaced-v"><a href="{{ value|htsafe }}" class="ajax-link-out">{{ value }}</a></div>
+        {% elif value.field.field_type == 'details' %}
+        <div class="content-details">{{ value|htsafe }}</div>
+        {% else %}
+        <div class="spaced-v">{{ value|htsafe }}</div>
+        {% endif %}
+    {% endif %}
+    {% endfor %}
+    {% endif %}
+  </div>
+  <div class="clear">
+</div>
+<br />
+<br />
+
+<div style="float: right; padding-right: 50px;">
+    <div class="spaced-v">
+    {% trans %}Date{% endtrans %}:
+    {{ order.date_created|htdate }}
+    </div>
+</div>
+
+{% if order.client %}
+<div style="padding-left: 50px;">
+    <div class="spaced-v large"><strong>{{ order.client.name }}</strong></div>
+    {% set contact_values = order.client.contactvalue_set.order_by('field__name') %}
+    {% for value in contact_values %}
+    {% if value.value %}
+        {% if value.field.field_type == 'picture' %}
+        {% elif value.field.field_type == 'url' %}
+        <div class="spaced-v"><a href="{{ value|htsafe }}" class="ajax-link-out">{{ value }}</a></div>
+        {% elif value.field.field_type == 'details' %}
+        <div class="content-details">{{ value|htsafe }}</div>
+        {% else %}
+        <div class="spaced-v">{{ value|htsafe }}</div>
+        {% endif %}
+    {% endif %}
+    {% endfor %}
+</div>
+{% endif %}
+<br /><br />
+
+<div>
+  <span class="content-label-head">{% trans %}Order Reference{% endtrans %}: {{order.reference}}&nbsp;</span>
+	  {% if ordered_products %}
+  <!-- Table header -->
+  <table id="finance_table">
+    <thead>
+        <tr>
+            <th scope="col">{% trans %}Item{% endtrans %}</th>
+            <th scope="col">{% trans %}Description{% endtrans %}</th>
+            <th align="right" scope="col">{% trans %}Quantity{% endtrans %}</th>
+            <th align="right" scope="col">{% trans %}Price{% endtrans %} ({{order.currency.code}})</th>
+            <th align="right" scope="col">{% trans %}Discount (%){% endtrans %}</th>
+            <th align="right" scope="col">{% trans %}Total{% endtrans %}</th>
+        </tr>
+    </thead>
+    <!-- Table body -->
+
+    <tbody>
+      
+    {% for product in ordered_products %}
+        <tr class="content-list-item-{{ loop.cycle('odd', 'even') }}">
+            <td><strong>{{ product }}</strong> {% if product.code %}({{ product.code }}){% endif %}</td>
+            <td>{{ product.description|htsafe }}</td>
+            <td align="right">{{ product.quantity }}</td>
+            <td align="right">{{ product.rate|number_format }}</td>
+            <td align="right">{{ product.discount }}</td>
+            <td align="right"><strong>{{ product.get_total()|number_format }}</strong></td>
+        </tr>
+    {% endfor %}
+    
+    </tbody>
+  </table>
+
+
+</div>
+<div class="clear"></div>
+<div style="float: right; padding-right: 10px;">
+    <span class="content-label"><strong>{% trans %}Sub Total{% endtrans %}:</strong></span>
+    <span class="content-value"><strong>{{ order.get_subtotal_display()|number_format }}</strong></span>
+</div>
+<div class="clear"></div>
+{% for tax in order.get_taxes().values() %}
+<div style="float: right; padding-right: 10px;">
+    <span class="content-label"><strong>{{ tax['name'] }}</strong> ({{ tax['rate'] }}%):</span>
+    <span class="content-value"><strong>{{tax['amount']|number_format}}</strong></span>
+</div>
+{% endfor %}
+<div class="clear"></div>
+<div style="float: right; border-top: 1px solid #BBB; padding-right: 10px;">
+    <span class="content-label"><strong>{% trans %}Total{% endtrans %}:</strong></span>
+    <span class="content-value"><strong>{{ order.get_total_display()|number_format|currency_format(order.currency) }}</strong></span>
+</div>
+
+
+  {% else %}
+  <div class="content-list-item spaced-h spaced-v">
+      <em>{% trans %}No Ordered Products{% endtrans %}</em>.
+      <a href="{% url sales_ordered_product_add  order.id %}" class="popup-link"><strong>{% trans %}Add an Item{% endtrans %}</strong></a>
+  </div>
+  {% endif %}
+</div>
+
+<div class="clear"><br/ ><br /></div>
+
+{% endblock %}

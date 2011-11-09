@@ -1,0 +1,61 @@
+{% extends "mobile/core/page.mobile" %}
+
+{% block title %}{% trans %}Invite People{% endtrans %} | {% trans %}Administration{% endtrans %}{% endblock %}
+
+{% block module_title %}{% trans %}Invite People{% endtrans %}{% endblock %}
+
+{% block class_invites %}sidebar-link-active{% endblock %}
+
+{% block module_content %}
+
+<div class="hint_box">
+	
+	<div class="hint_content">
+
+		{# 
+		   If submitted show message 
+		   If exceeded number of users show upgrade options
+		   Otherwise show invite form
+		#}
+		
+		{% if invited %}
+    <img class="left" src="/static/icons/hints/invite.gif"/>
+		<span class="hint_title">{% trans %}Done! We have sent invitations to the following addresses{% endtrans %}:</span>
+		<br />
+		<p>
+		{% for email in invited %}
+		<strong>{{ email }}</strong>{% if not loop.last %},{% endif %}
+		{% endfor %}
+		</p>
+		
+		{% elif not invites_allowed %}
+		<span class="hint_title">{% trans %}You've exceeded the maximum number of users{% endtrans %}</span>
+		<hr class="space" />
+		
+		<img class="left" src="/static/icons/large/cpanel.png" />
+  		<a class="ajax-link-out large" href="http://tree.io/login" target="_blank"><strong>{% trans %}Check the Control Panel{% endtrans %}</strong></a><br />
+  		<span class="light">{% trans %}To upgrade your account in order to be able to invite more users{% endtrans %}.</span>
+		
+		{% else %}
+		<img class="left" src="/static/icons/hints/invite.gif"/>
+		<div class="hint_message">
+		<span class="hint_title">{{ user.get_profile() }}, {% trans %}you can invite{% endtrans %} {{ invites_left }} {% trans %}more people to Tree.io{% endtrans %}</span>
+		<h3>{% trans %}Create accounts for your co-workers, clients, collaborators or friends{% endtrans %}.</h3>
+		
+		<form action="" method="post" class="content-form">
+{% csrf_token %}
+		    <ul class="content-form-fields">
+		        <textarea id="id_emails" class="no-editor" name="emails" cols="50" rows="3"></textarea>
+				<br />{% trans %}Type a list of email addresses, separated by a comma{% endtrans %}.
+		    </ul>
+		    <div class="content-form-submit">
+		        <input type="submit" value="{% trans %}Send Invitations{% endtrans %}">
+		    </div>
+		</form>
+		</div>
+		{% endif %}
+		
+	</div>
+</div>
+
+{% endblock %}

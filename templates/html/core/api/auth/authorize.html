@@ -1,0 +1,23 @@
+{% extends "html/base_login.html" %}
+
+{% block title %}Allow access{% endblock %}
+
+{% block page %}
+<div class="login-block">
+
+  	<div style="text-align: center;">
+  		<a href="{% url home %}"><img src="{% url core_logo_image_ie %}" alt="Tree.io" class="logo-large" /></a>
+  	</div>
+
+
+    <form action="{% url api_authorize_request_token %}" method="POST">
+{% csrf_token %}
+        <div class="login-form">
+            <div class="error">Allow {{ consumer.name }} to access your account?</div>
+            {{ form.as_p()|safe }}
+	        <input type="submit" value="Confirm" class="large" />
+        </div>
+    </form>
+</div>
+
+{% endblock %}

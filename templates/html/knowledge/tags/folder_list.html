@@ -1,0 +1,19 @@
+{% for subfolder in subfolders %}
+<div class="content-list-item content-list-item-{{ loop.cycle('odd', 'even') }}">
+    <div class="content-list-tick">
+    </div>
+    <span class="content-list-item-name">
+        <a href="{% url knowledge_folder_view subfolder.treepath %}">{{ subfolder }}</a>
+        <span class="content-list-item-group">
+            {%- if not skip_group and subfolder.parent %}
+            <a href="{% url knowledge_folder_view subfolder.parent.treepath %}" class="group-link">{{ subfolder.parent }}</a>
+            {%- endif %}
+        </span>
+    </span>
+    <span class="content-list-item-actions">
+        {% if user.get_profile().has_permission(subfolder, mode='w') %}
+        <a href="{% url knowledge_folder_edit subfolder.id %}" class="inline-link edit-link">{% trans %}Edit{% endtrans %}</a>
+        {% endif %}
+    </span>
+</div>
+{% endfor %}

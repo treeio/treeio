@@ -1,0 +1,22 @@
+{% extends "json/knowledge/page.json" %}
+{% block module_content %}
+
+	{
+	"item":
+		{
+			"id": {{ item.id }},
+			"url": "http://{{ site_domain }}{% url knowledge_item_view item.id %}",
+			"name": "{{ item }}",
+			{% if item.category -%}
+			"category": "{{ item.category }}",
+		    {% else -%}
+		    "category": null,
+		    {% endif -%}
+			{% if item.body -%}
+			"body": "{{ item.body.replace('\n', '').replace('\r', '')|htsafe }}"
+		    {% else -%}
+		    "body": null,
+		    {% endif -%}
+		}
+	}
+{% endblock %}

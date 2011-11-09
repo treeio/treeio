@@ -1,0 +1,38 @@
+{% extends "mobile/finance/page.mobile" %}
+
+{% block title %}{% trans %}Transactions{% endtrans %} | {% trans %}Finance{% endtrans %}{% endblock %}
+
+{% block module_title %}{% trans %}Transactions{% endtrans %}{% endblock %}
+
+{% block class_transactions %}sidebar-link-active{% endblock %}
+
+{% block module_topmenu %}
+<a href="{% url finance_transaction_add %}" class="top-menu add-link popup-link">{% trans %}New Transaction{% endtrans %}</a>
+{% endblock %}
+
+{% block sidebar_right %}
+{% endblock %}
+
+{% block module_content %}
+
+{% if transactions %}
+<form action="" method="post">
+{% csrf_token %}
+    <div class="content-label-head">
+        <ul class="mass-form">
+            <input type="checkbox" name="mass-transactions" class="group-control" {% if not transactions %}disabled="true"{% endif %} />
+            <input type="hidden" name="massform" value="massform" />
+             {{ massform.as_ul()|htsafe }}
+            <li>
+                <input type="submit" value="{% trans %}Save{% endtrans %}" />
+            </li>
+        </ul>
+    </div>
+    {{ finance_transaction_list(paginate(transactions)) }}
+
+    {{ pager(transactions) }}
+</form>
+    {% else %}
+    {{ show_hint('finance_transactions') }}
+    {% endif %}
+{% endblock %}

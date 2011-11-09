@@ -1,0 +1,11 @@
+name,service,default,response_time,uptime_rate,available_from,available_to,client,provider
+{% if sla.name %}{{sla.name|replace(',','')|replace('"','')|replace('
+','')|safe}},{% else %},{% endif %}{% if sla.service %}{{sla.service|replace(',','')|replace('"','')|replace('
+','')|safe}},{% else %},{% endif %}{% if sla.default %}{{sla.default|replace(',','')|replace('"','')|replace('
+','')|safe}},{% else %},{% endif %}{% if sla.response_time %}{{sla.response_time|replace(',','')|replace('"','')|replace('
+','')|safe}},{% else %},{% endif %}{% if sla.uptime_rate %}{{sla.uptime_rate|replace(',','')|replace('"','')|replace('
+','')|safe}},{% else %},{% endif %}{% if sla.available_from %}{{sla.available_from|replace(',','')|replace('"','')|replace('
+','')|safe}},{% else %},{% endif %}{% if sla.available_to %}{{sla.available_to|replace(',','')|replace('"','')|replace('
+','')|safe}},{% else %},{% endif %}{% if sla.client %}{{sla.client|replace(',','')|replace('"','')|replace('
+','')|safe}},{% else %},{% endif %}{% if sla.provider %}{{sla.provider|replace(',','')|replace('"','')|replace('
+','')|safe}}{% else %},{% endif %}

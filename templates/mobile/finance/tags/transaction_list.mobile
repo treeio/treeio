@@ -1,0 +1,13 @@
+<ul data-role="listview" data-inset="true" data-theme="c">
+{% for transaction in paginate(transactions) %}
+	<li>
+		<a href="{% url finance_transaction_view transaction.id %}">
+			<h3>{{ transaction.name|truncate(length=60) }}</h3>
+			<p>{% trans %}Source{% endtrans %}: {{ transaction.source }}</p>
+			<p class="ui-li-aside">
+				{{ transaction.datetime|htdatetime('SHORT_DATETIME_FORMAT') }}
+			</p>
+		</a>
+	</li>
+{% endfor %}
+</ul>

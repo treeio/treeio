@@ -1,0 +1,10 @@
+372,378c372
+< 					}
+<                     var htmlNode = document.createElement('div');
+<                     htmlNode.innerHTML = xhr.responseText;
+<                     if (htmlNode.innerText) {
+<                         xhr.responseText = htmlNode.innerText; // IE
+<                     }
+<                     xhr.responseText = htmlNode.textContent; // FF
+---
+> 					}			  

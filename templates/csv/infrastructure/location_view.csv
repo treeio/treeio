@@ -1,0 +1,4 @@
+name,parent
+{{location|replace(',','')|replace('"','')|replace('
+','')|safe}},{% if location.parent %}{{location.parent|replace(',','')|replace('"','')|replace('
+','')|safe}}{% else %},{% endif %}

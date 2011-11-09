@@ -1,0 +1,57 @@
+{% extends "html/page.html" %}
+
+{% block title %}{% trans %}Reports{% endtrans %}{% endblock %}
+
+{% block content %}
+
+<table>
+    <tr>
+        <td class="module-sidebar">
+		{{ logo_block_container() }}
+		<div>
+		{% block reports %}
+        <a href="{% url reports %}" class="sidebar-link {% block index_page %}{% endblock %}">{% trans %}All Reports{% endtrans %}</a>
+        <a href="{% url reports_index_owned %}" class="sidebar-link {% block index_owned %}{% endblock %}">{% trans %}Created by me{% endtrans %}</a>
+        {% endblock %}
+		
+        </td>
+		</div>
+        <td class="module-content">
+
+        <div class="module-content-fill">
+
+            <div class="title-block">
+
+                <div class="title">
+                    {% block module_title %}{% trans %}Reports{% endtrans %}{% endblock %}
+                </div>
+                <div class="subtitle-block">
+                    {% block module_subtitle %}{% endblock %}
+                </div>
+                <div class="module-top-menu-inline">
+                    {% block module_topmenu %}
+                    {% endblock %}
+                </div>
+                {{ help_link() }}
+
+            </div>
+            <table>
+
+                <tr>
+                    <td class="module-content-inner">
+                    <!-- module_content_inner -->
+                    {% block module_content %}{% endblock %}
+                    <!-- /module_content_inner -->
+                    </td>
+                    <td class="module-sidebar-right hidden">
+                    {% block sidebar_right %}{% endblock %}
+                    </td>
+                </tr>
+            </table>
+        </div>
+        </td>
+    </tr>
+</table>
+<div class="clear">
+</div>
+{% endblock %}

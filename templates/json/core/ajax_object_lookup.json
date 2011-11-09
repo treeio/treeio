@@ -1,0 +1,5 @@
+[
+{% for object in objects -%}
+{"label": "{{ object.object_name|striptags|truncate(40) }} ({{ object.get_human_type() }})", "value": "{{ object.id }}"}{% if not loop.last %},{% endif %}
+{% endfor -%}
+]

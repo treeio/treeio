@@ -1,0 +1,43 @@
+{% extends "mobile/core/page.mobile" %}
+
+{% block title %}{{ perspective|htsafe }} | {% trans %}Perspectives{% endtrans %} | {% trans %}Administration{% endtrans %}{% endblock %}
+
+{% block class_perspectives %}sidebar-link-active{% endblock %}
+
+{% block module_title %}{{ perspective }}{% endblock %}
+{% block module_subtitle %}{% trans %}Perspective{% endtrans %}{% endblock %}
+
+{% block module_topmenu %}
+
+<a href="{% url core_admin_perspective_view perspective.id %}" class="top-menu view-link-active">{% trans %}View{% endtrans %}</a>
+{% if user.get_profile().has_permission(perspective, mode='w') %}
+<a href="{% url core_admin_perspective_edit perspective.id %}" class="top-menu edit-link">{% trans %}Edit{% endtrans %}</a>
+<a href="{% url core_admin_perspective_delete perspective.id %}" class="top-menu delete-link">{% trans %}Delete{% endtrans %}</a>
+{% endif %}
+
+{% endblock %}
+
+{% block sidebar_right %}
+{% endblock %}
+
+{% block module_content %}
+<div>
+    <span class="content-label-head">{% trans %}Modules{% endtrans %}:</span>
+</div>
+{% set modules = perspective.modules.all() %}
+{% if modules %}
+{{ administration_module_list(modules) }}
+{% else %}
+{{ administration_module_list(all_modules) }}
+{% endif %}
+
+{% if perspective.details %}
+<br />
+<br />
+<div>
+    <span class="content-label">{% trans %}Details{% endtrans %}:</span>
+    <span class="content-details">{{ perspective.details|htsafe }}</span>
+</div>
+{% endif %}
+
+{% endblock %}

@@ -1,0 +1,30 @@
+{% if dopaginate %}
+  {% set pobjects = paginate(objects, 30) %}
+{% else %}
+  {% set pobjects = objects %}
+{% endif %}
+{% for item in pobjects %}
+<div class="content-list-item content-list-item-{{ loop.cycle('odd', 'even') }}">
+    <div class="content-list-tick"></div>
+    <span class="content-list-item-name">
+        {% set url = item.get_absolute_url() %}
+        {% if url %}
+        <a href="{{ url }}" class="popup-link">{{ item }}</a>
+        {% else %}
+        {{ item }}
+        {% endif %}
+        {% if not skip_group %}
+        <span class="content-list-item-group">
+            {{ item.get_human_type() }}
+        </span>
+        {% endif %}
+    </span>
+    <span class="content-list-item-actions">
+        <a href="{{ pathurl }}unsubscribe={{ item.id }}" class="inline-link delete-link popup-link-out"></a>
+    </span>
+</div>
+{% endfor %}
+
+{% if dopaginate %}
+{{ pager(objects, 30) }}
+{% endif %}

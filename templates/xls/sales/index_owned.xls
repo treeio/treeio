@@ -1,0 +1,1 @@
+{{ sales_order_list(orders) }}

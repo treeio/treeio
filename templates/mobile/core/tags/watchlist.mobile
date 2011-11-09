@@ -1,0 +1,29 @@
+{% if dopaginate %}
+  {% set pobjects = paginate(objects, 30) %}
+{% else %}
+  {% set pobjects = objects %}
+{% endif %}
+
+<ul data-role="listview" data-inset="true" data-theme="c">
+{% for item in pobjects %}
+<li>
+
+        {% set url = item.get_absolute_url() %}
+        {% if url %}
+        <a href="{{ url }}" class="popup-link">{{ item }}
+        {% else %}
+        {{ item }}
+        {% endif %}
+        {% if not skip_group %}
+        <p class="ui-li-aside">
+            {{ item.get_human_type() }}
+        </p>
+        {% endif %}
+        </a>
+</li>
+{% endfor %}
+</ul>
+
+{% if dopaginate %}
+{{ pager(objects, 30) }}
+{% endif %}

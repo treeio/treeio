@@ -1,0 +1,16 @@
+{% extends "mobile/events/page.mobile" %}
+
+{% block title %}{% trans %}Events{% endtrans %} | {% trans %}Calendar{% endtrans %}{% endblock %}
+
+{% block module_title %}{% trans %}Calendar{% endtrans %}{% endblock %}
+
+{% block class_all %}sidebar-link-active{% endblock %}
+
+{% block sidebar_right %}
+{% endblock %}
+
+{% block module_content %}
+    {{ events_event_list(paginate(events)) }}
+
+    {{ pager(events) }}
+{% endblock %}

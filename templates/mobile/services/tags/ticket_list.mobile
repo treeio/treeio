@@ -1,0 +1,13 @@
+<ul data-role="listview" data-inset="true" data-theme="c">
+{% for ticket in tickets %}
+<li>
+	<a href="{% url services_ticket_view ticket.id %}">
+		<h3>{%- if ticket.assigned.all().count() %}{{ ticket }}{% else %}{{ ticket.name }}{% endif -%}
+	    &nbsp;(#{{ ticket.reference }})</h3>
+	    <p class="ui-li-aside">
+	    {{ ticket.date_created|htdatetime('SHORT_DATETIME_FORMAT') }}
+	    </p>
+    </a>
+</li>
+{% endfor %}
+</ul>

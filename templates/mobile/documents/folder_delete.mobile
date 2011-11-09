@@ -1,0 +1,72 @@
+{% extends "mobile/documents/page.mobile" %}
+
+{% block title %}{{ folder|htsafe }} | {% trans %}Documents{% endtrans %}{% endblock %}
+
+{% block module_title %}{{ folder }}{% endblock %}
+
+{% block module_subtitle %}{% trans %}Folder{% endtrans %}{% endblock %}
+
+{% block module_topmenu %}
+<a class="top-menu add-link" href="{% url documents_folder_add_typed folder.id %}">{% trans %}New Folder{% endtrans %}</a>
+<a class="top-menu add-link" href="{% url documents_document_add_typed folder.id %}">{% trans %}New Document{% endtrans %}</a>
+<a class="top-menu add-link" href="{% url documents_weblink_add_typed folder.id %}">{% trans %}New Web Link{% endtrans %}</a>
+<a class="top-menu add-link" href="{% url documents_file_upload_typed folder.id %}">{% trans %}Upload File{% endtrans %}</a>
+<a class="top-menu view-link" href="{% url documents_folder_view folder.id %}">{% trans %}View{% endtrans %}</a>
+{% if user.get_profile().has_permission(folder, mode='w') %}
+<a class="top-menu edit-link" href="{% url documents_folder_edit folder.id %}">{% trans %}Edit{% endtrans %}</a>
+<a class="top-menu delete-link-active" href="{% url documents_folder_delete folder.id %}">{% trans %}Delete{% endtrans %}</a>
+{% endif %}
+{% endblock %}
+
+{% block module_content %}
+
+<div>
+    <span class="larger">{% trans %}Delete this Folder{% endtrans %}?</span>
+    <br />
+    <form action="" method="post" class="content-form">
+{% csrf_token %}
+        <ul class="content-form-fields">
+            <li>
+                <label for="trash">
+                    <input id="trash" type="checkbox" name="trash" checked="checked" />
+                    {% trans %}Move to Trash{% endtrans %}
+                </label>
+            </li>
+            <li class="ui-grid-a">
+            <div class="ui-block-a">
+                <input data-theme="b" type="submit" name="delete" value="{% trans %}Yes, Delete{% endtrans %}" style="font-weight: 700;" />&nbsp;&nbsp;
+            </div>
+            <div class="ui-block-b">
+                <input type="submit" name="cancel" value="{% trans %}Cancel{% endtrans %}" class="cancel" />
+            </div>
+            </li>
+        </ul>
+    </form>
+</div>
+<span class="content-label">{% trans %}Path{% endtrans %}:</span>
+<span class="content-value">{{ object_tree_path(folder) }}</span>
+{% if subfolders %}
+<div>
+    <span class="content-label-head">{% trans %}Folders{% endtrans %}:</span>
+</div>
+{% for subfolder in subfolders %}
+<div class="content-list-item content-list-item-{{ loop.cycle('odd', 'even') }}">
+    <span class="content-list-item-name">
+        <a href="{% url documents_folder_view subfolder.id %}">{{ subfolder }}</a>
+        <span class="content-list-item-group">
+            {%- if subfolder.parent %}
+            <a href="{% url documents_folder_view subfolder.parent_id %}" class="group-link">{{ subfolder.parent }}</a>
+            {%- endif %}
+        </span>
+    </span>
+    <span class="content-list-item-actions">
+        {% if user.get_profile().has_permission(folder, mode='w') %}
+        <a href="{% url documents_folder_edit folder.id %}" class="inline-link edit-link">{% trans %}Edit{% endtrans %}</a>
+        {% endif %}
+    </span>
+</div>
+{% endfor %}
+
+{% endif %}
+
+{% endblock %}

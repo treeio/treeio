@@ -1,0 +1,38 @@
+{% extends "mobile/reports/page.mobile" %}
+
+{% block title %}{% trans %}Reports{% endtrans %}{% endblock %}
+
+{% block module_title %}
+{% if report %}
+{{ report|htsafe }}
+{% else %}
+{% trans %}Reports{% endtrans %}
+{% endif %}
+{% endblock %}
+
+{% block report_index %}sidebar-link-active{% endblock %}
+
+{% block module_subtitle %}{% if report %}{% trans %}Report{% endtrans %}{% endif %}{% endblock %}
+
+{% block module_topmenu %}
+
+<a href="{% url reports_report_add %}" class="top-menu add-link-active">{% trans %}New Report{% endtrans %}</a>
+
+{% endblock %}
+
+{% block module_content %}
+
+
+<div>
+    <form action="" method="post" class="content-form">
+{% csrf_token %}
+        <ul class="content-form-fields">
+            {{ form.as_ul()|htsafe }}
+        </ul>
+        <div class="content-form-submit">
+          <input type="submit" value="{% trans %}Create Report{% endtrans %}">
+        </div>
+    </form>
+</div>
+
+{% endblock %}

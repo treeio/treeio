@@ -1,0 +1,42 @@
+{% extends "html/finance/page.html" %}
+
+{% block title %}{% trans %}Edit{% endtrans %} | {{ asset|htsafe }} | {% trans %}Finance{% endtrans %}{% endblock %}
+
+{% block module_title %}{{ asset.name }}{% endblock %}
+{% block module_subtitle %}{% trans %}Asset{% endtrans %}{% endblock %}
+
+{% block module_topmenu %}
+<a href="{% url finance_asset_view asset.id %}" class="top-menu view-link">{% trans %}View{% endtrans %}</a>
+<a href="{% url finance_asset_edit asset.id %}" class="top-menu edit-link-active">{% trans %}Edit{% endtrans %}</a>
+<a href="{% url finance_asset_delete asset.id %}" class="top-menu delete-link">{% trans %}Delete{% endtrans %}</a>
+{% endblock %}
+
+{% block sidebar_right %}
+
+<span class="sidebar-header-first">{% trans %}Permissions{% endtrans %}</span>
+<div class="sidebar-block">
+    {{ permission_block(asset) }}
+</div>
+<span class="sidebar-header-right">{% trans %}Links{% endtrans %}</span>
+<div class="sidebar-block">
+    {{ link_block(asset) }}
+</div>
+<span class="sidebar-header-right">{% trans %}Subscribers{% endtrans %}</span>
+<div class="sidebar-block">
+    {{ subscription_block(asset) }}
+</div>
+{% endblock %}
+
+{% block module_content %}
+
+<form action="" method="post" class="content-form">
+{% csrf_token %}
+    <ul class="content-form-fields">
+        {{ htform(form).as_ul()|htsafe }}
+    </ul>
+    <div class="content-form-submit">
+        <input type="submit" name="save" value="{% trans %}Save{% endtrans %}" />
+		<input type="submit" name="cancel" value="{% trans %}Cancel{% endtrans %}" class="cancel" />
+    </div>
+</form>
+{% endblock %}

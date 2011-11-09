@@ -1,0 +1,27 @@
+{% for item in items %}
+<div class="content-list-item content-list-item-{{ loop.cycle('odd', 'even') }}">
+    <div class="content-list-tick">
+        <input type="checkbox" name="mass-item-{{ item.id }}" value="{{ item.id }}" class="group-mass-unclassified" />
+    </div>
+    <span class="content-list-item-name">
+        <a href="{% url infrastructure_item_view item.id %}">{{ item }}</a>
+        {% if item.owner %}<a href="{% url identities_contact_view item.owner_id %}" class="author-link small popup-link">{{ item.owner }}</a>{% endif %}
+        {% if not item.status.active %} <a href="{% url infrastructure_status_view item.status_id %}" class="light small"><em>{{ item.status }}</em></a>{% endif %}
+        {% if not skip_group %}
+        <span class="content-list-item-group">
+            {% if item.manufacturer %}
+            <a href="{% url identities_contact_view item.manufacturer_id %}" class="author-link small popup-link">{{ item.manufacturer }}</a>
+            {% endif %}
+            {%- if item.item_type %}
+            <a href="{% url infrastructure_type_view item.item_type.id %}" class="group-link">{{ item.item_type }}</a>
+            {%- endif %}
+        </span>
+        {% endif %}
+    </span>
+    <span class="content-list-item-actions">
+        {% if user.get_profile().has_permission(item, mode='w') %}
+        <a href="{% url infrastructure_item_edit item.id %}" class="inline-link edit-link">{% trans %}Edit{% endtrans %}</a>
+        {% endif %}
+    </span>
+</div>
+{% endfor %}

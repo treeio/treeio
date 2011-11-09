@@ -1,0 +1,131 @@
+{% extends "mobile/services/page.mobile" %}
+
+{% block title %}{{ ticket|htsafe }} | {% trans %}Service Support{% endtrans %}{% endblock %}
+
+{% block module_title %}{{ ticket }}{% endblock %}
+{% block module_subtitle %}{% trans %}Ticket{% endtrans %}{% endblock %}
+
+{% block module_topmenu %}
+
+<a href="{% url services_ticket_view ticket.id %}" class="top-menu view-link-active">{% trans %}View{% endtrans %}</a>
+{% if user.get_profile().has_permission(ticket, mode='w') %}
+<a href="{% url services_ticket_edit ticket.id %}" class="top-menu edit-link">{% trans %}Edit{% endtrans %}</a>
+<a href="{% url services_ticket_delete ticket.id %}" class="top-menu delete-link">{% trans %}Delete{% endtrans %}</a>
+{% endif %}
+
+{% endblock %}
+
+{% block sidebar_right %}
+{% endblock %}
+
+{% block module_content %}
+
+<div>
+    <span class="content-label">{% trans %}Reference{% endtrans %}:</span>
+    <span class="content-value">{{ ticket.reference }}</span>
+</div>
+{% if ticket.caller %}
+<div>
+    <span class="content-label">{% trans %}Caller{% endtrans %}:</span>
+    <span class="content-value"><a href="{% url identities_contact_view ticket.caller.id %}" class="popup-link"><strong>{{ ticket.caller }}</strong></a></span>
+</div>
+{% endif %}
+<div>
+    <span class="content-label">{% trans %}Urgency{% endtrans %}:</span>
+    <span class="content-value">{{ ticket.urgency_human() }}</span>
+</div>
+<div>
+    <span class="content-label">{% trans %}Priority{% endtrans %}:</span>
+    <span class="content-value">{{ ticket.priority_human() }}</span>
+</div>
+<div>
+    <span class="content-label">{% trans %}Status{% endtrans %}:</span>
+    <span class="content-value"><a href="{% url services_status_view ticket.status.id %}">{{ ticket.status }}</a></span>
+</div>
+<div>
+    <span class="content-label">{% trans %}Assigned to{% endtrans %}:</span>
+    <span class="content-value">
+        {% set assigned = ticket.assigned.all() %}
+        {% if assigned %}
+        {% for assignee in assigned %}
+        <a href="{% url services_agent_view assignee.id %}" class="popup-link">{{ assignee }}</a>
+        <br />
+        {% endfor %}
+        {% else %}
+        <span class="lighter"><em>{% trans %}Nobody{% endtrans %}</em></span>
+        {% endif %}
+    </span>
+</div>
+{% if ticket.queue %}
+<div>
+    <span class="content-label">{% trans %}Queue{% endtrans %}:</span>
+    <span class="content-value"><a href="{% url services_queue_view ticket.queue.id %}">{{ ticket.queue }}</a></span>
+</div>
+{% endif %}
+{% if ticket.service %}
+<div>
+    <span class="content-label">{% trans %}Service{% endtrans %}:</span>
+    <span class="content-value"><a href="{% url services_service_view ticket.service_id %}">{{ ticket.service }}</a></span>
+</div>
+{% endif %}
+{% if ticket.sla %}
+<div>
+    <span class="content-label">{% trans %}Service Level Agreement{% endtrans %}:</span>
+    <span class="content-value">{{ ticket.sla }}</span>
+</div>
+{% endif %}
+
+<div class="spaced-v spaced-h">
+  <br />
+  {{ tags_box(ticket) }}
+</div>
+<br />
+
+{% if ticket.details %}
+<div>
+    <span class="content-label-head">{% trans %}Details{% endtrans %}:</span>
+    <span class="content-details">{{ ticket.details|htsafe }}</span>
+</div>
+<br />
+{% endif %}
+{% if ticket.resolution %}
+<div>
+    <span class="content-label-head">{% trans %}Resolution{% endtrans %}:</span>
+    <span class="content-details">{{ ticket.resolution|htsafe }}</span>
+</div>
+<br />
+{% endif %}
+
+{% if record_form %}
+<div>
+    <form action="" method="post" class="content-form">
+{% csrf_token %}
+        <br />
+        <ul class="content-form-fields">
+            <li>
+                <textarea id="id_body" rows="10" cols="40" name="body"></textarea>
+            </li>
+            {% if agent %}
+            <li class="content-form-inline">
+                <label for="id_notify">
+                    {{ record_form['notify'].label }}
+                </label>
+                <input type="checkbox" id="id_notify" name="notify" />
+            </li>
+            &nbsp;&nbsp;&nbsp;
+            <li class="content-form-inline content-form-full-inline">
+                <label for="id_resolution">
+                    {{ record_form['resolution'].label }}
+                </label>
+                <input type="checkbox" id="id_resolution" name="resolution" />
+            </li>
+            {% endif %}
+        </ul>
+        <div class="content-form-submit">
+            <input type="submit" value="{% trans %}Update Ticket{% endtrans %}">
+        </div>
+    </form>
+</div>
+{% endif %}
+
+{% endblock %}

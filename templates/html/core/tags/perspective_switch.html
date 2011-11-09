@@ -1,0 +1,10 @@
+{% trans %}Perspective{% endtrans %}:
+<form class="toolbar-form" id="perspective_switch" action="{% url user_perspective %}" method="post">
+{% csrf_token %}
+<select id="core_perspective" name="core_perspective">
+{% for perspective in perspectives %}
+  <option id="core_perspective_{{ perspective.id }}" value="{{ perspective.id }}"
+    {% if current == perspective %}selected="selected"{% endif %}>{{ perspective }}</option>
+{% endfor %}
+</select>
+</form>

@@ -1,0 +1,12 @@
+{% for module in modules %}
+<div class="content-list-item content-list-item-{{ loop.cycle('odd', 'even') }}">
+    <div class="content-list-tick">
+    </div>
+    <span class="content-list-item-name">
+        <a href="{% url core_admin_module_view module.id %}">{{ module }}</a>
+        <a href="{% url core_admin_module_view module.id %}" class="small lighter spaced-h">{{ module.name }}</a>
+    </span>
+    <span class="content-list-item-actions">
+    </span>
+</div>
+{% endfor %}

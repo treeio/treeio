@@ -1,0 +1,33 @@
+{% extends "mobile/base_login.mobile" %}
+
+{% block title %}Log in{% endblock %}
+
+{% block page %}
+
+<div class="login-block">
+
+  	<div style="text-align: center;">
+  		<a href="{% url home %}"><img src="{% url core_logo_image_ie %}" alt="Tree.io" class="logo-large" /></a>
+  	</div>
+
+
+    <form action="{% url user_login %}" method="post" autocomplete="off">
+	{% csrf_token %}
+        <div class="login-form">
+        {% if error_message %}<div class="error">{{ error_message|htsafe }}</div>{% endif %}
+        <p><label for="username" class="lighter">{% trans %}Username or E-mail{% endtrans %}:</label><br />
+        <input type="text" name="username" id="username" value="" size="22"/></p>
+        <p><label for="password" class="lighter">{% trans %}Password{% endtrans %}:</label><br />
+        <input type="password" name="password" id="password" value="" size="22"/></p>
+        <div class="login-captcha">
+        {{ form }}
+        </div>
+        <input type="submit" value="Log in" class="large" />
+        </div>
+    </form>
+    <div style="text-align: right; font-size: 13px; margin-top: 20px;"><a href="/accounts/password_reset/">{% trans %}Forgotten your password?{% endtrans %}</a><div>
+</div>
+
+{% endblock %}
+
+

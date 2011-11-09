@@ -1,0 +1,21 @@
+<ul data-role="listview" data-inset="true" data-theme="c">
+{% for order in orders %}
+	<li>
+		<a href="{% url sales_order_view order.id %}">
+			<h3>{% trans %}Order{% endtrans %} {{ order.reference }}</h3>
+			<p>
+				{{ order.total|number_format()|currency_format }}
+				{% if order.balance_due() > 0 %}
+	            {% else %}
+	            	(<strong>{% trans %}Paid in full{% endtrans %}</strong>)
+	            {% endif %}
+			</p>
+			{%- if order.datetime %}
+				<p class="ui-li-aside">
+					{{ order.datetime|htdate }}
+				</p>
+			{%- endif %}		
+		</a>
+	</li>
+{% endfor %}
+</ul>

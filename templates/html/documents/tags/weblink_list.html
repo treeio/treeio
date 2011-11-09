@@ -1,0 +1,24 @@
+{% for link in links %}
+<div class="content-list-item content-list-item-{{ loop.cycle('odd', 'even') }}">
+    <div class="content-list-tick">
+        <input type="checkbox" name="mass-weblink-{{ link.id }}" value="{{ link.id }}" class="group-mass-unclassified" />
+    </div>
+    <span class="content-list-item-name">
+        <img class="margin-bottom" src="/static/icons/documents/weblink.png" style="width: 16px; height: 16px;" alt="Link" />
+        <a href="{% url documents_weblink_view link.id %}">{{ link }}</a>
+        <span class="content-list-item-group">
+        	<span class="small">{{ link.last_updated|humanize_datetime }}</span>
+            {%- if link.folder %}
+            <a href="{% url documents_folder_view link.folder_id %}" class="group-link">{{ link.folder }}</a>
+            {%- endif %}
+        </span>
+        <br />
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="small lightest" href="{{ link.url|safe }}" target="_blank">{{ link.url|truncate(90, True) }}</a>
+    </span>
+    <span class="content-list-item-actions">
+        {% if user.get_profile().has_permission(link, mode='w') %}
+        <a href="{% url documents_weblink_edit link.id %}" class="inline-link edit-link">{% trans %}Edit{% endtrans %}</a>
+        {% endif %}
+    </span>
+</div>
+{% endfor %}

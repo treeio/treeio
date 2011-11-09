@@ -1,0 +1,29 @@
+{% extends "html/documents/page.html" %}
+
+{% block title %}{% trans %}Edit{% endtrans %} | {{ file|htsafe }} | {% trans %}Documents{% endtrans %}{% endblock %}
+
+{% block module_title %}{{ file }}{% endblock %}
+
+{% block module_subtitle %}{% trans %}File{% endtrans %}{% endblock %}
+
+{% block module_topmenu %}
+<a class="top-menu view-link" href="{% url documents_file_view file.id %}">{% trans %}View{% endtrans %}</a>
+{% if user.get_profile().has_permission(file, mode='w') %}
+<a class="top-menu edit-link-active" href="{% url documents_file_edit file.id %}">{% trans %}Edit{% endtrans %}</a>
+<a class="top-menu delete-link" href="{% url documents_file_delete file.id %}">{% trans %}Delete{% endtrans %}</a>
+{% endif %}
+{% endblock %}
+
+{% block module_content %}
+
+<form action="" method="post" class="content-form">
+{% csrf_token %}
+    <ul class="content-form-fields">
+        {{ form.as_ul()|safe }}
+    </ul>
+    <div class="content-form-submit">
+        <input type="submit" name="save" value="{% trans %}Save{% endtrans %}">
+		<input type="submit" name="cancel" value="{% trans %}Cancel{% endtrans %}" class="cancel" />
+    </div>
+</form>
+{% endblock %}

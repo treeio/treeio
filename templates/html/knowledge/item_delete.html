@@ -1,0 +1,59 @@
+{% extends "html/knowledge/page.html" %}
+
+{% block title %}{{ item|htsafe }} | {% trans %}Knowledge base{% endtrans %}{% endblock %}
+
+{% block module_title %}{{ item }}{% endblock %}
+
+{% block module_subtitle %}{% trans %}Item{% endtrans %}{% endblock %}
+
+{% block module_topmenu %}
+<a href="{% url knowledge_item_view item.folder.treepath, item.treepath %}" class="top-menu view-link">{% trans %}View{% endtrans %}</a>
+{% if user.get_profile().has_permission(item, mode='w') %}
+<a href="{% url knowledge_item_edit item.id %}" class="top-menu edit-link">{% trans %}Edit{% endtrans %}</a>
+<a href="{% url knowledge_item_delete item.id %}" class="top-menu delete-link-active">{% trans %}Delete{% endtrans %}</a>
+{% endif %}
+{% endblock %}
+
+{% block module_content %}
+
+<div class="delete-object">
+    <span class="larger">{% trans %}Delete this Item{% endtrans %}?</span>
+    <br />
+    <form action="" method="post" class="content-form">
+{% csrf_token %}
+        <ul class="content-form-fields">
+            <li>
+                <label for="trash">
+                    <input id="trash" type="checkbox" name="trash" checked="checked" />
+                    {% trans %}Move to Trash{% endtrans %}
+                </label>
+            </li>
+            <li>
+                <input type="submit" name="delete" value="{% trans %}Yes, Delete{% endtrans %}" />&nbsp;&nbsp;
+                <input type="submit" name="cancel" value="{% trans %}Cancel{% endtrans %}" class="cancel" />
+            </li>
+        </ul>
+    </form>
+</div>
+{% if item.name %}
+<div>
+    <span class="content-label">{% trans %}Name{% endtrans %}:</span>
+    <span class="content-value">{{ item.name }}</span>
+</div>
+{% endif %}
+
+{% if item.folder %}
+<div>
+    <span class="content-label">{% trans %}Folder{% endtrans %}:</span>
+    <span class="content-value">{{ object_tree_path(item.folder) }}</span>
+</div>
+{% endif %}
+
+{% if item.body %}
+<div>
+    <span class="content-label">{% trans %}Body{% endtrans %}:</span>
+    <span class="content-details">{{ item.body|htsafe }}</span>
+</div>
+{% endif %}
+
+{% endblock %}

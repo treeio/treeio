@@ -1,0 +1,40 @@
+{% extends "json/sales/page.json" %}
+{% block module_content %}
+    {"ordered_product":
+         {
+         "name": "{{ ordered_product }}",
+         "url": "http://{{ site_domain }}{% url sales_ordered_product_view ordered_product.id %}",
+         "permissions": {{ permission_block(ordered_product) }},
+
+          "order": {
+		            "id": {{ ordered_product.order_id }},
+                    "url": "http://{{ site_domain }}{% url sales_order_view ordered_product.order_id %}",
+                    "name": "{{ ordered_product.order.reference }}"
+                   },
+         
+         {% if ordered_product.subscription %}
+         "subscription": {
+		 			"id": {{ ordered_product.subscription_id }},
+					"url": "http://{{ site_domain }}{% url sales_subscription_view ordered_product.subscription_id %}"
+		 {% else %}
+		 "subscription": null,
+		 {% endif %}		
+		 
+		 "product": {
+                    "id": {{ ordered_product.product_id }},
+                    "url": "http://{{ site_domain }}{% url sales_product_view ordered_product.product_id %}",
+                    "name": "{{ ordered_product.product }}"
+                   },
+		
+		
+		 "quantity": {{ ordered_product.quantity }},
+		 
+         {% if ordered_product.discount %}
+         "discount": {{ ordered_product.discount }}
+		 {% else %}
+		 "discount": null
+		 {% endif %}		 
+
+         }
+    }
+{% endblock %}

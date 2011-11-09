@@ -1,0 +1,27 @@
+{% for event in paginate(events) %}
+<div class="content-list-item content-list-item-{{ loop.cycle('odd', 'even') }}">
+    <div class="content-list-tick">
+        <input type="checkbox" name="mass-event-{{ event.id }}" value="{{ event.id }}" class="group-mass-unclassified" />
+    </div>
+    <span class="content-list-item-name">
+        <a href="{% url events_event_view event.id %}">{{ event|htsafe }}</a>
+        <span class="spaced-h small lighter">
+            {% if event.start %}
+            {{ event.start.strftime("%d %B %Y, %H:%M") }} -
+            {% else %}
+            {{ event.end.strftime("%d %B %Y, %H:%M") }}
+            {% endif %}
+        </span>
+    </span>
+    <span class="content-list-item-group">
+        {%- if event.event_type %}
+        {{ event.event_type }}
+        {%- endif %}
+    </span>
+    <span class="content-list-item-actions">
+        {% if user.get_profile().has_permission(event, mode='w') %}
+        <a href="{% url events_event_edit event.id %}" class="inline-link edit-link">{% trans %}Edit{% endtrans %}</a>
+        {% endif %}
+    </span>
+</div>
+{% endfor %}

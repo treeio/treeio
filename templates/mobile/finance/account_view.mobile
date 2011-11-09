@@ -1,0 +1,43 @@
+{% extends "mobile/finance/page.mobile" %}
+
+{% block title %}{{ account.name|htsafe }} | {% trans %}Finance{% endtrans %}{% endblock %}
+
+{% block module_title %}{{ account.name }}{% endblock %}
+{% block module_subtitle %}{% trans %}Bank Account{% endtrans %}{% endblock %}
+
+{% block module_topmenu %}
+<a class="top-menu view-link-active" href="{% url finance_account_view account.id %}">{% trans %}View{% endtrans %}</a>
+<a class="top-menu edit-link" href="{% url finance_account_edit account.id %}">{% trans %}Edit{% endtrans %}</a>
+<a class="top-menu delete-link" href="{% url finance_account_delete account.id %}">{% trans %}Delete{% endtrans %}</a>
+{% endblock %}
+
+{% block sidebar_right %}
+{% endblock %}
+
+{% block module_content %}
+
+<div>
+    <span class="content-label">{% trans %}Owner{% endtrans %}:</span>
+    <span class="content-value"><a href="{% url identities_contact_view account.owner_id %}" class="popup-link">{{ account.owner }}</a></span>
+</div>
+
+{% if account.balance_display != account.balance %}
+
+<div>
+    <span class="content-label">{% trans %}Balance in{% endtrans %} {{currency_print(account.balance_currency)}}:</span>
+    <span class="content-balance">{{ account.balance_display|number_format|currency_format(account.balance_currency)}}</span>
+</div>
+{% endif %}
+
+<div>
+    <span class="content-label">{% trans %}Balance in{% endtrans %} {{currency_print()}}:</span>
+    <span class="content-balance">{{ account.balance|number_format|currency_format }}</span>
+</div>
+{% if account.details %}
+<div>
+    <span class="content-label">{% trans %}Details{% endtrans %}:</span>
+    <span class="content-details">{{ account.details|htsafe }}</span>
+</div>
+{% endif %}
+
+{% endblock %}

@@ -1,0 +1,14 @@
+--- ./db/models/fields/related.py	2011-11-08 20:35:16.000000000 +0000
++++ ./db/models/fields/related.py	2011-11-08 20:44:53.000000000 +0000
+@@ -323,8 +323,9 @@
+         # If null=True, we can assign null here, but otherwise the value needs
+         # to be an instance of the related class.
+         if value is None and self.field.null == False:
+-            raise ValueError('Cannot assign None: "%s.%s" does not allow null values.' %
+-                                (instance._meta.object_name, self.field.name))
++            pass # Sorry, Django!
++            #raise ValueError('Cannot assign None: "%s.%s" does not allow null values.' %
++            #                    (instance._meta.object_name, self.field.name))
+         elif value is not None and not isinstance(value, self.field.rel.to):
+             raise ValueError('Cannot assign "%r": "%s.%s" must be a "%s" instance.' %
+                                 (value, instance._meta.object_name,

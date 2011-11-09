@@ -1,0 +1,5 @@
+#!/bin/bash
+
+[ "$1" == "" ] && echo "Usage: runinstall yes (to confirm)" && exit 
+
+find . -name .svn -print0 | xargs -0 rm -rvf

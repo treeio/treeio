@@ -1,0 +1,7 @@
+#!/bin/bash
+
+echo "-- Installing database from backup..."
+
+echo "DROP DATABASE IF EXISTS treeio_dev; CREATE DATABASE treeio_dev;" | mysql -u treeio -p
+mysql -u treeio -p treeio_dev < sql/mysql-treeio-current.sql
+

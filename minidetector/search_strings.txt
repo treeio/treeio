@@ -1,0 +1,63 @@
+# Adapted from http://pub.mowser.com/wiki/Main/CodeExamples
+# With a few additions by Moof
+# The latest version of this file is always available from:
+# http://minidetector.googlecode.com/svn/trunk/minidetector/search_strings.txt
+#
+# This list is public domain, please feel free to use it for your own projects
+# If HTTP_USER_AGENT.lower() contains any of these strings, it's a mobile
+# Also include some games consoles, see below
+sony
+symbian
+nokia
+samsung
+mobile
+windows ce
+epoc
+opera mini
+nitro
+j2me
+midp-
+cldc-
+netfront
+mot
+up.browser
+up.link
+audiovox
+blackberry
+ericsson,
+panasonic
+philips
+sanyo
+sharp
+sie-
+portalmmm
+blazer
+avantgo
+danger
+palm
+series60
+palmsource
+pocketpc
+smartphone
+rover
+ipaq
+au-mic,
+alcatel
+ericy
+up.link
+docomo
+vodafone/
+wap1.
+wap2.
+plucker
+480x640
+sec
+fennec
+android
+# The Google transcoder
+google wireless transcoder
+# These are games consoles that either have a small screen or display on a
+# TV. Best to treat them as mobiles for web display
+nintendo
+webtv
+playstation

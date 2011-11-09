@@ -1,0 +1,34 @@
+{% extends "html/infrastructure/page.html" %}
+
+{% block title %}{% trans %}Service Records{% endtrans %} | {% trans %}Infrastructure{% endtrans %}{% endblock %}
+
+{% block module_title %}{% trans %}Service Records{% endtrans %}{% endblock %}
+
+{% block class_admin_service %}sidebar-link-active{% endblock %}
+
+{% block sidebar_right %}
+
+<span class="sidebar-header-first">{% trans %}Filter by{% endtrans %}</span>
+<form action="" method="get" class="content-filter-form">
+    <ul class="content-filter-form-fields">
+        {{ filters.as_ul()|htsafe }}
+    </ul>
+    <input type="submit" value="{% trans %}Submit{% endtrans %}">
+</form>
+<br />
+
+<span class="sidebar-header-right">{% trans %}Download as:{% endtrans %}<br />{% if '?' in request.get_full_path() %}<a class="pdf-block-link" href="{{ request.get_full_path()|replace('.ajax','').replace('?','.pdf?') }}"{% else %}<a class="pdf-block-link" href="{{ request.get_full_path()|replace('.ajax','') }}.pdf"{% endif %} target="_self">PDF</a>
+  <a class="csv-block-link" {% if '?' in request.get_full_path() %}href="{{ request.get_full_path()|replace('.ajax','').replace('?','.csv?') }}"{% else %}href="{{ request.get_full_path()|replace('.ajax','') }}.csv"{% endif %} target="_self">CSV</a></span></span>
+{% endblock %}
+
+{% block module_topmenu %}
+<a href="{% url infrastructure_service_record_add %}" class="top-menu add-link">{% trans %}New Service Record{% endtrans %}</a>
+{% endblock %}
+
+{% block module_content %}
+
+{{ infrastructure_servicing_list(service_records) }}
+
+{{ pager(service_records) }}
+
+{% endblock %}

@@ -1,0 +1,26 @@
+{% extends "html/account/page.html" %}
+
+{% block title %}{{ profile|htsafe }} | {% trans %}Account{% endtrans %}{% endblock %}
+
+{% block class_watchlist %}sidebar-link-active{% endblock %}
+
+{% block module_title %}{{ profile }}{% endblock %}
+{% block module_subtitle %}{% trans %}User{% endtrans %}{% endblock %}
+
+{% block module_topmenu %}
+{% endblock %}
+
+{% block sidebar_right %}
+<span class="sidebar-header-right">{% trans %}Download as:{% endtrans %}<br />{% if '?' in request.get_full_path() %}<a class="pdf-block-link" href="{{ request.get_full_path()|replace('.ajax','').replace('?','.pdf?') }}"{% else %}<a class="pdf-block-link" href="{{ request.get_full_path()|replace('.ajax','') }}.pdf"{% endif %} target="_self">PDF</a>
+      </span>
+{% endblock %}
+
+{% block module_content %}
+
+<span class="content-label-head">
+  My Watchlist:
+</span>
+
+{{ core_watchlist(watchlist, paginate=True) }}
+
+{% endblock %}

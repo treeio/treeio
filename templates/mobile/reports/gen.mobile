@@ -1,0 +1,79 @@
+{% if groups %}
+{% for grouper, list in groups %}
+<h4>{{groupname|replace('_',' ')|title()}}: {% if grouper %}{{grouper}}{% else %}None{% endif %}</h4>
+
+<table id="reports_table">
+    <thead>
+        <tr>
+          
+            {% for field in model.fields %}
+            {% if field.display %}
+            <th scope="col" style="width: 80px;">{{field.get_human_name()}}</th>
+            {% endif %}
+            {% endfor %}
+            
+        </tr>
+    </thead>
+    
+    {% for s in list %}
+    <tr class="content-list-item-{{ loop.cycle('odd', 'even') }}">
+        {% for field in model.fields if field.display %}
+            
+            <td>
+            {% set value = s.get_field_value(field.name) %}
+            
+            {% if value %}
+              {% if value is sequence and value is not string %}
+                {% for v in value %}
+                {{v|string}}{% if not loop.last %},{% endif %}
+                {% endfor %}
+              {% else %}
+                {{ value }}
+              {% endif %}
+    		     {% else %}
+    		        <center>-</center>
+            {% endif %}
+            </td>
+
+        {% endfor %}
+    </tr>
+    {% endfor %}
+</table>
+<br>
+{% endfor %}
+{% else %}
+<table id="reports_table">
+    <thead>
+        <tr>
+            {% for field in model.fields %}
+            {% if field.display %}
+            <th scope="col" style="width: 80px;">{{field.get_human_name()}}</th>
+            {% endif %}
+            {% endfor %}
+        </tr>
+    </thead>
+    {% for s in set %}
+    <tr class="content-list-item-{{ loop.cycle('odd', 'even') }}">
+        {% for field in model.fields if field.display %}
+            
+            <td>
+            {% set value = s.get_field_value(field.name) %}
+            
+            {% if value %}
+              {% if value is sequence and value is not string %}
+                {% for v in value %}
+                {{v|string}}{% if not loop.last %},{% endif %}
+                {% endfor %}
+              {% else %}
+                {{ value }}
+              {% endif %}
+             {% else %}
+                <center>-</center>
+            {% endif %}
+            </td>
+
+        {% endfor %}
+    </tr>
+    {% endfor %}
+</table>
+{% endif %}

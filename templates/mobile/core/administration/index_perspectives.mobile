@@ -1,0 +1,36 @@
+{% extends "mobile/core/page.mobile" %}
+
+{% block title %}{% trans %}Perspectives{% endtrans %} | {% trans %}Administration{% endtrans %}{% endblock %}
+
+{% block class_perspectives %}sidebar-link-active{% endblock %}
+
+{% block module_title %}{% trans %}Perspectives{% endtrans %}{% endblock %}
+
+{% block module_topmenu %}
+	<a href="{% url core_admin_perspective_add %}" class="top-menu add-link">{% trans %}New Perspective{% endtrans %}</a>
+{% endblock %}
+
+{% block sidebar_right %}
+
+{#
+	<span class="sidebar-header-first">{% trans %}Filter by{% endtrans %}</span>
+	
+    <form action="" method="get" class="content-filter-form">
+        <ul class="content-filter-form-fields">
+		{{ filters }}
+		</ul>
+    	<input type="submit" value="Submit">
+	</form>
+#}
+
+{% endblock %}
+
+{% block module_content %}
+<ul data-role="listview" data-inset="true" data-theme="c">
+	{% for perspective in perspectives %}
+	<li>
+		<a href="{% url core_admin_perspective_view perspective.id %}">{{ perspective }}</a>
+	</li>
+	{% endfor %}
+</ul>
+{% endblock %}

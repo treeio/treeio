@@ -1,0 +1,59 @@
+{% extends "html/documents/page.html" %}
+
+{% block title %}{{ document|htsafe }} | {% trans %}Documents{% endtrans %}{% endblock %}
+
+{% block module_title %}{{ document }}{% endblock %}
+
+{% block module_subtitle %}{% trans %}Document{% endtrans %}{% endblock %}
+
+{% block module_topmenu %}
+<a class="top-menu view-link" href="{% url documents_document_view document.id %}">{% trans %}View{% endtrans %}</a>
+{% if user.get_profile().has_permission(document, mode='w') %}
+<a class="top-menu edit-link" href="{% url documents_document_edit document.id %}">{% trans %}Edit{% endtrans %}</a>
+<a class="top-menu delete-link" href="{% url documents_document_delete document.id %}">{% trans %}Delete{% endtrans %}</a>
+{% endif %}
+{% endblock %}
+
+{% block module_content %}
+
+<div class="delete-object">
+    <span class="larger">{% trans %}Delete this Document{% endtrans %}?</span>
+    <br />
+    <form action="" method="post" class="content-form">
+{% csrf_token %}
+        <ul class="content-form-fields">
+            <li>
+                <label for="trash">
+                    <input id="trash" type="checkbox" name="trash" checked="checked" />
+                    {% trans %}Move to Trash{% endtrans %}
+                </label>
+            </li>
+            <li>
+                <input type="submit" name="delete" value="{% trans %}Yes, Delete{% endtrans %}" />&nbsp;&nbsp;
+                <input type="submit" name="cancel" value="{% trans %}Cancel{% endtrans %}" class="cancel" />
+            </li>
+        </ul>
+    </form>
+</div>
+{% if document.title %}
+<div>
+    <span class="content-label">{% trans %}Title{% endtrans %}:</span>
+    <span class="content-value">{{ document }}</span>
+</div>
+{% endif %}
+
+{% if document.folder %}
+<div>
+    <span class="content-label">{% trans %}Folder{% endtrans %}:</span>
+    <span class="content-value"><a href="{% url documents_folder_view document.folder.id %}">{{ document.folder }}</a></span>
+</div>
+{% endif %}
+
+{% if document.body %}
+<div>
+    <span class="content-label">{% trans %}Body{% endtrans %}:</span>
+    <span class="content-details">{{ document.body|htsafe }}</span>
+</div>
+{% endif %}
+
+{% endblock %}

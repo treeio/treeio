@@ -1,0 +1,36 @@
+{% extends "mobile/identities/page.mobile" %}
+
+{% block title %}{{ field|htsafe }} | {% trans %}Identities{% endtrans %}{% endblock %}
+
+{% block module_title %}{{ field }}{% endblock %}
+{% block module_subtitle %}{% trans %}Identities Field{% endtrans %}{% endblock %}
+
+{% block fields_sidebar -%}
+{% for ifield in fields %}
+<a href="{% url identities_field_view ifield.id %}" class="sidebar-link {% if ifield == field %}sidebar-link-active{% endif %}">{{ ifield }}</a>
+{% endfor %}
+{%- endblock %}
+
+{% block module_topmenu %}
+<a href="{% url identities_field_view field.id %}" class="top-menu view-link">{% trans %}View{% endtrans %}</a>
+<a href="{% url identities_field_edit field.id %}" class="top-menu edit-link edit-link-active">{% trans %}Edit{% endtrans %}</a>
+<a href="{% url identities_field_delete field.id %}" class="top-menu delete-link">{% trans %}Delete{% endtrans %}</a>
+{% endblock %}
+
+{% block module_content %}
+
+<form action="" method="post" class="content-form">
+{% csrf_token %}
+    <ul class="content-form-fields">
+        {{ form.as_ul()|htsafe }}
+    </ul>
+    <div class="content-form-submit ui-grid-a">
+    <div class="ui-block-a">
+        <input data-theme="b" type="submit" name="save" value="{% trans %}Save{% endtrans %}" />
+    </div>
+    <div class="ui-block-b">
+        <input type="submit" name="cancel" value="{% trans %}Cancel{% endtrans %}" class="cancel" />
+    </div>
+    </div>
+</form>
+{% endblock %}

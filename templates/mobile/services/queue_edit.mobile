@@ -1,0 +1,43 @@
+{% extends "mobile/services/page.mobile" %}
+
+{% block title %}{% trans %}Service Support{% endtrans %}{% endblock %}
+
+{% block module_title %}{{ queue }}{% endblock %}
+{% block module_subtitle %}{% trans %}Queue{% endtrans %}{% endblock %}
+
+{% block module_topmenu %}
+<a href="{% url services_ticket_add_by_queue queue.id %}" class="top-menu add-link">{% trans %}New Ticket{% endtrans %}</a>
+<a href="{% url services_queue_view queue.id %}" class="top-menu view-link">{% trans %}View{% endtrans %}</a>
+<a href="{% url services_queue_edit queue.id %}" class="top-menu edit-link-active">{% trans %}Edit{% endtrans %}</a>
+<a href="{% url services_queue_delete queue.id %}" class="top-menu delete-link">{% trans %}Delete{% endtrans %}</a>
+{% endblock %}
+
+{% block service_ticket_queues %}
+{% if queues %}
+<span class="sidebar-header">{% trans %}Queues{% endtrans %}</span>
+{% for iqueue in queues %}
+<a href="{% url services_queue_view iqueue.id %}" class="sidebar-link {% if iqueue==queue %}sidebar-link-active{% endif %}">{{ iqueue }}</a>
+{% endfor %}
+{% endif %}
+{% endblock %}
+
+{% block sidebar_right %}
+{% endblock %}
+
+{% block module_content %}
+
+<form action="" method="post" class="content-form">
+{% csrf_token %}
+    <ul class="content-form-fields">
+        {{ form.as_ul()|htsafe }}
+    </ul>
+    <div class="content-form-submit ui-grid-a">
+    <div class="ui-block-a">
+        <input data-theme="b" type="submit" name="save" value="{% trans %}Save{% endtrans %}" />
+   	</div>
+   	<div class="ui-block-b">
+        <input type="submit" name="cancel" value="{% trans %}Cancel{% endtrans %}" class="cancel" />
+    </div>
+    </div>
+</form>
+{% endblock %}

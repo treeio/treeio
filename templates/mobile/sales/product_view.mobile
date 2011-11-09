@@ -1,0 +1,150 @@
+{% extends "mobile/sales/page.mobile" %}
+
+{% block title %}{{ product|htsafe }} | {% trans %}Products{% endtrans %} | {% trans %}Sales{% endtrans %}{% endblock %}
+
+{% block module_title %}{{ product }}{% endblock %}
+
+{% block module_subtitle %}{% trans %}Product{% endtrans %}{% endblock %}
+
+{% block module_topmenu %}
+<a href="{% url sales_product_view product.id %}" class="top-menu view-link-active">{% trans %}View{% endtrans %}</a>
+{% if request.user.get_profile().has_permission(product, mode='w') %}
+<a href="{% url sales_product_edit product.id %}" class="top-menu edit-link">{% trans %}Edit{% endtrans %}</a>
+<a href="{% url sales_product_delete product.id %}" class="top-menu delete-link">{% trans %}Delete{% endtrans %}</a>
+{% endif %}
+{% endblock %}
+
+{% block sidebar_right %}
+{% endblock %}
+
+{% block module_content %}
+
+{% if product.product_type %}
+<div>
+    <span class="content-label">{% trans %}Product Type{% endtrans %}:</span>
+    <span class="content-value">{{ product.product_type|title() }}</span>
+</div>
+{% endif %}
+
+{% if product.parent %}
+<div>
+    <span class="content-label">{% trans %}Parent{% endtrans %}:</span>
+    <span class="content-value"><a href="{% url sales_product_view product.parent.id %}">{{ product.parent }}</a></span>
+</div>
+{% endif %}
+
+{% if product.source %}
+<div>
+    <span class="content-label">{% trans %}Supplier{% endtrans %}:</span>
+    <span class="content-value"><a href="{% url identities_contact_view product.supplier.id %}" class="popup-link">{{ product.supplier_code }}</a></span>
+    <span class="content-value"><a href="{% url identities_contact_view product.supplier.id %}" class="popup-link">{{ product.supplier.name }}</a></span>
+</div>
+{% endif %}
+
+{% if product.buy_price %}
+<div>
+    <span class="content-label">{% trans %}Buy Price{% endtrans %}:</span>
+    <span class="content-value">{{ product.buy_price|number_format|currency_format }}</span>
+</div>
+{% endif %}
+
+{% if product.sell_price %}
+<div>
+    <span class="content-label">{% trans %}Sell Price{% endtrans %}:</span>
+    <span class="content-value">{{ product.sell_price|number_format|currency_format }}</span>
+</div>
+{% endif %}
+
+{% if product.stock_quantity %}
+<div>
+    <span class="content-label">{% trans %}Stock{% endtrans %}:</span>
+    <span class="content-value">{{ product.stock_quantity }}</span>
+</div>
+{% endif %}
+
+<div>
+    <span class="content-label">{% trans %}Active{% endtrans %}:</span>
+    <span class="content-value">{% if product.active %}{% trans %}Yes{% endtrans %}{% else %}{% trans %}No{% endtrans %}{% endif %}</span>
+</div>
+{% if product.runout_action %}
+<div>
+    <span class="content-label">{% trans %}Runout Action{% endtrans %}:</span>
+    <span class="content-value">{{ product.runout_action|title() }}</span>
+</div>
+{% endif %}
+
+
+<div class="spaced-v spaced-h">
+  <br />
+  {{ tags_box(product) }}
+</div>
+
+
+<br />
+
+<div class="content-label-head">
+    {% trans %}Subproducts{% endtrans %}:
+    <a href="{% url sales_product_add product.id %}" id="add_product" class="inline-link add-link popup-link">{% trans %}Add{% endtrans %}</a>
+</div>
+{% for subproduct in subproducts %}
+<div class="content-list-item content-list-item-{{ loop.cycle('odd', 'even') }}" title="{{ subproduct.name }}">
+    <span class="content-list-item-name">
+        <a href="{% url sales_product_view subproduct.id %}">{{ subproduct.name }}</a>
+        ({{ subproduct.code }})
+        <span class="content-list-item-group">
+            {%- if subproduct.stock_quantity %}
+            {{ subproduct.stock_quantity }}
+            {%- endif %}
+        </span>
+    </span>
+    <span class="content-list-item-actions">
+        {% if user.get_profile().has_permission(subproduct, mode='w') %}
+        <a href="{% url sales_product_edit subproduct.id %}" class="inline-link edit-link">{% trans %}Edit{% endtrans %}</a>
+        {% endif %}
+    </span>
+</div>
+{% endfor %}
+
+<br />
+
+{% if product.product_type == 'subscription' %}
+<div class="content-label-head">
+    {% trans %}Subscriptions{% endtrans %}:
+    <a href="{% url sales_subscription_add_with_product product.id %}" id="add_product" class="inline-link add-link popup-link">{% trans %}Add{% endtrans %}</a>
+</div>
+{% for subscription in subscriptions %}
+<div class="content-list-item content-list-item-{{ loop.cycle('odd', 'even') }}" title="{{ subscription }}">
+    <span class="content-list-item-name">
+        <a href="{% url sales_subscription_view subscription.id %}">{{ subscription }}</a>
+        ({{ subscription.client }})
+        <span class="content-list-item-group">
+            {% if subscription.cycle_period %}
+            {{ subscription.cycle_period }} {% trans %}billing{% endtrans %}
+            {%- endif %}
+            {%- if subscription.expiry %}
+            - {% trans %}ends{% endtrans %}
+            {{ subscription.expiry }}
+            {% endif %}
+
+        </span>
+        {% if subscription.active %}{% trans %}Active{% endtrans %}{% else %}{% trans %}Inactive{% endtrans %}{% endif %}
+    </span>
+    <span class="content-list-item-actions">
+        {% if user.get_profile().has_permission(subscription, mode='w') %}
+        <a href="{% url sales_subscription_edit subscription.id %}" class="inline-link edit-link">{% trans %}Edit{% endtrans %}</a>
+        {% endif %}
+    </span>
+</div>
+{% endfor %}
+
+{% endif %}
+
+<br />
+{% if product.details %}
+<div>
+    <span class="content-label">{% trans %}Details{% endtrans %}:</span>
+    <span class="content-details">{{ product.details|htsafe }}</span>
+</div>
+{% endif %}
+
+{% endblock %}

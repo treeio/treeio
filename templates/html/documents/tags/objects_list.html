@@ -1,0 +1,47 @@
+
+{% for object in objects %}
+{% set document = object.get_related_object() %}
+
+<div class="content-list-item content-list-item-{{ loop.cycle('odd', 'even') }}">
+    <div class="content-list-tick">
+        <input type="checkbox" name="mass-object-{{ document.id }}" value="{{ document.id }}" class="group-mass-unclassified" />
+    </div>
+    <span class="content-list-item-name">
+        {% if document.object_type == 'treeio.documents.models.Document' %}
+        <img class="margin-bottom" src="/static/icons/documents/doc.png" style="width: 16px; height: 16px;" alt="Document" />
+        <a href="{% url documents_document_view document.id %}">{{ document }}</a>
+        {% elif document.object_type == 'treeio.documents.models.File' %}
+        <img class="margin-bottom" src="/static/icons/documents/file.png" style="width: 16px; height: 16px;" alt="File" />
+        <a href="{% url documents_file_view document.id %}">{{ document }}</a>
+        {% elif document.object_type == 'treeio.documents.models.WebLink' %}
+        <img class="margin-bottom" src="/static/icons/documents/weblink.png" style="width: 16px; height: 16px;" alt="Link" />
+        <a href="{% url documents_weblink_view document.id %}">{{ document }}</a>
+        {% endif %}
+        <span class="content-list-item-group">
+        	<span class="small">{{ document.last_updated|humanize_datetime }}</span>
+            {%- if document.folder %}
+            <a href="{% url documents_folder_view document.folder_id %}" class="group-link">{{ document.folder }}</a>
+            {%- endif %}
+        </span>
+        <br />
+        {% if document.object_type == 'treeio.documents.models.Document' %}
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="small lightest" href="{% url documents_document_view document.id %}">{{ document.body|striptags|truncate(80, True) }}</a>
+        {% elif document.object_type == 'treeio.documents.models.File' %}
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="small lightest" href="{% url documents_file_view document.id %}">{{ document.get_file_type() }} {% trans %}File{% endtrans %}</a>
+        {% elif document.object_type == 'treeio.documents.models.WebLink' %}
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="small lightest" href="{{ document.url|safe }}" target="_blank">{{ document.url|truncate(90, True) }}</a>
+        {% endif %}
+    </span>
+    <span class="content-list-item-actions">
+        {% if user.get_profile().has_permission(document, mode='w') %}
+        {% if document.object_type == 'treeio.documents.models.Document' %}
+        <a href="{% url documents_document_edit document.id %}" class="inline-link edit-link">{% trans %}Edit{% endtrans %}</a>
+        {% elif document.object_type == 'treeio.documents.models.File' %}
+        <a href="{% url documents_file_edit document.id %}" class="inline-link edit-link">{% trans %}Edit{% endtrans %}</a>
+        {% elif document.object_type == 'treeio.documents.models.WebLink' %}
+        <a href="{% url documents_weblink_edit document.id %}" class="inline-link edit-link">{% trans %}Edit{% endtrans %}</a>
+        {% endif %}
+        {% endif %}
+    </span>
+</div>
+{% endfor %}

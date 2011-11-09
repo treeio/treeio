@@ -1,0 +1,46 @@
+{% extends "html/knowledge/page.html" %}
+
+{% block title %}{{ folder|htsafe }} | {% trans %}Knowledge base{% endtrans %}{% endblock %}
+
+{% block module_title %}{{ folder }}{% endblock %}
+
+{% block module_subtitle %}{% trans %}Folder{% endtrans %}{% endblock %}
+
+{% block module_topmenu %}
+{% if user.get_profile().has_permission(folder, mode='x') %}
+<a href="{% url knowledge_item_add_folder folder.treepath %}" class="top-menu add-link">{% trans %}New Item{% endtrans %}</a>
+<a href="{% url knowledge_folder_add_folder folder.treepath %}" class="top-menu add-link">{% trans %}New Folder{% endtrans %}</a>
+{% endif %}
+<a href="{% url knowledge_folder_view folder.treepath %}" class="top-menu view-link">{% trans %}View{% endtrans %}</a>
+{% if user.get_profile().has_permission(folder, mode='w') %}
+<a href="{% url knowledge_folder_edit folder.id %}" class="top-menu edit-link">{% trans %}Edit{% endtrans %}</a>
+<a href="{% url knowledge_folder_delete folder.id %}" class="top-menu delete-link-active">{% trans %}Delete{% endtrans %}</a>
+{% endif %}
+{% endblock %}
+
+{% block module_content %}
+
+<div class="delete-object">
+    <span class="larger">{% trans %}Delete this Folder{% endtrans %}?</span>
+    <br />
+    <form action="" method="post" class="content-form">
+{% csrf_token %}
+        <ul class="content-form-fields">
+            <li>
+                <label for="trash">
+                    <input id="trash" type="checkbox" name="trash" checked="checked" />
+                    {% trans %}Move to Trash{% endtrans %}
+                </label>
+            </li>
+            <li>
+                <input type="submit" name="delete" value="{% trans %}Yes, Delete{% endtrans %}" />&nbsp;&nbsp;
+                <input type="submit" name="cancel" value="{% trans %}Cancel{% endtrans %}" class="cancel" />
+            </li>
+        </ul>
+    </form>
+</div>
+{{ knowledge_item_list(paginate(items)) }}
+
+{{ pager(items) }}
+
+{% endblock %}

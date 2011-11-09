@@ -1,0 +1,33 @@
+{% extends "html/knowledge/page.html" %}
+
+{% block title %}{% trans %}New folder{% endtrans %} | {% trans %}Knowledge base{% endtrans %}{% endblock %}
+
+{% block module_title %}{{ parent.name }}{% endblock %}
+
+{% block module_subtitle %}{% trans %}Folder{% endtrans %}{% endblock %}
+
+{% block module_topmenu %}
+<a href="{% url knowledge_item_add_folder parent.treepath %}" class="top-menu add-link">{% trans %}New Item{% endtrans %}</a>
+<a href="{% url knowledge_folder_add_folder parent.treepath %}" class="top-menu add-link-active">{% trans %}New Folder{% endtrans %}</a>
+<a href="{% url knowledge_folder_view parent.treepath %}" class="top-menu view-link">{% trans %}View{% endtrans %}</a>
+{% if user.get_profile().has_permission(parent, mode='w') %}
+<a href="{% url knowledge_folder_edit parent.id %}" class="top-menu edit-link">{% trans %}Edit{% endtrans %}</a>
+<a href="{% url knowledge_folder_delete parent.id %}" class="top-menu delete-link">{% trans %}Delete{% endtrans %}</a>
+{% endif %}
+{% endblock %}
+
+{% block module_content %}
+
+<p>
+    <form action="" method="post" class="content-form">
+{% csrf_token %}
+        <ul class="content-form-fields">
+            {{ form.as_ul()|htsafe }}
+        </ul>
+        <div class="content-form-submit">
+            <input type="submit" name="save" value="{% trans %}Create Folder{% endtrans %}" class="submit" />
+			<input type="submit" name="cancel" value="{% trans %}Cancel{% endtrans %}" class="cancel" />
+        </div>
+    </form>
+</p>
+{% endblock %}

@@ -1,0 +1,94 @@
+{% extends "html/page.html" %}
+
+{% block title %}{% trans %}Dashboard{% endtrans %}{% endblock %}
+
+{% block content %}
+
+<div class="title-block">
+    <div class="title">
+        {% block module_title %}{% trans %}Dashboard{% endtrans %}{% endblock %}
+    </div>
+    <div class="subtitle-block">
+        {% block module_subtitle %}{% endblock %}
+    </div>
+    <div class="module-top-menu-inline">
+        &nbsp;
+        {% block module_topmenu %}
+        <a href="{% url core_dashboard_widget_add %}" class="top-menu add-link">{% trans %}Add Widget{% endtrans %}</a>
+        <a href="{% url core_trash %}" class="top-menu trash-link {% if trash %}trash-full-link{% endif %}">{% trans %}Trash{% endtrans %}</a>
+		{% endblock %}
+        <span class="global_subscriptions">
+	        <a title="{% trans %}Be notified about major activity across all your projects{% endtrans %}" class="margin-bottom ajax-link-out" href="{{ rss_link('/news/all.rss') }}"><img src="/static/icons/rss.png"/> <strong>{% trans %}Global RSS Feed{% endtrans %}</strong></a> &nbsp;
+	        <a title="{% trans %}Export events from your calendar with a popular extension of <strong>.ics</strong>{% endtrans %}" class="margin-bottom ajax-link-out" href="{% url events_all_ical %}"><img src="/static/icons/ical.png"/> <strong>{% trans %}Global iCalendar{% endtrans %}</strong></a>
+        </span>
+    </div>
+    
+    {{ help_link() }}
+
+</div>
+<div class="module-content-home">
+    {% block module_content %}
+
+    <div class="widget-area" id="widget-area">
+    {% if widgets %}
+    <div id="widget-panel-left" class="widget-panel" callback="{% url core_dashboard_widget_arrange 'left' %}">
+        {% for widget in widgets if widget.weight <= 0  %}
+        {% set widget_block=widget.widget %}
+
+        <div class="widget-block" id="id_widget_{{ widget.id }}" style="width: {{ widget_block['size'] }}">
+            <div class="widget-links">
+            	<span class="content-list-item-actions">
+            	  <div class="hidejs" style="display: inline-block;"> {# edit button is not needed with AJAX #}
+                  <a href="{% url core_dashboard_widget_edit widget.id %}" class="inline-link edit-link">&nbsp;</a>
+                </div>
+                <a href="{% url core_dashboard_widget_delete widget.id %}" class="inline-link delete-link">&nbsp;</a>
+				      </span>
+            </div>
+            <div class="widget-title">
+                {{ httranslate(widget_block['title']) }}
+            </div>
+            <div class="widget-content">
+                {{ widget_block['content']|safe }}
+            </div>
+        </div>
+        {% endfor %}
+        
+      <div class="clear">&nbsp;</div>
+    </div>
+    <div class="widget-panel" id="widget-panel-right" callback="{% url core_dashboard_widget_arrange 'right' %}">
+        {% for widget in widgets if widget.weight > 0  %}
+        {% set widget_block=widget.widget %}
+
+        <div class="widget-block" id="id_widget_{{ widget.id }}" style="width: {{ widget_block['size'] }}">
+            <div class="widget-links">
+                <span class="content-list-item-actions">
+                  <div class="hidejs" style="display: inline-block;"> {# edit button is not needed with AJAX #}
+                  <a href="{% url core_dashboard_widget_edit widget.id %}" class="inline-link edit-link">&nbsp;</a>
+                </div>
+                <a href="{% url core_dashboard_widget_delete widget.id %}" class="inline-link delete-link">&nbsp;</a>
+                      </span>
+            </div>
+            <div class="widget-title">
+                {{ httranslate(widget_block['title']) }}
+            </div>
+            <div class="widget-content">
+                {{ widget_block['content']|safe }}
+            </div>
+        </div>
+        {% endfor %}
+        
+      <div class="clear">&nbsp;</div>
+    </div>
+    {% else %}
+	{{ show_hint('dashboard_widgets') }}
+    {% endif %}
+    </div>
+    <div class="clear"></div>
+    {% endblock %}
+
+</div>
+<div class="clear"></div>
+{% endblock %}
+
+{% block footer %}
+{% endblock %}

@@ -1,0 +1,31 @@
+<script type="text/javascript">
+var {{id}};
+	$(document).ready(function() {
+		var options = {{rendered_options|htsafe}}
+		{{id}} = new Highcharts.Chart(options);
+});
+</script>
+
+{% if request.user.get_profile().has_permission(chart,'w') %}<a class="delete-chart popup-link ajax-link-out" chart="{{ chart.id }}" title="{% trans %}Delete{% endtrans %}" href="{% url reports_chart_delete chart.id %}"><img class="margin-bottom" src="/static/icons/delete.png"/></a>{% endif %}
+<strong><a href="#" id="chart-toggle{{id}}">{{ chart.name }} {% trans %}Chart{% endtrans %}</a></strong>
+<span class="{{ id }} quick-report-actions">
+
+
+<a class="inline-link edit-link popup-link" href="{% url reports_chart_edit chart_id %}">{% trans %}Edit{% endtrans %}</a>
+</span>
+<hr class="space"/>
+<div id="{{id}}"></div>
+
+<script type="text/javascript">
+  $(document).ready(function() {
+  // hides charts as soon as the DOM is ready
+     //$('#{{ id }}').hide();
+   
+  $('#chart-toggle{{id}}').click(function() {
+      $('#{{ id }}').toggle(400);
+	  $('.{{ id }}.quick-report-actions').toggle('fast');
+    return false;
+  });
+  
+  });
+</script>

@@ -1,0 +1,72 @@
+{% extends "html/page.html" %}
+
+{% block title %}{% trans %}Contacts{% endtrans %}{% endblock %}
+
+{% block content %}
+
+<table>
+    <tr>
+        <td class="module-sidebar">
+		{{ logo_block_container() }}
+		<div>		
+		<a href="{% url identities_index %}" class="sidebar-link {% block class_all %}{% endblock %}">{% trans %}All Contacts{% endtrans %}</a>
+        <a href="{% url identities_contact_me %}" class="sidebar-link {% block class_me %}{% endblock %}">{% trans %}My Card{% endtrans %}</a>
+        <a href="{% url identities_index_users %}" class="sidebar-link {% block class_users %}{% endblock %}">{% trans %}Users{% endtrans %}</a>
+        <a href="{% url identities_index_groups %}" class="sidebar-link {% block class_groups %}{% endblock %}">{% trans %}Groups{% endtrans %}</a>
+        <span class="sidebar-header">{% trans %}Contact Types{% endtrans %}</span>
+        {% block identity_types_sidebar %}
+        {% for type in types %}
+        <a href="{% url identities_index_by_type type.id %}" class="sidebar-link">{{ type }}</a>
+        {% endfor %}
+        {% endblock %}
+
+        <span class="sidebar-header">{% trans %}Administration{% endtrans %}</span>
+        <a href="{% url identities_integration_index %}" class="sidebar-link {% block class_integration %}{% endblock %}">{% trans %}Integration{% endtrans %}</a>
+        {% if request.user.get_profile().is_admin('treeio.identities') %}
+        <a href="{% url identities_settings_view %}" class="sidebar-link {% block class_admin_settings %}{% endblock %}">{% trans %}Settings{% endtrans %}</a>
+        {% endif %}
+
+		</div>
+
+        </td>
+        <td class="module-content">
+
+        <div class="module-content-fill">
+
+            <div class="title-block">
+
+                <div class="title">
+                    {% block module_title %}{% trans %}Contacts{% endtrans %}{% endblock %}
+                </div>
+                <div class="subtitle-block">
+                    {% block module_subtitle %}{% endblock %}
+                </div>
+                <div class="module-top-menu-inline">
+                    {% block module_topmenu %}
+                    <a href="{% url identities_contact_add %}" class="top-menu add-link">{% trans %}New Contact{% endtrans %}</a>
+                    <a href="{% url core_trash %}" class="top-menu trash-link {% if trash %}trash-full-link{% endif %}">{% trans %}Trash{% endtrans %}</a>
+                    {% endblock %}
+                </div>
+                {{ help_link() }}
+
+            </div>
+            <table>
+
+                <tr>
+                    <td class="module-content-inner">
+                    <!-- module_content_inner -->
+                    {% block module_content %}{% endblock %}
+                    <!-- /module_content_inner -->
+                    </td>
+                    <td class="module-sidebar-right">
+                    {% block sidebar_right %}{% endblock %}
+                    </td>
+                </tr>
+            </table>
+        </div>
+        </td>
+    </tr>
+</table>
+<div class="clear">
+</div>
+{% endblock %}

@@ -1,0 +1,66 @@
+{% if leads %}
+    <table class="sales_table">
+
+        <!-- Table header -->
+        <thead>
+            <tr>
+                <th scope="col"></th>
+                <th scope="col"><a href="{{ htsortlink('contact') }}" class="sort-link">{% trans %}Contact{% endtrans %}</a></th>
+                <th scope="col"><a href="{{ htsortlink('status') }}" class="sort-link">{% trans %}Status{% endtrans %}</a></th>
+                <th scope="col"><a href="{{ htsortlink('assigned') }}" class="sort-link">{% trans %}Assigned{% endtrans %}</a></th>
+                <th scope="col"><a href="{{ htsortlink('products_interested') }}" class="sort-link">{% trans %}Products Interested{% endtrans %}</a></th>
+                <th scope="col"><a href="{{ htsortlink('last_updated') }}" class="sort-link">{% trans %}Last updated{% endtrans %}</a></th>
+                <th scope="col"></th>
+            </tr>
+        </thead>
+        <!-- Table body -->
+
+        <tbody>
+
+            {% for lead in leads %}
+
+            <tr class="content-list-item content-list-item-{{ loop.cycle('odd', 'even') }}">
+                <td>
+                    <input type="checkbox" name="mass-lead-{{ lead.id }}" value="{{ lead.id }}" class="group-mass-leads" />
+                </td>
+                <td>
+                <b><a href="{% url sales_lead_view lead.id %}">{{ lead.contact }}</a></b>{{ attachments_count(lead) }}
+                </td>
+                <td>
+                <a href="{% url sales_status_view lead.status_id %}">{{ lead.status }}</a>
+                </td>
+                <td>
+                {% set assigned = lead.assigned.all()[:3] %}
+                {% if assigned %}
+                {% for assignee in assigned %}
+                <a href="{% url identities_user_view assignee.id %}" class="popup-link">{{ assignee }}</a>
+                {% if not loop.last %}, {% endif %}
+                {% if loop.index == 3 %}...{% endif %}
+                {% endfor %}
+                {% else %}
+                Unassigned
+                {% endif %}
+                </td>
+                <td>
+                {% for product in lead.products_interested.all()[:3] %}
+                <a href="{% url sales_product_view product.id %}" class ="popup-link">{{ product }}</a>
+                {% if not loop.last %}, {% endif %}
+                {% if loop.index == 3 %}...{% endif %}
+                {% endfor %}
+                </td>
+                <td>
+                    {{ last_updated(lead) }}
+                </td>
+                <td>
+                {% if user.get_profile().has_permission(lead, mode='w') %}
+                <span class="content-list-item-actions table-link">
+                <a href="{% url sales_lead_edit lead.id %}" class="inline-link edit-link">{% trans %}Edit{% endtrans %}</a>
+                </span>
+                {% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+
+        </tbody>
+    </table>
+{% endif %}

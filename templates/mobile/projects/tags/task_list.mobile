@@ -1,0 +1,21 @@
+<ul data-role="listview" data-inset="true" data-theme="c">
+{% for task in tasks %}
+	<li>
+		<a href="{% url projects_task_view task.id %}" {% if hidden %}class="light"{% endif %}>
+			<h3>{{ task.name }}</h3>
+			<p class="ui-li-aside">
+				{{ task.status }}
+			</p>
+            {% if not by_assigned and task.assigned.all() %}
+            <p>
+            	{% trans %}Assigned{% endtrans %}:
+            	{% for assignee in task.assigned.all() %}
+                    {{ assignee }}
+                    {%- if not loop.last %},{% endif %}
+                {% endfor %}
+            </p>
+            {% endif %}
+		</a>
+	</li>
+{% endfor %}
+</ul>

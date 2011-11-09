@@ -1,0 +1,5 @@
+[
+{% for ticket in tickets -%}
+{"label": "{{ ticket.__unicode__().replace('\"', '\\\"')|htsafe }}", "value": "{{ ticket }}"}{% if not loop.last %},{% endif %}
+{% endfor -%}
+]

@@ -1,0 +1,68 @@
+{% extends "html/finance/page.html" %}
+
+{% block title %}{% trans %}Equities{% endtrans %} | {% trans %}Finance{% endtrans %}{% endblock %}
+
+{% block module_title %}{% trans %}Equities{% endtrans %}{% endblock %}
+
+{% block class_equities %}sidebar-link-active{% endblock %}
+
+{% block module_topmenu %}
+<a class="top-menu add-link" href="{% url finance_equity_add %}">{% trans %}New Equity{% endtrans %}</a>
+<a href="{% url core_trash %}" class="top-menu trash-link {% if trash %}trash-full-link{% endif %}">{% trans %}Trash{% endtrans %}</a>
+{% endblock %}
+
+{% block sidebar_right %}
+
+<span class="sidebar-header-first">{% trans %}Filter by{% endtrans %}</span>
+<form action="" method="get" class="content-filter-form">
+    <ul class="content-filter-form-fields">
+        {{ filters.as_ul()|htsafe }}
+    </ul>
+    <input type="submit" value="{% trans %}Submit{% endtrans %}">
+</form>
+<br />
+
+<span class="sidebar-header-right">{% trans %}Download as:{% endtrans %}<br />{% if '?' in request.get_full_path() %}<a class="pdf-block-link" href="{{ request.get_full_path()|replace('.ajax','').replace('?','.pdf?') }}"{% else %}<a class="pdf-block-link" href="{{ request.get_full_path()|replace('.ajax','') }}.pdf"{% endif %} target="_self">PDF</a>
+  <a class="csv-block-link" {% if '?' in request.get_full_path() %}href="{{ request.get_full_path()|replace('.ajax','').replace('?','.csv?') }}"{% else %}href="{{ request.get_full_path()|replace('.ajax','') }}.csv"{% endif %} target="_self">CSV</a></span></span>
+{% endblock %}
+
+{% block module_content %}
+
+{% if equities %}
+
+<table id="finance_table">
+
+    <!-- Table header -->
+
+    <thead>
+        <tr>
+            <th scope="col">{% trans %}Type{% endtrans %}</th>
+            <th scope="col">{% trans %}Purchase Date{% endtrans %}</th>
+            <th scope="col">{% trans %}Owner{% endtrans %}</th>
+            <th scope="col">{% trans %}Issuer{% endtrans %}</th>
+            <th scope="col">{% trans %}Quantity{% endtrans %}</th>
+            <th scope="col">{% trans %}Sell Price in {% endtrans %}{{ currency_print() }}</th>
+        </tr>
+    </thead>
+    <!-- Table body -->
+
+    <tbody>
+        {% for equity in paginate(equities) %}
+
+        <tr class="content-list-item-{{ loop.cycle('odd', 'even') }}">
+            <td><a href = "{% url finance_equity_view equity.id %}">{{ equity.equity_type|title() }}</a></td>
+            <td>{{ equity.purchase_date|htdate }}</a></td>
+            <td><a href = "{% url identities_contact_view equity.owner_id %}" class="popup-link">{{ equity.owner }}</a></td>
+            <td><a href = "{% url identities_contact_view equity.issuer_id %}" class="popup-link">{{ equity.issuer }}</a></td>
+            <td>{{ equity.amount }}</td>
+            <td>{{ equity.sell_price|number_format }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{{ pager(equities) }}
+
+{% else %}
+{{ show_hint('finance_equities') }}
+{% endif %}
+{% endblock %}

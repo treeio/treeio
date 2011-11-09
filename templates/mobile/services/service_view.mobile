@@ -1,0 +1,79 @@
+{% extends "mobile/services/page.mobile" %}
+
+{% block title %}{{ service }} | {% trans %}Services{% endtrans %} | {% trans %}Service Support{% endtrans %}{% endblock %}
+
+{% block class_service_catalogue %}sidebar-link-active{% endblock %}
+
+{% block module_title %}{{ service }}{% endblock %}
+{% block module_subtitle %}{% trans %}Service{% endtrans %}{% endblock %}
+
+{% block module_topmenu %}
+
+<a href="{% url services_service_view service.id %}" class="top-menu view-link-active">{% trans %}View{% endtrans %}</a>
+{% if user.get_profile().has_permission(service, mode='w') %}
+<a href="{% url services_service_edit service.id %}" class="top-menu edit-link">{% trans %}Edit{% endtrans %}</a>
+<a href="{% url services_service_delete service.id %}" class="top-menu delete-link">{% trans %}Delete{% endtrans %}</a>
+{% endif %}
+
+{% endblock %}
+
+{% block sidebar_right %}
+{% endblock %}
+
+{% block module_content %}
+
+<div>
+    <span class="content-label">{% trans %}Name{% endtrans %}:</span>
+    <span class="content-value"><a href="{% url services_service_view service.id %}">{{ service.name }}</a></span>
+</div>
+{% if service.parent %}
+<div>
+    <span class="content-label">{% trans %}Path{% endtrans %}:</span>
+    <span class="content-value">{{ object_tree_path(service) }}</span>
+</div>
+{% endif %}
+
+{% if service.details %}
+<div>
+    <span class="content-label">{% trans %}Details{% endtrans %}:</span>
+    <span class="content-details">{{ service.details|htsafe }}</span>
+</div>
+{% endif %}
+
+<br />
+{% if service.child_set.count() %}
+<div>
+    <span class="content-label-head">{% trans %}Child Services{% endtrans %}:</span>
+</div>
+{{ services_service_list(service.child_set.all()) }}
+{% endif %}
+
+<br />
+<div>
+    <span class="content-label-head">{% trans %}Service Level Agreements{% endtrans %}:</span>
+</div>
+{% if service.servicelevelagreement_set.count() %}
+
+{% for sla in service.servicelevelagreement_set.all() %}
+<div class="content-list-item content-list-item-{{ loop.cycle('odd', 'even') }}">
+    <span class="content-list-item-name">
+        <a href="{% url services_sla_view sla.id %}">{{ sla }}</a>
+        <span class="content-list-item-group">
+            <a href="{% url services_service_view sla.service.id %}" class="group-link">{{ service }}</a>
+        </span>
+    </span>
+    <span class="content-list-item-actions">
+        {% if user.get_profile().has_permission(service, mode='w') %}
+        <a href="{% url services_sla_edit sla.id %}" class="inline-link edit-link">{% trans %}Edit{% endtrans %}</a>
+        {% endif %}
+    </span>
+</div>
+{% endfor %}
+{% else %}
+<div class="content-list-item spaced-v spaced-h lighter">
+    <em>{% trans %}None{% endtrans %}</em>.
+    <a href="{% url services_sla_add %}" class="popup-link"><strong>{% trans %}Create a Service Level Agreement{% endtrans %}</strong></a>
+</div>
+{% endif %}
+
+{% endblock %}

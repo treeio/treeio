@@ -1,0 +1,147 @@
+{% if tickets %}
+<table class="generic_table">
+
+    <!-- Table header -->
+    {% if not noheader %}
+    <thead>
+        <tr>
+            <th scope="col"></th>
+            <th scope="col" style="width:{% if not skip_group and not by_assigned %}30{% elif skip_group %}35{% else %}40{% endif %}%">
+                <a href="{{ htsortlink('name') }}" class="sort-link">{% trans %}Title{% endtrans %}</a>
+            </th>
+            <th scope="col">
+                <a href="{{ htsortlink('status') }}" class="sort-link">{% trans %}Status{% endtrans %}</a>
+            </th>
+            {% if not skip_group %}
+            <th scope="col">
+                <a href="{{ htsortlink('queue') }}" class="sort-link">{% trans %}Queue{% endtrans %}</a>
+            </th>
+            {% endif %}
+            <th score="col">
+                <a href="{{ htsortlink('caller') }}" class="sort-link">{% trans %}Caller{% endtrans %}</a>
+            </th>
+            {% if not by_assigned %}
+            <th scope="col">
+                <a href="{{ htsortlink('assigned') }}" class="sort-link">{% trans %}Assigned{% endtrans %}</a>
+            </th>
+            {% endif %}
+            <th scope="col">
+                <a href="{{ htsortlink('date_created') }}" class="sort-link">{% trans %}Created{% endtrans %}</a>
+            </th>
+
+            <th scope="col">
+                <a href="{{ htsortlink('last_updated') }}" class="sort-link">{% trans %}Last updated{% endtrans %}</a>
+            </th>
+            <th scope="col"></th>
+        </tr>
+    </thead>
+    {% endif %}
+    <!-- Table body -->
+
+    <tbody>
+        {% for ticket in tickets %}
+
+        <tr class="content-list-item content-list-item-{{ loop.cycle('odd', 'even') }}">
+            <td class="content-smaller-tick">
+                <div class="content-list-tick services-ticket-priority-{{ ticket.priority }}">
+                {% if nomass %}
+                &nbsp;
+                {% else %}
+                <input type="checkbox" name="mass-ticket-{{ ticket.id }}" value="{{ ticket.id }}"
+                {%- if tick_group == 'status' -%}
+                {%- if ticket.status_id %} class="group-mass-status-{{ ticket.status_id }}"{% else %}class="group-mass-unclassified"{% endif %} />
+                {%- else -%}
+                {%- if ticket.queue_id %} class="group-mass-queue-{{ ticket.queue_id }}"{% else %}class="group-mass-unclassified"{% endif %} />
+                {%- endif -%}
+                {% endif %}
+                </div>
+            </td>
+            {% set assigned = ticket.assigned.all() %}
+            <td>
+                <a href="{% url services_ticket_view ticket.id %}">
+                <span class="small">#{{ ticket.reference }}</span> - 
+                {% if assigned %}{{ ticket }}{% else %}<strong>{{ ticket.name }}</strong>{% endif -%}{{ attachments_count(ticket) }}
+                </a>
+            </td>
+            {% if not by_status %}
+            <td>
+                {{ ticket.status }}
+            </td>
+            {% endif %}
+            {% if not skip_group %}
+            <td>
+                {% if ticket.queue %}
+                <a href="{% url services_queue_view ticket.queue_id %}" class="group-link">{{ ticket.queue }}</a>
+                {% endif %}
+            </td>
+            {% endif %}
+            <td>
+                {% if ticket.caller %}
+                <a href="{% url identities_contact_view ticket.caller.id %}" class="author-link popup-link">{{ ticket.caller }}</a>
+                {% endif %}
+            </td>
+            {% if not by_assigned %}
+            <td>
+                {% for assignee in assigned %}
+                <a href="{% url services_agent_view assignee.id %}" class="popup-link">{{ assignee }}</a>
+                {%- if not loop.last %},{% endif %}
+                {% endfor %}
+            </td>
+            {% endif %}
+            <td>
+                {{ ticket.date_created|htdatetime('SHORT_DATETIME_FORMAT') }}
+            </td>
+            <td>
+                {{ last_updated(ticket) }}
+            </td>
+            <td>
+                {% if user.get_profile().has_permission(ticket, mode='w') %}
+                <span class="content-list-item-actions table-link">
+                <a href="{% url services_ticket_edit ticket.id %}" class="inline-link edit-link">{% trans %}Edit{% endtrans %}</a>
+                </span>
+                {% endif %}
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endif %}
+
+{#
+
+{% for ticket in tickets %}
+<div class="content-list-item content-list-item-{{ loop.cycle('odd', 'even') }}">
+    <div class="content-list-tick services-ticket-priority-{{ ticket.priority }}">
+        {% if nomass %}
+        &nbsp;&nbsp;
+        {% else %}
+        <input type="checkbox" name="mass-ticket-{{ ticket.id }}" value="{{ ticket.id }}"
+        {%- if tick_group == 'status' -%}
+        {%- if ticket.status_id %} class="group-mass-status-{{ ticket.status_id }}"{% else %}class="group-mass-unclassified"{% endif %} />
+        {%- else -%}
+        {%- if ticket.queue_id %} class="group-mass-queue-{{ ticket.queue_id }}"{% else %}class="group-mass-unclassified"{% endif %} />
+        {%- endif -%}
+        {% endif %}
+    </div>
+    <span class="content-list-item-name">
+        <a href="{% url services_ticket_view ticket.id %}">
+        {%- if ticket.assigned.all().exists() %}{{ ticket }}{% else %}<strong>{{ ticket.name }}</strong>{% endif -%}
+        &nbsp;<span class="small">(#{{ ticket.reference }})</span>
+        </a>
+        {% if ticket.caller %}<a href="{% url identities_contact_view ticket.caller.id %}" class="author-link small spaced-h popup-link">{{ ticket.caller }}</a>{% endif %}
+        <span class="content-list-item-group">
+            <a href="{% url services_status_view ticket.status_id %}" class="author-link spaced-h"><em>{{ ticket.status }}</em></a>
+            {% if not skip_group and ticket.queue %}
+            <a href="{% url services_queue_view ticket.queue_id %}" class="group-link">{{ ticket.queue }}</a>
+            {% endif %}
+        </span>
+    </span>
+    <span class="content-list-item-actions">
+        {% if user.get_profile().has_permission(ticket, mode='w') %}
+        <a href="{% url services_ticket_edit ticket.id %}" class="inline-link edit-link">{% trans %}Edit{% endtrans %}</a>
+        {% endif %}
+    </span>
+</div>
+{% endfor %}
+
+#}

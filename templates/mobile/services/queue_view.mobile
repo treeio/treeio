@@ -1,0 +1,93 @@
+{% extends "mobile/services/page.mobile" %}
+
+{% block title %}{% trans %}Service Support{% endtrans %}{% endblock %}
+
+{% block module_title %}{{ queue }}{% endblock %}
+{% block module_subtitle %}{% trans %}Queue{% endtrans %}{% endblock %}
+
+{% block module_topmenu %}
+<a href="{% url services_ticket_add_by_queue queue.id %}" class="top-menu add-link">{% trans %}New Ticket{% endtrans %}</a>
+<a href="{% url services_queue_view queue.id %}" class="top-menu view-link-active">{% trans %}View{% endtrans %}</a>
+{% if user.get_profile().has_permission(queue, mode='w') %}
+<a href="{% url services_queue_edit queue.id %}" class="top-menu edit-link">{% trans %}Edit{% endtrans %}</a>
+<a href="{% url services_queue_delete queue.id %}" class="top-menu delete-link">{% trans %}Delete{% endtrans %}</a>
+{% endif %}
+{% endblock %}
+
+{% block service_ticket_queues %}
+{% if queues %}
+<span class="sidebar-header">{% trans %}Queues{% endtrans %}</span>
+{% for iqueue in queues %}
+<a href="{% url services_queue_view iqueue.id %}" class="sidebar-link {% if iqueue==queue %}sidebar-link-active{% endif %}">{{ iqueue }}</a>
+{% endfor %}
+{% endif %}
+{% endblock %}
+
+{% block sidebar_right %}
+{% endblock %}
+
+{% block module_content %}
+
+{% if queue.parent %}
+<div>
+    <span class="content-label">{% trans %}Parent{% endtrans %}:</span>
+    <span class="content-value"><a href="{% url services_queue_view queue.parent_id %}">{{ queue.parent }}</a></span>
+</div>
+{% endif %}
+{% if agent %}
+{% if queue.default_ticket_status %}
+<div>
+    <span class="content-label">{% trans %}Default Status{% endtrans %}:</span>
+    <span class="content-value"><a href="{% url services_status_view queue.default_ticket_status_id %}">{{ queue.default_ticket_status }}</a></span>
+</div>
+{% endif %}
+{% if queue.waiting_time %}
+<div>
+    <span class="content-label">{% trans %}Waiting time{% endtrans %}:</span>
+    <span class="content-value">{{ queue.waiting_time }} seconds</span>
+</div>
+{% endif %}
+{% endif %}
+
+{% if subqueues %}
+<br />
+<div class="clear">
+    <span class="content-label-head">
+        {% trans %}Contains Queues{% endtrans %}:
+    </span>
+</div>
+{{ services_queue_list(subqueues) }}
+
+{% endif %}
+
+<br />
+
+<form action="" method="post">
+{% csrf_token %}
+    <div class="clear">
+        <span class="content-label-head">
+            {% if tickets %}
+            <input type="checkbox" name="mass-queue-{{ queue.id }}" value="{{ queue.id }}" class="group-control" />
+            {% else %}
+            <input type="checkbox" name="mass-queue-{{ queue.id }}" value="{{ queue.id }}" class="group-control" disabled="true" />
+            {% endif %}
+            <span class="large">{% trans %}Tickets{% endtrans %}:</span>
+            <ul class="mass-form">
+                <input type="hidden" name="massform" value="massform" />
+                 {{ massform.as_ul()|htsafe }}
+                <li>
+                    <input type="submit" value="{% trans %}Save{% endtrans %}" />
+                </li>
+            </ul>
+        </span>
+        {% if not tickets %}
+        <div class="content-list-item spaced-v spaced-h lighter">
+            <em>{% trans %}No Active Tickets{% endtrans %}</em>.
+            <a href="{% url services_ticket_add_by_queue queue.id %}" class="popup-link"><strong>{% trans %}Create a Ticket{% endtrans %}</strong></a>
+        </div>
+        {% endif %}
+    </div>
+    {{ services_ticket_list(tickets, queue, group_by='status') }}
+
+</form>
+{% endblock %}

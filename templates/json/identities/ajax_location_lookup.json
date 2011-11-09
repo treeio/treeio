@@ -1,0 +1,5 @@
+[
+{% for location in locations -%}
+{"label": "{{ location.__unicode__().replace('\"', '\\\"')|htsafe }}", "value": "{{ location.id }}"}{% if not loop.last %},{% endif %}
+{% endfor -%}
+]

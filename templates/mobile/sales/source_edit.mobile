@@ -1,0 +1,44 @@
+{% extends "mobile/sales/page.mobile" %}
+
+{% block title %}{% trans %}Sales Support{% endtrans %}{% endblock %}
+
+{% block module_title %}{{ source }}{% endblock %}
+
+{% block module_subtitle %}{% trans %}Order Source{% endtrans %}{% endblock %}
+
+{% block module_topmenu %}
+<a href="{% url sales_source_add %}" class="top-menu add-link">{% trans %}New Source{% endtrans %}</a>
+<a href="{% url sales_source_view source.id %}" class="top-menu view-link">{% trans %}View{% endtrans %}</a>
+<a href="{% url sales_source_edit source.id %}" class="top-menu edit-link-active">{% trans %}Edit{% endtrans %}</a>
+<a href="{% url sales_source_delete source.id %}" class="top-menu delete-link">{% trans %}Delete{% endtrans %}</a>
+{% endblock %}
+
+{% block sale_order_sources %}
+{% if sources %}
+<span class="sidebar-header">{% trans %}By Source{% endtrans %}</span>
+{% for isource in sources %}
+<a href="{% url sales_source_view isource.id %}" class="sidebar-link {% if isource == source %}sidebar-link-active{% endif %}">{{ isource }}</a>
+{% endfor %}
+{% endif %}
+{% endblock %}
+
+{% block sidebar_right %}
+{% endblock %}
+
+{% block module_content %}
+
+<form action="" method="post" class="content-form">
+{% csrf_token %}
+    <ul class="content-form-fields">
+        {{ form.as_ul()|htsafe }}
+    </ul>
+    <div class="content-form-submit ui-grid-a">
+    <div class="ui-block-a">
+        <input data-theme="b" type="submit" name="save" value="{% trans %}Save{% endtrans %}" />
+    </div>
+    <div class="ui-block-b">
+        <input type="submit" name="cancel" value="{% trans %}Cancel{% endtrans %}" class="cancel" />
+    </div>
+    </div>
+</form>
+{% endblock %}

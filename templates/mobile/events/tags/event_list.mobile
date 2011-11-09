@@ -1,0 +1,18 @@
+<ul data-role="listview" data-inset="true" data-theme="c">
+	{% for event in events %}
+	<li>
+		<a href="{% url events_event_view event.id %}">
+			<img class="ui-li-icon" src="/static/icons/events-active.png"/>
+			<h3>{{ event }}</h3>
+			<p class="ui-li-aside">
+	            {% if event.start %}
+	            {{ event.start|htdatetime }}
+	            {% else %}
+	            {{ event.end|htdatetime }}
+	            {% endif %}
+			</p>
+		
+		</a>
+	</li>
+	{% endfor %}
+</ul>

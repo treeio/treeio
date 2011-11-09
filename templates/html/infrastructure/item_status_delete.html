@@ -1,0 +1,49 @@
+{% extends "html/infrastructure/page.html" %}
+
+{% block title %}{{ item_status|htsafe }} | {% trans %}Items{% endtrans %} | {% trans %}Infrastructure{% endtrans %}{% endblock %}
+
+{% block module_title %}{{ item_status }}{% endblock %}
+{% block module_subtitle %}{% trans %}Item Status{% endtrans %}{% endblock %}
+
+{% block infrastructure_statuses_sidebar -%}
+{% for istatus in statuses %}
+<a href="{% url infrastructure_status_view istatus.id %}" class="sidebar-link {% if istatus == item_status %}sidebar-link-active{% endif %}">{{ istatus }}</a>
+{% endfor %}
+{%- endblock %}
+
+{% block module_topmenu %}
+<a href="{% url infrastructure_status_view item_status.id %}" class="top-menu view-link">{% trans %}View{% endtrans %}</a>
+<a href="{% url infrastructure_status_edit item_status.id %}" class="top-menu edit-link">{% trans %}Edit{% endtrans %}</a>
+<a href="{% url infrastructure_status_delete item_status.id %}" class="top-menu delete-link-active">{% trans %}Delete{% endtrans %}</a>
+{% endblock %}
+
+{% block module_content %}
+
+<div class="delete-object">
+    <span class="larger">{% trans %}Delete this Status{% endtrans %}?</span>
+    <br />
+    <form action="" method="post" class="content-form">
+{% csrf_token %}
+        <ul class="content-form-fields">
+            <li>
+                <label for="trash">
+                    <input id="trash" type="checkbox" name="trash" checked="checked" />
+                    {% trans %}Move to Trash{% endtrans %}
+                </label>
+            </li>
+            <li>
+                <input type="submit" name="delete" value="{% trans %}Yes, Delete{% endtrans %}" />&nbsp;&nbsp;
+                <input type="submit" name="cancel" value="{% trans %}Cancel{% endtrans %}" class="cancel" />
+            </li>
+        </ul>
+    </form>
+</div>
+<div>
+    <span class="content-label">{% trans %}Active{% endtrans %}:</span>
+    <span class="content-value">{% if item_status.active %}Yes{% else %}No{% endif %}</span>
+</div>
+<div>
+    <span class="content-label">{% trans %}Hidden{% endtrans %}:</span>
+    <span class="content-value">{% if item_status.hidden %}Yes{% else %}No{% endif %}</span>
+</div>
+{% endblock %}

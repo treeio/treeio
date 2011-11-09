@@ -1,0 +1,30 @@
+{% if opportunities %}
+    <ul data-role="listview" data-inset="true" data-theme="c">
+
+        {% for opportunity in opportunities %}
+    
+            <li>
+                <a href="{% url sales_opportunity_view opportunity.id %}">
+                
+                	<h3>{{ opportunity.contact }}</h3>
+               
+	               	<p class="ui-li-aside">
+	               		{{ opportunity.status }}
+	               	</p>
+	               	
+	                <p>
+	                	{% trans %}Products Interested{% endtrans %} - 
+		                {% for product in opportunity.products_interested.all()[:3] %}
+		                {{ product }}
+		                {% if not loop.last %}, {% endif %}
+		                {% if loop.index == 3 %}...{% endif %}
+		                {% endfor %}
+		            </p>
+                </a>
+                
+            </li>
+            {% endfor %}
+
+        </tbody>
+    </table>
+{% endif %}

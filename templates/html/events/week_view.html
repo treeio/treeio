@@ -1,0 +1,60 @@
+{% extends "html/events/page.html" %}
+
+{% block title %}{% trans %}Week{% endtrans %} | {% trans %}Calendar{% endtrans %}{% endblock %}
+
+{% block module_title %}{% trans %}Calendar{% endtrans %}{% endblock %}
+
+{% block class_week %}sidebar-link-active{% endblock %}
+
+{% block module_content %}
+
+<form action="" method="get">
+    <ul class="calendar-goto-form-fields">
+        {{ gotoform|htsafe }}
+    </ul>
+    <input type="submit" value="{% trans %}Submit{% endtrans %}">
+    {% if not istoday %}
+    <span style="padding-left: 3em;">
+        {% trans %}Go to{% endtrans %} <a href="{% url events_week %}">{% trans %}Today{% endtrans %}</a>
+    </span>
+    {% endif %}
+</form>
+<div class="calendar-week-header">
+    <div class="calendar-month-prev">
+        <a href="{% url events_week %}?date_year={{ date_previous.year }}&date_month={{ date_previous.month }}&date_day={{ date_previous.day }}" class="lighter">&larr;&nbsp;{% trans %}Week{% endtrans %} {{ date_previous.isocalendar()[1] }}</a>
+    </div>
+    {{ start_date|htdate }} &mdash; {{ end_date|htdate }}
+    <div class="calendar-month-next">
+        <a href="{% url events_week %}?date_year={{ date_next.year }}&date_month={{ date_next.month }}&date_day={{ date_next.day }}" class="lighter">{% trans %}Week{% endtrans %} {{ date_next.isocalendar()[1] }}&nbsp;&rarr;</a>
+    </div>
+</div>
+<table class="calendar-week-table">
+    <tr>
+        <th scope="col" class="row-labels"></th>
+        {% for day in week %}
+        <th scope="col">{{ day|htdate('l d/m') }}</th>
+        {% endfor %}
+    </tr>
+    {% for hour in hours %}
+    <tr>
+        <td class="calendar-row-label content-list-item">{{ "%02d:00"|format(hour) }}</td>
+        {% for date in week %}
+        {% if now.date() == date and now.hour == hour %}
+        <td class="calendar-hour-now content-list-item">
+        {% else %}
+        {% if now.date() == date %}
+        <td class="calendar-hour-today content-list-item">
+        {% else %}
+        <td class="calendar-hour content-list-item">
+        {% endif %}
+        {% endif %}
+        {{ events.render_for_datehour(date, hour) }}
+        <span class="content-list-item-actions" style="position: relative; top: 15px;">
+            <a href="{% url events_event_add_to_date date.isoformat(), hour %}" class="inline-link add-link" style="padding: 0; width: 16px; height: 16px;"></a>
+        </span>
+        </td>
+        {% endfor %}
+    </tr>
+    {% endfor %}
+</table>
+{% endblock %}

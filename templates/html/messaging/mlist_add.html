@@ -1,0 +1,29 @@
+{% extends "html/messaging/page.html" %}
+
+{% block title %}{% trans %}Mailing List{% endtrans %} | {% trans %}Messaging{% endtrans %}{% endblock %}
+
+{% block module_topmenu %}
+<a href="{% url messaging_message_compose %}" class="top-menu add-link">{% trans %}New Message{% endtrans %}</a>
+<a href="{% url messaging_mlist_add %}" class="top-menu add-link-active">{% trans %}New Mailing List{% endtrans %}</a>
+{% endblock %}
+
+{% block module_content %}
+
+
+    <form action="" method="post" class="content-form">
+{% csrf_token %}
+        <ul class="content-form-fields">
+	        
+            {{form.as_ul()|htsafe}}
+            {#			{{ show_hint('messaging_mlist', form) }}#}
+			
+				
+							
+        </ul>
+		
+        <div class="content-form-submit">
+            <input type="submit" value="{% trans %}Create Mailing List{% endtrans %}" class="submit" />
+        </div>
+    </form>
+
+{% endblock %}

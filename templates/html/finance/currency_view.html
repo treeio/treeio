@@ -1,0 +1,50 @@
+{% extends "html/finance/page.html" %}
+
+{% block title %}{{ currency|htsafe }} | {% trans %}Currency{% endtrans %} | {% trans %}Finance{% endtrans %}{% endblock %}
+{% block class_admin_settings %}sidebar-link-active{% endblock %}
+{% block module_title %}{{ currency.name }}{% endblock %}
+{% block module_subtitle %}{% trans %}Currency{% endtrans %}{% endblock %}
+
+{% block module_topmenu %}
+<a class="top-menu view-link-active" href="{% url finance_currency_view currency.id %}">{% trans %}View{% endtrans %}</a>
+<a class="top-menu edit-link" href="{% url finance_currency_edit currency.id %}">{% trans %}Edit{% endtrans %}</a>
+<a class="top-menu delete-link" href="{% url finance_currency_delete currency.id %}">{% trans %}Delete{% endtrans %}</a>
+{% endblock %}
+
+{% block sidebar_right %}
+
+<span class="sidebar-header-first">{% trans %}Permissions{% endtrans %}</span>
+<div class="sidebar-block">
+    {{ permission_block(currency) }}
+</div>
+<span class="sidebar-header-right">{% trans %}Links{% endtrans %}</span>
+<div class="sidebar-block">
+    {{ link_block(currency) }}
+</div>
+<span class="sidebar-header-right">{% trans %}Subscribers{% endtrans %}</span>
+<div class="sidebar-block">
+    {{ subscription_block(currency) }}
+</div>
+<span class="sidebar-header-right">{% trans %}Download as:{% endtrans %}<br />{% if '?' in request.get_full_path() %}<a class="pdf-block-link" href="{{ request.get_full_path()|replace('.ajax','').replace('?','.pdf?') }}"{% else %}<a class="pdf-block-link" href="{{ request.get_full_path()|replace('.ajax','') }}.pdf"{% endif %} target="_self">PDF</a>
+  </span></span>
+{% endblock %}
+
+{% block module_content %}
+
+<div>
+    <span class="content-label">{% trans %}Name{% endtrans %}:</span>
+    <span class="content-value">{{currency.code}}</span>
+</div>
+<div>
+    <span class="content-label">{% trans %}Symbol{% endtrans %}:</span>
+    <span class="content-value">{% if currency.symbol %}{{currency.symbol}}{% else %}{% trans %}None Set{% endtrans %}{% endif %}</span>
+</div>
+<div>
+    <span class="content-label">{% trans %}Code{% endtrans %}:</span>
+    <span class="content-value">{{currency.code}}</span>
+</div>
+<div>
+    <span class="content-label">{% trans %}Exchange Factor{% endtrans %}:</span>
+    <span class="content-value">{{currency.factor}}</span>
+</div>
+{% endblock %}

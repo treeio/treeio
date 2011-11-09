@@ -1,0 +1,87 @@
+{% extends "mobile/page.mobile" %}
+
+{% block title %}{% trans %}Service Support{% endtrans %}{% endblock %}
+
+{% block content %}
+
+<div data-role="collapsible" data-collapsed="true" data-theme="a">
+<h3>{% trans %}Menu{% endtrans %}</h3>
+
+<div class="module-sidebar">
+	
+		<a href="{% url services_index %}" class="sidebar-link {% block class_all %}{% endblock %}">{% trans %}All Tickets{% endtrans %}</a>
+        <a href="{% url services_index_owned %}" class="sidebar-link {% block class_owned %}{% endblock %}">{% trans %}Owned by me{% endtrans %}</a>
+        {% if agent %}
+        <a href="{% url services_index_assigned %}" class="sidebar-link {% block class_assigned %}{% endblock %}">{% trans %}Assigned to me{% endtrans %}</a>
+        {% endif %}
+
+        {% block service_ticket_queues %}
+        {% if queues %}
+        <span class="sidebar-header">{% trans %}Queues{% endtrans %}</span>
+        {% for queue in queues %}
+        <a href="{% url services_queue_view queue.id %}" class="sidebar-link">{{ queue }}</a>
+        {% endfor %}
+        {% endif %}
+        {% endblock %}
+
+        {% block service_ticket_statuses %}
+        {% if statuses %}
+        <span class="sidebar-header">{% trans %}By Status{% endtrans %}</span>
+        {% for status in statuses %}
+        <a href="{% url services_status_view status.id %}" class="sidebar-link">{{ status }}</a>
+        {% endfor %}
+        {% endif %}
+        {% endblock %}
+
+        <span class="sidebar-header">{% trans %}Services{% endtrans %}</span>
+        <a href="{% url services_service_catalogue %}" class="sidebar-link {% block class_service_catalogue %}{% endblock %}">{% trans %}Service Catalogue{% endtrans %}</a>
+        <a href="{% url services_sla_index %}" class="sidebar-link {% block class_sla_index %}{% endblock %}">{% trans %}SLAs{% endtrans %}</a>
+        {% if request.user.get_profile().is_admin('treeio.services') %}
+        <span class="sidebar-header">{% trans %}Administration{% endtrans %}</span>
+        <a href="{% url services_settings_view %}" class="sidebar-link {% block class_admin_settings %}{% endblock %}">{% trans %}Settings{% endtrans %}</a>
+        <a href="{% url services_agent_index %}" class="sidebar-link {% block class_agent_index %}{% endblock %}">{% trans %}Agents{% endtrans %}</a>
+        {% endif %}
+	
+</div>
+</div>
+
+<div class="module-content">
+	
+	<div class="module-content-fill">
+	
+		<div class="title-block">
+			
+			<div class="title" id="module_title">{% block module_title %}{% trans %}Service Support{% endtrans %}{% endblock %}</div>
+			
+			<div class="subtitle-block" id="module_subtitle">{% block module_subtitle %}{% endblock %}</div>
+			
+			<div class="module-top-menu-inline">
+			{% block module_topmenu %}
+				<a href="{% url services_ticket_add %}" class="top-menu add-link">{% trans %}New Ticket{% endtrans %}</a>
+			{% endblock %}
+			</div>
+		    {{ help_link() }}
+			
+		</div>
+		
+        <div id="module_content">
+            
+			<div class="module-content-inner">
+            <!-- module_content_inner -->
+			{% block module_content %}{% endblock %}
+            <!-- /module_content_inner -->
+			</div>
+			
+			<div class="module-sidebar-right" id="sidebar_right">
+			{% block sidebar_right %}{% endblock %}
+			</div>
+        
+        </div>
+		
+	</div>
+
+</div>
+
+<div class="clear"></div>
+
+{% endblock %}

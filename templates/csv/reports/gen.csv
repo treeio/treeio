@@ -1,0 +1,3 @@
+{% for field in model.fields if field.display %}{{field.get_human_name()}}{% if not loop.last %},{% endif %}{% endfor %}
+{% for s in set %}{% for field in model.fields if field.display %}{% set value = s.get_field_value(field.name) %}{% if value %}{% if value is sequence and value is not string %}{% for v in value %}{{v|string}};{% endfor %},{% else %}{{ value }},{% endif %}{% else %},{% endif %}{% endfor %}
+{% endfor %}

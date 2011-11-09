@@ -1,0 +1,30 @@
+{% extends "mobile/core/page.mobile" %}
+
+{% block title %}{% trans %}Settings{% endtrans %} | {% trans %}Administration{% endtrans %}{% endblock %}
+
+{% block class_settings %}sidebar-link-active{% endblock %}
+
+{% block module_title %}{% trans %}Settings{% endtrans %}{% endblock %}
+
+{% block module_topmenu %}
+<a href="{% url core_settings_view %}" class="top-menu view-link">{% trans %}View{% endtrans %}</a>
+<a href="{% url core_settings_edit %}" class="top-menu edit-link-active">{% trans %}Edit{% endtrans %}</a>
+{% endblock %}
+
+{% block module_content %}
+
+<form action="" method="post" class="content-form" enctype="multipart/form-data">
+{% csrf_token %}
+    <ul class="content-form-fields">
+        {{ form.as_ul()|htsafe }}
+    </ul>
+    <div class="content-form-submit ui-grid-a">
+    <div class="ui-block-a">
+        <input data-theme="b" type="submit" name="save" value="{% trans %}Save{% endtrans %}" />
+    </div>
+    <div class="ui-block-b">
+        <input type="submit" name="cancel" value="{% trans %}Cancel{% endtrans %}" class="cancel" />
+    </div>
+    </div>
+</form>
+{% endblock %}

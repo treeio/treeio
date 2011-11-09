@@ -1,0 +1,16 @@
+{% extends "mobile/core/page.mobile" %}
+
+{% block title %}{% trans %}Modules{% endtrans %} | {% trans %}Administration{% endtrans %}{% endblock %}
+
+{% block class_modules %}sidebar-link-active{% endblock %}
+
+{% block module_title %}{% trans %}Modules{% endtrans %}{% endblock %}
+
+{% block module_topmenu %}
+{% endblock %}
+
+{% block module_content %}
+
+{{ administration_module_list(modules) }}
+
+{% endblock %}

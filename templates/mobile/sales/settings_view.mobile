@@ -1,0 +1,154 @@
+{% extends "mobile/sales/page.mobile" %}
+
+{% block title %}{% trans %}Settings{% endtrans %} | {% trans %}Service Support{% endtrans %}{% endblock %}
+
+{% block class_admin_settings %}sidebar-link-active{% endblock %}
+
+{% block module_title %}{% trans %}Settings{% endtrans %}{% endblock %}
+
+{% block module_topmenu %}
+<a href="{% url sales_status_add %}" class="top-menu add-link">{% trans %}New Status{% endtrans %}</a>
+<a href="{% url sales_source_add %}" class="top-menu add-link">{% trans %}New Source{% endtrans %}</a>
+<a href="{% url sales_settings_view %}" class="top-menu view-link-active">{% trans %}View{% endtrans %}</a>
+<a href="{% url sales_settings_edit %}" class="top-menu edit-link">{% trans %}Edit{% endtrans %}</a>
+{% endblock %}
+
+{% block module_content %}
+<div>
+    <span class="content-label">{% trans %}Base Currency{% endtrans %}:</span>
+    <span class="content-value">
+        {% if default_currency %}
+        {{ default_currency }}
+        {% else %}None{% endif %}
+    </span>
+</div>
+
+<div>
+    <span class="content-label">{% trans %}Default Lead Status{% endtrans %}:</span>
+    <span class="content-value">
+        {% if default_lead_status %}
+        <a href="{% url sales_status_view default_lead_status.id %}">{{ default_lead_status }}</a>
+        {% else %}None{% endif %}
+    </span>
+</div>
+<div>
+    <span class="content-label">{% trans %}Default Opportunity Status{% endtrans %}:</span>
+    <span class="content-value">
+        {% if default_opportunity_status %}
+        <a href="{% url sales_status_view default_opportunity_status.id %}">{{ default_opportunity_status }}</a>
+        {% else %}None{% endif %}
+    </span>
+</div>
+<div>
+    <span class="content-label">{% trans %}Default Order Status{% endtrans %}:</span>
+    <span class="content-value">
+        {% if default_order_status %}
+        <a href="{% url sales_status_view default_order_status.id %}">{{ default_order_status }}</a>
+        {% else %}None{% endif %}
+    </span>
+</div>
+<div>
+    <span class="content-label">{% trans %}Default Order Source{% endtrans %}:</span>
+    <span class="content-value">
+        {% if default_order_source %}
+        <a href="{% url sales_source_view default_order_source.id %}">{{ default_order_source }}</a>
+        {% else %}{% trans %}None{% endtrans %}{% endif %}
+    </span>
+</div>
+<div>
+    <span class="content-label">{% trans %}Default Order Product{% endtrans %}:</span>
+    <span class="content-value">
+        {% if default_order_product %}
+        <a href="{% url sales_product_view default_order_product.id %}">{{ default_order_product }}</a>
+        {% else %}{% trans %}None{% endtrans %}{% endif %}
+    </span>
+</div>
+<div>
+    <span class="content-label">{% trans %}Order Fulfilment Status{% endtrans %}:</span>
+    <span class="content-value">
+        {% if order_fulfil_status %}
+        <a href="{% url sales_status_view default_order_status.id %}">{{ order_fulfil_status }}</a>
+        {% else %}{% trans %}None{% endtrans %}{% endif %}
+    </span>
+</div>
+{% if sources %}
+<br />
+<div class="clear">
+    <span class="content-label-head">{% trans %}Sources{% endtrans %}:</span>
+</div>
+{% for source in sources %}
+<div class="content-list-item content-list-item-{{ loop.cycle('odd', 'even') }}">
+    <div class="content-list-tick"></div>
+    <span class="content-list-item-name">
+        <a href="{% url sales_source_view source.id %}">{{ source }}</a>
+        <span class="content-list-item-group">
+            <span class="lighter small">{% if source.active %}{% trans %}Active{% endtrans %}{% else %}{% trans %}Inactive{% endtrans %}{% endif %},</span>
+            <span class="lighter small">{% if source.hidden %}{% trans %}Hidden{% endtrans %}{% else %}{% trans %}Visible{% endtrans %}{% endif %}</span>
+        </span>
+    </span>
+    <span class="content-list-item-actions">
+        {% if user.get_profile().has_permission(source, mode='w') %}
+        <a href="{% url sales_source_edit source.id %}" class="inline-link edit-link">{% trans %}Edit{% endtrans %}</a>
+        {% endif %}
+    </span>
+</div>
+{% endfor %}
+
+{% endif %}
+
+{% if statuses %}
+<br />
+<div class="clear">
+    <span class="content-label-head">{% trans %}Statuses{% endtrans %}:</span>
+</div>
+{% for status in statuses %}
+<div class="content-list-item content-list-item-{{ loop.cycle('odd', 'even') }}">
+    <div class="content-list-tick"></div>
+    <span class="content-list-item-name">
+        <a href="{% url sales_status_view status.id %}">{{ status }}</a>
+		    <br />
+        <span class="lighter small">Available For:</span>
+        <span class="lighter small">{% if status.use_leads %}{% trans %}Leads{% endtrans %},{% endif %}</span>
+        <span class="lighter small">{% if status.use_opportunities %}{% trans %}Opportunities{% endtrans %},{% endif %}</span>
+        <span class="lighter small">{% if status.use_sales %}{% trans %}Sale Orders{% endtrans %},{% endif %}</span>
+			
+    		<span class="content-list-item-group">
+          <span class="lighter small">{% if status.active %}{% trans %}Active{% endtrans %}{% else %}{% trans %}Inactive{% endtrans %}{% endif %},</span>
+          <span class="lighter small">{% if status.hidden %}{% trans %}Hidden{% endtrans %}{% else %}{% trans %}Visible{% endtrans %}{% endif %}</span>
+    		</span>
+    </span>
+    <span class="content-list-item-actions">
+        {% if user.get_profile().has_permission(status, mode='w') %}
+        <a href="{% url sales_status_edit status.id %}" class="inline-link edit-link">{% trans %}Edit{% endtrans %}</a>
+        {% endif %}
+    </span>
+</div>
+{% endfor %}
+
+{% endif %}
+
+{% if currencies %}
+<br />
+<div class="clear">
+    <span class="content-label-head">{% trans %}Currencies{% endtrans %}:</span>
+</div>
+{% for c in currencies %}
+<div class="content-list-item content-list-item-{{ loop.cycle('odd', 'even') }}">
+    <div class="content-list-tick">
+    </div>
+    <span class="content-list-item-name">
+        <a href="{% url finance_currency_view c.id %}">{{ c }}</a>
+        <span class="content-list-item-group">
+            <span class="lighter small">{{ c.name }}{% if c.is_default %}<strong>&nbsp;{% trans %}Base{% endtrans %}</strong>{% endif %}</span>
+        </span>
+    </span>
+    <span class="content-list-item-actions">
+        {% if user.get_profile().has_permission(product, mode='w') %}
+        <a href="{% url finance_currency_edit c.id %}" class="inline-link edit-link">{% trans %}Edit{% endtrans %}</a>
+        {% endif %}
+    </span>
+</div>
+{% endfor %}
+
+{% endif %}
+{% endblock %}

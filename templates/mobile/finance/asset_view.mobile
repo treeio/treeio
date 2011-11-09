@@ -1,0 +1,84 @@
+{% extends "mobile/finance/page.mobile" %}
+
+{% block title %}{{ asset|htsafe }} | {% trans %}Finance{% endtrans %}{% endblock %}
+
+{% block module_title %}{{ asset.name }}{% endblock %}
+{% block module_subtitle %}{% trans %}Asset{% endtrans %}{% endblock %}
+
+{% block module_topmenu %}
+<a class="top-menu view-link-active" href="{% url finance_asset_view asset.id %}">{% trans %}View{% endtrans %}</a>
+<a class="top-menu edit-link" href="{% url finance_asset_edit asset.id %}">{% trans %}Edit{% endtrans %}</a>
+<a class="top-menu delete-link" href="{% url finance_asset_delete asset.id %}">{% trans %}Delete{% endtrans %}</a>
+{% endblock %}
+
+{% block sidebar_right %}
+{% endblock %}
+
+{% block module_content %}
+
+<span class="content-label">{% trans %}Asset Type{% endtrans %}:</span>
+<span class="content-value">
+    {{ asset.asset_type|title() }}
+</span>
+<div>
+    <span class="content-label">{% trans %}Inital Value{% endtrans %}:</span>
+    <span class="content-value">{{ asset.initial_value|currency_format }}</span>
+</div>
+{% if asset.lifetime %}
+<div>
+    <span class="content-label">{% trans %}Lifetime (Years){% endtrans %}:</span>
+    <span class="content-value">{{ asset.lifetime }}</span>
+</div>
+{% endif %}
+
+{% if asset.endlife_value %}
+<div>
+    <span class="content-label">{% trans %}End of Life Value{% endtrans %}:</span>
+    <span class="content-value">{{ asset.endlife_value|currency_format }}</span>
+</div>
+{% endif %}
+
+{% if asset.depreciation_type %}
+<div>
+    <span class="content-label">{% trans %}Depreciation Type{% endtrans %}:</span>
+    <span class="content-value">{{ asset.depreciation_type|title() }}</span>
+</div>
+{% endif %}
+
+{% if asset.depreciation_rate %}
+<div>
+    <span class="content-label">{% trans %}Depreciation Rate{% endtrans %}:</span>
+    <span class="content-value">{{ asset.depreciation_rate }}</span>
+</div>
+{% endif %}
+
+{% if asset.check_depreciate() %}
+<div>
+    <span class="content-label">{% trans %}Depreciation{% endtrans %}:</span>
+    <span class="content-value">{{ asset.get_depreciation()|currency_format }}</span>
+</div>
+{% endif %}
+
+{% if asset.purchase_date %}
+<div>
+    <span class="content-label">{% trans %}Purchase Date{% endtrans %}:</span>
+    <span class="content-value">{{ asset.purchase_date|htdate }}</span>
+</div>
+{% endif %}
+
+<div>
+    <span class="content-label">{% trans %}Current Value{% endtrans %}:</span>
+    <span class="content-value">{{ asset.set_current_value()|currency_format }}</span>
+</div>
+<div>
+    <span class="content-label">{% trans %}Owner{% endtrans %}:</span>
+    <span class="content-value"><a href="{% url identities_contact_view asset.owner.id %}" class="popup-link">{{ asset.owner }}</a></span>
+</div>
+{% if asset.details %}
+<div>
+    <span class="content-label">{% trans %}Details{% endtrans %}:</span>
+    <span class="content-details">{{ asset.details|htsafe }}</span>
+</div>
+{% endif %}
+
+{% endblock %}

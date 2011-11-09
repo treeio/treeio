@@ -1,0 +1,28 @@
+{% extends "mobile/documents/page.mobile" %}
+
+{% block title %}{% trans %}Upload File{% endtrans %} | {% trans %}Documents{% endtrans %}{% endblock %}
+
+{% block module_topmenu %}
+<a class="top-menu add-link" href="{% url documents_folder_add %}">{% trans %}New Folder{% endtrans %}</a>
+<a class="top-menu add-link" href="{% url documents_document_add %}">{% trans %}New Document{% endtrans %}</a>
+<a class="top-menu add-link" href="{% url documents_weblink_add %}">{% trans %}New Web Link{% endtrans %}</a>
+<a class="top-menu add-link-active" href="{% url documents_file_upload %}">{% trans %}Upload File{% endtrans %}</a>
+{% endblock %}
+
+{% block module_content %}
+
+<form action="" method="post" class="content-form" enctype="multipart/form-data">
+{% csrf_token %}
+    <ul class="content-form-fields">
+        {{ form|htsafe }}
+    </ul>
+    <div class="content-form-submit ui-grid-a">
+    <div class="ui-block-a">
+        <input data-theme="b" type="submit" name="save" value="{% trans %}Upload{% endtrans %}" />
+    </div>
+    <div class="ui-block-b">
+        <input type="submit" name="cancel" value="{% trans %}Cancel{% endtrans %}" class="cancel" />
+    </div>
+    </div>
+</form>
+{% endblock %}

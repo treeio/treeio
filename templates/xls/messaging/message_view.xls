@@ -1,0 +1,7 @@
+title,body,author,stream,reply_to
+{% if message.title %}{{ message.title|replace(',','')|replace('"','')|replace('
+','')|safe }},{% else %},{% endif %}{% if message.body %}{{ message.body|replace(',','')|replace('\n', '').replace('\r', '').replace('"', '\"')|replace('
+','')|safe }},{% else %},{% endif %}{% if message.author %}{{ message.author|replace(',','')|replace('"','')|replace('
+','')|safe }},{% else %},{% endif %}{% if message.stream %}{{ message.stream|replace(',','')|replace('"','')|replace('
+','')|safe }},{% else %},{% endif %}{% if message.reply_to %}{{ message.reply_to|replace(',','')|replace('"','')|replace('
+','')|safe }}{% else %},{% endif %}

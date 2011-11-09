@@ -1,0 +1,14 @@
+{% if pages %}
+<div class="paginator spaced-v">
+    <span class="spaced-h">{% trans %}Pages{% endtrans %}:</span>
+    {% for page in pages %}
+    {% if page['mover'] %}
+    <a href="{{ url }}page_skip={{ page['skip'] }}"><span class="pager-pagelink
+    {%- if skip == page['skip'] %} pager-mover-current{% else %} pager-mover{% endif %}">{{ page['page']|htsafe }}</span></a>
+    {% else %}
+    <a href="{{ url }}page_skip={{ page['skip'] }}"><span class="pager-pagelink
+    {%- if skip == page['skip'] %} pager-current{% endif %}">{{ page['page']|htsafe }}</span></a>
+    {% endif %}
+    {% endfor %}
+</div>
+{% endif %}

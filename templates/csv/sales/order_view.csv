@@ -1,0 +1,17 @@
+reference,datetime,client,opportunity,payment,source,assigned,status,details,name,product_type,code,quantity,discount
+{% if order.reference %}{{order.reference|replace(',','')|replace('"','')|replace('
+','')|safe}},{% else %},{% endif %}{% if order.datetime %}{{order.datetime|replace(',','')|replace('"','')|replace('
+','')|safe}},{% else %},{% endif %}{% if order.client %}{{order.client|replace(',','')|replace('"','')|replace('
+','')|safe}},{% else %},{% endif %}{% if order.opportunity %}{{order.opportunity|replace(',','')|replace('"','')|replace('
+','')|safe}},{% else %},{% endif %}{% if order.payment %}{{order.payment|replace(',','')|replace('"','')|replace('
+','')|safe}},{% else %},{% endif %}{% if order.source %}{{order.source|replace(',','')|replace('"','')|replace('
+','')|safe}},{% else %},{% endif %}{% if order.assigned %}{% for x in order.assigned.all() %}{{x|replace(',','')|replace('"','')|replace('
+','')|safe}};{% endfor %},{% endif %}{% if order.status %}{{order.status|replace(',','')|replace('"','')|replace('
+','')|safe}},{% else %},{% endif %}{% if order.details %}{{order.details|replace(',','')|replace('\n', '').replace('\r', '').replace('"', '\"')|replace('
+','')|safe}}{% else %},{% endif %}{% for product in ordered_products %}{% if product.name %}{{product.name|replace(',','')|replace('"','')|replace('
+','')|safe}},{% else %},{% endif %}{% if product.product_type %}{{product.product_type|replace(',','')|replace('"','')|replace('
+','')|safe}},{% else %},{% endif %}{% if product.code %}{{product.code|replace(',','')|replace('"','')|replace('
+','')|safe}},{% else %},{% endif %}{% if product.quantity %}{{product.quantity|replace(',','')|replace('"','')|replace('
+','')|safe}},{% else %},{% endif %}{% if product.discount %}{{product.discount|replace(',','')|replace('"','')|replace('
+','')|safe}}{% else %},{% endif %}
+{% endfor %}

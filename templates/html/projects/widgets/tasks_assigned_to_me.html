@@ -1,0 +1,18 @@
+{% extends "html/base_widget.html" %}
+
+{% block widget_title %}{% trans %}Tasks assigned to me{% endtrans %}{% endblock %}
+
+{% block widget_content %}
+
+{% set render_tasks = tasks.filter(assigned=request.user.get_profile()) %}
+{% if render_tasks %}
+{{ projects_task_list(render_tasks, nomass=True, by_milestone=True, by_assigned=True, noheader=True) }}
+{% else %}
+<div class="content-list-item">
+  <div class="spaced-h spaced-v">
+    <em>{% trans %}No Active Tasks{% endtrans %}</em>
+  </div>
+</div>
+{% endif %}
+
+{% endblock %}

@@ -1,0 +1,14 @@
+reference,name,caller,urgency,priority,status,service,sla,queue,assigned,message,details
+{% for ticket in tickets %}{% if ticket.reference %}{{ticket.reference|replace(',','')|replace('"','')|replace('
+','')|safe}},{% else %},{% endif %}{% if ticket.name %}{{ticket.name|replace(',','')|replace('"','')|replace('
+','')|safe}},{% else %},{% endif %}{% if ticket.caller %}{{ticket.caller|replace(',','')|replace('"','')|replace('
+','')|safe}},{% else %},{% endif %}{% if ticket.urgency %}{{ticket.urgency|replace(',','')|replace('"','')|replace('
+','')|safe}},{% else %},{% endif %}{% if ticket.priority %}{{ticket.priority|replace(',','')|replace('"','')|replace('
+','')|safe}},{% else %},{% endif %}{% if ticket.status %}{{ticket.status|replace(',','')|replace('"','')|replace('
+','')|safe}},{% else %},{% endif %}{% if ticket.service %}{{ticket.service|replace(',','')|replace('"','')|replace('
+','')|safe}},{% else %},{% endif %}{% if ticket.sla %}{{ticket.sla|replace(',','')|replace('"','')|replace('
+','')|safe}},{% else %},{% endif %}{% if ticket.queue %}{{ticket.queue|replace(',','')|replace('"','')|replace('
+','')|safe}},{% else %},{% endif %}{% if ticket.assigned %}{% for x in ticket.assigned.all() %}{{x|replace(',','')|replace('"','')|replace('
+','')|safe}};{% endfor %},{% endif %}{% if ticket.message %}{{ticket.message|replace(',','')|replace('"','')|replace('
+','')|safe}},{% else %},{% endif %}{% if ticket.details %}{{ticket.details|replace(',','')|replace('"','').replace('\n', '').replace('\r', '').replace('"', '\"')|safe}}{% endif %}
+{% endfor %}

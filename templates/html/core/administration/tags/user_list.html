@@ -1,0 +1,23 @@
+{% for user in users %}
+{% set contact = user.get_contact() %}
+<div class="content-list-item content-list-item-{{ loop.cycle('odd', 'even') }}">
+    <div class="content-list-tick">
+    </div>
+    <span class="content-list-item-name">
+        <a href="{% url core_admin_user_view user.id %}">{{ user.get_username() }}</a>
+        {% if contact %}
+        <a href="{% url identities_contact_view contact.id %}" class="author-link small">{{ contact }}</a>
+        {% endif %}
+        <span class="content-list-item-group">
+            {%- if user.default_group %}
+            <a href="{% url core_admin_group_view user.default_group_id %}" class="group-link">{{ user.default_group }}</a>
+            {%- endif %}
+        </span>
+    </span>
+    <span class="content-list-item-actions">
+        {% if request.user.get_profile().is_admin() %}
+        <a href="{% url core_admin_user_edit user.id %}" class="inline-link edit-link">{% trans %}Edit{% endtrans %}</a>
+        {% endif %}
+    </span>
+</div>
+{% endfor %}

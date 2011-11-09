@@ -1,0 +1,10 @@
+equity_type,issue_price,sell_price,issuer,owner,amount,purchase_date,details
+{% for equity in equities %}{% if equity.equity_type %}{{equity.equity_type|replace(',','')|replace('"','')|replace('
+','')|safe}},{% else %},{% endif %}{% if equity.issue_price %}{{equity.issue_price}},{% else %},{% endif %}{% if equity.sell_price %}{{equity.sell_price|replace('
+','')|safe}},{% else %},{% endif %}{% if equity.issuer %}{{equity.issuer|replace(',','')|replace('"','')|replace('
+','')|safe}},{% else %},{% endif %}{% if equity.owner %}{{equity.owner|replace(',','')|replace('"','')|replace('
+','')|safe}},{% else %},{% endif %}{% if equity.amount %}{{equity.amount|replace('
+','')|safe}},{% else %},{% endif %}{% if equity.purchase_date %}{{equity.purchase_date|replace(',','')|replace('
+','')|safe}},{% else %},{% endif %}{% if equity.details %}{{equity.details|replace(',','')|replace('\n', '').replace('\r', '').replace('"', '\"')|replace('
+','')|safe}}{% else %},{% endif %}
+{% endfor %}

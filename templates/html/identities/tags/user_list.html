@@ -1,0 +1,22 @@
+{% for user in users %}
+{% set contact = user.get_contact() %}
+<div class="content-list-item content-list-item-{{ loop.cycle('odd', 'even') }}">
+    <div class="content-list-tick">
+    </div>
+    <span class="content-list-item-name">
+        <a href="{% url identities_user_view user.id %}">{{ user.get_username() }}</a>
+        {% if contact %}
+        <a href="{% url identities_contact_view contact.id %}" class="author-link small">{{ contact }}</a>
+        {% endif %}
+        {% if not skip_group %}
+        <span class="content-list-item-group">
+            {%- if user.default_group %}
+            <a href="{% url identities_group_view user.default_group_id %}" class="group-link">{{ user.default_group }}</a>
+            {%- endif %}
+        </span>
+        {% endif %}
+    </span>
+    <span class="content-list-item-actions">
+    </span>
+</div>
+{% endfor %}
