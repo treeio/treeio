@@ -18,9 +18,8 @@ Installation
 
 In short ::
 
-	make
-
-    make install
+     make
+     make install
 
 For more details see INSTALL
 
