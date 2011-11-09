@@ -16,9 +16,10 @@ For more details see LICENSE.
 Installation
 ============
 
-In short::
+In short ::
 
 	make
+
     make install
 
 For more details see INSTALL
