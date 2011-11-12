@@ -3,7 +3,7 @@ MYAPP=treeio
 PIDFILE=/var/run/${MYAPP}_fcgi.pid
 SOCKET=/tmp/${MYAPP}.fcgi
 # Site settings
-SETTINGS=treeio.settings-prod
+SETTINGS=treeio.settings
 # Maximum requests for a child to service before expiring
 #MAXREQ=100
 # Spawning method - prefork or threaded
