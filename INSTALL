@@ -4,16 +4,22 @@ Installation
 
 1. Prerequisites
 ================
-    
-    Tree.io needs a bunch of Python modules, but you probably
-    don't need to worry with that - it'll build most of them.
 
-    Although you need to make sure you've got a few things for
+    Tree.io supports Linux and Mac OS X. Windows is not officially
+    supported, although it is possible to install it on Win.
+
+    Supported version of Python is 2.5+ or better.
+    
+    Tree.io also needs a bunch of Python modules, but you probably
+    don't need to worry with that - it'll download and build most
+    of them automatically.
+
+    However you do need to make sure you've got a few things for
     Tree.io to compile some of the modules. Specifically, we need
     to have all the requirements for lxml and PIL (Python Imaging
     Library).
 
-    On a Debian-based systems you can simply do::
+    On a Debian-based system you can simply do:
 
         sudo apt-get install build-essential python-dev
         sudo apt-get build-dep python-lxml python-imaging
@@ -30,7 +36,7 @@ Installation
 2. Building models
 ==================
 
-    Once you have all the prerequisites, just run ::
+    Once you have all the prerequisites, just run:
     
         make
 
