@@ -773,14 +773,13 @@ class OrderFilterForm(forms.ModelForm):
         self.fields['source'].required = False
         self.fields['source'].label = _("Source")
                 
+        self.fields['assigned'].label = _("Assigned")
+        self.fields['assigned'].widget.attrs.update({'class': 'multicomplete', 
+                                                     'callback': reverse('identities_ajax_user_lookup')})
         if 'assigned' in skip:
             del self.fields['assigned']
         else:
-            self.fields['assigned'].label = _("Assigned to")
             self.fields['assigned'].help_text = ""
-            self.fields['assigned'].required = False
-            self.fields['assigned'].widget.attrs.update({'class': 'autocomplete', 
-                                                   'callback': reverse('identities_ajax_user_lookup')}) 
             
     class Meta:
         "Order Filter Form"
