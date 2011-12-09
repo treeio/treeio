@@ -160,7 +160,6 @@ AUTHENTICATION_BACKENDS = (
     'django.contrib.auth.backends.ModelBackend',
     'treeio.core.auth.HashBackend',
     'treeio.core.auth.EmailBackend',
-    'treeio.core.auth.SupportBackend',
 )
 
 #
