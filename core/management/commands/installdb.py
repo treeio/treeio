@@ -27,28 +27,29 @@ class Command(BaseCommand):
         }
 
         db = {}
-        db['ENGINE'] = raw_input('Enter database engine <mysql,postgresql,oracle> (defaults to mysql): ')
+        db['ENGINE'] = raw_input('Enter database engine <mysql,postgresql,oracle,sqlite3> (defaults to sqlite3): ')
         if not db['ENGINE']:
-            db['ENGINE'] = 'mysql'
+            db['ENGINE'] = 'sqlite3'
 
-        if db['ENGINE'] in ('mysql', 'postgresql', 'oracle'):
+        if db['ENGINE'] in ('mysql', 'postgresql', 'oracle', 'sqlite3'):
             db['ENGINE'] = 'django.db.backends.' + db['ENGINE']
         else:
             raise CommandError('Unkown database engine: %s' % db['ENGINE'])
 
-        db['NAME'] = raw_input('Enter database name (defaults to treeio): ')
+        db['NAME'] = raw_input('Enter database name (defaults to treeio.db): ')
 
         if not db['NAME']:
-            db['NAME'] = 'treeio'
+            db['NAME'] = 'treeio.db'
 
-        db['USER'] = raw_input('Database user (defaults to treeio): ')
-        if not db['USER']:
-            db['USER'] = 'treeio'
+        if not db['ENGINE'].endswith('sqlite3'):
+            db['USER'] = raw_input('Database user (defaults to treeio): ')
+            if not db['USER']:
+                db['USER'] = 'treeio'
 
-        db['PASSWORD'] = raw_input('Database password: ')
+            db['PASSWORD'] = raw_input('Database password: ')
 
-        db['HOST'] = raw_input('Hostname (empty for default): ')
-        db['PORT'] = raw_input('Port (empty for default): ')
+            db['HOST'] = raw_input('Hostname (empty for default): ')
+            db['PORT'] = raw_input('Port (empty for default): ')
 
         self.stdout.write('\n-- Installing database...\n')
         self.stdout.flush()
