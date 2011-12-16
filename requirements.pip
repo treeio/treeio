@@ -1,4 +1,5 @@
-Django==1.3
+Django==1.3.1
+Pygments==1.3.1
 south
 jinja2==2.5.2
 coffin
