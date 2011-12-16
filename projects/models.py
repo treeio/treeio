@@ -78,7 +78,7 @@ class Milestone(Object):
 
     class Meta:
         "Milestone"
-        ordering = ['name']
+        ordering = ['start_date', 'name']
 
     def __unicode__(self):
         return self.name

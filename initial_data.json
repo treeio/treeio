@@ -3098,7 +3098,7 @@
 	"model": "projects.taskstatus",
 	"fields": {
 		"likes": [],
-		"name": "Awaits Spec",
+		"name": "In progress",
 		"links": [],
 		"tags": [],
 		"dislikes": [],
