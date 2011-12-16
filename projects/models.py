@@ -190,9 +190,6 @@ class Task(Object):
                     for slot in self.tasktimeslot_set.filter(time_to__isnull=True):
                         slot.time_to = datetime.now()
                         slot.save()
-                    # Check if a task depended on it
-                    for task in self.blocked_set.all():
-                        print "YES", task
 
 
         else:
