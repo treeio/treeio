@@ -153,7 +153,7 @@
 </div>
 {% endif %}
 
-{% if task.blocked_set.all %}
+{% if task.blocked_set.all() %}
 <div>
     <span class="content-label">{% trans %}Blocks{% endtrans %}:</span>
     <span class="content-value">
