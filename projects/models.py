@@ -115,6 +115,8 @@ class Task(Object):
     name = models.CharField(max_length=255)
     details = models.TextField(max_length=255, null=True, blank=True)
     assigned = models.ManyToManyField(User, blank=True, null=True)
+    depends = models.ForeignKey('Task', blank=True, null=True, related_name='blocked_set',
+                                limit_choices_to={'status__hidden': False})
     caller = models.ForeignKey(Contact, blank=True, null=True, on_delete=models.SET_NULL)
     start_date = models.DateTimeField(null=True, blank=True)
     end_date = models.DateTimeField(null=True, blank=True)
@@ -188,6 +190,9 @@ class Task(Object):
                     for slot in self.tasktimeslot_set.filter(time_to__isnull=True):
                         slot.time_to = datetime.now()
                         slot.save()
+                    # Check if a task depended on it
+                    for task in self.blocked_set.all():
+                        print "YES", task
 
 
         else:

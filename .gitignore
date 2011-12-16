@@ -2,3 +2,4 @@
 *.pyc
 .*.swp
 treeio.db
+static/media/identities/
