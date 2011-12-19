@@ -20,4 +20,4 @@ simplejson
 sphinx
 johnny-cache
 django-pandora
--e hg+https://bitbucket.org/psagers/django-auth-ldap#egg=django-auth-ldap
+-e hg+https://bitbucket.org/cyrilrbt/django-auth-ldap#egg=django-auth-ldap
