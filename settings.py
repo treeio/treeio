@@ -8,6 +8,8 @@
 """
 Django settings for treeio project.
 """
+import ldap
+from django_auth_ldap.config import LDAPSearch
 
 from os import path
 PROJECT_ROOT = path.abspath(path.dirname(__file__)) # assuming settings are in the same dir as source
@@ -157,10 +159,19 @@ INSTALLED_APPS = (
 AUTH_PROFILE_MODULE = 'core.User'
 
 AUTHENTICATION_BACKENDS = (
+#    'django_auth_ldap.backend.LDAPBackend',
     'django.contrib.auth.backends.ModelBackend',
     'treeio.core.auth.HashBackend',
     'treeio.core.auth.EmailBackend',
 )
+
+# LDAP Configuration
+#AUTH_LDAP_SERVER_URI = 'ldap://'
+#AUTH_LDAP_BIND_DN = ""
+#AUTH_LDAP_BIND_PASSWORD = ""
+#AUTH_LDAP_USER_SEARCH = LDAPSearch("ou=users,dc=example,dc=com",
+#        ldap.SCOPE_SUBTREE, "(uid=%(user)s)")
+#AUTH_LDAP_START_TLS = True
 
 #
 # Hardtree configuration
@@ -451,4 +462,3 @@ MESSAGE_STORAGE = 'treeio.core.contrib.messages.storage.cache.CacheStorage'
 
 # Dajaxice settings
 DAJAXICE_MEDIA_PREFIX="dajaxice"
-
