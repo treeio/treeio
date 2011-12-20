@@ -107,13 +107,6 @@
 </div>
 {% endif %}
 
-{% if task.depends %}
-<div>
-    <span class="content-label">{% trans %}Depends on{% endtrans %}:</span>
-    <span class="content-value"><a href="{% url projects_task_view task.depends.id %}">{{ task.depends }}</a></span>
-</div>
-{% endif %}
-
 {% if task.priority %}
 <div>
     <span class="content-label">{% trans %}Priority{% endtrans %}:</span>
@@ -150,6 +143,13 @@
 <div>
     <span class="content-label">{% trans %}Estimated time{% endtrans %}:</span>
     <span class="content-value">{{ task.get_estimated_time() }}</span>
+</div>
+{% endif %}
+
+{% if task.depends %}
+<div>
+    <span class="content-label">{% trans %}Depends on{% endtrans %}:</span>
+    <span class="content-value"><a href="{% url projects_task_view task.depends.id %}">{{ task.depends }}</a></span>
 </div>
 {% endif %}
 
