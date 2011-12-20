@@ -38,7 +38,8 @@ Installation
 
     Once you have all the prerequisites, just run:
     
-        make
+        python manage.py update_ve
+        ./bin/patch
 
 3. Setting up database
 ======================
@@ -56,7 +57,7 @@ Installation
 
     To install the database, just run ::
 
-        make install
+        python manage.py installdb
 
     If your setup is correct, it should install everything into the database for you.
 
