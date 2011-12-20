@@ -3,3 +3,4 @@
 .*.swp
 treeio.db
 static/media/identities/
+doc/_build
