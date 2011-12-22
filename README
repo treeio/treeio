@@ -26,6 +26,7 @@ In short ::
      python manage.py update_ve
      ./bin/patch
      python manage.py installdb
+     python manage.py loaddata data.json
 
 For more details see INSTALL
 
