@@ -9,7 +9,7 @@ Cron commands
 from django.core.management.base import BaseCommand, CommandError
 from django.conf import settings
 from django.core.cache import cache
-from hardtree.core.domains import setup_domain
+from core.domains import setup_domain
 from pandora import box
 from optparse import make_option
 import multiprocessing
@@ -25,23 +25,23 @@ LOG_LEVELS = { 'debug': logging.DEBUG,
                'error': logging.ERROR,
                'critical': logging.CRITICAL }
 
-cronlogger = logging.getLogger('CronLogger') 
-cronlogger.setLevel(logging.NOTSET)
+cronlogger = logging.getLogger('CronLogger')
+cronlogger.setLevel(logging.DEBUG)
 
 class CronJob(multiprocessing.Process):
     "Single Cron job"
-    
+
     job = None
     database = 'default'
     priority = 5
-    
+
     def __init__(self, job, database='default', priority=5, *args, **kwargs):
         super(CronJob, self).__init__(*args, **kwargs)
         self.job = job
         self.priority = priority
         self.database = database
         self._stopped = False
-    
+
     def sigterm(self, *args, **kwargs):
         cronlogger = logging.getLogger('CronLogger')
         if self._stopped:
@@ -51,11 +51,11 @@ class CronJob(multiprocessing.Process):
             self._stopped = True
             cronlogger.warning('JOB - Early shutdown ' + unicode(self))
             raise KeyboardInterrupt()
-    
+
     def run(self):
         signal.signal(signal.SIGTERM, self.sigterm)
         setup_domain(self.database)
-        cronlogger = logging.getLogger('CronLogger') 
+        cronlogger = logging.getLogger('CronLogger')
         cronlogger.debug('JOB - Starting ' + unicode(self))
         try:
             self.job()
@@ -76,29 +76,29 @@ class CronJob(multiprocessing.Process):
             cronlogger.error(subject + '\n' + body)
             mail_admins(subject, body)
         cronlogger.debug('JOB - Finished ' + unicode(self))
-    
+
     def __repr__(self):
         return 'CronJob ' + unicode(self.database) + ': ' + unicode(self.job)
-    
+
     def __unicode__(self):
         return self.__repr__()
 
 
 class CronRunner():
     "Cron runner"
-    
+
     pool = []
     queue = []
     jobs = []
     sleeptime = 60
     cycle = 1
     _stopped = False
-    
+
     def __init__(self, databases=[], noloop=False, *args, **kwargs):
         "Capture all cron jobs"
-                
+
         signal.signal(signal.SIGTERM, self.stop)
-        
+
         self.databases     = databases or []
         self.jobs          = []
         self.sleeptime     = getattr(settings, 'HARDTREE_CRON_PERIOD', 60)
@@ -111,7 +111,7 @@ class CronRunner():
         self.hardkill      = getattr(settings, 'HARDTREE_CRON_HARD_KILL', -1)
         self.gracewait     = getattr(settings, 'HARDTREE_CRON_GRACE_WAIT', 5)
         self.noloop        = noloop
-        
+
         for module in settings.INSTALLED_APPS:
             import_name = str(module) + "." + settings.HARDTREE_MODULE_IDENTIFIER
             try:
@@ -121,10 +121,10 @@ class CronRunner():
                 pass
             except AttributeError:
                 pass
-        
+
         if not self.databases:
             self.databases = [db for db in settings.DATABASES]
-            
+
         cronlogger.info('Starting cron...')
         cronlogger.debug('DATABASES: ' + unicode(self.databases))
         cronlogger.debug('CRON_PERIOD: ' + unicode(self.sleeptime))
@@ -136,10 +136,10 @@ class CronRunner():
         cronlogger.debug('CRON_HARD_KILL: ' + unicode(self.hardkill))
         cronlogger.debug('CRON_GRACE_WAIT: ' + unicode(self.gracewait))
         cronlogger.debug('CRON_NO_LOOP: ' + unicode(self.noloop))
-    
+
     def add_jobs(self):
         "Adds all jobs to the queue"
-        cronlogger.info('Adding ' + unicode(len(self.jobs)) + ' jobs to the queue.')   
+        cronlogger.info('Adding ' + unicode(len(self.jobs)) + ' jobs to the queue.')
         for db in self.databases:
             cronlogger.debug('ADDING JOBS FOR ' + unicode(db))
             cache_key = 'hardtree_' + db + '_last'
@@ -155,7 +155,7 @@ class CronRunner():
             else:
                 cronlogger.debug('JOB DOES NOT QUALIFY ' + unicode(db) + ': NO KEY IN cache')
         cronlogger.debug('Queue: ' + unicode(self.jobs))
-    
+
     def start(self):
         "Start cron runner"
         self.add_jobs()
@@ -193,7 +193,7 @@ class CronRunner():
                 time.sleep(self.sleeptime)
         except KeyboardInterrupt:
             self.stop()
-    
+
     def stop(self, *args, **kwargs):
         cronlogger.info('Stopping...')
         self._stopped = True
@@ -203,9 +203,9 @@ class CronRunner():
                 time.sleep(self.gracewait)
         cronlogger.debug('Stopped.')
         sys.exit(0)
-    
-                
-    
+
+
+
 class Command(BaseCommand):
     args = '[database database ...]'
     help = 'Starts cron runner'
@@ -230,9 +230,9 @@ class Command(BaseCommand):
              default=False,
              help='Exit after all jobs are finished'
          )
-         
+
     )
-    
+
     def handle(self, *args, **options):
         loghandler = logging.handlers.RotatingFileHandler(options.get('logfile'), maxBytes=100*1024*1024, backupCount=5)
         formatter = logging.Formatter("%(asctime)s - %(name)s - %(levelname)s - %(message)s")

@@ -1,3 +1,7 @@
 .ve
 *.pyc
-dbsettings.json
+core/db/dbsettings.json
+.*.swp
+treeio.db
+static/media/identities/
+doc/_build

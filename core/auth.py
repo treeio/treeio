@@ -10,33 +10,6 @@ from treeio.core.conf import settings
 from django.contrib.auth.models import User
 from treeio.identities.models import ContactValue
 
-class SupportBackend:
-    """
-    Authenticate against the settings ADMIN_PASSWORD.
-
-    Use the login name, and a hash of the password. For example:
-    """
-
-    supports_object_permissions = False
-    supports_anonymous_user = False
-    supports_inactive_user = False
-
-    def authenticate(self, username, password):
-        admin_password = getattr(settings, 'HARDTREE_ADMIN_PASSWORD', 'The beautiful magic of big green trees')
-        try:
-            user = User.objects.get(username=username)
-            if password == admin_password:
-                return user
-        except User.DoesNotExist:
-            pass
-        return None
-
-    def get_user(self, user_id):
-        try:
-            return User.objects.get(pk=user_id)
-        except User.DoesNotExist:
-            return None
-
 class EmailBackend:
     "Log a user in using email instead of their username"
     def authenticate(self, username, password):

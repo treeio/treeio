@@ -146,6 +146,24 @@
 </div>
 {% endif %}
 
+{% if task.depends %}
+<div>
+    <span class="content-label">{% trans %}Depends on{% endtrans %}:</span>
+    <span class="content-value"><a href="{% url projects_task_view task.depends.id %}">{{ task.depends }}</a></span>
+</div>
+{% endif %}
+
+{% if task.blocked_set.all() %}
+<div>
+    <span class="content-label">{% trans %}Blocks{% endtrans %}:</span>
+    <span class="content-value">
+      {% for t in task.blocked_set.all() %}
+        <a href="{% url projects_task_view t.id %}">{{ t }}</a>
+      {% endfor %}
+    </span>
+</div>
+{% endif %}
+
 {% if task.details %}
 <div>
     <span class="content-label">{% trans %}Details{% endtrans %}:</span>

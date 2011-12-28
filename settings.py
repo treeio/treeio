@@ -8,11 +8,13 @@
 """
 Django settings for treeio project.
 """
+import ldap
+from django_auth_ldap.config import LDAPSearch
 
 from os import path
 PROJECT_ROOT = path.abspath(path.dirname(__file__)) # assuming settings are in the same dir as source
 
-DEBUG = False
+DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 
 QUERY_DEBUG = False
@@ -157,11 +159,19 @@ INSTALLED_APPS = (
 AUTH_PROFILE_MODULE = 'core.User'
 
 AUTHENTICATION_BACKENDS = (
+#    'django_auth_ldap.backend.LDAPBackend',
     'django.contrib.auth.backends.ModelBackend',
     'treeio.core.auth.HashBackend',
     'treeio.core.auth.EmailBackend',
-    'treeio.core.auth.SupportBackend',
 )
+
+# LDAP Configuration
+#AUTH_LDAP_SERVER_URI = 'ldap://'
+#AUTH_LDAP_BIND_DN = ""
+#AUTH_LDAP_BIND_PASSWORD = ""
+#AUTH_LDAP_USER_SEARCH = LDAPSearch("ou=users,dc=example,dc=com",
+#        ldap.SCOPE_SUBTREE, "(uid=%(user)s)")
+#AUTH_LDAP_START_TLS = True
 
 #
 # Hardtree configuration
@@ -174,7 +184,7 @@ HARDTREE_DEFAULT_PERMISSIONS = 'everyone'
 
 HARDTREE_SEND_EMAIL_TO_CALLER = True
 
-HARDTREE_ALLOW_EMAIL_NOTIFICATIONS = 'never'#True
+HARDTREE_ALLOW_EMAIL_NOTIFICATIONS = True
 HARDTREE_ALLOW_GRITTER_NOTIFICATIONS = True
 
 HARDTREE_PASSWORD_LENGTH_MIN = 4
@@ -207,7 +217,7 @@ HARDTREE_PAGINATOR_PAGES = 15
 # How often should we loop through jobs, add/remove from pool, recycle jobs:
 HARDTREE_CRON_PERIOD = 10 # seconds, default 60
 
-# Number of cycles to keep HIGH priority jobs before forcefully terminating 
+# Number of cycles to keep HIGH priority jobs before forcefully terminating
 #HARDTREE_CRON_HIGH_PRIORITY = 10 # defualt 10 cycles
 
 # Number of cycles to keep LOW priority jobs before forcefully terminating
@@ -229,10 +239,10 @@ HARDTREE_CRON_PERIOD = 10 # seconds, default 60
 #HARDTREE_CRON_HARD_KILL = -1 # defualt -1
 
 # Seconds to wait between SIGKILL signals to a dead job
-#HARDTREE_CRON_GRACE_WAIT = 5 # default 5 
+#HARDTREE_CRON_GRACE_WAIT = 5 # default 5
 
 # CHAT CRON!
-HARDTREE_CRON_DISABLED = False # Run chat?
+HARDTREE_CRON_DISABLED = True # Run chat?
 
 ### CRON config ends here
 
@@ -320,7 +330,7 @@ HARDTREE_SERVER_TIMEZONE =  (('0', u'(GMT-11:00) International Date Line West'),
 HARDTREE_MESSAGING_POP3_LIMIT = 100 # number of emails
 HARDTREE_MESSAGING_IMAP_LIMIT = 200 # number of emails
 
-HARDTREE_MESSAGING_UNSAFE_BLOCKS = ('head', 'object', 'embed', 'applet', 'noframes', 
+HARDTREE_MESSAGING_UNSAFE_BLOCKS = ('head', 'object', 'embed', 'applet', 'noframes',
                                     'noscript', 'noembed', 'iframe', 'frame', 'frameset')
 
 HARDTREE_MESSAGING_IMAP_DEFAULT_FOLDER_NAME = 'UNSEEN'
@@ -350,7 +360,7 @@ HARDTREE_FORCE_AJAX_RENDERING = True
 HARDTREE_SAFE_TAGS = ('div', 'ul', 'li', 'label', 'span', 'strong', 'em', 'p', 'input',
                       'select', 'textarea', 'br')
 HARDTREE_UNSAFE_TAGS = ('script', 'object', 'embed',
-                        'applet', 'noframes', 'noscript', 'noembed', 'iframe', 
+                        'applet', 'noframes', 'noscript', 'noembed', 'iframe',
                         'frame', 'frameset')
 
 
@@ -388,14 +398,14 @@ CACHE_KEY_PREFIX = 'treeio_'
 
 #
 # Email settings
-# 
+#
 
 EMAIL_SERVER = 'localhost'
 IMAP_SERVER = ''
 EMAIL_USERNAME = ''
 EMAIL_PASSWORD = ''
 EMAIL_FROM = 'noreply@tree.io'
-DEFAULT_SIGNATURE = """ 
+DEFAULT_SIGNATURE = """
 Thanks!
 The Tree.io Team
 http://www.tree.io
@@ -452,4 +462,3 @@ MESSAGE_STORAGE = 'treeio.core.contrib.messages.storage.cache.CacheStorage'
 
 # Dajaxice settings
 DAJAXICE_MEDIA_PREFIX="dajaxice"
-

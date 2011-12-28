@@ -23,8 +23,9 @@ Installation
 
 In short ::
 
-     make
-     make install
+     python manage.py update_ve
+     ./bin/patch
+     python manage.py installdb
 
 For more details see INSTALL
 
