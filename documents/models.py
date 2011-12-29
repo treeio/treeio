@@ -85,7 +85,7 @@ class File(Object):
 class Document(Object):
     """ A readable document, i.e. HTML, which may be rendered directly """
     title = models.CharField(max_length=255)
-    folder = models.ForeignKey(Folder, null=True, blank=True)
+    folder = models.ForeignKey(Folder)
     body = models.TextField(null=True, blank=True)
 
     access_inherit = ('folder', '*module', '*user')
