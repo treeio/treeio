@@ -8,7 +8,7 @@
 """
 Django settings for treeio project.
 """
-import ldap
+#import ldap
 from django_auth_ldap.config import LDAPSearch
 
 from os import path
