@@ -112,7 +112,7 @@
       {% else %}
         <a href="{% url identities_user_view record.author.id %}" class="popup-link"><img class="contact-picture left" src="/static/messaging/pic.png" alt="" /></a>
       {% endif %}
-    {% elif record.sender and record.sender.object_type == 'hardtree.identities.models.Contact' %}
+    {% elif record.sender and record.sender.object_type == 'treeio.identities.models.Contact' %}
       {% set contact = record.sender.get_related_object() %}
       {% if contact %}
         {% set picture = contact.get_picture() %}

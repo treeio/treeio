@@ -1,4 +1,4 @@
-<div class="megamenu dropdown_hardtree-projects">
+<div class="megamenu dropdown_treeio-projects">
     <div class="col_1">
 
         <span class="megabar-header">{% trans %}Projects{% endtrans %}</span><br/>
@@ -33,7 +33,7 @@
 
     <div class="col_1">
 
-        {% if request.user.get_profile ( ) . is_admin ( 'hardtree.projects' ) %}
+        {% if request.user.get_profile ( ) . is_admin ( 'treeio.projects' ) %}
             <span class="megabar-header">{% trans %}Administration{% endtrans %}</span><br/>
             <a href="{% url projects_settings_view %}"
                class="megabar-link {% block class_admin_settings %}{% endblock %}">{% trans %}Settings{% endtrans %}</a>

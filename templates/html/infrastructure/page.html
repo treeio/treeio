@@ -50,7 +50,7 @@
 
         <span class="sidebar-header">{% trans %}Servicing{% endtrans %}</span>
         <a href="{% url infrastructure_service_record_index %}" class="sidebar-link {% block class_admin_service %}{% endblock %}">{% trans %}Service Records{% endtrans %}</a>
-        {% if request.user.get_profile().is_admin('hardtree.infrastructure') %}
+        {% if request.user.get_profile().is_admin('treeio.infrastructure') %}
         <span class="sidebar-header">{% trans %}Administration{% endtrans %}</span>
         <a href="{% url infrastructure_settings_view %}" class="sidebar-link {% block class_admin_settings %}{% endblock %}">{% trans %}Settings{% endtrans %}</a>
         {% endif %}

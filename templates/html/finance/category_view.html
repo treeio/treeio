@@ -7,7 +7,7 @@
 
 {% block module_topmenu %}
 
-{% if request.user.get_profile().is_admin('hardtree.finance') %}
+{% if request.user.get_profile().is_admin('treeio.finance') %}
 <a href="{% url finance_category_edit category.id %}" class="top-menu button edit-link"><img src="/static/modules/pencil-small.png">{% trans %}Edit{% endtrans %}</a>
 <a href="{% url finance_category_delete category.id %}" class="top-menu button delete-link"><img src="/static/modules/cross-small.png">{% trans %}Delete{% endtrans %}</a>
 {% endif %}

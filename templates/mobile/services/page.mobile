@@ -36,7 +36,7 @@
         <span class="sidebar-header">{% trans %}Services{% endtrans %}</span>
         <a href="{% url services_service_catalogue %}" class="sidebar-link {% block class_service_catalogue %}{% endblock %}">{% trans %}Service Catalogue{% endtrans %}</a>
         <a href="{% url services_sla_index %}" class="sidebar-link {% block class_sla_index %}{% endblock %}">{% trans %}SLAs{% endtrans %}</a>
-        {% if request.user.get_profile().is_admin('hardtree.services') %}
+        {% if request.user.get_profile().is_admin('treeio.services') %}
         <span class="sidebar-header">{% trans %}Administration{% endtrans %}</span>
         <a href="{% url services_settings_view %}" class="sidebar-link {% block class_admin_settings %}{% endblock %}">{% trans %}Settings{% endtrans %}</a>
         <a href="{% url services_agent_index %}" class="sidebar-link {% block class_agent_index %}{% endblock %}">{% trans %}Agents{% endtrans %}</a>

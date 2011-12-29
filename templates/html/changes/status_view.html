@@ -8,7 +8,7 @@
 {% block module_topmenu %}
 <a href="{% url changes_set_add %}" class="top-menu button add-link"><img src="/static/modules/plus-small.png">{% trans %}New Change Set{% endtrans %}</a>
 
-{% if request.user.get_profile().is_admin('hardtree.changes') %}
+{% if request.user.get_profile().is_admin('treeio.changes') %}
 <a href="{% url changes_status_edit status.id %}" class="top-menu button edit-link"><img src="/static/modules/pencil-small.png">{% trans %}Edit{% endtrans %}</a>
 <a href="{% url changes_status_delete status.id %}" class="top-menu button delete-link"><img src="/static/modules/cross-small.png">{% trans %}Delete{% endtrans %}</a>
 {% endif %}

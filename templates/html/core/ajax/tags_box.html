@@ -16,7 +16,7 @@
     <span>{% trans %}Tags{% endtrans %}</span>
   {% endif %}
   <span class="tags-box-link">
-  	&nbsp;&nbsp;<a class="button edit-link inline-link ajax-link" callback="Dajaxice.hardtree.account.tags" args="{ 'object_id': {{ object.id }}, 'edit': true }" target="#tags-{{ object.id }}"><img src="/static/modules/pencil-small.png">Edit</a>
+  	&nbsp;&nbsp;<a class="button edit-link inline-link ajax-link" callback="Dajaxice.treeio.account.tags" args="{ 'object_id': {{ object.id }}, 'edit': true }" target="#tags-{{ object.id }}"><img src="/static/modules/pencil-small.png">Edit</a>
   </span>
   {% endif %}
 </span>

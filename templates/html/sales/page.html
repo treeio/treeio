@@ -56,7 +56,7 @@
         <a href="{% url sales_product_index %}" class="sidebar-link {% block class_product_index %}{% endblock %}">{% trans %}All Products{% endtrans %}</a>
         {% endblock %}
 
-        {% if request.user.get_profile().is_admin('hardtree.sales') %}
+        {% if request.user.get_profile().is_admin('treeio.sales') %}
         <span class="sidebar-header">{% trans %}Administration{% endtrans %}</span>
         <a href="{% url sales_settings_view %}" class="sidebar-link {% block class_admin_settings %}{% endblock %}">{% trans %}Settings{% endtrans %}</a>
         {% endif %}

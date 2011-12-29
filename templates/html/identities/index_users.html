@@ -5,7 +5,7 @@
 {% block module_title %}{% trans %}Users{% endtrans %}{% endblock %}
 
 {% block module_topmenu %}
-{% if request.user.get_profile().is_admin('hardtree.core') %}
+{% if request.user.get_profile().is_admin('treeio.core') %}
 <a href="{% url core_admin_user_invite %}" class="top-menu button add-link popup-link"><img src="/static/modules/plus-small.png">{% trans %}Invite People{% endtrans %}</a>
 {% endif %}
 {% endblock %}

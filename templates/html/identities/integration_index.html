@@ -87,7 +87,7 @@
 {% if response.data.result_name.raw == 'access' %}
 <div class="content-list-item spaced-h spaced-v">
     <span class="heavy">Tree.io does not have access to your profile.</span>
-    <a href="javascript:hardtree.nuvius.fetch_access();" class="inline-link button add-link ajax-link-out"><img src="/static/modules/plus-inline.png">{% trans %}Grant access{% endtrans %}</a>
+    <a href="javascript:treeio.nuvius.fetch_access();" class="inline-link button add-link ajax-link-out"><img src="/static/modules/plus-inline.png">{% trans %}Grant access{% endtrans %}</a>
 </div>
 {% else %}
 <div class="content-list-item spaced-h spaced-v">
@@ -107,7 +107,7 @@
 {% else %}
 <script type="text/javascript">
     $( function() {
-        hardtree.nuvius.fetch_profile()
+        treeio.nuvius.fetch_profile()
     });
 </script>
 <div class="content-list-item spaced-h spaced-v showjs">

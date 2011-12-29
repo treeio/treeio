@@ -10,7 +10,7 @@
 
 {% block module_topmenu %}
 
-{% if request.user.get_profile().is_admin('hardtree.sales') %}
+{% if request.user.get_profile().is_admin('treeio.sales') %}
 <a href="{% url sales_subscription_edit subscription.id %}" class="top-menu button edit-link"><img src="/static/modules/pencil-small.png">{% trans %}Edit{% endtrans %}</a>
 <a href="{% url sales_subscription_delete subscription.id %}" class="top-menu button delete-link"><img src="/static/modules/cross-small.png">{% trans %}Delete{% endtrans %}</a>
 {% endif %}
