@@ -3,30 +3,30 @@
 <head>
     <link rel="icon" href="/static/favicon.ico" type="image/x-icon" />
     <link rel="stylesheet" href="/static/print.min.css" media="print" />
-    
-	{# Debug #}
+
+    {# Debug #}
     <link rel="stylesheet" href="/static/print.css" media="print" />
-	<link rel="stylesheet" href="/static/hardtree3.css" media="all" />
+    <link rel="stylesheet" href="/static/hardtree3.css" media="all" />
     <link rel="stylesheet" href="/static/js/css/jquery.gritter.css" media="all" />
     <link rel="stylesheet" href="/static/js/css/jquery-ui-1.css" media="all" />
     <link rel="stylesheet" href="/static/js/css/datepicker.css" media="all" />
     <link rel="stylesheet" href="/static/js/colorbox/colorbox.css" type="text/css" media="screen, projection" />
     <link rel="stylesheet" href="/static/jquery.flexbox.css" type="text/css" />
-	<link rel="stylesheet" type="text/css" href="/static/js/css/jquery.ganttView.css" />
-	
-	{# Production 
-	<link rel="stylesheet" href="/static/26a.min.css" media="all" /> 	
-    
+    <link rel="stylesheet" type="text/css" href="/static/js/css/jquery.ganttView.css" />
+
+    {# Production
+    <link rel="stylesheet" href="/static/26a.min.css" media="all" />
+
     <title>{% block title %}{% endblock %}. Tree.io</title>
     <meta name="description" content="{% block meta_description %} {% endblock %}" />
     <meta name="keywords" content="{% block meta_keywords %} {% endblock %}" />
     <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
-	#}
+    #}
     <!--[if lt IE 8]>
     <link rel="stylesheet" href="/static/ie.css" media="all" />
     <![endif]-->
-	
-	{# Debug #}
+
+    {# Debug #}
     <script src="/static/js/jquery-1.4.2.js" type="text/javascript" charset="utf-8"></script>
     <script src="/static/js/jquery.form.js" type="text/javascript" charset="utf-8"></script>
     <script src="/static/js/jquery-ui-full.min.js" type="text/javascript" charset="utf-8"></script>
@@ -35,79 +35,63 @@
     <script src="/static/js/tinymce/jscripts/tiny_mce/tiny_mce.js" type="text/javascript" charset="utf-8"></script>
     <script src="/static/js/tinymce/jscripts/tiny_mce/jquery.tinymce.js" type="text/javascript" charset="utf-8"></script>
 
-	<script src="/static/js/colorbox/jquery.colorbox-min.js" type="text/javascript" charset="utf-8"></script>
+    <script src="/static/js/colorbox/jquery.colorbox-min.js" type="text/javascript" charset="utf-8"></script>
     <script src="/static/js/hashchange.js" type="text/javascript" charset="utf-8"></script>
     <script src="/static/js/highcharts.js" type="text/javascript" charset="utf-8"></script>
-  	<script src="/static/js/hardtree.js" type="text/javascript" charset="utf-8"></script>
+    <script src="/static/js/hardtree.js" type="text/javascript" charset="utf-8"></script>
     <script src="/static/js/jquery.flexbox.min.js" type="text/javascript" charset="utf-8"></script>
     <script src="/static/js/jquery.ba-serializeobject.js" type="text/javascript" charset="utf-8"></script>
     <script src="/static/js/jquery.dajax.core.js" type="text/javascript" charset="utf-8"></script>
-    <script src="/static/js/chat.js" type="text/javascript" charset="utf-8"></script>
     <script src="/static/js/date.js" type="text/javascript" charset="utf-8"></script>
-    <script src="/static/js/jquery.ganttView.js" type="text/javascript" charset="utf-8"></script> 
-	<script src="/static/js/fileuploader.js" type="text/javascript" charset="utf-8"></script>
-	<script src="/static/js/jquery.tipsy.js" type="text/javascript" charset="utf-8"></script>
-	
-	{# Production 
-  	<script src="/static/js/jquery-stuff-and-ui.min.js" type="text/javascript" charset="utf-8"></script>
+    <script src="/static/js/jquery.ganttView.js" type="text/javascript" charset="utf-8"></script>
+    <script src="/static/js/fileuploader.js" type="text/javascript" charset="utf-8"></script>
+    <script src="/static/js/jquery.tipsy.js" type="text/javascript" charset="utf-8"></script>
+
+    {# Production
+    <script src="/static/js/jquery-stuff-and-ui.min.js" type="text/javascript" charset="utf-8"></script>
     <script src="/static/js/tinymce/jscripts/tiny_mce/tiny_mce.js" type="text/javascript" charset="utf-8"></script>
-  	<script src="/static/js/tinymce/jscripts/tiny_mce/jquery.tinymce.js" type="text/javascript" charset="utf-8"></script>
-  	<script src="/static/js/colorbox/jquery.colorbox-min.js" type="text/javascript" charset="utf-8"></script>
-  	<script src="/static/js/26a_super_mini.js" type="text/javascript" charset="utf-8"></script>
+    <script src="/static/js/tinymce/jscripts/tiny_mce/jquery.tinymce.js" type="text/javascript" charset="utf-8"></script>
+    <script src="/static/js/colorbox/jquery.colorbox-min.js" type="text/javascript" charset="utf-8"></script>
+    <script src="/static/js/26a_super_mini.js" type="text/javascript" charset="utf-8"></script>
     <script src="/static/js/jquery.ba-serializeobject.js" type="text/javascript" charset="utf-8"></script>
     <script src="/static/js/jquery.dajax.core.js" type="text/javascript" charset="utf-8"></script>
     #}
     {{ dajaxice_js_import() }}
-	
+
 </head>
 
 <body>
-	<div id="loading-splash">
-		<br /><br /><br />
-		<div id="logo-block">
-			<img alt="Tree.io" src="{% url core_logo_image_ie %}" class="logo" />
-		</div>
-		<h3>Loading...</h3>
-		<img src="/static/ajax-loader-big.gif" alt="" />
-	</div>
+<div id="loading-splash">
+    <br /><br /><br />
+    <div id="logo-block">
+        <img alt="Tree.io" src="{% url core_logo_image_ie %}" class="logo" />
+    </div>
+    <h3>Loading...</h3>
+    <img src="/static/ajax-loader-big.gif" alt="" />
+</div>
 
-    {{ modules_header_block() }}
-	<div id="page-container">
+{{ modules_header_block() }}
+<div id="page-container">
 
-			<div id="page">
-           
-		   {{ demo_user() }}
-		   
-			<div id="header" class="clear">
-			    <div id="loading-status"><img src="/static/ajax-loader.gif" alt="" />&nbsp;&nbsp;
-			      <span id="loading-status-text">Loading...</span></div>
-			</div>
-			
-			{% block page %}
-			{% endblock %}
+    <div id="page">
 
-		<div id="toolbar_action">
-			<span class="show_toolbar"><img src="/static/icons/up.gif"/></span>
-		</div>
-		
-		
-    
-    {#
-      <a href="">{% trans %}Share{% endtrans %}</a>
-    #}
-      <a href="#" onClick="return SnapABug.startChat('{% trans %}Hello, how can I help you today?{% endtrans %}');">Live Support</a>
-		</div>
-		  <span class="hide_toolbar">
-		  <img src="/static/icons/down.gif"/>
-		  </span>
-		</div>
-			
-		</div>
-	</div>
-<script type="text/javascript">
-document.write(unescape("%3Cscript src='" + ((document.location.protocol=="https:")?"https://snapabug.appspot.com":"http://www.snapengage.com") + "/snapabug.js' type='text/javascript'%3E%3C/script%3E"));</script><script type="text/javascript">
-SnapABug.allowChatSound(false);
-SnapABug.init("8aa56cc2-9f9e-40c9-9242-4a0f85a9aff3");
-</script>
+        {{ demo_user() }}
+
+        <div id="header" class="clear">
+            <div id="loading-status"><img src="/static/ajax-loader.gif" alt="" />&nbsp;&nbsp;
+                <span id="loading-status-text">Loading...</span></div>
+        </div>
+
+        {% block page %}
+        {% endblock %}
+
+
+
+    </div>
+
+</div>
+
+</div>
+</div>
 </body>
 </html>

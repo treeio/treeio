@@ -259,3 +259,25 @@ def easy_invite(request, emails=None):
     return dajax.json()
 
 dajaxice_functions.register(easy_invite)
+
+
+def mega_menu(request, menu_id=None):
+    #Generate the content for the dropdown top megamenu when mouse over
+    try:
+        dajax = Dajax()
+        module = menu_id.split('hardtree-')[1]
+        template = 'core/megamenu/'+ module
+
+        views = __import__(module, globals(), locals(), ['views'], -1).views
+        mega_markup = views.megaview(request)
+
+        dajax.add_data({'target': "div.dropdown_hardtree-%s"%(module), 'content': mega_markup}, 'hardtree.add_data')
+
+        return dajax.json()
+    except Exception, e:
+        if settings.DEBUG:
+            raise e
+        else:
+            pass
+
+dajaxice_functions.register(mega_menu)
