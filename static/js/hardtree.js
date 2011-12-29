@@ -1,9 +1,8 @@
-/* Copyright Tree.io 2011
- * This file is part of Treeio
- * License: www.tree.io/license
-*/
+/* Tree.io JS
+ * Copyright 2010-2011 Giteso Limited. All rights reserved. 
+ */
 
-var treeio = {
+var hardtree = {
   'put_mce': function(doc) {
       var obj;
       if (doc) {
@@ -101,15 +100,15 @@ var treeio = {
             }
         }
         if (url) {
-            url = treeio.prepare_url(url);
+            url = hardtree.prepare_url(url);
             $("#loading-status").css('display', 'block');
             $("#loading-status-text").html('Loading...');
             $.ajax({
                 'url': url,
                 'dataType': 'json',
-                'success': treeio.process_ajax,
-                'complete': treeio.process_html,
-                'error': treeio.show_error
+                'success': hardtree.process_ajax,
+                'complete': hardtree.process_html,
+                'error': hardtree.show_error
             })
         }
     },
@@ -131,12 +130,12 @@ var treeio = {
           return;
         }
         if (data.popup) {
-            treeio.process_popup_data(data);
+            hardtree.process_popup_data(data);
             return;
         }
         if (data.redirect) {
             if (window.location.hash == "#" + data.redirect) {
-                treeio.do_ajax();
+                hardtree.do_ajax();
             } else {
                 window.location.hash = data.redirect;
             }
@@ -177,30 +176,31 @@ var treeio = {
             block.data('active', true);
           }
           });
-          treeio.remove_mce($("#module-" + module + " form"));
+          hardtree.remove_mce($("#module-" + module + " form"));
         $("#module-" + module).html(content);
         if ($("#module-" + module + " form").length) {
-          treeio.prepare_forms(block);
-          treeio.prepare_comments(block)
+          hardtree.prepare_forms(block);
+          hardtree.prepare_comments(block)
           if ($("#module-" + module + " textarea").length) {
-            treeio.put_mce(block);
+            hardtree.put_mce(block);
           }
         }
-          treeio.prepare_tags(block);
-          treeio.prepare_list_actions(block);
-          treeio.prepare_attachments(block);
-          treeio.prepare_invites(block);
-          treeio.prepare_popups(block);
-          treeio.convert_links(block);
-          treeio.prepare_ajax_links(block);
-          treeio.prepare_slider_sidebar(block, sidebardisplay);
-          treeio.showhidejs(block);
-          treeio.prepare_module_stuff(module);
-          treeio.process_notifications(data.response.notifications);
+          hardtree.prepare_tags(block);
+          hardtree.prepare_list_actions(block);
+		  hardtree.prepare_content_top(block);
+          hardtree.prepare_attachments(block);
+          hardtree.prepare_invites(block);
+          hardtree.prepare_popups(block);
+          hardtree.convert_links(block);
+          hardtree.prepare_ajax_links(block);
+          hardtree.prepare_slider_sidebar(block, sidebardisplay);
+          hardtree.showhidejs(block);
+          hardtree.prepare_module_stuff(module);
+          hardtree.process_notifications(data.response.notifications);
         $(".menu-item a").each(function(){
             $(this).removeClass('active')
         });
-          treeio.process_userblock(data);
+          hardtree.process_userblock(data);
         $("#menu-" + module).addClass('active')
         $(block).data('title', data.response.content.title);
         if ($('#loading-splash').css('display') != 'none') {
@@ -233,7 +233,7 @@ var treeio = {
   'prepare_module_stuff': function(module_name) {
       try
       {
-          treeio.modules[module_name].init();
+          hardtree.modules[module_name].init();
       }
       catch(err){}
       
@@ -304,20 +304,21 @@ var treeio = {
 	  	target = newelem;
 	  }
 	  if ($("form", target).length) {
-	      treeio.prepare_forms(target);
-	      treeio.prepare_comments(target);
+	      hardtree.prepare_forms(target);
+	      hardtree.prepare_comments(target);
 	      if ($("textarea", target).length) {
-	        treeio.put_mce(target);
+	        hardtree.put_mce(target);
 	      }
 	  }
-      treeio.prepare_tags(target);
-      treeio.prepare_list_actions(target);
-      treeio.prepare_attachments(target);
-      treeio.prepare_invites(target);
-      treeio.prepare_popups(target);
-      treeio.convert_links(target);
-      treeio.prepare_ajax_links(target);
-      treeio.showhidejs(target);
+      hardtree.prepare_tags(target);
+      hardtree.prepare_list_actions(target);
+	  hardtree.prepare_content_top(target);
+      hardtree.prepare_attachments(target);
+      hardtree.prepare_invites(target);
+      hardtree.prepare_popups(target);
+      hardtree.convert_links(target);
+      hardtree.prepare_ajax_links(target);
+      hardtree.showhidejs(target);
       $("#loading-status").css('display', 'none');
   },
   
@@ -330,7 +331,7 @@ var treeio = {
       links.each(function() {
     	  $(this).click(function() {
     		  var target = $(this).parents($(this).attr('target'));
-	    	  var targetid = treeio.utils.generate_id();
+	    	  var targetid = hardtree.utils.generate_id();
 	    	  target.attr('id', targetid);
 	    	  $(this).attr('target', '#'+targetid);
     		  var callback = eval($(this).attr('callback'));
@@ -419,6 +420,30 @@ var treeio = {
           $("span.content-list-item-actions a", $(this)).addClass("popup-link");
       })
   },
+  
+  'prepare_content_top': function(doc) {
+
+    var msie6 = $.browser == 'msie' && $.browser.version < 7;
+    if (!msie6) {
+        var top = $('.content-top', doc).offset().top - 20;
+        $(window).scroll(function(event) {
+            var y = $(this).scrollTop();
+            if (y >= top) {
+                $('.content-top').css({
+                        position: 'fixed',
+                        top: 32,
+						opacity: 0.9,
+                    });
+            } else {
+                $('.content-top').css({
+                        position: 'relative',
+                        top: 0,
+						opacity: 1,
+                    });
+            }
+        });
+    }
+  },
     
   'put_datepicker': function(doc) {
         $('input.datepicker', doc).each(function() {
@@ -488,6 +513,9 @@ var treeio = {
           $(this).next('select').andSelf().wrapAll('<div class="wrap-class" />');
           $(this).replaceWith('<span class="wrap-label">' + $(this).text() + '&nbsp;<span class="wrap-value"></span></span>');
         });
+		$('.mass-form button', doc).each(function(doc){
+			$(this).andSelf().wrapAll('<div class="wrap-class" />');
+		});
     },
   
     // submit filter form onChange
@@ -522,13 +550,13 @@ var treeio = {
                               $.ajax({
                                   url: url,
                                   dataType: 'json',
-                                  success: treeio.process_popup_data
+                                  success: hardtree.process_popup_data
                               });
                               return false;
                           })
                   }
             });
-            treeio.prepare_popups(popup);
+            hardtree.prepare_popups(popup);
             $("form", popup).each(function() {
                 url = $(this).attr('action');
                 if (url) {
@@ -545,21 +573,21 @@ var treeio = {
                     },
                   'url': url,
                   'dataType': 'json',
-                  'success': treeio.process_ajax
+                  'success': hardtree.process_ajax
                 }
                 $(this).ajaxForm(options);
             })
-            treeio.showhidejs(popup);
-            treeio.prepare_ajax_links(popup);
-            treeio.prepare_comments(popup);
-            treeio.prepare_attachments(popup);
-            treeio.prepare_invites(popup);
-            treeio.prepare_tags(popup);
-            treeio.prepare_autocomplete(popup);
-            treeio.prepare_search_duplicates(popup);
-            treeio.put_datepicker(popup);
-            treeio.prepare_mass_form(popup);
-            treeio.put_mce(popup);
+            hardtree.showhidejs(popup);
+            hardtree.prepare_ajax_links(popup);
+            hardtree.prepare_comments(popup);
+            hardtree.prepare_attachments(popup);
+            hardtree.prepare_invites(popup);
+            hardtree.prepare_tags(popup);
+            hardtree.prepare_autocomplete(popup);
+            hardtree.prepare_search_duplicates(popup);
+            hardtree.put_datepicker(popup);
+            hardtree.prepare_mass_form(popup);
+            hardtree.put_mce(popup);
         }        
     },
     
@@ -588,7 +616,7 @@ var treeio = {
                      }
                  } else {
                      var url = location.hash.substring(1);
-                     url = treeio.prepare_url(url);
+                     url = hardtree.prepare_url(url);
                      var popupparents = popup.parents('div.popup-block-inner');
                      $("#loading-status").css('display', 'block');
                      if (popupparents.length > 0) {
@@ -599,14 +627,14 @@ var treeio = {
                      $.ajax({
                         'url': url,
                         'dataType': 'json',
-                        'success': treeio.process_ajax,
-                        'complete': treeio.process_html
+                        'success': hardtree.process_ajax,
+                        'complete': hardtree.process_html
                      });
                  }
                  popup.parent().remove();
              } else if (data.popup.redirect) {
                  var url = location.hash.substring(1);
-                 url = treeio.prepare_url(url);
+                 url = hardtree.prepare_url(url);
                  var popupparents = popup.parents('div.popup-block-inner');
                  $("#loading-status").css('display', 'block');
                  if (popupparents.length > 0) {
@@ -617,8 +645,8 @@ var treeio = {
                  $.ajax({
                     'url': url,
                     'dataType': 'json',
-                    'success': treeio.process_ajax,
-                    'complete': treeio.process_html
+                    'success': hardtree.process_ajax,
+                    'complete': hardtree.process_html
                  });
                  popup.parent().remove();
              } else {
@@ -626,7 +654,7 @@ var treeio = {
                  popuptitleblock.children('span.popup-title').html(data.popup.title);
                  popuptitleblock.children('span.popup-subtitle').html(data.popup.subtitle);
                  popup.html(data.popup.content);
-                 treeio.prepare_popup_content(data.popup);
+                 hardtree.prepare_popup_content(data.popup);
                  //popup.parent().css('display', 'block');
                  popup.parent().fadeIn(300);
                  $("input:text:visible:first", popup).focus();
@@ -707,7 +735,7 @@ var treeio = {
                 $.ajax({
                  url: url,
                  dataType: 'json',
-                 success: treeio.process_popup_data
+                 success: hardtree.process_popup_data
                 });
                 return false;
             })
@@ -750,7 +778,7 @@ var treeio = {
           $(this).bind( "keyup", function( event ) {
             if (event.keyCode === $.ui.keyCode.BACKSPACE ||
                        event.keyCode === $.ui.keyCode.DELETE) {
-              var terms = treeio.utils.split( this.value );
+              var terms = hardtree.utils.split( this.value );
               var fields = $('input',$(this).data('hidden_fields'));
               for (var i=0; i<fields.length; i++)
               {
@@ -765,12 +793,12 @@ var treeio = {
           $(this).autocomplete({
             source: function( request, response ) {
               $.getJSON(callback, {
-                term: treeio.utils.extractLast( request.term )
+                term: hardtree.utils.extractLast( request.term )
               }, response );
             },
             search: function() {
               // custom minLength
-              var term = treeio.utils.extractLast( this.value );
+              var term = hardtree.utils.extractLast( this.value );
               if ( term.length < 2 ) {
                 return false;
               }
@@ -780,7 +808,7 @@ var treeio = {
               return false;
             },
             select: function( event, ui ) {
-              var terms = treeio.utils.split( this.value );
+              var terms = hardtree.utils.split( this.value );
               terms.pop();
               terms.push( ui.item.label );
               terms.push( "" );
@@ -791,7 +819,7 @@ var treeio = {
               this.value = terms.join( ", " );
               fields.append(hidden);
         
-              var terms = treeio.utils.split( this.value );
+              var terms = hardtree.utils.split( this.value );
               var fields = $('input',$(this).data('hidden_fields'));
               for (var i=0; i<fields.length; i++)
               {
@@ -827,31 +855,28 @@ var treeio = {
 
         $('.delete-attachment', doc).each(function() {
            $(this).click(function() {
-               Dajaxice.treeio.account.attachment_delete(Dajax.process, {'attachment_id': $(this).attr('attachment')});
+               Dajaxice.hardtree.account.attachment_delete(Dajax.process, {'attachment_id': $(this).attr('attachment')});
                return false;
            });
         });
 
         $('.attachment-uploader', doc).each(function() {
+            auploader = $(this);
             var file_uploader = new qq.FileUploader({
                 action: $(this).attr('action'),
                 element: this,
-                multiple: false,
+                multiple: true,
                 onComplete: function(id, fileName, responseJSON) {
-                    Dajaxice.treeio.account.attachment(Dajax.process, {'object_id': responseJSON.object_id, 'update_id': responseJSON.update_id})
-                },
-                onAllComplete: function(uploads) {
-                    // uploads is an array of maps
-                    // the maps look like this: { file: FileObject, response: JSONServerResponse }
-                    //alert( "All complete!" ) ;
+                    Dajaxice.hardtree.account.attachment(Dajax.process, {'object_id': responseJSON.object_id, 'update_id': responseJSON.update_id});
                 },
                 params: {
                     'csrf_token': $(this).attr('csrf'),
                     'csrf_name': 'csrfmiddlewaretoken',
                     'csrf_xname': 'X-CSRFToken'
                 },
-                text: treeio_attachment_text
+                text: hardtree_attachment_text
             });
+           auploader.parent().append(auploader.find('.qq-upload-list').remove());
         });
 		
         $('.attachment-record-uploader', doc).each(function() {
@@ -860,7 +885,7 @@ var treeio = {
                 element: this,
                 multiple: false,
                 onComplete: function(id, fileName, responseJSON) {
-                    Dajaxice.treeio.account.attachment(Dajax.process, {'object_id': responseJSON.object_id, 'update_id': responseJSON.update_id})
+                    Dajaxice.hardtree.account.attachment(Dajax.process, {'object_id': responseJSON.object_id, 'update_id': responseJSON.update_id})
                 },
                 onAllComplete: function(uploads) {
                     // uploads is an array of maps
@@ -872,7 +897,7 @@ var treeio = {
                     'csrf_name': 'csrfmiddlewaretoken',
                     'csrf_xname': 'X-CSRFToken'
                 },
-                text: treeio_attachment_record_text
+                text: hardtree_attachment_record_text
             });
         });
     },
@@ -881,7 +906,7 @@ var treeio = {
     'prepare_invites': function(doc) {
           $('.easy-invite', doc).each(function() {
            $(this).click(function() {
-               Dajaxice.treeio.account.easy_invite(Dajax.process, {'emails': $(this).attr('emails')});
+               Dajaxice.hardtree.account.easy_invite(Dajax.process, {'emails': $(this).attr('emails')});
                return false;
              });
            });
@@ -922,14 +947,14 @@ var treeio = {
     	$(this).submit(function() {
     	  	var targetid = $(this).attr('target');
     	  	var target = $(this).parents('#'+targetid);
-    	  	targetid = treeio.utils.generate_id(targetid);
+    	  	targetid = hardtree.utils.generate_id(targetid);
     	  	target.attr('id', targetid);
     		var args = {
     			'target': '#'+targetid,
     			'form': $(this).serializeObject(),
     			'expand': true
     		}; 
-			Dajaxice.treeio.account.comments_likes(Dajax.process, args);
+			Dajaxice.hardtree.account.comments_likes(Dajax.process, args);
     		return false;
     	});
     });
@@ -944,7 +969,7 @@ var treeio = {
 	    $(this).parent('form').submit(function() {
     	  	var targetid = $(this).attr('target');
     	  	var target = $(this).parents(targetid);
-    	  	targetid = treeio.utils.generate_id();
+    	  	targetid = hardtree.utils.generate_id();
     	  	target.attr('id', targetid);
     		var args = {
     			'target': '#'+targetid,
@@ -952,7 +977,7 @@ var treeio = {
     			'edit': true,
     			'formdata': $(this).serializeObject()
     		};
-			Dajaxice.treeio.account.tags(Dajax.process, args);
+			Dajaxice.hardtree.account.tags(Dajax.process, args);
     		return false;
 	    });
     });
@@ -988,24 +1013,24 @@ var treeio = {
 	        }
 	        $(this).ajaxForm(options);
 	      } else {
-	        url = treeio.prepare_url(url);
+	        url = hardtree.prepare_url(url);
 	        var options = {
 	          'beforeSubmit': function(data) {
 	              $("#loading-status").css('display', 'block');
 	           },
 	          'url': url,
 	          'dataType': 'json',
-	          'success': treeio.process_ajax
+	          'success': hardtree.process_ajax
 	        }
 	        $(this).ajaxForm(options);
 	      }
       }
     })
-    treeio.prepare_mass_form(doc);
-    treeio.prepare_filter_form(doc);
-    treeio.prepare_autocomplete(doc);
-    treeio.prepare_search_duplicates(doc);
-    treeio.put_datepicker(doc);
+    hardtree.prepare_mass_form(doc);
+    hardtree.prepare_filter_form(doc);
+    hardtree.prepare_autocomplete(doc);
+    hardtree.prepare_search_duplicates(doc);
+    hardtree.put_datepicker(doc);
   },
   
   'prepare_dropdown_menus': function() {
@@ -1028,7 +1053,63 @@ var treeio = {
         });
     });  
   },
-  
+
+  'prepare_mega_menus': function() {
+
+    //add megemenu body to dropdown divs.
+
+      
+      $("div.menu-item").each(function(){
+        $(this).hover(function(){
+            $(this).addClass('hover');
+        }),function(){
+            $(this).removeClass('hover');
+        };});
+
+
+    $("div.mwrapper").each(function() {
+
+        var p = $(this).parent();
+        var a = p.find('a')
+        console.log(a);
+        p.mouseenter(function() {
+
+              Dajaxice.hardtree.account.mega_menu(Dajax.process, {'menu_id': $('.megamenu', this).attr('class')});
+              return false;
+          });
+         p.mouseleave(function() {
+
+             console.log('Im out of that menu item');
+
+          });
+        
+          $(this).hover(function(){
+             console.log('hi');
+             p.find('a').addClass('hover');
+          },
+          function(){
+              console.log(p.find('.megamenu'));
+              p.find('a').removeClass('hover');
+          });
+          var mega = $(this);
+          $(this).children().each(function() {
+              $(this).hover(function(){
+                                 console.log('hi');
+             mega.parent().find('a').addClass('hover');
+          },
+          function(){
+              console.log(p.find('.megamenu'));
+              console.log('bye');
+              mega.parent().find('a').removeClass('hover');
+          });
+          })
+      });
+
+      $("div.megamenu").each(function() {
+
+      });
+  },
+
   'prepare_toolbar': function() {
     
     //hide toolbar and make visible the 'up' arrow
@@ -1050,13 +1131,13 @@ var treeio = {
 
 }
 
-treeio.utils = {
+hardtree.utils = {
   'split': function( val ) {
       return val.split( /,\s*/ );
   },
   
   'extractLast': function( term ) {
-      return treeio.utils.split( term ).pop();
+      return hardtree.utils.split( term ).pop();
   },
   
   'generate_id': function( prefix ) {
@@ -1077,11 +1158,11 @@ treeio.utils = {
 /*
  * Hardtree modules JS library
  * 
- * Needs to be loaded after treeio.js
+ * Needs to be loaded after hardtree.js
  */
 
-treeio.modules = {
-    'treeio-home': {
+hardtree.modules = {
+    'hardtree-home': {
         'init': function() {
             var sortparams = { opacity: 0.6,
                                handle: 'div.widget-title',
@@ -1110,7 +1191,7 @@ treeio.modules = {
             $('#widget-panel-right').sortable(sortparams);
         }
     },
-    'treeio-core': {
+    'hardtree-core': {
         'init': function() {
             var setupbox = $('div.setup-module-box');
             if (setupbox.length > 0) {
@@ -1125,7 +1206,7 @@ treeio.modules = {
             }
         }
     },
-    'treeio-projects': {
+    'hardtree-projects': {
         'timer': function() {
             var timeslots = $('.projects-timeslot');
             if (timeslots) {
@@ -1156,7 +1237,7 @@ treeio.modules = {
                     }
                     $(this).html(string);
                 });
-                window.setTimeout(treeio.modules['treeio-projects'].timer, 1000);
+                window.setTimeout(hardtree.modules['hardtree-projects'].timer, 1000);
             }
             
         },
@@ -1180,19 +1261,19 @@ treeio.modules = {
 		                                      
 		                    },                    
 		                    onResize: function (data) { 
-		                        Dajaxice.treeio.projects.gantt(callback_function, {'task':data.id, 'start':data.start.toString("yyyy-M-d"), 'end':data.end.toString("yyyy-M-d")});
+		                        Dajaxice.hardtree.projects.gantt(callback_function, {'task':data.id, 'start':data.start.toString("yyyy-M-d"), 'end':data.end.toString("yyyy-M-d")});
 		                    },  
 		                    onDrag: function (data) { 
-		                        Dajaxice.treeio.projects.gantt(callback_function, {'task':data.id, 'start':data.start.toString("yyyy-M-d"), 'end':data.end.toString("yyyy-M-d")});
+		                        Dajaxice.hardtree.projects.gantt(callback_function, {'task':data.id, 'start':data.start.toString("yyyy-M-d"), 'end':data.end.toString("yyyy-M-d")});
 		                    }
 		                }
 	            	});
-	            	var projects_block = $('#module-treeio-projects');
+	            	var projects_block = $('#module-hardtree-projects');
 	            	$(this).ganttView("setSlideWidth", $('td.module-content', projects_block).width() - 60);
-	            	treeio.prepare_popups($(this));
+	            	hardtree.prepare_popups($(this));
 	            	$(window).resize(function() {
 	            		$('div.ganttChart', projects_block).each(function() {
-	            			var projects_block = $('#module-treeio-projects');
+	            			var projects_block = $('#module-hardtree-projects');
 	            			$(this).ganttView("setSlideWidth", $('td.module-content', projects_block).width() - 60);
 	            		});
 	            	})
@@ -1200,7 +1281,7 @@ treeio.modules = {
             });            
         }
     },
-  'treeio-reports': {
+  'hardtree-reports': {
         'init': function() {
           /*//LIVE CHARTS
              $('div.chart').each(function(){
@@ -1221,7 +1302,7 @@ treeio.modules = {
 }
 
 /* Hardtree Nuvius library */
-treeio.nuvius = {
+hardtree.nuvius = {
   
   'profile': null,
   'access_popup': false,
@@ -1233,8 +1314,8 @@ treeio.nuvius = {
       $.ajax({
           'url': nuvius_profile_url,
           'dataType': 'jsonp',
-          'success': treeio.nuvius.load_profile,
-          'error': treeio.show_error
+          'success': hardtree.nuvius.load_profile,
+          'error': hardtree.show_error
       })
   },
   
@@ -1246,19 +1327,19 @@ treeio.nuvius = {
           } else {
             $('#nuvius-username').html("Anonymous User");
           }
-          if (treeio.nuvius.reload_on_profile) {
-            treeio.do_ajax();
+          if (hardtree.nuvius.reload_on_profile) {
+            hardtree.do_ajax();
           }
         }
       } else {
-        if (treeio.nuvius.profile) {
+        if (hardtree.nuvius.profile) {
           var url = nuvius_profile_check_url;
-          url += "?nuvius_id=" + treeio.nuvius.profile.id + "&profile_key=" + treeio.nuvius.profile.key;
+          url += "?nuvius_id=" + hardtree.nuvius.profile.id + "&profile_key=" + hardtree.nuvius.profile.key;
           $.ajax({
             'url': url,
             'dataType': 'json',
-            'success': treeio.nuvius.check_profile,
-            'error': treeio.show_error
+            'success': hardtree.nuvius.check_profile,
+            'error': hardtree.show_error
           })
         }
       }
@@ -1267,26 +1348,26 @@ treeio.nuvius = {
   'load_profile': function(data) {
       $("#loading-status").css('display', 'none');
       if (data.profile) {
-        if (!data.profile.access_granted && treeio.nuvius.access_popup) {
+        if (!data.profile.access_granted && hardtree.nuvius.access_popup) {
           $.colorbox({
             href: data.profile.access_url,
             width:"80%",
             height:"80%",
             iframe: true,
             overlayClose: false,
-            onClosed: treeio.nuvius.fetch_profile
+            onClosed: hardtree.nuvius.fetch_profile
           });
-          treeio.nuvius.access_popup = false;
+          hardtree.nuvius.access_popup = false;
         } else {
-          treeio.nuvius.profile = data.profile;
-          treeio.nuvius.check_profile();
+          hardtree.nuvius.profile = data.profile;
+          hardtree.nuvius.check_profile();
         }
      }
   },
   
   'fetch_access': function() {
-      treeio.nuvius.access_popup = true;
-      treeio.nuvius.fetch_profile();
+      hardtree.nuvius.access_popup = true;
+      hardtree.nuvius.fetch_profile();
   },
   
   'close_iframe': function() {
@@ -1299,14 +1380,14 @@ treeio.nuvius = {
 $(function() {
   
   // Bind the event.
-  $(window).hashchange(treeio.do_ajax);
+  $(window).hashchange(hardtree.do_ajax);
 
   // Trigger the event (first thing on page load).
   $(window).hashchange();
-  treeio.prepare_dropdown_menus();
-  treeio.prepare_toolbar();
-  treeio.convert_links();
-  treeio.prepare_ajax_links();
+  hardtree.prepare_dropdown_menus();
+  hardtree.prepare_toolbar();
+  hardtree.convert_links();
+  hardtree.prepare_ajax_links();
   $(".menu-item a").each(function(){
       $(this).click(function() {
         if ($(this).hasClass('active') && $(this).attr('href') == window.location.hash) {
@@ -1320,14 +1401,14 @@ $(function() {
       if (!url) {
         url = location.hash.substring(1);
       }
-      url = treeio.prepare_url(url);
+      url = hardtree.prepare_url(url);
       var options = {
         'beforeSubmit': function(data) {
             $("#loading-status").css('display', 'block');
          },
         'url': url,
         'dataType': 'json',
-        'success': treeio.process_ajax
+        'success': hardtree.process_ajax
       }
       $(this).ajaxForm(options);
       $(this).children('select').change(function() {
@@ -1356,25 +1437,25 @@ $(function() {
   $(".module-block").each(function() {
       doc = $(this)
       if ($("form").length) {
-        treeio.prepare_forms(doc);
-        treeio.prepare_comments(doc);
+        hardtree.prepare_forms(doc);
+        hardtree.prepare_comments(doc);
         if ($("textarea").length) {
-          treeio.put_mce(doc);
+          hardtree.put_mce(doc);
         }
-        treeio.put_datepicker(doc)
-        treeio.prepare_forms(doc);
+        hardtree.put_datepicker(doc)
+        hardtree.prepare_forms(doc);
       }
-      treeio.prepare_tags();
-      treeio.prepare_slider_sidebar(doc);
-      treeio.prepare_list_actions(doc);
-      treeio.prepare_attachments(doc);
-      treeio.prepare_invites(doc);
-      treeio.prepare_popups(doc);
-      treeio.showhidejs(doc);
+      hardtree.prepare_tags();
+      hardtree.prepare_slider_sidebar(doc);
+      hardtree.prepare_list_actions(doc);
+	  hardtree.prepare_content_top(doc);
+      hardtree.prepare_attachments(doc);
+      hardtree.prepare_mega_menus(doc);
+      hardtree.prepare_invites(doc);
+      hardtree.prepare_popups(doc);
+      hardtree.showhidejs(doc);
       module_name = $(this).attr('id').substring(7);
-      treeio.prepare_module_stuff(module_name);
-      // Hide splash in case something went wrong
-      window.setTimeout("$('#loading-splash').fadeOut();", 5000);
-  })
+      hardtree.prepare_module_stuff(module_name);
+  });
 
 });

@@ -428,7 +428,7 @@ span.show_toolbar {
     text-shadow: 0 1px 1px #F7F7F7;
 }
 
-#menu-treeio-home {
+#menu-hardtree-home {
 	margin-right: 15px;
 }
 
@@ -511,12 +511,12 @@ span.show_toolbar {
  MENU ICONS
 --------------------------------------*/
 
-.treeio-home, .treeio-projects, .treeio-sales,
-.treeio-services, .treeio-account, .treeio-changes,
-.treeio-core, .treeio-documents, .treeio-events,
-.treeio-finance, .treeio-identities, .treeio-infrastructure,
-.treeio-knowledge,  .treeio-messaging, .treeio-news, 
-.treeio-reports, .treeio-forest {
+.hardtree-home, .hardtree-projects, .hardtree-sales,
+.hardtree-services, .hardtree-account, .hardtree-changes,
+.hardtree-core, .hardtree-documents, .hardtree-events,
+.hardtree-finance, .hardtree-identities, .hardtree-infrastructure,
+.hardtree-knowledge,  .hardtree-messaging, .hardtree-news, 
+.hardtree-reports, .hardtree-forest {
 	background: url("/static/icons/icons.gif") no-repeat top left;
 	height:16px;
 	width:18px;
@@ -537,41 +537,41 @@ span.show_toolbar {
 	text-decoration: none;
 }
 
-.active .treeio-events { background-position: 0 0; }
-.treeio-events { background-position: 0 -26px; }
-.active .treeio-documents { background-position: 0 -52px; }
-.treeio-documents { background-position: 0 -78px; }
-.active .treeio-finance {  background-position: 0 -104px; }
-.treeio-finance { background-position: 0 -130px; }
-.active .treeio-forest { background-position: 0 -156px; }
-.treeio-forest { background-position: 0 -182px; }
-.treeio-home { background-position: 0 -208px; }
-.active .treeio-identities { background-position: 0 -234px; }
-.treeio-identities { background-position: 0 -260px; }
-.active .treeio-infrastructure { background-position: 0 -286px; }
-.treeio-infrastructure { background-position: 0 -312px; }
-.active .treeio-knowledge { background-position: 0 -338px; }
-.treeio-knowledge  { background-position: 0 -364px; }
-.active .treeio-messaging { background-position: 0 -390px; }
-.treeio-messaging { background-position: 0 -416px; }
-.active .treeio-news { background-position: 0 -442px; }
-.treeio-news { background-position: 0 -468px; }
-.active .treeio-projects { background-position: 0 -494px; }
-.treeio-projects { background-position: 0 -520px; }
-.active .treeio-reports { background-position: 0 -546px; }
-.treeio-reports { background-position: 0 -572px; }
-.active .treeio-sales { background-position: 0 -598px; }
-.treeio-sales { background-position: 0 -624px; }
-.active .treeio-services { background-position: 0 -650px; }
-.treeio-services { background-position: 0 -676px; }
+.active .hardtree-events { background-position: 0 0; }
+.hardtree-events { background-position: 0 -26px; }
+.active .hardtree-documents { background-position: 0 -52px; }
+.hardtree-documents { background-position: 0 -78px; }
+.active .hardtree-finance {  background-position: 0 -104px; }
+.hardtree-finance { background-position: 0 -130px; }
+.active .hardtree-forest { background-position: 0 -156px; }
+.hardtree-forest { background-position: 0 -182px; }
+.hardtree-home { background-position: 0 -208px; }
+.active .hardtree-identities { background-position: 0 -234px; }
+.hardtree-identities { background-position: 0 -260px; }
+.active .hardtree-infrastructure { background-position: 0 -286px; }
+.hardtree-infrastructure { background-position: 0 -312px; }
+.active .hardtree-knowledge { background-position: 0 -338px; }
+.hardtree-knowledge  { background-position: 0 -364px; }
+.active .hardtree-messaging { background-position: 0 -390px; }
+.hardtree-messaging { background-position: 0 -416px; }
+.active .hardtree-news { background-position: 0 -442px; }
+.hardtree-news { background-position: 0 -468px; }
+.active .hardtree-projects { background-position: 0 -494px; }
+.hardtree-projects { background-position: 0 -520px; }
+.active .hardtree-reports { background-position: 0 -546px; }
+.hardtree-reports { background-position: 0 -572px; }
+.active .hardtree-sales { background-position: 0 -598px; }
+.hardtree-sales { background-position: 0 -624px; }
+.active .hardtree-services { background-position: 0 -650px; }
+.hardtree-services { background-position: 0 -676px; }
 
-.treeio-account { background:url("/static/icons/account.png") no-repeat; }
-.treeio-core { background:url("/static/icons/core.png") no-repeat; }
-.treeio-changes { background:url("/static/icons/changes.png") no-repeat; }
+.hardtree-account { background:url("/static/icons/account.png") no-repeat; }
+.hardtree-core { background:url("/static/icons/core.png") no-repeat; }
+.hardtree-changes { background:url("/static/icons/changes.png") no-repeat; }
 
-.active .treeio-account { background:url("/static/icons/account-active.png") no-repeat; }
-.active .treeio-core { background:url("/static/icons/core-active.png") no-repeat; }
-.active .treeio-changes { background:url("/static/icons/changes-active.png") no-repeat; }
+.active .hardtree-account { background:url("/static/icons/account-active.png") no-repeat; }
+.active .hardtree-core { background:url("/static/icons/core-active.png") no-repeat; }
+.active .hardtree-changes { background:url("/static/icons/changes-active.png") no-repeat; }
 
 .menu-separator {
   float: left;

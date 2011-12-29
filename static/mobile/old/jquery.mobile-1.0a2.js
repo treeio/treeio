@@ -3172,7 +3172,7 @@ $.fn.grid = function(options){
 		var $this = $(this),
 			//get href, remove same-domain protocol and host
 			href = $this.attr( "href" ).replace( location.protocol + "//" + location.host, ""),
-			href = '/m' + href, //treeio
+			href = '/m' + href, //hardtree
 			//if target attr is specified, it's external, and we mimic _blank... for now
 			target = $this.is( "[target]" ),
 			//if it still starts with a protocol, it's external, or could be :mailto, etc
@@ -3195,7 +3195,7 @@ $.fn.grid = function(options){
 				window.open(href);
 			}
 			else{
-				location.href = href.replace('/m', ''); //treeio
+				location.href = href.replace('/m', ''); //hardtree
 			}
 		}
 		else {	

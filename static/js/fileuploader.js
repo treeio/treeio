@@ -535,6 +535,7 @@ qq.FileUploader = function(o){
     
     this._bindCancelEvent();
     this._setupDragDrop();
+
 };
 
 // inherit from Basic Uploader
@@ -613,8 +614,6 @@ qq.extend(qq.FileUploader.prototype, {
         } else {                                   
             text = this._formatSize(total);
         }          
-        
-        qq.setText(size, text);         
     },
     _onComplete: function(id, fileName, result){
         qq.FileUploaderBasic.prototype._onComplete.apply(this, arguments);
@@ -784,6 +783,11 @@ qq.UploadButton = function(o){
     qq.css(this._element, {
         position: 'relative',
         overflow: 'hidden',
+        top: '0 !important',
+        left: '0 !important',
+        width: '110px !important',
+        height: '27px !important',
+
         // Make sure browse button is in the right side
         // in Internet Explorer
         direction: 'ltr'
@@ -821,15 +825,17 @@ qq.UploadButton.prototype = {
             // in Opera only 'browse' button
             // is clickable and it is located at
             // the right side of the input
-            right: 0,
-            top: '6px',
+            left: '2px',
+            top: '-2px',
             fontFamily: 'Arial',
             // 4 persons reported this, the max values that worked for them were 243, 236, 236, 118
-            fontSize: '2px',
+            fontSize: '5px',
             margin: 0,
             padding: 0,
             cursor: 'pointer',
-            opacity: 0
+            opacity: 0,
+            width: '110px !important',
+            height: '27px !important'
         });
         
         this._element.appendChild(input);
@@ -1226,6 +1232,11 @@ qq.extend(qq.UploadHandlerXhr.prototype, {
         };
 
         xhr.onreadystatechange = function(){
+            xhr.setRequestHeader("Content-Type", "application/octet-stream");
+            if( params.csrfmiddlewaretoken )
+            {
+            xhr.setRequestHeader("X-CSRFToken", params.csrfmiddlewaretoken);
+            }
             if (xhr.readyState == 4){
                 self._onComplete(id, xhr);
             }

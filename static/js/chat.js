@@ -85,7 +85,7 @@ var chat = {
         if (json.notifications) {
           json.notifications.length = json.notifications.length || []
           if (json.notifications.length > 0){
-              treeio.process_notifications(json.notifications);
+              hardtree.process_notifications(json.notifications);
           }          
         }
     },
@@ -229,7 +229,7 @@ chat.events = {
 };
 
 chat.option = {
-    'interval': 25000,
+    'interval': 2000,
     'url': "/chat",
     'timeout': 60000
 };
