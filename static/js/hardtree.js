@@ -188,7 +188,6 @@ var treeio = {
         }
           treeio.prepare_tags(block);
           treeio.prepare_list_actions(block);
-          treeio.prepare_content_top(block);
           treeio.prepare_attachments(block);
           treeio.prepare_invites(block);
           treeio.prepare_popups(block);
@@ -313,7 +312,6 @@ var treeio = {
 	  }
       treeio.prepare_tags(target);
       treeio.prepare_list_actions(target);
-      treeio.prepare_content_top(target);
       treeio.prepare_attachments(target);
       treeio.prepare_invites(target);
       treeio.prepare_popups(target);
@@ -421,30 +419,6 @@ var treeio = {
           $("span.content-list-item-actions a", $(this)).addClass("popup-link");
       })
   },
-
-    'prepare_content_top': function(doc) {
-
-        var msie6 = $.browser == 'msie' && $.browser.version < 7;
-        if (!msie6) {
-            var top = $('.content-top', doc).offset().top - 20;
-            $(window).scroll(function(event) {
-                var y = $(this).scrollTop();
-                if (y >= top) {
-                    $('.content-top').css({
-                        position: 'fixed',
-                        top: 32,
-                        opacity: 0.9,
-                    });
-                } else {
-                    $('.content-top').css({
-                        position: 'relative',
-                        top: 0,
-                        opacity: 1
-                    });
-                }
-            });
-        }
-    },
     
   'put_datepicker': function(doc) {
         $('input.datepicker', doc).each(function() {
@@ -1437,7 +1411,6 @@ $(function() {
       treeio.prepare_tags();
       treeio.prepare_slider_sidebar(doc);
       treeio.prepare_list_actions(doc);
-      treeio.prepare_content_top(doc);
       treeio.prepare_attachments(doc);
       treeio.prepare_mega_menus(doc);
       treeio.prepare_invites(doc);
