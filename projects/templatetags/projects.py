@@ -10,8 +10,9 @@ from coffin import template
 from treeio.core.rendering import render_to_string
 from jinja2 import contextfunction, Markup
 from django.template import RequestContext
-
+from treeio.projects import Project, Milestone, Task
 register = template.Library()
+
 
 @contextfunction
 def projects_task_list(context, tasks, time_slots=[], nomass=False,

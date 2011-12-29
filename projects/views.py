@@ -12,10 +12,9 @@ from django.template import RequestContext
 from django.http import HttpResponseRedirect, Http404
 from django.core.urlresolvers import reverse
 from django.db.models import Q
-from core.rendering import render_to_string
+from treeio.core.rendering import render_to_string, render_to_response
 from treeio.core.models import Object, ModuleSetting, UpdateRecord
 from treeio.core.views import user_denied
-from treeio.core.rendering import render_to_response
 from treeio.core.decorators import treeio_login_required, handle_response_format
 from treeio.projects.models import Project, Milestone, Task, TaskStatus, TaskTimeSlot
 from treeio.projects.forms import ProjectForm, MilestoneForm, TaskForm, FilterForm, TaskRecordForm, \
