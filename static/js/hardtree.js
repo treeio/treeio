@@ -236,7 +236,7 @@ var treeio = {
       {
           treeio.modules[module_name].init();
       }
-      catch(err){console.log(err);}
+      catch(err){}
       
   },
   
@@ -1079,7 +1079,7 @@ var treeio = {
             console.log(a);
             p.mouseenter(function() {
 
-                Dajaxice.hardtree.account.mega_menu(Dajax.process, {'menu_id': $('.megamenu', this).attr('class')});
+                Dajaxice.treeio.account.mega_menu(Dajax.process, {'menu_id': $('.megamenu', this).attr('class')});
                 return false;
             });
             p.mouseleave(function() {
@@ -1146,7 +1146,7 @@ treeio.utils = {
 }
 
 /*
- * Hardtree modules JS library
+ * Tree.io modules JS library
  * 
  * Needs to be loaded after treeio.js
  */
@@ -1291,7 +1291,7 @@ treeio.modules = {
   }
 }
 
-/* Hardtree Nuvius library */
+/* Tree.io Nuvius library */
 treeio.nuvius = {
   
   'profile': null,

@@ -12,6 +12,7 @@ from django.template import RequestContext
 from django.http import HttpResponseRedirect, Http404
 from django.core.urlresolvers import reverse
 from django.db.models import Q
+from core.rendering import render_to_string
 from treeio.core.models import Object, ModuleSetting, UpdateRecord
 from treeio.core.views import user_denied
 from treeio.core.rendering import render_to_response
@@ -1233,3 +1234,10 @@ def task_ajax(request, response_format='html'):
         print request.POST
         
     #return HttpResponse(options, mimetype=settings.HARDTREE_RESPONSE_FORMATS['json'])
+
+def megaview(request, response_format='html'):
+    projects = Project.objects.all()
+    context = _get_default_context(request)
+    context['projects']=projects
+    return render_to_string('core/megamenu/projects',context,
+        context_instance=RequestContext(request), response_format=response_format)

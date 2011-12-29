@@ -53,3 +53,42 @@ def projects_time_slot_list(context, time_slots, no_dates=False):
                                response_format=response_format))
 
 register.object(projects_time_slot_list)
+
+@contextfunction
+def breadcrumb(context, object):
+    "Print a breadcrumb hierarchy of an object's path"
+
+    request = context['request']
+
+    response_format = 'html'
+    if 'response_format' in context:
+        response_format = context['response_format']
+
+    projects, milestones, tasks = [], [], []
+
+    while True:
+
+        if isinstance(object, Project):
+            projects.append(object)
+        elif isinstance(object, Milestone):
+            milestones.append(object)
+        elif isinstance(object, Task):
+            tasks.append(object)
+
+        if hasattr(object, 'parent') and object.parent and object.parent != object:
+            object = object.parent
+        elif hasattr(object, 'milestone') and object.milestone and object.milestone != object:
+            object = object.milestone
+        elif hasattr(object, 'project') and object.project and object.project != object:
+            object = object.project
+        else:
+            break
+
+    return Markup(render_to_string('projects/tags/breadcrumb',
+            {'projects': projects,
+             'milestones': milestones,
+             'tasks': tasks},
+        context_instance=RequestContext(request),
+        response_format=response_format))
+
+register.object(breadcrumb)
