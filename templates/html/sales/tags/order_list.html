@@ -44,9 +44,9 @@
                 </td>
                 
                 <td>
-                	{% if order.balance_due() > 0 or order.get_total() == 0 %}
-                  <a href="{% url finance_transaction_add_order order.id %}" class ="inline-link add-link popup-link">{% trans %}Add{% endtrans %}</a>
-                    {% else %}
+                	{% if order.balance_due() > 0 %}
+                  <a href="{% url finance_transaction_add_order order.id %}" class ="inline-link button add-link popup-link"><img src="/static/modules/plus-inline.png">{% trans %}Add{% endtrans %}</a>
+                  {% else %}
                   {% trans %}Paid in full{% endtrans %}
                   {% endif %}
                 </td>
@@ -56,7 +56,7 @@
                    <td>{{ last_updated(order) }}</td>
                 <td>
                   {% if user.get_profile().has_permission(order, mode='w') %}
-                  <span class="content-list-item-actions table-link"><a href="{% url sales_order_edit order.id %}" class="inline-link edit-link popup-link">{% trans %}Edit{% endtrans %}</a></span>
+                  <span class="content-list-item-actions table-link"><a href="{% url sales_order_edit order.id %}" class="inline-link button edit-link popup-link"><img src="/static/modules/pencil-small.png">{% trans %}Edit{% endtrans %}</a></span>
                   {% endif %}
                 </td>
             </tr>

@@ -7,10 +7,10 @@
 {% block module_subtitle %}{% trans %}Order Status{% endtrans %}{% endblock %}
 
 {% block module_topmenu %}
-<a href="{% url sales_order_add %}" class="top-menu add-link">{% trans %}New Order{% endtrans %}</a>
-<a href="{% url sales_status_view status.id %}" class="top-menu view-link">{% trans %}View{% endtrans %}</a>
-<a href="{% url sales_status_edit status.id %}" class="top-menu edit-link">{% trans %}Edit{% endtrans %}</a>
-<a href="{% url sales_status_delete status.id %}" class="top-menu delete-link-active">{% trans %}Delete{% endtrans %}</a>
+<a href="{% url sales_order_add %}" class="top-menu button add-link"><img src="/static/modules/plus-small.png">{% trans %}New Order{% endtrans %}</a>
+
+<a href="{% url sales_status_edit status.id %}" class="top-menu button edit-link"><img src="/static/modules/pencil-small.png">{% trans %}Edit{% endtrans %}</a>
+<a href="{% url sales_status_delete status.id %}" class="top-menu button delete-link-active"><img src="/static/modules/cross-small.png">{% trans %}Delete{% endtrans %}</a>
 {% endblock %}
 
 {% block sale_order_statuses %}
@@ -41,7 +41,7 @@
             </li>
             <li>
                 <input type="submit" name="delete" value="{% trans %}Yes, Delete{% endtrans %}" />&nbsp;&nbsp;
-                <input type="submit" name="cancel" value="{% trans %}Cancel{% endtrans %}" class="cancel" />
+                <button type="submit" name="cancel"  class="cancel" ><img src="/static/modules/cancel.png"/>{% trans %}Cancel{% endtrans %}</button>
             </li>
         </ul>
     </form>
@@ -79,7 +79,7 @@
     </span>
     <span class="content-list-item-actions">
         {% if user.get_profile().has_permission(order, mode='w') %}
-        <a href="{% url sales_order_edit order.id %}" class="inline-link edit-link">{% trans %}Edit{% endtrans %}</a>
+        <a href="{% url sales_order_edit order.id %}" class="inline-link button edit-link"><img src="/static/modules/pencil-small.png">{% trans %}Edit{% endtrans %}</a>
         {% endif %}
     </span>
 </div>

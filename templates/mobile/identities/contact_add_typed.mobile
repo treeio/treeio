@@ -6,7 +6,7 @@
 {% block module_subtitle %}{% trans %}Contact Type{% endtrans %}{% endblock %}
 
 {% block module_topmenu %}
-<a href="{% url identities_contact_add_typed type.id %}" class="top-menu add-link add-link-active">{% trans %}New{% endtrans %} {{ type.name }}</a>
+<a href="{% url identities_contact_add_typed type.slug %}" class="top-menu add-link add-link-active">{% trans %}New{% endtrans %} {{ type.name }}</a>
 {% endblock %}
 
 {% block module_content %}

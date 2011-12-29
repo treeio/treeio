@@ -7,10 +7,10 @@
 {% block module_subtitle %}{% trans %}Delete Source{% endtrans %}{% endblock %}
 
 {% block module_topmenu %}
-<a href="{% url sales_source_add %}" class="top-menu add-link">{% trans %}New Source{% endtrans %}</a>
-<a href="{% url sales_source_view source.id %}" class="top-menu view-link">{% trans %}View{% endtrans %}</a>
-<a href="{% url sales_source_edit source.id %}" class="top-menu edit-link">{% trans %}Edit{% endtrans %}</a>
-<a href="{% url sales_source_delete source.id %}" class="top-menu delete-link-active">{% trans %}Delete{% endtrans %}</a>
+<a href="{% url sales_source_add %}" class="top-menu button add-link"><img src="/static/modules/plus-small.png">{% trans %}New Source{% endtrans %}</a>
+
+<a href="{% url sales_source_edit source.id %}" class="top-menu button edit-link"><img src="/static/modules/pencil-small.png">{% trans %}Edit{% endtrans %}</a>
+<a href="{% url sales_source_delete source.id %}" class="top-menu button delete-link-active"><img src="/static/modules/cross-small.png">{% trans %}Delete{% endtrans %}</a>
 {% endblock %}
 
 {% block sale_order_sources %}
@@ -41,7 +41,7 @@
             </li>
             <li>
                 <input type="submit" name="delete" value="{% trans %}Yes, Delete{% endtrans %}" />&nbsp;&nbsp;
-                <input type="submit" name="cancel" value="{% trans %}Cancel{% endtrans %}" class="cancel" />
+                <button type="submit" name="cancel"  class="cancel" ><img src="/static/modules/cancel.png"/>{% trans %}Cancel{% endtrans %}</button>
             </li>
         </ul>
     </form>

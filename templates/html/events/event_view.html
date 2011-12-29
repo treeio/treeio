@@ -7,10 +7,10 @@
 {% block module_subtitle %}{% trans %}Event{% endtrans %}{% endblock %}
 
 {% block module_topmenu %}
-<a class="top-menu view-link-active" href="{% url events_event_view event.id %}">{% trans %}View{% endtrans %}</a>
+
 {% if user.get_profile().has_permission(event, mode='w') %}
-<a class="top-menu edit-link" href="{% url events_event_edit event.id %}">{% trans %}Edit{% endtrans %}</a>
-<a class="top-menu delete-link" href="{% url events_event_delete event.id %}">{% trans %}Delete{% endtrans %}</a>
+<a class="top-menu button edit-link" href="{% url events_event_edit event.id %}"><img src="/static/modules/pencil-small.png">{% trans %}Edit{% endtrans %}</a>
+<a class="top-menu button delete-link" href="{% url events_event_delete event.id %}"><img src="/static/modules/cross-small.png">{% trans %}Delete{% endtrans %}</a>
 {% endif %}
 {% endblock %}
 
@@ -28,8 +28,8 @@
 <div class="sidebar-block">
     {{ subscription_block(event) }}
 </div>
-<span class="sidebar-header-right">{% trans %}Download as:{% endtrans %}<br />{% if '?' in request.get_full_path() %}<a class="pdf-block-link" href="{{ request.get_full_path()|replace('.ajax','').replace('?','.pdf?') }}"{% else %}<a class="pdf-block-link" href="{{ request.get_full_path()|replace('.ajax','') }}.pdf"{% endif %} target="_self">PDF</a>
-  </span></span>
+<span class="sidebar-header-right">{% trans %}Download as{% endtrans %}<br />{% if '?' in request.get_full_path() %}<a class="button pdf-block-link" href="{{ request.get_full_path()|replace('.ajax','').replace('?','.pdf?') }}"{% else %}<a class="button pdf-block-link" href="{{ request.get_full_path()|replace('.ajax','') }}.pdf"{% endif %} target="_self"><img src="/static/modules/pdf.png"/>PDF</a>
+  </span>
 </td>
 {% endblock %}
 

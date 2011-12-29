@@ -6,7 +6,7 @@
 
 {% block module_title %}{% trans %}Perspectives{% endtrans %}{% endblock %}
 {% block module_topmenu %}
-<a href="{% url core_admin_perspective_add %}" class="top-menu add-link-active">{% trans %}New Perspective{% endtrans %}</a>
+<a href="{% url core_admin_perspective_add %}" class="top-menu button add-link-active"><img src="/static/modules/plus-small.png">{% trans %}New Perspective{% endtrans %}</a>
 {% endblock %}
 
 {% block sidebar_right %}
@@ -20,8 +20,8 @@
         {{ form|htsafe }}
     </ul>
     <div class="content-form-submit">
-        <input type="submit" name="save" value="{% trans %}Create Perspective{% endtrans %}">
-		<input type="submit" name="cancel" value="{% trans %}Cancel{% endtrans %}" class="cancel" />
+        <button type="submit" name="save">{% trans %}Create Perspective{% endtrans %}</button>
+		<button type="submit" name="cancel"  class="cancel" ><img src="/static/modules/cancel.png"/>{% trans %}Cancel{% endtrans %}</button>
     </div>
 </form>
 {% endblock %}

@@ -7,14 +7,14 @@
 {% block module_title %}{% trans %}Settings{% endtrans %}{% endblock %}
 
 {% block sidebar_right %}
-<span class="sidebar-header-right">{% trans %}Download as:{% endtrans %}<br />{% if '?' in request.get_full_path() %}<a class="pdf-block-link" href="{{ request.get_full_path()|replace('.ajax','').replace('?','.pdf?') }}"{% else %}<a class="pdf-block-link" href="{{ request.get_full_path()|replace('.ajax','') }}.pdf"{% endif %} target="_self">PDF</a>
+<span class="sidebar-header-right">{% trans %}Download as{% endtrans %}<br />{% if '?' in request.get_full_path() %}<a class="button pdf-block-link" href="{{ request.get_full_path()|replace('.ajax','').replace('?','.pdf?') }}"{% else %}<a class="button pdf-block-link" href="{{ request.get_full_path()|replace('.ajax','') }}.pdf"{% endif %} target="_self"><img src="/static/modules/pdf.png"/>PDF</a>
       </span>
 {% endblock %}
 
 {% block module_topmenu %}
-<a href="{% url identities_type_add %}" class="top-menu add-link">{% trans %}New Type{% endtrans %}</a>
-<a href="{% url identities_field_add %}" class="top-menu add-link">{% trans %}New Field{% endtrans %}</a>
-<a href="{% url identities_settings_view %}" class="top-menu view-link-active">{% trans %}View{% endtrans %}</a>
+<a href="{% url identities_type_add %}" class="top-menu button add-link"><img src="/static/modules/plus-small.png">{% trans %}New Type{% endtrans %}</a>
+<a href="{% url identities_field_add %}" class="top-menu button add-link"><img src="/static/modules/plus-small.png">{% trans %}New Field{% endtrans %}</a>
+
 {% endblock %}
 
 {% block module_content %}
@@ -35,7 +35,7 @@
     </span>
     <span class="content-list-item-actions">
         {% if user.get_profile().has_permission(itype, mode='w') %}
-        <a href="{% url identities_type_edit itype.id %}" class="inline-link edit-link">{% trans %}Edit{% endtrans %}</a>
+        <a href="{% url identities_type_edit itype.id %}" class="inline-link button edit-link"><img src="/static/modules/pencil-small.png">{% trans %}Edit{% endtrans %}</a>
         {% endif %}
     </span>
 </div>
@@ -60,7 +60,7 @@
     </span>
     <span class="content-list-item-actions">
         {% if user.get_profile().has_permission(ifield, mode='w') %}
-        <a href="{% url identities_field_edit ifield.id %}" class="inline-link edit-link">{% trans %}Edit{% endtrans %}</a>
+        <a href="{% url identities_field_edit ifield.id %}" class="inline-link button edit-link"><img src="/static/modules/pencil-small.png">{% trans %}Edit{% endtrans %}</a>
         {% endif %}
     </span>
 </div>
@@ -74,7 +74,7 @@
 {% csrf_token %}
     <div style="padding: 0">
         <input type="file" name="file" size="20">
-        <input type="submit" name="import" value="Import Contacts" />
+        <button type="submit" name="import" >Import Contacts</button>
     </div>
 </form>
 {% endblock %}

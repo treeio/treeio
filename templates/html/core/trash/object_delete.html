@@ -8,10 +8,10 @@
 {% block module_topmenu %}
 {% set url = object.get_absolute_url() %}
 {% if url %}
-<a href="{{ url }}" class="top-menu view-link">{% trans %}View{% endtrans %}</a>
+
 {% endif %}
-<a href="{% url core_trash_object_delete object.id %}" class="top-menu delete-link-active">{% trans %}Delete{% endtrans %}</a>
-<a href="{% url core_trash %}" class="top-menu trash-link trash-link {% if trash %}trash-full-link-active{% endif %}">{% trans %}Trash{% endtrans %}</a>
+<a href="{% url core_trash_object_delete object.id %}" class="top-menu button delete-link-active"><img src="/static/modules/cross-small.png">{% trans %}Delete{% endtrans %}</a>
+<a href="{% url core_trash %}" class="top-menu button trash-link button trash-link {% if trash %}trash-full-link-active{% endif %}"><img src="/static/modules/bin.png">{% trans %}Trash{% endtrans %}</a>
 {% endblock %}
 
 {% block module_content %}
@@ -29,7 +29,7 @@
             </li>
             <li>
                 <input type="submit" name="delete" value="{% trans %}Yes, Delete{% endtrans %}" style="font-weight: 700;" />&nbsp;&nbsp;
-                <input type="submit" name="cancel" value="{% trans %}Cancel{% endtrans %}" class="cancel" />
+                <button type="submit" name="cancel"  class="cancel" ><img src="/static/modules/cancel.png"/>{% trans %}Cancel{% endtrans %}</button>
             </li>
         </ul>
     </form>

@@ -1,5 +1,5 @@
 {"active":
-{%- if not active %}"treeio-home"{% endif -%}
+{%- if not active %}"hardtree-home"{% endif -%}
 {%- for module in modules -%}
 	{%- if module == active -%}
     "{{ module.name|replace('.', '-')}}"

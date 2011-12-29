@@ -4,6 +4,27 @@
 
 {% block content %}
 
+<div class="content-top">
+	{% block module_breadcrumb %}{% endblock %}
+		
+	<div class="title-block">
+
+            <div class="title">
+                {% block module_title %}{% trans %}Service Support{% endtrans %}{% endblock %}
+            </div>
+            <div class="subtitle-block">
+                {% block module_subtitle %}{% endblock %}
+            </div>
+            <div class="module-top-menu-inline">
+                {% block module_topmenu %}
+                <a href="{% url services_ticket_add %}" class="top-menu button add-link"><img src="/static/modules/plus-small.png">{% trans %}New Ticket{% endtrans %}</a>
+                <a href="{% url core_trash %}" class="top-menu button trash-link {% if trash %}trash-full-link{% endif %}"><img src="/static/modules/bin.png">{% trans %}Trash{% endtrans %}</a>
+                {% endblock %}
+            </div>
+            {{ help_link() }}
+
+        </div>
+</div>
 <table>
     <tr>
         <td class="module-sidebar">
@@ -36,7 +57,7 @@
         <span class="sidebar-header">{% trans %}Services{% endtrans %}</span>
         <a href="{% url services_service_catalogue %}" class="sidebar-link {% block class_service_catalogue %}{% endblock %}">{% trans %}Service Catalogue{% endtrans %}</a>
         <a href="{% url services_sla_index %}" class="sidebar-link {% block class_sla_index %}{% endblock %}">{% trans %}SLAs{% endtrans %}</a>
-        {% if request.user.get_profile().is_admin('treeio.services') %}
+        {% if request.user.get_profile().is_admin('hardtree.services') %}
         <span class="sidebar-header">{% trans %}Administration{% endtrans %}</span>
         <a href="{% url services_settings_view %}" class="sidebar-link {% block class_admin_settings %}{% endblock %}">{% trans %}Settings{% endtrans %}</a>
         <a href="{% url services_agent_index %}" class="sidebar-link {% block class_agent_index %}{% endblock %}">{% trans %}Agents{% endtrans %}</a>
@@ -47,23 +68,6 @@
 
         <div class="module-content-fill">
 
-            <div class="title-block">
-
-                <div class="title">
-                    {% block module_title %}{% trans %}Service Support{% endtrans %}{% endblock %}
-                </div>
-                <div class="subtitle-block">
-                    {% block module_subtitle %}{% endblock %}
-                </div>
-                <div class="module-top-menu-inline">
-                    {% block module_topmenu %}
-                    <a href="{% url services_ticket_add %}" class="top-menu add-link">{% trans %}New Ticket{% endtrans %}</a>
-                    <a href="{% url core_trash %}" class="top-menu trash-link {% if trash %}trash-full-link{% endif %}">{% trans %}Trash{% endtrans %}</a>
-                    {% endblock %}
-                </div>
-                {{ help_link() }}
-
-            </div>
             <div id="module_content">
 
                 <table>

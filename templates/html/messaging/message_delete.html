@@ -25,12 +25,12 @@
 
 {% block module_topmenu %}
 {% if message.reply_to %}
-<a href="{% url messaging_message_view message.reply_to.id %}" class="top-menu view-link">{% trans %}View{% endtrans %}</a>
+
 {% else %}
-<a href="{% url messaging_message_view message.id %}" class="top-menu view-link">{% trans %}View{% endtrans %}</a>
+
 {% endif %}
 {% if user.get_profile().has_permission(message, mode='w') %}
-<a href="{% url messaging_message_delete message.id %}" class="top-menu delete-link-active">{% trans %}Delete{% endtrans %}</a>
+<a href="{% url messaging_message_delete message.id %}" class="top-menu button delete-link-active"><img src="/static/modules/cross-small.png">{% trans %}Delete{% endtrans %}</a>
 {% endif %}
 {% endblock %}
 
@@ -50,7 +50,7 @@
             </li>
             <li>
                 <input type="submit" name="delete" value="{% trans %}Yes, Delete{% endtrans %}" />&nbsp;&nbsp;
-                <input type="submit" name="cancel" value="{% trans %}Cancel{% endtrans %}" class="cancel" />
+                <button type="submit" name="cancel"  class="cancel" ><img src="/static/modules/cancel.png"/>{% trans %}Cancel{% endtrans %}</button>
             </li>
         </ul>
     </form>

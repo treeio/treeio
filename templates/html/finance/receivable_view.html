@@ -6,9 +6,9 @@
 {% block module_subtitle %}{% trans %}Receivable{% endtrans %}{% endblock %}
 
 {% block module_topmenu %}
-<a class="top-menu view-link-active" href="{% url finance_receivable_view liability.id %}">{% trans %}View{% endtrans %}</a>
-<a class="top-menu edit-link" href="{% url finance_receivable_edit liability.id %}">{% trans %}Edit{% endtrans %}</a>
-<a class="top-menu delete-link" href="{% url finance_receivable_delete liability.id %}">{% trans %}Delete{% endtrans %}</a>
+
+<a class="top-menu button edit-link" href="{% url finance_receivable_edit liability.id %}"><img src="/static/modules/pencil-small.png">{% trans %}Edit{% endtrans %}</a>
+<a class="top-menu button delete-link" href="{% url finance_receivable_delete liability.id %}"><img src="/static/modules/cross-small.png">{% trans %}Delete{% endtrans %}</a>
 {% endblock %}
 
 {% block sidebar_right %}
@@ -25,8 +25,8 @@
 <div class="sidebar-block">
     {{ subscription_block(liability) }}
 </div>
-<span class="sidebar-header-right">{% trans %}Download as:{% endtrans %}<br />{% if '?' in request.get_full_path() %}<a class="pdf-block-link" href="{{ request.get_full_path()|replace('.ajax','').replace('?','.pdf?') }}"{% else %}<a class="pdf-block-link" href="{{ request.get_full_path()|replace('.ajax','') }}.pdf"{% endif %} target="_self">PDF</a>
-  </span></span>
+<span class="sidebar-header-right">{% trans %}Download as{% endtrans %}<br />{% if '?' in request.get_full_path() %}<a class="button pdf-block-link" href="{{ request.get_full_path()|replace('.ajax','').replace('?','.pdf?') }}"{% else %}<a class="button pdf-block-link" href="{{ request.get_full_path()|replace('.ajax','') }}.pdf"{% endif %} target="_self"><img src="/static/modules/pdf.png"/>PDF</a>
+  </span>
 {% endblock %}
 
 {% block module_content %}
@@ -72,7 +72,7 @@
 
 <div class="content-label-head">
     {% trans %}Payments{% endtrans %}:
-    <a href="{% url finance_transaction_add liability.id %}" id="add_transaction" class="inline-link add-link popup-link">{% trans %}Add{% endtrans %}</a>
+    <a href="{% url finance_transaction_add liability.id %}" id="add_transaction" class="inline-link button add-link popup-link"><img src="/static/modules/plus-inline.png">{% trans %}Add{% endtrans %}</a>
 </div>
 {% if transactions %}
 

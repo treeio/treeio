@@ -5,11 +5,11 @@
 {% block class_index %}sidebar-link-active{% endblock %}
 
 {% block module_topmenu %}
-<a href="{% url changes_set_add %}" class="top-menu add-link-active">{% trans %}New Change Set{% endtrans %}</a>
+<a href="{% url changes_set_add %}" class="top-menu button add-link-active"><img src="/static/modules/plus-small.png">{% trans %}New Change Set{% endtrans %}</a>
 {% endblock %}
 
 {% block sidebar_right %}
-<span class="sidebar-header-right">{% trans %}Download as:{% endtrans %}<br />{% if '?' in request.get_full_path() %}<a class="pdf-block-link" href="{{ request.get_full_path()|replace('.ajax','').replace('?','.pdf?') }}"{% else %}<a class="pdf-block-link" href="{{ request.get_full_path()|replace('.ajax','') }}.pdf"{% endif %} target="_self">PDF</a>
+<span class="sidebar-header-right">{% trans %}Download as{% endtrans %}<br />{% if '?' in request.get_full_path() %}<a class="button pdf-block-link" href="{{ request.get_full_path()|replace('.ajax','').replace('?','.pdf?') }}"{% else %}<a class="button pdf-block-link" href="{{ request.get_full_path()|replace('.ajax','') }}.pdf"{% endif %} target="_self"><img src="/static/modules/pdf.png"/>PDF</a>
       </span>
 {% endblock %}
 
@@ -21,7 +21,7 @@
         {{ form.as_ul()|htsafe }}
     </ul>
     <div class="content-form-submit">
-        <input type="submit" value="{% trans %}Create Set{% endtrans %}">
+        <button type="submit">{% trans %}Create Set{% endtrans %}</button>
     </div>
 </form>
 {% endblock %}

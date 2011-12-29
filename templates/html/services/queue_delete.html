@@ -6,11 +6,11 @@
 {% block module_subtitle %}{% trans %}Queue{% endtrans %}{% endblock %}
 
 {% block module_topmenu %}
-<a href="{% url services_ticket_add_by_queue queue.id %}" class="top-menu add-link">{% trans %}New Ticket{% endtrans %}</a>
-<a href="{% url services_queue_view queue.id %}" class="top-menu view-link">{% trans %}View{% endtrans %}</a>
+<a href="{% url services_ticket_add_by_queue queue.id %}" class="top-menu button add-link"><img src="/static/modules/plus-small.png">{% trans %}New Ticket{% endtrans %}</a>
+
 {% if user.get_profile().has_permission(queue, mode='w') %}
-<a href="{% url services_queue_edit queue.id %}" class="top-menu edit-link">{% trans %}Edit{% endtrans %}</a>
-<a href="{% url services_queue_delete queue.id %}" class="top-menu delete-link-active">{% trans %}Delete{% endtrans %}</a>
+<a href="{% url services_queue_edit queue.id %}" class="top-menu button edit-link"><img src="/static/modules/pencil-small.png">{% trans %}Edit{% endtrans %}</a>
+<a href="{% url services_queue_delete queue.id %}" class="top-menu button delete-link-active"><img src="/static/modules/cross-small.png">{% trans %}Delete{% endtrans %}</a>
 {% endif %}
 {% endblock %}
 
@@ -55,7 +55,7 @@
             </li>
             <li>
                 <input type="submit" name="delete" value="{% trans %}Yes, Delete{% endtrans %}" />&nbsp;&nbsp;
-                <input type="submit" name="cancel" value="{% trans %}Cancel{% endtrans %}" class="cancel" />
+                <button type="submit" name="cancel"  class="cancel" ><img src="/static/modules/cancel.png"/>{% trans %}Cancel{% endtrans %}</button>
             </li>
         </ul>
     </form>
@@ -94,7 +94,7 @@
     </span>
     <span class="content-list-item-actions">
         {% if user.get_profile().has_permission(queue, mode='w') %}
-        <a href="{% url services_queue_edit queue.id %}" class="inline-link edit-link">{% trans %}Edit{% endtrans %}</a>
+        <a href="{% url services_queue_edit queue.id %}" class="inline-link button edit-link"><img src="/static/modules/pencil-small.png">{% trans %}Edit{% endtrans %}</a>
         {% endif %}
     </span>
 </div>
@@ -120,7 +120,7 @@
     </span>
     <span class="content-list-item-actions">
         {% if user.get_profile().has_permission(ticket, mode='w') %}
-        <a href="{% url services_ticket_edit ticket.id %}" class="inline-link edit-link">{% trans %}Edit{% endtrans %}</a>
+        <a href="{% url services_ticket_edit ticket.id %}" class="inline-link button edit-link"><img src="/static/modules/pencil-small.png">{% trans %}Edit{% endtrans %}</a>
         {% endif %}
     </span>
 </div>

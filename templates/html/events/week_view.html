@@ -12,7 +12,7 @@
     <ul class="calendar-goto-form-fields">
         {{ gotoform|htsafe }}
     </ul>
-    <input type="submit" value="{% trans %}Submit{% endtrans %}">
+    <button type="submit">{% trans %}Submit{% endtrans %}</button>
     {% if not istoday %}
     <span style="padding-left: 3em;">
         {% trans %}Go to{% endtrans %} <a href="{% url events_week %}">{% trans %}Today{% endtrans %}</a>
@@ -50,7 +50,7 @@
         {% endif %}
         {{ events.render_for_datehour(date, hour) }}
         <span class="content-list-item-actions" style="position: relative; top: 15px;">
-            <a href="{% url events_event_add_to_date date.isoformat(), hour %}" class="inline-link add-link" style="padding: 0; width: 16px; height: 16px;"></a>
+            <a href="{% url events_event_add_to_date date.isoformat(), hour %}" class="inline-link button add-link" style="padding: 0; width: 16px; height: 16px;"><img src="/static/modules/plus-inline.png"></a>
         </span>
         </td>
         {% endfor %}

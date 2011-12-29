@@ -5,8 +5,8 @@
 {% block module_title %}{% trans %}Static Pages{% endtrans %}{% endblock %}
 
 {% block module_topmenu %}
-<a href="{% url core_admin_page_add %}" class="top-menu add-link">{% trans %}New Page{% endtrans %}</a>
-<a href="{% url core_admin_pagefolder_add %}" class="top-menu add-link">{% trans %}New Folder{% endtrans %}</a>
+<a href="{% url core_admin_page_add %}" class="top-menu button add-link"><img src="/static/modules/plus-small.png">{% trans %}New Page{% endtrans %}</a>
+<a href="{% url core_admin_pagefolder_add %}" class="top-menu button add-link"><img src="/static/modules/plus-small.png">{% trans %}New Folder{% endtrans %}</a>
 {% endblock %}
 
 {% block class_pages %}sidebar-link-active{% endblock %}
@@ -24,7 +24,7 @@
         </span>
     </span>
     <span class="content-list-item-actions">
-        <a href="{% url core_admin_page_edit page.id %}" class="inline-link edit-link">{% trans %}Edit{% endtrans %}</a>
+        <a href="{% url core_admin_page_edit page.id %}" class="inline-link button edit-link"><img src="/static/modules/pencil-small.png">{% trans %}Edit{% endtrans %}</a>
     </span>
 </div>
 {% endfor %}

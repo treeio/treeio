@@ -54,7 +54,7 @@
                 <td>
                 {% if user.get_profile().has_permission(lead, mode='w') %}
                 <span class="content-list-item-actions table-link">
-                <a href="{% url sales_lead_edit lead.id %}" class="inline-link edit-link">{% trans %}Edit{% endtrans %}</a>
+                <a href="{% url sales_lead_edit lead.id %}" class="inline-link button edit-link"><img src="/static/modules/pencil-small.png">{% trans %}Edit{% endtrans %}</a>
                 </span>
                 {% endif %}
                 </td>

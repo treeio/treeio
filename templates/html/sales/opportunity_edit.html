@@ -7,10 +7,10 @@
 {% block module_subtitle %}{% trans %}Opportunity{% endtrans %}{% endblock %}
 
 {% block module_topmenu %}
-<a href="{% url sales_opportunity_view opportunity.id %}" class="top-menu view-link">{% trans %}View{% endtrans %}</a>
-<a href="{% url sales_opportunity_edit opportunity.id %}" class="top-menu edit-link-active">{% trans %}Edit{% endtrans %}</a>
-<a href="{% url sales_opportunity_delete opportunity.id %}" class="top-menu delete-link">{% trans %}Delete{% endtrans %}</a>
-<a href="{% url sales_order_add_with_opportunity opportunity.id %}" class="top-menu add-link">{% trans %}Convert To Order{% endtrans %}</a>
+
+<a href="{% url sales_opportunity_edit opportunity.id %}" class="top-menu button edit-link-active"><img src="/static/modules/pencil-small.png">{% trans %}Edit{% endtrans %}</a>
+<a href="{% url sales_opportunity_delete opportunity.id %}" class="top-menu button delete-link"><img src="/static/modules/cross-small.png">{% trans %}Delete{% endtrans %}</a>
+<a href="{% url sales_order_add_with_opportunity opportunity.id %}" class="top-menu button add-link"><img src="/static/modules/plus-small.png">{% trans %}Convert To Order{% endtrans %}</a>
 {% endblock %}
 
 {% block sidebar_right %}
@@ -24,8 +24,8 @@
         {{ htform(form).as_ul()|htsafe }}
     </ul>
     <div class="content-form-submit">
-        <input type="submit" name="save" value="{% trans %}Save{% endtrans %}" />
-		<input type="submit" name="cancel" value="{% trans %}Cancel{% endtrans %}" class="cancel" />
+        <button type="submit" name="save" >{% trans %}Save{% endtrans %}</button>
+		<button type="submit" name="cancel"  class="cancel" ><img src="/static/modules/cancel.png"/>{% trans %}Cancel{% endtrans %}</button>
     </div>
 </form>
 {% endblock %}

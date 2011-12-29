@@ -53,7 +53,7 @@
 
 		{% if request.user.get_profile().is_admin() %}
 		
-		<div class="highlight-column">
+		<div class="highlight-column right-column">
 		 
     	<h4>{% trans %}Manage your Tree.io{% endtrans %}:</h4>
     	
@@ -73,6 +73,11 @@
   		</div>
   		<hr class="space" />
   		
+  		<div class="highlight">
+  		<img class="left" src="/static/icons/dashboard/cpanel.gif" />
+  		<a class="large" href="{%  url core_billing_upgrade %}"><strong>{% trans %}Upgrade{% endtrans %}</strong></a><br />
+  		<span class="light">{% trans %}To add more than 3 users{% endtrans %}.</span>
+      </div>
     </div>
 		
 		{% endif %}

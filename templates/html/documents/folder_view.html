@@ -7,15 +7,16 @@
 {% block module_subtitle %}{% trans %}Folder{% endtrans %}{% endblock %}
 
 {% block module_topmenu %}
-<a class="top-menu add-link" href="{% url documents_folder_add_typed folder.id %}">{% trans %}New Folder{% endtrans %}</a>
-<a class="top-menu add-link" href="{% url documents_document_add_typed folder.id %}">{% trans %}New Document{% endtrans %}</a>
-<a class="top-menu add-link" href="{% url documents_weblink_add_typed folder.id %}">{% trans %}New Web Link{% endtrans %}</a>
-<a class="top-menu add-link" href="{% url documents_file_upload_typed folder.id %}">{% trans %}Upload File{% endtrans %}</a>
-<a class="top-menu view-link-active" href="{% url documents_folder_view folder.id %}">{% trans %}View{% endtrans %}</a>
+<a class="top-menu button add-link" href="{% url documents_folder_add_typed folder.id %}"><img src="/static/modules/plus-small.png">{% trans %}New Folder{% endtrans %}</a>
+<a class="top-menu button add-link" href="{% url documents_document_add_typed folder.id %}"><img src="/static/modules/plus-small.png">{% trans %}New Document{% endtrans %}</a>
+<a class="top-menu button add-link" href="{% url documents_weblink_add_typed folder.id %}"><img src="/static/modules/plus-small.png">{% trans %}New Web Link{% endtrans %}</a>
+<a class="top-menu button add-link" href="{% url documents_file_upload_typed folder.id %}"><img src="/static/modules/plus-small.png">{% trans %}Upload File{% endtrans %}</a>
+
 {% if user.get_profile().has_permission(folder, mode='w') %}
-<a class="top-menu edit-link" href="{% url documents_folder_edit folder.id %}">{% trans %}Edit{% endtrans %}</a>
-<a class="top-menu delete-link" href="{% url documents_folder_delete folder.id %}">{% trans %}Delete{% endtrans %}</a>
+<a class="top-menu button edit-link" href="{% url documents_folder_edit folder.id %}"><img src="/static/modules/pencil-small.png">{% trans %}Edit{% endtrans %}</a>
+<a class="top-menu button delete-link" href="{% url documents_folder_delete folder.id %}"><img src="/static/modules/cross-small.png">{% trans %}Delete{% endtrans %}</a>
 {% endif %}
+{{ last_updated(folder, true) }}
 {% endblock %}
 
 {% block sidebar_right %}
@@ -32,8 +33,8 @@
 <div class="sidebar-block">
     {{ subscription_block(folder) }}
 </div>
-<span class="sidebar-header-right">{% trans %}Download as:{% endtrans %}<br />{% if '?' in request.get_full_path() %}<a class="pdf-block-link" href="{{ request.get_full_path()|replace('.ajax','').replace('?','.pdf?') }}"{% else %}<a class="pdf-block-link" href="{{ request.get_full_path()|replace('.ajax','') }}.pdf"{% endif %} target="_self">PDF</a>
-  </span></span>
+<span class="sidebar-header-right">{% trans %}Download as{% endtrans %}<br />{% if '?' in request.get_full_path() %}<a class="button pdf-block-link" href="{{ request.get_full_path()|replace('.ajax','').replace('?','.pdf?') }}"{% else %}<a class="button pdf-block-link" href="{{ request.get_full_path()|replace('.ajax','') }}.pdf"{% endif %} target="_self"><img src="/static/modules/pdf.png"/>PDF</a>
+  </span>
 {% endblock %}
 
 {% block module_content %}
@@ -47,7 +48,7 @@
 <div>
     <span class="content-label-head">{% trans %}Folders{% endtrans %}:
         <span class="spaced-h smaller">
-            <a class="inline-link add-link popup-link" href="{% url documents_folder_add_typed folder.id %}">{% trans %}Add Folder{% endtrans %}</a>
+            <a class="inline-link button add-link popup-link" href="{% url documents_folder_add_typed folder.id %}"><img src="/static/modules/plus-inline.png">{% trans %}Add Folder{% endtrans %}</a>
         </span>
     </span>
 </div>
@@ -61,7 +62,7 @@
     </span>
     <span class="content-list-item-actions">
         {% if user.get_profile().has_permission(folder, mode='w') %}
-        <a href="{% url documents_folder_edit folder.id %}" class="inline-link edit-link">{% trans %}Edit{% endtrans %}</a>
+        <a href="{% url documents_folder_edit folder.id %}" class="inline-link button edit-link"><img src="/static/modules/pencil-small.png">{% trans %}Edit{% endtrans %}</a>
         {% endif %}
     </span>
 </div>
@@ -72,9 +73,9 @@
 <div>
     <span class="content-label-head">{% trans %}Items{% endtrans %}:
         <span class="spaced-h smaller">
-            <a class="inline-link add-link popup-link" href="{% url documents_document_add_typed folder.id %}">{% trans %}New Document{% endtrans %}</a>
-            <a class="inline-link add-link popup-link" href="{% url documents_weblink_add_typed folder.id %}">{% trans %}New Web Link{% endtrans %}</a>
-            <a class="inline-link add-link popup-link" href="{% url documents_file_upload_typed folder.id %}">{% trans %}Upload File{% endtrans %}</a>
+            <a class="inline-link button add-link popup-link" href="{% url documents_document_add_typed folder.id %}"><img src="/static/modules/plus-inline.png">{% trans %}New Document{% endtrans %}</a>
+            <a class="inline-link button add-link popup-link" href="{% url documents_weblink_add_typed folder.id %}"><img src="/static/modules/plus-inline.png">{% trans %}New Web Link{% endtrans %}</a>
+            <a class="inline-link button add-link popup-link" href="{% url documents_file_upload_typed folder.id %}"><img src="/static/modules/plus-inline.png">{% trans %}Upload File{% endtrans %}</a>
         </span>
     </span>
 </div>
@@ -86,7 +87,7 @@
         <input type="checkbox" name="mass-unclassified" value="unclassified" class="group-control" />
         {{ massform.as_ul()|htsafe }}
         <li>
-            <input type="submit" value="{% trans %}Save{% endtrans %}" />
+            <button type="submit" >{% trans %}Save{% endtrans %}</button>
         </li>
     </ul>
     {{ documents_objects_list(paginate(objects), folder) }}

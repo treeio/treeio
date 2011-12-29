@@ -30,6 +30,8 @@
 		{% else %}
 		<img class="left" src="/static/icons/hints/invite.gif"/>
 		<div class="hint_message">
+		<span class="hint_title">{{ user.get_profile() }}, {% trans %}you can invite{% endtrans %} <u>{{ invites_left }}</u> {% trans %}more people to Tree.io{% endtrans %}</span>
+        <h2>{% trans %}Need More{% endtrans %}? <a href="{% url core_billing_upgrade %}">{% trans %}Upgrade{% endtrans %}!</a></h2>
 		<h3>{% trans %}Create accounts for your co-workers, clients, collaborators or friends{% endtrans %}.</h3>
 		
 		<form action="" method="post" class="content-form">
@@ -39,7 +41,7 @@
 				<br />{% trans %}Type a list of email addresses, separated by a comma{% endtrans %}.
 		    </ul>
 		    <div class="content-form-submit special">
-		        <input type="submit" value="{% trans %}Send Invitations{% endtrans %}">
+		        <button type="submit">{% trans %}Send Invitations{% endtrans %}</button>
 		    </div>
 		</form>
 		</div>

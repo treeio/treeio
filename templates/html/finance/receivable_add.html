@@ -5,7 +5,7 @@
 {% block module_title %}{% trans %}Receivables{% endtrans %}{% endblock %}
 
 {% block module_topmenu %}
-<a href="{% url finance_receivable_add %}" class="top-menu add-link-active">{% trans %}New Receivable{% endtrans %}</a>
+<a href="{% url finance_receivable_add %}" class="top-menu button add-link-active"><img src="/static/modules/plus-small.png">{% trans %}New Receivable{% endtrans %}</a>
 {% endblock %}
 
 {% block module_content %}
@@ -16,8 +16,8 @@
         {{ htform(form).as_ul()|htsafe }}
     </ul>
     <div class="content-form-submit">
-        <input type="submit" name="save" value="{% trans %}Create Receivable{% endtrans %}" />
-		<input type="submit" name="cancel" value="{% trans %}Cancel{% endtrans %}" class="cancel" />
+        <button type="submit" name="save" >{% trans %}Create Receivable{% endtrans %}</button>
+		<button type="submit" name="cancel"  class="cancel" ><img src="/static/modules/cancel.png"/>{% trans %}Cancel{% endtrans %}</button>
     </div>
 </form>
 {% endblock %}

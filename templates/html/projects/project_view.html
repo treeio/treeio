@@ -1,5 +1,7 @@
 {% extends "html/projects/page.html" %}
 
+
+
 {% block title %}{{ project|htsafe }} | {% trans %}Project Management{% endtrans %}{% endblock %}
 
 {% block module_title %}{{ project }}{% endblock %}
@@ -7,14 +9,14 @@
 {% block module_subtitle %}{% trans %}Project{% endtrans %}{% endblock %}
 
 {% block module_topmenu %}
-<a href="{% url projects_project_add_typed project.id %}" class="top-menu add-link">{% trans %}New Project{% endtrans %}</a>
-<a href="{% url projects_milestone_add_typed project.id %}" class="top-menu add-link">{% trans %}New Milestone{% endtrans %}</a>
-<a href="{% url projects_task_add_typed project.id %}" class="top-menu add-link">{% trans %}New Task{% endtrans %}</a>
-<a href="{% url projects_gantt_view project.id %}" class="top-menu gantt-link">{% trans %}Gantt Chart{% endtrans %}</a>
-<a href="{% url projects_project_view project.id %}" class="top-menu view-link-active">{% trans %}View{% endtrans %}</a>
+<a href="{% url projects_project_add_typed project.id %}" class="top-menu button add-link"><img src="/static/modules/plus-small.png">{% trans %}Subproject{% endtrans %}</a>
+<a href="{% url projects_milestone_add_typed project.id %}" class="top-menu button add-link"><img src="/static/modules/plus-small.png">{% trans %}Milestone{% endtrans %}</a>
+<a href="{% url projects_task_add_typed project.id %}" class="top-menu button add-link"><img src="/static/modules/plus-small.png">{% trans %}Task{% endtrans %}</a>
+<a href="{% url projects_gantt_view project.id %}" class="top-menu button gantt-link"><img src="/static/modules/gantt.png"/>{% trans %}Gantt Chart{% endtrans %}</a>
+
 {% if user.get_profile().has_permission(project, mode='w') %}
-<a href="{% url projects_project_edit project.id %}" class="top-menu edit-link">{% trans %}Edit{% endtrans %}</a>
-<a href="{% url projects_project_delete project.id %}" class="top-menu delete-link">{% trans %}Delete{% endtrans %}</a>
+<a href="{% url projects_project_edit project.id %}" class="top-menu button edit-link"><img src="/static/modules/pencil-small.png">{% trans %}Edit{% endtrans %}</a>
+<a href="{% url projects_project_delete project.id %}" class="top-menu button delete-link"><img src="/static/modules/cross-small.png">{% trans %}Delete{% endtrans %}</a>
 {% endif %}
 {{ last_updated(project) }}
 {% endblock %}
@@ -26,7 +28,7 @@
     <ul class="content-filter-form-fields">
         {{ filters.as_ul()|htsafe }}
     </ul>
-    <input type="submit" value="{% trans %}Submit{% endtrans %}">
+    <button type="submit">{% trans %}Submit{% endtrans %}</button>
 </form>
 <br />
 <span class="sidebar-header-right">{% trans %}Permissions{% endtrans %}</span>
@@ -41,13 +43,17 @@
 <div class="sidebar-block">
     {{ subscription_block(project) }}
 </div>
-<span class="sidebar-header-right">{% trans %}Download as:{% endtrans %}<br />
-    {% if '?' in request.get_full_path() %}<a class="pdf-block-link" href="{{ request.get_full_path()|replace('.ajax','').replace('?','.pdf?') }}"{% else %}<a class="pdf-block-link" href="{{ request.get_full_path()|replace('.ajax','') }}.pdf"{% endif %} target="_self">PDF</a>
-    <a class="csv-block-link" {% if '?' in request.get_full_path() %}href="{{ request.get_full_path()|replace('.ajax','').replace('?','.csv?') }}"{% else %}href="{{ request.get_full_path()|replace('.ajax','') }}.csv"{% endif %} target="_self">CSV</a>
- </span>
+<span class="sidebar-header-right">{% trans %}Download as{% endtrans %}<br />{% if '?' in request.get_full_path() %}<a class="button pdf-block-link" href="{{ request.get_full_path()|replace('.ajax','').replace('?','.pdf?') }}"{% else %}<a class="button pdf-block-link" href="{{ request.get_full_path()|replace('.ajax','') }}.pdf"{% endif %} target="_self"><img src="/static/modules/pdf.png"/>PDF</a>
+  </span>
+{% endblock %}
+
+{% block module_breadcrumb %}
+{{ breadcrumb(project) }}
 {% endblock %}
 
 {% block module_content %}
+
+
 
 {% if project.parent %}
 <div>
@@ -110,7 +116,7 @@
     </span>
     <span class="content-list-item-actions">
         {% if user.get_profile().has_permission(project, mode='w') %}
-        <a href="{% url projects_project_edit subproject.id %}" class="inline-link edit-link">{% trans %}Edit{% endtrans %}</a>
+        <a href="{% url projects_project_edit subproject.id %}" class="inline-link button edit-link"><img src="/static/modules/pencil-small.png">{% trans %}Edit{% endtrans %}</a>
         {% endif %}
     </span>
 </div>
@@ -130,7 +136,7 @@
       <input type="hidden" name="massform" value="massform" />
        {{ massform.as_ul()|htsafe }}
       <li>
-          <input type="submit" value="{% trans %}Save{% endtrans %}" />
+          <button type="submit" >{% trans %}Save{% endtrans %}</button>
       </li>
   </ul>
     {% for milestone in milestones %}
@@ -138,7 +144,7 @@
         <input type="checkbox" name="mass-milestone-{{ milestone.id }}" value="{{ milestone.id }}" class="group-control" />
         <a href="{% url projects_milestone_view milestone.id %}" class="projects-milestone">{{ milestone.name }}</a>
         <span class="spaced-h smaller">
-            <a href="{% url projects_task_add_to_milestone milestone.id %}" id="add_task" class="inline-link add-link popup-link">{% trans %}Add{% endtrans %}</a>
+            <a href="{% url projects_task_add_to_milestone milestone.id %}" id="add_task" class="inline-link button add-link popup-link"><img src="/static/modules/plus-inline.png">{% trans %}Add{% endtrans %}</a>
         </span>
     </span>
     {% set render_tasks = tasks.filter(milestone=milestone) %}
@@ -204,17 +210,10 @@
     {% endif %}
   
     <div class="news-record-details">
-		<div class="div_container">
-	  		<div class="comments">
-				<span class="lighter small">{{ record.date_created|htdatetime }}</span>
-        		&nbsp;&nbsp;
-		       	{{ comments_likes(record) }}
-			</div>
-	  		<div class="attachments">
-		       	{{ attachments(record) }}
-			</div>
-			<hr class="space"/>
-		</div>
+        <span class="lighter small">{{ record.date_created|htdatetime }}</span>
+        &nbsp;&nbsp;
+        {{ comments_likes(record) }}
+		{{ attachments(record) }}
     </div>
 </div>
 {% endfor %}
@@ -230,7 +229,7 @@
             </li>
         </ul>
         <div class="content-form-submit">
-            <input type="submit" value="{% trans %}Update Project{% endtrans %}">
+            <button type="submit">{% trans %}Update Project{% endtrans %}</button>
         </div>
     </form>
 </div>

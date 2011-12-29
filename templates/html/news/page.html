@@ -4,6 +4,27 @@
 
 {% block content %}
 
+<div class="content-top">
+	{% block module_breadcrumb %}{% endblock %}
+
+	<div class="title-block">
+
+        <div class="title">
+            {% block module_title %}{% trans %}News{% endtrans %}{% endblock %}
+        </div>
+        <div class="subtitle-block">
+            {% block module_subtitle %}{% endblock %}
+        </div>
+        <div class="module-top-menu-inline">
+            {% block module_topmenu %}
+            {% endblock %}
+        </div>
+        {{ help_link() }}
+
+    </div>
+			
+</div>
+
 <table>
     <tr>
       <td class="module-sidebar">
@@ -31,28 +52,13 @@
 
         <div class="module-content-fill">
 
-            <div class="title-block">
-
-                <div class="title">
-                    {% block module_title %}{% trans %}News{% endtrans %}{% endblock %}
-                </div>
-                <div class="subtitle-block">
-                    {% block module_subtitle %}{% endblock %}
-                </div>
-                <div class="module-top-menu-inline">
-                    {% block module_topmenu %}
-                    {% endblock %}
-                </div>
-                {{ help_link() }}
-
-            </div>
             <table>
 
                 <tr>
                     <td class="module-content-inner">
                     <!-- module_content_inner -->
 			        {% block rss_link %}
-                      <a class="ajax-link-out news-rss-link" href="{{ rss_link() }}"><img class="margin-bottom" src="/static/icons/rss.png"/> {% trans %}Subscribe{% endtrans %}</a>
+                      <a class="ajax-link-out news-rss-link" href="{{ rss_link() }}"><img class="margin-bottom" src="/static/modules/feed.png"/> {% trans %}Subscribe{% endtrans %}</a>
 		            {% endblock %}
                     {% block module_content %}{% endblock %}
                     <!-- /module_content_inner -->

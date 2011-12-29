@@ -4,6 +4,29 @@
 
 {% block content %}
 
+<div class="content-top">
+	{% block module_breadcrumb %}{% endblock %}
+	
+	<div class="title-block">
+
+        <div class="title">
+            {% block module_title %}{% trans %}Sales{% endtrans %}{% endblock %}
+        </div>
+        <div class="subtitle-block">
+            {% block module_subtitle %}{% endblock %}
+        </div>
+        <div class="module-top-menu-inline">
+            {% block module_topmenu %}
+            <a href="{% url sales_order_add %}" class="top-menu button add-link"><img src="/static/modules/plus-small.png">{% trans %}New Order{% endtrans %}</a>
+            <a href="{% url core_trash %}" class="top-menu button trash-link {% if trash %}trash-full-link{% endif %}"><img src="/static/modules/bin.png">{% trans %}Trash{% endtrans %}</a>
+            {% endblock %}
+        </div>
+        {{ help_link() }}
+
+    </div>
+			
+</div>
+
 <table>
     <tr>
         <td class="module-sidebar">
@@ -33,7 +56,7 @@
         <a href="{% url sales_product_index %}" class="sidebar-link {% block class_product_index %}{% endblock %}">{% trans %}All Products{% endtrans %}</a>
         {% endblock %}
 
-        {% if request.user.get_profile().is_admin('treeio.sales') %}
+        {% if request.user.get_profile().is_admin('hardtree.sales') %}
         <span class="sidebar-header">{% trans %}Administration{% endtrans %}</span>
         <a href="{% url sales_settings_view %}" class="sidebar-link {% block class_admin_settings %}{% endblock %}">{% trans %}Settings{% endtrans %}</a>
         {% endif %}
@@ -43,23 +66,6 @@
 
         <div class="module-content-fill">
 
-            <div class="title-block">
-
-                <div class="title">
-                    {% block module_title %}{% trans %}Sales{% endtrans %}{% endblock %}
-                </div>
-                <div class="subtitle-block">
-                    {% block module_subtitle %}{% endblock %}
-                </div>
-                <div class="module-top-menu-inline">
-                    {% block module_topmenu %}
-                    <a href="{% url sales_order_add %}" class="top-menu add-link">{% trans %}New Order{% endtrans %}</a>
-                    <a href="{% url core_trash %}" class="top-menu trash-link {% if trash %}trash-full-link{% endif %}">{% trans %}Trash{% endtrans %}</a>
-                    {% endblock %}
-                </div>
-                {{ help_link() }}
-
-            </div>
             <table>
 
                 <tr>

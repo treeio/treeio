@@ -13,6 +13,7 @@
         <span class="menu-item-user">{% trans %}Administration{% endtrans %}</span>
         </a>
     </li>
+
     {% endif %}
     <li class="menu-item">
       {% if account %}
@@ -22,36 +23,43 @@
             <span class="menu-item-user"><strong>{{ user }}</strong></span>
         </a>
         <ul class="menu-dropdown" id="menu-dropdown-user">
-          <li class="menu-dropdown-item">
-            <a href="{% url account_view %}">{% trans %}Account{% endtrans %}</a>
-          </li>
-          <li class="menu-dropdown-item">
-            <a href="{% url account_settings %}">{% trans %}Settings{% endtrans %}</a>
-          </li>
-		  {% if admin and user.is_admin() %}
-          <li class="menu-dropdown-item">
-            <a href="{% url core_admin_user_invite %}">{% trans %}Invite People{% endtrans %}</a>
-          </li>
-		  {% endif %}
-          <li class="menu-dropdown-item">
-            <a href="{% url user_logout %}">{% trans %}Log out{% endtrans %}</a>
-          </li>
+		    <div class="col_1">
+				{% set picture = user.get_contact().get_picture() %}
+				<img class="contact-profile-picture imgshadow" src="{{ picture|htsafe }}" alt="" />
+			</div>
+			
+			<div class="col_1">
+				<li class="menu-dropdown-item">
+					<a href="{% url account_view %}">{% trans %}Account{% endtrans %}</a>
+				</li>
+				<li class="menu-dropdown-item">
+					<a href="{% url account_settings %}">{% trans %}Settings{% endtrans %}</a>
+				</li>
+				{% if admin and user.is_admin() %}
+				<li class="menu-dropdown-item">
+					<a href="{% url core_admin_user_invite %}">{% trans %}Invite People{% endtrans %}</a>
+				</li>
+				{% endif %}
+				<li class="menu-dropdown-item">
+					<a href="{% url user_logout %}">{% trans %}Log out{% endtrans %}</a>
+				</li>
+			</div>
         </ul>
       {% else %}
         <a id="menu-{{ account.name|replace('.', '-')}}" title="{{ account.title }}" class="menu-dropdown-link" dropdown="menu-dropdown-user" >
             <span class="menu-item-user"><strong>{{ user }}</strong></span>
         </a>
         <ul class="menu-dropdown" id="menu-dropdown-user">
-          <li class="menu-dropdown-item">
-            <a href="{% url user_logout %}">{% trans %}Log out{% endtrans %}</a>
-          </li>
+        	<div class="col_1">
+				<li class="menu-dropdown-item">
+					<a href="{% url user_logout %}">{% trans %}Log out{% endtrans %}</a>
+				</li>
+			</div>
         </ul>
       {% endif %}
     </li>
+	
   {% endif %}
   </ul>
-	{#
-	{% if trial %}
-	<span class="loud trial"><a href="http://tree.io/login/">{% trans %}Upgrade</a> your free trial{% endtrans %}!</span> 
-	#}
+	
 </div>

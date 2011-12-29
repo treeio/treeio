@@ -12,10 +12,10 @@
 {%- endblock %}
 
 {% block module_topmenu %}
-<a href="{% url infrastructure_field_view field.id %}" class="top-menu view-link-active">{% trans %}View{% endtrans %}</a>
+
 {% if user.get_profile().has_permission(field, mode='w') %}
-<a href="{% url infrastructure_field_edit field.id %}" class="top-menu edit-link">{% trans %}Edit{% endtrans %}</a>
-<a href="{% url infrastructure_field_delete field.id %}" class="top-menu delete-link">{% trans %}Delete{% endtrans %}</a>
+<a href="{% url infrastructure_field_edit field.id %}" class="top-menu button edit-link"><img src="/static/modules/pencil-small.png">{% trans %}Edit{% endtrans %}</a>
+<a href="{% url infrastructure_field_delete field.id %}" class="top-menu button delete-link"><img src="/static/modules/cross-small.png">{% trans %}Delete{% endtrans %}</a>
 {% endif %}
 {% endblock %}
 

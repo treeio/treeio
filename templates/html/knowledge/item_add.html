@@ -3,9 +3,9 @@
 {% block title %}{% trans %}New Item{% endtrans %} | {% trans %}Knowledge base{% endtrans %}{% endblock %}
 
 {% block module_topmenu %}
-<a href="{% url knowledge_item_add %}" class="top-menu add-link-active">{% trans %}New Item{% endtrans %}</a>
-<a href="{% url knowledge_folder_add %}" class="top-menu add-link">{% trans %}New Folder{% endtrans %}</a>
-<a href="{% url knowledge_category_add %}" class="top-menu add-link">{% trans %}New Category{% endtrans %}</a>
+<a href="{% url knowledge_item_add %}" class="top-menu button add-link-active"><img src="/static/modules/plus-small.png">{% trans %}New Item{% endtrans %}</a>
+<a href="{% url knowledge_folder_add %}" class="top-menu button add-link"><img src="/static/modules/plus-small.png">{% trans %}New Folder{% endtrans %}</a>
+<a href="{% url knowledge_category_add %}" class="top-menu button add-link"><img src="/static/modules/plus-small.png">{% trans %}New Category{% endtrans %}</a>
 {% endblock %}
 
 {% block module_content %}
@@ -17,8 +17,8 @@
             {{ form.as_ul()|htsafe }}
         </ul>
         <div class="content-form-submit">
-            <input type="submit" name="save" value="{% trans %}Submit{% endtrans %}" class="submit" />
-			<input type="submit" name="cancel" value="{% trans %}Cancel{% endtrans %}" class="cancel" />
+            <button type="submit" name="save"  class="submit" >{% trans %}Submit{% endtrans %}</button>
+			<button type="submit" name="cancel"  class="cancel" ><img src="/static/modules/cancel.png"/>{% trans %}Cancel{% endtrans %}</button>
         </div>
     </form>
 </p>

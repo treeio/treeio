@@ -7,11 +7,11 @@
 {% block module_subtitle %}{% trans %}Milestone{% endtrans %}{% endblock %}
 
 {% block module_topmenu %}
-<a href="{% url projects_task_add_to_milestone milestone.id %}" class="top-menu add-link">{% trans %}New Task{% endtrans %}</a>
-<a href="{% url projects_milestone_view milestone.id %}" class="top-menu view-link">{% trans %}View{% endtrans %}</a>
+<a href="{% url projects_task_add_to_milestone milestone.id %}" class="top-menu button add-link"><img src="/static/modules/plus-small.png">{% trans %}Task{% endtrans %}</a>
+
 {% if user.get_profile().has_permission(milestone, mode='w') %}
-<a href="{% url projects_milestone_edit milestone.id %}" class="top-menu edit-link">{% trans %}Edit{% endtrans %}</a>
-<a href="{% url projects_milestone_delete milestone.id %}" class="top-menu delete-link-active">{% trans %}Delete{% endtrans %}</a>
+<a href="{% url projects_milestone_edit milestone.id %}" class="top-menu button edit-link"><img src="/static/modules/pencil-small.png">{% trans %}Edit{% endtrans %}</a>
+<a href="{% url projects_milestone_delete milestone.id %}" class="top-menu button delete-link-active"><img src="/static/modules/cross-small.png">{% trans %}Delete{% endtrans %}</a>
 {% endif %}
 {% endblock %}
 
@@ -31,7 +31,7 @@
             </li>
             <li>
                 <input type="submit" name="delete" value="{% trans %}Yes, Delete{% endtrans %}" />&nbsp;&nbsp;
-                <input type="submit" name="cancel" value="{% trans %}Cancel{% endtrans %}" class="cancel" />
+                <button type="submit" name="cancel"  class="cancel" ><img src="/static/modules/cancel.png"/>{% trans %}Cancel{% endtrans %}</button>
             </li>
         </ul>
     </form>

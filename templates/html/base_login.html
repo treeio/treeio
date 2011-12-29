@@ -4,7 +4,7 @@
         <link rel="icon" href="/static/favicon.ico" type="image/x-icon" />
 		<link rel="stylesheet" href="/static/print.min.css" media="print" />
 		{# Debug 
-		<link rel="stylesheet" href="/static/treeio3.css" media="all" />
+		<link rel="stylesheet" href="/static/hardtree3.css" media="all" />
 		<link rel="stylesheet" href="/static/js/css/jquery.gritter.css" media="all" />
 		<link rel="stylesheet" href="/static/js/css/jquery-ui-1.css" media="all" />
 		<link rel="stylesheet" href="/static/js/css/datepicker.css" media="all" />
@@ -24,6 +24,21 @@
         <![endif]-->
 
         {% block headfiles %}{% endblock %}
+	<script type="text/javascript">
+	
+	  var _gaq = _gaq || [];
+	  _gaq.push(['_setAccount', 'UA-13034355-6']);
+	  _gaq.push(['_setDomainName', '.tree.io']);
+	  _gaq.push(['_trackPageview']);
+	  _gaq.push(['_trackPageLoadTime']);
+	
+	  (function() {
+	    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+	    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+	    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+	  })();
+	
+	</script>
     </head>
     <body>
         <div id="page-container">

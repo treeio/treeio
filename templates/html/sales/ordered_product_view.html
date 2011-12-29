@@ -9,10 +9,10 @@
 {% block module_subtitle %}{% trans %}Ordered Product{% endtrans %}{% endblock %}
 
 {% block module_topmenu %}
-<a href="{% url sales_ordered_product_view ordered_product.id %}" class="top-menu view-link-active">{% trans %}View{% endtrans %}</a>
+
 {% if request.user.get_profile().has_permission(ordered_product.order, mode='w') %}
-<a href="{% url sales_ordered_product_edit ordered_product.id %}" class="top-menu edit-link">{% trans %}Edit{% endtrans %}</a>
-<a href="{% url sales_ordered_product_delete ordered_product.id %}" class="top-menu delete-link">{% trans %}Delete{% endtrans %}</a>
+<a href="{% url sales_ordered_product_edit ordered_product.id %}" class="top-menu button edit-link"><img src="/static/modules/pencil-small.png">{% trans %}Edit{% endtrans %}</a>
+<a href="{% url sales_ordered_product_delete ordered_product.id %}" class="top-menu button delete-link"><img src="/static/modules/cross-small.png">{% trans %}Delete{% endtrans %}</a>
 {% endif %}
 {% endblock %}
 
@@ -30,7 +30,7 @@
 <div class="sidebar-block">
     {{ subscription_block(ordered_product) }}
 </div>
-<span class="sidebar-header-right">{% trans %}Download as:{% endtrans %}<br />{% if '?' in request.get_full_path() %}<a class="pdf-block-link" href="{{ request.get_full_path()|replace('.ajax','').replace('?','.pdf?') }}"{% else %}<a class="pdf-block-link" href="{{ request.get_full_path()|replace('.ajax','') }}.pdf"{% endif %} target="_self">PDF</a>
+<span class="sidebar-header-right">{% trans %}Download as{% endtrans %}<br />{% if '?' in request.get_full_path() %}<a class="button pdf-block-link" href="{{ request.get_full_path()|replace('.ajax','').replace('?','.pdf?') }}"{% else %}<a class="button pdf-block-link" href="{{ request.get_full_path()|replace('.ajax','') }}.pdf"{% endif %} target="_self"><img src="/static/modules/pdf.png"/>PDF</a>
   </span>
 {% endblock %}
 

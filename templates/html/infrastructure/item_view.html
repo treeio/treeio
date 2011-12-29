@@ -25,9 +25,9 @@
 {% endblock %}
 
 {% block module_topmenu %}
-<a href="{% url infrastructure_item_view item.id %}" class="top-menu view-link-active">{% trans %}View{% endtrans %}</a>
-<a href="{% url infrastructure_item_edit item.id %}" class="top-menu edit-link edit-link">{% trans %}Edit{% endtrans %}</a>
-<a href="{% url infrastructure_item_delete item.id %}" class="top-menu edit-link delete-link">{% trans %}Delete{% endtrans %}</a>
+
+<a href="{% url infrastructure_item_edit item.id %}" class="top-menu button edit-link button edit-link"><img src="/static/modules/pencil-small.png">{% trans %}Edit{% endtrans %}</a>
+<a href="{% url infrastructure_item_delete item.id %}" class="top-menu button edit-link button delete-link"><img src="/static/modules/pencil-small.png"><img src="/static/modules/cross-small.png">{% trans %}Delete{% endtrans %}</a>
 {{ last_updated(item) }}
 {% endblock %}
 

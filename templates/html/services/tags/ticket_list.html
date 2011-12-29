@@ -97,7 +97,7 @@
             <td>
                 {% if user.get_profile().has_permission(ticket, mode='w') %}
                 <span class="content-list-item-actions table-link">
-                <a href="{% url services_ticket_edit ticket.id %}" class="inline-link edit-link">{% trans %}Edit{% endtrans %}</a>
+                <a href="{% url services_ticket_edit ticket.id %}" class="inline-link button edit-link"><img src="/static/modules/pencil-small.png">{% trans %}Edit{% endtrans %}</a>
                 </span>
                 {% endif %}
             </td>
@@ -138,7 +138,7 @@
     </span>
     <span class="content-list-item-actions">
         {% if user.get_profile().has_permission(ticket, mode='w') %}
-        <a href="{% url services_ticket_edit ticket.id %}" class="inline-link edit-link">{% trans %}Edit{% endtrans %}</a>
+        <a href="{% url services_ticket_edit ticket.id %}" class="inline-link button edit-link"><img src="/static/modules/pencil-small.png">{% trans %}Edit{% endtrans %}</a>
         {% endif %}
     </span>
 </div>

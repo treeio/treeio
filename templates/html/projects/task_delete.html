@@ -7,11 +7,11 @@
 {% block module_subtitle %}{% trans %}Task{% endtrans %}{% endblock %}
 
 {% block module_topmenu %}
-<a href="{% url projects_task_add_subtask task.id %}" class="top-menu add-link">{% trans %}New Sub Task{% endtrans %}</a>
-<a href="{% url projects_task_view task.id %}" class="top-menu view-link">{% trans %}View{% endtrans %}</a>
+<a href="{% url projects_task_add_subtask task.id %}" class="top-menu button add-link"><img src="/static/modules/plus-small.png">{% trans %}New Sub Task{% endtrans %}</a>
+
 {% if user.get_profile().has_permission(task, mode='w') %}
-<a href="{% url projects_task_edit task.id %}" class="top-menu edit-link">{% trans %}Edit{% endtrans %}</a>
-<a href="{% url projects_task_delete task.id %}" class="top-menu delete-link-active">{% trans %}Delete{% endtrans %}</a>
+<a href="{% url projects_task_edit task.id %}" class="top-menu button edit-link"><img src="/static/modules/pencil-small.png">{% trans %}Edit{% endtrans %}</a>
+<a href="{% url projects_task_delete task.id %}" class="top-menu button delete-link-active"><img src="/static/modules/cross-small.png">{% trans %}Delete{% endtrans %}</a>
 {% endif %}
 {% endblock %}
 
@@ -31,7 +31,7 @@
             </li>
             <li>
                 <input type="submit" name="delete" value="{% trans %}Yes, Delete{% endtrans %}" />&nbsp;&nbsp;
-                <input type="submit" name="cancel" value="{% trans %}Cancel{% endtrans %}" class="cancel" />
+                <button type="submit" name="cancel"  class="cancel" ><img src="/static/modules/cancel.png"/>{% trans %}Cancel{% endtrans %}</button>
             </li>
         </ul>
     </form>
@@ -128,7 +128,7 @@
     </span>
     <span class="content-list-item-actions">
         {% if user.get_profile().has_permission(subtask, mode='w') %}
-        <a href="{% url projects_task_edit subtask.id %}" class="inline-link edit-link">{% trans %}Edit{% endtrans %}</a>
+        <a href="{% url projects_task_edit subtask.id %}" class="inline-link button edit-link"><img src="/static/modules/pencil-small.png">{% trans %}Edit{% endtrans %}</a>
         {% endif %}
     </span>
 </div>

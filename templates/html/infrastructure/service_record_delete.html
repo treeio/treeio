@@ -6,9 +6,9 @@
 {% block module_subtitle %}{% trans %}Service Record{% endtrans %}{% endblock %}
 
 {% block module_topmenu %}
-<a href="{% url infrastructure_service_record_view service_record.id %}" class="top-menu view-link">{% trans %}View{% endtrans %}</a>
-<a href="{% url infrastructure_service_record_edit service_record.id %}" class="top-menu edit-link">{% trans %}Edit{% endtrans %}</a>
-<a href="{% url infrastructure_service_record_delete service_record.id %}" class="top-menu delete-link-active">{% trans %}Delete{% endtrans %}</a>
+
+<a href="{% url infrastructure_service_record_edit service_record.id %}" class="top-menu button edit-link"><img src="/static/modules/pencil-small.png">{% trans %}Edit{% endtrans %}</a>
+<a href="{% url infrastructure_service_record_delete service_record.id %}" class="top-menu button delete-link-active"><img src="/static/modules/cross-small.png">{% trans %}Delete{% endtrans %}</a>
 {% endblock %}
 
 {% block module_content %}
@@ -27,7 +27,7 @@
             </li>
             <li>
                 <input type="submit" name="delete" value="{% trans %}Yes, Delete{% endtrans %}" />&nbsp;&nbsp;
-                <input type="submit" name="cancel" value="{% trans %}Cancel{% endtrans %}" class="cancel" />
+                <button type="submit" name="cancel"  class="cancel" ><img src="/static/modules/cancel.png"/>{% trans %}Cancel{% endtrans %}</button>
             </li>
         </ul>
     </form>

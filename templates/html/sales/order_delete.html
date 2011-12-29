@@ -7,11 +7,11 @@
 {% block module_subtitle %}{% trans %}Sale Order{% endtrans %}{% endblock %}
 
 {% block module_topmenu %}
-<a href="{% url sales_order_view order.id %}" class="top-menu view-link">{% trans %}View{% endtrans %}</a>
-<a href="{% url sales_order_invoice_view order.id %}" class="top-menu view-link">{% trans %}Invoice{% endtrans %}</a>
-<a href="{% url sales_order_edit order.id %}" class="top-menu edit-link">{% trans %}Edit{% endtrans %}</a>
-<a href="{% url sales_order_delete order.id %}" class="top-menu delete-link-active">{% trans %}Delete{% endtrans %}</a>
-{#<a href="{% url sales_ordered_product_add order.id %}" class="top-menu add-link">{% trans %}Add Ordered Product{% endtrans %}</a>#}
+
+
+<a href="{% url sales_order_edit order.id %}" class="top-menu button edit-link"><img src="/static/modules/pencil-small.png">{% trans %}Edit{% endtrans %}</a>
+<a href="{% url sales_order_delete order.id %}" class="top-menu button delete-link-active"><img src="/static/modules/cross-small.png">{% trans %}Delete{% endtrans %}</a>
+{#<a href="{% url sales_ordered_product_add order.id %}" class="top-menu button add-link"><img src="/static/modules/plus-small.png">{% trans %}Add Ordered Product{% endtrans %}</a>#}
 {% endblock %}
 
 {% block module_content %}
@@ -30,7 +30,7 @@
             </li>
             <li>
                 <input type="submit" name="delete" value="{% trans %}Yes, Delete{% endtrans %}" />&nbsp;&nbsp;
-                <input type="submit" name="cancel" value="{% trans %}Cancel{% endtrans %}" class="cancel" />
+                <button type="submit" name="cancel"  class="cancel" ><img src="/static/modules/cancel.png"/>{% trans %}Cancel{% endtrans %}</button>
             </li>
         </ul>
     </form>

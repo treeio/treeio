@@ -5,8 +5,8 @@
 {% block module_title %}{% trans %}Users{% endtrans %}{% endblock %}
 
 {% block module_topmenu %}
-<a href="{% url core_admin_user_add %}" class="top-menu add-link">{% trans %}New User{% endtrans %}</a>
-<a href="{% url core_admin_user_invite %}" class="top-menu add-link">{% trans %}Invite People{% endtrans %}</a>
+<a href="{% url core_admin_user_add %}" class="top-menu button add-link"><img src="/static/modules/plus-small.png">{% trans %}New User{% endtrans %}</a>
+<a href="{% url core_admin_user_invite %}" class="top-menu button add-link"><img src="/static/modules/plus-small.png">{% trans %}Invite People{% endtrans %}</a>
 {% endblock %}
 
 {% block class_users %}sidebar-link-active{% endblock %}

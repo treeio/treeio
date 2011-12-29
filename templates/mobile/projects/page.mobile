@@ -28,7 +28,7 @@
     {% endif %}
     {% endblock %}
 
-    {% if request.user.get_profile().is_admin('treeio.projects') %}
+    {% if request.user.get_profile().is_admin('hardtree.projects') %}
     <span class="sidebar-header">{% trans %}Administration{% endtrans %}</span>
     <a href="{% url projects_settings_view %}" class="sidebar-link {% block class_admin_settings %}{% endblock %}">{% trans %}Settings{% endtrans %}</a>
     {% endif %}

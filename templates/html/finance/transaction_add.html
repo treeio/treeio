@@ -5,7 +5,7 @@
 {% block module_title %}{% trans %}Transactions{% endtrans %}{% endblock %}
 
 {% block module_topmenu %}
-<a href="{% url finance_transaction_add %}" class="top-menu add-link-active">{% trans %}New Transaction{% endtrans %}</a>
+<a href="{% url finance_transaction_add %}" class="top-menu button add-link-active"><img src="/static/modules/plus-small.png">{% trans %}New Transaction{% endtrans %}</a>
 {% endblock %}
 
 {% block module_content %}
@@ -16,8 +16,8 @@
         {{ htform(form).as_ul()|htsafe }}
     </ul>
     <div class="content-form-submit">
-        <input type="submit" name="save" value="{% trans %}Create Transaction{% endtrans %}" />
-		<input type="submit" name="cancel" value="{% trans %}Cancel{% endtrans %}" class="cancel" />
+        <button type="submit" name="save" >{% trans %}Create Transaction{% endtrans %}</button>
+		<button type="submit" name="cancel"  class="cancel" ><img src="/static/modules/cancel.png"/>{% trans %}Cancel{% endtrans %}</button>
     </div>
 </form>
 {% endblock %}

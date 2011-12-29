@@ -7,11 +7,12 @@
 {% block module_subtitle %}{% trans %}File{% endtrans %}{% endblock %}
 
 {% block module_topmenu %}
-<a class="top-menu view-link-active" href="{% url documents_file_view file.id %}">{% trans %}View{% endtrans %}</a>
+
 {% if user.get_profile().has_permission(file, mode='w') %}
-<a class="top-menu edit-link" href="{% url documents_file_edit file.id %}">{% trans %}Edit{% endtrans %}</a>
-<a class="top-menu delete-link" href="{% url documents_file_delete file.id %}">{% trans %}Delete{% endtrans %}</a>
+<a class="top-menu button edit-link" href="{% url documents_file_edit file.id %}"><img src="/static/modules/pencil-small.png">{% trans %}Edit{% endtrans %}</a>
+<a class="top-menu button delete-link" href="{% url documents_file_delete file.id %}"><img src="/static/modules/cross-small.png">{% trans %}Delete{% endtrans %}</a>
 {% endif %}
+{{ last_updated(file, true) }}
 {% endblock %}
 
 {% block sidebar_right %}
@@ -63,7 +64,7 @@
 <form action="" method="get" class="content-form">
     <div>
         <span class="content-label">&nbsp;</span>
-        <span class="content-value"><input type="submit" name="download" value="Download" /></span>
+        <span class="content-value"><button type="submit" name="download" >Download</button></span>
     </div>
 </form>
 

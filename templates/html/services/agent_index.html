@@ -7,7 +7,7 @@
 {% block module_title %}{% trans %}Agents{% endtrans %}{% endblock %}
 
 {% block module_topmenu %}
-<a href="{% url services_agent_add %}" class="top-menu add-link">{% trans %}New Agent{% endtrans %}</a>
+<a href="{% url services_agent_add %}" class="top-menu button add-link"><img src="/static/modules/plus-small.png">{% trans %}New Agent{% endtrans %}</a>
 {% endblock %}
 
 {% block sidebar_right %}
@@ -17,11 +17,11 @@
     <ul class="content-filter-form-fields">
         {{ filters.as_ul()|htsafe }}
     </ul>
-    <input type="submit" value="{% trans %}Submit{% endtrans %}">
+    <button type="submit">{% trans %}Submit{% endtrans %}</button>
 </form>
 <br />
 
-<span class="sidebar-header-right">{% trans %}Download as:{% endtrans %}<br />{% if '?' in request.get_full_path() %}<a class="pdf-block-link" href="{{ request.get_full_path()|replace('.ajax','').replace('?','.pdf?') }}"{% else %}<a class="pdf-block-link" href="{{ request.get_full_path()|replace('.ajax','') }}.pdf"{% endif %} target="_self">PDF</a>
+<span class="sidebar-header-right">{% trans %}Download as{% endtrans %}<br />{% if '?' in request.get_full_path() %}<a class="button pdf-block-link" href="{{ request.get_full_path()|replace('.ajax','').replace('?','.pdf?') }}"{% else %}<a class="button pdf-block-link" href="{{ request.get_full_path()|replace('.ajax','') }}.pdf"{% endif %} target="_self"><img src="/static/modules/pdf.png"/>PDF</a>
   <a class="csv-block-link" {% if '?' in request.get_full_path() %}href="{{ request.get_full_path()|replace('.ajax','').replace('?','.csv?') }}"{% else %}href="{{ request.get_full_path()|replace('.ajax','') }}.csv"{% endif %} target="_self">CSV</a></span></span>
 {% endblock %}
 
@@ -37,7 +37,7 @@
     </span>
     <span class="content-list-item-actions">
         {% if user.get_profile().has_permission(agent, mode='w') %}
-        <a href="{% url services_agent_edit agent.id %}" class="inline-link edit-link">{% trans %}Edit{% endtrans %}</a>
+        <a href="{% url services_agent_edit agent.id %}" class="inline-link button edit-link"><img src="/static/modules/pencil-small.png">{% trans %}Edit{% endtrans %}</a>
         {% endif %}
     </span>
 </div>

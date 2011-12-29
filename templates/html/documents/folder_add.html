@@ -3,10 +3,10 @@
 {% block title %}{% trans %}New Folder{% endtrans %} | {% trans %}Documents{% endtrans %}{% endblock %}
 
 {% block module_topmenu %}
-<a class="top-menu add-link-active" href="{% url documents_folder_add %}">{% trans %}New Folder{% endtrans %}</a>
-<a class="top-menu add-link" href="{% url documents_document_add %}">{% trans %}New Document{% endtrans %}</a>
-<a class="top-menu add-link" href="{% url documents_weblink_add %}">{% trans %}New Web Link{% endtrans %}</a>
-<a class="top-menu add-link" href="{% url documents_file_upload %}">{% trans %}Upload File{% endtrans %}</a>
+<a class="top-menu button add-link-active" href="{% url documents_folder_add %}"><img src="/static/modules/plus-small.png">{% trans %}New Folder{% endtrans %}</a>
+<a class="top-menu button add-link" href="{% url documents_document_add %}"><img src="/static/modules/plus-small.png">{% trans %}New Document{% endtrans %}</a>
+<a class="top-menu button add-link" href="{% url documents_weblink_add %}"><img src="/static/modules/plus-small.png">{% trans %}New Web Link{% endtrans %}</a>
+<a class="top-menu button add-link" href="{% url documents_file_upload %}"><img src="/static/modules/plus-small.png">{% trans %}Upload File{% endtrans %}</a>
 {% endblock %}
 
 {% block module_content %}
@@ -17,8 +17,8 @@
         {{ form.as_ul()|safe }}
     </ul>
     <div class="content-form-submit">
-        <input type="submit" name="save" value="{% trans %}Create Folder{% endtrans %}" />
-		<input type="submit" name="cancel" value="{% trans %}Cancel{% endtrans %}" class="cancel" />
+        <button type="submit" name="save" >{% trans %}Create Folder{% endtrans %}</button>
+		<button type="submit" name="cancel"  class="cancel" ><img src="/static/modules/cancel.png"/>{% trans %}Cancel{% endtrans %}</button>
     </div>
 </form>
 {% endblock %}

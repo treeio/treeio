@@ -9,10 +9,10 @@
 {% block module_subtitle %}{% trans %}Ordered Product{% endtrans %}{% endblock %}
 
 {% block module_topmenu %}
-<a href="{% url sales_ordered_product_view ordered_product.id %}" class="top-menu view-link">{% trans %}View{% endtrans %}</a>
+
 {% if request.user.get_profile().has_permission(ordered_product.order, mode='w') %}
-<a href="{% url sales_ordered_product_edit ordered_product.id %}" class="top-menu edit-link-active">{% trans %}Edit{% endtrans %}</a>
-<a href="{% url sales_ordered_product_delete ordered_product.id %}" class="top-menu delete-link">{% trans %}Delete{% endtrans %}</a>
+<a href="{% url sales_ordered_product_edit ordered_product.id %}" class="top-menu button edit-link-active"><img src="/static/modules/pencil-small.png">{% trans %}Edit{% endtrans %}</a>
+<a href="{% url sales_ordered_product_delete ordered_product.id %}" class="top-menu button delete-link"><img src="/static/modules/cross-small.png">{% trans %}Delete{% endtrans %}</a>
 {% endif %}
 {% endblock %}
 
@@ -102,7 +102,7 @@
         </span>
         <span class="content-list-item-actions">
             {% if user.get_profile().has_permission(product, mode='w') %}
-            <a href="{% url sales_product_edit product.product_id %}" class="inline-link edit-link">{% trans %}Edit{% endtrans %}</a>
+            <a href="{% url sales_product_edit product.product_id %}" class="inline-link button edit-link"><img src="/static/modules/pencil-small.png">{% trans %}Edit{% endtrans %}</a>
             {% endif %}
         </span>
     </div>
@@ -116,9 +116,9 @@
         {{ form.as_ul()|htsafe }}
     </ul>
     <div class="content-form-submit">
-        <input type="submit" name="save" value="{% trans %}Save{% endtrans %}" />
+        <button type="submit" name="save" >{% trans %}Save{% endtrans %}</button>
         <input type="submit" name="add_another" value="Add Another" />
-		<input type="submit" name="cancel" value="{% trans %}Cancel{% endtrans %}" class="cancel" />
+		<button type="submit" name="cancel"  class="cancel" ><img src="/static/modules/cancel.png"/>{% trans %}Cancel{% endtrans %}</button>
     </div>
 </form>
 {% endblock %}

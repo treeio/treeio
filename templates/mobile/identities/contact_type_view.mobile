@@ -6,8 +6,8 @@
 {% block module_subtitle %}{% trans %}Contact Type{% endtrans %}{% endblock %}
 
 {% block module_topmenu %}
-<a href="{% url identities_contact_add_typed type.id %}" class="top-menu add-link">{% trans %}New{% endtrans %} {{ type.name }}</a>
-<a href="{% url identities_type_view type.id %}" class="top-menu view-link-active">{% trans %}View{% endtrans %}</a>
+<a href="{% url identities_contact_add_typed type.slug %}" class="top-menu add-link">{% trans %}New{% endtrans %} {{ type.name }}</a>
+<a href="{% url identities_type_view type.slug %}" class="top-menu view-link-active">{% trans %}View{% endtrans %}</a>
 {% if user.get_profile().has_permission(type, mode='w') %}
 <a href="{% url identities_type_edit type.id %}" class="top-menu edit-link">{% trans %}Edit{% endtrans %}</a>
 <a href="{% url identities_type_delete type.id %}" class="top-menu delete-link">{% trans %}Delete{% endtrans %}</a>
@@ -16,7 +16,7 @@
 
 {% block identity_types_sidebar -%}
 {% for itype in types %}
-<a href="{% url identities_index_by_type itype.id %}" class="sidebar-link {% if itype == type %}sidebar-link-active{% endif %}">{{ itype }}</a>
+<a href="{% url identities_index_by_type itype.slug %}" class="sidebar-link {% if itype == type %}sidebar-link-active{% endif %}">{{ itype }}</a>
 {% endfor %}
 {%- endblock %}
 

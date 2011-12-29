@@ -7,17 +7,17 @@
 {% block module_subtitle %}{% trans %}Sale Order{% endtrans %}{% endblock %}
 
 {% block module_topmenu %}
-<a href="{% url sales_order_view order.id %}" class="top-menu view-link">{% trans %}View{% endtrans %}</a>
-<a href="{% url sales_order_invoice_view order.id %}" class="top-menu view-link-active">{% trans %}Invoice{% endtrans %}</a>
+
+
 {% if request.user.get_profile().has_permission(order, mode='w') %}
-<a href="{% url sales_order_edit order.id %}" class="top-menu edit-link">{% trans %}Edit{% endtrans %}</a>
-<a href="{% url sales_order_delete order.id %}" class="top-menu delete-link">{% trans %}Delete{% endtrans %}</a>
-{#<a href="{% url sales_ordered_product_add order.id %}" class="top-menu add-link">{% trans %}Add Ordered Product{% endtrans %}</a>#}
+<a href="{% url sales_order_edit order.id %}" class="top-menu button edit-link"><img src="/static/modules/pencil-small.png">{% trans %}Edit{% endtrans %}</a>
+<a href="{% url sales_order_delete order.id %}" class="top-menu button delete-link"><img src="/static/modules/cross-small.png">{% trans %}Delete{% endtrans %}</a>
+{#<a href="{% url sales_ordered_product_add order.id %}" class="top-menu button add-link"><img src="/static/modules/plus-small.png">{% trans %}Add Ordered Product{% endtrans %}</a>#}
 {% endif %}
 {% endblock %}
 
 {% block sidebar_right %}
-<span class="sidebar-header-right">{% trans %}Download as:{% endtrans %}<br />{% if '?' in request.get_full_path() %}<a class="pdf-block-link" href="{{ request.get_full_path()|replace('.ajax','').replace('?','.pdf?') }}"{% else %}<a class="pdf-block-link" href="{{ request.get_full_path()|replace('.ajax','') }}.pdf"{% endif %} target="_self">PDF</a>
+<span class="sidebar-header-right">{% trans %}Download as{% endtrans %}<br />{% if '?' in request.get_full_path() %}<a class="button pdf-block-link" href="{{ request.get_full_path()|replace('.ajax','').replace('?','.pdf?') }}"{% else %}<a class="button pdf-block-link" href="{{ request.get_full_path()|replace('.ajax','') }}.pdf"{% endif %} target="_self"><img src="/static/modules/pdf.png"/>PDF</a>
       </span>
 {% endblock %}
 

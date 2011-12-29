@@ -5,8 +5,8 @@
 {% block module_title %}{% trans %}Billing{% endtrans %}{% endblock %}
 
 {% block module_topmenu %}
-    <a href="{% url core_billing_upgrade %}" class="top-menu add-link">{% trans %}Upgrade Account{% endtrans %}</a>
-    <a href="{% url core_billing_information %}" class="top-menu edit-link-active">{% trans %}Billing Information{% endtrans %}</a>
+    <a href="{% url core_billing_upgrade %}" class="top-menu button add-link"><img src="/static/modules/plus-small.png">{% trans %}Upgrade Account{% endtrans %}</a>
+    <a href="{% url core_billing_information %}" class="top-menu button edit-link-active"><img src="/static/modules/pencil-small.png">{% trans %}Billing Information{% endtrans %}</a>
 {% endblock %}
 
 {% block class_billing %}sidebar-link-active{% endblock %}
@@ -128,8 +128,8 @@ $(document).ready(function(){
 			                <p class="clearfix label-margin"><a id="cvv2_help_link">{{ form.cvv2.help_text|htsafe }}</a></p>
 			                <div id="cvv2_help_image" class="label-margin"><img src="/static/images/cvv2.jpg"/></div>
 		                  	<div class="label-margin content-form-submit">
-                      			<input type="submit" name="pay" value="{% trans %}Update{% endtrans %}" />
-                        		<input type="submit" name="cancel" value="{% trans %}Cancel{% endtrans %}" class="cancel" />
+                      			<button type="submit" name="pay" >{% trans %}Update{% endtrans %}</button>
+                        		<button type="submit" name="cancel"  class="cancel" ><img src="/static/modules/cancel.png"/>{% trans %}Cancel{% endtrans %}</button>
                   			</div>
 
 			

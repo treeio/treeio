@@ -1,18 +1,26 @@
 <script>
-    var treeio_attachment_text = {
-        attach: '<img class="margin-bottom" alt="Tags" src="/static/icons/attach.gif" /> {% trans %}Attach a file{% endtrans %}',
+    var hardtree_attachment_text = {
+        attach: '<img class="margin-bottom" alt="Attachments" src="/static/icons/attach.gif" /> {% trans %}Attach a file{% endtrans %}',
         drop: '{% trans %}Drop files here to upload{% endtrans %}',
-        cancel: '{% trans %}Cancel{% endtrans %}',
+        cancel: '<img src="/static/modules/cancel.png"/>{% trans %}Cancel{% endtrans %}',
         failed: '{% trans %}Failed{% endtrans %}'
     };
 </script>
 
-<div class="attachment-uploader" object="{{ object.id }}" action="{% url ajax_upload object.id %}" csrf="{{ csrf_token }}">
+
+<div class="attachment-group">
+
+<div class="attachment-uploader button" object="{{ object.id }}" action="{% url ajax_upload object.id %}" csrf="{{ csrf_token }}">
+   
     <noscript>
         <p>Please enable JavaScript to use file uploader.</p>
         <!-- or put a simple form for upload here -->
     </noscript>
 </div>
+
+</div>
+
+
 
 <div class="attachment-block" object="{{ object.id }}">
     {% for attachment in attachments %}

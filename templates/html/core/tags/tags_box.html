@@ -1,5 +1,5 @@
 <span class="tags-box" id="tags-{{ object.id }}">
-  <img src="/static/icons/tags.gif" alt="Tags" class="margin-bottom"/>
+  <img src="/static/modules/tag.png" alt="Tags" class="margin-bottom"/>
   {% if form %}
   <form action="{{ editlink }}" method="post" class="tags-form" target="#tags-{{ object.id }}" object="{{ object.id }}">
 	{% csrf_token %}
@@ -13,10 +13,10 @@
       <a href="{% url core_search_query %}?q=tags:{{ tag }}" class="tags-tag">{{ tag }}</a>{% if not loop.last %}&nbsp;{% endif %}
     {% endfor %}
   {% else %}
-    <span>{% trans %}no tags{% endtrans %}</span>
+    <span>{% trans %}Tags{% endtrans %}</span>
   {% endif %}
   <span class="tags-box-link">
-  	&nbsp;&nbsp;<a class="edit-link inline-link ajax-link" callback="Dajaxice.treeio.account.tags" args="{ 'object_id': {{ object.id }}, 'edit': true }" target="#tags-{{ object.id }}">Edit</a>
+  	&nbsp;&nbsp;<a class="button edit-link inline-link ajax-link" callback="Dajaxice.hardtree.account.tags" args="{ 'object_id': {{ object.id }}, 'edit': true }" target="#tags-{{ object.id }}"><img src="/static/modules/pencil-small.png">Edit</a>
   </span>
   {% endif %}
 </span>

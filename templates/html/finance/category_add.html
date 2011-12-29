@@ -3,7 +3,7 @@
 {% block title %}{% trans %}New Category{% endtrans %} | {% trans %}Finance{% endtrans %}{% endblock %}
 
 {% block module_topmenu %}
-<a href="{% url finance_category_add %}" class="top-menu add-link-active">{% trans %}New Category{% endtrans %}</a>
+<a href="{% url finance_category_add %}" class="top-menu button add-link-active"><img src="/static/modules/plus-small.png">{% trans %}New Category{% endtrans %}</a>
 {% endblock %}
 
 {% block module_content %}
@@ -14,8 +14,8 @@
         {{ form.as_ul()|htsafe }}
     </ul>
     <div class="content-form-submit">
-        <input type="submit" name="save" value="{% trans %}Create Category{% endtrans %}" />
-		<input type="submit" name="cancel" value="{% trans %}Cancel{% endtrans %}" class="cancel" />
+        <button type="submit" name="save" >{% trans %}Create Category{% endtrans %}</button>
+		<button type="submit" name="cancel"  class="cancel" ><img src="/static/modules/cancel.png"/>{% trans %}Cancel{% endtrans %}</button>
     </div>
 </form>
 {% endblock %}

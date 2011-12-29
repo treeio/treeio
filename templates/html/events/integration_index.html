@@ -8,7 +8,7 @@
 {% block class_integration %}sidebar-link-active{% endblock %}
 
 {% block module_topmenu %}
-{#<a href="{% url events_integration_add resource.id %}" class="top-menu add-link">{% trans %}Add Resource{% endtrans %}</a>#}
+{#<a href="{% url events_integration_add resource.id %}" class="top-menu button add-link"><img src="/static/modules/plus-small.png">{% trans %}Add Resource{% endtrans %}</a>#}
 {% endblock %}
 
 {% block module_content %}
@@ -48,7 +48,7 @@
     <span class="content-list-item-group">
     </span>
     <span class="content-list-item-actions">
-        <a href="{% url events_integration_view res.id %}" class="inline-link delete-link">{% trans %}Disconnect{% endtrans %}</a>
+        <a href="{% url events_integration_view res.id %}" class="inline-link button delete-link"><img src="/static/modules/cross-small.png">{% trans %}Disconnect{% endtrans %}</a>
     </span>
 </div>
 {% endfor %}
@@ -82,7 +82,7 @@
     <span class="content-list-item-group">
     </span>
     <span class="content-list-item-actions">
-        <a href="{% url events_integration_add resource.id.raw %}" class="inline-link add-link">{% trans %}Connect{% endtrans %}</a>
+        <a href="{% url events_integration_add resource.id.raw %}" class="inline-link button add-link"><img src="/static/modules/plus-inline.png">{% trans %}Connect{% endtrans %}</a>
     </span>
 </div>
 {% endfor %}
@@ -90,7 +90,7 @@
 {% if response.data.result_name.raw == 'access' %}
 <div class="content-list-item spaced-h spaced-v">
     <span class="heavy">Tree.io does not have access to your profile.</span>
-    <a href="javascript:treeio.nuvius.fetch_access();" class="inline-link add-link ajax-link-out">{% trans %}Grant access{% endtrans %}</a>
+    <a href="javascript:hardtree.nuvius.fetch_access();" class="inline-link button add-link ajax-link-out"><img src="/static/modules/plus-inline.png">{% trans %}Grant access{% endtrans %}</a>
 </div>
 {% else %}
 <div class="content-list-item spaced-h spaced-v">
@@ -110,7 +110,7 @@
 {% else %}
 <script type="text/javascript">
     $( function() {
-        treeio.nuvius.fetch_profile()
+        hardtree.nuvius.fetch_profile()
     });
 </script>
 <div class="content-list-item spaced-h spaced-v showjs">

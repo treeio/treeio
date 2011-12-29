@@ -7,7 +7,7 @@
 {% block module_title %}{% trans %}Service Level Agreements{% endtrans %}{% endblock %}
 
 {% block module_topmenu %}
-{% if user.get_profile().is_admin('treeio.services') %}
+{% if user.get_profile().is_admin('hardtree.services') %}
 <a href="{% url services_sla_add %}" class="top-menu add-link">{% trans %}New Agreement{% endtrans %}</a>
 {% endif %}
 {% endblock %}

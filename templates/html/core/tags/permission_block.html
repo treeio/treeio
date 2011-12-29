@@ -4,8 +4,8 @@
         Trashed
     </div>
     {% if request.user.get_profile().has_permission(object, mode='w') %}
-    <div class="object-trash-links">
-        <a href="{% url core_trash_object_untrash object.id %}" class="inline-link add-link">{% trans %}Untrash{% endtrans %}</a>
+    <div class="object-button trash-links"><img src="/static/modules/bin.png">
+        <a href="{% url core_trash_object_untrash object.id %}" class="inline-link button add-link"><img src="/static/modules/plus-inline.png">{% trans %}Untrash{% endtrans %}</a>
     </div>
     {% endif %}
     <br />
@@ -33,6 +33,6 @@
 
 {% if request.user.get_profile().has_permission(object, mode='w') %}
 <div class="permission-links">
-    <a href="{{ path }}?permission" class="inline-link edit-link">{% trans %}Edit{% endtrans %}</a>
+    <a href="{{ path }}?permission" class="inline-link button edit-link"><img src="/static/modules/pencil-small.png">{% trans %}Edit{% endtrans %}</a>
 </div>
 {% endif %}

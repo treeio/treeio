@@ -7,8 +7,8 @@
 {% block module_title %}{% trans %}Service Catalogue{% endtrans %}{% endblock %}
 
 {% block module_topmenu %}
-{% if user.get_profile().is_admin('treeio.services') %}
-<a href="{% url services_service_add %}" class="top-menu add-link">{% trans %}New Service{% endtrans %}</a>
+{% if user.get_profile().is_admin('hardtree.services') %}
+<a href="{% url services_service_add %}" class="top-menu button add-link"><img src="/static/modules/plus-small.png">{% trans %}New Service{% endtrans %}</a>
 {% endif %}
 {% endblock %}
 

@@ -30,7 +30,7 @@
         <div class="calendar-month-day-label">
             {{ date.day }}
         <span class="content-list-item-actions" style="position: relative; float: left;">
-            <a href="{% url events_event_add_to_date date.isoformat() %}" class="inline-link add-link" style="padding: 0; width: 16px; height: 16px;"></a>
+            <a href="{% url events_event_add_to_date date.isoformat() %}" class="inline-link button add-link" style="padding: 0; width: 16px; height: 16px;"><img src="/static/modules/plus-inline.png"></a>
         </span>
         </div>
         {{ events.render_for_date(date) }}

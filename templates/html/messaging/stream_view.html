@@ -6,13 +6,13 @@
 {% block module_subtitle %}{% trans %}Stream{% endtrans %}{% endblock %}
 
 {% block module_topmenu %}
-<a href="{% url messaging_stream_view stream.id %}" class="top-menu view-link-active">{% trans %}View{% endtrans %}</a>
+
 {% if stream.incoming_server_name %}
-<a href="{% url messaging_stream_checkmail stream.id %}" class="top-menu view-link">{% trans %}Check Mail{% endtrans %}</a>
+
 {% endif %}
 {% if user.get_profile().has_permission(stream, mode='w') %}
-<a href="{% url messaging_stream_edit stream.id %}" class="top-menu edit-link">{% trans %}Edit{% endtrans %}</a>
-<a href="{% url messaging_stream_delete stream.id %}" class="top-menu delete-link">{% trans %}Delete{% endtrans %}</a>
+<a href="{% url messaging_stream_edit stream.id %}" class="top-menu button edit-link"><img src="/static/modules/pencil-small.png">{% trans %}Edit{% endtrans %}</a>
+<a href="{% url messaging_stream_delete stream.id %}" class="top-menu button delete-link"><img src="/static/modules/cross-small.png">{% trans %}Delete{% endtrans %}</a>
 {% endif %}
 {% endblock %}
 
@@ -30,8 +30,8 @@
 <div class="sidebar-block">
     {{ subscription_block(stream) }}
 </div>
-<span class="sidebar-header-right">{% trans %}Download as:{% endtrans %}<br />{% if '?' in request.get_full_path() %}<a class="pdf-block-link" href="{{ request.get_full_path()|replace('.ajax','').replace('?','.pdf?') }}"{% else %}<a class="pdf-block-link" href="{{ request.get_full_path()|replace('.ajax','') }}.pdf"{% endif %} target="_self">PDF</a>
-  </span></span>
+<span class="sidebar-header-right">{% trans %}Download as{% endtrans %}<br />{% if '?' in request.get_full_path() %}<a class="button pdf-block-link" href="{{ request.get_full_path()|replace('.ajax','').replace('?','.pdf?') }}"{% else %}<a class="button pdf-block-link" href="{{ request.get_full_path()|replace('.ajax','') }}.pdf"{% endif %} target="_self"><img src="/static/modules/pdf.png"/>PDF</a>
+  </span>
 {% endblock %}
 
 {% block module_content %}
@@ -45,7 +45,7 @@
         <input type="checkbox" name="mass-unclassified" value="unclassified" class="group-control" />
          {{ massform.as_ul()|htsafe }}
         <li>
-            <input type="submit" value="{% trans %}Save{% endtrans %}" />
+            <button type="submit" >{% trans %}Save{% endtrans %}</button>
         </li>
     </ul>
     {{ messaging_message_list(paginate(messages)) }}
@@ -98,7 +98,7 @@
                       </li>
                     </ul>
                     <div class="content-form-submit">
-                        <input type="submit" value="{% trans %}Send Message{% endtrans %}">
+                        <button type="submit">{% trans %}Send Message{% endtrans %}</button>
                     </div>
                 </form>
                 <span class="message-tail"></span>

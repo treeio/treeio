@@ -15,9 +15,9 @@
 {% block module_subtitle %}{% if report %}{% trans %}Report{% endtrans %}{% endif %}{% endblock %}
 
 {% block module_topmenu %}
-<a class="top-menu view-link" href="{% url reports_report_view report.id %}">{% trans %}View{% endtrans %}</a>
-<a class="top-menu edit-link-active" href="{% url reports_report_edit report.id %}">{% trans %}Edit{% endtrans %}</a>
-<a class="top-menu delete-link" href="{% url reports_report_delete report.id %}">{% trans %}Delete{% endtrans %}</a>
+
+<a class="top-menu button edit-link-active" href="{% url reports_report_edit report.id %}"><img src="/static/modules/pencil-small.png">{% trans %}Edit{% endtrans %}</a>
+<a class="top-menu button delete-link" href="{% url reports_report_delete report.id %}"><img src="/static/modules/cross-small.png">{% trans %}Delete{% endtrans %}</a>
 {% endblock %}
 
 {% block module_content %}
@@ -78,7 +78,7 @@
     <br />
     <input type="hidden" name="report" value="{{report.id}}">
     <div class="content-form-submit">
-      <input type="submit" name="commit" value="{% trans %}Save{% endtrans %}">
+      <button type="submit" name="commit">{% trans %}Save{% endtrans %}</button>
     </div>
 </form>
 

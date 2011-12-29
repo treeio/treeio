@@ -4,6 +4,28 @@
 
 {% block content %}
 
+<div class="content-top">
+	{% block module_breadcrumb %}{% endblock %}
+		
+	<div class="title-block">
+	
+        <div class="title">
+            {% block module_title %}{% trans %}Finance{% endtrans %}{% endblock %}
+        </div>
+        <div class="subtitle-block">
+            {% block module_subtitle %}{% endblock %}
+        </div>
+        <div class="module-top-menu-inline">
+            {% block module_topmenu %}
+            <a href="{% url finance_category_add %}" class="top-menu button add-link"><img src="/static/modules/plus-small.png">{% trans %}New Category{% endtrans %}</a>
+            {% endblock %}
+        </div>
+        {{ help_link() }}
+
+    </div>
+			
+</div>
+
 <table>
     <tr>
         <td class="module-sidebar">
@@ -18,7 +40,7 @@
         <span class="sidebar-header">{% trans %}Reports{% endtrans %}</span>
         <a href="{% url finance_income_view %}" class="sidebar-link {% block class_income %}{% endblock %}">{% trans %}Income Statement{% endtrans %}</a>
         <a href="{% url finance_balance_sheet %}" class="sidebar-link {% block class_balance %}{% endblock %}">{% trans %}Balance Sheet{% endtrans %}</a>
-        {% if request.user.get_profile().is_admin('treeio.finance') %}
+        {% if request.user.get_profile().is_admin('hardtree.finance') %}
         <span class="sidebar-header">{% trans %}Administration{% endtrans %}</span>
         <a href="{% url finance_index_accounts %}" class="sidebar-link {% block class_accounts %}{% endblock %}">{% trans %}Accounts{% endtrans %}</a>
         <a href="{% url finance_settings_view %}" class="sidebar-link {% block class_admin_settings %}{% endblock %}">{% trans %}Settings{% endtrans %}</a>
@@ -29,22 +51,6 @@
 
         <div class="module-content-fill">
 
-            <div class="title-block">
-
-                <div class="title">
-                    {% block module_title %}{% trans %}Finance{% endtrans %}{% endblock %}
-                </div>
-                <div class="subtitle-block">
-                    {% block module_subtitle %}{% endblock %}
-                </div>
-                <div class="module-top-menu-inline">
-                    {% block module_topmenu %}
-                    <a href="{% url finance_category_add %}" class="top-menu add-link">{% trans %}New Category{% endtrans %}</a>
-                    {% endblock %}
-                </div>
-                {{ help_link() }}
-
-            </div>
             <table>
 
                 <tr>

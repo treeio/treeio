@@ -40,7 +40,7 @@
               </li>
           </ul>
           <div class="news-form-submit" style="width: 90%;">
-              <input type="submit" value="{% trans %}Share{% endtrans %}">
+              <button type="submit">{% trans %}Share{% endtrans %}</button>
           </div>
       </form>
     </div>
@@ -54,7 +54,7 @@
 {% if updates.count() > 20 %}
 <div id="more-news">
 <p class="spaced-h" style="text-align: right; padding-right: 20px;">
-    <a href="" callback="Dajaxice.treeio.news.get_more" class="ajax-link" target="#more-news">See more &rarr;</a>
+    <a href="" callback="Dajaxice.hardtree.news.get_more" class="ajax-link" target="#more-news">See more &rarr;</a>
 </p>
 </div>
 {% endif %}

@@ -6,8 +6,8 @@
 {% block module_subtitle %}{% trans %}Chart{% endtrans %}{% endblock %}
 
 {% block module_topmenu %}
-<a class="top-menu edit-link" href="{% url reports_chart_edit chart.id %}">{% trans %}Edit{% endtrans %}</a>
-<a class="top-menu delete-link-active" href="{% url reports_chart_delete chart.id %}">{% trans %}Delete{% endtrans %}</a>
+<a class="top-menu button edit-link" href="{% url reports_chart_edit chart.id %}"><img src="/static/modules/pencil-small.png">{% trans %}Edit{% endtrans %}</a>
+<a class="top-menu button delete-link-active" href="{% url reports_chart_delete chart.id %}"><img src="/static/modules/cross-small.png">{% trans %}Delete{% endtrans %}</a>
 {% endblock %}
 
 {% block sidebar_right %}
@@ -43,7 +43,7 @@
             </li>
             <li>
                 <input type="submit" name="delete" value="{% trans %}Yes, Delete{% endtrans %}" />&nbsp;&nbsp;
-                <input type="submit" name="cancel" value="{% trans %}Cancel{% endtrans %}" class="cancel" />
+                <button type="submit" name="cancel"  class="cancel" ><img src="/static/modules/cancel.png"/>{% trans %}Cancel{% endtrans %}</button>
             </li>
         </ul>
     </form>

@@ -11,12 +11,12 @@
     <ul class="content-filter-form-fields">
         {{ filters.as_ul()|htsafe }}
     </ul>
-    <input type="submit" value="{% trans %}Submit{% endtrans %}">
+    <button type="submit">{% trans %}Submit{% endtrans %}</button>
 </form>
 <br />
 
-<span class="sidebar-header-right">{% trans %}Download as:{% endtrans %}<br />{% if '?' in request.get_full_path() %}<a class="pdf-block-link" href="{{ request.get_full_path()|replace('.ajax','').replace('?','.pdf?') }}"{% else %}<a class="pdf-block-link" href="{{ request.get_full_path()|replace('.ajax','') }}.pdf"{% endif %} target="_self">PDF</a>
-  <a class="csv-block-link" {% if '?' in request.get_full_path() %}href="{{ request.get_full_path()|replace('.ajax','').replace('?','.csv?') }}"{% else %}href="{{ request.get_full_path()|replace('.ajax','') }}.csv"{% endif %} target="_self">CSV</a></span></span>
+<span class="sidebar-header-right">{% trans %}Download as{% endtrans %}<br />{% if '?' in request.get_full_path() %}<a class="button pdf-block-link" href="{{ request.get_full_path()|replace('.ajax','').replace('?','.pdf?') }}"{% else %}<a class="button pdf-block-link" href="{{ request.get_full_path()|replace('.ajax','') }}.pdf"{% endif %} target="_self"><img src="/static/modules/pdf.png"/>PDF</a>
+  <a class="button csv-block-link" {% if '?' in request.get_full_path() %}href="{{ request.get_full_path()|replace('.ajax','').replace('?','.csv?') }}"{% else %}href="{{ request.get_full_path()|replace('.ajax','') }}.csv"{% endif %} target="_self"><img src="/static/modules/csv.png"/>CSV</a></span>
 {% endblock %}
 
 {% block module_content %}
@@ -29,7 +29,7 @@
       <input type="hidden" name="massform" value="massform" />
        {{ massform.as_ul()|htsafe }}
       <li>
-          <input type="submit" value="{% trans %}Save{% endtrans %}" />
+          <button type="submit" >{% trans %}Save{% endtrans %}</button>
       </li>
   </ul>
     {% for queue in queues %}
@@ -37,7 +37,7 @@
         <input type="checkbox" name="mass-queue-{{ queue.id }}" value="{{ queue.id }}" class="group-control" />
         <a href="{% url services_queue_view queue.id %}" class="services-queue">{{ queue }}</a>
         <span class="spaced-h smaller">
-            <a href="{% url services_ticket_add_by_queue queue.id %}" id="add_ticket" class="inline-link add-link popup-link">{% trans %}Add{% endtrans %}</a>
+            <a href="{% url services_ticket_add_by_queue queue.id %}" id="add_ticket" class="inline-link button add-link popup-link"><img src="/static/modules/plus-inline.png">{% trans %}Add{% endtrans %}</a>
         </span>
     </span>
     {% set render_tickets = htsort(tickets.filter(queue=queue))[:16] %}

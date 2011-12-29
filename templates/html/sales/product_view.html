@@ -7,10 +7,10 @@
 {% block module_subtitle %}{% trans %}Product{% endtrans %}{% endblock %}
 
 {% block module_topmenu %}
-<a href="{% url sales_product_view product.id %}" class="top-menu view-link-active">{% trans %}View{% endtrans %}</a>
+
 {% if request.user.get_profile().has_permission(product, mode='w') %}
-<a href="{% url sales_product_edit product.id %}" class="top-menu edit-link">{% trans %}Edit{% endtrans %}</a>
-<a href="{% url sales_product_delete product.id %}" class="top-menu delete-link">{% trans %}Delete{% endtrans %}</a>
+<a href="{% url sales_product_edit product.id %}" class="top-menu button edit-link"><img src="/static/modules/pencil-small.png">{% trans %}Edit{% endtrans %}</a>
+<a href="{% url sales_product_delete product.id %}" class="top-menu button delete-link"><img src="/static/modules/cross-small.png">{% trans %}Delete{% endtrans %}</a>
 {% endif %}
 {{ last_updated(product) }}
 {% endblock %}
@@ -29,7 +29,7 @@
 <div class="sidebar-block">
     {{ subscription_block(product) }}
 </div>
-<span class="sidebar-header-right">{% trans %}Download as:{% endtrans %}<br />{% if '?' in request.get_full_path() %}<a class="pdf-block-link" href="{{ request.get_full_path()|replace('.ajax','').replace('?','.pdf?') }}"{% else %}<a class="pdf-block-link" href="{{ request.get_full_path()|replace('.ajax','') }}.pdf"{% endif %} target="_self">PDF</a>
+<span class="sidebar-header-right">{% trans %}Download as{% endtrans %}<br />{% if '?' in request.get_full_path() %}<a class="button pdf-block-link" href="{{ request.get_full_path()|replace('.ajax','').replace('?','.pdf?') }}"{% else %}<a class="button pdf-block-link" href="{{ request.get_full_path()|replace('.ajax','') }}.pdf"{% endif %} target="_self"><img src="/static/modules/pdf.png"/>PDF</a>
   </span>
 {% endblock %}
 
@@ -101,7 +101,7 @@
 
 <div class="content-label-head">
     {% trans %}Subproducts{% endtrans %}:
-    <a href="{% url sales_product_add product.id %}" id="add_product" class="inline-link add-link popup-link">{% trans %}Add{% endtrans %}</a>
+    <a href="{% url sales_product_add product.id %}" id="add_product" class="inline-link button add-link popup-link"><img src="/static/modules/plus-inline.png">{% trans %}Add{% endtrans %}</a>
 </div>
 {% for subproduct in subproducts %}
 <div class="content-list-item content-list-item-{{ loop.cycle('odd', 'even') }}" title="{{ subproduct.name }}">
@@ -116,7 +116,7 @@
     </span>
     <span class="content-list-item-actions">
         {% if user.get_profile().has_permission(subproduct, mode='w') %}
-        <a href="{% url sales_product_edit subproduct.id %}" class="inline-link edit-link">{% trans %}Edit{% endtrans %}</a>
+        <a href="{% url sales_product_edit subproduct.id %}" class="inline-link button edit-link"><img src="/static/modules/pencil-small.png">{% trans %}Edit{% endtrans %}</a>
         {% endif %}
     </span>
 </div>
@@ -127,7 +127,7 @@
 {% if product.product_type == 'subscription' %}
 <div class="content-label-head">
     {% trans %}Subscriptions{% endtrans %}:
-    <a href="{% url sales_subscription_add_with_product product.id %}" id="add_product" class="inline-link add-link popup-link">{% trans %}Add{% endtrans %}</a>
+    <a href="{% url sales_subscription_add_with_product product.id %}" id="add_product" class="inline-link button add-link popup-link"><img src="/static/modules/plus-inline.png">{% trans %}Add{% endtrans %}</a>
 </div>
 {% for subscription in paginate(subscriptions) %}
 <div class="content-list-item content-list-item-{{ loop.cycle('odd', 'even') }}" title="{{ subscription }}">
@@ -148,7 +148,7 @@
     </span>
     <span class="content-list-item-actions">
         {% if user.get_profile().has_permission(subscription, mode='w') %}
-        <a href="{% url sales_subscription_edit subscription.id %}" class="inline-link edit-link">{% trans %}Edit{% endtrans %}</a>
+        <a href="{% url sales_subscription_edit subscription.id %}" class="inline-link button edit-link"><img src="/static/modules/pencil-small.png">{% trans %}Edit{% endtrans %}</a>
         {% endif %}
     </span>
 </div>

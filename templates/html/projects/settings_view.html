@@ -7,9 +7,9 @@
 {% block module_title %}{% trans %}Settings{% endtrans %}{% endblock %}
 
 {% block module_topmenu %}
-<a href="{% url projects_task_status_add %}" class="top-menu add-link">{% trans %}New Status{% endtrans %}</a>
-<a href="{% url projects_settings_view %}" class="top-menu view-link-active">{% trans %}View{% endtrans %}</a>
-<a href="{% url projects_settings_edit %}" class="top-menu edit-link">{% trans %}Edit{% endtrans %}</a>
+<a href="{% url projects_task_status_add %}" class="top-menu button add-link"><img src="/static/modules/plus-small.png">{% trans %}New Status{% endtrans %}</a>
+
+<a href="{% url projects_settings_edit %}" class="top-menu button edit-link"><img src="/static/modules/pencil-small.png">{% trans %}Edit{% endtrans %}</a>
 {% endblock %}
 
 {% block module_content %}
@@ -39,7 +39,7 @@
     </span>
     <span class="content-list-item-actions">
         {% if user.get_profile().has_permission(status, mode='w') %}
-        <a href="{% url projects_task_status_edit status.id %}" class="inline-link edit-link">{% trans %}Edit{% endtrans %}</a>
+        <a href="{% url projects_task_status_edit status.id %}" class="inline-link button edit-link"><img src="/static/modules/pencil-small.png">{% trans %}Edit{% endtrans %}</a>
         {% endif %}
     </span>
 </div>

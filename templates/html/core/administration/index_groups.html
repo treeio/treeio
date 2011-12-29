@@ -5,7 +5,7 @@
 {% block module_title %}{% trans %}Groups{% endtrans %}{% endblock %}
 
 {% block module_topmenu %}
-<a href="{% url core_admin_group_add %}" class="top-menu add-link">{% trans %}New Group{% endtrans %}</a>
+<a href="{% url core_admin_group_add %}" class="top-menu button add-link"><img src="/static/modules/plus-small.png">{% trans %}New Group{% endtrans %}</a>
 {% endblock %}
 
 {% block class_groups %}sidebar-link-active{% endblock %}

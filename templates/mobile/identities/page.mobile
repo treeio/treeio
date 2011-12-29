@@ -21,7 +21,7 @@
 	{% endfor %}
 	{% endblock %}
 	
-	{% if request.user.get_profile().is_admin('treeio.identities') %}
+	{% if request.user.get_profile().is_admin('hardtree.identities') %}
 	<span class="sidebar-header">{% trans %}Administration{% endtrans %}</span>
 	<a href="{% url identities_settings_view %}" class="sidebar-link {% block class_admin_settings %}{% endblock %}">{% trans %}Settings{% endtrans %}</a>
 	{% endif %}

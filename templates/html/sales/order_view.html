@@ -7,11 +7,11 @@
 {% block module_subtitle %}{% trans %}Sale Order{% endtrans %}{% endblock %}
 
 {% block module_topmenu %}
-<a href="{% url sales_order_view order.id %}" class="top-menu view-link-active">{% trans %}View{% endtrans %}</a>
-<a href="{% url sales_order_invoice_view order.id %}" class="top-menu view-link">{% trans %}Invoice{% endtrans %}</a>
+
+
 {% if request.user.get_profile().has_permission(order, mode='w') %}
-<a href="{% url sales_order_edit order.id %}" class="top-menu edit-link">{% trans %}Edit{% endtrans %}</a>
-<a href="{% url sales_order_delete order.id %}" class="top-menu delete-link">{% trans %}Delete{% endtrans %}</a>
+<a href="{% url sales_order_edit order.id %}" class="top-menu button edit-link"><img src="/static/modules/pencil-small.png">{% trans %}Edit{% endtrans %}</a>
+<a href="{% url sales_order_delete order.id %}" class="top-menu button delete-link"><img src="/static/modules/cross-small.png">{% trans %}Delete{% endtrans %}</a>
 {% endif %}
     {{ last_updated(order) }}
 {% endblock %}
@@ -30,7 +30,7 @@
 <div class="sidebar-block">
     {{ subscription_block(order) }}
 </div>
-<span class="sidebar-header-right">{% trans %}Download as:{% endtrans %}<br />{% if '?' in request.get_full_path() %}<a class="pdf-block-link" href="{{ request.get_full_path()|replace('.ajax','').replace('?','.pdf?') }}"{% else %}<a class="pdf-block-link" href="{{ request.get_full_path()|replace('.ajax','') }}.pdf"{% endif %} target="_self">PDF</a>
+<span class="sidebar-header-right">{% trans %}Download as{% endtrans %}<br />{% if '?' in request.get_full_path() %}<a class="button pdf-block-link" href="{{ request.get_full_path()|replace('.ajax','').replace('?','.pdf?') }}"{% else %}<a class="button pdf-block-link" href="{{ request.get_full_path()|replace('.ajax','') }}.pdf"{% endif %} target="_self"><img src="/static/modules/pdf.png"/>PDF</a>
   </span>
 {% endblock %}
 
@@ -120,7 +120,7 @@
 
 <div>
   <span class="content-label-head">{% trans %}Ordered Products{% endtrans %}:
-    <a href="{% url sales_ordered_product_add order.id %}" id="add_ordered_product" class="inline-link add-link popup-link">{% trans %}Add{% endtrans %}</a>
+    <a href="{% url sales_ordered_product_add order.id %}" id="add_ordered_product" class="inline-link button add-link popup-link"><img src="/static/modules/plus-inline.png">{% trans %}Add{% endtrans %}</a>
 	</span>
   {% if ordered_products %}
   <!-- Table header -->
@@ -132,7 +132,6 @@
             <th align="right" scope="col">{% trans %}Quantity{% endtrans %}</th>
             <th align="right" scope="col">{% trans %}Price{% endtrans %} ({{order.currency.code}})</th>
             <th align="right" scope="col">{% trans %}Discount (%){% endtrans %}</th>
-            <th align="right" scope="col">{% trans %}Tax{% endtrans %}</th>
             <th align="right" scope="col">{% trans %}Total{% endtrans %}</th>
         </tr>
     </thead>
@@ -144,15 +143,13 @@
         <tr class="content-list-item-{{ loop.cycle('odd', 'even') }}">
             <td>
               <span class="content-list-item table-link" style="border: none">
-              <a href="{% url sales_ordered_product_edit product.id %}" class="inline-link edit-link popup-link">{{ product }} {% if product.code %}({{ product.code }}){% endif %}</a>
-              <a href="{% url sales_ordered_product_delete product.id %}" class="inline-link delete-link popup-link">&nbsp;</a>
+              <a href="{% url sales_ordered_product_edit product.id %}" class="inline-link button edit-link popup-link"><img src="/static/modules/pencil-small.png">{{ product }} {% if product.code %}({{ product.code }}){% endif %}</a>
               </span>
             </td>
             <td>{{ product.description|htsafe|striptags }}</td>
             <td align="right">{{ product.quantity }}</td>
             <td align="right">{{ product.rate|number_format }}</td>
             <td align="right">{{ product.discount }}</td>
-            <td align="right">{{ product.tax }}</td>
             <td align="right"><strong>{{ product.get_total()|number_format }}</strong></td>
       
         
@@ -178,8 +175,8 @@
     <span class="content-label">{{ tax['name'] }} ({{ tax['rate'] }}%):</span>
     <span class="content-value"><strong>{{tax['amount']|number_format}}</strong></span>
 </div>
-<div class="clear"></div>
 {% endfor %}
+<div class="clear"></div>
 <div style="float: right; border-top: 1px solid #BBB; padding-right: 10px; width: 200px; text-align:right;">
     <span class="content-label">{% trans %}Total{% endtrans %}:</span>
     <span class="content-value"><strong>{{ order.get_total_display()|number_format|currency_format(order.currency) }}</strong></span>
@@ -205,7 +202,7 @@
 
 <div>
   <span class="content-label-head">{% trans %}Payments{% endtrans %}:
-    <a href="{% url finance_transaction_add_order order.id %}" id="add_payment" class="inline-link add-link popup-link">{% trans %}Add{% endtrans %}</a>
+    <a href="{% url finance_transaction_add_order order.id %}" id="add_payment" class="inline-link button add-link popup-link"><img src="/static/modules/plus-inline.png">{% trans %}Add{% endtrans %}</a>
   </span>
   {% if order.payment.filter(trash=False).count() %}
   <!-- Table header -->
@@ -225,7 +222,7 @@
         <tr class="content-list-item-{{ loop.cycle('odd', 'even') }}">
             <td>
               <span class="content-list-item-actions table-link">
-        <a href="{% url finance_transaction_edit payment.id %}" class="inline-link edit-link popup-link">{{ payment }}</a>
+        <a href="{% url finance_transaction_edit payment.id %}" class="inline-link button edit-link popup-link"><img src="/static/modules/pencil-small.png">{{ payment }}</a>
         </span></td>
             <td>{{ payment.details|striptags|htsafe }}</td>
             <td align="right">{{ payment.value }}</td>
@@ -260,7 +257,7 @@
       {% else %}
         <a href="{% url identities_user_view record.author.id %}" class="popup-link"><img class="contact-picture left" src="/static/messaging/pic.png" alt="" /></a>
       {% endif %}
-    {% elif record.sender and record.sender.object_type == 'treeio.identities.models.Contact' %}
+    {% elif record.sender and record.sender.object_type == 'hardtree.identities.models.Contact' %}
       {% set contact = record.sender.get_related_object() %}
       {% if contact %}
         {% set picture = contact.get_picture() %}
@@ -333,7 +330,7 @@
             {% endif %}
         </ul>
         <div class="content-form-submit">
-            <input type="submit" value="{% trans %}Update Order{% endtrans %}">
+            <button type="submit">{% trans %}Update Order{% endtrans %}</button>
         </div>
     </form>
 </div>

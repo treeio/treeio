@@ -6,7 +6,7 @@
 
 {% block sidebar_right %}
 
-<span class="sidebar-header-right">{% trans %}Download as:{% endtrans %}<br />{% if '?' in request.get_full_path() %}<a class="pdf-block-link" href="{{ request.get_full_path()|replace('.ajax','').replace('?','.pdf?') }}"{% else %}<a class="pdf-block-link" href="{{ request.get_full_path()|replace('.ajax','') }}.pdf"{% endif %} target="_self">PDF</a>
+<span class="sidebar-header-right">{% trans %}Download as{% endtrans %}<br />{% if '?' in request.get_full_path() %}<a class="button pdf-block-link" href="{{ request.get_full_path()|replace('.ajax','').replace('?','.pdf?') }}"{% else %}<a class="button pdf-block-link" href="{{ request.get_full_path()|replace('.ajax','') }}.pdf"{% endif %} target="_self"><img src="/static/modules/pdf.png"/>PDF</a>
   <a class="csv-block-link" {% if '?' in request.get_full_path() %}href="{{ request.get_full_path()|replace('.ajax','').replace('?','.csv?') }}"{% else %}href="{{ request.get_full_path()|replace('.ajax','') }}.csv"{% endif %} target="_self">CSV</a></span></span>
 
 {% endblock %}
@@ -52,7 +52,7 @@
               </li>
           </ul>
           <div class="news-form-submit">
-              <input type="submit" value="{% trans %}Share{% endtrans %}">
+              <button type="submit">{% trans %}Share{% endtrans %}</button>
           </div>
       </form>
     </div>

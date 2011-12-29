@@ -3,8 +3,8 @@
 {% block title %}{% trans %}Compose{% endtrans %} | {% trans %}Messaging{% endtrans %}{% endblock %}
 
 {% block module_topmenu %}
-<a href="{% url messaging_message_compose %}" class="top-menu add-link-active">{% trans %}New Message{% endtrans %}</a>
-<a href="{% url messaging_stream_add %}" class="top-menu add-link">{% trans %}New Stream{% endtrans %}</a>
+<a href="{% url messaging_message_compose %}" class="top-menu button add-link-active"><img src="/static/modules/plus-small.png">{% trans %}New Message{% endtrans %}</a>
+<a href="{% url messaging_stream_add %}" class="top-menu button add-link"><img src="/static/modules/plus-small.png">{% trans %}New Stream{% endtrans %}</a>
 {% endblock %}
 
 {% block module_content %}
@@ -16,8 +16,8 @@
             {{ form.as_ul()|htsafe }}
         </ul>
         <div class="content-form-submit">
-            <input type="submit" name="save" value="{% trans %}Send Message{% endtrans %}" class="submit" />
-			<input type="submit" name="cancel" value="{% trans %}Cancel{% endtrans %}" class="cancel" />
+            <button type="submit" name="save"  class="submit" >{% trans %}Send Message{% endtrans %}</button>
+			<button type="submit" name="cancel"  class="cancel" ><img src="/static/modules/cancel.png"/>{% trans %}Cancel{% endtrans %}</button>
         </div>
     </form>
 </p>

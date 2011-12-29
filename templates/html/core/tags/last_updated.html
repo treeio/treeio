@@ -1,3 +1,3 @@
 <span class="quiet small">
-	<img class="margin-bottom" alt="Tags" src="/static/icons/clock.gif" />{% if verbose %}{% trans %}Last updated{% endtrans %}{% endif %} &nbsp;{{ updated|humanize_datetime }}
+	{% if verbose %}<img class="margin-bottom last-updated" alt="Tags" src="/static/modules/clock.png" />{% trans %} Updated{% endtrans %}{% endif %} {{ updated|humanize_datetime }}{% if updated_by %} {% trans %}by{% endtrans %} {{ updated_by }}{% endif %}
 </span>

@@ -23,13 +23,13 @@
 {% endblock %}
 
 {% block module_topmenu %}
-<a href="{% url messaging_stream_view stream.id %}" class="top-menu view-link">{% trans %}View{% endtrans %}</a>
+
 {% if stream.incoming_server_name %}
-<a href="{% url messaging_stream_checkmail stream.id %}" class="top-menu view-link">{% trans %}Check Mail{% endtrans %}</a>
+
 {% endif %}
 {% if user.get_profile().has_permission(stream, mode='w') %}
-<a href="{% url messaging_stream_edit stream.id %}" class="top-menu edit-link">{% trans %}Edit{% endtrans %}</a>
-<a href="{% url messaging_stream_delete stream.id %}" class="top-menu delete-link-active">{% trans %}Delete{% endtrans %}</a>
+<a href="{% url messaging_stream_edit stream.id %}" class="top-menu button edit-link"><img src="/static/modules/pencil-small.png">{% trans %}Edit{% endtrans %}</a>
+<a href="{% url messaging_stream_delete stream.id %}" class="top-menu button delete-link-active"><img src="/static/modules/cross-small.png">{% trans %}Delete{% endtrans %}</a>
 {% endif %}
 {% endblock %}
 
@@ -49,7 +49,7 @@
             </li>
             <li>
                 <input type="submit" name="delete" value="{% trans %}Yes, Delete{% endtrans %}" />&nbsp;&nbsp;
-                <input type="submit" name="cancel" value="{% trans %}Cancel{% endtrans %}" class="cancel" />
+                <button type="submit" name="cancel"  class="cancel" ><img src="/static/modules/cancel.png"/>{% trans %}Cancel{% endtrans %}</button>
             </li>
         </ul>
     </form>

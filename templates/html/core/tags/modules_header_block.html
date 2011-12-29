@@ -12,8 +12,8 @@
   		
       {% if not active %}
       <li class="menu-item">
-          <a href="/" id="menu-treeio-home" class="active">
-            <span class="treeio-home">
+          <a href="/" id="menu-hardtree-home" class="active">
+            <span class="hardtree-home">
               <span class="menu-item-minor">&nbsp;</span>
               {# <span class="menu-item-major">{% trans %}Home{% endtrans %}</span> #}
             </span>
@@ -21,8 +21,8 @@
       </li>
       {% else %}
       <li class="menu-item">
-          <a href="/" id="menu-treeio-home">
-            <span class="treeio-home">
+          <a href="/" id="menu-hardtree-home">
+            <span class="hardtree-home">
               <span class="menu-item-minor">&nbsp;</span>
               {# <span class="menu-item-major">{% trans %}Home{% endtrans %}</span> #}
             </span>
@@ -34,7 +34,12 @@
       {% for module in modules if module.type == 'major' -%}
       {% if module == active %}
       <li class="menu-item">
-          <a href="{{ module.url }}" id="menu-{{ module.name|replace('.', '-')}}" class="active" title="{{ module }}">
+          <div class="mwrapper">
+          <div class="megamenu dropdown_{{ module.name|replace('.','-')}}">
+              <p>{% trans %}Loading..{% endtrans %}</p>
+          </div>
+          </div>
+          <a href="{{ module.url }}" id="menu-{{ module.name|replace('.', '-')}}" class="active">
             <span class="{{ module.name|replace('.', '-')}}">
               <span class="menu-item-major">{{ module }}</span>
             </span>
@@ -42,7 +47,12 @@
       </li>
       {% else %}
       <li class="menu-item">
-          <a href="{{ module.url }}" id="menu-{{ module.name|replace('.', '-')}}" title="{{ module }}">
+          <div class="mwrapper">
+          <div class="megamenu dropdown_{{ module.name|replace('.','-')}}">
+              <p>{% trans %}Loading..{% endtrans %}</p>
+          </div>
+          </div>
+          <a href="{{ module.url }}" id="menu-{{ module.name|replace('.', '-')}}">
             <span class="{{ module.name|replace('.', '-')}}">
               <span class="menu-item-major">{{ module }}</span>
             </span>
@@ -63,6 +73,7 @@
               <span class="menu-item-minor">&nbsp;</span>
             </span>
           </a>
+          
       </li>
       {% else %}
       <li class="menu-item">

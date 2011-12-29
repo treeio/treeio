@@ -7,14 +7,14 @@
 {% block module_subtitle %}{% trans %}Project{% endtrans %}{% endblock %}
 
 {% block module_topmenu %}
-<a href="{% url projects_project_add_typed project.id %}" class="top-menu add-link">{% trans %}New Project{% endtrans %}</a>
-<a href="{% url projects_milestone_add_typed project.id %}" class="top-menu add-link">{% trans %}New Milestone{% endtrans %}</a>
-<a href="{% url projects_task_add_typed project.id %}" class="top-menu add-link">{% trans %}New Task{% endtrans %}</a>
-<a href="{% url projects_gantt_view project.id %}" class="top-menu gantt-link-active">{% trans %}Gantt Chart{% endtrans %}</a>
-<a href="{% url projects_project_view project.id %}" class="top-menu view-link">{% trans %}View{% endtrans %}</a>
+<a href="{% url projects_project_add_typed project.id %}" class="top-menu button add-link"><img src="/static/modules/plus-small.png">{% trans %}Subproject{% endtrans %}</a>
+<a href="{% url projects_milestone_add_typed project.id %}" class="top-menu button add-link"><img src="/static/modules/plus-small.png">{% trans %}Milestone{% endtrans %}</a>
+<a href="{% url projects_task_add_typed project.id %}" class="top-menu button add-link"><img src="/static/modules/plus-small.png">{% trans %}Task{% endtrans %}</a>
+<a href="{% url projects_gantt_view project.id %}" class="top-menu button gantt-link-active"><img src="/static/modules/gantt.png"/>{% trans %}Gantt Chart{% endtrans %}</a>
+
 {% if user.get_profile().has_permission(project, mode='w') %}
-<a href="{% url projects_project_edit project.id %}" class="top-menu edit-link">{% trans %}Edit{% endtrans %}</a>
-<a href="{% url projects_project_delete project.id %}" class="top-menu delete-link">{% trans %}Delete{% endtrans %}</a>
+<a href="{% url projects_project_edit project.id %}" class="top-menu button edit-link"><img src="/static/modules/pencil-small.png">{% trans %}Edit{% endtrans %}</a>
+<a href="{% url projects_project_delete project.id %}" class="top-menu button delete-link"><img src="/static/modules/cross-small.png">{% trans %}Delete{% endtrans %}</a>
 {% endif %}
 {% endblock %}
 

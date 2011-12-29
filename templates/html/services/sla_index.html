@@ -7,8 +7,8 @@
 {% block module_title %}{% trans %}Service Level Agreements{% endtrans %}{% endblock %}
 
 {% block module_topmenu %}
-{% if user.get_profile().is_admin('treeio.services') %}
-<a href="{% url services_sla_add %}" class="top-menu add-link">{% trans %}New Agreement{% endtrans %}</a>
+{% if user.get_profile().is_admin('hardtree.services') %}
+<a href="{% url services_sla_add %}" class="top-menu button add-link"><img src="/static/modules/plus-small.png">{% trans %}New Agreement{% endtrans %}</a>
 {% endif %}
 {% endblock %}
 
@@ -19,7 +19,7 @@
     <ul class="content-filter-form-fields">
         {{ filters.as_ul()|htsafe }}
     </ul>
-    <input type="submit" value="{% trans %}Submit{% endtrans %}">
+    <button type="submit">{% trans %}Submit{% endtrans %}</button>
 </form>
 {% endblock %}
 
@@ -38,7 +38,7 @@
     </span>
     <span class="content-list-item-actions">
         {% if user.get_profile().has_permission(sla, mode='w') %}
-        <a href="{% url services_sla_edit sla.id %}" class="inline-link edit-link">{% trans %}Edit{% endtrans %}</a>
+        <a href="{% url services_sla_edit sla.id %}" class="inline-link button edit-link"><img src="/static/modules/pencil-small.png">{% trans %}Edit{% endtrans %}</a>
         {% endif %}
     </span>
 </div>

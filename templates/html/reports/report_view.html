@@ -6,10 +6,10 @@
 {% block module_subtitle %}{% trans %}Report{% endtrans %}{% endblock %}
 
 {% block module_topmenu %}
-<a class="top-menu view-link-active" href="{% url reports_report_view report.id %}">{% trans %}View{% endtrans %}</a>
-<a class="top-menu edit-link" href="{% url reports_report_edit report.id %}">{% trans %}Edit{% endtrans %}</a>
-<a class="top-menu delete-link" href="{% url reports_report_delete report.id %}">{% trans %}Delete{% endtrans %}</a>
-<a class="top-menu add-link popup-link" href="{% url reports_chart_add report.id %}">{% trans %}Add Chart{% endtrans %}</a>
+
+<a class="top-menu button edit-link" href="{% url reports_report_edit report.id %}"><img src="/static/modules/pencil-small.png">{% trans %}Edit{% endtrans %}</a>
+<a class="top-menu button delete-link" href="{% url reports_report_delete report.id %}"><img src="/static/modules/cross-small.png">{% trans %}Delete{% endtrans %}</a>
+<a class="top-menu button add-link popup-link" href="{% url reports_chart_add report.id %}"><img src="/static/modules/plus-small.png">{% trans %}Add Chart{% endtrans %}</a>
 {{ last_updated(report) }}
 {% endblock %}
 
@@ -26,7 +26,7 @@
 <div class="sidebar-block">
     {{ subscription_block(report) }}
 </div>
-<span class="sidebar-header-right">{% trans %}Download as:{% endtrans %}<br />{% if '?' in request.get_full_path() %}<a class="pdf-block-link" href="{{ request.get_full_path()|replace('.ajax','').replace('?','.pdf?') }}"{% else %}<a class="pdf-block-link" href="{{ request.get_full_path()|replace('.ajax','') }}.pdf"{% endif %} target="_self">PDF</a>
+<span class="sidebar-header-right">{% trans %}Download as{% endtrans %}<br />{% if '?' in request.get_full_path() %}<a class="button pdf-block-link" href="{{ request.get_full_path()|replace('.ajax','').replace('?','.pdf?') }}"{% else %}<a class="button pdf-block-link" href="{{ request.get_full_path()|replace('.ajax','') }}.pdf"{% endif %} target="_self"><img src="/static/modules/pdf.png"/>PDF</a>
 </span>
 {% endblock %}
 

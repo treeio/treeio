@@ -9,7 +9,7 @@
 {% block module_subtitle %}{% if queue %}{% trans %}Queue{% endtrans %}{% endif %}{% endblock %}
 
 {% block module_topmenu %}
-<a href="{% url services_ticket_add %}" class="top-menu add-link-active">{% trans %}New Ticket{% endtrans %}</a>
+<a href="{% url services_ticket_add %}" class="top-menu button add-link-active"><img src="/static/modules/plus-small.png">{% trans %}New Ticket{% endtrans %}</a>
 {% endblock %}
 
 {% block module_content %}
@@ -19,8 +19,8 @@
         {{ form.as_ul()|htsafe }}
     </ul>
     <div class="content-form-submit">
-        <input type="submit" name="save" value="{% trans %}Create Ticket{% endtrans %}" />
-		<input type="submit" name="cancel" value="{% trans %}Cancel{% endtrans %}" class="cancel" />
+        <button type="submit" name="save" >{% trans %}Create Ticket{% endtrans %}</button>
+		<button type="submit" name="cancel"  class="cancel" ><img src="/static/modules/cancel.png"/>{% trans %}Cancel{% endtrans %}</button>
     </div>
 </form>
 {% endblock %}

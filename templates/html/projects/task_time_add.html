@@ -7,10 +7,10 @@
 {% block module_subtitle %}{% trans %}Task{% endtrans %}{% endblock %}
 
 {% block module_topmenu %}
-<a href="{% url projects_task_view task.id %}" class="top-menu view-link">{% trans %}View{% endtrans %}</a>
+
 {% if user.get_profile().has_permission(task, mode='w') %}
-<a href="{% url projects_task_edit task.id %}" class="top-menu edit-link">{% trans %}Edit{% endtrans %}</a>
-<a href="{% url projects_task_delete task.id %}" class="top-menu delete-link">{% trans %}Delete{% endtrans %}</a>
+<a href="{% url projects_task_edit task.id %}" class="top-menu button edit-link"><img src="/static/modules/pencil-small.png">{% trans %}Edit{% endtrans %}</a>
+<a href="{% url projects_task_delete task.id %}" class="top-menu button delete-link"><img src="/static/modules/cross-small.png">{% trans %}Delete{% endtrans %}</a>
 {% endif %}
 {% endblock %}
 
@@ -139,7 +139,7 @@
     </span>
     <span class="content-list-item-actions">
         {% if user.get_profile().has_permission(subtask, mode='w') %}
-        <a href="{% url projects_task_edit subtask.id %}" class="inline-link edit-link">{% trans %}Edit{% endtrans %}</a>
+        <a href="{% url projects_task_edit subtask.id %}" class="inline-link button edit-link"><img src="/static/modules/pencil-small.png">{% trans %}Edit{% endtrans %}</a>
         {% endif %}
     </span>
 </div>
@@ -155,10 +155,10 @@
 {% if user.get_profile().has_permission(task, mode='x') and not task.is_being_done_by(request.user.get_profile()) %}
 <div class="spaced-h spaced-v">
     <form action="{% url projects_task_time_slot_start task.id %}" method="get" class="content-form content-form-inline">
-        <input type="submit" value="Start Work">
+        <button type="submit"><img src="/static/modules/clock--arrow.png"/>Start Work</button>
     </form>
     <form action="{% url projects_task_time_slot_add task.id %}" method="get" class="content-form content-form-inline">
-        <input type="submit" value="Add Work">
+        <button type="submit"><img src="/static/modules/clock--plus.png"/>Add Work</button>
     </form>
 </div>
 {% endif %}
@@ -170,8 +170,8 @@
         {{ form.as_ul()|htsafe }}
     </ul>
     <div class="content-form-submit-small">
-        <input type="submit" name="add" value="Add">
-        <input type="submit" name="cancel" value="Cancel">
+        <button type="submit" name="add">Add</button>
+        <button type="submit" name="cancel">Cancel</button>
     </div>
 </form>
 {% endif %}
@@ -217,7 +217,7 @@
                     </li>
                 </ul>
                 <div class="content-form-submit-small">
-                    <input type="submit" name="stop" value="Stop Work">
+                    <button type="submit" name="stop"><img src="/static/modules/clock--exclamation.png"/>Stop Work</button>
                 </div>
             </form>
             {% endif %}
@@ -226,7 +226,7 @@
     </span>
     <span class="content-list-item-actions">
         {% if user.get_profile().has_permission(task, mode='w') or user.get_profile().has_permission(slot, mode='w') %}
-        <a href="{% url projects_task_time_slot_edit slot.id %}" class="inline-link edit-link">{% trans %}Edit{% endtrans %}</a>
+        <a href="{% url projects_task_time_slot_edit slot.id %}" class="inline-link button edit-link"><img src="/static/modules/pencil-small.png">{% trans %}Edit{% endtrans %}</a>
         {% endif %}
     </span>
 </div>

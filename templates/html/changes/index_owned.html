@@ -11,7 +11,7 @@
     <ul class="content-filter-form-fields">
         {{ filters.as_ul()|htsafe }}
     </ul>
-    <input type="submit" value="{% trans %}Submit{% endtrans %}">
+    <button type="submit">{% trans %}Submit{% endtrans %}</button>
 </form>
 {% endblock %}
 
@@ -25,7 +25,7 @@
         <input type="checkbox" name="mass-unclassified" value="unclassified" class="group-control" />
          {{ massform.as_ul()|htsafe }}
         <li>
-            <input type="submit" value="{% trans %}Save{% endtrans %}" />
+            <button type="submit" >{% trans %}Save{% endtrans %}</button>
         </li>
     </ul>
     {{ changes_set_list(paginate(changesets)) }}

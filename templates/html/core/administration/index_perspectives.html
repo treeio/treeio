@@ -7,7 +7,7 @@
 {% block module_title %}{% trans %}Perspectives{% endtrans %}{% endblock %}
 
 {% block module_topmenu %}
-<a href="{% url core_admin_perspective_add %}" class="top-menu add-link">{% trans %}New Perspective{% endtrans %}</a>
+<a href="{% url core_admin_perspective_add %}" class="top-menu button add-link"><img src="/static/modules/plus-small.png">{% trans %}New Perspective{% endtrans %}</a>
 {% endblock %}
 
 {% block sidebar_right %}
@@ -18,7 +18,7 @@
     <ul class="content-filter-form-fields">
         {{ filters }}
     </ul>
-    <input type="submit" value="{% trans %}Submit{% endtrans %}">
+    <button type="submit">{% trans %}Submit{% endtrans %}</button>
 </form>
 #}
 
@@ -49,7 +49,7 @@
     </span>
     <span class="content-list-item-actions">
         {% if user.get_profile().has_permission(perspective, mode='w') %}
-        <a href="{% url core_admin_perspective_edit perspective.id %}" class="inline-link edit-link">{% trans %}Edit{% endtrans %}</a>
+        <a href="{% url core_admin_perspective_edit perspective.id %}" class="inline-link button edit-link"><img src="/static/modules/pencil-small.png">{% trans %}Edit{% endtrans %}</a>
         {% endif %}
     </span>
 </div>

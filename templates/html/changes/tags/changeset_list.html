@@ -20,7 +20,7 @@
     </span>
     <span class="content-list-item-actions">
         {% if user.get_profile().has_permission(changeset.object, mode='w') %}
-        <a href="{% url changes_set_edit changeset.id %}" class="inline-link edit-link">{% trans %}Edit{% endtrans %}</a>
+        <a href="{% url changes_set_edit changeset.id %}" class="inline-link button edit-link"><img src="/static/modules/pencil-small.png">{% trans %}Edit{% endtrans %}</a>
         {% endif %}
     </span>
 </div>

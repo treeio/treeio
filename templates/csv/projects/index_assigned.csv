@@ -1,1 +1,1 @@
-{{ projects_task_list(tasks) }}
+{{ projects_task_list(tasks, skip_group=True) }}

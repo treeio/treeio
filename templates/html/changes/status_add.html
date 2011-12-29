@@ -7,9 +7,9 @@
 {% block module_title %}{% trans %}Settings{% endtrans %}{% endblock %}
 
 {% block module_topmenu %}
-<a href="{% url changes_status_add %}" class="top-menu add-link-active">{% trans %}New Status{% endtrans %}</a>
-<a href="{% url changes_settings_view %}" class="top-menu view-link">{% trans %}View{% endtrans %}</a>
-<a href="{% url changes_settings_edit %}" class="top-menu edit-link">{% trans %}Edit{% endtrans %}</a>
+<a href="{% url changes_status_add %}" class="top-menu button add-link-active"><img src="/static/modules/plus-small.png">{% trans %}New Status{% endtrans %}</a>
+
+<a href="{% url changes_settings_edit %}" class="top-menu button edit-link"><img src="/static/modules/pencil-small.png">{% trans %}Edit{% endtrans %}</a>
 {% endblock %}
 
 {% block module_content %}
@@ -20,7 +20,7 @@
         {{ form.as_ul()|htsafe }}
     </ul>
     <div class="content-form-submit">
-        <input type="submit" value="{% trans %}Create Status{% endtrans %}">
+        <button type="submit">{% trans %}Create Status{% endtrans %}</button>
     </div>
 </form>
 {% endblock %}

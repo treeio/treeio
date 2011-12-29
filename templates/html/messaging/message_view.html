@@ -20,14 +20,14 @@
 <div class="sidebar-block">
     {{ subscription_block(message) }}
 </div>
-<span class="sidebar-header-right">{% trans %}Download as:{% endtrans %}<br />{% if '?' in request.get_full_path() %}<a class="pdf-block-link" href="{{ request.get_full_path()|replace('.ajax','').replace('?','.pdf?') }}"{% else %}<a class="pdf-block-link" href="{{ request.get_full_path()|replace('.ajax','') }}.pdf"{% endif %} target="_self">PDF</a>
-  </span></span>
+<span class="sidebar-header-right">{% trans %}Download as{% endtrans %}<br />{% if '?' in request.get_full_path() %}<a class="button pdf-block-link" href="{{ request.get_full_path()|replace('.ajax','').replace('?','.pdf?') }}"{% else %}<a class="button pdf-block-link" href="{{ request.get_full_path()|replace('.ajax','') }}.pdf"{% endif %} target="_self"><img src="/static/modules/pdf.png"/>PDF</a>
+  </span>
 {% endblock %}
 
 {% block module_topmenu %}
-<a href="{% url messaging_message_view message.id %}" class="top-menu view-link-active">{% trans %}View{% endtrans %}</a>
+
 {% if user.get_profile().has_permission(message, mode='w') %}
-<a href="{% url messaging_message_delete message.id %}" class="top-menu delete-link">{% trans %}Delete{% endtrans %}</a>
+<a href="{% url messaging_message_delete message.id %}" class="top-menu button delete-link"><img src="/static/modules/cross-small.png">{% trans %}Delete{% endtrans %}</a>
 {% endif %}
 {% endblock %}
 
@@ -142,7 +142,7 @@
                       </li>
                     </ul>
                     <div class="content-form-submit">
-                        <input type="submit" value="{% trans %}Send Reply{% endtrans %}">
+                        <button type="submit">{% trans %}Send Reply{% endtrans %}</button>
                     </div>
                 </form>
                 <span class="message-tail"></span>

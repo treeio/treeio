@@ -7,8 +7,8 @@
 {% block class_transactions %}sidebar-link-active{% endblock %}
 
 {% block module_topmenu %}
-<a href="{% url finance_transaction_add %}" class="top-menu add-link popup-link">{% trans %}New Transaction{% endtrans %}</a>
-<a href="{% url core_trash %}" class="top-menu trash-link {% if trash %}trash-full-link{% endif %}">{% trans %}Trash{% endtrans %}</a>
+<a href="{% url finance_transaction_add %}" class="top-menu button add-link popup-link"><img src="/static/modules/plus-small.png">{% trans %}New Transaction{% endtrans %}</a>
+<a href="{% url core_trash %}" class="top-menu button trash-link {% if trash %}trash-full-link{% endif %}"><img src="/static/modules/bin.png">{% trans %}Trash{% endtrans %}</a>
 {% endblock %}
 
 {% block sidebar_right %}
@@ -18,12 +18,12 @@
     <ul class="content-filter-form-fields">
         {{ filters.as_ul()|htsafe }}
     </ul>
-    <input type="submit" value="{% trans %}Submit{% endtrans %}">
+    <button type="submit">{% trans %}Submit{% endtrans %}</button>
 </form>
 <br />
 
-<span class="sidebar-header-right">{% trans %}Download as:{% endtrans %}<br />{% if '?' in request.get_full_path() %}<a class="pdf-block-link" href="{{ request.get_full_path()|replace('.ajax','').replace('?','.pdf?') }}"{% else %}<a class="pdf-block-link" href="{{ request.get_full_path()|replace('.ajax','') }}.pdf"{% endif %} target="_self">PDF</a>
-  <a class="csv-block-link" {% if '?' in request.get_full_path() %}href="{{ request.get_full_path()|replace('.ajax','').replace('?','.csv?') }}"{% else %}href="{{ request.get_full_path()|replace('.ajax','') }}.csv"{% endif %} target="_self">CSV</a></span></span>
+<span class="sidebar-header-right">{% trans %}Download as{% endtrans %}<br />{% if '?' in request.get_full_path() %}<a class="button pdf-block-link" href="{{ request.get_full_path()|replace('.ajax','').replace('?','.pdf?') }}"{% else %}<a class="button pdf-block-link" href="{{ request.get_full_path()|replace('.ajax','') }}.pdf"{% endif %} target="_self"><img src="/static/modules/pdf.png"/>PDF</a>
+  <a class="button csv-block-link" {% if '?' in request.get_full_path() %}href="{{ request.get_full_path()|replace('.ajax','').replace('?','.csv?') }}"{% else %}href="{{ request.get_full_path()|replace('.ajax','') }}.csv"{% endif %} target="_self"><img src="/static/modules/csv.png"/>CSV</a></span>
 {% endblock %}
 
 {% block module_content %}
@@ -37,7 +37,7 @@
             <input type="hidden" name="massform" value="massform" />
              {{ massform.as_ul()|htsafe }}
             <li>
-                <input type="submit" value="{% trans %}Save{% endtrans %}" />
+                <button type="submit" >{% trans %}Save{% endtrans %}</button>
             </li>
         </ul>
     </div>

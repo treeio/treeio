@@ -16,7 +16,7 @@
 <div class="spaced-list">
     <div class="module-top-menu-inline">
         {% for type in types %}
-        <a href="{% url identities_contact_add_typed type.id %}" class="top-menu add-link">{{ type }}</a>
+        <a href="{% url identities_contact_add_typed type.slug %}" class="top-menu add-link">{{ type }}</a>
         {% endfor %}
     </div>
 </div>

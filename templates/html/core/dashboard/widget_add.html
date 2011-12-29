@@ -1,8 +1,8 @@
 {% extends "html/core/dashboard/index.html" %}
 
 {% block module_topmenu %}
-<a href="{% url core_dashboard_widget_add %}" class="top-menu add-link-active">{% trans %}Add Widget{% endtrans %}</a>
-<a href="{% url core_trash %}" class="top-menu trash-link {% if trash %}trash-full-link{% endif %}">{% trans %}Trash{% endtrans %}</a>
+<a href="{% url core_dashboard_widget_add %}" class="top-menu button add-link-active"><img src="/static/modules/plus-small.png">{% trans %}Add Widget{% endtrans %}</a>
+<a href="{% url core_trash %}" class="top-menu button trash-link {% if trash %}trash-full-link{% endif %}"><img src="/static/modules/bin.png">{% trans %}Trash{% endtrans %}</a>
 {% endblock %}
 
 {% block module_content %}
@@ -14,7 +14,7 @@
         <div class="content-list-tick">
         </div>
         <span class="content-list-item-name">
-            <a href="{% url core_dashboard_widget_add_selected widgets[name]['module_name'], name %}" class="inline-link add-link">{{ httranslate(widgets[name]['title']) }}</a>
+            <a href="{% url core_dashboard_widget_add_selected widgets[name]['module_name'], name %}" class="inline-link button add-link"><img src="/static/modules/plus-inline.png">{{ httranslate(widgets[name]['title']) }}</a>
             <span class="content-list-item-group">
                 <span class="light spaced-h"><em>{{ httranslate(widgets[name]['module_title']) }}</em></span>
             </span>

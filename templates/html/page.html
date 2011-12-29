@@ -2,18 +2,26 @@
 
 {% block page %}
 
-{{ modules_header_block() }}
+
 
 <div id="container">
     <div id="content">
         <div id="module-{{ modules_active() }}" class="module-block">
             <!-- module_content -->
-			<script type="text/javascript">
-			  $(function() {
-			  	$('#menu-right .menu-tooltips .menu-item a ').tipsy({title: 'title'});
-				$('.tooltip a, .global_subscriptions a, .help-block-link').tipsy({title: 'title', html: true});
-				$('.attachments-count').tipsy({gravity: 'w'});
-			  });
+			<script type="text/javascript" charset="utf-8">
+				$(function() {
+				    $('#menu-right .menu-tooltips .menu-item a ').tipsy({
+				        title: 'title'
+				    });
+				    $('.tooltip a, .global_subscriptions a, .help-block-link').tipsy({
+				        title: 'title',
+				        html: true
+				    });
+				    $('.attachments-count').tipsy({
+				        gravity: 'w'
+				    });
+				
+				});
 			</script>
             {% block content %}{% endblock %}
             <!-- /module_content -->

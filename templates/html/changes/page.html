@@ -4,6 +4,26 @@
 
 {% block content %}
 
+<div class="content-top">
+	{% block module_breadcrumb %}{% endblock %}
+		
+	<div class="title-block">
+
+        <div class="title">
+            {% block module_title %}{% trans %}Changes{% endtrans %}{% endblock %}
+        </div>
+        <div class="subtitle-block">
+            {% block module_subtitle %}{% endblock %}
+        </div>
+        <div class="module-top-menu-inline">
+            {% block module_topmenu %}
+            <a href="{% url changes_set_add %}" class="top-menu button add-link"><img src="/static/modules/plus-small.png">{% trans %}New Change Set{% endtrans %}</a>
+            {% endblock %}
+        </div>
+        {{ help_link() }}
+
+    </div>
+</div>
 <table>
     <tr>
       <td class="module-sidebar">
@@ -33,22 +53,6 @@
 
         <div class="module-content-fill">
 
-            <div class="title-block">
-
-                <div class="title">
-                    {% block module_title %}{% trans %}Changes{% endtrans %}{% endblock %}
-                </div>
-                <div class="subtitle-block">
-                    {% block module_subtitle %}{% endblock %}
-                </div>
-                <div class="module-top-menu-inline">
-                    {% block module_topmenu %}
-                    <a href="{% url changes_set_add %}" class="top-menu add-link">{% trans %}New Change Set{% endtrans %}</a>
-                    {% endblock %}
-                </div>
-                {{ help_link() }}
-
-            </div>
             <table>
 
                 <tr>

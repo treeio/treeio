@@ -9,14 +9,14 @@
     {% endif %}
     <span class="smaller lighter">{{ link.get_human_type() }}</span>
     {% if request.user.get_profile().has_permission(object, mode='w') or request.user.get_profile().id == subscription.id %}
-    <a href="{{ request.path }}?link_delete={{ link.id }}" class="inline-link delete-link" style="padding-left: 8px;">&nbsp;</a>
+    <a href="{{ request.path }}?link_delete={{ link.id }}" class="inline-link button delete-link" style="padding-left: 8px;"><img src="/static/modules/cross-small.png">&nbsp;</a>
     {% endif %}
     <br />
     {% endfor %}
 </div>
 <div class="object-links-links">
     {% if request.user.get_profile().has_permission(object, mode='w') %}
-    <a href="{{ request.path }}?link_add" class="inline-link add-link" style="margin: 0">{% trans %}Add{% endtrans %}</a>
+    <a href="{{ request.path }}?link_add" class="inline-link button add-link" style="margin: 0"><img src="/static/modules/plus-inline.png">{% trans %}Add{% endtrans %}</a>
     {% endif %}
 </div>
 {% endif %}

@@ -1,1 +1,1 @@
-{"default": {"ENGINE": "django.db.backends.sqlite3", "NAME": "treeio.db"}}
+{"default": {"ENGINE": "django.db.backends.mysql", "NAME": "treeio", "HOST": "", "USER": "treeio_user", "PASSWORD": "zxc/.,", "PORT": ""}}

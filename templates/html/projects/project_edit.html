@@ -7,14 +7,14 @@
 {% block module_subtitle %}{% trans %}Project{% endtrans %}{% endblock %}
 
 {% block module_topmenu %}
-<a href="{% url projects_project_add_typed project.id %}" class="top-menu add-link">{% trans %}New Project{% endtrans %}</a>
-<a href="{% url projects_milestone_add_typed project.id %}" class="top-menu add-link">{% trans %}New Milestone{% endtrans %}</a>
-<a href="{% url projects_task_add_typed project.id %}" class="top-menu add-link">{% trans %}New Task{% endtrans %}</a>
-<a href="{% url projects_gantt_view project.id %}" class="top-menu gantt-link">{% trans %}Gantt Chart{% endtrans %}</a>
-<a href="{% url projects_project_view project.id %}" class="top-menu view-link">{% trans %}View{% endtrans %}</a>
+<a href="{% url projects_project_add_typed project.id %}" class="top-menu button add-link"><img src="/static/modules/plus-small.png">{% trans %}Subproject{% endtrans %}</a>
+<a href="{% url projects_milestone_add_typed project.id %}" class="top-menu button add-link"><img src="/static/modules/plus-small.png">{% trans %}Milestone{% endtrans %}</a>
+<a href="{% url projects_task_add_typed project.id %}" class="top-menu button add-link"><img src="/static/modules/plus-small.png">{% trans %}Task{% endtrans %}</a>
+<a href="{% url projects_gantt_view project.id %}" class="top-menu button gantt-link"><img src="/static/modules/gantt.png"/>{% trans %}Gantt Chart{% endtrans %}</a>
+
 {% if user.get_profile().has_permission(project, mode='w') %}
-<a href="{% url projects_project_edit project.id %}" class="top-menu edit-link-active">{% trans %}Edit{% endtrans %}</a>
-<a href="{% url projects_project_delete project.id %}" class="top-menu delete-link">{% trans %}Delete{% endtrans %}</a>
+<a href="{% url projects_project_edit project.id %}" class="top-menu button edit-link-active"><img src="/static/modules/pencil-small.png">{% trans %}Edit{% endtrans %}</a>
+<a href="{% url projects_project_delete project.id %}" class="top-menu button delete-link"><img src="/static/modules/cross-small.png">{% trans %}Delete{% endtrans %}</a>
 {% endif %}
 {% endblock %}
 
@@ -26,8 +26,8 @@
         {{ form.as_ul()|htsafe }}
     </ul>
     <div class="content-form-submit">
-        <input type="submit" name="save" value="{% trans %}Save{% endtrans %}" />
-		<input type="submit" name="cancel" value="{% trans %}Cancel{% endtrans %}" class="cancel" />
+        <button type="submit" name="save" >{% trans %}Save{% endtrans %}</button>
+		<button type="submit" name="cancel"  class="cancel" ><img src="/static/modules/cancel.png"/>{% trans %}Cancel{% endtrans %}</button>
     </div>
 </form>
 {% endblock %}

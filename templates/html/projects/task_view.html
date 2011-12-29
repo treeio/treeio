@@ -6,18 +6,20 @@
 
 {% block module_subtitle %}{% trans %}Task{% endtrans %}{% endblock %}
 
+
+
 {% block module_topmenu %}
-<a href="{% url projects_task_add_subtask task.id %}" class="top-menu add-link popup-link">{% trans %}New Sub Task{% endtrans %}</a>
-<a href="{% url projects_task_view task.id %}" class="top-menu view-link-active">{% trans %}View{% endtrans %}</a>
+<a href="{% url projects_task_add_subtask task.id %}" class="top-menu button add-link popup-link"><img src="/static/modules/plus-small.png">{% trans %}New Sub Task{% endtrans %}</a>
+
 {% if user.get_profile().has_permission(task, mode='w') %}
-<a href="{% url projects_task_edit task.id %}" class="top-menu edit-link">{% trans %}Edit{% endtrans %}</a>
-<a href="{% url projects_task_delete task.id %}" class="top-menu delete-link">{% trans %}Delete{% endtrans %}</a>
+<a href="{% url projects_task_edit task.id %}" class="top-menu button edit-link"><img src="/static/modules/pencil-small.png">{% trans %}Edit{% endtrans %}</a>
+<a href="{% url projects_task_delete task.id %}" class="top-menu button delete-link"><img src="/static/modules/cross-small.png">{% trans %}Delete{% endtrans %}</a>
 {% endif %}
-{{ last_updated(task) }}
+{{ last_updated(task,true) }}
 {% endblock %}
 
 {% block sidebar_right %}
-
+<img class="logo" src="/static/logo.png"/>
 {% if user.get_profile().has_permission(task, mode='x') %}
 <span class="sidebar-header-first">{% trans %}Quick Status{% endtrans %}</span>
 <div class="sidebar-block">
@@ -59,12 +61,18 @@
 <div class="sidebar-block">
     {{ subscription_block(task) }}
 </div>
-<span class="sidebar-header-right">{% trans %}Download as:{% endtrans %}<br />{% if '?' in request.get_full_path() %}<a class="pdf-block-link" href="{{ request.get_full_path()|replace('.ajax','').replace('?','.pdf?') }}"{% else %}<a class="pdf-block-link" href="{{ request.get_full_path()|replace('.ajax','') }}.pdf"{% endif %} target="_self">PDF</a>
-  </span></span>
+<span class="sidebar-header-right">{% trans %}Download as{% endtrans %}<br />{% if '?' in request.get_full_path() %}<a class="button pdf-block-link" href="{{ request.get_full_path()|replace('.ajax','').replace('?','.pdf?') }}"{% else %}<a class="button pdf-block-link" href="{{ request.get_full_path()|replace('.ajax','') }}.pdf"{% endif %} target="_self"><img src="/static/modules/pdf.png"/>PDF</a>
+  </span>
+{% endblock %}
+
+{% block module_breadcrumb %}
+{{ breadcrumb(task) }}
 {% endblock %}
 
 {% block module_content %}
+ 
 
+ {#
 <div>
     <span class="content-label">{% trans %}Project{% endtrans %}:</span>
     <span class="content-value"><a href="{% url projects_project_view task.project.id %}"><strong>{{ task.project }}</strong></a></span>
@@ -75,6 +83,11 @@
     <span class="content-value"><a href="{% url projects_milestone_view task.milestone.id %}">{{ task.milestone }}</a></span>
 </div>
 {% endif %}
+
+     #}
+
+
+
 
 <div>
     <span class="content-label">{% trans %}Assigned to{% endtrans %}:</span>
@@ -146,24 +159,6 @@
 </div>
 {% endif %}
 
-{% if task.depends %}
-<div>
-    <span class="content-label">{% trans %}Depends on{% endtrans %}:</span>
-    <span class="content-value"><a href="{% url projects_task_view task.depends.id %}">{{ task.depends }}</a></span>
-</div>
-{% endif %}
-
-{% if task.blocked_set.all() %}
-<div>
-    <span class="content-label">{% trans %}Blocks{% endtrans %}:</span>
-    <span class="content-value">
-      {% for t in task.blocked_set.all() %}
-        <a href="{% url projects_task_view t.id %}">{{ t }}</a>
-      {% endfor %}
-    </span>
-</div>
-{% endif %}
-
 {% if task.details %}
 <div>
     <span class="content-label">{% trans %}Details{% endtrans %}:</span>
@@ -194,7 +189,7 @@
         <input type="hidden" name="massform" value="massform" />
          {{ massform.as_ul()|htsafe }}
         <li>
-            <input type="submit" value="{% trans %}Save{% endtrans %}" />
+            <button type="submit" >{% trans %}Save{% endtrans %}</button>
         </li>
     </ul>
     {{ projects_task_list(htsort(subtasks), by_milestone=True, by_project=True) }}
@@ -210,11 +205,11 @@
 {% if user.get_profile().has_permission(task, mode='x') and not task.is_being_done_by(request.user.get_profile()) %}
 <div class="spaced-h spaced-v">
     <form action="{% url projects_task_time_slot_start task.id %}" method="get" class="content-form content-form-inline">
-        <input type="submit" name="stop" value="{% trans %}Start Work{% endtrans %}">
+        <button type="submit" name="stop"><img src="/static/modules/clock--arrow.png"/>{% trans %}Start Work{% endtrans %}</button>
     </form>
     &nbsp;
     <form action="{% url projects_task_time_slot_add task.id %}" method="get" class="content-form content-form-inline">
-        <input type="submit" name="add" value="{% trans %}Add Work{% endtrans %}">
+        <button type="submit" name="add"><img src="/static/modules/clock--plus.png"/>{% trans %}Add Work{% endtrans %}</button>
     </form>
 </div>
 {% endif %}
@@ -261,7 +256,7 @@
                     </li>
                 </ul>
                 <div class="content-form-submit-small">
-                    <input type="submit" name="stop" value="Stop Work">
+                    <button type="submit" name="stop"><img src="/static/modules/clock--exclamation.png"/>Stop Work</button>
                 </div>
             </form>
             {% endif %}
@@ -270,7 +265,7 @@
     </span>
     <span class="content-list-item-actions">
         {% if user.get_profile().has_permission(task, mode='w') or user.get_profile().has_permission(slot, mode='w') %}
-        <a href="{% url projects_task_time_slot_edit slot.id %}" class="inline-link edit-link">{% trans %}Edit{% endtrans %}</a>
+        <a href="{% url projects_task_time_slot_edit slot.id %}" class="inline-link button edit-link"><img src="/static/modules/pencil-small.png">{% trans %}Edit{% endtrans %}</a>
         {% endif %}
     </span>
 </div>
@@ -335,7 +330,7 @@
             </li>
         </ul>
         <div class="content-form-submit">
-            <input type="submit" value="{% trans %}Update Task{% endtrans %}">
+            <button type="submit">{% trans %}Update Task{% endtrans %}</button>
         </div>
     </form>
 </div>
