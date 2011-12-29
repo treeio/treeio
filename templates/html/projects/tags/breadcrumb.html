@@ -1,0 +1,14 @@
+<div class="breadcrumb-container">
+    <ul class="breadcrumb">
+    <li><a href="{% url projects_index %}">{% trans %}Projects{% endtrans %}</a></li>
+    {% for project in projects %}
+        <li><a href="{% url projects_project_view project.id %}">{{ project }}</a></li>
+    {% endfor %}
+    {% for milestone in milestones %}
+        <li><a href="{% url projects_milestone_view milestone.id %}">{{ milestone }}</a></li>
+    {% endfor %}
+    {% for task in tasks %}
+        <li><a href="{% url projects_task_view task.id %}">{{ task}}</a></li>
+    {% endfor %}
+    </ul>
+</div>

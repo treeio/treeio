@@ -1,0 +1,58 @@
+<div class="megamenu dropdown_hardtree-projects">
+    <div class="col_1">
+
+        <span class="megabar-header">{% trans %}Projects{% endtrans %}</span><br/>
+        {% for iproject in projects %}
+            {% if not iproject.parent %}
+                <a href="{% url projects_project_view iproject.id %}"
+                   class="megabar-link {% if iproject == project %}megabar-link-active{% endif %}">{{ iproject }}</a>
+            {% endif %}
+        {% endfor %}
+
+
+    </div>
+
+
+
+    <div class="col_1">
+
+
+        <span class="megabar-header">{% trans %}Shortcuts{% endtrans %}</span><br/>
+        <a href="{% url projects_index %}" class="megabar-link {% block index_page %}{% endblock %}">{% trans %}All
+            Tasks{% endtrans %}</a>
+        <a href="{% url projects_index_owned %}" class="megabar-link {% block class_owned %}{% endblock %}">{% trans %}
+            Called by me{% endtrans %}</a>
+        <a href="{% url projects_index_assigned %}"
+           class="megabar-link {% block class_assigned %}{% endblock %}">{% trans %}Assigned to me{% endtrans %}</a>
+        <a href="{% url projects_tasks_in_progress %}"
+           class="megabar-link {% block class_in_progress %}{% endblock %}">{% trans %}Tasks in
+            progress{% endtrans %}</a>
+
+
+    </div>
+
+    <div class="col_1">
+
+        {% if request.user.get_profile ( ) . is_admin ( 'hardtree.projects' ) %}
+            <span class="megabar-header">{% trans %}Administration{% endtrans %}</span><br/>
+            <a href="{% url projects_settings_view %}"
+               class="megabar-link {% block class_admin_settings %}{% endblock %}">{% trans %}Settings{% endtrans %}</a>
+        {% endif %}
+    </div>
+    <div class="col_1">
+        {% block project_task_statuses %}
+            {% if statuses %}
+                <span class="megabar-header">{% trans %}Status{% endtrans %}</span><br/>
+                {% for status in statuses %}
+                    <a href="{% url projects_index_by_status status.id %}" class="megabar-link">{{ status }}</a>
+                {% endfor %}
+            {% endif %}
+        {% endblock %}
+
+
+
+
+    </div>
+
+
+</div>
