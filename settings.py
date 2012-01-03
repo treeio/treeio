@@ -8,8 +8,6 @@
 """
 Django settings for treeio project.
 """
-#import ldap
-from django_auth_ldap.config import LDAPSearch
 
 from os import path
 PROJECT_ROOT = path.abspath(path.dirname(__file__)) # assuming settings are in the same dir as source
@@ -159,7 +157,6 @@ INSTALLED_APPS = (
 AUTH_PROFILE_MODULE = 'core.User'
 
 AUTHENTICATION_BACKENDS = (
-#    'django_auth_ldap.backend.LDAPBackend',
     'django.contrib.auth.backends.ModelBackend',
     'treeio.core.auth.HashBackend',
     'treeio.core.auth.EmailBackend',
