@@ -6076,7 +6076,7 @@ chat.events.on_messages = function(a) {
 		$("#chat-frame").css("display") == "none" && $("#chat-icon").attr("src", "/static/icons/chat-active.gif").fadeOut(100).fadeIn(100).fadeOut(100).fadeIn(100).fadeOut(100).fadeIn(100)
 	}
 };
-/*$(function() {
+$(function() {
 	$("#chat-tabs").tabs({
 		tabTemplate: "<li><img src='/static/icons/forest-active.png' class='margin-bottom' style='float: left;'><a href='#{href}'>#{label}</a><span class='ui-icon ui-icon-close'>Remove Tab</span></li>"
 	});
@@ -6137,7 +6137,7 @@ $(function() {
 		b.dialog("close");
 		return false
 	})
-});*/
+});
 Date.CultureInfo = {
 	name: "en-US",
 	englishName: "English (United States)",

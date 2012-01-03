@@ -1,0 +1,14 @@
+#!/bin/bash
+echo Using workspace: $WORKSPACE/treeio
+cd $WORKSPACE/treeio
+python manage.py test --pythonpath=$WORKSPACE --settings=treeio.settings-test --cover-package=treeio --with-xunit --with-xcoverage treeio
+
+echo "== DONE: Testing"
+
+cd $WORKSPACE
+pylint --rcfile=treeio/.pylintrc -d E1101 -f parseable treeio > pylint.txt
+echo "== DONE: Coding style checks"
+
+cd $WORKSPACE/treeio/doc
+make html
+echo "== DONE: Generating documentation"
