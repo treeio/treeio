@@ -58,6 +58,7 @@ Installation
     To install the database, just run ::
 
         python manage.py installdb
+        python manage.py loaddata data.json
 
     If your setup is correct, it should install everything into the database for you.
 
