@@ -55,10 +55,10 @@ Create a fork and clone this repository
 Install the database (Example showing MySQL)
 ------------------------
 
-$ mysql -u username -p
-        > create database database_name;
-        > grant all privileges on database_name.* to some_user@localhost identified by 'some_password';
-        > \q
+    $ mysql -u username -p
+           > create database database_name;
+           > grant all privileges on database_name.* to some_user@localhost identified by 'some_password';
+           > \q
 
 1.  Install your database `python manage.py installdb`
 1.  Setup initial data `python manage.py loaddata data.json`
