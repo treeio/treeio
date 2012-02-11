@@ -12,28 +12,71 @@ License
 
 Tree.io is licensed under the Creative Commons Attribution-NonCommercial 3.0 License.
 
+If you wish to re-sell or charge for install you must contact us for a Reseller License. 
+
 For more details see LICENSE.
 
 Tree.io cannot accept any responsibility for damage or losses caused by use of this software. Use at your own risk!
 
 
+Installation on Ubuntu or Debian with MySQL
+================================
 
-Installation
-============
+Although you can install on most any UNIX system very easily, debian based distros are easier due to their package management.
 
-In short ::
+You can also install on Max OSX or with other databases aside from MySQL very easily.
 
-     python manage.py update_ve
-     ./bin/patch
-     python manage.py installdb
-     python manage.py loaddata data.json
 
-For more details see INSTALL
+Install any dependencies
+
+# Update your local cache `sudo apt-get update`
+# Upgrade your system `sudo apt-get upgrade` (Recommended but optional)
+# `sudo apt-get install python build-essential python-dev`
+# `sudo apt-get build-dep python-lxml python-imaging
+# `sudo apt-get install git python-flup python-pip`
+
+Install services (In Production)
+
+# Install database `sudo apt-get install mysql-server` (Aside from MySQL you can also use Postgre, SQLite or OracleDB)
+# Install web server `sudo apt-get install nginx` (You may also use Apache following instructions for setting up Django with Apache)
+
+Create a fork and clone this repository
+
+# Fork this repository by clicking Fork in the top toolbar (Forking will make it easier to contribute as you commit changes and have them merged into this Tree.io master repository)
+# Create a folder called treeio `mkdir treeio && cd treeio` (**Tree.io must be run inside another folder called treeio to work correctly**)
+# Clone the repo by running: `git clone git@github.com:your_git/treeio.git`
+# Update your virtual environment `python manage.py update_ve`
+# Perform the patch `./bin/patch`
+
+Install the database (Example showing MySQL)
+
+$ mysql -u username -p
+        > create database database_name;
+        > grant all privileges on database_name.* to some_user@localhost identified by 'some_password';
+        > \q
+
+# Install your database `python manage.py installdb`
+# Setup initial data `python manage.py loaddata data.json`
+
+Test install 
+
+# Run the built-in Django server `python manage.py runserver`
+# In your browser go to `http://localhost:8000`
+# Log in using username: `admin` and password: `admin`
+# Profit!
+
+Next steps (In Production)
+
+* Configure nginx
+* Set up a mailserver
+* Set up a domain to point to your new server (Set A Record)
+
 
 Support
 =======
 
 Commercial installation and support is available from Tree.io Ltd, London, UK.
+Our community support forum is the first stop for any questions http://www.tree.io/community
 Please see http://www.tree.io/ or contact info@tree.io for more details.
 
 
