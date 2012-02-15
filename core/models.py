@@ -880,29 +880,23 @@ class Object(models.Model):
                             pass
         if do_user:
         # if we can't inherit set permissions to the user as specified in the settings
+        
+            if 'readonly' in default_permissions:
+                access_container = self.read_access
+            else:
+                access_container = self.full_access
+        
             if 'user' in default_permissions:
-                if 'readonly' in default_permissions:
-                    self.read_access.add(user)
-                else:
-                    self.full_access.add(user)
+                access_container.add(user)
 
             if 'usergroup' in default_permissions and user.default_group:
-                if 'readonly' in default_permissions:
-                    self.read_access.add(user.default_group)
-                else:
-                    self.full_access.add(user.default_group)
+                access_container.add(user.default_group)
 
             if 'userallgroups' in default_permissions:
                 if user.default_group:
-                    if 'readonly' in default_permissions:
-                        self.read_access.add(user.default_group)
-                    else:
-                        self.full_access.add(user.default_group)
+                    access_container.add(user.default_group)
                 for group in user.other_groups.all():
-                    if 'readonly' in default_permissions:
-                        self.read_access.add(group)
-                    else:
-                        self.full_access.add(group)
+                    access_container.add(group)
 
         # process assigned fields to give auto-permissions to assignees
         if hasattr(self, 'assigned'):
