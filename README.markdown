@@ -41,7 +41,9 @@ Install services (In Production)
 ------------------------
 
 1.  Install database `sudo apt-get install mysql-server` (Aside from MySQL you can also use Postgre, SQLite or OracleDB)
-1.  Install web server `sudo apt-get install nginx` (You may also use Apache following instructions for setting up Django with Apache)
+1.  Install web server `sudo apt-get install nginx` 
+
+Alternatively you can use Apache, see this [community post](http://tree.io/en/community/questions/186/treeio-with-wsgi-for-apache-deploy) for an example configuration.
 
 Create a fork and clone this repository
 ------------------------
