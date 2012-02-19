@@ -133,7 +133,7 @@ class SettingsForm(forms.Form):
         destination = open(settings.MEDIA_ROOT + filepath, 'wb+')
         for chunk in file.chunks():
             destination.write(chunk)
-            destination.close()
+        destination.close()
         return filepath
     
     def save(self):
