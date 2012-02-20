@@ -318,7 +318,7 @@ class FilterForm(forms.ModelForm):
             del self.fields['contact_type']
         else:
             self.fields['contact_type'].queryset = Object.filter_permitted(user, ContactType.objects)
-            self.fields['contact_type'].required = False
+            self.fields['contact_type'].required = True
             self.fields['contact_type'].label = _("Contact type")
 
     class Meta:
