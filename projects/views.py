@@ -15,7 +15,7 @@ from django.db.models import Q
 from treeio.core.models import Object, ModuleSetting, UpdateRecord
 from treeio.core.views import user_denied
 from treeio.core.rendering import render_to_response
-from treeio.core.decorators import treeio_login_required, handle_response_format
+from treeio.core.decorators import treeio_login_required, handle_response_format, module_admin_required
 from treeio.projects.models import Project, Milestone, Task, TaskStatus, TaskTimeSlot
 from treeio.projects.forms import ProjectForm, MilestoneForm, TaskForm, FilterForm, TaskRecordForm, \
                                     MassActionForm, TaskTimeSlotForm, TaskStatusForm, SettingsForm
@@ -229,6 +229,7 @@ def index_in_progress(request, response_format='html'):
 
 @handle_response_format
 @treeio_login_required
+@module_admin_required()
 def project_add(request, response_format='html'):
     "New project form"
     
