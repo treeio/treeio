@@ -8,6 +8,7 @@ from treeio.core.conf import settings
 import simplejson as json
 import subprocess
 from os import path
+import sys
 
 PROJECT_ROOT = getattr(settings, 'PROJECT_ROOT')
 HARDTREE_DB_SETTINGS_FILE = path.join(PROJECT_ROOT, 'core/db/dbsettings.json')
@@ -58,7 +59,7 @@ class Command(BaseCommand):
         json.dump({'default': db}, f)
         f.close()
 
-        exit_code = subprocess.call(['python', 'manage.py', 'syncdb', '--all', '--noinput'])
+        exit_code = subprocess.call([sys.executable, 'manage.py', 'syncdb', '--all', '--noinput'])
         if not exit_code == 0:
             self.stdout.flush()
             f = open(HARDTREE_DB_SETTINGS_FILE, 'w')
@@ -66,7 +67,7 @@ class Command(BaseCommand):
             f.close()
             raise CommandError('Failed to install database.')
 
-        exit_code = subprocess.call(['python', 'manage.py', 'migrate', '--all', '--fake', '--noinput', '--no-initial-data'])
+        exit_code = subprocess.call([sys.executable, 'manage.py', 'migrate', '--all', '--fake', '--noinput', '--no-initial-data'])
 
         self.stdout.write('\n-- Successfully installed database. \n-- You\'re ready to go!\n\n')
 
