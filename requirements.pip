@@ -5,7 +5,7 @@ jinja2==2.5.2
 coffin
 hashlib
 PIL
-html5lib==0.95
+html5lib==0.90
 oauth2
 whoosh
 python-dateutil
