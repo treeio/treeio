@@ -23,7 +23,7 @@ def gantt(request, task, start, end):
     t.start_date = s
     t.end_date = e
     t.save()
-    messages.add_message(request, messages.INFO, _("%s \"%s\" dates have been updated.")%(ot, unicode(t)))
+    messages.add_message(request, messages.INFO, _("%(ot)s \"%(t)s\" dates have been updated.") % {'ot':ot, 't':unicode(t)})
     return dajax.json()
 
 dajaxice_functions.register(gantt)
