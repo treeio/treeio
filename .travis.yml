@@ -5,6 +5,9 @@ python:
 # command to install dependencies
 install:
   - pip install -r requirements.pip --use-mirrors
-#- ./bin/patch
+  - RUN_DIR=`pwd`
+  - DJANGO_DIR=`python -c "import django; import os; print os.path.dirname(django.db.models.fields.related.__file__)`
+  - cd $DJANGO_DIR
+  - patch -p1 < $RUN_DIR/bin/django-related-fields.patch
 # command to run tests
 script: python manage.py test
