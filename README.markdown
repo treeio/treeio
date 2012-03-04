@@ -1,4 +1,4 @@
-[![Build Status](https://secure.travis-ci.org/treeio/treeio.png?branch=master)](http://travis-ci.org/treeio/treeio)
+[![Build Status](https://secure.travis-ci.org/treeio/treeio.png?branch=14_client_workflow)](http://travis-ci.org/treeio/treeio)
 
 ==========================
 Tree.io Business Management Platform
