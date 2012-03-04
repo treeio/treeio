@@ -5,6 +5,7 @@ python:
 # command to install dependencies
 install:
   - pip install -r requirements.pip --use-mirrors
-  - sudo python manage.py related_fields_patch
+  - DJANGO_DIR=`python -c "import django; import os; print os.path.dirname(django.__file__)"`
+  - sudo python related_fields_patch $DJANGO_DIR
 # command to run tests
 script: python manage.py test
