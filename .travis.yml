@@ -5,6 +5,6 @@ python:
 # command to install dependencies
 install:
   - pip install -r requirements.pip --use-mirrors
-  - python manage.py related_fields_patch
+  - sudo python manage.py related_fields_patch
 # command to run tests
 script: python manage.py test
