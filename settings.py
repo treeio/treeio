@@ -154,6 +154,7 @@ INSTALLED_APPS = (
     'south',
 )
 
+TEST_RUNNER = 'treeio.core.test_runner.CustomTestRunner'
 
 AUTH_PROFILE_MODULE = 'core.User'
 
