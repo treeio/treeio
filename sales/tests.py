@@ -29,43 +29,16 @@ class SalesViewsTest(TestCase):
         "Initial Setup"
         
         if not self.prepared:
-            # Clean up first
-            Object.objects.all().delete()
-            User.objects.all().delete()
-            
-            # Create objects
-            try:
-                self.group = Group.objects.get(name='test')
-            except Group.DoesNotExist:
-                Group.objects.all().delete()
-                self.group = Group(name='test')
-                self.group.save()
-            
-            try:
-                self.user = DjangoUser.objects.get(username=self.username)
-                self.user.set_password(self.password)
-                try:
-                    self.profile = self.user.get_profile()
-                except Exception:
-                    User.objects.all().delete()
-                    self.user = DjangoUser(username=self.username, password='')
-                    self.user.set_password(self.password)
-                    self.user.save()
-            except DjangoUser.DoesNotExist:
-                User.objects.all().delete()
-                self.user = DjangoUser(username=self.username, password='')
-                self.user.set_password(self.password)
-                self.user.save()
-                
-            try:
-                perspective = Perspective.objects.get(name='default')
-            except Perspective.DoesNotExist:
-                Perspective.objects.all().delete()
-                perspective = Perspective(name='default')
-                perspective.set_default_user()
-                perspective.save()
-    
-            ModuleSetting.set('default_perspective', perspective.id)
+            self.group, created = Group.objects.get_or_create(name='test')
+            duser, created = DjangoUser.objects.get_or_create(username=self.username)
+            duser.set_password(self.password)
+            duser.save()
+            self.user, created = User.objects.get_or_create(user=duser)
+            self.user.save()
+            perspective, created = Perspective.objects.get_or_create(name='default')
+            perspective.set_default_user()
+            perspective.save()
+            ModuleSetting.set('default_perspective', perspective.id) 
             
             self.contact_type = ContactType()
             self.contact_type.slug = 'machine'
