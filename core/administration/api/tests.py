@@ -31,37 +31,16 @@ class CoreAPITest(TestCase):
             Object.objects.all().delete()
 
             # Create objects
-            try:
-                self.group = Group.objects.get(name='test')
-            except Group.DoesNotExist:
-                Group.objects.all().delete()
-                self.group = Group(name='test')
-                self.group.save()
-
-            try:
-                self.user = DjangoUser.objects.get(username=self.username)
-                self.user.set_password(self.password)
-                try:
-                    self.profile = self.user.get_profile()
-                except Exception:
-                    User.objects.all().delete()
-                    self.user = DjangoUser(username=self.username, password='')
-                    self.user.set_password(self.password)
-                    self.user.save()
-            except DjangoUser.DoesNotExist:
-                User.objects.all().delete()
-                self.user = DjangoUser(username=self.username, password='')
-                self.user.set_password(self.password)
-                self.user.save()
-
-            try:
-                perspective = Perspective.objects.get(name='default')
-            except Perspective.DoesNotExist:
-                Perspective.objects.all().delete()
-                perspective = Perspective(name='default')
-                perspective.set_default_user()
-                perspective.save()
-            ModuleSetting.set('default_perspective', perspective.id)
+            self.group, created = Group.objects.get_or_create(name='test')
+            duser, created = DjangoUser.objects.get_or_create(username=self.username)
+            duser.set_password(self.password)
+            duser.save()
+            self.user, created = User.objects.get_or_create(user=duser)
+            self.user.save()
+            perspective, created = Perspective.objects.get_or_create(name='default')
+            perspective.set_default_user()
+            perspective.save()
+            ModuleSetting.set('default_perspective', perspective.id) 
 
             self.perspective = Perspective(name='test')
             self.perspective.set_default_user()
@@ -108,14 +87,14 @@ class CoreAPITest(TestCase):
         self.assertEquals(response.status_code, 200)
 
     def test_get_user(self):
-        response = self.client.get(path=reverse('api_admin_users', kwargs={'accessentity_ptr': self.user.get_profile().id}), **self.authentication_headers)
+        response = self.client.get(path=reverse('api_admin_users', kwargs={'accessentity_ptr': self.user.id}), **self.authentication_headers)
         print response.content
         self.assertEquals(response.status_code, 200)
 
     def test_update_user(self):
         updates = {'name': 'Api user name', 'default_group': self.group.id, 'disabled': False,
                    'perspective': self.perspective.id}
-        response = self.client.put(path=reverse('api_admin_users', kwargs={'accessentity_ptr': self.user.get_profile().id}),
+        response = self.client.put(path=reverse('api_admin_users', kwargs={'accessentity_ptr': self.user.id}),
                                    content_type=self.content_type,  data=json.dumps(updates), **self.authentication_headers)
         self.assertEquals(response.status_code, 405)
 
@@ -126,7 +105,7 @@ class CoreAPITest(TestCase):
         #self.assertEquals(data['perspective']['id'], updates['perspective'])
 
     def test_delete_self(self):
-        response = self.client.delete(path=reverse('api_admin_users', kwargs={'accessentity_ptr': self.user.get_profile().id}), **self.authentication_headers)
+        response = self.client.delete(path=reverse('api_admin_users', kwargs={'accessentity_ptr': self.user.id}), **self.authentication_headers)
         self.assertEquals(response.status_code, 401)
 
     def test_get_ticket_modules_list(self):
