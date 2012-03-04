@@ -6,6 +6,6 @@ python:
 install:
   - pip install -r requirements.pip --use-mirrors
   - DJANGO_DIR=`python -c "import django; import os; print os.path.dirname(django.__file__)"`
-  - sudo python related_fields_patch $DJANGO_DIR
+  - sudo python related_fields_patch.py $DJANGO_DIR
 # command to run tests
 script: python manage.py test
