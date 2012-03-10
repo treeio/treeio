@@ -116,7 +116,7 @@ msgstr "否"
 #: templates/html/core/administration/group_view.html:30
 #: templates/html/core/administration/settings_view.html:17
 msgid "Default Perspective"
-msgstr "默认视角"
+msgstr "默认视图"
 
 #: account/forms.py:103 core/administration/forms.py:88
 #: templates/html/account/settings_view.html:26
@@ -672,7 +672,7 @@ msgstr "对不起，没有这个用户名或邮件。"
 
 #: core/forms.py:181
 msgid "Your name"
-msgstr ""
+msgstr "您的名字"
 
 #: core/forms.py:182 core/administration/forms.py:176 messaging/forms.py:170
 #: messaging/forms.py:177 templates/html/core/user_login.html:19
@@ -742,7 +742,7 @@ msgstr "模块"
 
 #: core/administration/forms.py:182
 msgid "Used to log in"
-msgstr ""
+msgstr "用于登陆"
 
 #: core/administration/forms.py:183
 msgid "Default group"
@@ -760,17 +760,17 @@ msgstr "其他组"
 #: templates/html/core/administration/user_view.html:33
 #: templates/html/core/tags/perspective_switch.html:1
 msgid "Perspective"
-msgstr "视角"
+msgstr "视图"
 
 #: core/administration/views.py:100 core/administration/views.py:128
 msgid ""
 "This is your only Perspective with Administration module. You would be "
 "locked out!"
-msgstr ""
+msgstr "这是您唯一可以使用管理员模块的视图。您可能被锁在外面。"
 
 #: core/administration/views.py:126
 msgid "This is your only Perspective."
-msgstr "这是唯一的视角。"
+msgstr "这是唯一的视图。"
 
 #: core/administration/views.py:258
 msgid "This is you!"
@@ -893,7 +893,7 @@ msgstr "行动"
 #: reports/forms.py:20 reports/forms.py:31
 #: templates/html/messaging/mlist_view.html:48
 msgid "With selected"
-msgstr ""
+msgstr "选择"
 
 #: documents/forms.py:66 documents/forms.py:118 documents/forms.py:147
 #: events/forms.py:50 messaging/forms.py:219
@@ -905,7 +905,7 @@ msgstr ""
 #: templates/html/documents/weblink_delete.html:39
 #: templates/html/documents/weblink_view.html:39
 msgid "Title"
-msgstr ""
+msgstr "标题"
 
 #: documents/forms.py:68 documents/forms.py:95 documents/forms.py:125
 #: documents/forms.py:148 knowledge/forms.py:72 knowledge/forms.py:115
@@ -943,7 +943,7 @@ msgstr "文件夹"
 #: templates/html/knowledge/item_delete.html:53
 #: templates/html/knowledge/item_view.html:53
 msgid "Body"
-msgstr ""
+msgstr "内容"
 
 #: documents/forms.py:105
 msgid "Content"
@@ -1055,11 +1055,11 @@ msgstr "货币"
 
 #: finance/forms.py:92
 msgid "Initial Balance"
-msgstr ""
+msgstr "初始余额"
 
 #: finance/forms.py:129
 msgid "Asset type"
-msgstr ""
+msgstr "资产类型"
 
 #: finance/forms.py:130
 msgid "Initial value"
@@ -1071,7 +1071,7 @@ msgstr "寿命（年）"
 
 #: finance/forms.py:132
 msgid "Endlife value"
-msgstr ""
+msgstr "寿终值"
 
 #: finance/forms.py:133
 msgid "Depreciation rate"
@@ -1096,26 +1096,26 @@ msgstr "购买日期至"
 #: finance/forms.py:173 templates/html/finance/asset_delete.html:34
 #: templates/html/finance/asset_view.html:34
 msgid "Asset Type"
-msgstr ""
+msgstr "资产类型"
 
 #: finance/forms.py:197
 msgid "Equity type"
-msgstr ""
+msgstr "股票类型"
 
 #: finance/forms.py:198
 msgid "Issue price"
-msgstr ""
+msgstr "发行价格"
 
 #: finance/forms.py:199 sales/forms.py:505
 msgid "Sell price"
-msgstr ""
+msgstr "卖出价格"
 
 #: finance/forms.py:200 finance/forms.py:261
 #: templates/html/finance/equity_delete.html:61
 #: templates/html/finance/equity_view.html:55
 #: templates/html/finance/index_equities.html:41
 msgid "Issuer"
-msgstr ""
+msgstr "发行者"
 
 #: finance/forms.py:202 sales/forms.py:590
 #: templates/html/finance/equity_view.html:51
@@ -1128,12 +1128,12 @@ msgstr ""
 #: templates/html/sales/ordered_product_edit.html:56
 #: templates/html/sales/ordered_product_view.html:55
 msgid "Quantity"
-msgstr ""
+msgstr "数量"
 
 #: finance/forms.py:253 templates/html/finance/equity_delete.html:35
 #: templates/html/finance/equity_view.html:34
 msgid "Equity Type"
-msgstr ""
+msgstr "股票类型"
 
 #: finance/forms.py:290 finance/forms.py:331 finance/forms.py:434
 #: finance/forms.py:463 finance/forms.py:525 sales/forms.py:666
@@ -1185,7 +1185,7 @@ msgstr "银行帐户"
 
 #: finance/forms.py:293 finance/forms.py:466
 msgid "Due date"
-msgstr "应付日期"
+msgstr "到期日"
 
 #: finance/forms.py:297 finance/forms.py:338 finance/forms.py:470
 #: templates/html/finance/liability_delete.html:62
@@ -1193,7 +1193,7 @@ msgstr "应付日期"
 #: templates/html/finance/transaction_delete.html:61
 #: templates/html/infrastructure/item_delete.html:92
 msgid "Value"
-msgstr ""
+msgstr "数量"
 
 #: finance/forms.py:329 messaging/forms.py:196
 #: templates/html/finance/tags/liability_list.html:11
@@ -1210,15 +1210,15 @@ msgstr "日期和时间"
 
 #: finance/forms.py:363
 msgid "Liability / Receivable"
-msgstr ""
+msgstr "应付／应收帐款"
 
 #: finance/forms.py:504
 msgid "Due Date From:"
-msgstr "应付日期从："
+msgstr "到期日始于："
 
 #: finance/forms.py:510
 msgid "Due Date To:"
-msgstr "应付日期至："
+msgstr "到期日截至："
 
 #: finance/forms.py:547 templates/html/account/account_edit.html:3
 #: templates/html/account/account_password.html:3
@@ -1235,11 +1235,11 @@ msgstr "帐户"
 
 #: finance/forms.py:597
 msgid "Your company has to have at least one Financial Account"
-msgstr "公司须至少有一个财务帐户"
+msgstr "您的公司至少须有一个财务帐户"
 
 #: finance/forms.py:609
 msgid "Default Account has to belong to your company"
-msgstr ""
+msgstr "默认帐户须属于您的公司"
 
 #: finance/forms.py:641
 msgid "Currency Code"
@@ -1263,11 +1263,11 @@ msgstr "如果没有输入符号，则用3个字母的代号表示。"
 
 #: finance/models.py:21
 msgid "factor"
-msgstr ""
+msgstr "因子"
 
 #: finance/models.py:22
 msgid "Specifies the difference of the currency to default one."
-msgstr ""
+msgstr "指定与默认货币的区别。"
 
 #: finance/models.py:24
 msgid "active"
@@ -1275,7 +1275,7 @@ msgstr "启用"
 
 #: finance/models.py:25
 msgid "The currency will be updated with daily exchange rates."
-msgstr ""
+msgstr "货币将以汇率每日更新。"
 
 #: finance/models.py:26
 msgid "default"
@@ -1319,7 +1319,7 @@ msgstr "删除"
 
 #: identities/forms.py:220
 msgid "Attach to User"
-msgstr ""
+msgstr "关联用户"
 
 #: identities/forms.py:291
 msgid "Contact type"
@@ -1354,7 +1354,7 @@ msgstr "供应商"
 
 #: infrastructure/forms.py:139
 msgid "Asset Record"
-msgstr ""
+msgstr "资产记录"
 
 #: infrastructure/forms.py:311 templates/html/documents/folder_view.html:69
 #: templates/html/identities/field_delete.html:3
@@ -1366,7 +1366,7 @@ msgstr ""
 #: templates/html/knowledge/category_view.html:50
 #: templates/html/knowledge/folder_view.html:63
 msgid "Items"
-msgstr ""
+msgstr "项目"
 
 #: infrastructure/forms.py:313 projects/forms.py:145 projects/forms.py:234
 msgid "Start date"
@@ -1382,11 +1382,11 @@ msgstr "过期日期"
 #: templates/html/sales/order_view.html:203
 #: templates/html/sales/tags/order_list.html:13
 msgid "Payments"
-msgstr ""
+msgstr "付款"
 
 #: infrastructure/forms.py:335
 msgid "Item type"
-msgstr ""
+msgstr "项目类型"
 
 #: messaging/forms.py:45 messaging/forms.py:64
 msgid "Mark Read"
@@ -1404,7 +1404,7 @@ msgstr "移动至"
 #: templates/html/forest/email_index.html:80
 #: templates/html/messaging/mlist_view.html:79
 msgid "Subject"
-msgstr "专题"
+msgstr "话题"
 
 #: messaging/forms.py:106 messaging/forms.py:226 messaging/models.py:71
 #: templates/html/forest/email_index.html:84
@@ -1442,7 +1442,7 @@ msgstr "发送邮件服务器"
 
 #: messaging/forms.py:197
 msgid "Sender Contact Details"
-msgstr "？发件联系人详情"
+msgstr "发件联系人详情"
 
 #: messaging/forms.py:200
 #: templates/html/core/administration/group_view.html:48
@@ -1456,7 +1456,7 @@ msgstr ""
 
 #: messaging/models.py:72 templates/html/messaging/page.html:17
 msgid "Streams"
-msgstr ""
+msgstr "流"
 
 #: news/views.py:50 templates/html/news/page.html:14
 msgid "All Activity"
@@ -1464,7 +1464,7 @@ msgstr "所有活动"
 
 #: news/views.py:52 news/views.py:91 news/views.py:165 news/views.py:208
 msgid "Updates on activity in your Tree.io"
-msgstr ""
+msgstr "您的活动更新"
 
 #: news/views.py:89 templates/html/news/page.html:13
 msgid "Top News"
@@ -1478,7 +1478,7 @@ msgstr "我的关注"
 
 #: news/views.py:128
 msgid "Updates on your watchlist in Tree.io"
-msgstr ""
+msgstr "您的关注列表更新"
 
 #: news/views.py:163 templates/html/news/my_activity.html:4
 #: templates/html/news/page.html:16
@@ -1553,7 +1553,7 @@ msgstr "派给"
 #: templates/html/services/ticket_delete.html:56
 #: templates/html/services/ticket_view.html:73
 msgid "Caller"
-msgstr ""
+msgstr "来电者"
 
 #: projects/forms.py:209 projects/forms.py:389
 #: templates/html/projects/milestone_delete.html:3
@@ -1647,7 +1647,7 @@ msgstr "0分钟"
 
 #: reports/forms.py:59
 msgid "Choose an Object to Report on"
-msgstr ""
+msgstr "选择一个对象进行报告"
 
 #: sales/forms.py:195 templates/html/finance/settings_view.html:18
 #: templates/html/sales/settings_view.html:18
@@ -1656,23 +1656,23 @@ msgstr "基准货币"
 
 #: sales/forms.py:196 templates/html/sales/settings_view.html:27
 msgid "Default Lead Status"
-msgstr "默认Lead状态"
+msgstr "默认线索状态"
 
 #: sales/forms.py:197 templates/html/sales/settings_view.html:35
 msgid "Default Opportunity Status"
-msgstr "默认Opportunity状态"
+msgstr "默认机会状态"
 
 #: sales/forms.py:198 templates/html/sales/settings_view.html:43
 msgid "Default Order Status"
-msgstr "默认Order状态"
+msgstr "默认订单状态"
 
 #: sales/forms.py:199 templates/html/sales/settings_view.html:51
 msgid "Default Order Source"
-msgstr "默认Order来源"
+msgstr "默认订单来源"
 
 #: sales/forms.py:200 templates/html/sales/settings_view.html:59
 msgid "Default Order Product"
-msgstr "默认Order产品"
+msgstr "默认订单产品"
 
 #: sales/forms.py:201 templates/html/sales/settings_view.html:67
 msgid "Order Fulfilment Status"
@@ -1688,15 +1688,15 @@ msgstr "派给："
 
 #: sales/forms.py:439
 msgid "Enabled for Leads"
-msgstr ""
+msgstr "为线索启用"
 
 #: sales/forms.py:440
 msgid "Enabled for Opportunities"
-msgstr ""
+msgstr "为机会启用"
 
 #: sales/forms.py:441
 msgid "Enabled for Sales"
-msgstr ""
+msgstr "为销售激活"
 
 #: sales/forms.py:501 sales/forms.py:526
 msgid "Product type"
@@ -1713,11 +1713,11 @@ msgstr "供应商代码"
 
 #: sales/forms.py:504
 msgid "Buy price"
-msgstr ""
+msgstr "购买价格"
 
 #: sales/forms.py:506
 msgid "Stock quantity"
-msgstr ""
+msgstr "股票数量"
 
 #: sales/forms.py:507
 msgid "Runout action"
@@ -1757,12 +1757,12 @@ msgstr "过期"
 
 #: sales/forms.py:638
 msgid "Cycle period"
-msgstr ""
+msgstr "循环周期"
 
 #: sales/forms.py:653 services/forms.py:145
 #: templates/html/services/ticket_view.html:68
 msgid "Reference"
-msgstr ""
+msgstr "引用"
 
 #: sales/forms.py:696 templates/html/sales/opportunity_delete.html:7
 #: templates/html/sales/opportunity_index.html:51
@@ -1773,7 +1773,7 @@ msgstr ""
 #: templates/html/sales/order_view.html:62
 #: templates/html/sales/ordered_product_edit.html:45
 msgid "Opportunity"
-msgstr ""
+msgstr "机会"
 
 #: sales/forms.py:709 sales/forms.py:755 sales/forms.py:786 sales/forms.py:904
 #: services/forms.py:153 services/forms.py:480
@@ -1789,7 +1789,7 @@ msgstr ""
 #: templates/html/services/ticket_delete.html:61
 #: templates/html/services/ticket_view.html:90
 msgid "Assigned to"
-msgstr "派给"
+msgstr "指派给"
 
 #: sales/forms.py:713 templates/html/finance/tags/transaction_list.html:8
 #: templates/html/sales/opportunity_index.html:55
@@ -1801,11 +1801,11 @@ msgstr "日期"
 
 #: sales/forms.py:727 templates/html/sales/tags/order_list.html:49
 msgid "Paid in full"
-msgstr ""
+msgstr "全额支付"
 
 #: sales/forms.py:727
 msgid "Pending Payments"
-msgstr ""
+msgstr "待支付"
 
 #: sales/forms.py:740
 msgid "Payment Status"
@@ -1837,12 +1837,12 @@ msgstr "期望日期"
 
 #: sales/forms.py:903
 msgid "Closed date"
-msgstr ""
+msgstr "截止日"
 
 #: sales/forms.py:905 templates/html/finance/equity_delete.html:56
 #: templates/html/sales/order_view.html:213
 msgid "Amount"
-msgstr ""
+msgstr "数量"
 
 #: sales/forms.py:911 templates/html/sales/opportunity_view.html:99
 msgid "Probability"
@@ -1852,7 +1852,7 @@ msgstr "可能性"
 #, python-format
 msgid ""
 "Your message is received and a ticket is created, ticket reference is [%s]"
-msgstr ""
+msgstr "您的消息已经收到并为此创建了一个ticket[%s]"
 
 #: services/forms.py:36 templates/html/services/settings_view.html:19
 msgid "Default Ticket Status"
@@ -1899,11 +1899,11 @@ msgstr "队列"
 #: templates/html/services/ticket_delete.html:87
 #: templates/html/services/ticket_view.html:117
 msgid "Service Level Agreement"
-msgstr ""
+msgstr "服务级别协议"
 
 #: services/forms.py:168 templates/html/services/ticket_view.html:145
 msgid "Resolution"
-msgstr ""
+msgstr "决议"
 
 #: services/forms.py:215 templates/html/services/ticket_view.html:78
 msgid "Urgency"
@@ -1952,27 +1952,27 @@ msgstr "消息流"
 
 #: services/forms.py:380
 msgid "Response time"
-msgstr ""
+msgstr "响应时间"
 
 #: services/forms.py:384
 msgid "Uptime rate"
-msgstr ""
+msgstr "正常运行率"
 
 #: services/forms.py:399 services/forms.py:506
 #: templates/html/services/sla_delete.html:78
 #: templates/html/services/sla_view.html:63
 msgid "Provider"
-msgstr "供方"
+msgstr "供应商"
 
 #: services/forms.py:403 services/forms.py:431
 #: templates/html/services/sla_view.html:69
 msgid "Available from"
-msgstr ""
+msgstr "有效期始于"
 
 #: services/forms.py:406 services/forms.py:432
 #: templates/html/services/sla_view.html:75
 msgid "Available to"
-msgstr ""
+msgstr "有效期截至"
 
 #: services/forms.py:426 services/forms.py:526
 msgid "Related user"
@@ -1995,7 +1995,7 @@ msgstr "搜索"
 
 #: templates/html/base.html:85 templates/html/base.html.py:90
 msgid "Chat"
-msgstr ""
+msgstr "聊天"
 
 #: templates/html/base.html:118 templates/html/news/index.html:45
 #: templates/html/news/index_by_module.html:42
@@ -2251,7 +2251,7 @@ msgstr "用户"
 #: templates/html/services/ticket_edit.html:10
 #: templates/html/services/ticket_view.html:10
 msgid "View"
-msgstr ""
+msgstr "查看"
 
 #: templates/html/account/account_edit.html:12
 #: templates/html/account/settings_edit.html:12
@@ -3050,23 +3050,23 @@ msgstr "提交"
 #: templates/html/changes/index_owned.html:35
 #: templates/html/changes/index_resolved.html:35
 msgid "No Change Sets"
-msgstr ""
+msgstr "没有变更集"
 
 #: templates/html/changes/index.html:36
 #: templates/html/changes/index_owned.html:36
 #: templates/html/changes/index_resolved.html:36
 msgid "Create a Change Set"
-msgstr ""
+msgstr "创建变更集"
 
 #: templates/html/changes/page.html:13
 #: templates/html/core/tags/logo_block_container.html:3
 #: templates/html/core/tags/modules_header_block.html:7
 msgid "Home"
-msgstr ""
+msgstr "主页"
 
 #: templates/html/changes/page.html:19
 msgid "All Change Sets"
-msgstr ""
+msgstr "所有变更集"
 
 #: templates/html/changes/page.html:20
 #: templates/html/infrastructure/page.html:14
@@ -3091,7 +3091,7 @@ msgstr "我解决的"
 #: templates/html/services/status_edit.html:17
 #: templates/html/services/status_view.html:19
 msgid "By Status"
-msgstr "以状态"
+msgstr "状态"
 
 #: templates/html/changes/page.html:27 templates/html/core/page.html:3
 #: templates/html/core/page.html.py:27
@@ -3131,22 +3131,22 @@ msgstr "以状态"
 #: templates/html/messaging/page.html:33 templates/html/projects/page.html:33
 #: templates/html/sales/page.html:39 templates/html/services/page.html:40
 msgid "Administration"
-msgstr ""
+msgstr "管理"
 
 #: templates/html/changes/page.html:39
 msgid "Changes"
-msgstr ""
+msgstr "变更"
 
 #: templates/html/changes/page.html:46 templates/html/changes/set_add.html:8
 #: templates/html/changes/status_delete.html:9
 #: templates/html/changes/status_edit.html:9
 #: templates/html/changes/status_view.html:9
 msgid "New Change Set"
-msgstr ""
+msgstr "先变更集合"
 
 #: templates/html/changes/set_add.html:23
 msgid "Create Set"
-msgstr ""
+msgstr "创建集合"
 
 #: templates/html/changes/set_delete.html:3
 #: templates/html/changes/set_edit.html:3
@@ -3156,21 +3156,21 @@ msgstr ""
 #: templates/html/changes/status_view.html:3
 #: templates/html/changes/status_view.html:58
 msgid "Change Sets"
-msgstr ""
+msgstr "变更集合"
 
 #: templates/html/changes/set_delete.html:6
 #: templates/html/changes/set_edit.html:6
 #: templates/html/changes/set_view.html:6
 msgid "Change Set"
-msgstr ""
+msgstr "变更集合"
 
 #: templates/html/changes/set_delete.html:17
 msgid "Delete this Change Set"
-msgstr ""
+msgstr "删除变更集合"
 
 #: templates/html/changes/set_delete.html:23
 msgid "WARNING: This cannot be undone"
-msgstr "警告：不能恢复"
+msgstr "警告：无法恢复"
 
 #: templates/html/changes/set_delete.html:27
 #: templates/html/changes/status_delete.html:29
@@ -3323,11 +3323,11 @@ msgstr "新状态"
 
 #: templates/html/changes/settings_view.html:18
 msgid "Default Change Set Status"
-msgstr "默认Change Set状态"
+msgstr "默认变更集合状态"
 
 #: templates/html/changes/settings_view.html:26
 msgid "Change Set Statuses"
-msgstr "Change Set状态"
+msgstr "变更集合状态"
 
 #: templates/html/changes/status_add.html:22
 #: templates/html/infrastructure/item_status_add.html:28
@@ -3345,7 +3345,7 @@ msgstr "变更状态"
 
 #: templates/html/changes/status_delete.html:18
 msgid "Delete this Change Set Status"
-msgstr "删除这个Change Set的状态"
+msgstr "删除这个变更集合的状态"
 
 #: templates/html/changes/status_view.html:26
 #: templates/html/core/administration/module_view.html:17
@@ -3660,7 +3660,7 @@ msgstr "创建帐户"
 #: templates/html/core/administration/perspective_edit.html:3
 #: templates/html/core/administration/perspective_view.html:3
 msgid "Perspectives"
-msgstr "视角"
+msgstr "视图"
 
 #: templates/html/core/page.html:14
 #: templates/html/core/administration/index_users.html:3
@@ -3705,7 +3705,8 @@ msgid ""
 "We've sent you a message.\n"
 "                <br />Please check your e-mail box for instructions on how "
 "to restore your password"
-msgstr ""
+msgstr "邮件已发出。\n"
+"<br />请查收邮件，并根据邮件提示恢复密码。"
 
 #: templates/html/core/password_reset_done.html:18
 msgid "Thank you!"
@@ -3719,7 +3720,7 @@ msgstr "密码重置"
 msgid ""
 "Forgotten your password? Enter your username or e-mail below, and we'll send "
 "you a new one"
-msgstr "忘记密码？输入用户名或邮件，通过邮件重置。"
+msgstr "忘记密码？输入用户名或邮件，发送给您新密码。"
 
 #: templates/html/core/user_login.html:27
 msgid "Forgotten your password?"
@@ -3757,7 +3758,9 @@ msgid ""
 "will be deleted.\n"
 "                    <br />\n"
 "                    All Objects owned by those Users will be deleted"
-msgstr ""
+msgstr "警告：无法恢复。所有指派给这个组的用户都将被删除。\n"
+"                    <br />\n"
+"                    所有这些用户拥有的对象将被删除"
 
 #: templates/html/core/administration/group_delete.html:40
 #: templates/html/core/administration/group_view.html:26
@@ -3873,7 +3876,7 @@ msgstr "发布"
 #: templates/html/core/administration/pagefolder_edit.html:6
 #: templates/html/core/administration/pagefolder_view.html:6
 msgid "Page Folder"
-msgstr ""
+msgstr "页面文件夹"
 
 #: templates/html/core/administration/pagefolder_delete.html:21
 #: templates/html/documents/folder_delete.html:24
@@ -3889,11 +3892,11 @@ msgstr "页面"
 
 #: templates/html/core/administration/perspective_add.html:22
 msgid "Create Perspective"
-msgstr "创建视角"
+msgstr "创建视图"
 
 #: templates/html/core/administration/perspective_delete.html:44
 msgid "Delete this Perspective"
-msgstr "删除视角"
+msgstr "删除视图"
 
 #: templates/html/core/administration/settings_view.html:27
 msgid "Everyone"
@@ -3985,13 +3988,13 @@ msgstr ""
 
 #: templates/html/core/dashboard/index.html:60
 msgid "Global iCalendar"
-msgstr ""
+msgstr "全局iCalendar"
 
 #: templates/html/core/dashboard/index.html:60
 msgid ""
 "Export events from your calendar with a popular extension of <strong>.ics</"
 "strong>"
-msgstr ""
+msgstr "以流行的<strong>.ics</strong>格式导出您的日历。"
 
 #: templates/html/core/dashboard/widget_edit.html:6
 msgid "Widget"
@@ -4031,11 +4034,11 @@ msgstr "创建一个网页链接"
 
 #: templates/html/core/hints/events.html:6
 msgid "Integration with other services made easy"
-msgstr ""
+msgstr "方便的与其他服务集成"
 
 #: templates/html/core/hints/events.html:7
 msgid "You can now integrate Tree.io Events with other services"
-msgstr ""
+msgstr "您可以将Tree.io的时间与其他服务集成"
 
 #: templates/html/core/hints/events_all.html:6
 msgid "there are no Events"
@@ -4047,11 +4050,11 @@ msgstr "创建一个事件"
 
 #: templates/html/core/hints/finance_assets.html:6
 msgid "there are no Assets"
-msgstr ""
+msgstr "没有资产"
 
 #: templates/html/core/hints/finance_assets.html:7
 msgid "Create an Asset"
-msgstr ""
+msgstr "创建一个资产"
 
 #: templates/html/core/hints/finance_categories.html:6
 msgid "there are no Categories"
@@ -4063,225 +4066,226 @@ msgstr "创建一个分类"
 
 #: templates/html/core/hints/finance_equities.html:6
 msgid "there are no Equities"
-msgstr ""
+msgstr "没有股票"
 
 #: templates/html/core/hints/finance_equities.html:7
 msgid "Create an Equity"
-msgstr ""
+msgstr "创建一个股票"
 
 #: templates/html/core/hints/finance_liabilities.html:6
 msgid "there are no Liabilities"
-msgstr ""
+msgstr "没有负债"
 
 #: templates/html/core/hints/finance_liabilities.html:7
 msgid "Create a Liability"
-msgstr ""
+msgstr "创建负债"
 
 #: templates/html/core/hints/finance_receivables.html:6
 msgid "there are no Receivables"
-msgstr ""
+msgstr "没有应收款"
 
 #: templates/html/core/hints/finance_receivables.html:7
 msgid "Create a Receivable"
-msgstr ""
+msgstr "创建应收款"
 
 #: templates/html/core/hints/finance_transactions.html:6
 msgid "there are no Transactions"
-msgstr ""
+msgstr "没有交易"
 
 #: templates/html/core/hints/finance_transactions.html:7
 msgid "Create a Transaction"
-msgstr ""
+msgstr "创建交易"
 
 #: templates/html/core/hints/messaging_compose.html:6
 msgid "No messages"
-msgstr ""
+msgstr "没有消息"
 
 #: templates/html/core/hints/messaging_compose.html:7
 msgid "Post the first message"
-msgstr ""
+msgstr "发布第一个消息"
 
 #: templates/html/core/hints/messaging_stream.html:6
 msgid "You can link your mailbox to this stream"
-msgstr ""
+msgstr "可以将您的邮箱关联至这个消息流"
 
 #: templates/html/core/hints/messaging_stream.html:7
 msgid "To send or recieve emails"
-msgstr ""
+msgstr "发送或者接收邮件"
 
 #: templates/html/core/hints/messaging_stream.html:10
 msgid "Incoming"
-msgstr ""
+msgstr "接收"
 
 #: templates/html/core/hints/messaging_stream.html:17
 msgid "Outgoing (SMTP)"
-msgstr ""
+msgstr "发送（SMTP）"
 
 #: templates/html/core/hints/news.html:7
 msgid "Get all the news in one place"
-msgstr ""
+msgstr "在一个地方接收所有新闻"
 
 #: templates/html/core/hints/perspective_delete.html:6
 msgid "Sorry you can not delete this Perspective"
-msgstr ""
+msgstr "对不起，您不能删除这个视图"
 
 #: templates/html/core/hints/perspective_view.html:6
 msgid "Some of your changes haven't been saved"
-msgstr ""
+msgstr "有些变更还没有被保存"
 
 #: templates/html/core/hints/projects.html:6
 msgid "Welcome to your new Projects page. Let's get started"
-msgstr ""
+msgstr "欢迎来到新项目页面。让我们开始吧"
 
 #: templates/html/core/hints/projects.html:7
 #: templates/html/core/widgets/welcome.html:40
 msgid "Create a Project"
-msgstr ""
+msgstr "创建一个项目"
 
 #: templates/html/core/hints/reports.html:6
 msgid "Get crystal clear, tailored reports"
-msgstr ""
+msgstr "获取量身定做的报告"
 
 #: templates/html/core/hints/reports.html:7
 msgid "Create a Report"
-msgstr ""
+msgstr "创建一个报告"
 
 #: templates/html/core/hints/sales.html:6
 msgid "Welcome to your new Sales Page"
-msgstr ""
+msgstr "欢迎来到新销售页面"
 
 #: templates/html/core/hints/sales.html:6
 msgid "Let's get started"
-msgstr ""
+msgstr "让我们开始吧"
 
 #: templates/html/core/hints/sales.html:7
 msgid "Create a Sale Order"
-msgstr ""
+msgstr "创建一个销售订单"
 
 #: templates/html/core/hints/sales_leads.html:6
 msgid "there are no Leads"
-msgstr ""
+msgstr "没有线索"
 
 #: templates/html/core/hints/sales_leads.html:7
 msgid "Create a Lead"
-msgstr ""
+msgstr "创建一个线索"
 
 #: templates/html/core/hints/sales_opportunities.html:6
 msgid "there are no Opportunities"
-msgstr ""
+msgstr "没有机会"
 
 #: templates/html/core/hints/sales_opportunities.html:7
 msgid "Create an Opportunity"
-msgstr ""
+msgstr "创建一个机会"
 
 #: templates/html/core/hints/sales_products.html:6
 msgid "there are no Products"
-msgstr ""
+msgstr "没有产品"
 
 #: templates/html/core/hints/sales_products.html:7
 msgid "Create a Product"
-msgstr ""
+msgstr "创建一个产品"
 
 #: templates/html/core/hints/search.html:6
 msgid "You've searched for"
-msgstr ""
+msgstr "您在搜索"
 
 #: templates/html/core/hints/service_catalogue.html:6
 msgid "there are no Services yet"
-msgstr ""
+msgstr "还没有服务"
 
 #: templates/html/core/hints/service_sla.html:6
 msgid "there are no Service Level Agreements yet"
-msgstr ""
+msgstr "还没有服务等级协议"
 
 #: templates/html/core/hints/services.html:6
 msgid "to get started with support"
-msgstr ""
+msgstr "开始提供支持"
 
 #: templates/html/core/hints/services.html:7
 msgid "Create a Queue"
-msgstr ""
+msgstr "创建一个队列"
 
 #: templates/html/core/hints/services.html:8
 msgid ""
 "you can even link it to a Message Stream to get tickets automatically "
 "created from messaging!"
 msgstr ""
+"您甚至可以将其链接到一个消息流来自动获得ticket！"
 
 #: templates/html/core/hints/user_denied.html:6
 msgid "Access Denied"
-msgstr ""
+msgstr "拒绝访问"
 
 #: templates/html/core/hints/user_denied.html:7
 msgid "Sorry, but you are not allowed to access this"
-msgstr ""
+msgstr "对不去，不允许您访问"
 
 #: templates/html/core/search/query_view.html:42
 msgid "Sorry, your search for "
-msgstr ""
+msgstr "对不去，您搜索"
 
 #: templates/html/core/search/query_view.html:44
 msgid "Suggestions"
-msgstr ""
+msgstr "建议"
 
 #: templates/html/core/search/query_view.html:46
 msgid "Check your spelling"
-msgstr ""
+msgstr "检查您的拼写"
 
 #: templates/html/core/search/query_view.html:47
 msgid "Use fewer words (results have to match the exact phrase you type)"
-msgstr ""
+msgstr "使用更少的字（结果需要准确匹配您的输入）"
 
 #: templates/html/core/tags/comments_likes.html:24
 msgid "You like this"
-msgstr ""
+msgstr "您喜欢这个"
 
 #: templates/html/core/tags/comments_likes.html:30
 msgid "You don't like this"
-msgstr ""
+msgstr "您不喜欢这个"
 
 #: templates/html/core/tags/comments_likes.html:36
 msgid "Like"
-msgstr ""
+msgstr "喜欢"
 
 #: templates/html/core/tags/comments_likes.html:41
 msgid "Dislike"
-msgstr ""
+msgstr "不喜欢"
 
 #: templates/html/core/tags/comments_likes.html:45
 #: templates/html/core/tags/comments_likes.html:118
 msgid "Comment"
-msgstr ""
+msgstr "评论"
 
 #: templates/html/core/tags/comments_likes.html:54
 #: templates/html/core/tags/comments_likes.html:70
 msgid "and"
-msgstr ""
+msgstr "和"
 
 #: templates/html/core/tags/comments_likes.html:57
 #: templates/html/core/tags/comments_likes.html:73
 msgid "You"
-msgstr ""
+msgstr "您"
 
 #: templates/html/core/tags/comments_likes.html:62
 msgid "like this"
-msgstr ""
+msgstr "喜欢这个"
 
 #: templates/html/core/tags/comments_likes.html:78
 msgid "don't like this"
-msgstr ""
+msgstr "不喜欢这个"
 
 #: templates/html/core/tags/demo_user.html:3
 msgid "Return to the Website"
-msgstr ""
+msgstr "返回网站"
 
 #: templates/html/core/tags/demo_user.html:4
 msgid "This is a demo site"
-msgstr ""
+msgstr "这是一个演示站点"
 
 #: templates/html/core/tags/demo_user.html:4
 msgid "Sign Up for Free!"
-msgstr ""
+msgstr "免费注册！"
 
 #: templates/html/core/tags/link_block.html:19
 #: templates/html/core/tags/subscription_block.html:17
@@ -4303,107 +4307,107 @@ msgstr ""
 #: templates/html/services/index_assigned.html:38
 #: templates/html/services/index_owned.html:39
 msgid "Add"
-msgstr ""
+msgstr "添加"
 
 #: templates/html/core/tags/permission_block.html:8
 #: templates/html/core/trash/index.html:34
 msgid "Untrash"
-msgstr ""
+msgstr "取消删除"
 
 #: templates/html/core/tags/permission_block.html:18
 msgid "Read only"
-msgstr ""
+msgstr "只读"
 
 #: templates/html/core/tags/permission_block.html:27
 msgid "Full access"
-msgstr ""
+msgstr "全部权限"
 
 #: templates/html/core/tags/subscription_block.html:14
 #: templates/html/core/tags/subscription_block_add.html:13
 #: templates/html/news/page.html:54
 msgid "Subscribe"
-msgstr ""
+msgstr "订阅"
 
 #: templates/html/core/tags/tags_box.html:17
 msgid "Add Tags"
-msgstr ""
+msgstr "添加标签"
 
 #: templates/html/core/tags/user_block.html:32
 #: templates/html/core/tags/user_block.html:41
 msgid "Log out"
-msgstr ""
+msgstr "登出"
 
 #: templates/html/core/tags/user_block.html:50
 msgid "Upgrade</a> your free trial"
-msgstr ""
+msgstr "升级</a>您的免费试用"
 
 #: templates/html/core/trash/index.html:44
 msgid "There's nothing in Trash"
-msgstr ""
+msgstr "垃圾桶里什么也没有"
 
 #: templates/html/core/trash/object_delete.html:20
 msgid "Delete this"
-msgstr ""
+msgstr "删除这个"
 
 #: templates/html/core/trash/object_delete.html:26
 msgid "WARNING: This can not be undone"
-msgstr ""
+msgstr "警告：这个操作无法恢复"
 
 #: templates/html/core/widgets/welcome.html:5
 msgid "welcome to Tree.io"
-msgstr ""
+msgstr "欢迎来到Tree.io"
 
 #: templates/html/core/widgets/welcome.html:20
 msgid "Press Ctrl+D (or Command+D on a Mac) to bookmark this page"
-msgstr ""
+msgstr "按 Ctrl+D(Mac用户，请用Command+D)来收藏这个页面"
 
 #: templates/html/core/widgets/welcome.html:29
 msgid "Get Started"
-msgstr ""
+msgstr "开始"
 
 #: templates/html/core/widgets/welcome.html:33
 msgid "Bookmark this page"
-msgstr ""
+msgstr "收藏这个页面"
 
 #: templates/html/core/widgets/welcome.html:34
 msgid "You may want to bookmark this page so you can come back to it later"
-msgstr ""
+msgstr "您可能希望收藏这个页面，以便将来访问"
 
 #: templates/html/core/widgets/welcome.html:41
 msgid "Manage your tasks easier and more powerful than ever before"
-msgstr ""
+msgstr "更容易更强大的来管理您的任务"
 
 #: templates/html/core/widgets/welcome.html:47
 msgid "Invite other people"
-msgstr ""
+msgstr "邀请其他人加入"
 
 #: templates/html/core/widgets/welcome.html:56
 msgid "Manage your Tree.io"
-msgstr ""
+msgstr "管理您的Tree.io"
 
 #: templates/html/core/widgets/welcome.html:60
 msgid "Upload your logo"
-msgstr ""
+msgstr "上传您的Logo"
 
 #: templates/html/core/widgets/welcome.html:61
 msgid "Your logo will appear on the top left corner of every page"
-msgstr ""
+msgstr "您的Logo将显示在每个页面的左上角"
 
 #: templates/html/core/widgets/welcome.html:67
 msgid "Change the language"
-msgstr ""
+msgstr "更改语言"
 
 #: templates/html/core/widgets/welcome.html:68
 msgid "Tree.io is available in multiple languages"
-msgstr ""
+msgstr "Tree.io支持多种语言"
 
 #: templates/html/core/widgets/welcome.html:76
 msgid "To upgrade your <strong>trial version</strong>"
-msgstr ""
+msgstr "升级您的<strong>试用版</strong>"
 
 #: templates/html/core/widgets/welcome.html:78
 msgid "To upgrade or change your subscription"
-msgstr ""
+msgstr "升级或变更您的订阅"
 
 #: templates/html/documents/document_add.html:3
 #: templates/html/documents/document_add.html:7
@@ -4420,7 +4424,7 @@ msgstr ""
 #: templates/html/documents/weblink_add.html:7
 #: templates/html/documents/weblink_add_typed.html:11
 msgid "New Document"
-msgstr ""
+msgstr "新文档"
 
 #: templates/html/documents/document_add.html:3
 #: templates/html/documents/document_add_typed.html:3
@@ -4450,7 +4454,7 @@ msgstr ""
 #: templates/html/documents/weblink_edit.html:3
 #: templates/html/documents/weblink_view.html:3
 msgid "Documents"
-msgstr ""
+msgstr "文档"
 
 #: templates/html/documents/document_add.html:8
 #: templates/html/documents/document_add_typed.html:12
@@ -4467,7 +4471,7 @@ msgstr ""
 #: templates/html/documents/weblink_add_typed.html:3
 #: templates/html/documents/weblink_add_typed.html:12
 msgid "New Web Link"
-msgstr ""
+msgstr "新网页链接"
 
 #: templates/html/documents/document_add.html:9
 #: templates/html/documents/document_add_typed.html:13
@@ -4484,12 +4488,12 @@ msgstr ""
 #: templates/html/documents/weblink_add.html:9
 #: templates/html/documents/weblink_add_typed.html:13
 msgid "Upload File"
-msgstr ""
+msgstr "上传文件"
 
 #: templates/html/documents/document_add.html:19
 #: templates/html/documents/document_add_typed.html:28
 msgid "Create Document"
-msgstr ""
+msgstr "创建文档"
 
 #: templates/html/documents/document_delete.html:7
 #: templates/html/documents/document_edit.html:7
@@ -4498,11 +4502,11 @@ msgstr ""
 #: templates/html/documents/tags/objects_list.html:13
 #: templates/html/documents/tags/objects_list.html:55
 msgid "Document"
-msgstr ""
+msgstr "文档"
 
 #: templates/html/documents/document_delete.html:20
 msgid "Delete this Document"
-msgstr ""
+msgstr "删除这个文档"
 
 #: templates/html/documents/document_view.html:52
 #: templates/html/documents/file_view.html:50
@@ -4512,13 +4516,13 @@ msgstr ""
 #: templates/html/sales/order_delete.html:69
 #: templates/html/sales/ordered_product_edit.html:51
 msgid "Date created"
-msgstr ""
+msgstr "创建日期"
 
 #: templates/html/documents/document_view.html:56
 #: templates/html/documents/weblink_delete.html:56
 #: templates/html/documents/weblink_view.html:56
 msgid "Last updated"
-msgstr ""
+msgstr "上次更新"
 
 #: templates/html/documents/file_delete.html:7
 #: templates/html/documents/file_edit.html:7
@@ -4527,23 +4531,23 @@ msgstr ""
 #: templates/html/documents/tags/objects_list.html:16
 #: templates/html/documents/tags/objects_list.html:58
 msgid "File"
-msgstr ""
+msgstr "文件"
 
 #: templates/html/documents/file_delete.html:20
 msgid "Delete this File"
-msgstr ""
+msgstr "删除这个文件"
 
 #: templates/html/documents/file_upload.html:19
 #: templates/html/documents/file_upload_typed.html:28
 msgid "Upload"
-msgstr ""
+msgstr "上传"
 
 #: templates/html/documents/folder_add.html:19
 #: templates/html/documents/folder_add_typed.html:28
 #: templates/html/knowledge/folder_add.html:19
 #: templates/html/knowledge/folder_add_folder.html:27
 msgid "Create Folder"
-msgstr ""
+msgstr "创建文件夹"
 
 #: templates/html/documents/folder_delete.html:45
 #: templates/html/documents/folder_view.html:45
@@ -4552,51 +4556,51 @@ msgstr ""
 #: templates/html/knowledge/index.html:24
 #: templates/html/knowledge/page.html:15
 msgid "Folders"
-msgstr ""
+msgstr "文件夹"
 
 #: templates/html/documents/index.html:26
 #: templates/html/documents/page.html:12
 #: templates/html/infrastructure/page.html:13
 #: templates/html/knowledge/page.html:13
 msgid "All Items"
-msgstr ""
+msgstr "全部条目"
 
 #: templates/html/documents/index_files.html:3
 #: templates/html/documents/index_files.html:5
 #: templates/html/documents/page.html:14
 msgid "Files"
-msgstr ""
+msgstr "文件"
 
 #: templates/html/documents/index_weblinks.html:3
 #: templates/html/documents/index_weblinks.html:5
 #: templates/html/documents/page.html:15
 msgid "Web Links"
-msgstr ""
+msgstr "网页链接"
 
 #: templates/html/documents/weblink_add.html:19
 #: templates/html/documents/weblink_add_typed.html:28
 msgid "Create Weblink"
-msgstr ""
+msgstr "创建网页链接"
 
 #: templates/html/documents/weblink_delete.html:7
 #: templates/html/documents/weblink_edit.html:7
 #: templates/html/documents/weblink_view.html:7
 #: templates/html/documents/tags/weblink_list.html:8
 msgid "Web Link"
-msgstr ""
+msgstr "网页链接"
 
 #: templates/html/documents/weblink_delete.html:20
 msgid "Delete this Web Link"
-msgstr ""
+msgstr "删除这个网页链接"
 
 #: templates/html/documents/tags/objects_list.html:19
 #: templates/html/documents/tags/objects_list.html:61
 msgid "Link"
-msgstr ""
+msgstr "链接"
 
 #: templates/html/events/day_view.html:3 templates/html/events/page.html:17
 msgid "Day"
-msgstr ""
+msgstr "日"
 
 #: templates/html/events/day_view.html:3 templates/html/events/day_view.html:5
 #: templates/html/events/event_add.html:3
@@ -4617,45 +4621,45 @@ msgstr ""
 #: templates/html/events/week_view.html:3
 #: templates/html/events/week_view.html:5
 msgid "Calendar"
-msgstr ""
+msgstr "日历"
 
 #: templates/html/events/day_view.html:18
 #: templates/html/events/month_view.html:18
 #: templates/html/events/week_view.html:18
 msgid "Go to"
-msgstr ""
+msgstr "前往"
 
 #: templates/html/events/day_view.html:18
 #: templates/html/events/month_view.html:18
 #: templates/html/events/week_view.html:18
 msgid "Today"
-msgstr ""
+msgstr "今天"
 
 #: templates/html/events/day_view.html:34 templates/html/events/index.html:3
 #: templates/html/events/integration_add.html:3
 #: templates/html/events/integration_index.html:3
 #: templates/html/events/integration_view.html:3
 msgid "Events"
-msgstr ""
+msgstr "事件"
 
 #: templates/html/events/event_add.html:3
 #: templates/html/events/event_add.html:6 templates/html/events/page.html:36
 msgid "New Event"
-msgstr ""
+msgstr "新事件"
 
 #: templates/html/events/event_add.html:16
 msgid "Create Event"
-msgstr ""
+msgstr "创建事件"
 
 #: templates/html/events/event_delete.html:7
 #: templates/html/events/event_edit.html:7
 #: templates/html/events/event_view.html:7
 msgid "Event"
-msgstr ""
+msgstr "事件"
 
 #: templates/html/events/event_delete.html:35
 msgid "Delete this Event"
-msgstr ""
+msgstr "删除这个事件"
 
 #: templates/html/events/integration_add.html:6
 #: templates/html/events/integration_index.html:6
@@ -4669,51 +4673,51 @@ msgstr ""
 #: templates/html/identities/integration_view.html:6
 #: templates/html/identities/page.html:24
 msgid "Integration"
-msgstr ""
+msgstr "集成"
 
 #: templates/html/events/integration_add.html:34
 #: templates/html/events/integration_index.html:84
 #: templates/html/identities/integration_add.html:34
 #: templates/html/identities/integration_index.html:81
 msgid "Connect"
-msgstr ""
+msgstr "连接"
 
 #: templates/html/events/integration_add.html:40
 #: templates/html/identities/integration_add.html:40
 msgid "needs your approval"
-msgstr ""
+msgstr "需要您的批准"
 
 #: templates/html/events/integration_add.html:43
 #: templates/html/identities/integration_add.html:43
 msgid "Please proceed to "
-msgstr ""
+msgstr "请处理"
 
 #: templates/html/events/integration_add.html:57
 #: templates/html/identities/integration_add.html:57
 msgid "Sorry, there has been a problem adding "
-msgstr ""
+msgstr "对不起，未能成功添加"
 
 #: templates/html/events/integration_add.html:59
 #: templates/html/identities/integration_add.html:59
 msgid "Please try again later."
-msgstr ""
+msgstr "请稍后再试。"
 
 #: templates/html/events/integration_index.html:37
 #: templates/html/identities/integration_index.html:34
 msgid "Active Resources"
-msgstr ""
+msgstr "活动资源"
 
 #: templates/html/events/integration_index.html:51
 #: templates/html/events/integration_view.html:33
 #: templates/html/identities/integration_index.html:48
 #: templates/html/identities/integration_view.html:33
 msgid "Disconnect"
-msgstr ""
+msgstr "断开连接"
 
 #: templates/html/events/integration_index.html:58
 #: templates/html/identities/integration_index.html:55
 msgid "Update Now"
-msgstr ""
+msgstr "现在更新"
 
 #: templates/html/events/integration_index.html:63
 #: templates/html/events/integration_index.html:96
@@ -4725,17 +4729,17 @@ msgstr ""
 #: templates/html/sales/status_view.html:64
 #: templates/html/services/service_view.html:92
 msgid "None"
-msgstr ""
+msgstr "无"
 
 #: templates/html/events/integration_index.html:70
 #: templates/html/identities/integration_index.html:67
 msgid "Available Resources"
-msgstr ""
+msgstr "可用资源"
 
 #: templates/html/events/integration_index.html:92
 #: templates/html/identities/integration_index.html:89
 msgid "Grant access"
-msgstr ""
+msgstr "授权访问"
 
 #: templates/html/events/integration_index.html:104
 #: templates/html/events/integration_index.html:125
@@ -4747,44 +4751,44 @@ msgstr ""
 #: templates/html/events/integration_index.html:105
 #: templates/html/identities/integration_index.html:102
 msgid "Your Nuvius profile is"
-msgstr ""
+msgstr "您的Nuvius资料是"
 
 #: templates/html/events/integration_index.html:107
 #: templates/html/identities/integration_index.html:104
 msgid "reset"
-msgstr ""
+msgstr "重置"
 
 #: templates/html/events/integration_index.html:116
 #: templates/html/identities/integration_index.html:113
 msgid "Loading"
-msgstr ""
+msgstr "加载中"
 
 #: templates/html/events/integration_index.html:119
 #: templates/html/identities/integration_index.html:116
 msgid "This page requires JavaScript"
-msgstr ""
+msgstr "这个页面需要支持JavaScript"
 
 #: templates/html/events/month_view.html:3 templates/html/events/page.html:15
 msgid "Month"
-msgstr ""
+msgstr "月"
 
 #: templates/html/events/page.html:12
 msgid "All Events"
-msgstr ""
+msgstr "全部事件"
 
 #: templates/html/events/page.html:13
 msgid "Upcoming"
-msgstr ""
+msgstr "即将"
 
 #: templates/html/events/page.html:16 templates/html/events/week_view.html:3
 #: templates/html/events/week_view.html:24
 #: templates/html/events/week_view.html:28
 msgid "Week"
-msgstr ""
+msgstr "周"
 
 #: templates/html/events/upcoming.html:3
 msgid "Upcoming Events"
-msgstr ""
+msgstr "即将发生的事件"
 
 #: templates/html/events/upcoming.html:12
 #: templates/html/finance/balance_sheet.html:11
@@ -4795,13 +4799,13 @@ msgstr ""
 #: templates/html/services/service_view.html:36
 #: templates/html/services/sla_view.html:34
 msgid "Export to"
-msgstr ""
+msgstr "导出至"
 
 #: templates/html/finance/account_add.html:3
 #: templates/html/finance/account_add.html:8
 #: templates/html/finance/index_accounts.html:10
 msgid "New Account"
-msgstr ""
+msgstr "新帐户"
 
 #: templates/html/finance/account_add.html:3
 #: templates/html/finance/account_delete.html:3
@@ -4852,22 +4856,22 @@ msgstr ""
 #: templates/html/finance/transaction_edit.html:3
 #: templates/html/finance/transaction_view.html:3
 msgid "Finance"
-msgstr ""
+msgstr "财务"
 
 #: templates/html/finance/account_add.html:5
 #: templates/html/finance/index_accounts.html:7
 #: templates/html/finance/page.html:23
 msgid "Accounts"
-msgstr ""
+msgstr "帐户"
 
 #: templates/html/finance/account_delete.html:20
 msgid "Delete this Account"
-msgstr ""
+msgstr "删除这个帐户"
 
 #: templates/html/finance/account_delete.html:42
 #: templates/html/finance/index_accounts.html:41
 msgid "Balance"
-msgstr ""
+msgstr "结余"
 
 #: templates/html/finance/account_view.html:42
 #: templates/html/finance/account_view.html:48
@@ -4878,53 +4882,53 @@ msgstr ""
 #: templates/html/finance/asset_add.html:8
 #: templates/html/finance/index_assets.html:10
 msgid "New Asset"
-msgstr ""
+msgstr "新资产"
 
 #: templates/html/finance/asset_add.html:5
 #: templates/html/finance/index_assets.html:3
 #: templates/html/finance/index_assets.html:5
 #: templates/html/finance/page.html:15
 msgid "Assets"
-msgstr ""
+msgstr "资产"
 
 #: templates/html/finance/asset_add.html:18
 msgid "Create Asset"
-msgstr ""
+msgstr "创建资产"
 
 #: templates/html/finance/asset_delete.html:6
 #: templates/html/finance/asset_edit.html:6
 #: templates/html/finance/asset_view.html:6
 #: templates/html/infrastructure/item_view.html:77
 msgid "Asset"
-msgstr ""
+msgstr "资产"
 
 #: templates/html/finance/asset_delete.html:17
 msgid "Delete this Asset"
-msgstr ""
+msgstr "删除这个资产"
 
 #: templates/html/finance/asset_delete.html:39
 #: templates/html/finance/asset_view.html:39
 msgid "Inital Value"
-msgstr ""
+msgstr "初始值"
 
 #: templates/html/finance/asset_delete.html:44
 msgid "Lifetime"
-msgstr ""
+msgstr "寿命"
 
 #: templates/html/finance/asset_delete.html:51
 #: templates/html/finance/asset_view.html:51
 msgid "End of Life Value"
-msgstr ""
+msgstr "寿终值"
 
 #: templates/html/finance/asset_delete.html:58
 #: templates/html/finance/asset_view.html:58
 msgid "Depreciation Type"
-msgstr ""
+msgstr "折旧类型"
 
 #: templates/html/finance/asset_delete.html:65
 #: templates/html/finance/asset_view.html:65
 msgid "Depreciation Rate"
-msgstr ""
+msgstr "折旧率"
 
 #: templates/html/finance/asset_delete.html:72
 #: templates/html/finance/asset_view.html:79
@@ -4933,27 +4937,27 @@ msgstr ""
 #: templates/html/finance/index_assets.html:39
 #: templates/html/finance/index_equities.html:39
 msgid "Purchase Date"
-msgstr ""
+msgstr "购买日"
 
 #: templates/html/finance/asset_delete.html:78
 #: templates/html/finance/asset_view.html:85
 msgid "Current Value"
-msgstr ""
+msgstr "当前值"
 
 #: templates/html/finance/asset_view.html:44
 msgid "Lifetime (Years)"
-msgstr ""
+msgstr "寿命（年）"
 
 #: templates/html/finance/asset_view.html:72
 #: templates/html/finance/index_assets.html:43
 msgid "Depreciation"
-msgstr ""
+msgstr "折旧率"
 
 #: templates/html/finance/balance_sheet.html:3
 #: templates/html/finance/balance_sheet.html:5
 #: templates/html/finance/page.html:20
 msgid "Balance Sheet"
-msgstr ""
+msgstr "资产负债表"
 
 #: templates/html/finance/balance_sheet.html:21
 msgid "Balance Sheet for"
@@ -4965,27 +4969,27 @@ msgstr ""
 
 #: templates/html/finance/balance_sheet.html:28
 msgid "ASSETS"
-msgstr ""
+msgstr "资产"
 
 #: templates/html/finance/balance_sheet.html:33
 msgid "Non-Current Assets"
-msgstr ""
+msgstr "非流动资产"
 
 #: templates/html/finance/balance_sheet.html:37
 msgid "Property, Plant and Equipment"
-msgstr ""
+msgstr "物业，厂房及设备"
 
 #: templates/html/finance/balance_sheet.html:41
 msgid "Intangible Assets"
-msgstr ""
+msgstr "无形资产"
 
 #: templates/html/finance/balance_sheet.html:46
 msgid "Current Assets"
-msgstr ""
+msgstr "流动资产"
 
 #: templates/html/finance/balance_sheet.html:50
 msgid "Inventories"
-msgstr ""
+msgstr "库存"
 
 #: templates/html/finance/balance_sheet.html:54
 #: templates/html/finance/index_receivables.html:3
@@ -4993,67 +4997,67 @@ msgstr ""
 #: templates/html/finance/page.html:14
 #: templates/html/finance/receivable_add.html:5
 msgid "Receivables"
-msgstr ""
+msgstr "应收款"
 
 #: templates/html/finance/balance_sheet.html:58
 msgid "Prepayments"
-msgstr ""
+msgstr "预付款"
 
 #: templates/html/finance/balance_sheet.html:62
 msgid "Cash and Cash equivalents"
-msgstr ""
+msgstr "现金及现金等价物"
 
 #: templates/html/finance/balance_sheet.html:66
 msgid "Total Assets"
-msgstr ""
+msgstr "全部资产"
 
 #: templates/html/finance/balance_sheet.html:73
 msgid "LIABILITIES"
-msgstr ""
+msgstr "负债"
 
 #: templates/html/finance/balance_sheet.html:78
 msgid "Non-Current Liabilities"
-msgstr ""
+msgstr "非流动负债"
 
 #: templates/html/finance/balance_sheet.html:82
 msgid "Borrowings"
-msgstr ""
+msgstr "借贷"
 
 #: templates/html/finance/balance_sheet.html:87
 msgid "Current Liabilities"
-msgstr ""
+msgstr "流动负债"
 
 #: templates/html/finance/balance_sheet.html:91
 msgid "Payables"
-msgstr ""
+msgstr "负债"
 
 #: templates/html/finance/balance_sheet.html:95
 msgid "Total Liabilities"
-msgstr ""
+msgstr "总欠款"
 
 #: templates/html/finance/balance_sheet.html:102
 msgid "SHAREHOLDER EQUITY"
-msgstr ""
+msgstr "股东权益"
 
 #: templates/html/finance/balance_sheet.html:106
 msgid "Share Capital"
-msgstr ""
+msgstr "股本"
 
 #: templates/html/finance/balance_sheet.html:110
 msgid "Share Premium"
-msgstr ""
+msgstr "股份溢价"
 
 #: templates/html/finance/balance_sheet.html:114
 msgid "Retained Earnings"
-msgstr ""
+msgstr "保留利润"
 
 #: templates/html/finance/balance_sheet.html:118
 msgid "Total Equity"
-msgstr ""
+msgstr "总权益"
 
 #: templates/html/finance/balance_sheet.html:122
 msgid "Total Equity and Liabilities"
-msgstr ""
+msgstr "权益及负债总额"
 
 #: templates/html/finance/category_add.html:3
 #: templates/html/finance/category_add.html:6
@@ -5067,17 +5071,17 @@ msgstr ""
 #: templates/html/knowledge/item_add.html:8
 #: templates/html/knowledge/page.html:40
 msgid "New Category"
-msgstr ""
+msgstr "新分类"
 
 #: templates/html/finance/category_add.html:16
 #: templates/html/knowledge/category_add.html:19
 msgid "Create Category"
-msgstr ""
+msgstr "创建分类"
 
 #: templates/html/finance/category_delete.html:17
 #: templates/html/knowledge/category_delete.html:20
 msgid "Delete this Category"
-msgstr ""
+msgstr "删除这个分类"
 
 #: templates/html/finance/category_view.html:27
 #: templates/html/finance/index_transactions.html:3
@@ -5085,11 +5089,11 @@ msgstr ""
 #: templates/html/finance/page.html:3 templates/html/finance/page.html:12
 #: templates/html/finance/transaction_add.html:5
 msgid "Transactions"
-msgstr ""
+msgstr "交易"
 
 #: templates/html/finance/category_view.html:45
 msgid "No Transactions available"
-msgstr ""
+msgstr "没有交易"
 
 #: templates/html/finance/category_view.html:51
 #: templates/html/finance/index_liabilities.html:3
@@ -5097,67 +5101,67 @@ msgstr ""
 #: templates/html/finance/liability_add.html:5
 #: templates/html/finance/page.html:13
 msgid "Liabilities"
-msgstr ""
+msgstr "负债"
 
 #: templates/html/finance/category_view.html:68
 msgid "No Liabilities available"
-msgstr ""
+msgstr "没有负债"
 
 #: templates/html/finance/currency_add.html:3
 msgid "Add Currency"
-msgstr ""
+msgstr "添加货币"
 
 #: templates/html/finance/currency_add.html:14
 #: templates/html/finance/settings_view.html:10
 msgid "New Currency"
-msgstr ""
+msgstr "新货币"
 
 #: templates/html/finance/currency_add.html:29
 msgid "Create Currency"
-msgstr ""
+msgstr "创建货币"
 
 #: templates/html/finance/currency_delete.html:17
 msgid "Delete this Currency"
-msgstr ""
+msgstr "删除这个货币"
 
 #: templates/html/finance/currency_delete.html:40
 #: templates/html/finance/currency_view.html:39
 msgid "Symbol"
-msgstr ""
+msgstr "符号"
 
 #: templates/html/finance/currency_delete.html:41
 #: templates/html/finance/currency_view.html:40
 msgid "None Set"
-msgstr ""
+msgstr "没有设置"
 
 #: templates/html/finance/currency_edit.html:3
 msgid "Edit Currency"
-msgstr ""
+msgstr "编辑货币"
 
 #: templates/html/finance/currency_edit.html:30
 msgid "Save Currency"
-msgstr ""
+msgstr "保存货币"
 
 #: templates/html/finance/currency_view.html:47
 msgid "Exchange Factor"
-msgstr ""
+msgstr "交换因子"
 
 #: templates/html/finance/equity_add.html:3
 #: templates/html/finance/equity_add.html:8
 #: templates/html/finance/index_equities.html:10
 msgid "New Equity"
-msgstr ""
+msgstr "新产权"
 
 #: templates/html/finance/equity_add.html:5
 #: templates/html/finance/index_equities.html:3
 #: templates/html/finance/index_equities.html:5
 #: templates/html/finance/page.html:16
 msgid "Equities"
-msgstr ""
+msgstr "产权"
 
 #: templates/html/finance/equity_add.html:18
 msgid "Create Equity"
-msgstr ""
+msgstr "创建产权"
 
 #: templates/html/finance/equity_delete.html:3
 #: templates/html/finance/equity_delete.html:6
@@ -5166,61 +5170,61 @@ msgstr ""
 #: templates/html/finance/equity_view.html:3
 #: templates/html/finance/equity_view.html:6
 msgid "Equity"
-msgstr ""
+msgstr "产权"
 
 #: templates/html/finance/equity_delete.html:17
 msgid "Delete this Equity"
-msgstr ""
+msgstr "删除这个产权"
 
 #: templates/html/finance/equity_delete.html:41
 #: templates/html/finance/equity_view.html:39
 msgid "Issue Price"
-msgstr ""
+msgstr "发行价"
 
 #: templates/html/finance/equity_delete.html:46
 #: templates/html/finance/equity_view.html:43
 #: templates/html/sales/product_view.html:68
 msgid "Sell Price"
-msgstr ""
+msgstr "卖出价格"
 
 #: templates/html/finance/income_view.html:3
 #: templates/html/finance/income_view.html:5
 #: templates/html/finance/page.html:19
 msgid "Income Statement"
-msgstr ""
+msgstr "损益表"
 
 #: templates/html/finance/income_view.html:19
 msgid "Revenues"
-msgstr ""
+msgstr "收入"
 
 #: templates/html/finance/income_view.html:31
 msgid "Total Revenues"
-msgstr ""
+msgstr "总收入"
 
 #: templates/html/finance/income_view.html:35
 msgid "Expenses"
-msgstr ""
+msgstr "开支"
 
 #: templates/html/finance/income_view.html:47
 msgid "Total Expenses"
-msgstr ""
+msgstr "总开支"
 
 #: templates/html/finance/income_view.html:51
 msgid "Totals"
-msgstr ""
+msgstr "总共"
 
 #: templates/html/finance/income_view.html:54
 msgid "Net Income"
-msgstr ""
+msgstr "净利"
 
 #: templates/html/finance/index_accounts.html:53
 msgid "No Accounts"
-msgstr ""
+msgstr "没有帐户"
 
 #: templates/html/finance/index_assets.html:40
 #: templates/html/finance/index_equities.html:38
 msgid "Type"
-msgstr ""
+msgstr "类型"
 
 #: templates/html/finance/index_assets.html:42
 #: templates/html/finance/tags/liability_list.html:15
@@ -5235,33 +5239,33 @@ msgstr ""
 #: templates/html/knowledge/index_categories.html:3
 #: templates/html/knowledge/page.html:14
 msgid "Categories"
-msgstr ""
+msgstr "分类"
 
 #: templates/html/finance/index_equities.html:43
 msgid "Sell Price in "
-msgstr ""
+msgstr "卖出价"
 
 #: templates/html/finance/index_liabilities.html:10
 #: templates/html/finance/liability_add.html:3
 #: templates/html/finance/liability_add.html:8
 msgid "New Liability"
-msgstr ""
+msgstr "新负债"
 
 #: templates/html/finance/index_receivables.html:10
 #: templates/html/finance/receivable_add.html:3
 #: templates/html/finance/receivable_add.html:8
 msgid "New Receivable"
-msgstr ""
+msgstr "新应收款"
 
 #: templates/html/finance/index_transactions.html:10
 #: templates/html/finance/transaction_add.html:3
 #: templates/html/finance/transaction_add.html:8
 msgid "New Transaction"
-msgstr ""
+msgstr "新交易"
 
 #: templates/html/finance/liability_add.html:18
 msgid "Create Liability"
-msgstr ""
+msgstr "创建负债"
 
 #: templates/html/finance/liability_delete.html:3
 #: templates/html/finance/liability_delete.html:6
@@ -5272,11 +5276,11 @@ msgstr ""
 #: templates/html/finance/transaction_delete.html:52
 #: templates/html/finance/transaction_view.html:54
 msgid "Liability"
-msgstr ""
+msgstr "负债"
 
 #: templates/html/finance/liability_delete.html:17
 msgid "Delete this Liability"
-msgstr ""
+msgstr "删除这个负债"
 
 #: templates/html/finance/liability_delete.html:56
 #: templates/html/finance/liability_view.html:56
@@ -5284,7 +5288,7 @@ msgstr ""
 #: templates/html/finance/receivable_view.html:56
 #: templates/html/finance/tags/liability_list.html:10
 msgid "Due Date"
-msgstr ""
+msgstr "到期日"
 
 #: templates/html/finance/liability_view.html:63
 #: templates/html/finance/liability_view.html:69
@@ -5308,11 +5312,11 @@ msgstr ""
 #: templates/html/reports/report_filter.html:3
 #: templates/html/reports/report_view.html:3
 msgid "Reports"
-msgstr ""
+msgstr "报告"
 
 #: templates/html/finance/receivable_add.html:18
 msgid "Create Receivable"
-msgstr ""
+msgstr "创建应收款"
 
 #: templates/html/finance/receivable_delete.html:3
 #: templates/html/finance/receivable_delete.html:6
@@ -5321,41 +5325,41 @@ msgstr ""
 #: templates/html/finance/receivable_view.html:3
 #: templates/html/finance/receivable_view.html:6
 msgid "Receivable"
-msgstr ""
+msgstr "应收款"
 
 #: templates/html/finance/receivable_delete.html:17
 msgid "Delete this Receivable"
-msgstr ""
+msgstr "删除这个应收账"
 
 #: templates/html/finance/settings_view.html:26
 msgid "My Company"
-msgstr ""
+msgstr "我的公司"
 
 #: templates/html/finance/settings_view.html:34
 msgid "Default Account"
-msgstr ""
+msgstr "默认帐户"
 
 #: templates/html/finance/settings_view.html:70
 #: templates/html/sales/settings_view.html:133
 msgid "Currencies"
-msgstr ""
+msgstr "货币"
 
 #: templates/html/finance/settings_view.html:79
 #: templates/html/sales/settings_view.html:142
 msgid "Base"
-msgstr ""
+msgstr "基准"
 
 #: templates/html/finance/tax_add.html:3
 msgid "Add Tax"
-msgstr ""
+msgstr "添加税"
 
 #: templates/html/finance/tax_add.html:8
 msgid "New Tax"
-msgstr ""
+msgstr "新税"
 
 #: templates/html/finance/tax_add.html:23
 msgid "Create Tax"
-msgstr ""
+msgstr "创建税"
 
 #: templates/html/finance/tax_delete.html:3
 #: templates/html/finance/tax_delete.html:6
@@ -5363,33 +5367,33 @@ msgstr ""
 #: templates/html/finance/tax_view.html:3
 #: templates/html/finance/tax_view.html:6
 msgid "Tax"
-msgstr ""
+msgstr "税"
 
 #: templates/html/finance/tax_delete.html:17
 msgid "Delete this Tax"
-msgstr ""
+msgstr "删除这个税"
 
 #: templates/html/finance/tax_delete.html:40
 #: templates/html/finance/tax_view.html:39
 msgid "Rate"
-msgstr ""
+msgstr "率"
 
 #: templates/html/finance/tax_delete.html:45
 #: templates/html/finance/tax_view.html:44
 msgid "Compound Tax"
-msgstr ""
+msgstr "复合税"
 
 #: templates/html/finance/tax_edit.html:3
 msgid "Edit Tax"
-msgstr ""
+msgstr "编辑税"
 
 #: templates/html/finance/tax_edit.html:24
 msgid "Save Tax"
-msgstr ""
+msgstr "保存税"
 
 #: templates/html/finance/transaction_add.html:18
 msgid "Create Transaction"
-msgstr ""
+msgstr "创建交易"
 
 #: templates/html/finance/transaction_delete.html:3
 #: templates/html/finance/transaction_delete.html:6
@@ -5398,11 +5402,11 @@ msgstr ""
 #: templates/html/finance/transaction_view.html:3
 #: templates/html/finance/transaction_view.html:6
 msgid "Transaction"
-msgstr ""
+msgstr "交易"
 
 #: templates/html/finance/transaction_delete.html:17
 msgid "Delete this Transaction"
-msgstr ""
+msgstr "删除这个交易"
 
 #: templates/html/finance/tags/liability_list.html:9
 #: templates/html/finance/tags/transaction_list.html:7
@@ -5421,7 +5425,7 @@ msgstr ""
 #: templates/html/forest/instance_view.html:11
 #: templates/html/forest/page.html:21 templates/html/forest/page.html.py:22
 msgid "Statistics"
-msgstr ""
+msgstr "统计"
 
 #: templates/html/forest/breeze_index.html:3
 #: templates/html/forest/breeze_update.html:3
@@ -5436,42 +5440,42 @@ msgstr ""
 
 #: templates/html/forest/breeze_update.html:14
 msgid "Update Statistics for Instances"
-msgstr ""
+msgstr "更新实例统计"
 
 #: templates/html/forest/breeze_update.html:18
 msgid "This will run Breeze script to analyze Instance logs"
-msgstr ""
+msgstr "这将运行微风脚本分析实例日志"
 
 #: templates/html/forest/breeze_update.html:20
 msgid "Yes, Update"
-msgstr ""
+msgstr "是的，更新"
 
 #: templates/html/forest/email_index.html:45
 msgid "Preview"
-msgstr ""
+msgstr "预览"
 
 #: templates/html/forest/email_index.html:62
 msgid "Recipient list"
-msgstr ""
+msgstr "接收列表"
 
 #: templates/html/forest/email_index.html:75
 msgid "Compose Message"
-msgstr ""
+msgstr "编辑消息"
 
 #: templates/html/forest/email_index.html:100
 msgid "Preview E-mail"
-msgstr ""
+msgstr "预览邮件"
 
 #: templates/html/forest/email_index.html:104
 msgid "Send E-mail"
-msgstr ""
+msgstr "发送邮件"
 
 #: templates/html/forest/email_index.html:111
 #: templates/html/forest/index.html:25
 #: templates/html/forest/package_view.html:78
 #: templates/html/forest/recent.html:25
 msgid "Instances"
-msgstr ""
+msgstr "实例"
 
 #: templates/html/forest/email_index.html:119
 #: templates/html/forest/instance_view.html:22
@@ -5480,45 +5484,45 @@ msgstr ""
 
 #: templates/html/forest/email_index.html:121
 msgid "E-mail"
-msgstr ""
+msgstr "邮件"
 
 #: templates/html/forest/email_index.html:122
 #: templates/html/forest/instance_view.html:52
 #: templates/html/forest/package_view.html:3
 #: templates/html/forest/package_view.html:7
 msgid "Package"
-msgstr ""
+msgstr "包"
 
 #: templates/html/forest/email_index.html:148
 #: templates/html/forest/tags/instance_list.html:10
 msgid "EXPIRED"
-msgstr ""
+msgstr "过期"
 
 #: templates/html/forest/instance_statistics.html:9
 #: templates/html/forest/instance_view.html:7
 msgid "Instance"
-msgstr ""
+msgstr "实例"
 
 #: templates/html/forest/instance_view.html:37
 msgid "Created"
-msgstr ""
+msgstr "创建于"
 
 #: templates/html/forest/instance_view.html:68
 msgid "Referrer"
-msgstr ""
+msgstr "引荐"
 
 #: templates/html/forest/instance_view.html:77
 msgid "Industry"
-msgstr ""
+msgstr "行业"
 
 #: templates/html/forest/instance_view.html:83
 #: templates/html/sales/settings_view.html:113
 msgid "Sale Orders"
-msgstr ""
+msgstr "销售订单"
 
 #: templates/html/forest/instance_view.html:88
 msgid "Messages"
-msgstr ""
+msgstr "消息"
 
 #: templates/html/forest/instance_view.html:96
 #: templates/html/messaging/index_inbox.html:41
@@ -5526,11 +5530,11 @@ msgstr ""
 #: templates/html/messaging/stream_view.html:53
 #: templates/html/messaging/unread.html:41
 msgid "No Messages"
-msgstr ""
+msgstr "没有消息"
 
 #: templates/html/forest/package_view.html:35
 msgid "Max Users"
-msgstr ""
+msgstr "最多用户"
 
 #: templates/html/forest/package_view.html:54
 msgid "Trial"
@@ -5541,35 +5545,35 @@ msgstr ""
 #: templates/html/sales/order_invoice_view.html:94
 #: templates/html/sales/order_view.html:132
 msgid "Price"
-msgstr ""
+msgstr "价格"
 
 #: templates/html/forest/package_view.html:69
 msgid "Effective Price"
-msgstr ""
+msgstr "有效价格"
 
 #: templates/html/forest/packages.html:16 templates/html/forest/page.html:15
 msgid "Packages"
-msgstr ""
+msgstr "包"
 
 #: templates/html/forest/page.html:12
 msgid "All Instances"
-msgstr ""
+msgstr "所有实例"
 
 #: templates/html/forest/page.html:13
 msgid "Most Recent"
-msgstr ""
+msgstr "最近"
 
 #: templates/html/forest/page.html:16
 msgid "All Packages"
-msgstr ""
+msgstr "全部包"
 
 #: templates/html/forest/page.html:18
 msgid "E-mails"
-msgstr ""
+msgstr "邮件"
 
 #: templates/html/forest/page.html:19
 msgid "Mass Mailing"
-msgstr ""
+msgstr "大量邮件"
 
 #: templates/html/forest/tags/package_list.html:8
 #: templates/html/sales/ordered_product_edit.html:98
@@ -5578,14 +5582,14 @@ msgstr ""
 #: templates/html/sales/settings_view.html:116
 #: templates/html/services/settings_view.html:57
 msgid "Inactive"
-msgstr ""
+msgstr "非活动"
 
 #: templates/html/identities/contact_add.html:3
 #: templates/html/identities/contact_add.html:7
 #: templates/html/identities/contact_add_typed.html:3
 #: templates/html/identities/page.html:46
 msgid "New Contact"
-msgstr ""
+msgstr "新联系人"
 
 #: templates/html/identities/contact_add.html:3
 #: templates/html/identities/contact_add.html:4
@@ -5619,57 +5623,57 @@ msgstr ""
 #: templates/html/identities/settings_view.html:3
 #: templates/html/identities/user_view.html:3
 msgid "Identities"
-msgstr ""
+msgstr "标识"
 
 #: templates/html/identities/contact_add.html:14
 msgid "Please choose the type of Contact you wish to create"
-msgstr ""
+msgstr "请选择您希望创建的联系人类型"
 
 #: templates/html/identities/contact_add.html:25
 msgid ""
 "Sorry, you can not create new Contacts. You don't have access to any of the "
 "available Contact Types"
-msgstr ""
+msgstr "对不起，您不能创建新联系人。您不能使用任何可用联系人类型。"
 
 #: templates/html/identities/contact_add_typed.html:6
 #: templates/html/identities/contact_type_delete.html:6
 #: templates/html/identities/contact_type_edit.html:6
 #: templates/html/identities/contact_type_view.html:6
 msgid "Contact Type"
-msgstr ""
+msgstr "联系人类型"
 
 #: templates/html/identities/contact_add_typed.html:19
 msgid "Create Contact"
-msgstr ""
+msgstr "创建联系人"
 
 #: templates/html/identities/contact_delete.html:33
 msgid "Delete this Contact?"
-msgstr ""
+msgstr "删除这个联系人？"
 
 #: templates/html/identities/contact_me.html:8
 msgid "My Contact Card"
-msgstr ""
+msgstr "我的联系人名片"
 
 #: templates/html/identities/contact_me.html:83
 #: templates/html/identities/contact_view.html:81
 msgid "Child Contacts"
-msgstr ""
+msgstr "子联系人"
 
 #: templates/html/identities/contact_me_missing.html:7
 msgid "No Contact"
-msgstr ""
+msgstr "没有联系人"
 
 #: templates/html/identities/contact_me_missing.html:20
 msgid "Sorry, you do not have a Contact Card"
-msgstr ""
+msgstr "对不起，您没有联系人名片"
 
 #: templates/html/identities/contact_me_missing.html:22
 msgid "Maybe you want to"
-msgstr ""
+msgstr "也许您想"
 
 #: templates/html/identities/contact_me_missing.html:22
 msgid "Add</a> one"
-msgstr ""
+msgstr "添加</a>一个"
 
 #: templates/html/identities/contact_type_add.html:3
 #: templates/html/identities/contact_type_add.html:8
@@ -5682,7 +5686,7 @@ msgstr ""
 #: templates/html/infrastructure/settings_edit.html:10
 #: templates/html/infrastructure/settings_view.html:10
 msgid "New Type"
-msgstr ""
+msgstr "新类型"
 
 #: templates/html/identities/contact_type_add.html:9
 #: templates/html/identities/field_add.html:3
@@ -5695,54 +5699,54 @@ msgstr ""
 #: templates/html/infrastructure/settings_edit.html:11
 #: templates/html/infrastructure/settings_view.html:11
 msgid "New Field"
-msgstr ""
+msgstr "新字段"
 
 #: templates/html/identities/contact_type_add.html:20
 #: templates/html/infrastructure/item_type_add.html:26
 msgid "Create Type"
-msgstr ""
+msgstr "创建类型"
 
 #: templates/html/identities/contact_type_delete.html:18
 msgid "Delete this Contact Type?"
-msgstr ""
+msgstr "删除这个联系人类型"
 
 #: templates/html/identities/contact_type_delete.html:23
 msgid "WARNING: All Contacts of this Type will be deleted"
-msgstr ""
+msgstr "警告：全部此类型联系人都将被删除"
 
 #: templates/html/identities/field_add.html:26
 #: templates/html/infrastructure/field_add.html:26
 msgid "Create Field"
-msgstr ""
+msgstr "创建字段"
 
 #: templates/html/identities/field_delete.html:6
 msgid "Item Field"
-msgstr ""
+msgstr "条目字段"
 
 #: templates/html/identities/field_delete.html:23
 msgid "Delete this Field?"
-msgstr ""
+msgstr "删除这个字段"
 
 #: templates/html/identities/field_edit.html:6
 #: templates/html/identities/field_view.html:6
 msgid "Identities Field"
-msgstr ""
+msgstr "标识字段"
 
 #: templates/html/identities/field_view.html:29
 #: templates/html/infrastructure/field_view.html:29
 msgid "Field Type"
-msgstr ""
+msgstr "字段类型"
 
 #: templates/html/identities/field_view.html:38
 #: templates/html/infrastructure/field_view.html:38
 msgid "Allowed Values"
-msgstr ""
+msgstr "允许的值"
 
 #: templates/html/identities/index.html:3
 #: templates/html/identities/page.html:3
 #: templates/html/identities/page.html:39
 msgid "Contacts"
-msgstr ""
+msgstr "联系人"
 
 #: templates/html/identities/location_add.html:3
 #: templates/html/identities/location_add.html:6
@@ -5751,39 +5755,39 @@ msgstr ""
 #: templates/html/infrastructure/location_add.html:7
 #: templates/html/infrastructure/page.html:53
 msgid "New Location"
-msgstr ""
+msgstr "新位置"
 
 #: templates/html/identities/location_add.html:3
 msgid "identities"
-msgstr ""
+msgstr "标识"
 
 #: templates/html/identities/location_add.html:16
 #: templates/html/infrastructure/location_add.html:17
 msgid "Create Location"
-msgstr ""
+msgstr "创建位置"
 
 #: templates/html/identities/location_delete.html:33
 #: templates/html/infrastructure/location_delete.html:32
 msgid "Delete this Location"
-msgstr ""
+msgstr "删除这个位置"
 
 #: templates/html/identities/page.html:12
 msgid "All Contacts"
-msgstr ""
+msgstr "全部联系人"
 
 #: templates/html/identities/page.html:13
 #: templates/html/identities/widgets/contact_me.html:3
 msgid "My Card"
-msgstr ""
+msgstr "我的名片"
 
 #: templates/html/identities/page.html:16
 #: templates/html/identities/settings_view.html:24
 msgid "Contact Types"
-msgstr ""
+msgstr "联系人类型"
 
 #: templates/html/identities/settings_view.html:49
 msgid "Contact Fields"
-msgstr ""
+msgstr "联系人字段"
 
 #: templates/html/infrastructure/field_add.html:3
 #: templates/html/infrastructure/field_delete.html:3
@@ -5819,17 +5823,17 @@ msgstr ""
 #: templates/html/infrastructure/settings_edit.html:3
 #: templates/html/infrastructure/settings_view.html:3
 msgid "Infrastructure"
-msgstr ""
+msgstr "基建"
 
 #: templates/html/infrastructure/field_delete.html:6
 #: templates/html/infrastructure/field_edit.html:6
 #: templates/html/infrastructure/field_view.html:6
 msgid "Infrastructure Field"
-msgstr ""
+msgstr "基建字段"
 
 #: templates/html/infrastructure/field_delete.html:23
 msgid "Delete this Field"
-msgstr ""
+msgstr "删除这个字段"
 
 #: templates/html/infrastructure/index.html:44
 #: templates/html/infrastructure/index_owned.html:40
@@ -5838,12 +5842,12 @@ msgstr ""
 #: templates/html/knowledge/category_delete.html:43
 #: templates/html/knowledge/category_view.html:69
 msgid "No Items"
-msgstr ""
+msgstr "没有条目"
 
 #: templates/html/infrastructure/index.html:45
 #: templates/html/infrastructure/index_owned.html:41
 msgid "Create an Item"
-msgstr ""
+msgstr "创建一个条目"
 
 #: templates/html/infrastructure/item_add.html:3
 #: templates/html/infrastructure/item_add.html:6
@@ -5862,39 +5866,39 @@ msgstr ""
 #: templates/html/knowledge/item_add_folder.html:10
 #: templates/html/knowledge/page.html:38
 msgid "New Item"
-msgstr ""
+msgstr "新条目"
 
 #: templates/html/infrastructure/item_add.html:14
 msgid "Please choose the type of Infrastructure Item you wish to create"
-msgstr ""
+msgstr "请选择希望创建的基建条目类型"
 
 #: templates/html/infrastructure/item_add.html:25
 msgid ""
 "Sorry, you can not create new Items. You don't have access to any of the "
 "available Infrastructure Item Types"
-msgstr ""
+msgstr "对不起，您不能创建新条目。您无法使用任何可用基建条目类型"
 
 #: templates/html/infrastructure/item_add_typed.html:6
 #: templates/html/infrastructure/item_type_delete.html:6
 #: templates/html/infrastructure/item_type_edit.html:6
 #: templates/html/infrastructure/item_type_view.html:6
 msgid "Infrastructure Type"
-msgstr ""
+msgstr "基建类型"
 
 #: templates/html/infrastructure/item_add_typed.html:25
 #: templates/html/knowledge/item_add_folder.html:27
 msgid "Create Item"
-msgstr ""
+msgstr "创建条目"
 
 #: templates/html/infrastructure/item_delete.html:33
 msgid "Delete this Infrastructure Item"
-msgstr ""
+msgstr "删除这个基建条目"
 
 #: templates/html/infrastructure/item_status_delete.html:6
 #: templates/html/infrastructure/item_status_edit.html:6
 #: templates/html/infrastructure/item_status_view.html:6
 msgid "Item Status"
-msgstr ""
+msgstr "条目状态"
 
 #: templates/html/infrastructure/item_status_delete.html:23
 msgid "Delete this Status"
@@ -5918,15 +5922,15 @@ msgstr "活动服务记录"
 #: templates/html/infrastructure/service_record_index.html:3
 #: templates/html/infrastructure/service_record_index.html:5
 msgid "Service Records"
-msgstr ""
+msgstr "服务记录"
 
 #: templates/html/infrastructure/page.html:15
 msgid "By Type"
-msgstr ""
+msgstr "根据类型"
 
 #: templates/html/infrastructure/page.html:29
 msgid "Servicing"
-msgstr ""
+msgstr "正在服务"
 
 #: templates/html/infrastructure/service_record_add.html:3
 #: templates/html/infrastructure/service_record_add.html:8
@@ -5971,15 +5975,15 @@ msgstr "开始日期"
 
 #: templates/html/infrastructure/service_record_view.html:41
 msgid "Expiry Date"
-msgstr "过期日起"
+msgstr "过期日期"
 
 #: templates/html/infrastructure/service_record_view.html:48
 msgid "Items Covered"
-msgstr ""
+msgstr "条目涵盖"
 
 #: templates/html/infrastructure/service_record_view.html:57
 msgid "No items covered"
-msgstr ""
+msgstr "没有条目涵盖"
 
 #: templates/html/infrastructure/service_record_view.html:74
 msgid "Payment History"
@@ -5987,19 +5991,19 @@ msgstr "支付历史"
 
 #: templates/html/infrastructure/settings_view.html:20
 msgid "Default Item Status"
-msgstr ""
+msgstr "默认条目状态"
 
 #: templates/html/infrastructure/settings_view.html:31
 msgid "Infrastructure Types"
-msgstr ""
+msgstr "基建类型"
 
 #: templates/html/infrastructure/settings_view.html:56
 msgid "Infrastructure Fields"
-msgstr ""
+msgstr "基建字段"
 
 #: templates/html/infrastructure/settings_view.html:81
 msgid "Item Statuses"
-msgstr ""
+msgstr "条目状态"
 
 #: templates/html/knowledge/category_add.html:3
 #: templates/html/knowledge/category_delete.html:3
@@ -6026,7 +6030,7 @@ msgstr "新文件夹"
 
 #: templates/html/knowledge/folder_view.html:80
 msgid "No Items available"
-msgstr ""
+msgstr "没有可用条目"
 
 #: templates/html/knowledge/index.html:3
 #: templates/html/knowledge/index_categories.html:3
@@ -6036,11 +6040,11 @@ msgstr "知识库"
 
 #: templates/html/knowledge/index.html:31
 msgid "Recently Changed Items"
-msgstr ""
+msgstr "最近变更的条目"
 
 #: templates/html/knowledge/index_categories.html:31
 msgid "No Categories Available"
-msgstr ""
+msgstr "没有分类"
 
 #: templates/html/knowledge/item_delete.html:7
 #: templates/html/knowledge/item_edit.html:5
@@ -6048,11 +6052,11 @@ msgstr ""
 #: templates/html/sales/order_invoice_view.html:91
 #: templates/html/sales/order_view.html:129
 msgid "Item"
-msgstr ""
+msgstr "条目"
 
 #: templates/html/knowledge/item_delete.html:20
 msgid "Delete this Item"
-msgstr ""
+msgstr "删除这个条目"
 
 #: templates/html/messaging/index.html:3
 #: templates/html/messaging/index_inbox.html:3
@@ -6083,11 +6087,11 @@ msgstr "收件箱"
 #: templates/html/messaging/index_sent.html:3
 #: templates/html/messaging/page.html:16
 msgid "Sent"
-msgstr ""
+msgstr "发送"
 
 #: templates/html/messaging/message_compose.html:3
 msgid "Compose"
-msgstr ""
+msgstr "编辑"
 
 #: templates/html/messaging/message_compose.html:6
 #: templates/html/messaging/mlist_add.html:6
@@ -6105,7 +6109,7 @@ msgstr "新流"
 #: templates/html/messaging/message_compose.html:18
 #: templates/html/messaging/stream_view.html:96
 msgid "Send Message"
-msgstr ""
+msgstr "发送消息"
 
 #: templates/html/messaging/message_delete.html:7
 #: templates/html/messaging/message_view.html:7
@@ -6119,15 +6123,15 @@ msgstr "删除这个消息"
 #: templates/html/messaging/message_view.html:61
 #: templates/html/messaging/message_view.html:97
 msgid "this message"
-msgstr ""
+msgstr "这条消息"
 
 #: templates/html/messaging/message_view.html:108
 msgid "Post a reply"
-msgstr ""
+msgstr "发布回复"
 
 #: templates/html/messaging/message_view.html:141
 msgid "Send Reply"
-msgstr ""
+msgstr "发送回复"
 
 #: templates/html/messaging/mlist_add.html:3
 #: templates/html/messaging/mlist_view.html:6
@@ -6160,7 +6164,7 @@ msgstr "你的消息"
 
 #: templates/html/messaging/mlist_view.html:92
 msgid "Post"
-msgstr ""
+msgstr "发布"
 
 #: templates/html/messaging/page.html:13
 msgid "All"
@@ -6202,7 +6206,7 @@ msgstr "没有新消息"
 #: templates/html/news/my_watchlist_old.html:3 templates/html/news/page.html:3
 #: templates/html/news/page.html.py:36 templates/html/news/top_news.html:3
 msgid "News"
-msgstr ""
+msgstr "新闻"
 
 #: templates/html/news/index.html:21
 #: templates/html/news/index_by_module.html:18
@@ -6210,11 +6214,11 @@ msgstr ""
 #: templates/html/news/my_watchlist.html:22
 #: templates/html/news/top_news.html:23
 msgid "What are you working on?"
-msgstr ""
+msgstr "您现在在做什么？"
 
 #: templates/html/news/page.html:18
 msgid "News by Module"
-msgstr ""
+msgstr "模块新闻"
 
 #: templates/html/news/top_news.html:5
 msgid "Top"
@@ -6265,7 +6269,7 @@ msgstr "添加任务"
 
 #: templates/html/projects/index.html:58
 msgid "show more"
-msgstr ""
+msgstr "显示更多"
 
 #: templates/html/projects/index.html:62
 #: templates/html/projects/index_assigned.html:47
@@ -6274,7 +6278,7 @@ msgstr ""
 #: templates/html/projects/project_view.html:142
 #: templates/html/projects/widgets/tasks_assigned_to_me.html:13
 msgid "No Active Tasks"
-msgstr ""
+msgstr "没有活动任务"
 
 #: templates/html/projects/index.html:72
 #: templates/html/projects/index_assigned.html:57
@@ -6283,14 +6287,14 @@ msgstr ""
 #: templates/html/projects/index_owned.html:57
 #: templates/html/projects/project_view.html:153
 msgid "Unclassified Tasks"
-msgstr ""
+msgstr "未分类任务"
 
 #: templates/html/projects/index_by_status.html:10
 #: templates/html/projects/page.html:25
 #: templates/html/projects/status_delete.html:20
 #: templates/html/projects/status_edit.html:19
 msgid "By status"
-msgstr ""
+msgstr "状态"
 
 #: templates/html/projects/index_by_status.html:43
 #: templates/html/projects/milestone_add.html:8
@@ -6400,7 +6404,7 @@ msgstr "全部任务"
 #: templates/html/services/page.html:15
 #: templates/html/services/widgets/index_assigned.html:3
 msgid "Assigned to me"
-msgstr "派给我的"
+msgstr "指派派给我的"
 
 #: templates/html/projects/page.html:16
 msgid "Tasks in progress"
@@ -6504,22 +6508,22 @@ msgstr "子任务"
 #: templates/html/projects/task_time_add.html:152
 #: templates/html/projects/task_view.html:182
 msgid "Total Work Time"
-msgstr ""
+msgstr "总工作时间"
 
 #: templates/html/projects/task_time_add.html:189
 #: templates/html/projects/task_view.html:210
 msgid "now"
-msgstr ""
+msgstr "现在"
 
 #: templates/html/projects/task_time_delete.html:7
 #: templates/html/projects/task_time_edit.html:7
 #: templates/html/projects/task_time_view.html:7
 msgid "Task Time Slot"
-msgstr ""
+msgstr "任务时间段"
 
 #: templates/html/projects/task_time_delete.html:20
 msgid "Delete this Time Slot"
-msgstr ""
+msgstr "删除这个时间段"
 
 #: templates/html/projects/task_view.html:188
 msgid "Start Work"
@@ -6703,17 +6707,17 @@ msgstr "销售"
 #: templates/html/sales/settings_view.html:111
 #: templates/html/sales/status_view.html:47
 msgid "Leads"
-msgstr ""
+msgstr "线索"
 
 #: templates/html/sales/lead_add.html:8
 #: templates/html/sales/lead_index.html:10
 #: templates/html/sales/lead_index_owned.html:10
 msgid "New Lead"
-msgstr ""
+msgstr "新线索"
 
 #: templates/html/sales/lead_add.html:21
 msgid "Create Lead"
-msgstr ""
+msgstr "创建线索"
 
 #: templates/html/sales/lead_delete.html:3
 #: templates/html/sales/lead_edit.html:3 templates/html/sales/lead_view.html:3
@@ -6729,11 +6733,11 @@ msgstr "销售支持"
 #: templates/html/sales/lead_view.html:7
 #: templates/html/sales/opportunity_view.html:56
 msgid "Lead"
-msgstr ""
+msgstr "线索"
 
 #: templates/html/sales/lead_delete.html:21
 msgid "Delete this Lead?"
-msgstr ""
+msgstr "删除这个线索？"
 
 #: templates/html/sales/lead_delete.html:70
 #: templates/html/sales/lead_index.html:52
@@ -6752,7 +6756,7 @@ msgstr "联系方式"
 
 #: templates/html/sales/lead_view.html:14
 msgid "Convert To Opportunity"
-msgstr ""
+msgstr "转化成机会"
 
 #: templates/html/sales/lead_view.html:15
 #: templates/html/sales/opportunity_view.html:14
@@ -6762,11 +6766,11 @@ msgstr "转化为订单"
 #: templates/html/sales/lead_view.html:116
 #: templates/html/sales/opportunity_view.html:162
 msgid "Auto"
-msgstr ""
+msgstr "自动"
 
 #: templates/html/sales/lead_view.html:155
 msgid "Update Lead"
-msgstr ""
+msgstr "更新线索"
 
 #: templates/html/sales/opportunity_add.html:5
 #: templates/html/sales/opportunity_index.html:3
@@ -6777,7 +6781,7 @@ msgstr ""
 #: templates/html/sales/settings_view.html:112
 #: templates/html/sales/status_view.html:50
 msgid "Opportunities"
-msgstr ""
+msgstr "机会"
 
 #: templates/html/sales/opportunity_add.html:8
 #: templates/html/sales/opportunity_delete.html:10
@@ -6785,19 +6789,19 @@ msgstr ""
 #: templates/html/sales/opportunity_index.html:10
 #: templates/html/sales/opportunity_index_owned.html:10
 msgid "New Opportunity"
-msgstr ""
+msgstr "新机会"
 
 #: templates/html/sales/opportunity_add.html:21
 msgid "Create Opportunity"
-msgstr ""
+msgstr "创建机会"
 
 #: templates/html/sales/opportunity_delete.html:22
 msgid "Delete this Order Opportunity?"
-msgstr ""
+msgstr "删除这个订单机会"
 
 #: templates/html/sales/opportunity_edit.html:7
 msgid "Opportunity Edit"
-msgstr ""
+msgstr "编辑机会"
 
 #: templates/html/sales/opportunity_view.html:49
 #: templates/html/sales/order_view.html:49
@@ -6806,11 +6810,11 @@ msgstr "未派"
 
 #: templates/html/sales/opportunity_view.html:81
 msgid "Expected Date"
-msgstr ""
+msgstr "期望日期"
 
 #: templates/html/sales/opportunity_view.html:88
 msgid "Closed Date"
-msgstr ""
+msgstr "截至日期"
 
 #: templates/html/sales/opportunity_view.html:107
 msgid "Amount in "
@@ -6818,15 +6822,15 @@ msgstr ""
 
 #: templates/html/sales/opportunity_view.html:115
 msgid "Amount in Base Currency"
-msgstr ""
+msgstr "基准货币金额"
 
 #: templates/html/sales/opportunity_view.html:122
 msgid "Weighted Amount"
-msgstr ""
+msgstr "加权金额"
 
 #: templates/html/sales/opportunity_view.html:201
 msgid "Update Opportunity"
-msgstr ""
+msgstr "更新机会"
 
 #: templates/html/sales/order_add.html:3
 #: templates/html/sales/order_add.html:12 templates/html/sales/page.html:58
@@ -6874,17 +6878,17 @@ msgstr "删除这个销售订单？"
 #: templates/html/sales/order_delete.html:81
 #: templates/html/sales/ordered_product_edit.html:63
 msgid "Payment"
-msgstr ""
+msgstr "支付"
 
 #: templates/html/sales/order_invoice_view.html:85
 msgid "Order Reference"
-msgstr ""
+msgstr "订单参考"
 
 #: templates/html/sales/order_invoice_view.html:95
 #: templates/html/sales/order_view.html:133
 #, python-format
 msgid "Discount (%%)"
-msgstr ""
+msgstr "折扣（%%）"
 
 #: templates/html/sales/order_invoice_view.html:96
 #: templates/html/sales/order_invoice_view.html:133
@@ -6899,7 +6903,7 @@ msgstr "总计"
 #: templates/html/sales/order_view.html:168
 #: templates/html/sales/tags/order_list.html:12
 msgid "Sub Total"
-msgstr ""
+msgstr "总计"
 
 #: templates/html/sales/order_invoice_view.html:140
 #: templates/html/sales/order_view.html:195
@@ -6909,7 +6913,7 @@ msgstr "没有预订产品"
 #: templates/html/sales/order_invoice_view.html:141
 #: templates/html/sales/order_view.html:196
 msgid "Add an Item"
-msgstr ""
+msgstr "添加一个项目"
 
 #: templates/html/sales/order_view.html:121
 #: templates/html/sales/ordered_product_edit.html:88
@@ -6951,11 +6955,11 @@ msgstr "全部销售订单"
 
 #: templates/html/sales/page.html:22
 msgid "All Leads"
-msgstr ""
+msgstr "全部线索"
 
 #: templates/html/sales/page.html:28
 msgid "All Opportunities"
-msgstr ""
+msgstr "全部机会"
 
 #: templates/html/sales/page.html:33 templates/html/sales/product_add.html:3
 #: templates/html/sales/product_add.html:7
@@ -7008,7 +7012,7 @@ msgstr "子产品"
 
 #: templates/html/sales/product_view.html:61
 msgid "Buy Price"
-msgstr ""
+msgstr "买入价"
 
 #: templates/html/sales/product_view.html:75
 msgid "Stock"
@@ -7111,11 +7115,11 @@ msgstr "删除这个来源"
 #: templates/html/sales/status_delete.html:66
 #: templates/html/sales/status_view.html:53
 msgid "Orders"
-msgstr ""
+msgstr "订单"
 
 #: templates/html/sales/source_edit.html:7
 msgid "Order Source"
-msgstr "Order来源"
+msgstr "订单来源"
 
 #: templates/html/sales/source_edit.html:18
 msgid "By Source"
@@ -7123,25 +7127,25 @@ msgstr "以来源"
 
 #: templates/html/sales/source_view.html:52
 msgid "Orders From"
-msgstr ""
+msgstr "订单来自"
 
 #: templates/html/sales/status_delete.html:7
 #: templates/html/sales/status_edit.html:13
 #: templates/html/sales/status_view.html:7
 msgid "Order Status"
-msgstr ""
+msgstr "订单状态"
 
 #: templates/html/sales/status_delete.html:31
 msgid "Delete this Order Status?"
-msgstr ""
+msgstr "删除这个订单状态"
 
 #: templates/html/sales/status_view.html:45
 msgid "Available For"
-msgstr ""
+msgstr "可用于"
 
 #: templates/html/sales/status_view.html:64
 msgid "Orders With Status"
-msgstr ""
+msgstr "有状态的订单"
 
 #: templates/html/sales/subscription_add.html:21
 msgid "Create Subscription"
@@ -7231,12 +7235,12 @@ msgstr "删除这个代理"
 #: templates/html/services/agent_delete.html:68
 #: templates/html/services/agent_view.html:52
 msgid "Available"
-msgstr ""
+msgstr "可用"
 
 #: templates/html/services/agent_delete.html:71
 #: templates/html/services/agent_view.html:55
 msgid "From"
-msgstr "从"
+msgstr "始于"
 
 #: templates/html/services/agent_delete.html:73
 #: templates/html/services/agent_view.html:57
@@ -7269,7 +7273,7 @@ msgstr "未分类Tickets"
 
 #: templates/html/services/page.html:12
 msgid "All Tickets"
-msgstr ""
+msgstr "全部Ticket"
 
 #: templates/html/services/page.html:20
 #: templates/html/services/queue_add.html:18
@@ -7367,7 +7371,7 @@ msgstr "创建服务等级协议"
 
 #: templates/html/services/settings_view.html:35
 msgid "Notify Caller By Email"
-msgstr ""
+msgstr "通过邮件通知呼入者"
 
 #: templates/html/services/settings_view.html:98
 msgid "Example E-mail"
@@ -7437,4 +7441,4 @@ msgid "Active Support Tickets"
 msgstr "活跃支持Ticket"
 
 msgid "Sales & Stock"
-msgstr "进销存"
+msgstr "销售 & 库存"
