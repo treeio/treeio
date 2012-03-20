@@ -1,12 +1,11 @@
 [![Build Status](https://secure.travis-ci.org/treeio/treeio.png?branch=master)](http://travis-ci.org/treeio/treeio)
 
 ==========================
-Tree.io Business Management Platform
+Tree.io gestion des affaires
 ==========================
+Tree.io est une plate-forme de gestion des affaires, avec des tonnes de fonctionnalités intéressantes telles que la gestion de projets intégrée, Help Desk (prise en charge de billetterie) et les modules CRM. Pour une liste complète des fonctionnalités s'il vous plaît voir http://www.tree.io
 
-Tree.io is a powerful business management platform with tons of great features including integrated Project Management, Help Desk (support ticketing) and CRM modules. For a full list of features please see http://www.tree.io
-
-For FAQ see the Tree.io community site http://www.tree.io/community/
+Pour voir la FAQ Tree.io site de la communauté http://www.tree.io/community/
 
 
 License
