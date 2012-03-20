@@ -1,7 +1,7 @@
 # encoding: utf-8
 # Copyright 2011 Tree.io Limited
 # This file is part of Treeio.
-# License www.tree.io/license French localisation morgao.com
+# License www.tree.io/license
 
 # coding=utf-8
 
@@ -36,7 +36,7 @@ TIME_ZONE = 'Europe/London'
 
 # Language code for this installation. All choices can be found here:
 # http://www.i18nguy.com/unicode/language-identifiers.html
-LANGUAGE_CODE = 'fr-FR'
+LANGUAGE_CODE = 'en-GB'
 
 SITE_ID = 1
 
@@ -340,7 +340,7 @@ HARDTREE_HELP_LINK_PREFIX = '/help/'
 HARDTREE_HELP_SOURCE = 'http://www.treeio.com/help'
 
 HARDTREE_LANGUAGES = (('en', u'English'), ('ru', u'Русский'), ('es', u'Español'), ('de', u'Deutsche'), ('zh_CN', u'简体中文'), ('fr', u'Français'))
-HARDTREE_LANGUAGES_DEFAULT = 'fr'
+HARDTREE_LANGUAGES_DEFAULT = 'en'
 
 HARDTREE_AJAX_RELOAD_ON_REDIRECT = ('home',
                                     'user_login',
