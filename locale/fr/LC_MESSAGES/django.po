@@ -5,15 +5,18 @@
 #
 msgid ""
 msgstr ""
-"PO-Revision-Date: 2012-02-27 00:28+0100\n"
+"Project-Id-Version: treeioFR 0.1\n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: 2012-03-21 08:37+0100\n"
 "Last-Translator: Jean-Bruno <redb68@gmail.com>\n"
-"X-Translated-Using: django-rosetta 0.6.2\n"
+"Language-Team: http://www.morgao.com <info@morgao.com>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Project-Id-Version: \n"
-"POT-Creation-Date: \n"
-"Language-Team: \n"
+"X-Translated-Using: django-rosetta 0.6.5\n"
+"X-Poedit-Language: French\n"
+"X-Poedit-Country: FRANCE\n"
+"X-Poedit-SourceCharset: utf-8\n"
 
 #: account/forms.py:36
 #: core/administration/forms.py:115
@@ -298,7 +301,7 @@ msgstr "Caché"
 #: templates/html/services/ticket_delete.html:96
 #: templates/html/services/ticket_view.html:137
 msgid "Details"
-msgstr "Details"
+msgstr "Détails"
 
 #: changes/forms.py:54
 #: changes/forms.py:55
@@ -307,7 +310,7 @@ msgstr "Details"
 #: templates/html/changes/set_delete.html:33
 #: templates/html/changes/set_view.html:20
 msgid "Object"
-msgstr "Objeto"
+msgstr "Objet"
 
 #: changes/forms.py:72
 #: changes/forms.py:139
@@ -346,7 +349,7 @@ msgstr "Objeto"
 #: templates/html/services/ticket_view.html:95
 #: templates/html/services/ticket_view.html:165
 msgid "Status"
-msgstr "Estado"
+msgstr "Statut"
 
 #: changes/forms.py:113
 #: templates/html/changes/set_delete.html:52
@@ -354,19 +357,19 @@ msgstr "Estado"
 #: templates/html/projects/task_time_delete.html:38
 #: templates/html/projects/task_time_view.html:44
 msgid "Author"
-msgstr "Autor"
+msgstr "Auteur"
 
 #: changes/forms.py:132
 msgid "Resolved by"
-msgstr "Resuelto por"
+msgstr "Résolu par"
 
 #: core/forms.py:68
 msgid "Enter text from the image"
-msgstr "Ingrese el texto de la imagen"
+msgstr "Entrer ici le texte affiché sur l'image"
 
 #: core/forms.py:90
 msgid "That username doesn't have an associated email."
-msgstr "Ese usuario no tiene un correo electrónico asociado."
+msgstr "Cet utilisateur n'a pas de mail associé"
 
 #: core/forms.py:108
 #: documents/forms.py:18
@@ -413,7 +416,7 @@ msgstr "Principal"
 #: templates/html/services/index_assigned.html:38
 #: templates/html/services/index_owned.html:38
 msgid "Add"
-msgstr "Agregar"
+msgstr "Ajouter"
 
 #: core/administration/forms.py:78
 #: templates/html/core/page.html:12
@@ -423,12 +426,12 @@ msgstr "Agregar"
 #: templates/html/core/administration/perspective_delete.html:60
 #: templates/html/core/administration/perspective_view.html:42
 msgid "Modules"
-msgstr "Módulos"
+msgstr "Modules"
 
 #: core/administration/forms.py:97
 #: templates/html/core/user_login.html:20
 msgid "Password"
-msgstr "Contraseña"
+msgstr "Mot de passe"
 
 #: core/administration/forms.py:102
 #: templates/html/account/account_view.html:22
@@ -437,36 +440,36 @@ msgstr "Contraseña"
 #: templates/html/core/administration/user_view.html:22
 #: templates/html/identities/user_view.html:24
 msgid "Username"
-msgstr "Nombre de usuario"
+msgstr "Nom d'utilisateur"
 
 #: core/administration/forms.py:103
 msgid "Detaul group"
-msgstr "Grupo por defecto"
+msgstr "Groupe par défaut"
 
 #: core/administration/forms.py:104
 msgid "Other groups"
-msgstr "Otros grupos"
+msgstr "Autres groupes"
 
 #: core/administration/forms.py:122
 #, python-format
 msgid "Sorry, but your subscription does not allow more than %d users. You're currently at your limit."
-msgstr "Lo sentimos, pero su suscripción no permite más de %d usuarios. Usted ha alcanzado su limite."
+msgstr "Désolé mais votre compte ne permet pas plus de %d utilisateurs. Vous avez atteint votre limite."
 
 #: core/dashboard/forms.py:17
 #: templates/html/core/administration/perspective_delete.html:8
 #: templates/html/core/administration/perspective_edit.html:14
 #: templates/html/core/administration/perspective_view.html:8
 msgid "Perspective"
-msgstr "Vista"
+msgstr "Perspective"
 
 #: core/dashboard/forms.py:18
 msgid "Weight"
-msgstr "Peso"
+msgstr "Poids"
 
 #: core/trash/forms.py:10
 #: sales/forms.py:207
 msgid "Action"
-msgstr "Acción"
+msgstr "Action"
 
 #: documents/forms.py:33
 #: documents/forms.py:73
@@ -481,7 +484,7 @@ msgstr "Acción"
 #: templates/html/documents/weblink_delete.html:39
 #: templates/html/documents/weblink_view.html:44
 msgid "Title"
-msgstr "Título"
+msgstr "Títre"
 
 #: documents/forms.py:35
 #: documents/forms.py:56
@@ -512,7 +515,7 @@ msgstr "Título"
 #: templates/html/knowledge/item_delete.html:46
 #: templates/html/knowledge/item_view.html:51
 msgid "Folder"
-msgstr "Carpeta"
+msgstr "Dossier"
 
 #: documents/forms.py:40
 #: knowledge/forms.py:52
@@ -524,11 +527,11 @@ msgstr "Carpeta"
 #: templates/html/knowledge/item_delete.html:53
 #: templates/html/knowledge/item_view.html:58
 msgid "Body"
-msgstr "Cuerpo"
+msgstr "Corps"
 
 #: documents/forms.py:61
 msgid "Content"
-msgstr "Contenido"
+msgstr "Contenu"
 
 #: documents/forms.py:76
 #: templates/html/documents/weblink_delete.html:63
@@ -545,7 +548,7 @@ msgstr "URL"
 #: templates/html/sales/subscription_delete.html:47
 #: templates/html/sales/subscription_view.html:56
 msgid "Start"
-msgstr "Início"
+msgstr "Début"
 
 #: events/forms.py:26
 #: templates/html/events/event_delete.html:67
@@ -555,21 +558,21 @@ msgstr "Fin"
 
 #: events/forms.py:55
 msgid "End date can not be before the start date"
-msgstr "La fecha de finalización no puede ser anterior a la fecha de inicio"
+msgstr "La date de fin ne peut être avant la date de début"
 
 #: events/forms.py:69
 msgid "Go to date"
-msgstr "Ir a la fecha"
+msgstr "Aller à la date"
 
 #: events/forms.py:78
 #: finance/forms.py:366
 msgid "Date From"
-msgstr "Fecha Desde"
+msgstr "Date depuis"
 
 #: events/forms.py:81
 #: finance/forms.py:373
 msgid "Date To"
-msgstr "Fecha Hasta"
+msgstr "Date jusqu'à"
 
 #: finance/forms.py:29
 #: finance/forms.py:269
@@ -595,7 +598,7 @@ msgstr "Fecha Hasta"
 #: templates/html/knowledge/category_edit.html:5
 #: templates/html/knowledge/category_view.html:7
 msgid "Category"
-msgstr "Categoria"
+msgstr "Catégorie"
 
 #: finance/forms.py:66
 #: finance/forms.py:92
@@ -616,69 +619,69 @@ msgstr "Categoria"
 #: templates/html/infrastructure/item_delete.html:89
 #: templates/html/infrastructure/item_view.html:75
 msgid "Owner"
-msgstr "Proprietario"
+msgstr "Propriétaire"
 
 #: finance/forms.py:72
 msgid "Initial Balance"
-msgstr "Saldo Inicial"
+msgstr "Balance initiale"
 
 #: finance/forms.py:109
 msgid "Asset type"
-msgstr "Tipo de Activo"
+msgstr "Type d'actifs"
 
 #: finance/forms.py:110
 msgid "Initial value"
-msgstr "Valor incial"
+msgstr "Valeur initiale"
 
 #: finance/forms.py:111
 msgid "Lifetime (years)"
-msgstr "Longevidad (en años)"
+msgstr "Longévité (en année)"
 
 #: finance/forms.py:112
 msgid "Endlife value"
-msgstr "Valor final"
+msgstr "Valeur finale"
 
 #: finance/forms.py:113
 msgid "Depreciation rate"
-msgstr "Tasa de depreciación"
+msgstr "Taux de dépréciation"
 
 #: finance/forms.py:114
 #: finance/forms.py:183
 msgid "Purchase date"
-msgstr "Fecha de compra"
+msgstr "Date d'achat"
 
 #: finance/forms.py:116
 msgid "Current value"
-msgstr "Valor actual"
+msgstr "Valeur actuelle"
 
 #: finance/forms.py:141
 #: finance/forms.py:221
 msgid "Purchase Date From"
-msgstr "Fecha de Compra Desde"
+msgstr "Date d'achat depuis"
 
 #: finance/forms.py:148
 #: finance/forms.py:228
 msgid "Purchase Date To"
-msgstr "Fecha de Compra Hasta"
+msgstr "Date d'achat jusq'à"
 
 #: finance/forms.py:153
 #: templates/html/finance/asset_delete.html:35
 #: templates/html/finance/asset_view.html:40
 msgid "Asset Type"
-msgstr "Tipo de Activo"
+msgstr "Type d'actif"
 
 #: finance/forms.py:177
 msgid "Equity type"
-msgstr "Tipo de Capital Social"
+msgstr "Type de Capital Social"
 
 #: finance/forms.py:178
 msgid "Issue price"
-msgstr "Precio de la emisión"
+msgstr "Prix de l'émission"
 
 #: finance/forms.py:179
 #: sales/forms.py:304
 msgid "Sell price"
-msgstr "Precio de venta"
+msgstr "Prix de vente"
 
 #: finance/forms.py:180
 #: finance/forms.py:241
@@ -686,7 +689,7 @@ msgstr "Precio de venta"
 #: templates/html/finance/equity_view.html:66
 #: templates/html/finance/index_equities.html:42
 msgid "Issuer"
-msgstr "Emisor"
+msgstr "Emetteur"
 
 #: finance/forms.py:182
 #: sales/forms.py:714
@@ -695,13 +698,13 @@ msgstr "Emisor"
 #: templates/html/finance/index_equities.html:43
 #: templates/html/sales/opportunity_view.html:113
 msgid "Amount"
-msgstr "Cantidad"
+msgstr "Quantité"
 
 #: finance/forms.py:233
 #: templates/html/finance/equity_delete.html:35
 #: templates/html/finance/equity_view.html:40
 msgid "Equity Type"
-msgstr "Tipo de Capital Social"
+msgstr "Type de Capital Social"
 
 #: finance/forms.py:270
 #: finance/forms.py:308
@@ -728,7 +731,7 @@ msgstr "Tipo de Capital Social"
 #: templates/html/sales/ordered_product_add.html:77
 #: templates/html/sales/ordered_product_edit.html:74
 msgid "Source"
-msgstr "Orígen"
+msgstr "Origine"
 
 #: finance/forms.py:271
 #: finance/forms.py:309
@@ -742,7 +745,7 @@ msgstr "Orígen"
 #: templates/html/finance/transaction_delete.html:45
 #: templates/html/finance/transaction_view.html:53
 msgid "Target"
-msgstr "Destinatario"
+msgstr "Destinataire"
 
 #: finance/forms.py:272
 #: finance/forms.py:310
@@ -765,12 +768,12 @@ msgstr "Destinatario"
 #: templates/html/finance/transaction_view.html:58
 #: templates/html/finance/tags/transaction_list.html:12
 msgid "Account"
-msgstr "Cuenta"
+msgstr "Compte"
 
 #: finance/forms.py:273
 #: finance/forms.py:420
 msgid "Due date"
-msgstr "Fecha Limite"
+msgstr "date de valeur (?) de validité (?) de due ?"
 
 #: finance/forms.py:274
 #: finance/forms.py:312
@@ -786,79 +789,81 @@ msgstr "Fecha Limite"
 #: templates/html/finance/tags/transaction_list.html:13
 #: templates/html/infrastructure/item_delete.html:95
 msgid "Value"
-msgstr "Valor"
+msgstr "Valeur"
 
 #: finance/forms.py:306
 #: templates/html/finance/tags/liability_list.html:10
 #: templates/html/finance/tags/transaction_list.html:9
 msgid "Description"
-msgstr "Descripción"
+msgstr "Description"
 
 #: finance/forms.py:311
 #: templates/html/finance/transaction_delete.html:60
 #: templates/html/finance/transaction_view.html:68
 msgid "Date & Time"
-msgstr "Fecha y Hora"
+msgstr "Date & heure"
 
 #: finance/forms.py:337
+#, fuzzy
 msgid "Liability / Receivable"
-msgstr "Obligación / Por Cobrar"
+msgstr "Débit / Crédit ( Liability / Receivable )"
 
 #: finance/forms.py:455
 msgid "Due Date From:"
-msgstr "Fecha Limite Desde:"
+msgstr "Dû depuis (Due Date From)"
 
 #: finance/forms.py:461
+#, fuzzy
 msgid "Due Date To:"
-msgstr "Fecha Limite Hasta:"
+msgstr "Dû a partir (Due Date To:)"
 
 #: finance/forms.py:539
 msgid "Your company has to have at least one Financial Account"
-msgstr "Su compañía debe tener al menos una Cuenta Financiera"
+msgstr "Votre entreprise doit avoir au moins un Compte Finance"
 
 #: finance/forms.py:551
 msgid "Default Account has to belong to your company"
-msgstr "La Cuenta Predeterminada debe pertenecer a su compañía"
+msgstr "Le compte par défaut doit appartenir à votre entreprise"
 
 #: identities/forms.py:25
 #: infrastructure/forms.py:249
 #: templates/html/identities/field_view.html:25
 #: templates/html/infrastructure/field_view.html:25
 msgid "Label"
-msgstr "Etiqueta"
+msgstr "Etiquette"
 
 #: identities/forms.py:26
 #: infrastructure/forms.py:250
 msgid "Field type"
-msgstr "Tipo de campo"
+msgstr "Type de champ"
 
 #: identities/forms.py:27
 #: infrastructure/forms.py:251
 #: templates/html/identities/field_view.html:35
 #: templates/html/infrastructure/field_view.html:35
 msgid "Required"
-msgstr "Obligatorio"
+msgstr "Obligatoire"
 
 #: identities/forms.py:46
 #: infrastructure/forms.py:268
 msgid "Fields"
-msgstr "Campos"
+msgstr "Champs"
 
 #: identities/forms.py:268
 msgid "Contact type"
-msgstr "Tipo de contacto"
+msgstr "Type de contact"
 
 #: identities/forms.py:279
 #: templates/html/messaging/settings_view.html:18
 msgid "Default Contact Type"
-msgstr "Tipo de contacto predeterminado"
+msgstr "Type de contact par défaut"
 
 #: infrastructure/forms.py:134
 #: infrastructure/forms.py:350
 #: templates/html/infrastructure/item_delete.html:70
 #: templates/html/infrastructure/item_view.html:56
 msgid "Manufacturer"
-msgstr "Fabricante"
+msgstr "Fabricant"
 
 #: infrastructure/forms.py:136
 #: infrastructure/forms.py:310
@@ -869,19 +874,22 @@ msgstr "Fabricante"
 #: templates/html/infrastructure/item_view.html:63
 #: templates/html/infrastructure/service_record_view.html:28
 #: templates/html/sales/product_view.html:58
+#, fuzzy
 msgid "Supplier"
-msgstr "Proveedor"
+msgstr "Distributeur"
 
 #: infrastructure/forms.py:138
 #: infrastructure/forms.py:356
 #: templates/html/infrastructure/item_delete.html:83
 #: templates/html/infrastructure/item_view.html:69
+#, fuzzy
 msgid "Location"
-msgstr "Ubicación"
+msgstr "Emplacement"
 
 #: infrastructure/forms.py:139
+#, fuzzy
 msgid "Asset Record"
-msgstr "Registro de Activos"
+msgstr "Livre de compte"
 
 #: infrastructure/forms.py:309
 #: templates/html/documents/folder_view.html:78
@@ -893,28 +901,30 @@ msgstr "Registro de Activos"
 #: templates/html/infrastructure/item_type_delete.html:3
 #: templates/html/knowledge/category_view.html:52
 #: templates/html/knowledge/folder_view.html:70
+#, fuzzy
 msgid "Items"
-msgstr "Elementos"
+msgstr "Items !"
 
 #: infrastructure/forms.py:311
 #: projects/forms.py:142
 #: projects/forms.py:219
 msgid "Start date"
-msgstr "Fecha de inicio"
+msgstr "Date de début"
 
 #: infrastructure/forms.py:312
 msgid "Expiry date"
-msgstr "Fecha de vencimiento"
+msgstr "Date de fin"
 
 #: infrastructure/forms.py:313
 #: templates/html/finance/liability_view.html:79
 #: templates/html/finance/receivable_view.html:78
 msgid "Payments"
-msgstr "Pagos"
+msgstr "Paiements"
 
 #: infrastructure/forms.py:333
+#, fuzzy
 msgid "Item type"
-msgstr "Tipo de elemento"
+msgstr "Type d'item"
 
 #: infrastructure/forms.py:369
 #: messaging/forms.py:48
@@ -3152,7 +3162,7 @@ msgstr "No se ha encontrado nada"
 
 #: templates/html/core/tags/help_link_block.html:1
 msgid "Help"
-msgstr "Ayuda"
+msgstr "Aide"
 
 #: templates/html/core/tags/modules_header_block.html:4
 #: templates/html/core/tags/modules_header_block.html:6

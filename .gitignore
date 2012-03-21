@@ -5,3 +5,4 @@ core/db/dbsettings.json
 treeio.db
 static/media/identities/
 doc/_build
+.DS_Store
