@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: treeioFR 0.1\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2012-03-21 16:50+0100\n"
+"PO-Revision-Date: 2012-03-21 20:08+0100\n"
 "Last-Translator: Jean-Bruno <redb68@gmail.com>\n"
 "Language-Team: http://www.morgao.com <info@morgao.com>\n"
 "MIME-Version: 1.0\n"
@@ -1399,7 +1399,7 @@ msgstr "Produit"
 #: templates/html/sales/ordered_product_view.html:45
 #: templates/html/sales/tags/order_list.html:7
 msgid "Order"
-msgstr "Orden"
+msgstr "Commande"
 
 #: sales/forms.py:396
 #: templates/html/sales/order_delete.html:73
@@ -1409,7 +1409,7 @@ msgstr "Orden"
 #: templates/html/sales/ordered_product_edit.html:56
 #: templates/html/sales/ordered_product_view.html:62
 msgid "Quantity"
-msgstr "Cantidad"
+msgstr "Quantité"
 
 #: sales/forms.py:397
 #: templates/html/sales/order_view.html:125
@@ -1418,23 +1418,23 @@ msgstr "Cantidad"
 #: templates/html/sales/ordered_product_edit.html:100
 #: templates/html/sales/ordered_product_view.html:68
 msgid "Discount"
-msgstr "Descuento"
+msgstr "Remise"
 
 #: sales/forms.py:451
 #: templates/html/sales/subscription_delete.html:53
 #: templates/html/sales/subscription_view.html:62
 msgid "Expiry"
-msgstr "Vencimiento"
+msgstr "Expiration"
 
 #: sales/forms.py:460
 msgid "Cycle period"
-msgstr "Periodo del ciclo"
+msgstr "Durée du cycle"
 
 #: sales/forms.py:475
 #: services/forms.py:109
 #: templates/html/services/ticket_view.html:77
 msgid "Reference"
-msgstr "Referencia"
+msgstr "Réference"
 
 #: sales/forms.py:503
 #: sales/forms.py:557
@@ -1443,7 +1443,7 @@ msgstr "Referencia"
 #: templates/html/sales/ordered_product_add.html:66
 #: templates/html/sales/ordered_product_edit.html:63
 msgid "Payment"
-msgstr "Pago"
+msgstr "Paiement"
 
 #: sales/forms.py:506
 #: sales/forms.py:567
@@ -1455,7 +1455,7 @@ msgstr "Pago"
 #: templates/html/sales/ordered_product_add.html:47
 #: templates/html/sales/ordered_product_edit.html:44
 msgid "Opportunity"
-msgstr "Oportunidad"
+msgstr "Opportunité"
 
 #: sales/forms.py:519
 #: sales/forms.py:576
@@ -1476,12 +1476,12 @@ msgstr "Oportunidad"
 #: templates/html/services/ticket_delete.html:66
 #: templates/html/services/ticket_view.html:99
 msgid "Assigned to"
-msgstr "Asignado a"
+msgstr "Assigné à"
 
 #: sales/forms.py:521
 #: templates/html/finance/tags/transaction_list.html:8
 msgid "Date"
-msgstr "Fecha"
+msgstr "Date"
 
 #: sales/forms.py:595
 #: sales/forms.py:642
@@ -1494,32 +1494,32 @@ msgstr "Fecha"
 #: templates/html/sales/lead_view.html:61
 #: templates/html/sales/opportunity_view.html:66
 msgid "Contact"
-msgstr "Contacto"
+msgstr "Contact"
 
 #: sales/forms.py:602
 #: sales/forms.py:647
 #: sales/forms.py:709
 #: sales/forms.py:751
 msgid "Products interested"
-msgstr "Productos de interés"
+msgstr "Produits concernés"
 
 #: sales/forms.py:622
 #: sales/forms.py:660
 msgid "Contact method"
-msgstr "Método de contacto"
+msgstr "Methode de contact"
 
 #: sales/forms.py:711
 msgid "Expected date"
-msgstr "Fecha prevista"
+msgstr "Date prévue"
 
 #: sales/forms.py:712
 msgid "Closed date"
-msgstr "Fecha de cierre"
+msgstr "Date de clôture"
 
 #: sales/forms.py:715
 #: templates/html/sales/opportunity_view.html:106
 msgid "Probability"
-msgstr "Probabilidad"
+msgstr "Probabilité"
 
 #: sales/forms.py:734
 #: templates/html/sales/lead_delete.html:7
@@ -1527,7 +1527,7 @@ msgstr "Probabilidad"
 #: templates/html/sales/lead_view.html:7
 #: templates/html/sales/opportunity_view.html:61
 msgid "Lead"
-msgstr "Cliente Potencial"
+msgstr "Client Potentiel"
 
 #: services/forms.py:79
 #: services/forms.py:119
@@ -1542,7 +1542,7 @@ msgstr "Cliente Potencial"
 #: templates/html/services/ticket_delete.html:85
 #: templates/html/services/ticket_view.html:119
 msgid "Service"
-msgstr "Servicio"
+msgstr "Service"
 
 #: services/forms.py:121
 #: services/forms.py:392
@@ -1553,7 +1553,7 @@ msgstr "Servicio"
 #: templates/html/services/ticket_delete.html:79
 #: templates/html/services/ticket_view.html:113
 msgid "Queue"
-msgstr "Cola"
+msgstr "File"
 
 #: services/forms.py:123
 #: templates/html/services/sla_delete.html:6
@@ -1561,44 +1561,46 @@ msgstr "Cola"
 #: templates/html/services/sla_view.html:6
 #: templates/html/services/ticket_delete.html:91
 #: templates/html/services/ticket_view.html:125
+#, fuzzy
 msgid "Service Level Agreement"
-msgstr "Acuerdo de Nivel de Servicio"
+msgstr "Niveau de permission"
 
 #: services/forms.py:129
 #: templates/html/services/ticket_view.html:144
 msgid "Resolution"
-msgstr "Resolución"
+msgstr "Résolution"
 
 #: services/forms.py:175
 #: templates/html/services/ticket_view.html:87
 msgid "Urgency"
-msgstr "Urgencia"
+msgstr "Urgence"
 
 #: services/forms.py:206
+#, fuzzy
 msgid "Notify caller"
-msgstr "Notificar a quien llame"
+msgstr "Avertir l'appelant"
 
 #: services/forms.py:207
 msgid "Set as Resolution"
-msgstr "Establecer como Resolución"
+msgstr "Définir comme résolution"
 
 #: services/forms.py:249
 msgid "Default ticket status"
-msgstr "Estado Predeterminado de la Solicitud"
+msgstr "Statut du ticket par défaut"
 
 #: services/forms.py:250
 msgid "Default ticket priority"
-msgstr "Prioridad Predeterminada de la Solicitud"
+msgstr "Priorité du ticket par défaut"
 
 #: services/forms.py:251
 msgid "Default service"
-msgstr "Servicio predeterminado"
+msgstr "Service par défaut"
 
 #: services/forms.py:252
 #: templates/html/services/queue_delete.html:78
 #: templates/html/services/queue_view.html:73
 msgid "Waiting time"
-msgstr "Tiempo de espera"
+msgstr "Temps d'attente"
 
 #: services/forms.py:253
 msgid "Next queue"
