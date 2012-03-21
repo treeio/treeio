@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: treeioFR 0.1\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2012-03-21 20:08+0100\n"
+"PO-Revision-Date: 2012-03-21 21:08+0100\n"
 "Last-Translator: Jean-Bruno <redb68@gmail.com>\n"
 "Language-Team: http://www.morgao.com <info@morgao.com>\n"
 "MIME-Version: 1.0\n"
@@ -1604,61 +1604,61 @@ msgstr "Temps d'attente"
 
 #: services/forms.py:253
 msgid "Next queue"
-msgstr "Siguiente cola"
+msgstr "Prochaine file"
 
 #: services/forms.py:254
 msgid "Ticket code"
-msgstr "Código de la Solicitud"
+msgstr "Code du ticket"
 
 #: services/forms.py:255
 msgid "Message stream"
-msgstr "Fuente del mensaje"
+msgstr "Flux de message"
 
 #: services/forms.py:302
 msgid "Response time"
-msgstr "Tiempo de respuesta"
+msgstr "Temps de réponse"
 
 #: services/forms.py:306
 msgid "Uptime rate"
-msgstr "Tasa de tiempo de actividad"
+msgstr "Taux de disponibilité"
 
 #: services/forms.py:321
 #: services/forms.py:424
 #: templates/html/services/sla_delete.html:81
 #: templates/html/services/sla_view.html:67
 msgid "Provider"
-msgstr "Proveedor"
+msgstr "Fournisseur"
 
 #: services/forms.py:325
 #: services/forms.py:351
 #: templates/html/services/sla_view.html:73
 msgid "Available from"
-msgstr "Disponible desde"
+msgstr "Disponible depuis"
 
 #: services/forms.py:328
 #: services/forms.py:352
 #: templates/html/services/sla_view.html:79
 msgid "Available to"
-msgstr "Disponible hasta"
+msgstr "Disponible jusqu'à"
 
 #: services/forms.py:348
 #: services/forms.py:444
 msgid "Related user"
-msgstr "Usuario relacionado"
+msgstr "Utilisateur lié"
 
 #: services/forms.py:350
 #: templates/html/services/agent_delete.html:69
 #: templates/html/services/agent_view.html:50
 msgid "Occupied"
-msgstr "Ocupado"
+msgstr "Occupé"
 
 #: services/forms.py:386
 msgid "SLA"
-msgstr "ANS"
+msgstr "Niveau de Qualité De Service"
 
 #: templates/html/base.html:56
 msgid "Mobile-version<sup>alpha</sup>"
-msgstr "Versión móvil<sup>alpha</sup>"
+msgstr "Version mobile <sup>alpha</sup>"
 
 #: templates/html/account/account_edit.html:8
 #: templates/html/account/account_password.html:8
@@ -1678,7 +1678,7 @@ msgstr "Versión móvil<sup>alpha</sup>"
 #: templates/html/services/agent_delete.html:61
 #: templates/html/services/agent_view.html:42
 msgid "User"
-msgstr "Usuario"
+msgstr "Ustilisateur"
 
 #: templates/html/account/account_edit.html:11
 #: templates/html/account/account_password.html:11
@@ -1888,7 +1888,7 @@ msgstr "Usuario"
 #: templates/html/services/ticket_edit.html:16
 #: templates/html/services/ticket_view.html:16
 msgid "View"
-msgstr "Vista"
+msgstr "Voir"
 
 #: templates/html/account/account_edit.html:12
 #: templates/html/account/settings_edit.html:11
@@ -2178,7 +2178,7 @@ msgstr "Vista"
 #: templates/html/services/tags/service_list.html:17
 #: templates/html/services/tags/ticket_list.html:31
 msgid "Edit"
-msgstr "Editar"
+msgstr "Editer"
 
 #: templates/html/account/account_password.html:3
 #: templates/html/account/account_password.html:12
@@ -2188,40 +2188,40 @@ msgstr "Editar"
 #: templates/html/core/administration/user_password.html:11
 #: templates/html/core/administration/user_view.html:11
 msgid "Change Password"
-msgstr "Cambiar contraseña"
+msgstr "Changer le mot de passe"
 
 #: templates/html/account/account_view.html:27
 #: templates/html/core/administration/user_delete.html:41
 #: templates/html/core/administration/user_view.html:27
 #: templates/html/identities/user_view.html:29
 msgid "Default Group"
-msgstr "Grupo Predeterminado"
+msgstr "Groupe par défaut"
 
 #: templates/html/account/account_view.html:33
 #: templates/html/core/administration/user_delete.html:47
 #: templates/html/core/administration/user_view.html:33
 #: templates/html/identities/user_view.html:35
 msgid "Other Groups"
-msgstr "Otros Grupos"
+msgstr "Autres Groupes"
 
 #: templates/html/account/notification_index.html:3
 #: templates/html/account/notification_index.html:7
 #: templates/html/account/page.html:12
 #: templates/html/core/tags/user_block.html:9
 msgid "Notifications"
-msgstr "Notificaciones"
+msgstr "Notifications"
 
 #: templates/html/account/notification_index.html:12
 msgid "Delete All"
-msgstr "Eliminar Todo"
+msgstr "Tous supprimer"
 
 #: templates/html/account/notification_index.html:43
 msgid "There are no notifications for you."
-msgstr "No hay notificaciones para usted."
+msgstr "Aucune notification pour vous"
 
 #: templates/html/account/page.html:11
 msgid "Your Account"
-msgstr "Su Cuenta"
+msgstr "Votre compte"
 
 #: templates/html/account/page.html:13
 #: templates/html/account/settings_edit.html:3
@@ -2300,19 +2300,19 @@ msgstr "Su Cuenta"
 #: templates/html/services/settings_view.html:3
 #: templates/html/services/settings_view.html:7
 msgid "Settings"
-msgstr "Configuración"
+msgstr "Paramètres"
 
 #: templates/html/account/page.html:14
 msgid "Account Settings"
-msgstr "Configuración de la Cuenta"
+msgstr "Paramètres du compte"
 
 #: templates/html/admin/base_site.html:4
 msgid "Data administrator"
-msgstr "Administradores de la información"
+msgstr "Administrateur des données"
 
 #: templates/html/admin/base_site.html:7
 msgid "Hardtree: Data administrator"
-msgstr "Hardtree: Administrador de la Información"
+msgstr "Treeio : responsable de l'information"
 
 #: templates/html/changes/index.html:3
 #: templates/html/changes/index_owned.html:3
@@ -2329,7 +2329,7 @@ msgstr "Hardtree: Administrador de la Información"
 #: templates/html/changes/status_edit.html:3
 #: templates/html/changes/status_view.html:3
 msgid "Change Control"
-msgstr "Control de Cambios"
+msgstr "Contrôle des changements"
 
 #: templates/html/changes/index.html:9
 #: templates/html/changes/index_owned.html:9
@@ -2384,18 +2384,19 @@ msgstr "Control de Cambios"
 #: templates/html/services/sla_index.html:17
 #: templates/html/services/status_view.html:29
 msgid "Filter by"
-msgstr "Filtrar por"
+msgstr "Filtrer par"
 
 #: templates/html/changes/index.html:26
 #: templates/html/changes/index_owned.html:26
 #: templates/html/changes/index_resolved.html:26
 #: templates/html/changes/status_view.html:69
+#, fuzzy
 msgid "No Change Sets available"
-msgstr "No hay Grupos de Cambios disponibles"
+msgstr "Aucune modification disponible"
 
 #: templates/html/changes/page.html:10
 msgid "All Change Sets"
-msgstr "Todos los Grupos de Cambios"
+msgstr "Toutes les modifications"
 
 #: templates/html/changes/page.html:11
 #: templates/html/infrastructure/page.html:12
@@ -2405,12 +2406,13 @@ msgstr "Todos los Grupos de Cambios"
 #: templates/html/sales/page.html:26
 #: templates/html/sales/page.html.py:32
 #: templates/html/services/page.html:12
+#, fuzzy
 msgid "Owned by me"
-msgstr "De mi propriedad"
+msgstr "A moi"
 
 #: templates/html/changes/page.html:12
 msgid "Resolved by me"
-msgstr "Resueltos por mi"
+msgstr "Résolu par moi"
 
 #: templates/html/changes/page.html:14
 #: templates/html/infrastructure/page.html:21
@@ -2422,7 +2424,7 @@ msgstr "Resueltos por mi"
 #: templates/html/services/status_edit.html:23
 #: templates/html/services/status_view.html:19
 msgid "By Status"
-msgstr "Por Estado"
+msgstr "Par Statut"
 
 #: templates/html/changes/page.html:19
 #: templates/html/core/page.html:3
@@ -2464,11 +2466,11 @@ msgstr "Por Estado"
 #: templates/html/sales/page.html:36
 #: templates/html/services/page.html:40
 msgid "Administration"
-msgstr "Administración"
+msgstr "Administration"
 
 #: templates/html/changes/page.html:30
 msgid "Changes"
-msgstr "Modificaciones"
+msgstr "Modifications"
 
 #: templates/html/changes/page.html:36
 #: templates/html/changes/set_add.html:8
@@ -2476,7 +2478,7 @@ msgstr "Modificaciones"
 #: templates/html/changes/status_edit.html:10
 #: templates/html/changes/status_view.html:10
 msgid "New Change Set"
-msgstr "Nuevos Grupos de Cambios"
+msgstr "Nouvelle modification"
 
 #: templates/html/changes/set_delete.html:3
 #: templates/html/changes/set_edit.html:3
@@ -2486,31 +2488,31 @@ msgstr "Nuevos Grupos de Cambios"
 #: templates/html/changes/status_view.html:3
 #: templates/html/changes/status_view.html:63
 msgid "Change Sets"
-msgstr "Grupos de Cambios"
+msgstr "Modifications"
 
 #: templates/html/changes/set_delete.html:6
 #: templates/html/changes/set_edit.html:6
 #: templates/html/changes/set_view.html:6
 msgid "Change Set"
-msgstr "Grupo de Cambio"
+msgstr "Modification"
 
 #: templates/html/changes/set_delete.html:18
 msgid "Delete this Change Set"
-msgstr "Eliminar este Grupo de Cambios"
+msgstr "Supprimer cette modification"
 
 #: templates/html/changes/set_delete.html:22
 msgid "WARNING: This cannot be undone"
-msgstr "PRECAUCIÓN: Esto no se puede deshacer"
+msgstr "ATTENTION : Ne peux être annulé"
 
 #: templates/html/changes/set_delete.html:58
 #: templates/html/changes/set_view.html:45
 msgid "Resolved By"
-msgstr "Resuelto por"
+msgstr "Résolu par"
 
 #: templates/html/changes/set_delete.html:64
 #: templates/html/changes/set_view.html:51
 msgid "Resolution Date"
-msgstr "Fecha de Resolución"
+msgstr "Date de résolution"
 
 #: templates/html/changes/settings_edit.html:10
 #: templates/html/changes/settings_view.html:10
@@ -2533,25 +2535,27 @@ msgstr "Fecha de Resolución"
 #: templates/html/services/settings_view.html:11
 #: templates/html/services/status_add.html:15
 msgid "New Status"
-msgstr "Nuevo Estado"
+msgstr "Nouveau statut"
 
 #: templates/html/changes/settings_view.html:18
+#, fuzzy
 msgid "Default Change Set Status"
-msgstr "Estado de Grupo de Cambios Predeterminado"
+msgstr "Modification par défaut"
 
 #: templates/html/changes/settings_view.html:27
 msgid "Change Set Statuses"
-msgstr "Estados de los Grupos de Cambios"
+msgstr "Statuts de modification"
 
 #: templates/html/changes/status_delete.html:6
 #: templates/html/changes/status_edit.html:6
 #: templates/html/changes/status_view.html:6
 msgid "Change Status"
-msgstr "Estado de Modificación"
+msgstr "Statut de modification"
 
 #: templates/html/changes/status_delete.html:19
+#, fuzzy
 msgid "Delete this Change Set Status"
-msgstr "Eliminar este Estado de Grupo de Cambios"
+msgstr "Supprimer ce Statut de Modification"
 
 #: templates/html/changes/status_delete.html:25
 #: templates/html/core/administration/page_delete.html:27
@@ -2604,7 +2608,7 @@ msgstr "Eliminar este Estado de Grupo de Cambios"
 #: templates/html/services/status_delete.html:36
 #: templates/html/services/ticket_delete.html:46
 msgid "Move to Trash"
-msgstr "Desechar"
+msgstr "Mettre à la corbeille"
 
 #: templates/html/changes/status_view.html:29
 #: templates/html/core/administration/module_view.html:18
@@ -2681,7 +2685,7 @@ msgstr "Desechar"
 #: templates/html/services/ticket_edit.html:24
 #: templates/html/services/ticket_view.html:52
 msgid "Permissions"
-msgstr "Permisos"
+msgstr "Permissions"
 
 #: templates/html/changes/status_view.html:34
 #: templates/html/core/administration/module_view.html:23
@@ -2758,7 +2762,7 @@ msgstr "Permisos"
 #: templates/html/services/ticket_edit.html:29
 #: templates/html/services/ticket_view.html:57
 msgid "Links"
-msgstr "Enlaces"
+msgstr "Liens"
 
 #: templates/html/changes/status_view.html:39
 #: templates/html/core/administration/module_view.html:28
@@ -2835,7 +2839,7 @@ msgstr "Enlaces"
 #: templates/html/services/ticket_edit.html:34
 #: templates/html/services/ticket_view.html:62
 msgid "Subscribers"
-msgstr "Suscriptores"
+msgstr "Abonnés"
 
 #: templates/html/core/index.html:3
 #: templates/html/core/index.html.py:8
@@ -2844,7 +2848,7 @@ msgstr "Suscriptores"
 #: templates/html/core/dashboard/page.html:3
 #: templates/html/core/dashboard/page.html:8
 msgid "Dashboard"
-msgstr "Panel de control"
+msgstr "Paneau de contrôle"
 
 #: templates/html/core/index.html:14
 #: templates/html/core/dashboard/index.html:18
@@ -2856,7 +2860,7 @@ msgstr "Panel de control"
 #: templates/html/core/trash/page.html:8
 #: templates/html/core/trash/page.html:14
 msgid "Trash"
-msgstr "Basura"
+msgstr "Poubelle"
 
 #: templates/html/core/page.html:11
 #: templates/html/core/administration/index_perspectives.html:3
@@ -2866,7 +2870,7 @@ msgstr "Basura"
 #: templates/html/core/administration/perspective_edit.html:3
 #: templates/html/core/administration/perspective_view.html:3
 msgid "Perspectives"
-msgstr "Vistas"
+msgstr "Vues"
 
 #: templates/html/core/page.html:13
 #: templates/html/core/administration/index_users.html:3
@@ -2876,7 +2880,7 @@ msgstr "Vistas"
 #: templates/html/identities/index_users.html:5
 #: templates/html/identities/page.html:13
 msgid "Users"
-msgstr "Usuarios"
+msgstr "Utilisateurs"
 
 #: templates/html/core/page.html:14
 #: templates/html/core/administration/group_add.html:3
@@ -2888,36 +2892,36 @@ msgstr "Usuarios"
 #: templates/html/identities/index_groups.html:5
 #: templates/html/identities/page.html:14
 msgid "Groups"
-msgstr "Grupos"
+msgstr "Groupes"
 
 #: templates/html/core/page.html:17
 msgid "Global Settings"
-msgstr "Configuración Global"
+msgstr "Configuration Globale"
 
 #: templates/html/core/password_reset_done.html:13
 msgid "E-mail sent"
-msgstr "Correo electrónico enviado"
+msgstr "Courrier électronique envoyé"
 
 #: templates/html/core/password_reset_form.html:13
 msgid "Forgotten your password? Enter your username below, and we'll send you a new one"
-msgstr "¿Olvidó su contraseña? Ingrese su nombre de usuario a continuación y le enviaremos una nueva"
+msgstr "Mot de passe perdu ? Entrez votre nom d'utilisateur ci-dessous et nous vous en enverrons un nouveau"
 
 #: templates/html/core/user_denied.html:13
 msgid "Access Denied"
-msgstr "Acceso Denegado"
+msgstr "Acces refusé"
 
 #: templates/html/core/user_denied.html:15
 msgid "Sorry, but you are not allowed to access this"
-msgstr "Lo sentimos, pero no le está permitido tener acceso"
+msgstr "Désolé, mais vous n'êtes pas autorisé à voir ceci. Rapprocher vous de l'administrateur"
 
 #: templates/html/core/user_login.html:25
 msgid "Forgotten your password?"
-msgstr "¿Olvidó su contraseña?"
+msgstr "Mot de passe perdu ?"
 
 #: templates/html/core/administration/group_add.html:8
 #: templates/html/core/administration/index_groups.html:8
 msgid "New Group"
-msgstr "Grupo Nuevo"
+msgstr "Nouveau groupe"
 
 #: templates/html/core/administration/group_delete.html:6
 #: templates/html/core/administration/group_edit.html:6
@@ -2933,19 +2937,19 @@ msgstr "Grupo Nuevo"
 #: templates/html/identities/widgets/contact_me.html:19
 #: templates/html/reports/report_add.html:33
 msgid "Group"
-msgstr "Grupo"
+msgstr "Groupe"
 
 #: templates/html/core/administration/group_delete.html:17
 msgid "Delete this Group"
-msgstr "Eliminar este Grupo"
+msgstr "Supprimer ce groupe"
 
 #: templates/html/core/administration/group_delete.html:22
 msgid ""
 "WARNING: This cannot be undone. All Users assigned to this group as default will be deleted.<br />\n"
 "                    All Objects owned by those Users will be deleted"
 msgstr ""
-"PRECAUCIÓN: Esto no se puede deshacer. Todos los usuarios asignados a este grupo como predeterminado serán eliminados.<br />\n"
-"Todos los Objetos de propiedad de estos Usuarios serán eliminados"
+"AVERTISSEMENT: Ceci ne peut être annulée. Tous les utilisateurs assignés à ce groupe par défaut seront supprimés. <br />\n"
+"Tous les objets appartenant à ces utilisateurs seront supprimés"
 
 #: templates/html/core/administration/group_delete.html:39
 #: templates/html/core/administration/group_view.html:26
@@ -2956,12 +2960,12 @@ msgstr ""
 #: templates/html/knowledge/folder_view.html:47
 #: templates/html/projects/project_view.html:56
 msgid "Path"
-msgstr "Camino"
+msgstr "Chemin"
 
 #: templates/html/core/administration/group_view.html:46
 #: templates/html/identities/group_view.html:74
 msgid "Members"
-msgstr "Miembros"
+msgstr "Membres"
 
 #: templates/html/core/administration/index_pages.html:3
 #: templates/html/core/administration/index_pages.html:5
@@ -2976,13 +2980,13 @@ msgstr "Miembros"
 #: templates/html/core/administration/pagefolder_edit.html:3
 #: templates/html/core/administration/pagefolder_view.html:3
 msgid "Static Pages"
-msgstr "Páginas Estáticas"
+msgstr "Pages statiques"
 
 #: templates/html/core/administration/index_pages.html:8
 #: templates/html/core/administration/page_add.html:14
 #: templates/html/core/administration/pagefolder_add.html:14
 msgid "New Page"
-msgstr "Nueva Página"
+msgstr "Nouvelle page"
 
 #: templates/html/core/administration/index_pages.html:9
 #: templates/html/core/administration/page_add.html:15
