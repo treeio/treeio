@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: treeioFR 0.1\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2012-03-21 08:37+0100\n"
+"PO-Revision-Date: 2012-03-21 09:33+0100\n"
 "Last-Translator: Jean-Bruno <redb68@gmail.com>\n"
 "Language-Team: http://www.morgao.com <info@morgao.com>\n"
 "MIME-Version: 1.0\n"
@@ -17,6 +17,7 @@ msgstr ""
 "X-Poedit-Language: French\n"
 "X-Poedit-Country: FRANCE\n"
 "X-Poedit-SourceCharset: utf-8\n"
+"X-Poedit-Bookmarks: 116,85,-1,-1,-1,-1,-1,-1,-1,-1\n"
 
 #: account/forms.py:36
 #: core/administration/forms.py:115
@@ -1117,57 +1118,58 @@ msgstr "Type d'item"
 #: templates/html/services/ticket_edit.html:18
 #: templates/html/services/ticket_view.html:19
 msgid "Delete"
-msgstr "Eliminar"
+msgstr "Supprimer"
 
 #: messaging/forms.py:45
 #: projects/forms.py:60
 msgid "Mark as"
-msgstr "Marcar como"
+msgstr "Marquer comme"
 
 #: messaging/forms.py:64
 msgid "Move to"
-msgstr "Mover a"
+msgstr "Bouger"
 
 #: messaging/forms.py:102
 #: templates/html/messaging/stream_view.html:76
 msgid "Subject"
-msgstr "Tema"
+msgstr "Theme"
 
 #: messaging/forms.py:111
 msgid "Send as an email to"
-msgstr "Enviar como correo electrónico a"
+msgstr "Envoyer un courrier electronique à"
 
 #: messaging/forms.py:125
 msgid "That stream doesn't have an outgoing email. Check Email Settings or deselect recipient below."
-msgstr "Esa fuente no tiene un correo electrónico saliente. Revise las Configuraciones del Correo Electrónico o deshabilite el receptor a continuacion:"
+msgstr "Ce flus n'a pas de paramètres pour les emails sortants. Vérifiez les paramètres de courrier électronique ou désactiver la boite de réception ci-dessous:"
 
 #: messaging/forms.py:141
+#, fuzzy
 msgid "Email Name"
-msgstr "Nombre del Correo Electrónico"
+msgstr "Nom du compte courrier électronique"
 
 #: messaging/forms.py:142
 msgid "Server Name"
-msgstr "Nombre del Servidor"
+msgstr "Nom du serveur"
 
 #: messaging/forms.py:143
 msgid "Server Type"
-msgstr "Tipo de Servidor"
+msgstr "Type de serveur"
 
 #: messaging/forms.py:144
 msgid "Server Username"
-msgstr "Nombre de Usuario del Servidor"
+msgstr "Nom utilisateur du serveur"
 
 #: messaging/forms.py:145
 msgid "Server Password"
-msgstr "Contraseña del Servidor"
+msgstr "Mot de passe du serveur"
 
 #: messaging/forms.py:160
 msgid "Email Incoming"
-msgstr "Correo Entrante"
+msgstr "Courrier entrant"
 
 #: messaging/forms.py:165
 msgid "Email Outgoing"
-msgstr "Correo Saliente"
+msgstr "Courrier sortant"
 
 #: messaging/forms.py:193
 #: templates/html/messaging/message_view.html:113
@@ -1178,11 +1180,11 @@ msgstr "Correo Saliente"
 #: templates/html/messaging/stream_view.html:73
 #: templates/html/services/ticket_view.html:131
 msgid "Stream"
-msgstr "Fuente"
+msgstr "Flux"
 
 #: projects/forms.py:62
 msgid "Move to Project"
-msgstr "Mover al Proyecto"
+msgstr "Bouger vers Projet"
 
 #: projects/forms.py:64
 #: projects/forms.py:195
@@ -1198,11 +1200,11 @@ msgstr "Mover al Proyecto"
 #: templates/html/projects/task_time_add.html:105
 #: templates/html/projects/task_view.html:107
 msgid "Milestone"
-msgstr "Hito"
+msgstr "Etape importante"
 
 #: projects/forms.py:101
 msgid "Manager"
-msgstr "Administrador"
+msgstr "Administrateur"
 
 #: projects/forms.py:106
 #: sales/forms.py:446
@@ -1221,7 +1223,7 @@ msgstr "Administrador"
 #: templates/html/services/sla_delete.html:75
 #: templates/html/services/sla_view.html:61
 msgid "Client"
-msgstr "Cliente"
+msgstr "Client"
 
 #: projects/forms.py:128
 #: projects/forms.py:190
@@ -1242,12 +1244,12 @@ msgstr "Projet"
 #: projects/forms.py:144
 #: projects/forms.py:221
 msgid "End date"
-msgstr "Fecha de fínalización"
+msgstr "Date de finalisation"
 
 #: projects/forms.py:174
 #: projects/forms.py:363
 msgid "Assigned"
-msgstr "Asignado"
+msgstr "Assigné"
 
 #: projects/forms.py:177
 #: projects/forms.py:347
@@ -1259,48 +1261,48 @@ msgstr "Asignado"
 #: templates/html/services/ticket_delete.html:61
 #: templates/html/services/ticket_view.html:82
 msgid "Caller"
-msgstr "Llamante"
+msgstr "Visiteur"
 
 #: projects/forms.py:207
 #: templates/html/projects/task_view.html:114
 #: templates/html/services/ticket_view.html:91
 msgid "Priority"
-msgstr "Prioridad"
+msgstr "Priorité"
 
 #: projects/forms.py:225
 #: templates/html/projects/task_view.html:145
 msgid "Estimated time"
-msgstr "Tiempo estimado"
+msgstr "Temps estimé"
 
 #: projects/forms.py:226
 #: templates/html/projects/task_view.html:146
 msgid "minutes"
-msgstr "minutos"
+msgstr "minutes"
 
 #: projects/forms.py:281
 #: templates/html/projects/task_time_delete.html:43
 #: templates/html/projects/task_time_view.html:49
 msgid "Started"
-msgstr "Iniciado"
+msgstr "Commencé"
 
 #: projects/forms.py:282
 #: templates/html/projects/task_time_delete.html:49
 #: templates/html/projects/task_time_view.html:55
 msgid "Finished"
-msgstr "Terminado"
+msgstr "Fini"
 
 #: projects/forms.py:288
 msgid "Minutes"
-msgstr "Minutos"
+msgstr "Minutes"
 
 #: reports/forms.py:28
 msgid "Choose an Object to Report on: "
-msgstr "Elija un Objeto para Reportar sobre:"
+msgstr "Choisir l'objet du rapport :"
 
 #: sales/forms.py:21
 #: templates/html/sales/settings_view.html:19
 msgid "Default Order Status"
-msgstr "Estado Predeterminado de la Orden"
+msgstr "Ordre des statuts par défaut"
 
 #: sales/forms.py:22
 #: templates/html/sales/settings_view.html:28
