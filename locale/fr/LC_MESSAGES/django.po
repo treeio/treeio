@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: treeioFR 0.1\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2012-03-21 09:34+0100\n"
+"PO-Revision-Date: 2012-03-21 16:50+0100\n"
 "Last-Translator: Jean-Bruno <redb68@gmail.com>\n"
 "Language-Team: http://www.morgao.com <info@morgao.com>\n"
 "MIME-Version: 1.0\n"
@@ -875,9 +875,8 @@ msgstr "Fabricant"
 #: templates/html/infrastructure/item_view.html:63
 #: templates/html/infrastructure/service_record_view.html:28
 #: templates/html/sales/product_view.html:58
-#, fuzzy
 msgid "Supplier"
-msgstr "Distributeur"
+msgstr "Revendeur"
 
 #: infrastructure/forms.py:138
 #: infrastructure/forms.py:356
@@ -1307,66 +1306,68 @@ msgstr "Ordre des statuts par défaut"
 #: sales/forms.py:22
 #: templates/html/sales/settings_view.html:28
 msgid "Default Order Source"
-msgstr "Fuente Predeterminada de la Orden"
+msgstr "Ordre des flux par défaut"
 
 #: sales/forms.py:23
 #: templates/html/sales/settings_view.html:37
 msgid "Default Order Product"
-msgstr "Producto Predeterminado de la Orden"
+msgstr "Ordre des produits par défaut"
 
 #: sales/forms.py:25
 #: templates/html/sales/settings_view.html:46
+#, fuzzy
 msgid "Order Fulfilment Status"
-msgstr "Estado de Cumplimiento de la Orden"
+msgstr "Estado de Cumplimiento de la OrdenStatut Exécution de commande"
 
 #: sales/forms.py:108
 #: sales/forms.py:150
 #: sales/forms.py:186
 msgid "Status:"
-msgstr "Estado:"
+msgstr "Statut :"
 
 #: sales/forms.py:111
 #: sales/forms.py:153
 #: sales/forms.py:189
 msgid "Assign To:"
-msgstr "Asignado A:"
+msgstr "Assigné à :"
 
 #: sales/forms.py:238
 msgid "Enabled for Leads"
-msgstr "Habilitado para Clientes Potenciales"
+msgstr "Activé pour les Clients Potentiels"
 
 #: sales/forms.py:239
 msgid "Enabled for Opportunities"
-msgstr "Habilitado para Oportunidades"
+msgstr "Activé pour Opportunités"
 
 #: sales/forms.py:240
 msgid "Enabled for Sales"
-msgstr "Habilitado para Ventas"
+msgstr "Activé pour Ventes"
 
 #: sales/forms.py:300
 #: sales/forms.py:325
 msgid "Product type"
-msgstr "Tipo de producto"
+msgstr "Type de produit"
 
 #: sales/forms.py:301
 msgid "Code"
-msgstr "Código"
+msgstr "Code"
 
 #: sales/forms.py:302
 msgid "Supplier code"
-msgstr "Código del proveedor"
+msgstr "Code revendeur"
 
 #: sales/forms.py:303
 msgid "Buy price"
-msgstr "Precio de compra"
+msgstr "Prix d'achat"
 
 #: sales/forms.py:305
 msgid "Stock quantity"
-msgstr "Cantidad en existencias"
+msgstr "Quantité en stock"
 
 #: sales/forms.py:306
+#, fuzzy
 msgid "Runout action"
-msgstr "Accion al agotarse"
+msgstr "Action suspendue"
 
 #: sales/forms.py:378
 #: templates/html/sales/ordered_product_delete.html:45
@@ -1376,7 +1377,7 @@ msgstr "Accion al agotarse"
 #: templates/html/sales/subscription_edit.html:13
 #: templates/html/sales/subscription_view.html:9
 msgid "Subscription"
-msgstr "Suscripción"
+msgstr "Souscription"
 
 #: sales/forms.py:382
 #: sales/forms.py:440
@@ -1387,7 +1388,7 @@ msgstr "Suscripción"
 #: templates/html/sales/product_view.html:7
 #: templates/html/sales/subscription_view.html:46
 msgid "Product"
-msgstr "Producto"
+msgstr "Produit"
 
 #: sales/forms.py:391
 #: templates/html/sales/order_add.html:16
