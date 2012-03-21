@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: treeioFR 0.1\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2012-03-21 21:08+0100\n"
+"PO-Revision-Date: 2012-03-21 23:05+0100\n"
 "Last-Translator: Jean-Bruno <redb68@gmail.com>\n"
 "Language-Team: http://www.morgao.com <info@morgao.com>\n"
 "MIME-Version: 1.0\n"
@@ -17,7 +17,7 @@ msgstr ""
 "X-Poedit-Language: French\n"
 "X-Poedit-Country: FRANCE\n"
 "X-Poedit-SourceCharset: utf-8\n"
-"X-Poedit-Bookmarks: 116,85,-1,-1,-1,-1,-1,-1,-1,-1\n"
+"X-Poedit-Bookmarks: 284,85,-1,-1,-1,-1,-1,-1,-1,-1\n"
 
 #: account/forms.py:36
 #: core/administration/forms.py:115
@@ -1179,7 +1179,7 @@ msgstr "Courrier sortant"
 #: templates/html/messaging/stream_view.html:73
 #: templates/html/services/ticket_view.html:131
 msgid "Stream"
-msgstr "Flux"
+msgstr "Fil"
 
 #: projects/forms.py:62
 msgid "Move to Project"
@@ -1306,7 +1306,7 @@ msgstr "Ordre des statuts par défaut"
 #: sales/forms.py:22
 #: templates/html/sales/settings_view.html:28
 msgid "Default Order Source"
-msgstr "Ordre des flux par défaut"
+msgstr "Ordre de Fils par défaut"
 
 #: sales/forms.py:23
 #: templates/html/sales/settings_view.html:37
@@ -1612,7 +1612,7 @@ msgstr "Code du ticket"
 
 #: services/forms.py:255
 msgid "Message stream"
-msgstr "Flux de message"
+msgstr "File de message"
 
 #: services/forms.py:302
 msgid "Response time"
@@ -3015,52 +3015,52 @@ msgstr "Nouvelle page"
 #: templates/html/knowledge/item_add_folder.html:12
 #: templates/html/knowledge/page.html:37
 msgid "New Folder"
-msgstr "Nueva Carpeta"
+msgstr "Nouveau dossier"
 
 #: templates/html/core/administration/index_perspectives.html:10
 #: templates/html/core/administration/perspective_add.html:3
 #: templates/html/core/administration/perspective_add.html:15
 msgid "New Perspective"
-msgstr "Nueva Vista"
+msgstr "Nouvelle vue"
 
 #: templates/html/core/administration/index_users.html:8
 #: templates/html/core/administration/user_add.html:3
 #: templates/html/core/administration/user_add.html:8
 msgid "New User"
-msgstr "Nuevo Usuario"
+msgstr "Nouvel utilisateur"
 
 #: templates/html/core/administration/module_view.html:8
 #: templates/html/core/dashboard/widget_edit.html:31
 msgid "Module"
-msgstr "Módulo"
+msgstr "Module"
 
 #: templates/html/core/administration/module_view.html:48
 msgid "System"
-msgstr "Sistema"
+msgstr "Système"
 
 #: templates/html/core/administration/module_view.html:53
 #: templates/html/reports/report_add.html:30
 msgid "Display"
-msgstr "Visualizar"
+msgstr "Visualiser"
 
 #: templates/html/core/administration/module_view.html:59
 msgid "Used in Perspectives"
-msgstr "Utilizado en las Vistas"
+msgstr "Utilisé en Vue"
 
 #: templates/html/core/administration/page_delete.html:6
 #: templates/html/core/administration/page_edit.html:12
 #: templates/html/core/administration/page_view.html:6
 msgid "Page"
-msgstr "Página"
+msgstr "Page"
 
 #: templates/html/core/administration/page_delete.html:21
 msgid "Delete this Page"
-msgstr "Eliminar esta Página"
+msgstr "Supprimer cette Page"
 
 #: templates/html/core/administration/page_delete.html:54
 #: templates/html/core/administration/page_view.html:36
 msgid "Published"
-msgstr "Publicado"
+msgstr "Publié"
 
 #: templates/html/core/administration/page_delete.html:55
 #: templates/html/core/administration/page_view.html:37
@@ -3087,7 +3087,7 @@ msgstr "Publicado"
 #: templates/html/services/status_view.html:63
 #: templates/html/services/status_view.html:67
 msgid "Yes"
-msgstr "Si"
+msgstr "Oui"
 
 #: templates/html/core/administration/page_delete.html:55
 #: templates/html/core/administration/page_view.html:37
@@ -3114,60 +3114,60 @@ msgstr "Si"
 #: templates/html/services/status_view.html:63
 #: templates/html/services/status_view.html:67
 msgid "No"
-msgstr "No"
+msgstr "Non"
 
 #: templates/html/core/administration/pagefolder_delete.html:6
 #: templates/html/core/administration/pagefolder_edit.html:12
 #: templates/html/core/administration/pagefolder_view.html:6
 msgid "Page Folder"
-msgstr "Carpeta de Páginas"
+msgstr "Dossier de Page"
 
 #: templates/html/core/administration/pagefolder_delete.html:21
 #: templates/html/documents/folder_delete.html:24
 #: templates/html/knowledge/folder_delete.html:24
 msgid "Delete this Folder"
-msgstr "Eliminar esta Carpeta"
+msgstr "Supprimer ce Dossier"
 
 #: templates/html/core/administration/pagefolder_delete.html:52
 #: templates/html/core/administration/pagefolder_view.html:33
 #: templates/html/core/tags/pager.html:3
 msgid "Pages"
-msgstr "Páginas"
+msgstr "Pages"
 
 #: templates/html/core/administration/perspective_delete.html:42
 msgid "Delete this Perspective"
-msgstr "Eliminar esta Vista"
+msgstr "Supprimer cette Vue"
 
 #: templates/html/core/administration/user_delete.html:22
 msgid "Delete this User"
-msgstr "Eliminar este Usuario"
+msgstr "Supprimer cet Utilisateur"
 
 #: templates/html/core/administration/user_delete.html:24
 msgid "WARNING: All Objects belonging to this User will be deleted"
-msgstr "PRECAUCIÓN: Todos los Objetos de propiedad de este Usuario serán eliminados"
+msgstr "ATTENTION: Tous les objets appartenant à cet utilisateur seront supprimés"
 
 #: templates/html/core/dashboard/index.html:15
 #: templates/html/core/dashboard/page.html:14
 #: templates/html/core/dashboard/widget_add.html:4
 msgid "Add Widget"
-msgstr "Agregar Widget"
+msgstr "Ajouter un Tableau de Bord"
 
 #: templates/html/core/dashboard/widget_edit.html:6
 msgid "Widget"
-msgstr "Widget"
+msgstr "Tableau de Bord"
 
 #: templates/html/core/search/query_view.html:3
 #: templates/html/core/search/query_view.html:5
 msgid "Search"
-msgstr "Buscar"
+msgstr "Chercher"
 
 #: templates/html/core/search/query_view.html:12
 msgid "You've searched for"
-msgstr "Usted ha buscado"
+msgstr "Vous avez cherché"
 
 #: templates/html/core/search/query_view.html:41
 msgid "There's nothing found"
-msgstr "No se ha encontrado nada"
+msgstr "Recherche infructueuse"
 
 #: templates/html/core/tags/help_link_block.html:1
 msgid "Help"
@@ -3176,31 +3176,31 @@ msgstr "Aide"
 #: templates/html/core/tags/modules_header_block.html:4
 #: templates/html/core/tags/modules_header_block.html:6
 msgid "Home"
-msgstr "Inicio"
+msgstr "Accueil"
 
 #: templates/html/core/tags/permission_block.html:7
 #: templates/html/core/trash/index.html:33
 msgid "Untrash"
-msgstr "Recuperar de la papelera"
+msgstr "Sortir de la poubelle"
 
 #: templates/html/core/tags/permission_block.html:39
 #: templates/html/core/tags/permission_block_edit.html:28
 #: templates/html/messaging/page.html:10
 msgid "All"
-msgstr "Todo"
+msgstr "Tout"
 
 #: templates/html/core/tags/subscription_block.html:15
 #: templates/html/core/tags/subscription_block_add.html:14
 msgid "Subscribe"
-msgstr "Suscribirse"
+msgstr "S'abonner"
 
 #: templates/html/core/tags/user_block.html:3
 msgid "logout"
-msgstr "Salir"
+msgstr "Se déconnecter"
 
 #: templates/html/core/tags/user_block.html:6
 msgid "Messages"
-msgstr "Mensajes"
+msgstr "Messages"
 
 #: templates/html/core/trash/index.html:10
 #: templates/html/finance/category_view.html:36
@@ -3240,19 +3240,19 @@ msgstr "Mensajes"
 #: templates/html/services/queue_view.html:103
 #: templates/html/services/status_view.html:89
 msgid "With selected"
-msgstr "Con selección"
+msgstr "Avec la selection"
 
 #: templates/html/core/trash/index.html:43
 msgid "There's nothing in Trash"
-msgstr "No hay nada en la Papelera"
+msgstr "Il n'y a rien dans la poubelle"
 
 #: templates/html/core/trash/object_delete.html:20
 msgid "Delete this"
-msgstr "Eliminar esto"
+msgstr "Supprimer ceci"
 
 #: templates/html/core/trash/object_delete.html:25
 msgid "WARNING: This can not be undone"
-msgstr "PRECAUCIÓN: Esto no se puede deshacer"
+msgstr "ATTENTION: Cette action ne peut être annulée"
 
 #: templates/html/documents/document_add.html:3
 #: templates/html/documents/document_add.html:13
@@ -3269,7 +3269,7 @@ msgstr "PRECAUCIÓN: Esto no se puede deshacer"
 #: templates/html/documents/weblink_add.html:7
 #: templates/html/documents/weblink_add_typed.html:11
 msgid "New Document"
-msgstr "Nuevo Documento"
+msgstr "Nouveau Document"
 
 #: templates/html/documents/document_add.html:3
 #: templates/html/documents/document_add_typed.html:3
@@ -3300,7 +3300,7 @@ msgstr "Nuevo Documento"
 #: templates/html/documents/weblink_edit.html:3
 #: templates/html/documents/weblink_view.html:3
 msgid "Documents"
-msgstr "Documentos"
+msgstr "Documents"
 
 #: templates/html/documents/document_add.html:14
 #: templates/html/documents/document_add_typed.html:18
@@ -3317,7 +3317,7 @@ msgstr "Documentos"
 #: templates/html/documents/weblink_add_typed.html:3
 #: templates/html/documents/weblink_add_typed.html:12
 msgid "New Web Link"
-msgstr "Nuevo Enlace Web"
+msgstr "Nouveau Lien Web"
 
 #: templates/html/documents/document_add.html:15
 #: templates/html/documents/document_add_typed.html:19
@@ -3334,7 +3334,7 @@ msgstr "Nuevo Enlace Web"
 #: templates/html/documents/weblink_add.html:9
 #: templates/html/documents/weblink_add_typed.html:13
 msgid "Upload File"
-msgstr "Cargar Archivo"
+msgstr "Charger un fichier"
 
 #: templates/html/documents/document_delete.html:7
 #: templates/html/documents/document_edit.html:7
@@ -3343,11 +3343,11 @@ msgstr "Cargar Archivo"
 #: templates/html/documents/tags/objects_list.html:11
 #: templates/html/documents/tags/objects_list.html:50
 msgid "Document"
-msgstr "Documento"
+msgstr "Document"
 
 #: templates/html/documents/document_delete.html:20
 msgid "Delete this Document"
-msgstr "Eliminar este Documento"
+msgstr "Supprimer ce Document"
 
 #: templates/html/documents/document_view.html:34
 #: templates/html/documents/folder_view.html:38
@@ -3423,7 +3423,7 @@ msgstr "Eliminar este Documento"
 #: templates/html/services/status_view.html:53
 #: templates/html/services/ticket_view.html:67
 msgid "Export to"
-msgstr "Exportar a"
+msgstr "Exporter vers"
 
 #: templates/html/documents/document_view.html:57
 #: templates/html/documents/file_view.html:52
@@ -3435,13 +3435,13 @@ msgstr "Exportar a"
 #: templates/html/sales/ordered_product_add.html:53
 #: templates/html/sales/ordered_product_edit.html:50
 msgid "Date created"
-msgstr "Fecha de creación"
+msgstr "Date de création"
 
 #: templates/html/documents/document_view.html:62
 #: templates/html/documents/weblink_delete.html:57
 #: templates/html/documents/weblink_view.html:62
 msgid "Last updated"
-msgstr "Última actualización"
+msgstr "Dernière mise à jour"
 
 #: templates/html/documents/file_delete.html:7
 #: templates/html/documents/file_edit.html:7
@@ -3450,11 +3450,11 @@ msgstr "Última actualización"
 #: templates/html/documents/tags/objects_list.html:14
 #: templates/html/documents/tags/objects_list.html:53
 msgid "File"
-msgstr "Archivo"
+msgstr "Fichier"
 
 #: templates/html/documents/file_delete.html:20
 msgid "Delete this File"
-msgstr "Eliminar este Archivo"
+msgstr "Supprimer ce Fichier"
 
 #: templates/html/documents/folder_delete.html:48
 #: templates/html/documents/folder_view.html:53
@@ -3463,51 +3463,51 @@ msgstr "Eliminar este Archivo"
 #: templates/html/knowledge/index.html:26
 #: templates/html/knowledge/page.html:14
 msgid "Folders"
-msgstr "Carpetas"
+msgstr "Dossiers"
 
 #: templates/html/documents/index.html:26
 #: templates/html/documents/page.html:11
 #: templates/html/infrastructure/page.html:11
 #: templates/html/knowledge/page.html:11
 msgid "All Items"
-msgstr "Todos los Elementos"
+msgstr "Tous les Elements"
 
 #: templates/html/documents/index.html:33
 msgid "No Documents available"
-msgstr "No hay Documentos disponibles"
+msgstr "Aucun Document disponible"
 
 #: templates/html/documents/index_files.html:3
 #: templates/html/documents/index_files.html:5
 #: templates/html/documents/page.html:13
 msgid "Files"
-msgstr "Archivos"
+msgstr "Fichiers"
 
 #: templates/html/documents/index_weblinks.html:3
 #: templates/html/documents/index_weblinks.html:5
 #: templates/html/documents/page.html:14
 msgid "Web Links"
-msgstr "Enlaces Web"
+msgstr "Liens Web"
 
 #: templates/html/documents/weblink_delete.html:7
 #: templates/html/documents/weblink_edit.html:7
 #: templates/html/documents/weblink_view.html:7
 #: templates/html/documents/tags/weblink_list.html:6
 msgid "Web Link"
-msgstr "Enlace Web"
+msgstr "Lien Web"
 
 #: templates/html/documents/weblink_delete.html:20
 msgid "Delete this Web Link"
-msgstr "Eliminar este Enlace"
+msgstr "Supprimer ce Lien Web"
 
 #: templates/html/documents/tags/objects_list.html:17
 #: templates/html/documents/tags/objects_list.html:56
 msgid "Link"
-msgstr "Enlace"
+msgstr "Lien"
 
 #: templates/html/events/day_view.html:3
 #: templates/html/events/page.html:17
 msgid "Day"
-msgstr "Día"
+msgstr "Jour"
 
 #: templates/html/events/day_view.html:3
 #: templates/html/events/day_view.html:5
@@ -3533,19 +3533,19 @@ msgstr "Día"
 #: templates/html/events/week_view.html:3
 #: templates/html/events/week_view.html:5
 msgid "Calendar"
-msgstr "Calendario"
+msgstr "Calendrier"
 
 #: templates/html/events/day_view.html:18
 #: templates/html/events/month_view.html:18
 #: templates/html/events/week_view.html:18
 msgid "Go to"
-msgstr "Ir a"
+msgstr "Aller à"
 
 #: templates/html/events/day_view.html:18
 #: templates/html/events/month_view.html:18
 #: templates/html/events/week_view.html:18
 msgid "Today"
-msgstr "Hoy"
+msgstr "Aujourd'hui"
 
 #: templates/html/events/day_view.html:35
 #: templates/html/events/index.html:3
@@ -3553,50 +3553,50 @@ msgstr "Hoy"
 #: templates/html/events/integration_index.html:3
 #: templates/html/events/integration_view.html:3
 msgid "Events"
-msgstr "Eventos"
+msgstr "Evènements"
 
 #: templates/html/events/event_add.html:3
 #: templates/html/events/event_add.html:12
 #: templates/html/events/page.html:36
 msgid "New Event"
-msgstr "Nuevo Evento"
+msgstr "Nouvel Evènement"
 
 #: templates/html/events/event_delete.html:7
 #: templates/html/events/event_edit.html:7
 #: templates/html/events/event_view.html:7
 msgid "Event"
-msgstr "Evento"
+msgstr "Evènement"
 
 #: templates/html/events/event_delete.html:37
 msgid "Delete this Event"
-msgstr "Eliminar este Evento"
+msgstr "Supprimer cet Evènement"
 
 #: templates/html/events/integration_add.html:6
 #: templates/html/events/integration_index.html:6
 #: templates/html/events/integration_view.html:6
 #: templates/html/events/page.html:20
 msgid "Integration"
-msgstr "Integración"
+msgstr "Intégration"
 
 #: templates/html/events/integration_add.html:39
 msgid "needs your approval"
-msgstr "necesita su aprobación"
+msgstr "Necessite une validation"
 
 #: templates/html/events/integration_add.html:41
 msgid "Please proceed to "
-msgstr "Por favor, proceda con"
+msgstr "Merci de procéder à"
 
 #: templates/html/events/integration_add.html:52
 msgid "Sorry, there has been a problem adding "
-msgstr "Lo sentimos, ha ocurrido un problema al agregar"
+msgstr "Désolé, il n'y a eu un problème en ajoutant"
 
 #: templates/html/events/integration_index.html:32
 msgid "Active Resources"
-msgstr "Recursos Activos"
+msgstr "Ressources Actives"
 
 #: templates/html/events/integration_index.html:51
 msgid "Sync Now"
-msgstr "Sincronizar Ahora"
+msgstr "Synchroniser maintenant"
 
 #: templates/html/events/integration_index.html:55
 #: templates/html/events/integration_index.html:82
@@ -3606,59 +3606,59 @@ msgstr "Sincronizar Ahora"
 #: templates/html/sales/status_view.html:67
 #: templates/html/services/service_view.html:86
 msgid "None"
-msgstr "Ninguno"
+msgstr "Vide"
 
 #: templates/html/events/integration_index.html:59
 msgid "Available Resources"
-msgstr "Recursos Disponibles"
+msgstr "Ressources Disponibles"
 
 #: templates/html/events/integration_index.html:79
 msgid "Grant access"
-msgstr "Otorgar acceso"
+msgstr "Accorder l'accès"
 
 #: templates/html/events/integration_index.html:87
 #: templates/html/events/integration_index.html:100
 msgid "Powered by"
-msgstr "Impulsado por"
+msgstr "Propulsé par"
 
 #: templates/html/events/integration_index.html:95
 msgid "Loading"
-msgstr "Cargando"
+msgstr "Chargement"
 
 #: templates/html/events/integration_index.html:96
 msgid "This page requires JavaScript"
-msgstr "Esta página requiere JavaScript"
+msgstr "Cette page a besoin de JavaScript"
 
 #: templates/html/events/month_view.html:3
 #: templates/html/events/page.html:15
 msgid "Month"
-msgstr "Mes"
+msgstr "Mois"
 
 #: templates/html/events/page.html:11
 msgid "All Events"
-msgstr "Todos los Eventos"
+msgstr "Tous les Evènements"
 
 #: templates/html/events/page.html:12
 msgid "Upcoming"
-msgstr "En breve"
+msgstr "A venir"
 
 #: templates/html/events/page.html:16
 #: templates/html/events/week_view.html:3
 #: templates/html/events/week_view.html:25
 #: templates/html/events/week_view.html:29
 msgid "Week"
-msgstr "Semana"
+msgstr "Semaine"
 
 #: templates/html/events/upcoming.html:3
 #: templates/html/events/upcoming.html:6
 msgid "Upcoming Events"
-msgstr "Proximos Eventos"
+msgstr "Evènements à venir"
 
 #: templates/html/finance/account_add.html:3
 #: templates/html/finance/account_add.html:14
 #: templates/html/finance/index_accounts.html:10
 msgid "New Account"
-msgstr "Nueva Cuenta"
+msgstr "Nouveau Compte"
 
 #: templates/html/finance/account_add.html:3
 #: templates/html/finance/account_delete.html:3
@@ -3701,75 +3701,79 @@ msgstr "Nueva Cuenta"
 #: templates/html/finance/transaction_edit.html:3
 #: templates/html/finance/transaction_view.html:3
 msgid "Finance"
-msgstr "Finanzas"
+msgstr "Finance"
 
 #: templates/html/finance/account_add.html:11
 #: templates/html/finance/index_accounts.html:7
 #: templates/html/finance/page.html:21
 msgid "Accounts"
-msgstr "Cuentas"
+msgstr "Comptes"
 
 #: templates/html/finance/account_delete.html:6
 msgid "Delete Account"
-msgstr "Eliminar Cuenta"
+msgstr "Supprimer Compte"
 
 #: templates/html/finance/account_delete.html:20
 msgid "Delete this Account"
-msgstr "Eliminar esta Cuenta"
+msgstr "Supprimer ce Compte"
 
 #: templates/html/finance/account_delete.html:44
 #: templates/html/finance/account_view.html:46
 #: templates/html/finance/index_accounts.html:42
 msgid "Balance"
-msgstr "Saldo"
+msgstr "Solde"
 
 #: templates/html/finance/asset_add.html:3
 #: templates/html/finance/asset_add.html:14
 #: templates/html/finance/index_assets.html:10
+#, fuzzy
 msgid "New Asset"
-msgstr "Nuevo Activo"
+msgstr "Nouveau Bien"
 
 #: templates/html/finance/asset_add.html:11
 #: templates/html/finance/index_assets.html:3
 #: templates/html/finance/index_assets.html:5
 #: templates/html/finance/page.html:13
+#, fuzzy
 msgid "Assets"
-msgstr "Activos"
+msgstr "Biens"
 
 #: templates/html/finance/asset_delete.html:6
 #: templates/html/finance/asset_edit.html:12
 #: templates/html/finance/asset_view.html:6
 #: templates/html/infrastructure/item_view.html:81
+#, fuzzy
 msgid "Asset"
-msgstr "Activo"
+msgstr "Bien"
 
 #: templates/html/finance/asset_delete.html:17
+#, fuzzy
 msgid "Delete this Asset"
-msgstr "Eliminar este Activo"
+msgstr "Supprimer ce Bien"
 
 #: templates/html/finance/asset_delete.html:41
 #: templates/html/finance/asset_view.html:46
 msgid "Inital Value"
-msgstr "Valor Incial"
+msgstr "Valeur Initiale"
 
 #: templates/html/finance/asset_delete.html:47
 msgid "Lifetime"
-msgstr "Longevidad"
+msgstr "Durée de Vie"
 
 #: templates/html/finance/asset_delete.html:54
 #: templates/html/finance/asset_view.html:59
 msgid "End of Life Value"
-msgstr "Valor final"
+msgstr "Valeur Finale"
 
 #: templates/html/finance/asset_delete.html:61
 #: templates/html/finance/asset_view.html:66
 msgid "Depreciation Type"
-msgstr "Tipo de Depreciación"
+msgstr "Type d'Amortissement"
 
 #: templates/html/finance/asset_delete.html:68
 #: templates/html/finance/asset_view.html:73
 msgid "Depreciation Rate"
-msgstr "Tasa de Depreciación"
+msgstr "Taux d'Amortissement"
 
 #: templates/html/finance/asset_delete.html:76
 #: templates/html/finance/asset_view.html:87
@@ -3778,59 +3782,59 @@ msgstr "Tasa de Depreciación"
 #: templates/html/finance/index_assets.html:47
 #: templates/html/finance/index_equities.html:40
 msgid "Purchase Date"
-msgstr "Fecha de Compra"
+msgstr "Date d'Achat"
 
 #: templates/html/finance/asset_delete.html:82
 #: templates/html/finance/asset_view.html:93
 msgid "Current Value"
-msgstr "Valor Actual"
+msgstr "Valeur Actuelle"
 
 #: templates/html/finance/asset_view.html:52
 msgid "Lifetime (Years)"
-msgstr "Longevidad (en años)"
+msgstr "Durée de Vie (en années)"
 
 #: templates/html/finance/asset_view.html:80
 #: templates/html/finance/index_assets.html:51
 msgid "Depreciation"
-msgstr "Depreciación"
+msgstr "Amortissement"
 
 #: templates/html/finance/balance_sheet.html:3
 #: templates/html/finance/balance_sheet.html:5
 #: templates/html/finance/page.html:18
 msgid "Balance Sheet"
-msgstr "Balance General"
+msgstr "Bilan"
 
 #: templates/html/finance/balance_sheet.html:22
 msgid "Balance Sheet for"
-msgstr "Balance General para"
+msgstr "Bilan pour"
 
 #: templates/html/finance/balance_sheet.html:22
 msgid "as of"
-msgstr "hasta"
+msgstr "à partir de "
 
 #: templates/html/finance/balance_sheet.html:29
 msgid "ASSETS"
-msgstr "ACTIVOS"
+msgstr "ACTIFS"
 
 #: templates/html/finance/balance_sheet.html:33
 msgid "Non-Current Assets"
-msgstr "Activos No-Corrientes"
+msgstr "Actif non-courant"
 
 #: templates/html/finance/balance_sheet.html:37
 msgid "Property, Plant and Equipment"
-msgstr "Propriedad, Planta y Equipo"
+msgstr "Immobilisations Corporelles"
 
 #: templates/html/finance/balance_sheet.html:42
 msgid "Intangible Assets"
-msgstr "Activos Intangibles"
+msgstr "Actifs Incorporels"
 
 #: templates/html/finance/balance_sheet.html:48
 msgid "Current Assets"
-msgstr "Activos Corrientes"
+msgstr "Actifs Courants"
 
 #: templates/html/finance/balance_sheet.html:52
 msgid "Inventories"
-msgstr "Inventario"
+msgstr "Inventaire"
 
 #: templates/html/finance/balance_sheet.html:57
 #: templates/html/finance/index_receivables.html:3
@@ -3838,67 +3842,72 @@ msgstr "Inventario"
 #: templates/html/finance/page.html:12
 #: templates/html/finance/receivable_add.html:11
 msgid "Receivables"
-msgstr "Por Cobrar"
+msgstr "Créances"
 
 #: templates/html/finance/balance_sheet.html:62
 msgid "Prepayments"
-msgstr "Pagos Anticipados"
+msgstr "Comptes"
 
 #: templates/html/finance/balance_sheet.html:67
 msgid "Cash and Cash equivalents"
-msgstr "Caja y Equivalentes de Caja"
+msgstr "Trésorerie et Equivalents de Trésorerie"
 
 #: templates/html/finance/balance_sheet.html:72
 msgid "Total Assets"
-msgstr "Activo total"
+msgstr "Actif total"
 
 #: templates/html/finance/balance_sheet.html:80
 msgid "LIABILITIES"
-msgstr "PASIVOS"
+msgstr "PASSIF"
 
 #: templates/html/finance/balance_sheet.html:84
 msgid "Non-Current Liabilities"
-msgstr "Pasivos No-Corrientes"
+msgstr "Passifs Non-courants"
 
 #: templates/html/finance/balance_sheet.html:88
 msgid "Borrowings"
-msgstr "Prestamos"
+msgstr "Emprunts"
 
 #: templates/html/finance/balance_sheet.html:93
 msgid "Current Liabilities"
-msgstr "Pasivos Corrientes"
+msgstr "Passif Courant"
 
 #: templates/html/finance/balance_sheet.html:97
 msgid "Payables"
-msgstr "Deudas"
+msgstr "Dettes"
 
 #: templates/html/finance/balance_sheet.html:102
 msgid "Total Liabilities"
-msgstr "Pasivo Total"
+msgstr "Total du Passif"
 
 #: templates/html/finance/balance_sheet.html:110
 msgid "SHAREHOLDER EQUITY"
-msgstr "PATRIMONIO NETO"
+msgstr "CAPITAUX PROPRES"
 
 #: templates/html/finance/balance_sheet.html:114
+#, fuzzy
 msgid "Share Capital"
 msgstr "Capital Social"
 
 #: templates/html/finance/balance_sheet.html:119
+#, fuzzy
 msgid "Share Premium"
-msgstr "Prima en Títulos Valores"
+msgstr "Prime d'Emission"
 
 #: templates/html/finance/balance_sheet.html:124
+#, fuzzy
 msgid "Retained Earnings"
-msgstr "Ganancias Retenidas"
+msgstr "Bénéfices Non Répartis"
 
 #: templates/html/finance/balance_sheet.html:129
+#, fuzzy
 msgid "Total Equity"
-msgstr "Total Patrimonio Neto"
+msgstr "Total Capitaux Propres"
 
 #: templates/html/finance/balance_sheet.html:134
+#, fuzzy
 msgid "Total Equity and Liabilities"
-msgstr "Total Patrimonio Neto y Pasivo"
+msgstr "Total des capitaux propres et passifs"
 
 #: templates/html/finance/category_add.html:3
 #: templates/html/finance/category_add.html:12
@@ -3911,12 +3920,12 @@ msgstr "Total Patrimonio Neto y Pasivo"
 #: templates/html/knowledge/item_add.html:9
 #: templates/html/knowledge/page.html:38
 msgid "New Category"
-msgstr "Nueva Categoria"
+msgstr "Nouvelle Catégorie"
 
 #: templates/html/finance/category_delete.html:17
 #: templates/html/knowledge/category_delete.html:20
 msgid "Delete this Category"
-msgstr "Eliminar esta Categoria"
+msgstr "Supprimer cette Catégorie"
 
 #: templates/html/finance/category_view.html:29
 #: templates/html/finance/index_transactions.html:3
@@ -3925,12 +3934,12 @@ msgstr "Eliminar esta Categoria"
 #: templates/html/finance/page.html:10
 #: templates/html/finance/transaction_add.html:11
 msgid "Transactions"
-msgstr "Transacciones"
+msgstr "Transactions"
 
 #: templates/html/finance/category_view.html:44
 #: templates/html/finance/index_transactions.html:52
 msgid "No Transactions available"
-msgstr "Sin Transacciones disponibles"
+msgstr "Aucune Transactions disponibles"
 
 #: templates/html/finance/category_view.html:49
 #: templates/html/finance/index_liabilities.html:3
@@ -3938,24 +3947,24 @@ msgstr "Sin Transacciones disponibles"
 #: templates/html/finance/liability_add.html:11
 #: templates/html/finance/page.html:11
 msgid "Liabilities"
-msgstr "Pasivos"
+msgstr "Passifs"
 
 #: templates/html/finance/category_view.html:64
 msgid "No Liabilities available"
-msgstr "Sin Pasivos disponibles"
+msgstr "Aucun Passif Disponible"
 
 #: templates/html/finance/equity_add.html:3
 #: templates/html/finance/equity_add.html:14
 #: templates/html/finance/index_equities.html:10
 msgid "New Equity"
-msgstr "Nuevo Capital Accionario"
+msgstr "Nouveau Titre"
 
 #: templates/html/finance/equity_add.html:11
 #: templates/html/finance/index_equities.html:3
 #: templates/html/finance/index_equities.html:5
 #: templates/html/finance/page.html:14
 msgid "Equities"
-msgstr "Patrimonio Neto"
+msgstr "Titres"
 
 #: templates/html/finance/equity_delete.html:3
 #: templates/html/finance/equity_delete.html:6
@@ -3964,66 +3973,66 @@ msgstr "Patrimonio Neto"
 #: templates/html/finance/equity_view.html:3
 #: templates/html/finance/equity_view.html:6
 msgid "Equity"
-msgstr "Acción"
+msgstr "Titre"
 
 #: templates/html/finance/equity_delete.html:17
 msgid "Delete this Equity"
-msgstr "Eliminar esta Acción"
+msgstr "Supprimer ce Titre"
 
 #: templates/html/finance/equity_delete.html:41
 #: templates/html/finance/equity_view.html:46
 msgid "Issue Price"
-msgstr "Precio de Emisión"
+msgstr "Prix d'Emission"
 
 #: templates/html/finance/equity_delete.html:46
 #: templates/html/finance/equity_view.html:51
 #: templates/html/finance/index_equities.html:44
 #: templates/html/sales/product_view.html:74
 msgid "Sell Price"
-msgstr "Precio de Venta"
+msgstr "Prix de Vente"
 
 #: templates/html/finance/income_view.html:3
 #: templates/html/finance/income_view.html:5
 #: templates/html/finance/page.html:17
 msgid "Income Statement"
-msgstr "Estado de Resultados"
+msgstr "Compte de Résultat"
 
 #: templates/html/finance/income_view.html:19
 msgid "Revenues"
-msgstr "Ingresos"
+msgstr "Chiffre d'Affaire"
 
 #: templates/html/finance/income_view.html:30
 msgid "Total Revenues"
-msgstr "Total de Ingresos"
+msgstr "Total du Chiffre d'Affaire"
 
 #: templates/html/finance/income_view.html:34
 msgid "Expenses"
-msgstr "Gastos"
+msgstr "Dépenses"
 
 #: templates/html/finance/income_view.html:45
 msgid "Total Expenses"
-msgstr "Total de Gastos"
+msgstr "Total des Dépenses"
 
 #: templates/html/finance/income_view.html:49
 msgid "Totals"
-msgstr "Totales"
+msgstr "Totaux"
 
 #: templates/html/finance/income_view.html:51
 msgid "Net Income"
-msgstr "Ingresos Netos"
+msgstr "Revenu Net"
 
 #: templates/html/finance/index_accounts.html:53
 msgid "No Accounts"
-msgstr "Sin Cuentas"
+msgstr "Pas de Comptes"
 
 #: templates/html/finance/index_assets.html:48
 #: templates/html/finance/index_equities.html:39
 msgid "Type"
-msgstr "Tipo"
+msgstr "Type"
 
 #: templates/html/finance/index_assets.html:80
 msgid "No Assets"
-msgstr "Sin Activos"
+msgstr "Aucun Actif"
 
 #: templates/html/finance/index_categories.html:3
 #: templates/html/finance/index_categories.html:5
@@ -4032,42 +4041,44 @@ msgstr "Sin Activos"
 #: templates/html/knowledge/index_categories.html:3
 #: templates/html/knowledge/page.html:12
 msgid "Categories"
-msgstr "Categorias"
+msgstr "Catégories"
 
 #: templates/html/finance/index_categories.html:42
 #: templates/html/knowledge/index_categories.html:30
 msgid "No Categories Available"
-msgstr "Sin Categorias Disponibles"
+msgstr "Aucune Catégorie Disponible"
 
 #: templates/html/finance/index_equities.html:72
 msgid "No Equities"
-msgstr "Sin Patrimonio Neto"
+msgstr "Aucune Action"
 
 #: templates/html/finance/index_liabilities.html:11
 #: templates/html/finance/liability_add.html:3
 #: templates/html/finance/liability_add.html:14
 msgid "New Liability"
-msgstr "Nuevo Pasivo"
+msgstr "Nouvel Engaement"
 
 #: templates/html/finance/index_liabilities.html:56
 msgid "No Liabilities"
-msgstr "Sin Pasivos"
+msgstr "Pas d'Engagement"
 
 #: templates/html/finance/index_receivables.html:10
 #: templates/html/finance/receivable_add.html:3
 #: templates/html/finance/receivable_add.html:14
+#, fuzzy
 msgid "New Receivable"
-msgstr "Nueva Cuenta por Cobrar"
+msgstr "Nouvel A Recevoir"
 
 #: templates/html/finance/index_receivables.html:52
+#, fuzzy
 msgid "No Receivables"
-msgstr "Sin Cuentas por Cobrar"
+msgstr "Aucun A Recevoir"
 
 #: templates/html/finance/index_transactions.html:10
 #: templates/html/finance/transaction_add.html:3
 #: templates/html/finance/transaction_add.html:14
 msgid "New Transaction"
-msgstr "Nueva Transacción"
+msgstr "Nouvelle Transaction"
 
 #: templates/html/finance/liability_delete.html:3
 #: templates/html/finance/liability_delete.html:6
@@ -4077,12 +4088,13 @@ msgstr "Nueva Transacción"
 #: templates/html/finance/liability_view.html:6
 #: templates/html/finance/transaction_delete.html:55
 #: templates/html/finance/transaction_view.html:63
+#, fuzzy
 msgid "Liability"
-msgstr "Pasivo"
+msgstr "Passif"
 
 #: templates/html/finance/liability_delete.html:17
 msgid "Delete this Liability"
-msgstr "Eliminar este Pasivo"
+msgstr "Supprimer cet Engagement"
 
 #: templates/html/finance/liability_delete.html:58
 #: templates/html/finance/liability_view.html:65
@@ -4090,7 +4102,7 @@ msgstr "Eliminar este Pasivo"
 #: templates/html/finance/receivable_view.html:65
 #: templates/html/finance/tags/liability_list.html:11
 msgid "Due Date"
-msgstr "Fecha Limite"
+msgstr "Date Limite"
 
 #: templates/html/finance/page.html:16
 #: templates/html/reports/index.html:3
@@ -4101,7 +4113,7 @@ msgstr "Fecha Limite"
 #: templates/html/reports/report_add_populate.html:3
 #: templates/html/reports/report_query.html:3
 msgid "Reports"
-msgstr "Reportes"
+msgstr "Rapports"
 
 #: templates/html/finance/receivable_delete.html:3
 #: templates/html/finance/receivable_delete.html:6
@@ -4110,19 +4122,19 @@ msgstr "Reportes"
 #: templates/html/finance/receivable_view.html:3
 #: templates/html/finance/receivable_view.html:6
 msgid "Receivable"
-msgstr "Por Cobrar"
+msgstr "A Recevoir"
 
 #: templates/html/finance/receivable_delete.html:17
 msgid "Delete this Receivable"
-msgstr "Eliminar esta Cuenta por Cobrar"
+msgstr "Supprimer cet A Recevoir"
 
 #: templates/html/finance/settings_view.html:18
 msgid "Default Account"
-msgstr "Cuenta Predeterminada"
+msgstr "Compte par défaut"
 
 #: templates/html/finance/settings_view.html:27
 msgid "My Company"
-msgstr "Mi Compañia"
+msgstr "Mon Entreprise"
 
 #: templates/html/finance/transaction_delete.html:3
 #: templates/html/finance/transaction_delete.html:6
@@ -4131,16 +4143,16 @@ msgstr "Mi Compañia"
 #: templates/html/finance/transaction_view.html:3
 #: templates/html/finance/transaction_view.html:6
 msgid "Transaction"
-msgstr "Transacción"
+msgstr "Transaction"
 
 #: templates/html/finance/transaction_delete.html:17
 msgid "Delete this Transaction"
-msgstr "Eliminar esta Transacción"
+msgstr "Supprimer cette Transaction"
 
 #: templates/html/finance/tags/liability_list.html:9
 #: templates/html/finance/tags/transaction_list.html:7
 msgid "Select"
-msgstr "Seleccionar"
+msgstr "Cocher"
 
 #: templates/html/finance/tags/liability_list.html:12
 #: templates/html/finance/tags/transaction_list.html:10
@@ -4152,14 +4164,14 @@ msgstr "De"
 #: templates/html/finance/tags/liability_list.html:13
 #: templates/html/finance/tags/transaction_list.html:11
 msgid "To"
-msgstr "Para"
+msgstr "A"
 
 #: templates/html/identities/contact_add.html:3
 #: templates/html/identities/contact_add.html:7
 #: templates/html/identities/contact_add_typed.html:3
 #: templates/html/identities/page.html:42
 msgid "New Contact"
-msgstr "Nuevo Contacto"
+msgstr "Nouveau Contact"
 
 #: templates/html/identities/contact_add.html:3
 #: templates/html/identities/contact_add.html:4
@@ -4186,22 +4198,22 @@ msgstr "Nuevo Contacto"
 #: templates/html/identities/settings_view.html:3
 #: templates/html/identities/user_view.html:3
 msgid "Identities"
-msgstr "Identidades"
+msgstr "Identités"
 
 #: templates/html/identities/contact_add.html:14
 msgid "Please choose the type of Contact you wish to create"
-msgstr "Por favor, seleccione el tipo de Contacto que desea crear"
+msgstr "Merci de choisir le type de contact que vous voulez créer"
 
 #: templates/html/identities/contact_add.html:24
 msgid "Sorry, you can not create new Contacts. You don't have access to any of the available Contact Types"
-msgstr "Lo sentimos, no puede crear nuevos Contactos. Usted no tiene acceso a cualquiera de los Tipos de Contactos disponibles"
+msgstr "Désolé, vous ne pouvez pas créer de nouveaux Contacts. Vous n'avez pas accès à tous les Types de Contact disponibles"
 
 #: templates/html/identities/contact_add_typed.html:6
 #: templates/html/identities/contact_type_delete.html:6
 #: templates/html/identities/contact_type_edit.html:6
 #: templates/html/identities/contact_type_view.html:6
 msgid "Contact Type"
-msgstr "Tipo de Contacto"
+msgstr "Type de Contact"
 
 #: templates/html/identities/contact_add_typed.html:9
 #: templates/html/identities/contact_type_delete.html:9
@@ -4212,31 +4224,31 @@ msgstr "Tipo de Contacto"
 #: templates/html/infrastructure/item_type_edit.html:15
 #: templates/html/infrastructure/item_type_view.html:47
 msgid "New"
-msgstr "Nuevo"
+msgstr "Nouveau"
 
 #: templates/html/identities/contact_delete.html:36
 msgid "Delete this Contact?"
-msgstr "¿Eliminar este Contacto?"
+msgstr "Supprimer ce Contact ?"
 
 #: templates/html/identities/contact_me.html:5
 msgid "My Contact Card"
-msgstr "Mi Tarjeta de Visita"
+msgstr "Ma carte de Visite"
 
 #: templates/html/identities/contact_me_missing.html:7
 msgid "No Contact"
-msgstr "Sin Contactos"
+msgstr "Aucun Contact"
 
 #: templates/html/identities/contact_me_missing.html:19
 msgid "Sorry, you do not have a Contact Card"
-msgstr "Lo sentimos, usted no tiene una Tarjeta de Visita"
+msgstr "Désolé, vous n'avez pas de Carte de Visite"
 
 #: templates/html/identities/contact_me_missing.html:21
 msgid "Maybe you want to"
-msgstr "Quizás usted quiera"
+msgstr "Peut être souhaitez vous"
 
 #: templates/html/identities/contact_me_missing.html:21
 msgid "Add</a> one"
-msgstr "Agregar</a> una"
+msgstr "Ajouter </a> une"
 
 #: templates/html/identities/contact_type_add.html:3
 #: templates/html/identities/contact_type_add.html:8
@@ -4249,7 +4261,7 @@ msgstr "Agregar</a> una"
 #: templates/html/infrastructure/settings_edit.html:10
 #: templates/html/infrastructure/settings_view.html:10
 msgid "New Type"
-msgstr "Nuevo Tipo"
+msgstr "Nouveau Type"
 
 #: templates/html/identities/contact_type_add.html:9
 #: templates/html/identities/field_add.html:3
@@ -4262,60 +4274,61 @@ msgstr "Nuevo Tipo"
 #: templates/html/infrastructure/settings_edit.html:11
 #: templates/html/infrastructure/settings_view.html:11
 msgid "New Field"
-msgstr "Nuevo Campo"
+msgstr "Nouveau Champ"
 
 #: templates/html/identities/contact_type_delete.html:18
 msgid "Delete this Contact Type?"
-msgstr "¿Eliminar este Tipo de Contacto?"
+msgstr "Supprimer ce Type de Contact ?"
 
 #: templates/html/identities/contact_type_delete.html:21
 msgid "WARNING: All Contacts of this Type will be deleted"
-msgstr "PRECAUCIÓN: Todos los Contactos de este Tipo serán eliminados"
+msgstr "AVERTISSEMENT: Tous les contacts de ce Type seront supprimés"
 
 #: templates/html/identities/contact_view.html:81
 msgid "Child Contacts"
-msgstr "Contactos Dependientes"
+msgstr "Contacts Dépendants"
 
 #: templates/html/identities/field_delete.html:6
+#, fuzzy
 msgid "Item Field"
-msgstr "Campo de Elemento"
+msgstr "Champ Elements"
 
 #: templates/html/identities/field_delete.html:23
 msgid "Delete this Field?"
-msgstr "¿Eliminar este Campo?"
+msgstr "Supprimer ce Champ ?"
 
 #: templates/html/identities/field_edit.html:6
 #: templates/html/identities/field_view.html:6
 msgid "Identities Field"
-msgstr "Campo de Identidades"
+msgstr "Champ Identités"
 
 #: templates/html/identities/field_view.html:30
 #: templates/html/infrastructure/field_view.html:30
 msgid "Field Type"
-msgstr "Tipo de Campo"
+msgstr "Type de Champ"
 
 #: templates/html/identities/field_view.html:41
 #: templates/html/infrastructure/field_view.html:41
 msgid "Allowed Values"
-msgstr "Valores Permitidos"
+msgstr "Valeurs autorisées"
 
 #: templates/html/identities/page.html:11
 msgid "All Contacts"
-msgstr "Todos los Contactos"
+msgstr "Tous les Contact"
 
 #: templates/html/identities/page.html:12
 #: templates/html/identities/widgets/contact_me.html:3
 msgid "My Card"
-msgstr "Mi Tarjeta"
+msgstr "Ma Carte"
 
 #: templates/html/identities/page.html:16
 #: templates/html/identities/settings_view.html:23
 msgid "Contact Types"
-msgstr "Tipos de Contacto"
+msgstr "Types de Contact"
 
 #: templates/html/identities/settings_view.html:48
 msgid "Contact Fields"
-msgstr "Campos de Contacto"
+msgstr "Champ Contact"
 
 #: templates/html/infrastructure/field_add.html:3
 #: templates/html/infrastructure/field_delete.html:3
@@ -4351,21 +4364,21 @@ msgstr "Campos de Contacto"
 #: templates/html/infrastructure/settings_edit.html:3
 #: templates/html/infrastructure/settings_view.html:3
 msgid "Infrastructure"
-msgstr "Infraestructura"
+msgstr "Matériels & Equipements"
 
 #: templates/html/infrastructure/field_delete.html:6
 #: templates/html/infrastructure/field_edit.html:6
 #: templates/html/infrastructure/field_view.html:6
 msgid "Infrastructure Field"
-msgstr "Campo de Infraestructura"
+msgstr "Champ Matériels & Equipements"
 
 #: templates/html/infrastructure/field_delete.html:23
 msgid "Delete this Field"
-msgstr "Eliminar Campo"
+msgstr "Supprimer ce Champ"
 
 #: templates/html/infrastructure/index.html:43
 msgid "No Items available"
-msgstr "Sin Elementos disponibles"
+msgstr "Pas d'éléments disponibles"
 
 #: templates/html/infrastructure/item_add.html:3
 #: templates/html/infrastructure/item_add.html:6
@@ -4384,51 +4397,51 @@ msgstr "Sin Elementos disponibles"
 #: templates/html/knowledge/item_add_folder.html:11
 #: templates/html/knowledge/page.html:36
 msgid "New Item"
-msgstr "Nuevo Elemento"
+msgstr "Aucun Element"
 
 #: templates/html/infrastructure/item_add.html:7
 #: templates/html/infrastructure/location_add.html:3
 #: templates/html/infrastructure/location_add.html:7
 #: templates/html/infrastructure/page.html:51
 msgid "New Location"
-msgstr "Ubicación"
+msgstr "Nouvel Emplacement"
 
 #: templates/html/infrastructure/item_add.html:14
 msgid "Please choose the type of Infrastructure Item you wish to create"
-msgstr "Por favor, seleccione el Tipo de Elemento de Infraestructura que desea crear"
+msgstr "Merci de choisir le type de Matériels ou Equipements que vous souhaitez créer"
 
 #: templates/html/infrastructure/item_add.html:24
 msgid "Sorry, you can not create new Items. You don't have access to any of the available Infrastructure Item Types"
-msgstr "Lo sentimos, usted no puede crear nuevos Elementos. Usted no tiene acceso a ninguno de los Tipos de Elemento de Infraestructura disponibles"
+msgstr "Désolé, vous ne pouvez pas créer de nouveaux éléments. Vous n'avez pas accès à tous les types Matériels & Equipements disponibles "
 
 #: templates/html/infrastructure/item_add_typed.html:6
 #: templates/html/infrastructure/item_type_delete.html:6
 #: templates/html/infrastructure/item_type_edit.html:6
 #: templates/html/infrastructure/item_type_view.html:6
 msgid "Infrastructure Type"
-msgstr "Tipo de Infraestructura"
+msgstr "Tipo de Matériels & Equipements"
 
 #: templates/html/infrastructure/item_delete.html:36
 msgid "Delete this Infrastructure Item"
-msgstr "Eliminar este Elemento de Infraestructura"
+msgstr "Supprimer ce Type de Matériels & Equipements"
 
 #: templates/html/infrastructure/item_status_delete.html:6
 #: templates/html/infrastructure/item_status_edit.html:6
 #: templates/html/infrastructure/item_status_view.html:6
 msgid "Item Status"
-msgstr "Estado del Elemento"
+msgstr "Statut de l'Element"
 
 #: templates/html/infrastructure/item_status_delete.html:23
 msgid "Delete this Status"
-msgstr "Eliminar este Estado"
+msgstr "Supprimer ce Statut"
 
 #: templates/html/infrastructure/item_type_delete.html:18
 msgid "Delete this Type"
-msgstr "Eliminar este Tipo"
+msgstr "Supprimer ce Type"
 
 #: templates/html/infrastructure/item_view.html:109
 msgid "Active Service Records"
-msgstr "Registros de Servicio Activos"
+msgstr "Dossiers de Maintenance Actif"
 
 #: templates/html/infrastructure/item_view.html:118
 #: templates/html/infrastructure/page.html:3
@@ -4436,48 +4449,48 @@ msgstr "Registros de Servicio Activos"
 #: templates/html/infrastructure/service_record_index.html:3
 #: templates/html/infrastructure/service_record_index.html:5
 msgid "Service Records"
-msgstr "Registros de Servicio"
+msgstr "Dossier de Maintenance"
 
 #: templates/html/infrastructure/location_delete.html:35
 msgid "Delete this Location"
-msgstr "Eliminar esta Ubicación"
+msgstr "Supprimer cet Emplacement"
 
 #: templates/html/infrastructure/page.html:14
 msgid "By Type"
-msgstr "Por Tipo"
+msgstr "Par Type"
 
 #: templates/html/infrastructure/page.html:28
 msgid "Servicing"
-msgstr "Sirviendo"
+msgstr "Maintenance"
 
 #: templates/html/infrastructure/service_record_add.html:3
 #: templates/html/infrastructure/service_record_add.html:8
 #: templates/html/infrastructure/service_record_index.html:27
 msgid "New Service Record"
-msgstr "Nuevo Registro de Servicio"
+msgstr "Nouvelle Maintenace"
 
 #: templates/html/infrastructure/service_record_add.html:5
 #: templates/html/infrastructure/service_record_delete.html:6
 #: templates/html/infrastructure/service_record_edit.html:6
 #: templates/html/infrastructure/service_record_view.html:8
 msgid "Service Record"
-msgstr "Registro de Servicio"
+msgstr "Dossier de Maintenance"
 
 #: templates/html/infrastructure/service_record_delete.html:3
 msgid "Delete Service Record"
-msgstr "Eliminar Registro de Servicio"
+msgstr "Supprimer Dossier Maintenance"
 
 #: templates/html/infrastructure/service_record_delete.html:17
 msgid "Delete this Service Record"
-msgstr "Eliminar este Registro de Servicio"
+msgstr "Supprimer ce Dossier de Maintenace"
 
 #: templates/html/infrastructure/service_record_edit.html:3
 msgid "Edit Service Record"
-msgstr "Editar Registro de Servicio"
+msgstr "Editer Dossier de Maintenance"
 
 #: templates/html/infrastructure/service_record_view.html:3
 msgid "Service Record View"
-msgstr "Vista de Registro de Servicio"
+msgstr "Vue du Dossier de Maintenance"
 
 #: templates/html/infrastructure/service_record_view.html:35
 #: templates/html/projects/milestone_delete.html:45
@@ -4485,39 +4498,39 @@ msgstr "Vista de Registro de Servicio"
 #: templates/html/projects/task_delete.html:86
 #: templates/html/projects/task_view.html:126
 msgid "Start Date"
-msgstr "Fecha de Inicio"
+msgstr "Date de Début"
 
 #: templates/html/infrastructure/service_record_view.html:42
 msgid "Expiry Date"
-msgstr "Fecha de Vencimiento"
+msgstr "Date de Fin"
 
 #: templates/html/infrastructure/service_record_view.html:49
 msgid "Items Covered"
-msgstr "Elementos Cubiertos"
+msgstr "Elements couverts"
 
 #: templates/html/infrastructure/service_record_view.html:57
 msgid "No items covered"
-msgstr "No hay elementos cubiertos"
+msgstr "Pas d'Element couvert"
 
 #: templates/html/infrastructure/service_record_view.html:74
 msgid "Payment History"
-msgstr "Historial de Pagos"
+msgstr "Historique de Paiement"
 
 #: templates/html/infrastructure/settings_view.html:20
 msgid "Default Item Status"
-msgstr "Estado de Elemento Predeterminado"
+msgstr "Statut d'Element par Défaut"
 
 #: templates/html/infrastructure/settings_view.html:31
 msgid "Infrastructure Types"
-msgstr "Tipos de Infraestructura"
+msgstr "Types de Materiels & Equipements"
 
 #: templates/html/infrastructure/settings_view.html:56
 msgid "Infrastructure Fields"
-msgstr "Campos de Infraestructura"
+msgstr "Champs Matériels & Equipements"
 
 #: templates/html/infrastructure/settings_view.html:81
 msgid "Item Statuses"
-msgstr "Estados de los Elementos"
+msgstr "Statut d'Element"
 
 #: templates/html/knowledge/category_add.html:3
 #: templates/html/knowledge/category_delete.html:3
@@ -4535,37 +4548,37 @@ msgstr "Estados de los Elementos"
 #: templates/html/knowledge/item_view.html:3
 #: templates/html/knowledge/page.html:3
 msgid "Knowledge base"
-msgstr "Base de Conocimientos"
+msgstr "Bibliothèque de Connaissance"
 
 #: templates/html/knowledge/category_delete.html:41
 #: templates/html/knowledge/category_view.html:58
 msgid "No Items"
-msgstr "Sin Elementos"
+msgstr "Pas d'élément"
 
 #: templates/html/knowledge/folder_add.html:3
 #: templates/html/knowledge/folder_add_folder.html:3
 msgid "New folder"
-msgstr "Nueva carpeta"
+msgstr "Nouveau Dossier"
 
 #: templates/html/knowledge/index.html:3
 #: templates/html/knowledge/index_categories.html:3
 #: templates/html/knowledge/page.html:30
 msgid "Knowledge Base"
-msgstr "Base de Conocimientos"
+msgstr "Bibliothèque de Connaissance"
 
 #: templates/html/knowledge/index.html:32
 msgid "Recently Changed Items"
-msgstr "Elementos Modificados Recientemente"
+msgstr "Elements récemment modifiés"
 
 #: templates/html/knowledge/item_delete.html:7
 #: templates/html/knowledge/item_edit.html:5
 #: templates/html/knowledge/item_view.html:7
 msgid "Item"
-msgstr "Elemento"
+msgstr "Elements"
 
 #: templates/html/knowledge/item_delete.html:20
 msgid "Delete this Item"
-msgstr "Eliminar Elemento"
+msgstr "Supprimer cet élément"
 
 #: templates/html/messaging/emailbox_add.html:3
 #: templates/html/messaging/emailbox_delete.html:3
@@ -4587,7 +4600,7 @@ msgstr "Eliminar Elemento"
 #: templates/html/messaging/stream_edit.html:3
 #: templates/html/messaging/stream_view.html:3
 msgid "Messaging"
-msgstr "Mensajería"
+msgstr "Messagerie"
 
 #: templates/html/messaging/emailbox_add.html:7
 #: templates/html/messaging/emailbox_delete.html:5
@@ -4597,98 +4610,98 @@ msgstr "Mensajería"
 #: templates/html/messaging/settings_user_view.html:7
 #: templates/html/messaging/settings_view.html:7
 msgid "Email"
-msgstr "Correo Electrónico"
+msgstr "Courrier Electronique"
 
 #: templates/html/messaging/emailbox_add.html:11
 #: templates/html/messaging/emailbox_delete.html:8
 #: templates/html/messaging/emailbox_edit.html:11
 #: templates/html/messaging/settings_user_view.html:11
 msgid "New Email Box"
-msgstr "Nueva Bandeja de Correo Electrónico"
+msgstr "Nouvelle Boîte aux Lettres"
 
 #: templates/html/messaging/emailbox_delete.html:16
 msgid "Delete this Email Box"
-msgstr "Eliminar esta Bandeja"
+msgstr "Supprimer cette Boîte aux Lettres"
 
 #: templates/html/messaging/index.html:41
 #: templates/html/messaging/index_inbox.html:43
 #: templates/html/messaging/index_sent.html:43
 #: templates/html/messaging/stream_view.html:62
 msgid "No Messages"
-msgstr "Sin Mensajes"
+msgstr "Aucun Message"
 
 #: templates/html/messaging/index_inbox.html:7
 #: templates/html/messaging/page.html:11
 msgid "Inbox"
-msgstr "Bandeja de Entrada"
+msgstr "Reçu"
 
 #: templates/html/messaging/index_sent.html:3
 #: templates/html/messaging/index_sent.html:7
 #: templates/html/messaging/page.html:12
 msgid "Sent"
-msgstr "Enviados"
+msgstr "Envoyé"
 
 #: templates/html/messaging/message_compose.html:3
 msgid "Compose"
-msgstr "Redactar"
+msgstr "Rédiger"
 
 #: templates/html/messaging/message_compose.html:12
 #: templates/html/messaging/page.html:43
 #: templates/html/messaging/stream_add.html:6
 msgid "New Message"
-msgstr "Nuevo Mensaje"
+msgstr "Nouveau Message"
 
 #: templates/html/messaging/message_compose.html:13
 #: templates/html/messaging/page.html:44
 #: templates/html/messaging/stream_add.html:7
 msgid "New Stream"
-msgstr "Nueva Fuente"
+msgstr "Nouveau Fil"
 
 #: templates/html/messaging/message_delete.html:7
 #: templates/html/messaging/message_view.html:7
 msgid "Message"
-msgstr "Mensaje"
+msgstr "Message"
 
 #: templates/html/messaging/message_delete.html:44
 msgid "Delete this Message"
-msgstr "Eliminar este Mensaje"
+msgstr "Supprimer ce Message"
 
 #: templates/html/messaging/message_view.html:68
 #: templates/html/messaging/message_view.html:98
 msgid "this message"
-msgstr "este mensaje"
+msgstr "ce message"
 
 #: templates/html/messaging/message_view.html:109
 msgid "Post a reply"
-msgstr "Responder"
+msgstr "Répondre"
 
 #: templates/html/messaging/page.html:14
 msgid "Streams"
-msgstr "Fuentes"
+msgstr "Fils"
 
 #: templates/html/messaging/page.html:22
 msgid "Email Settings"
-msgstr "Configuraciones del Correo Electrónico"
+msgstr "Configuration du Courrier Electronique"
 
 #: templates/html/messaging/stream_delete.html:40
 msgid "Delete this Stream"
-msgstr "Eliminar esta Fuenta"
+msgstr "Supprimer ce Fil"
 
 #: templates/html/messaging/stream_view.html:69
 msgid "Write a Message"
-msgstr "Redactar un Mensaje"
+msgstr "Ecrire un Message"
 
 #: templates/html/messaging/stream_view.html:78
 msgid "Your message"
-msgstr "Su Mensaje"
+msgstr "Votre Message"
 
 #: templates/html/messaging/widgets/new_messages.html:3
 msgid "New messages"
-msgstr "Nuevos mensajes"
+msgstr "Nouveaux Messages"
 
 #: templates/html/messaging/widgets/new_messages.html:10
 msgid "No new messages"
-msgstr "No hay mensajes nuevos"
+msgstr "Aucun nouveau message"
 
 #: templates/html/projects/index.html:3
 #: templates/html/projects/index_assigned.html:3
@@ -4723,7 +4736,7 @@ msgstr "No hay mensajes nuevos"
 #: templates/html/projects/task_view.html:3
 #: templates/html/projects/tasks_in_progress.html:3
 msgid "Project Management"
-msgstr "Gestión de Proyecto"
+msgstr "Gestion de Projet"
 
 #: templates/html/projects/index.html:46
 #: templates/html/projects/index_assigned.html:47
@@ -4733,7 +4746,7 @@ msgstr "Gestión de Proyecto"
 #: templates/html/projects/tasks_in_progress.html:47
 #: templates/html/projects/widgets/tasks_assigned_to_me.html:11
 msgid "No Active Tasks"
-msgstr "Sin Tareas Activas"
+msgstr "Aune Tâche Active"
 
 #: templates/html/projects/index.html:55
 #: templates/html/projects/index_assigned.html:56
@@ -4745,14 +4758,14 @@ msgstr "Sin Tareas Activas"
 #: templates/html/services/index_assigned.html:53
 #: templates/html/services/index_owned.html:53
 msgid "Unclassified Tasks"
-msgstr "Tareas Sin Clasificación"
+msgstr "Tâches Non Classées"
 
 #: templates/html/projects/index_by_status.html:10
 #: templates/html/projects/page.html:23
 #: templates/html/projects/status_delete.html:20
 #: templates/html/projects/status_edit.html:25
 msgid "By status"
-msgstr "Por estado"
+msgstr "Par Statut"
 
 #: templates/html/projects/index_by_status.html:49
 #: templates/html/projects/milestone_add.html:14
@@ -4775,7 +4788,7 @@ msgstr "Por estado"
 #: templates/html/projects/task_add_typed.html:3
 #: templates/html/projects/task_add_typed.html:18
 msgid "New Task"
-msgstr "Nueva Tarea"
+msgstr "Nouvelle Tâche"
 
 #: templates/html/projects/milestone_add.html:3
 #: templates/html/projects/milestone_add.html:13
@@ -4790,7 +4803,7 @@ msgstr "Nueva Tarea"
 #: templates/html/projects/task_add.html:13
 #: templates/html/projects/task_add_typed.html:17
 msgid "New Milestone"
-msgstr "Nuevo Hito"
+msgstr "Nouvelle Etape"
 
 #: templates/html/projects/milestone_add.html:12
 #: templates/html/projects/milestone_add_typed.html:16
@@ -4805,18 +4818,18 @@ msgstr "Nuevo Hito"
 #: templates/html/projects/task_add.html:12
 #: templates/html/projects/task_add_typed.html:16
 msgid "New Project"
-msgstr "Nuevo Proyecto"
+msgstr "Nouveau Projet"
 
 #: templates/html/projects/milestone_delete.html:21
 msgid "Delete this Milestone"
-msgstr "Eliminar este Hito"
+msgstr "Supprimer cette Etape"
 
 #: templates/html/projects/milestone_delete.html:52
 #: templates/html/projects/milestone_view.html:93
 #: templates/html/projects/task_delete.html:93
 #: templates/html/projects/task_view.html:133
 msgid "End Date"
-msgstr "Fecha de Fín"
+msgstr "Date de Fin"
 
 #: templates/html/projects/milestone_view.html:22
 #: templates/html/projects/task_time_add.html:20
@@ -4824,22 +4837,22 @@ msgstr "Fecha de Fín"
 #: templates/html/projects/task_view.html:21
 #: templates/html/services/ticket_view.html:27
 msgid "Quick Status"
-msgstr "Estado Rápido"
+msgstr "Statut Rapide"
 
 #: templates/html/projects/milestone_view.html:47
 #: templates/html/projects/project_delete.html:22
 #: templates/html/reports/report_add.html:32
 msgid "Filter"
-msgstr "Filtro"
+msgstr "Filtre"
 
 #: templates/html/projects/milestone_view.html:113
 #: templates/html/projects/project_view.html:108
 msgid "Tasks"
-msgstr "Tareas"
+msgstr "Tâches"
 
 #: templates/html/projects/page.html:11
 msgid "All Tasks"
-msgstr "Todas las Tareas"
+msgstr "Toutes les Tâches"
 
 #: templates/html/projects/page.html:13
 #: templates/html/reports/page.html:13
@@ -4847,49 +4860,49 @@ msgstr "Todas las Tareas"
 #: templates/html/services/page.html:14
 #: templates/html/services/widgets/index_assigned.html:3
 msgid "Assigned to me"
-msgstr "Assignadas a mi"
+msgstr "A moi"
 
 #: templates/html/projects/page.html:14
 msgid "Tasks in progress"
-msgstr "Tareas en curso"
+msgstr "Tâche en cours"
 
 #: templates/html/projects/page.html:15
 #: templates/html/projects/page.html:43
 #: templates/html/projects/project_delete.html:73
 msgid "Projects"
-msgstr "Proyectos"
+msgstr "Projets"
 
 #: templates/html/projects/project_delete.html:32
 msgid "Delete this Project"
-msgstr "Eliminar este Proyecto"
+msgstr "Supprimer ce Projet"
 
 #: templates/html/projects/project_delete.html:58
 #: templates/html/projects/project_view.html:64
 msgid "Project manager"
-msgstr "Administrador del proyecto"
+msgstr "Chef de Projet"
 
 #: templates/html/projects/project_view.html:86
 msgid "Sub Projects"
-msgstr "Subproyectos"
+msgstr "Sous-Projets"
 
 #: templates/html/projects/settings_view.html:18
 msgid "Default Task Status"
-msgstr "Estado de Tarea Predeterminado"
+msgstr "Statut de Tâche par défaut"
 
 #: templates/html/projects/settings_view.html:29
 #: templates/html/sales/settings_view.html:83
 #: templates/html/services/settings_view.html:63
 msgid "Statuses"
-msgstr "Estados"
+msgstr "Statuts"
 
 #: templates/html/projects/status_delete.html:7
 #: templates/html/projects/status_edit.html:12
 msgid "Task Status"
-msgstr "Estado de la Tarea"
+msgstr "Statut de Tâche"
 
 #: templates/html/projects/status_delete.html:30
 msgid "Delete this Task Status"
-msgstr "Eliminar este Estado de Tarea"
+msgstr "Supprimer ce Statut de Tâche"
 
 #: templates/html/projects/task_add_subtask.html:3
 #: templates/html/projects/task_add_subtask.html:10
@@ -4897,7 +4910,7 @@ msgstr "Eliminar este Estado de Tarea"
 #: templates/html/projects/task_edit.html:10
 #: templates/html/projects/task_view.html:10
 msgid "New Sub Task"
-msgstr "Nueva Subtarea"
+msgstr "Nouvelle Sous-Tâche"
 
 #: templates/html/projects/task_add_subtask.html:7
 #: templates/html/projects/task_delete.html:7
@@ -4906,11 +4919,11 @@ msgstr "Nueva Subtarea"
 #: templates/html/projects/task_time_view.html:39
 #: templates/html/projects/task_view.html:7
 msgid "Task"
-msgstr "Tarea"
+msgstr "Tâche"
 
 #: templates/html/projects/task_delete.html:21
 msgid "Delete this Task"
-msgstr "Eliminar esta Tarea"
+msgstr "Supprimer cette Tâche"
 
 #: templates/html/projects/task_delete.html:53
 #: templates/html/projects/task_time_add.html:79
@@ -4921,29 +4934,29 @@ msgstr "Eliminar esta Tarea"
 #: templates/html/sales/ordered_product_add.html:32
 #: templates/html/sales/ordered_product_edit.html:29
 msgid "Anyone"
-msgstr "Cualquiera"
+msgstr "Personne"
 
 #: templates/html/projects/task_delete.html:112
 #: templates/html/projects/task_time_add.html:124
 #: templates/html/projects/task_view.html:164
 msgid "Subtasks"
-msgstr "Subtareas"
+msgstr "Sous-Taches"
 
 #: templates/html/projects/task_time_add.html:154
 #: templates/html/projects/task_view.html:183
 msgid "Total Work Time"
-msgstr "Tiempo de Trabajo Total"
+msgstr "Temps de Travail Total"
 
 #: templates/html/projects/task_time_add.html:192
 #: templates/html/projects/task_view.html:212
 msgid "now"
-msgstr "ahora"
+msgstr "maintenant"
 
 #: templates/html/projects/task_time_delete.html:7
 #: templates/html/projects/task_time_edit.html:7
 #: templates/html/projects/task_time_view.html:7
 msgid "Task Time Slot"
-msgstr "Intervalo de Tiempo de la Tarea"
+msgstr "Intervalle de Temps de Travail"
 
 #: templates/html/projects/task_time_delete.html:20
 msgid "Delete this Time Slot"
@@ -4952,12 +4965,12 @@ msgstr "Eliminar este Intervalo"
 #: templates/html/projects/task_view.html:205
 #: templates/html/projects/tags/time_slot_list.html:8
 msgid "In progress"
-msgstr "En curso"
+msgstr "En cours"
 
 #: templates/html/projects/task_view.html:254
 #: templates/html/services/ticket_view.html:152
 msgid "History"
-msgstr "Historial"
+msgstr "Historique"
 
 #: templates/html/projects/task_view.html:262
 #: templates/html/projects/task_view.html:265
@@ -4968,7 +4981,7 @@ msgstr "Historial"
 #: templates/html/services/ticket_view.html:166
 #: templates/html/services/ticket_view.html:169
 msgid "on"
-msgstr "en"
+msgstr "sur"
 
 #: templates/html/projects/task_view.html:262
 #: templates/html/projects/task_view.html:265
@@ -4988,36 +5001,36 @@ msgstr "Auto"
 
 #: templates/html/projects/task_view.html:287
 msgid "Update task"
-msgstr "Actualizar tarea"
+msgstr "Mettre à jour la Tâche"
 
 #: templates/html/projects/widgets/tasks_assigned_to_me.html:3
 msgid "Tasks assigned to me"
-msgstr "Tareas asignadas a mí"
+msgstr "Mes Tâches"
 
 #: templates/html/reports/page.html:11
 msgid "All Reports"
-msgstr "Todos los Reportes"
+msgstr "Tous les Rapports"
 
 #: templates/html/reports/page.html:12
 msgid "My Reports"
-msgstr "Mis Reportes"
+msgstr "Mes Rapports"
 
 #: templates/html/reports/page.html:14
 msgid "By Module"
-msgstr "Por Módulo"
+msgstr "Par Module"
 
 #: templates/html/reports/page.html:31
 #: templates/html/reports/report_add.html:6
 msgid "New Template"
-msgstr "Nueva Plantilla"
+msgstr "Nouveau Template"
 
 #: templates/html/reports/report_add.html:31
 msgid "Field Name"
-msgstr "Nombre del Campo"
+msgstr "Nom du Champ"
 
 #: templates/html/reports/report_add.html:34
 msgid "Join"
-msgstr "Unirse"
+msgstr "Fusionner"
 
 #: templates/html/sales/index.html:3
 #: templates/html/sales/index.html.py:9
@@ -5061,13 +5074,13 @@ msgstr "Unirse"
 #: templates/html/sales/subscription_edit.html:3
 #: templates/html/sales/subscription_view.html:3
 msgid "Sales"
-msgstr "Ventas"
+msgstr "Ventes"
 
 #: templates/html/sales/index.html:52
 #: templates/html/sales/index_assigned.html:49
 #: templates/html/sales/index_owned.html:50
 msgid "No sale orders"
-msgstr "Sin ordenes de ventas"
+msgstr "Aucune Vente"
 
 #: templates/html/sales/lead_add.html:5
 #: templates/html/sales/lead_delete.html:3
@@ -5080,13 +5093,13 @@ msgstr "Sin ordenes de ventas"
 #: templates/html/sales/page.html:18
 #: templates/html/sales/status_view.html:50
 msgid "Leads"
-msgstr "Clientes Potenciales"
+msgstr "Client Potentiel"
 
 #: templates/html/sales/lead_add.html:8
 #: templates/html/sales/lead_index.html:10
 #: templates/html/sales/lead_index_owned.html:10
 msgid "New Lead"
-msgstr "Nuevo Cliente Potencial"
+msgstr "Nouveau Client Potentiel"
 
 #: templates/html/sales/lead_delete.html:3
 #: templates/html/sales/lead_edit.html:3
@@ -5096,31 +5109,31 @@ msgstr "Nuevo Cliente Potencial"
 #: templates/html/sales/source_edit.html:3
 #: templates/html/sales/status_edit.html:3
 msgid "Sales Support"
-msgstr "Soporte de Ventas"
+msgstr "Support de Vente"
 
 #: templates/html/sales/lead_delete.html:21
 msgid "Delete this Lead?"
-msgstr "¿Eliminar este Cliente Potencial?"
+msgstr "Supprimer ce Client Potentiel"
 
 #: templates/html/sales/lead_delete.html:67
 #: templates/html/sales/lead_view.html:74
 #: templates/html/sales/opportunity_view.html:79
 msgid "Products Interested"
-msgstr "Productos de Interés"
+msgstr "Produits qui l'intéressent"
 
 #: templates/html/sales/lead_delete.html:74
 #: templates/html/sales/lead_view.html:81
 msgid "Contact Method"
-msgstr "Método de Contacto"
+msgstr "Méthode de Contact"
 
 #: templates/html/sales/lead_view.html:14
 msgid "Convert To Opportunity"
-msgstr "Convertir en Oportunidad"
+msgstr "Convertir en Opportunité"
 
 #: templates/html/sales/lead_view.html:15
 #: templates/html/sales/opportunity_view.html:14
 msgid "Convert To Order"
-msgstr "Convertir en Orden"
+msgstr "Convertir en Commande"
 
 #: templates/html/sales/opportunity_add.html:11
 #: templates/html/sales/opportunity_index.html:3
@@ -5130,7 +5143,7 @@ msgstr "Convertir en Orden"
 #: templates/html/sales/page.html:24
 #: templates/html/sales/status_view.html:53
 msgid "Opportunities"
-msgstr "Oportunidades"
+msgstr "Opportunitéq"
 
 #: templates/html/sales/opportunity_add.html:14
 #: templates/html/sales/opportunity_delete.html:10
@@ -5138,46 +5151,47 @@ msgstr "Oportunidades"
 #: templates/html/sales/opportunity_index.html:10
 #: templates/html/sales/opportunity_index_owned.html:10
 msgid "New Opportunity"
-msgstr "Nueva Oportunidad"
+msgstr "Nouvelle Opportunité"
 
 #: templates/html/sales/opportunity_delete.html:23
 msgid "Delete this Order Opportunity?"
-msgstr "¿Eliminar esta Oportunidad?"
+msgstr "Supprimer cette Opportunité ?"
 
 #: templates/html/sales/opportunity_edit.html:13
 msgid "Opportunity Edit"
-msgstr "Editar Oportunidad"
+msgstr "Editer Opportunité"
 
 #: templates/html/sales/opportunity_index.html:58
 #: templates/html/sales/opportunity_index_owned.html:58
 msgid "Closed"
-msgstr "Cerrado"
+msgstr "Fermé"
 
 #: templates/html/sales/opportunity_view.html:87
 msgid "Expected Date"
-msgstr "Fecha Esperada"
+msgstr "Date Prévue"
 
 #: templates/html/sales/opportunity_view.html:94
 msgid "Closed Date"
-msgstr "Fecha de Cierre"
+msgstr "Date de Fermeture"
 
 #: templates/html/sales/opportunity_view.html:120
 msgid "Weighted Amount"
-msgstr "Cantidad Estimada"
+msgstr "Budget Estimé"
 
 #: templates/html/sales/order_add.html:3
 #: templates/html/sales/order_add.html:19
 #: templates/html/sales/page.html:56
 #: templates/html/sales/status_delete.html:10
+#, fuzzy
 msgid "New Order"
-msgstr "Nuevo Pedido"
+msgstr "Nouvelle Ordre"
 
 #: templates/html/sales/order_delete.html:7
 #: templates/html/sales/order_edit.html:13
 #: templates/html/sales/order_view.html:9
 #: templates/html/sales/ordered_product_add.html:13
 msgid "Sale Order"
-msgstr "Orden de Venta"
+msgstr "Ordre"
 
 #: templates/html/sales/order_delete.html:13
 #: templates/html/sales/order_edit.html:19
