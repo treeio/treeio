@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: treeioFR 0.1\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2012-03-21 23:05+0100\n"
+"PO-Revision-Date: 2012-03-22 13:12+0100\n"
 "Last-Translator: Jean-Bruno <redb68@gmail.com>\n"
 "Language-Team: http://www.morgao.com <info@morgao.com>\n"
 "MIME-Version: 1.0\n"
@@ -1586,11 +1586,11 @@ msgstr "Définir comme résolution"
 
 #: services/forms.py:249
 msgid "Default ticket status"
-msgstr "Statut du ticket par défaut"
+msgstr "Statut de la Demande d'Assistance par défaut"
 
 #: services/forms.py:250
 msgid "Default ticket priority"
-msgstr "Priorité du ticket par défaut"
+msgstr "Priorité de la Demande d'Assistance par défaut"
 
 #: services/forms.py:251
 msgid "Default service"
@@ -1608,7 +1608,7 @@ msgstr "Prochaine file"
 
 #: services/forms.py:254
 msgid "Ticket code"
-msgstr "Code du ticket"
+msgstr "Code de la Demande d'Assistance"
 
 #: services/forms.py:255
 msgid "Message stream"
@@ -5191,32 +5191,32 @@ msgstr "Nouvelle Ordre"
 #: templates/html/sales/order_view.html:9
 #: templates/html/sales/ordered_product_add.html:13
 msgid "Sale Order"
-msgstr "Ordre"
+msgstr "Commande"
 
 #: templates/html/sales/order_delete.html:13
 #: templates/html/sales/order_edit.html:19
 #: templates/html/sales/order_view.html:16
 #: templates/html/sales/ordered_product_add.html:19
 msgid "Add Ordered Product"
-msgstr "Agregar Producto Ordenado"
+msgstr "Ajouter Produit Commandé"
 
 #: templates/html/sales/order_delete.html:19
 msgid "Delete this Sale Order?"
-msgstr "¿Eliminar esta Orden de Venta?"
+msgstr "Supprimé cette Commande"
 
 #: templates/html/sales/order_view.html:3
 msgid "Sale Order View"
-msgstr "Vista de Orden de Venta"
+msgstr "Voir la Commande"
 
 #: templates/html/sales/order_view.html:113
 #: templates/html/sales/ordered_product_add.html:91
 #: templates/html/sales/ordered_product_edit.html:88
 msgid "Ordered Products"
-msgstr "Productos Ordenados"
+msgstr "Produits Commandés"
 
 #: templates/html/sales/ordered_product_add.html:3
 msgid "New Ordered Product"
-msgstr "Nuevo Producto Ordenado"
+msgstr "Nouveau Produit Commandé"
 
 #: templates/html/sales/ordered_product_delete.html:3
 #: templates/html/sales/ordered_product_delete.html:9
@@ -5225,11 +5225,11 @@ msgstr "Nuevo Producto Ordenado"
 #: templates/html/sales/ordered_product_view.html:3
 #: templates/html/sales/ordered_product_view.html:9
 msgid "Ordered Product"
-msgstr "Producto Ordenado"
+msgstr "Produit Commandé"
 
 #: templates/html/sales/ordered_product_delete.html:20
 msgid "Delete this Ordered Product?"
-msgstr "¿Eliminar este Producto Ordenado?"
+msgstr "Supprimer ce Produit Commandé"
 
 #: templates/html/sales/ordered_product_edit.html:98
 #: templates/html/sales/product_view.html:155
@@ -5237,19 +5237,19 @@ msgstr "¿Eliminar este Producto Ordenado?"
 #: templates/html/sales/settings_view.html:91
 #: templates/html/services/settings_view.html:47
 msgid "Inactive"
-msgstr "Inactivo"
+msgstr "Inactif"
 
 #: templates/html/sales/page.html:12
 msgid "All Sale Orders"
-msgstr "Todas las Ordenes de Venta"
+msgstr "Toutes les Commandes"
 
 #: templates/html/sales/page.html:19
 msgid "All Leads"
-msgstr "Todos los Clientes Potenciales"
+msgstr "Tous les Clients Potentiels"
 
 #: templates/html/sales/page.html:25
 msgid "All Opportunities"
-msgstr "Todas las Oportunidades"
+msgstr "Toutes les Opportunités"
 
 #: templates/html/sales/page.html:30
 #: templates/html/sales/product_add.html:3
@@ -5264,71 +5264,73 @@ msgstr "Todas las Oportunidades"
 #: templates/html/sales/subscription_add.html:3
 #: templates/html/sales/subscription_add.html:7
 msgid "Products"
-msgstr "Productos"
+msgstr "Produits"
 
 #: templates/html/sales/page.html:31
 msgid "All Products"
-msgstr "Todos los Productos"
+msgstr "Tous les Produits"
 
 #: templates/html/sales/product_add.html:10
 #: templates/html/sales/product_index.html:10
 #: templates/html/sales/product_index_owned.html:10
 #: templates/html/sales/subscription_add.html:10
 msgid "New Product"
-msgstr "Nuevo Producto"
+msgstr "Nouveau Produit"
 
 #: templates/html/sales/product_add.html:11
 #: templates/html/sales/product_index.html:11
 #: templates/html/sales/product_index_owned.html:11
 #: templates/html/sales/subscription_add.html:11
 msgid "New Subscription"
-msgstr "Nueva Suscripción"
+msgstr "Nouvel Abonnement"
 
 #: templates/html/sales/product_delete.html:21
 msgid "Delete this Product?"
-msgstr "¿Eliminar este Producto?"
+msgstr "Supprimer ce Produit"
 
 #: templates/html/sales/product_delete.html:46
 #: templates/html/sales/product_view.html:44
 msgid "Product Type"
-msgstr "Tipo de Producto"
+msgstr "Type de Produit"
 
 #: templates/html/sales/product_delete.html:62
 msgid "Sub Products"
-msgstr "Subproductos"
+msgstr "Sous-Produits"
 
 #: templates/html/sales/product_index.html:48
 #: templates/html/sales/product_index_owned.html:48
 msgid "No Products"
-msgstr "Sin Productos"
+msgstr "Aucun Produit"
 
 #: templates/html/sales/product_view.html:67
 msgid "Buy Price"
-msgstr "Precio de Compra"
+msgstr "Prix d'Achat"
 
 #: templates/html/sales/product_view.html:82
+#, fuzzy
 msgid "Stock"
-msgstr "Existencias"
+msgstr "Stock"
 
 #: templates/html/sales/product_view.html:95
+#, fuzzy
 msgid "Runout Action"
-msgstr "Acción al Agotarse"
+msgstr "Exécuter une Action"
 
 #: templates/html/sales/product_view.html:104
 msgid "Subproducts"
-msgstr "Subproductos"
+msgstr "Sous-Produits"
 
 #: templates/html/sales/product_view.html:134
 msgid "Subscriptions"
-msgstr "Suscripciones"
+msgstr "Abonnement"
 
 #: templates/html/sales/product_view.html:147
 msgid "billing"
-msgstr "Facturación"
+msgstr "Facturation"
 
 #: templates/html/sales/product_view.html:150
 msgid "ends"
-msgstr "termina"
+msgstr "Se termine"
 
 #: templates/html/sales/settings_edit.html:11
 #: templates/html/sales/settings_view.html:11
@@ -5338,7 +5340,7 @@ msgstr "termina"
 #: templates/html/sales/source_view.html:10
 #: templates/html/sales/status_add.html:15
 msgid "New Source"
-msgstr "Nueva Fuente"
+msgstr "Nouvelle Source"
 
 #: templates/html/sales/settings_view.html:3
 #: templates/html/services/agent_add.html:3
@@ -5377,11 +5379,11 @@ msgstr "Nueva Fuente"
 #: templates/html/services/ticket_edit.html:3
 #: templates/html/services/ticket_view.html:3
 msgid "Service Support"
-msgstr "Soporte de Servicio"
+msgstr "Centre d'Assistance"
 
 #: templates/html/sales/settings_view.html:57
 msgid "Sources"
-msgstr "Fuentes"
+msgstr "Sources"
 
 #: templates/html/sales/settings_view.html:66
 #: templates/html/sales/settings_view.html:92
@@ -5390,91 +5392,92 @@ msgstr "Visible"
 
 #: templates/html/sales/source_add.html:3
 msgid "Add Source"
-msgstr "Agregar Fuente"
+msgstr "Ajouter une Source"
 
 #: templates/html/sales/source_delete.html:7
 msgid "Delete Source"
-msgstr "Eliminar Fuente"
+msgstr "Supprimer Source"
 
 #: templates/html/sales/source_delete.html:31
 msgid "Delete this Source?"
-msgstr "¿Eliminar esta Fuente?"
+msgstr "Supprimer cette Source"
 
 #: templates/html/sales/source_delete.html:66
 #: templates/html/sales/status_delete.html:66
 #: templates/html/sales/status_view.html:56
 msgid "Orders"
-msgstr "Ordenes"
+msgstr "Commandes"
 
 #: templates/html/sales/source_edit.html:13
 msgid "Order Source"
-msgstr "Fuente de la Orden"
+msgstr "Source Commande"
 
 #: templates/html/sales/source_edit.html:24
 msgid "By Source"
-msgstr "Por Fuente"
+msgstr "Par Source"
 
 #: templates/html/sales/source_view.html:58
 msgid "Orders From"
-msgstr "Ordenes Desde"
+msgstr "Commande de"
 
 #: templates/html/sales/status_delete.html:7
 #: templates/html/sales/status_edit.html:13
 #: templates/html/sales/status_view.html:7
 msgid "Order Status"
-msgstr "Estado de la Orden"
+msgstr "Statut Commande"
 
 #: templates/html/sales/status_delete.html:31
 msgid "Delete this Order Status?"
-msgstr "¿Eliminar este Estado de Orden?"
+msgstr "Supprimer ce Statut de Commande"
 
 #: templates/html/sales/status_view.html:48
 msgid "Available For"
-msgstr "Disponible por"
+msgstr "Disponible pour"
 
 #: templates/html/sales/status_view.html:67
 msgid "Orders With Status"
-msgstr "Ordenes con Estado"
+msgstr "Commandes avec Statut"
 
 #: templates/html/sales/subscription_delete.html:3
 msgid "Delete Subscription"
-msgstr "Eliminar Suscripción"
+msgstr "Supprimer Abonnement"
 
 #: templates/html/sales/subscription_delete.html:29
 msgid "Delete this Subscription?"
-msgstr "¿Eliminar esta Suscripción?"
+msgstr "Supprimer cet Abonnement ?"
 
 #: templates/html/sales/subscription_delete.html:59
 #: templates/html/sales/subscription_view.html:68
+#, fuzzy
 msgid "Cycle Period"
-msgstr "Periodo del Ciclo"
+msgstr "Durée Cycle"
 
 #: templates/html/sales/subscription_delete.html:65
 #: templates/html/sales/subscription_view.html:74
 msgid "Cycle End"
-msgstr "Fin del Ciclo"
+msgstr "Fin de Cycle"
 
 #: templates/html/sales/subscription_edit.html:3
 msgid "Edit Subscription"
-msgstr "Editar Suscripción"
+msgstr "Modifier Abonnement"
 
 #: templates/html/sales/subscription_view.html:3
 msgid "View Subscription"
-msgstr "Ver Suscripción"
+msgstr "Voir Abonnement"
 
 #: templates/html/sales/subscription_view.html:101
 msgid "No Invoices"
-msgstr "No hay Facturas"
+msgstr "Aucune Facture"
 
 #: templates/html/sales/tags/order_list.html:10
 msgid "UNPAID"
-msgstr "SIN PAGAR"
+msgstr "IMPAYÉ"
 
 #: templates/html/services/agent_add.html:3
 #: templates/html/services/agent_add.html:8
 #: templates/html/services/agent_index.html:10
 msgid "New Agent"
-msgstr "Nuevo Agente"
+msgstr "Nouvel Agent"
 
 #: templates/html/services/agent_add.html:3
 #: templates/html/services/agent_delete.html:3
@@ -5489,25 +5492,26 @@ msgstr "Nuevo Agente"
 #: templates/html/services/sla_delete.html:3
 #: templates/html/services/sla_edit.html:3
 #: templates/html/services/sla_view.html:3
+#, fuzzy
 msgid "Services"
-msgstr "Servicios"
+msgstr "Services"
 
 #: templates/html/services/agent_add.html:5
 #: templates/html/services/agent_index.html:3
 #: templates/html/services/agent_index.html:7
 #: templates/html/services/page.html:42
 msgid "Agents"
-msgstr "Agentes"
+msgstr "Agents"
 
 #: templates/html/services/agent_delete.html:7
 #: templates/html/services/agent_edit.html:6
 #: templates/html/services/agent_view.html:6
 msgid "Agent"
-msgstr "Agente"
+msgstr "Agent"
 
 #: templates/html/services/agent_delete.html:41
 msgid "Delete this Agent?"
-msgstr "¿Eliminar este Agente?"
+msgstr "Supprimer cet Agent ?"
 
 #: templates/html/services/agent_delete.html:74
 #: templates/html/services/agent_view.html:55
@@ -5517,18 +5521,18 @@ msgstr "Disponible"
 #: templates/html/services/agent_delete.html:79
 #: templates/html/services/agent_view.html:60
 msgid "Until"
-msgstr "Hasta"
+msgstr "Jusqu'à"
 
 #: templates/html/services/index.html:45
 #: templates/html/services/index_assigned.html:45
 #: templates/html/services/index_owned.html:45
 #: templates/html/services/queue_view.html:108
 msgid "No Active Tickets"
-msgstr "No hay Solicitudes Activas"
+msgstr "Aucune Demande d'Assistance active"
 
 #: templates/html/services/page.html:11
 msgid "All Tickets"
-msgstr "Todas las Solicitudes"
+msgstr "Toutes les Demandes d'Assistance"
 
 #: templates/html/services/page.html:19
 #: templates/html/services/queue_add.html:16
@@ -5537,18 +5541,18 @@ msgstr "Todas las Solicitudes"
 #: templates/html/services/queue_view.html:19
 #: templates/html/services/settings_view.html:39
 msgid "Queues"
-msgstr "Colas"
+msgstr "Files d'Attente"
 
 #: templates/html/services/page.html:36
 #: templates/html/services/service_add.html:11
 #: templates/html/services/service_catalogue.html:3
 #: templates/html/services/service_catalogue.html:7
 msgid "Service Catalogue"
-msgstr "Catálogo de Servicio"
+msgstr "Catalogue Service"
 
 #: templates/html/services/page.html:37
 msgid "SLAs"
-msgstr "ANSs"
+msgstr "Contrats de Qualité de Service"
 
 #: templates/html/services/page.html:59
 #: templates/html/services/queue_delete.html:9
@@ -5560,7 +5564,7 @@ msgstr "ANSs"
 #: templates/html/services/ticket_add.html:3
 #: templates/html/services/ticket_add.html:19
 msgid "New Ticket"
-msgstr "Nueva Solicitud"
+msgstr "Nouvelle Demande d'Assistance"
 
 #: templates/html/services/queue_add.html:3
 #: templates/html/services/queue_add.html:10
@@ -5568,42 +5572,43 @@ msgstr "Nueva Solicitud"
 #: templates/html/services/settings_view.html:10
 #: templates/html/services/status_add.html:14
 msgid "New Queue"
-msgstr "Nueva Cola"
+msgstr "Nouvelle File d'Attente"
 
 #: templates/html/services/queue_delete.html:48
 msgid "Delete this Queue?"
-msgstr "¿Eliminar esta Cola?"
+msgstr "Supprimer cette File d'Attente"
 
 #: templates/html/services/queue_delete.html:73
 #: templates/html/services/queue_view.html:68
 msgid "Default Status"
-msgstr "Estado Predeterminado"
+msgstr "Statut par Défaut"
 
 #: templates/html/services/queue_delete.html:86
 #: templates/html/services/queue_view.html:83
 msgid "Contains Queues"
-msgstr "Contiene Colas"
+msgstr "Contient des Files d'Attente"
 
 #: templates/html/services/queue_delete.html:109
 #: templates/html/services/queue_view.html:100
 #: templates/html/services/status_delete.html:65
 #: templates/html/services/status_view.html:86
 msgid "Tickets"
-msgstr "Solicitudes"
+msgstr "Demandes d'Assistance"
 
 #: templates/html/services/queue_view.html:28
+#, fuzzy
 msgid "Filter tickets"
-msgstr "Filtrar Solicitudes"
+msgstr "Filtre Demandes d'Assistance"
 
 #: templates/html/services/service_add.html:3
 #: templates/html/services/service_add.html:15
 #: templates/html/services/service_catalogue.html:11
 msgid "New Service"
-msgstr "Nuevo Servicio"
+msgstr "Nouveau Service"
 
 #: templates/html/services/service_delete.html:40
 msgid "Delete this Service?"
-msgstr "¿Eliminar este Servicio?"
+msgstr "Supprimer ce Service ?"
 
 #: templates/html/services/service_delete.html:69
 #: templates/html/services/service_view.html:65
@@ -5611,117 +5616,119 @@ msgstr "¿Eliminar este Servicio?"
 #: templates/html/services/sla_index.html:3
 #: templates/html/services/sla_index.html:7
 msgid "Service Level Agreements"
-msgstr "Acuerdos de Nivel de Servicio"
+msgstr "Niveau de Qualité de Service"
 
 #: templates/html/services/service_view.html:58
 msgid "Child Services"
-msgstr "Servicios Dependientes"
+msgstr "Services Dépendants"
 
 #: templates/html/services/settings_view.html:19
 msgid "Default Ticket Status"
-msgstr "Estado Predeterminado de la Solicitud "
+msgstr "Statut de la Demande d'Assistance par défaut"
 
 #: templates/html/services/settings_view.html:28
 msgid "Default Queue"
-msgstr "Cola Predeterminada"
+msgstr "File d'Attente par Défaut"
 
 #: templates/html/services/sla_add.html:3
 msgid "New Service Level Agreement"
-msgstr "Nuevo Acuerdo de Nivel de Servicio"
+msgstr "Nouveau Niveau de Qualité de Servcie"
 
 #: templates/html/services/sla_add.html:8
 #: templates/html/services/sla_index.html:11
+#, fuzzy
 msgid "New Agreement"
-msgstr "Nuevo Acuerdo"
+msgstr "Nouveau Niveau"
 
 #: templates/html/services/sla_delete.html:42
 msgid "Delete this Service Level Agreement?"
-msgstr "¿Eliminar este Acuerdo de Nivel de Servicio?"
+msgstr "Supprimer ce Niveau de Qualité de Service"
 
 #: templates/html/services/sla_delete.html:69
 #: templates/html/services/sla_view.html:55
 msgid "Response Time"
-msgstr "Tiempo de Respuesta"
+msgstr "Délai Réponse"
 
 #: templates/html/services/status_delete.html:6
 #: templates/html/services/status_edit.html:12
 #: templates/html/services/status_view.html:6
 msgid "Ticket Status"
-msgstr "Estado de la Solicitud"
+msgstr "Statut de la Demande d'Assistance"
 
 #: templates/html/services/status_delete.html:30
 msgid "Delete this Ticket Status?"
-msgstr "¿Eliminar este Estado de Solicitud?"
+msgstr "Supprimer ce Statut de Demande d'Assistance"
 
 #: templates/html/services/status_view.html:94
 #, python-format
 msgid "No Tickets with %(status)s Status"
-msgstr "No Existen Solicitudes con el Estado %(status)s"
+msgstr "Aucune Demande d'Assistance avec Statut %(status)s"
 
 #: templates/html/services/ticket_delete.html:6
 #: templates/html/services/ticket_edit.html:12
 #: templates/html/services/ticket_view.html:12
 msgid "Ticket"
-msgstr "Solicitud"
+msgstr "Demande d'Assistance"
 
 #: templates/html/services/ticket_delete.html:40
 msgid "Delete this Ticket?"
-msgstr "¿Eliminar esta Solicitud?"
+msgstr "Supprimer cette Demande d'Assistance ?"
 
 #: templates/html/services/ticket_view.html:107
 msgid "Nobody"
-msgstr "Nadie"
+msgstr "Personne"
 
 #: templates/html/services/ticket_view.html:185
 msgid "Update ticket"
-msgstr "Actualizar la solicitud"
+msgstr "Demande d'Assistance mise à Jour"
 
 #: templates/html/services/widgets/index.html:3
 msgid "Active Support Tickets"
-msgstr "Solicitudes de Soporte Activas"
+msgstr "Demandes d'Assistance Actives"
 
 msgid "By Location"
-msgstr "Ubicación"
+msgstr "Par Emplacement"
 
 msgid "New Report"
-msgstr "Informes"
+msgstr "Nouveau Rapport"
 
+#, fuzzy
 msgid "New Query Set"
-msgstr "Nueva cola"
+msgstr "Ensemble de Nouvelle Demande"
 
 msgid "New Function"
-msgstr "Nueva Transacción"
+msgstr "Nouvelle Fonction"
 
 msgid "Password reset successfully"
-msgstr "Contraseña reiniciada con éxito"
+msgstr "Mot de Passe mis à jour avec succès"
 
 msgid "Please enter your new password"
-msgstr "Introduzca la contraseña"
+msgstr "Merci d'entrer votre nouveau Mot de Passe"
 
 msgid "The password reset link was invalid"
-msgstr "El enlace de reinicialización de la contraseña no es válido."
+msgstr "Le lien permettant de réinitialiser le mot de passe est invalide"
 
 msgid "Add Category"
-msgstr "Adicionar Categoria"
+msgstr "Ajouter Catégorie"
 
 msgid "Delete Category"
-msgstr "Eliminar Categoria"
+msgstr "Supprimer Catégorie"
 
 msgid "Text"
-msgstr "Texto"
+msgstr "Texte"
 
 msgid "E-mail"
-msgstr "E-mail"
+msgstr "Courrier Electronique"
 
 msgid "Phone"
-msgstr "Teléfono"
+msgstr "Téléphone"
 
 msgid "Picture"
-msgstr "Imagen"
+msgstr "Image"
 
 msgid "Knowledge"
-msgstr "Conocimiento"
+msgstr "Connaissance"
 
 msgid "Sales & Stock"
-msgstr "Ventas & Existencias"
+msgstr "Ventes & Stock"
 
