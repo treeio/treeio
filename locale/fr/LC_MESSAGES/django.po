@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: treeioFR 0.1\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2012-03-22 13:12+0100\n"
+"PO-Revision-Date: 2012-03-23 19:26+0100\n"
 "Last-Translator: Jean-Bruno <redb68@gmail.com>\n"
 "Language-Team: http://www.morgao.com <info@morgao.com>\n"
 "MIME-Version: 1.0\n"
@@ -1315,9 +1315,8 @@ msgstr "Ordre des produits par défaut"
 
 #: sales/forms.py:25
 #: templates/html/sales/settings_view.html:46
-#, fuzzy
 msgid "Order Fulfilment Status"
-msgstr "Estado de Cumplimiento de la OrdenStatut Exécution de commande"
+msgstr "Statut Exécution de commande"
 
 #: sales/forms.py:108
 #: sales/forms.py:150
