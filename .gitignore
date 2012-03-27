@@ -6,3 +6,4 @@ treeio.db
 static/media/identities/
 doc/_build
 .DS_Store
+DS_Store
