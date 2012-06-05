@@ -35,7 +35,7 @@ Install any dependencies
 1.  Update your local cache `sudo apt-get update`
 1.  Upgrade your system `sudo apt-get upgrade` (Recommended but optional)
 1.  `sudo apt-get install python build-essential python-dev`
-1.  `sudo apt-get build-dep python-lxml python-imaging
+1.  `sudo apt-get build-dep python-lxml python-imaging`
 1.  `sudo apt-get install git python-flup python-pip`
 
 
