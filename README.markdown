@@ -52,8 +52,10 @@ Create a fork and clone this repository
 
 1.  Clone the repo by running: `git clone https://github.com/treeio/treeio.git`
 1.  Install dependencies: `pip install -r requirements.pip`
-1.  Update your virtualenv `python manage.py update_ve`
-1.  Perform the patch `./bin/patch`
+1.  Run the patch:
+
+   DJANGO_DIR=`python -c "import django; import os; print os.path.dirname(django.__file__)"`
+   sudo python related_fields_patch.py $DJANGO_DIR
 
 Install the database (Example showing MySQL)
 ------------------------
