@@ -48,7 +48,7 @@ Install services (In Production)
 
 Alternatively you can use Apache, see this [community post](http://tree.io/en/community/questions/186/treeio-with-wsgi-for-apache-deploy) for an example configuration.
 
-Create a fork and clone this repository
+Create a clone of this repository
 ------------------------
 
 1.  Clone the repo by running: `git clone https://github.com/treeio/treeio.git`
