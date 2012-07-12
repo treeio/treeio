@@ -8,6 +8,7 @@ Tree.io is a powerful business management platform with tons of great features i
 
 For FAQ see the Tree.io community site http://www.tree.io/community/
 
+There is also a pre-built micro [Amazon AMI Image](https://console.aws.amazon.com/ec2/home?region=us-east-1#launchAmi=ami-6af22f03&source=tree.io) available.
 
 License
 =======
@@ -47,15 +48,13 @@ Install services (In Production)
 
 Alternatively you can use Apache, see this [community post](http://tree.io/en/community/questions/186/treeio-with-wsgi-for-apache-deploy) for an example configuration.
 
-Create a fork and clone this repository
+Create a clone of this repository
 ------------------------
 
 1.  Clone the repo by running: `git clone https://github.com/treeio/treeio.git`
 1.  Install dependencies: `pip install -r requirements.pip`
-1.  Run the patch:
+1.  Run the patch: `python related_fields_patch.py`
 
-   DJANGO_DIR=`python -c "import django; import os; print os.path.dirname(django.__file__)"`
-   sudo python related_fields_patch.py $DJANGO_DIR
 
 Install the database (Example showing MySQL)
 ------------------------
