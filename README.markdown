@@ -13,7 +13,7 @@ There is also a pre-built micro [Amazon AMI Image](https://console.aws.amazon.co
 License
 =======
 
-Tree.io is licensed under the GNU Affero General Public License.
+Tree.io is licensed under the MIT License. See the `LICENSE` file.
 
 
 Installation on Ubuntu or Debian with MySQL
