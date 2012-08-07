@@ -165,7 +165,7 @@ class FilterForm(ModelForm):
             del self.fields['folder']
         else:
             self.fields['folder'].queryset = Object.filter_permitted(user, Folder.objects, mode='x')
-            self.fields['folder'].required = False
+            #self.fields['folder'].required = False
             self.fields['folder'].null = True
 
     class Meta:
