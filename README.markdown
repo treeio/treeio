@@ -13,13 +13,7 @@ There is also a pre-built micro [Amazon AMI Image](https://console.aws.amazon.co
 License
 =======
 
-Tree.io is licensed under the Creative Commons Attribution-NonCommercial 3.0 License.
-
-If you wish to re-sell or charge for install you must contact us for a Reseller License. 
-
-For more details see LICENSE.
-
-Tree.io cannot accept any responsibility for damage or losses caused by use of this software. Use at your own risk!
+Tree.io is licensed under the MIT License. See the `LICENSE` file.
 
 
 Installation on Ubuntu or Debian with MySQL

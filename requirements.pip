@@ -8,7 +8,7 @@ PIL
 html5lib==0.90
 oauth2
 whoosh
-python-dateutil
+python-dateutil<2.0
 django-dajax
 django-dajaxice
 django-piston==0.2.2
