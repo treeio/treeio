@@ -115,7 +115,7 @@ class FilterForm(ModelForm):
             del self.fields['folder']
         else:
             self.fields['folder'].queryset = Object.filter_permitted(user, KnowledgeFolder.objects, mode='x')
-            self.fields['folder'].required = False
+            #self.fields['folder'].required = False
             self.fields['folder'].label = _("Folder")
         
         if 'category' in skip:
