@@ -9,7 +9,7 @@ html5lib==0.90
 oauth2
 whoosh
 python-dateutil<2.0
-django-dajax
+django-dajax==0.8.4
 django-dajaxice==0.2
 django-piston==0.2.2
 django-simple-captcha
