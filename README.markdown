@@ -8,7 +8,7 @@ Tree.io is a powerful business management platform with tons of great features i
 
 For FAQ see the Tree.io community site http://www.tree.io/community/
 
-There is also a pre-built micro [Amazon AMI Image](https://console.aws.amazon.com/ec2/home?region=us-east-1#launchAmi=ami-6af22f03&source=tree.io) available.
+There is also a pre-built micro [Amazon AMI Image](https://console.aws.amazon.com/ec2/home?region=us-east-1#launchAmi=ami-6af22f03&source=tree.io) available which will run on [Amazon's Free Usage Tier](http://aws.amazon.com/free/) for 1 year.
 
 License
 =======
