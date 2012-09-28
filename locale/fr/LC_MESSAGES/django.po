@@ -7,20 +7,19 @@ msgid ""
 msgstr ""
 "Project-Id-Version: treeioFR 0.1\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2012-03-23 19:26+0100\n"
-"Last-Translator: Jean-Bruno <redb68@gmail.com>\n"
+"PO-Revision-Date: 2012-09-28 10:58+0100\n"
+"Last-Translator: Jean-Bruno Ricard <info@morgao.com>\n"
 "Language-Team: http://www.morgao.com <info@morgao.com>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Translated-Using: django-rosetta 0.6.5\n"
-"X-Poedit-Language: French\n"
-"X-Poedit-Country: FRANCE\n"
 "X-Poedit-SourceCharset: utf-8\n"
 "X-Poedit-Bookmarks: 284,85,-1,-1,-1,-1,-1,-1,-1,-1\n"
+"Language: fr_FR\n"
+"X-Generator: Poedit 1.5.3\n"
 
-#: account/forms.py:36
-#: core/administration/forms.py:115
+#: account/forms.py:36 core/administration/forms.py:115
 #, python-format
 msgid "User with username %s already exists."
 msgstr "Utilisateur %s existe déjà."
@@ -29,13 +28,11 @@ msgstr "Utilisateur %s existe déjà."
 msgid "Current Password"
 msgstr "Mot de passe actuel"
 
-#: account/forms.py:60
-#: core/administration/forms.py:158
+#: account/forms.py:60 core/administration/forms.py:158
 msgid "New Password"
 msgstr "Nouveau Mot de passe"
 
-#: account/forms.py:61
-#: core/administration/forms.py:99
+#: account/forms.py:61 core/administration/forms.py:99
 #: core/administration/forms.py:160
 msgid "Confirm Password"
 msgstr "Confirmer le Mot de passe"
@@ -44,66 +41,40 @@ msgstr "Confirmer le Mot de passe"
 msgid "Current password is wrong"
 msgstr "Ce mot de passe est faux"
 
-#: account/forms.py:77
-#: core/administration/forms.py:130
+#: account/forms.py:77 core/administration/forms.py:130
 #: core/administration/forms.py:174
 msgid "Passwords do not match"
 msgstr "Les Mots de passe ne coincident pas"
 
-#: account/forms.py:101
-#: core/administration/forms.py:24
+#: account/forms.py:101 core/administration/forms.py:24
 #: templates/html/account/settings_view.html:17
 #: templates/html/core/administration/settings_view.html:17
 msgid "Default Permissions"
 msgstr "Permissions par défaut"
 
-#: account/forms.py:102
-#: core/administration/forms.py:25
+#: account/forms.py:102 core/administration/forms.py:25
 #: templates/html/account/settings_view.html:24
 #: templates/html/core/administration/settings_view.html:24
 msgid "Default Perspective"
 msgstr "Perspective par défaut"
 
-#: account/forms.py:103
-#: core/administration/forms.py:26
-#: templates/html/base.html:57
-#: templates/html/account/settings_view.html:33
+#: account/forms.py:103 core/administration/forms.py:26
+#: templates/html/base.html:57 templates/html/account/settings_view.html:33
 #: templates/html/core/administration/settings_view.html:33
 msgid "Language"
 msgstr "Langue"
 
-#: changes/forms.py:31
-#: changes/forms.py:51
-#: core/forms.py:106
-#: core/administration/forms.py:77
-#: documents/forms.py:16
-#: documents/forms.py:54
-#: finance/forms.py:50
-#: finance/forms.py:64
-#: finance/forms.py:108
-#: finance/forms.py:268
-#: finance/forms.py:415
-#: identities/forms.py:24
-#: identities/forms.py:42
-#: identities/forms.py:261
-#: infrastructure/forms.py:131
-#: infrastructure/forms.py:248
-#: infrastructure/forms.py:266
-#: infrastructure/forms.py:308
-#: knowledge/forms.py:17
-#: knowledge/forms.py:40
-#: knowledge/forms.py:65
-#: messaging/forms.py:157
-#: projects/forms.py:93
-#: projects/forms.py:126
-#: projects/forms.py:162
-#: projects/forms.py:331
-#: sales/forms.py:237
-#: sales/forms.py:262
-#: services/forms.py:174
-#: services/forms.py:246
-#: services/forms.py:280
-#: services/forms.py:298
+#: changes/forms.py:31 changes/forms.py:51 core/forms.py:106
+#: core/administration/forms.py:77 documents/forms.py:16 documents/forms.py:54
+#: finance/forms.py:50 finance/forms.py:64 finance/forms.py:108
+#: finance/forms.py:268 finance/forms.py:415 identities/forms.py:24
+#: identities/forms.py:42 identities/forms.py:261 infrastructure/forms.py:131
+#: infrastructure/forms.py:248 infrastructure/forms.py:266
+#: infrastructure/forms.py:308 knowledge/forms.py:17 knowledge/forms.py:40
+#: knowledge/forms.py:65 messaging/forms.py:157 projects/forms.py:93
+#: projects/forms.py:126 projects/forms.py:162 projects/forms.py:331
+#: sales/forms.py:237 sales/forms.py:262 services/forms.py:174
+#: services/forms.py:246 services/forms.py:280 services/forms.py:298
 #: templates/html/account/account_view.html:52
 #: templates/html/core/administration/group_delete.html:35
 #: templates/html/core/administration/group_view.html:22
@@ -140,15 +111,9 @@ msgstr "Langue"
 msgid "Name"
 msgstr "Nom"
 
-#: changes/forms.py:32
-#: projects/forms.py:332
-#: sales/forms.py:242
-#: sales/forms.py:263
-#: sales/forms.py:288
-#: sales/forms.py:335
-#: sales/forms.py:459
-#: services/forms.py:247
-#: services/forms.py:349
+#: changes/forms.py:32 projects/forms.py:332 sales/forms.py:242
+#: sales/forms.py:263 sales/forms.py:288 sales/forms.py:335 sales/forms.py:459
+#: services/forms.py:247 services/forms.py:349
 #: templates/html/changes/settings_view.html:35
 #: templates/html/changes/status_delete.html:37
 #: templates/html/changes/status_view.html:48
@@ -179,9 +144,7 @@ msgstr "Nom"
 msgid "Active"
 msgstr "Actif"
 
-#: changes/forms.py:33
-#: projects/forms.py:333
-#: sales/forms.py:243
+#: changes/forms.py:33 projects/forms.py:333 sales/forms.py:243
 #: templates/html/changes/settings_view.html:36
 #: templates/html/changes/status_delete.html:41
 #: templates/html/changes/status_view.html:52
@@ -203,42 +166,18 @@ msgstr "Actif"
 msgid "Hidden"
 msgstr "Caché"
 
-#: changes/forms.py:34
-#: changes/forms.py:73
-#: core/administration/forms.py:79
-#: events/forms.py:27
-#: finance/forms.py:51
-#: finance/forms.py:74
-#: finance/forms.py:184
-#: finance/forms.py:275
-#: finance/forms.py:313
-#: finance/forms.py:422
-#: identities/forms.py:28
-#: identities/forms.py:48
-#: infrastructure/forms.py:252
-#: infrastructure/forms.py:269
-#: infrastructure/forms.py:314
-#: knowledge/forms.py:26
-#: knowledge/forms.py:66
-#: projects/forms.py:112
-#: projects/forms.py:147
-#: projects/forms.py:224
-#: projects/forms.py:289
-#: projects/forms.py:334
-#: projects/forms.py:395
-#: sales/forms.py:244
-#: sales/forms.py:264
-#: sales/forms.py:307
-#: sales/forms.py:350
-#: sales/forms.py:461
-#: sales/forms.py:523
-#: sales/forms.py:623
-#: sales/forms.py:717
-#: services/forms.py:176
-#: services/forms.py:205
-#: services/forms.py:256
-#: services/forms.py:282
-#: templates/html/changes/set_delete.html:70
+#: changes/forms.py:34 changes/forms.py:73 core/administration/forms.py:79
+#: events/forms.py:27 finance/forms.py:51 finance/forms.py:74
+#: finance/forms.py:184 finance/forms.py:275 finance/forms.py:313
+#: finance/forms.py:422 identities/forms.py:28 identities/forms.py:48
+#: infrastructure/forms.py:252 infrastructure/forms.py:269
+#: infrastructure/forms.py:314 knowledge/forms.py:26 knowledge/forms.py:66
+#: projects/forms.py:112 projects/forms.py:147 projects/forms.py:224
+#: projects/forms.py:289 projects/forms.py:334 projects/forms.py:395
+#: sales/forms.py:244 sales/forms.py:264 sales/forms.py:307 sales/forms.py:350
+#: sales/forms.py:461 sales/forms.py:523 sales/forms.py:623 sales/forms.py:717
+#: services/forms.py:176 services/forms.py:205 services/forms.py:256
+#: services/forms.py:282 templates/html/changes/set_delete.html:70
 #: templates/html/changes/set_view.html:57
 #: templates/html/changes/status_delete.html:46
 #: templates/html/changes/status_view.html:57
@@ -304,31 +243,17 @@ msgstr "Caché"
 msgid "Details"
 msgstr "Détails"
 
-#: changes/forms.py:54
-#: changes/forms.py:55
-#: changes/forms.py:118
-#: changes/forms.py:124
-#: templates/html/changes/set_delete.html:33
+#: changes/forms.py:54 changes/forms.py:55 changes/forms.py:118
+#: changes/forms.py:124 templates/html/changes/set_delete.html:33
 #: templates/html/changes/set_view.html:20
 msgid "Object"
 msgstr "Objet"
 
-#: changes/forms.py:72
-#: changes/forms.py:139
-#: infrastructure/forms.py:133
-#: infrastructure/forms.py:339
-#: projects/forms.py:133
-#: projects/forms.py:164
-#: projects/forms.py:356
-#: sales/forms.py:494
-#: sales/forms.py:554
-#: sales/forms.py:614
-#: sales/forms.py:657
-#: sales/forms.py:716
-#: sales/forms.py:756
-#: services/forms.py:77
-#: services/forms.py:117
-#: services/forms.py:380
+#: changes/forms.py:72 changes/forms.py:139 infrastructure/forms.py:133
+#: infrastructure/forms.py:339 projects/forms.py:133 projects/forms.py:164
+#: projects/forms.py:356 sales/forms.py:494 sales/forms.py:554
+#: sales/forms.py:614 sales/forms.py:657 sales/forms.py:716 sales/forms.py:756
+#: services/forms.py:77 services/forms.py:117 services/forms.py:380
 #: templates/html/changes/set_delete.html:46
 #: templates/html/changes/set_view.html:33
 #: templates/html/infrastructure/item_delete.html:59
@@ -352,8 +277,7 @@ msgstr "Objet"
 msgid "Status"
 msgstr "Statut"
 
-#: changes/forms.py:113
-#: templates/html/changes/set_delete.html:52
+#: changes/forms.py:113 templates/html/changes/set_delete.html:52
 #: templates/html/changes/set_view.html:39
 #: templates/html/projects/task_time_delete.html:38
 #: templates/html/projects/task_time_view.html:44
@@ -372,17 +296,10 @@ msgstr "Entrer ici le texte affiché sur l'image"
 msgid "That username doesn't have an associated email."
 msgstr "Cet utilisateur n'a pas de mail associé"
 
-#: core/forms.py:108
-#: documents/forms.py:18
-#: infrastructure/forms.py:132
-#: infrastructure/forms.py:267
-#: knowledge/forms.py:19
-#: projects/forms.py:96
-#: projects/forms.py:200
-#: sales/forms.py:298
-#: services/forms.py:248
-#: services/forms.py:281
-#: templates/html/infrastructure/item_delete.html:64
+#: core/forms.py:108 documents/forms.py:18 infrastructure/forms.py:132
+#: infrastructure/forms.py:267 knowledge/forms.py:19 projects/forms.py:96
+#: projects/forms.py:200 sales/forms.py:298 services/forms.py:248
+#: services/forms.py:281 templates/html/infrastructure/item_delete.html:64
 #: templates/html/infrastructure/item_view.html:50
 #: templates/html/infrastructure/location_delete.html:59
 #: templates/html/infrastructure/location_view.html:30
@@ -398,8 +315,7 @@ msgstr "Cet utilisateur n'a pas de mail associé"
 msgid "Parent"
 msgstr "Principal"
 
-#: core/rendering.py:28
-#: templates/html/core/tags/link_block.html:20
+#: core/rendering.py:28 templates/html/core/tags/link_block.html:20
 #: templates/html/core/tags/subscription_block.html:18
 #: templates/html/core/tags/subscription_block_add.html:16
 #: templates/html/events/integration_add.html:34
@@ -419,8 +335,7 @@ msgstr "Principal"
 msgid "Add"
 msgstr "Ajouter"
 
-#: core/administration/forms.py:78
-#: templates/html/core/page.html:12
+#: core/administration/forms.py:78 templates/html/core/page.html:12
 #: templates/html/core/administration/index_modules.html:3
 #: templates/html/core/administration/index_modules.html:7
 #: templates/html/core/administration/module_view.html:3
@@ -429,8 +344,7 @@ msgstr "Ajouter"
 msgid "Modules"
 msgstr "Modules"
 
-#: core/administration/forms.py:97
-#: templates/html/core/user_login.html:20
+#: core/administration/forms.py:97 templates/html/core/user_login.html:20
 msgid "Password"
 msgstr "Mot de passe"
 
@@ -453,8 +367,12 @@ msgstr "Autres groupes"
 
 #: core/administration/forms.py:122
 #, python-format
-msgid "Sorry, but your subscription does not allow more than %d users. You're currently at your limit."
-msgstr "Désolé mais votre compte ne permet pas plus de %d utilisateurs. Vous avez atteint votre limite."
+msgid ""
+"Sorry, but your subscription does not allow more than %d users. You're "
+"currently at your limit."
+msgstr ""
+"Désolé mais votre compte ne permet pas plus de %d utilisateurs. Vous avez "
+"atteint votre limite."
 
 #: core/dashboard/forms.py:17
 #: templates/html/core/administration/perspective_delete.html:8
@@ -467,16 +385,12 @@ msgstr "Perspective"
 msgid "Weight"
 msgstr "Poids"
 
-#: core/trash/forms.py:10
-#: sales/forms.py:207
+#: core/trash/forms.py:10 sales/forms.py:207
 msgid "Action"
 msgstr "Action"
 
-#: documents/forms.py:33
-#: documents/forms.py:73
-#: documents/forms.py:96
-#: events/forms.py:19
-#: messaging/forms.py:186
+#: documents/forms.py:33 documents/forms.py:73 documents/forms.py:96
+#: events/forms.py:19 messaging/forms.py:186
 #: templates/html/core/administration/module_view.html:38
 #: templates/html/core/administration/page_delete.html:44
 #: templates/html/core/administration/page_view.html:26
@@ -487,12 +401,8 @@ msgstr "Action"
 msgid "Title"
 msgstr "Títre"
 
-#: documents/forms.py:35
-#: documents/forms.py:56
-#: documents/forms.py:80
-#: documents/forms.py:97
-#: knowledge/forms.py:42
-#: knowledge/forms.py:85
+#: documents/forms.py:35 documents/forms.py:56 documents/forms.py:80
+#: documents/forms.py:97 knowledge/forms.py:42 knowledge/forms.py:85
 #: templates/html/core/administration/page_delete.html:49
 #: templates/html/core/administration/page_view.html:31
 #: templates/html/documents/document_add_typed.html:7
@@ -518,9 +428,7 @@ msgstr "Títre"
 msgid "Folder"
 msgstr "Dossier"
 
-#: documents/forms.py:40
-#: knowledge/forms.py:52
-#: messaging/forms.py:108
+#: documents/forms.py:40 knowledge/forms.py:52 messaging/forms.py:108
 #: templates/html/core/administration/page_delete.html:59
 #: templates/html/core/administration/page_view.html:41
 #: templates/html/documents/document_delete.html:53
@@ -534,16 +442,14 @@ msgstr "Corps"
 msgid "Content"
 msgstr "Contenu"
 
-#: documents/forms.py:76
-#: templates/html/documents/weblink_delete.html:63
+#: documents/forms.py:76 templates/html/documents/weblink_delete.html:63
 #: templates/html/documents/weblink_view.html:68
 #: templates/html/events/integration_add.html:24
 #: templates/html/events/integration_view.html:24
 msgid "URL"
 msgstr "URL"
 
-#: events/forms.py:25
-#: sales/forms.py:449
+#: events/forms.py:25 sales/forms.py:449
 #: templates/html/events/event_delete.html:61
 #: templates/html/events/event_view.html:50
 #: templates/html/sales/subscription_delete.html:47
@@ -551,8 +457,7 @@ msgstr "URL"
 msgid "Start"
 msgstr "Début"
 
-#: events/forms.py:26
-#: templates/html/events/event_delete.html:67
+#: events/forms.py:26 templates/html/events/event_delete.html:67
 #: templates/html/events/event_view.html:56
 msgid "End"
 msgstr "Fin"
@@ -565,24 +470,17 @@ msgstr "La date de fin ne peut être avant la date de début"
 msgid "Go to date"
 msgstr "Aller à la date"
 
-#: events/forms.py:78
-#: finance/forms.py:366
+#: events/forms.py:78 finance/forms.py:366
 msgid "Date From"
 msgstr "Date depuis"
 
-#: events/forms.py:81
-#: finance/forms.py:373
+#: events/forms.py:81 finance/forms.py:373
 msgid "Date To"
 msgstr "Date jusqu'à"
 
-#: finance/forms.py:29
-#: finance/forms.py:269
-#: finance/forms.py:307
-#: finance/forms.py:380
-#: finance/forms.py:416
-#: finance/forms.py:468
-#: knowledge/forms.py:48
-#: knowledge/forms.py:93
+#: finance/forms.py:29 finance/forms.py:269 finance/forms.py:307
+#: finance/forms.py:380 finance/forms.py:416 finance/forms.py:468
+#: knowledge/forms.py:48 knowledge/forms.py:93
 #: templates/html/finance/category_delete.html:3
 #: templates/html/finance/category_delete.html:6
 #: templates/html/finance/category_edit.html:3
@@ -601,14 +499,9 @@ msgstr "Date jusqu'à"
 msgid "Category"
 msgstr "Catégorie"
 
-#: finance/forms.py:66
-#: finance/forms.py:92
-#: finance/forms.py:162
-#: finance/forms.py:181
-#: finance/forms.py:253
-#: infrastructure/forms.py:137
-#: infrastructure/forms.py:346
-#: templates/html/core/trash/object_delete.html:49
+#: finance/forms.py:66 finance/forms.py:92 finance/forms.py:162
+#: finance/forms.py:181 finance/forms.py:253 infrastructure/forms.py:137
+#: infrastructure/forms.py:346 templates/html/core/trash/object_delete.html:49
 #: templates/html/finance/account_delete.html:39
 #: templates/html/finance/account_view.html:41
 #: templates/html/finance/asset_delete.html:88
@@ -646,8 +539,7 @@ msgstr "Valeur finale"
 msgid "Depreciation rate"
 msgstr "Taux de dépréciation"
 
-#: finance/forms.py:114
-#: finance/forms.py:183
+#: finance/forms.py:114 finance/forms.py:183
 msgid "Purchase date"
 msgstr "Date d'achat"
 
@@ -655,18 +547,15 @@ msgstr "Date d'achat"
 msgid "Current value"
 msgstr "Valeur actuelle"
 
-#: finance/forms.py:141
-#: finance/forms.py:221
+#: finance/forms.py:141 finance/forms.py:221
 msgid "Purchase Date From"
 msgstr "Date d'achat depuis"
 
-#: finance/forms.py:148
-#: finance/forms.py:228
+#: finance/forms.py:148 finance/forms.py:228
 msgid "Purchase Date To"
 msgstr "Date d'achat jusq'à"
 
-#: finance/forms.py:153
-#: templates/html/finance/asset_delete.html:35
+#: finance/forms.py:153 templates/html/finance/asset_delete.html:35
 #: templates/html/finance/asset_view.html:40
 msgid "Asset Type"
 msgstr "Type d'actif"
@@ -679,21 +568,18 @@ msgstr "Type de Capital Social"
 msgid "Issue price"
 msgstr "Prix de l'émission"
 
-#: finance/forms.py:179
-#: sales/forms.py:304
+#: finance/forms.py:179 sales/forms.py:304
 msgid "Sell price"
 msgstr "Prix de vente"
 
-#: finance/forms.py:180
-#: finance/forms.py:241
+#: finance/forms.py:180 finance/forms.py:241
 #: templates/html/finance/equity_delete.html:61
 #: templates/html/finance/equity_view.html:66
 #: templates/html/finance/index_equities.html:42
 msgid "Issuer"
 msgstr "Emetteur"
 
-#: finance/forms.py:182
-#: sales/forms.py:714
+#: finance/forms.py:182 sales/forms.py:714
 #: templates/html/finance/equity_delete.html:56
 #: templates/html/finance/equity_view.html:61
 #: templates/html/finance/index_equities.html:43
@@ -701,24 +587,15 @@ msgstr "Emetteur"
 msgid "Amount"
 msgstr "Quantité"
 
-#: finance/forms.py:233
-#: templates/html/finance/equity_delete.html:35
+#: finance/forms.py:233 templates/html/finance/equity_delete.html:35
 #: templates/html/finance/equity_view.html:40
 msgid "Equity Type"
 msgstr "Type de Capital Social"
 
-#: finance/forms.py:270
-#: finance/forms.py:308
-#: finance/forms.py:388
-#: finance/forms.py:417
-#: finance/forms.py:476
-#: sales/forms.py:484
-#: sales/forms.py:571
-#: sales/forms.py:598
-#: sales/forms.py:652
-#: sales/forms.py:710
-#: sales/forms.py:745
-#: templates/html/finance/liability_delete.html:43
+#: finance/forms.py:270 finance/forms.py:308 finance/forms.py:388
+#: finance/forms.py:417 finance/forms.py:476 sales/forms.py:484
+#: sales/forms.py:571 sales/forms.py:598 sales/forms.py:652 sales/forms.py:710
+#: sales/forms.py:745 templates/html/finance/liability_delete.html:43
 #: templates/html/finance/liability_view.html:50
 #: templates/html/finance/receivable_delete.html:43
 #: templates/html/finance/receivable_view.html:50
@@ -734,11 +611,8 @@ msgstr "Type de Capital Social"
 msgid "Source"
 msgstr "Origine"
 
-#: finance/forms.py:271
-#: finance/forms.py:309
-#: finance/forms.py:400
-#: finance/forms.py:418
-#: finance/forms.py:488
+#: finance/forms.py:271 finance/forms.py:309 finance/forms.py:400
+#: finance/forms.py:418 finance/forms.py:488
 #: templates/html/finance/liability_delete.html:48
 #: templates/html/finance/liability_view.html:55
 #: templates/html/finance/receivable_delete.html:48
@@ -748,11 +622,8 @@ msgstr "Origine"
 msgid "Target"
 msgstr "Destinataire"
 
-#: finance/forms.py:272
-#: finance/forms.py:310
-#: finance/forms.py:419
-#: finance/forms.py:498
-#: templates/html/account/account_edit.html:3
+#: finance/forms.py:272 finance/forms.py:310 finance/forms.py:419
+#: finance/forms.py:498 templates/html/account/account_edit.html:3
 #: templates/html/account/account_password.html:3
 #: templates/html/account/account_view.html:3
 #: templates/html/account/notification_index.html:3
@@ -771,14 +642,11 @@ msgstr "Destinataire"
 msgid "Account"
 msgstr "Compte"
 
-#: finance/forms.py:273
-#: finance/forms.py:420
+#: finance/forms.py:273 finance/forms.py:420
 msgid "Due date"
 msgstr "date de valeur (?) de validité (?) de due ?"
 
-#: finance/forms.py:274
-#: finance/forms.py:312
-#: finance/forms.py:421
+#: finance/forms.py:274 finance/forms.py:312 finance/forms.py:421
 #: templates/html/finance/index_assets.html:50
 #: templates/html/finance/liability_delete.html:64
 #: templates/html/finance/liability_view.html:71
@@ -792,14 +660,12 @@ msgstr "date de valeur (?) de validité (?) de due ?"
 msgid "Value"
 msgstr "Valeur"
 
-#: finance/forms.py:306
-#: templates/html/finance/tags/liability_list.html:10
+#: finance/forms.py:306 templates/html/finance/tags/liability_list.html:10
 #: templates/html/finance/tags/transaction_list.html:9
 msgid "Description"
 msgstr "Description"
 
-#: finance/forms.py:311
-#: templates/html/finance/transaction_delete.html:60
+#: finance/forms.py:311 templates/html/finance/transaction_delete.html:60
 #: templates/html/finance/transaction_view.html:68
 msgid "Date & Time"
 msgstr "Date & heure"
@@ -814,7 +680,6 @@ msgid "Due Date From:"
 msgstr "Dû depuis (Due Date From)"
 
 #: finance/forms.py:461
-#, fuzzy
 msgid "Due Date To:"
 msgstr "Dû a partir (Due Date To:)"
 
@@ -826,27 +691,23 @@ msgstr "Votre entreprise doit avoir au moins un Compte Finance"
 msgid "Default Account has to belong to your company"
 msgstr "Le compte par défaut doit appartenir à votre entreprise"
 
-#: identities/forms.py:25
-#: infrastructure/forms.py:249
+#: identities/forms.py:25 infrastructure/forms.py:249
 #: templates/html/identities/field_view.html:25
 #: templates/html/infrastructure/field_view.html:25
 msgid "Label"
 msgstr "Etiquette"
 
-#: identities/forms.py:26
-#: infrastructure/forms.py:250
+#: identities/forms.py:26 infrastructure/forms.py:250
 msgid "Field type"
 msgstr "Type de champ"
 
-#: identities/forms.py:27
-#: infrastructure/forms.py:251
+#: identities/forms.py:27 infrastructure/forms.py:251
 #: templates/html/identities/field_view.html:35
 #: templates/html/infrastructure/field_view.html:35
 msgid "Required"
 msgstr "Obligatoire"
 
-#: identities/forms.py:46
-#: infrastructure/forms.py:268
+#: identities/forms.py:46 infrastructure/forms.py:268
 msgid "Fields"
 msgstr "Champs"
 
@@ -854,23 +715,18 @@ msgstr "Champs"
 msgid "Contact type"
 msgstr "Type de contact"
 
-#: identities/forms.py:279
-#: templates/html/messaging/settings_view.html:18
+#: identities/forms.py:279 templates/html/messaging/settings_view.html:18
 msgid "Default Contact Type"
 msgstr "Type de contact par défaut"
 
-#: infrastructure/forms.py:134
-#: infrastructure/forms.py:350
+#: infrastructure/forms.py:134 infrastructure/forms.py:350
 #: templates/html/infrastructure/item_delete.html:70
 #: templates/html/infrastructure/item_view.html:56
 msgid "Manufacturer"
 msgstr "Fabricant"
 
-#: infrastructure/forms.py:136
-#: infrastructure/forms.py:310
-#: infrastructure/forms.py:354
-#: sales/forms.py:286
-#: sales/forms.py:331
+#: infrastructure/forms.py:136 infrastructure/forms.py:310
+#: infrastructure/forms.py:354 sales/forms.py:286 sales/forms.py:331
 #: templates/html/infrastructure/item_delete.html:77
 #: templates/html/infrastructure/item_view.html:63
 #: templates/html/infrastructure/service_record_view.html:28
@@ -878,8 +734,7 @@ msgstr "Fabricant"
 msgid "Supplier"
 msgstr "Revendeur"
 
-#: infrastructure/forms.py:138
-#: infrastructure/forms.py:356
+#: infrastructure/forms.py:138 infrastructure/forms.py:356
 #: templates/html/infrastructure/item_delete.html:83
 #: templates/html/infrastructure/item_view.html:69
 #, fuzzy
@@ -891,8 +746,7 @@ msgstr "Emplacement"
 msgid "Asset Record"
 msgstr "Livre de compte"
 
-#: infrastructure/forms.py:309
-#: templates/html/documents/folder_view.html:78
+#: infrastructure/forms.py:309 templates/html/documents/folder_view.html:78
 #: templates/html/identities/field_delete.html:3
 #: templates/html/infrastructure/field_delete.html:3
 #: templates/html/infrastructure/item_status_delete.html:3
@@ -901,13 +755,10 @@ msgstr "Livre de compte"
 #: templates/html/infrastructure/item_type_delete.html:3
 #: templates/html/knowledge/category_view.html:52
 #: templates/html/knowledge/folder_view.html:70
-#, fuzzy
 msgid "Items"
-msgstr "Items !"
+msgstr "Occurrences"
 
-#: infrastructure/forms.py:311
-#: projects/forms.py:142
-#: projects/forms.py:219
+#: infrastructure/forms.py:311 projects/forms.py:142 projects/forms.py:219
 msgid "Start date"
 msgstr "Date de début"
 
@@ -915,22 +766,17 @@ msgstr "Date de début"
 msgid "Expiry date"
 msgstr "Date de fin"
 
-#: infrastructure/forms.py:313
-#: templates/html/finance/liability_view.html:79
+#: infrastructure/forms.py:313 templates/html/finance/liability_view.html:79
 #: templates/html/finance/receivable_view.html:78
 msgid "Payments"
 msgstr "Paiements"
 
 #: infrastructure/forms.py:333
-#, fuzzy
 msgid "Item type"
-msgstr "Type d'item"
+msgstr "Type d'occurences"
 
-#: infrastructure/forms.py:369
-#: messaging/forms.py:48
-#: projects/forms.py:48
-#: sales/forms.py:93
-#: services/forms.py:64
+#: infrastructure/forms.py:369 messaging/forms.py:48 projects/forms.py:48
+#: sales/forms.py:93 services/forms.py:64
 #: templates/html/account/notification_index.html:25
 #: templates/html/changes/set_delete.html:12
 #: templates/html/changes/set_edit.html:12
@@ -1119,8 +965,7 @@ msgstr "Type d'item"
 msgid "Delete"
 msgstr "Supprimer"
 
-#: messaging/forms.py:45
-#: projects/forms.py:60
+#: messaging/forms.py:45 projects/forms.py:60
 msgid "Mark as"
 msgstr "Marquer comme"
 
@@ -1128,8 +973,7 @@ msgstr "Marquer comme"
 msgid "Move to"
 msgstr "Bouger"
 
-#: messaging/forms.py:102
-#: templates/html/messaging/stream_view.html:76
+#: messaging/forms.py:102 templates/html/messaging/stream_view.html:76
 msgid "Subject"
 msgstr "Theme"
 
@@ -1138,11 +982,15 @@ msgid "Send as an email to"
 msgstr "Envoyer un courrier electronique à"
 
 #: messaging/forms.py:125
-msgid "That stream doesn't have an outgoing email. Check Email Settings or deselect recipient below."
-msgstr "Ce flus n'a pas de paramètres pour les emails sortants. Vérifiez les paramètres de courrier électronique ou désactiver la boite de réception ci-dessous:"
+msgid ""
+"That stream doesn't have an outgoing email. Check Email Settings or deselect "
+"recipient below."
+msgstr ""
+"Ce flus n'a pas de paramètres pour les emails sortants. Vérifiez les "
+"paramètres de courrier électronique ou désactiver la boite de réception ci-"
+"dessous:"
 
 #: messaging/forms.py:141
-#, fuzzy
 msgid "Email Name"
 msgstr "Nom du compte courrier électronique"
 
@@ -1170,8 +1018,7 @@ msgstr "Courrier entrant"
 msgid "Email Outgoing"
 msgstr "Courrier sortant"
 
-#: messaging/forms.py:193
-#: templates/html/messaging/message_view.html:113
+#: messaging/forms.py:193 templates/html/messaging/message_view.html:113
 #: templates/html/messaging/stream_add.html:3
 #: templates/html/messaging/stream_delete.html:6
 #: templates/html/messaging/stream_edit.html:6
@@ -1185,9 +1032,7 @@ msgstr "Fil"
 msgid "Move to Project"
 msgstr "Bouger vers Projet"
 
-#: projects/forms.py:64
-#: projects/forms.py:195
-#: projects/forms.py:376
+#: projects/forms.py:64 projects/forms.py:195 projects/forms.py:376
 #: templates/html/projects/milestone_delete.html:3
 #: templates/html/projects/milestone_delete.html:7
 #: templates/html/projects/milestone_edit.html:3
@@ -1205,12 +1050,8 @@ msgstr "Etape importante"
 msgid "Manager"
 msgstr "Administrateur"
 
-#: projects/forms.py:106
-#: sales/forms.py:446
-#: sales/forms.py:481
-#: sales/forms.py:563
-#: services/forms.py:315
-#: services/forms.py:418
+#: projects/forms.py:106 sales/forms.py:446 sales/forms.py:481
+#: sales/forms.py:563 services/forms.py:315 services/forms.py:418
 #: templates/html/projects/project_delete.html:51
 #: templates/html/projects/project_view.html:71
 #: templates/html/sales/order_delete.html:54
@@ -1224,9 +1065,7 @@ msgstr "Administrateur"
 msgid "Client"
 msgstr "Client"
 
-#: projects/forms.py:128
-#: projects/forms.py:190
-#: projects/forms.py:369
+#: projects/forms.py:128 projects/forms.py:190 projects/forms.py:369
 #: templates/html/projects/milestone_add_typed.html:7
 #: templates/html/projects/milestone_delete.html:39
 #: templates/html/projects/milestone_view.html:80
@@ -1240,21 +1079,16 @@ msgstr "Client"
 msgid "Project"
 msgstr "Projet"
 
-#: projects/forms.py:144
-#: projects/forms.py:221
+#: projects/forms.py:144 projects/forms.py:221
 msgid "End date"
 msgstr "Date de finalisation"
 
-#: projects/forms.py:174
-#: projects/forms.py:363
+#: projects/forms.py:174 projects/forms.py:363
 msgid "Assigned"
 msgstr "Assigné"
 
-#: projects/forms.py:177
-#: projects/forms.py:347
-#: services/forms.py:114
-#: services/forms.py:373
-#: templates/html/projects/task_delete.html:60
+#: projects/forms.py:177 projects/forms.py:347 services/forms.py:114
+#: services/forms.py:373 templates/html/projects/task_delete.html:60
 #: templates/html/projects/task_time_add.html:86
 #: templates/html/projects/task_view.html:88
 #: templates/html/services/ticket_delete.html:61
@@ -1262,30 +1096,25 @@ msgstr "Assigné"
 msgid "Caller"
 msgstr "Visiteur"
 
-#: projects/forms.py:207
-#: templates/html/projects/task_view.html:114
+#: projects/forms.py:207 templates/html/projects/task_view.html:114
 #: templates/html/services/ticket_view.html:91
 msgid "Priority"
 msgstr "Priorité"
 
-#: projects/forms.py:225
-#: templates/html/projects/task_view.html:145
+#: projects/forms.py:225 templates/html/projects/task_view.html:145
 msgid "Estimated time"
 msgstr "Temps estimé"
 
-#: projects/forms.py:226
-#: templates/html/projects/task_view.html:146
+#: projects/forms.py:226 templates/html/projects/task_view.html:146
 msgid "minutes"
 msgstr "minutes"
 
-#: projects/forms.py:281
-#: templates/html/projects/task_time_delete.html:43
+#: projects/forms.py:281 templates/html/projects/task_time_delete.html:43
 #: templates/html/projects/task_time_view.html:49
 msgid "Started"
 msgstr "Commencé"
 
-#: projects/forms.py:282
-#: templates/html/projects/task_time_delete.html:49
+#: projects/forms.py:282 templates/html/projects/task_time_delete.html:49
 #: templates/html/projects/task_time_view.html:55
 msgid "Finished"
 msgstr "Fini"
@@ -1298,35 +1127,27 @@ msgstr "Minutes"
 msgid "Choose an Object to Report on: "
 msgstr "Choisir l'objet du rapport :"
 
-#: sales/forms.py:21
-#: templates/html/sales/settings_view.html:19
+#: sales/forms.py:21 templates/html/sales/settings_view.html:19
 msgid "Default Order Status"
 msgstr "Ordre des statuts par défaut"
 
-#: sales/forms.py:22
-#: templates/html/sales/settings_view.html:28
+#: sales/forms.py:22 templates/html/sales/settings_view.html:28
 msgid "Default Order Source"
 msgstr "Ordre de Fils par défaut"
 
-#: sales/forms.py:23
-#: templates/html/sales/settings_view.html:37
+#: sales/forms.py:23 templates/html/sales/settings_view.html:37
 msgid "Default Order Product"
 msgstr "Ordre des produits par défaut"
 
-#: sales/forms.py:25
-#: templates/html/sales/settings_view.html:46
+#: sales/forms.py:25 templates/html/sales/settings_view.html:46
 msgid "Order Fulfilment Status"
 msgstr "Statut Exécution de commande"
 
-#: sales/forms.py:108
-#: sales/forms.py:150
-#: sales/forms.py:186
+#: sales/forms.py:108 sales/forms.py:150 sales/forms.py:186
 msgid "Status:"
 msgstr "Statut :"
 
-#: sales/forms.py:111
-#: sales/forms.py:153
-#: sales/forms.py:189
+#: sales/forms.py:111 sales/forms.py:153 sales/forms.py:189
 msgid "Assign To:"
 msgstr "Assigné à :"
 
@@ -1342,8 +1163,7 @@ msgstr "Activé pour Opportunités"
 msgid "Enabled for Sales"
 msgstr "Activé pour Ventes"
 
-#: sales/forms.py:300
-#: sales/forms.py:325
+#: sales/forms.py:300 sales/forms.py:325
 msgid "Product type"
 msgstr "Type de produit"
 
@@ -1364,12 +1184,10 @@ msgid "Stock quantity"
 msgstr "Quantité en stock"
 
 #: sales/forms.py:306
-#, fuzzy
 msgid "Runout action"
 msgstr "Action suspendue"
 
-#: sales/forms.py:378
-#: templates/html/sales/ordered_product_delete.html:45
+#: sales/forms.py:378 templates/html/sales/ordered_product_delete.html:45
 #: templates/html/sales/ordered_product_edit.html:98
 #: templates/html/sales/ordered_product_view.html:51
 #: templates/html/sales/subscription_delete.html:9
@@ -1378,8 +1196,7 @@ msgstr "Action suspendue"
 msgid "Subscription"
 msgstr "Souscription"
 
-#: sales/forms.py:382
-#: sales/forms.py:440
+#: sales/forms.py:382 sales/forms.py:440
 #: templates/html/sales/ordered_product_delete.html:53
 #: templates/html/sales/ordered_product_view.html:57
 #: templates/html/sales/product_delete.html:7
@@ -1389,8 +1206,7 @@ msgstr "Souscription"
 msgid "Product"
 msgstr "Produit"
 
-#: sales/forms.py:391
-#: templates/html/sales/order_add.html:16
+#: sales/forms.py:391 templates/html/sales/order_add.html:16
 #: templates/html/sales/order_delete.html:5
 #: templates/html/sales/order_edit.html:11
 #: templates/html/sales/order_view.html:7
@@ -1400,8 +1216,7 @@ msgstr "Produit"
 msgid "Order"
 msgstr "Commande"
 
-#: sales/forms.py:396
-#: templates/html/sales/order_delete.html:73
+#: sales/forms.py:396 templates/html/sales/order_delete.html:73
 #: templates/html/sales/order_view.html:81
 #: templates/html/sales/ordered_product_add.html:59
 #: templates/html/sales/ordered_product_delete.html:58
@@ -1410,8 +1225,7 @@ msgstr "Commande"
 msgid "Quantity"
 msgstr "Quantité"
 
-#: sales/forms.py:397
-#: templates/html/sales/order_view.html:125
+#: sales/forms.py:397 templates/html/sales/order_view.html:125
 #: templates/html/sales/ordered_product_add.html:103
 #: templates/html/sales/ordered_product_delete.html:64
 #: templates/html/sales/ordered_product_edit.html:100
@@ -1419,8 +1233,7 @@ msgstr "Quantité"
 msgid "Discount"
 msgstr "Remise"
 
-#: sales/forms.py:451
-#: templates/html/sales/subscription_delete.html:53
+#: sales/forms.py:451 templates/html/sales/subscription_delete.html:53
 #: templates/html/sales/subscription_view.html:62
 msgid "Expiry"
 msgstr "Expiration"
@@ -1429,14 +1242,12 @@ msgstr "Expiration"
 msgid "Cycle period"
 msgstr "Durée du cycle"
 
-#: sales/forms.py:475
-#: services/forms.py:109
+#: sales/forms.py:475 services/forms.py:109
 #: templates/html/services/ticket_view.html:77
 msgid "Reference"
 msgstr "Réference"
 
-#: sales/forms.py:503
-#: sales/forms.py:557
+#: sales/forms.py:503 sales/forms.py:557
 #: templates/html/sales/order_delete.html:80
 #: templates/html/sales/order_view.html:88
 #: templates/html/sales/ordered_product_add.html:66
@@ -1444,8 +1255,7 @@ msgstr "Réference"
 msgid "Payment"
 msgstr "Paiement"
 
-#: sales/forms.py:506
-#: sales/forms.py:567
+#: sales/forms.py:506 sales/forms.py:567
 #: templates/html/sales/opportunity_delete.html:7
 #: templates/html/sales/opportunity_view.html:3
 #: templates/html/sales/opportunity_view.html:7
@@ -1456,12 +1266,8 @@ msgstr "Paiement"
 msgid "Opportunity"
 msgstr "Opportunité"
 
-#: sales/forms.py:519
-#: sales/forms.py:576
-#: sales/forms.py:605
-#: sales/forms.py:713
-#: services/forms.py:126
-#: services/forms.py:398
+#: sales/forms.py:519 sales/forms.py:576 sales/forms.py:605 sales/forms.py:713
+#: services/forms.py:126 services/forms.py:398
 #: templates/html/projects/task_delete.html:44
 #: templates/html/projects/task_time_add.html:70
 #: templates/html/projects/task_view.html:72
@@ -1477,15 +1283,11 @@ msgstr "Opportunité"
 msgid "Assigned to"
 msgstr "Assigné à"
 
-#: sales/forms.py:521
-#: templates/html/finance/tags/transaction_list.html:8
+#: sales/forms.py:521 templates/html/finance/tags/transaction_list.html:8
 msgid "Date"
 msgstr "Date"
 
-#: sales/forms.py:595
-#: sales/forms.py:642
-#: sales/forms.py:708
-#: sales/forms.py:740
+#: sales/forms.py:595 sales/forms.py:642 sales/forms.py:708 sales/forms.py:740
 #: templates/html/account/account_view.html:46
 #: templates/html/identities/group_view.html:31
 #: templates/html/identities/user_view.html:48
@@ -1495,15 +1297,11 @@ msgstr "Date"
 msgid "Contact"
 msgstr "Contact"
 
-#: sales/forms.py:602
-#: sales/forms.py:647
-#: sales/forms.py:709
-#: sales/forms.py:751
+#: sales/forms.py:602 sales/forms.py:647 sales/forms.py:709 sales/forms.py:751
 msgid "Products interested"
 msgstr "Produits concernés"
 
-#: sales/forms.py:622
-#: sales/forms.py:660
+#: sales/forms.py:622 sales/forms.py:660
 msgid "Contact method"
 msgstr "Methode de contact"
 
@@ -1515,24 +1313,18 @@ msgstr "Date prévue"
 msgid "Closed date"
 msgstr "Date de clôture"
 
-#: sales/forms.py:715
-#: templates/html/sales/opportunity_view.html:106
+#: sales/forms.py:715 templates/html/sales/opportunity_view.html:106
 msgid "Probability"
 msgstr "Probabilité"
 
-#: sales/forms.py:734
-#: templates/html/sales/lead_delete.html:7
-#: templates/html/sales/lead_edit.html:7
-#: templates/html/sales/lead_view.html:7
+#: sales/forms.py:734 templates/html/sales/lead_delete.html:7
+#: templates/html/sales/lead_edit.html:7 templates/html/sales/lead_view.html:7
 #: templates/html/sales/opportunity_view.html:61
 msgid "Lead"
 msgstr "Client Potentiel"
 
-#: services/forms.py:79
-#: services/forms.py:119
-#: services/forms.py:309
-#: services/forms.py:383
-#: services/forms.py:428
+#: services/forms.py:79 services/forms.py:119 services/forms.py:309
+#: services/forms.py:383 services/forms.py:428
 #: templates/html/services/service_delete.html:6
 #: templates/html/services/service_edit.html:12
 #: templates/html/services/service_view.html:6
@@ -1543,8 +1335,7 @@ msgstr "Client Potentiel"
 msgid "Service"
 msgstr "Service"
 
-#: services/forms.py:121
-#: services/forms.py:392
+#: services/forms.py:121 services/forms.py:392
 #: templates/html/services/queue_delete.html:6
 #: templates/html/services/queue_edit.html:6
 #: templates/html/services/queue_view.html:6
@@ -1554,8 +1345,7 @@ msgstr "Service"
 msgid "Queue"
 msgstr "File"
 
-#: services/forms.py:123
-#: templates/html/services/sla_delete.html:6
+#: services/forms.py:123 templates/html/services/sla_delete.html:6
 #: templates/html/services/sla_edit.html:6
 #: templates/html/services/sla_view.html:6
 #: templates/html/services/ticket_delete.html:91
@@ -1564,13 +1354,11 @@ msgstr "File"
 msgid "Service Level Agreement"
 msgstr "Niveau de permission"
 
-#: services/forms.py:129
-#: templates/html/services/ticket_view.html:144
+#: services/forms.py:129 templates/html/services/ticket_view.html:144
 msgid "Resolution"
 msgstr "Résolution"
 
-#: services/forms.py:175
-#: templates/html/services/ticket_view.html:87
+#: services/forms.py:175 templates/html/services/ticket_view.html:87
 msgid "Urgency"
 msgstr "Urgence"
 
@@ -1595,8 +1383,7 @@ msgstr "Priorité de la Demande d'Assistance par défaut"
 msgid "Default service"
 msgstr "Service par défaut"
 
-#: services/forms.py:252
-#: templates/html/services/queue_delete.html:78
+#: services/forms.py:252 templates/html/services/queue_delete.html:78
 #: templates/html/services/queue_view.html:73
 msgid "Waiting time"
 msgstr "Temps d'attente"
@@ -1621,32 +1408,27 @@ msgstr "Temps de réponse"
 msgid "Uptime rate"
 msgstr "Taux de disponibilité"
 
-#: services/forms.py:321
-#: services/forms.py:424
+#: services/forms.py:321 services/forms.py:424
 #: templates/html/services/sla_delete.html:81
 #: templates/html/services/sla_view.html:67
 msgid "Provider"
 msgstr "Fournisseur"
 
-#: services/forms.py:325
-#: services/forms.py:351
+#: services/forms.py:325 services/forms.py:351
 #: templates/html/services/sla_view.html:73
 msgid "Available from"
 msgstr "Disponible depuis"
 
-#: services/forms.py:328
-#: services/forms.py:352
+#: services/forms.py:328 services/forms.py:352
 #: templates/html/services/sla_view.html:79
 msgid "Available to"
 msgstr "Disponible jusqu'à"
 
-#: services/forms.py:348
-#: services/forms.py:444
+#: services/forms.py:348 services/forms.py:444
 msgid "Related user"
 msgstr "Utilisateur lié"
 
-#: services/forms.py:350
-#: templates/html/services/agent_delete.html:69
+#: services/forms.py:350 templates/html/services/agent_delete.html:69
 #: templates/html/services/agent_view.html:50
 msgid "Occupied"
 msgstr "Occupé"
@@ -1965,8 +1747,7 @@ msgstr "Voir"
 #: templates/html/events/event_delete.html:11
 #: templates/html/events/event_edit.html:17
 #: templates/html/events/event_view.html:12
-#: templates/html/events/index.html:50
-#: templates/html/events/upcoming.html:43
+#: templates/html/events/index.html:50 templates/html/events/upcoming.html:43
 #: templates/html/finance/account_delete.html:10
 #: templates/html/finance/account_edit.html:3
 #: templates/html/finance/account_edit.html:16
@@ -2233,8 +2014,7 @@ msgstr "Votre compte"
 #: templates/html/changes/settings_view.html:3
 #: templates/html/changes/settings_view.html:7
 #: templates/html/changes/status_add.html:3
-#: templates/html/changes/status_add.html:7
-#: templates/html/core/page.html:16
+#: templates/html/changes/status_add.html:7 templates/html/core/page.html:16
 #: templates/html/core/administration/settings_edit.html:3
 #: templates/html/core/administration/settings_edit.html:7
 #: templates/html/core/administration/settings_view.html:3
@@ -2267,8 +2047,7 @@ msgstr "Votre compte"
 #: templates/html/messaging/emailbox_delete.html:6
 #: templates/html/messaging/emailbox_edit.html:3
 #: templates/html/messaging/emailbox_edit.html:8
-#: templates/html/messaging/page.html:21
-#: templates/html/messaging/page.html:26
+#: templates/html/messaging/page.html:21 templates/html/messaging/page.html:26
 #: templates/html/messaging/settings_edit.html:3
 #: templates/html/messaging/settings_edit.html:8
 #: templates/html/messaging/settings_user_edit.html:3
@@ -2283,8 +2062,7 @@ msgstr "Votre compte"
 #: templates/html/projects/settings_view.html:3
 #: templates/html/projects/settings_view.html:7
 #: templates/html/projects/status_add.html:11
-#: templates/html/sales/page.html:37
-#: templates/html/sales/settings_edit.html:3
+#: templates/html/sales/page.html:37 templates/html/sales/settings_edit.html:3
 #: templates/html/sales/settings_edit.html:7
 #: templates/html/sales/settings_view.html:3
 #: templates/html/sales/settings_view.html:7
@@ -2316,8 +2094,7 @@ msgstr "Treeio : responsable de l'information"
 #: templates/html/changes/index.html:3
 #: templates/html/changes/index_owned.html:3
 #: templates/html/changes/index_resolved.html:3
-#: templates/html/changes/page.html:3
-#: templates/html/changes/set_add.html:3
+#: templates/html/changes/page.html:3 templates/html/changes/set_add.html:3
 #: templates/html/changes/set_delete.html:3
 #: templates/html/changes/set_edit.html:3
 #: templates/html/changes/set_view.html:3
@@ -2352,8 +2129,7 @@ msgstr "Contrôle des changements"
 #: templates/html/infrastructure/item_status_view.html:10
 #: templates/html/infrastructure/item_type_view.html:10
 #: templates/html/infrastructure/service_record_index.html:11
-#: templates/html/knowledge/index.html:9
-#: templates/html/messaging/index.html:9
+#: templates/html/knowledge/index.html:9 templates/html/messaging/index.html:9
 #: templates/html/messaging/index_inbox.html:11
 #: templates/html/messaging/index_sent.html:11
 #: templates/html/messaging/message_delete.html:11
@@ -2399,12 +2175,9 @@ msgstr "Toutes les modifications"
 
 #: templates/html/changes/page.html:11
 #: templates/html/infrastructure/page.html:12
-#: templates/html/projects/page.html:12
-#: templates/html/sales/page.html:13
-#: templates/html/sales/page.html.py:20
-#: templates/html/sales/page.html:26
-#: templates/html/sales/page.html.py:32
-#: templates/html/services/page.html:12
+#: templates/html/projects/page.html:12 templates/html/sales/page.html:13
+#: templates/html/sales/page.html.py:20 templates/html/sales/page.html:26
+#: templates/html/sales/page.html.py:32 templates/html/services/page.html:12
 #, fuzzy
 msgid "Owned by me"
 msgstr "A moi"
@@ -2425,8 +2198,7 @@ msgstr "Résolu par moi"
 msgid "By Status"
 msgstr "Par Statut"
 
-#: templates/html/changes/page.html:19
-#: templates/html/core/page.html:3
+#: templates/html/changes/page.html:19 templates/html/core/page.html:3
 #: templates/html/core/page.html.py:27
 #: templates/html/core/administration/group_add.html:3
 #: templates/html/core/administration/group_delete.html:3
@@ -2457,13 +2229,10 @@ msgstr "Par Statut"
 #: templates/html/core/administration/user_edit.html:3
 #: templates/html/core/administration/user_password.html:3
 #: templates/html/core/administration/user_view.html:3
-#: templates/html/finance/page.html:20
-#: templates/html/identities/page.html:24
+#: templates/html/finance/page.html:20 templates/html/identities/page.html:24
 #: templates/html/infrastructure/page.html:33
-#: templates/html/messaging/page.html:25
-#: templates/html/projects/page.html:31
-#: templates/html/sales/page.html:36
-#: templates/html/services/page.html:40
+#: templates/html/messaging/page.html:25 templates/html/projects/page.html:31
+#: templates/html/sales/page.html:36 templates/html/services/page.html:40
 msgid "Administration"
 msgstr "Administration"
 
@@ -2471,8 +2240,7 @@ msgstr "Administration"
 msgid "Changes"
 msgstr "Modifications"
 
-#: templates/html/changes/page.html:36
-#: templates/html/changes/set_add.html:8
+#: templates/html/changes/page.html:36 templates/html/changes/set_add.html:8
 #: templates/html/changes/status_delete.html:10
 #: templates/html/changes/status_edit.html:10
 #: templates/html/changes/status_view.html:10
@@ -2840,8 +2608,7 @@ msgstr "Liens"
 msgid "Subscribers"
 msgstr "Abonnés"
 
-#: templates/html/core/index.html:3
-#: templates/html/core/index.html.py:8
+#: templates/html/core/index.html:3 templates/html/core/index.html.py:8
 #: templates/html/core/dashboard/index.html:3
 #: templates/html/core/dashboard/index.html:8
 #: templates/html/core/dashboard/page.html:3
@@ -2855,8 +2622,7 @@ msgstr "Paneau de contrôle"
 #: templates/html/core/dashboard/widget_add.html:5
 #: templates/html/core/trash/object_delete.html:3
 #: templates/html/core/trash/object_delete.html:14
-#: templates/html/core/trash/page.html:3
-#: templates/html/core/trash/page.html:8
+#: templates/html/core/trash/page.html:3 templates/html/core/trash/page.html:8
 #: templates/html/core/trash/page.html:14
 msgid "Trash"
 msgstr "Poubelle"
@@ -2902,8 +2668,12 @@ msgid "E-mail sent"
 msgstr "Courrier électronique envoyé"
 
 #: templates/html/core/password_reset_form.html:13
-msgid "Forgotten your password? Enter your username below, and we'll send you a new one"
-msgstr "Mot de passe perdu ? Entrez votre nom d'utilisateur ci-dessous et nous vous en enverrons un nouveau"
+msgid ""
+"Forgotten your password? Enter your username below, and we'll send you a new "
+"one"
+msgstr ""
+"Mot de passe perdu ? Entrez votre nom d'utilisateur ci-dessous et nous vous "
+"en enverrons un nouveau"
 
 #: templates/html/core/user_denied.html:13
 msgid "Access Denied"
@@ -2911,7 +2681,9 @@ msgstr "Acces refusé"
 
 #: templates/html/core/user_denied.html:15
 msgid "Sorry, but you are not allowed to access this"
-msgstr "Désolé, mais vous n'êtes pas autorisé à voir ceci. Rapprocher vous de l'administrateur"
+msgstr ""
+"Désolé, mais vous n'êtes pas autorisé à voir ceci. Rapprocher vous de "
+"l'administrateur"
 
 #: templates/html/core/user_login.html:25
 msgid "Forgotten your password?"
@@ -2944,10 +2716,12 @@ msgstr "Supprimer ce groupe"
 
 #: templates/html/core/administration/group_delete.html:22
 msgid ""
-"WARNING: This cannot be undone. All Users assigned to this group as default will be deleted.<br />\n"
+"WARNING: This cannot be undone. All Users assigned to this group as default "
+"will be deleted.<br />\n"
 "                    All Objects owned by those Users will be deleted"
 msgstr ""
-"AVERTISSEMENT: Ceci ne peut être annulée. Tous les utilisateurs assignés à ce groupe par défaut seront supprimés. <br />\n"
+"AVERTISSEMENT: Ceci ne peut être annulée. Tous les utilisateurs assignés à "
+"ce groupe par défaut seront supprimés. <br />\n"
 "Tous les objets appartenant à ces utilisateurs seront supprimés"
 
 #: templates/html/core/administration/group_delete.html:39
@@ -3143,7 +2917,8 @@ msgstr "Supprimer cet Utilisateur"
 
 #: templates/html/core/administration/user_delete.html:24
 msgid "WARNING: All Objects belonging to this User will be deleted"
-msgstr "ATTENTION: Tous les objets appartenant à cet utilisateur seront supprimés"
+msgstr ""
+"ATTENTION: Tous les objets appartenant à cet utilisateur seront supprimés"
 
 #: templates/html/core/dashboard/index.html:15
 #: templates/html/core/dashboard/page.html:14
@@ -3290,8 +3065,7 @@ msgstr "Nouveau Document"
 #: templates/html/documents/index_documents.html:5
 #: templates/html/documents/index_files.html:3
 #: templates/html/documents/index_weblinks.html:3
-#: templates/html/documents/page.html:3
-#: templates/html/documents/page.html:12
+#: templates/html/documents/page.html:3 templates/html/documents/page.html:12
 #: templates/html/documents/page.html:30
 #: templates/html/documents/weblink_add.html:3
 #: templates/html/documents/weblink_add_typed.html:3
@@ -3355,8 +3129,7 @@ msgstr "Supprimer ce Document"
 #: templates/html/documents/index_weblinks.html:20
 #: templates/html/documents/weblink_view.html:34
 #: templates/html/events/event_view.html:34
-#: templates/html/events/index.html:21
-#: templates/html/events/upcoming.html:13
+#: templates/html/events/index.html:21 templates/html/events/upcoming.html:13
 #: templates/html/finance/account_view.html:31
 #: templates/html/finance/asset_view.html:31
 #: templates/html/finance/balance_sheet.html:11
@@ -3503,18 +3276,15 @@ msgstr "Supprimer ce Lien Web"
 msgid "Link"
 msgstr "Lien"
 
-#: templates/html/events/day_view.html:3
-#: templates/html/events/page.html:17
+#: templates/html/events/day_view.html:3 templates/html/events/page.html:17
 msgid "Day"
 msgstr "Jour"
 
-#: templates/html/events/day_view.html:3
-#: templates/html/events/day_view.html:5
+#: templates/html/events/day_view.html:3 templates/html/events/day_view.html:5
 #: templates/html/events/event_add.html:3
 #: templates/html/events/event_delete.html:3
 #: templates/html/events/event_edit.html:3
-#: templates/html/events/event_view.html:3
-#: templates/html/events/index.html:3
+#: templates/html/events/event_view.html:3 templates/html/events/index.html:3
 #: templates/html/events/index.html.py:5
 #: templates/html/events/integration_add.html:3
 #: templates/html/events/integration_add.html:5
@@ -3523,12 +3293,9 @@ msgstr "Jour"
 #: templates/html/events/integration_view.html:3
 #: templates/html/events/integration_view.html:5
 #: templates/html/events/month_view.html:3
-#: templates/html/events/month_view.html:5
-#: templates/html/events/page.html:3
-#: templates/html/events/page.html.py:14
-#: templates/html/events/page.html:30
-#: templates/html/events/upcoming.html:3
-#: templates/html/events/upcoming.html:5
+#: templates/html/events/month_view.html:5 templates/html/events/page.html:3
+#: templates/html/events/page.html.py:14 templates/html/events/page.html:30
+#: templates/html/events/upcoming.html:3 templates/html/events/upcoming.html:5
 #: templates/html/events/week_view.html:3
 #: templates/html/events/week_view.html:5
 msgid "Calendar"
@@ -3546,8 +3313,7 @@ msgstr "Aller à"
 msgid "Today"
 msgstr "Aujourd'hui"
 
-#: templates/html/events/day_view.html:35
-#: templates/html/events/index.html:3
+#: templates/html/events/day_view.html:35 templates/html/events/index.html:3
 #: templates/html/events/integration_add.html:3
 #: templates/html/events/integration_index.html:3
 #: templates/html/events/integration_view.html:3
@@ -3555,8 +3321,7 @@ msgid "Events"
 msgstr "Evènements"
 
 #: templates/html/events/event_add.html:3
-#: templates/html/events/event_add.html:12
-#: templates/html/events/page.html:36
+#: templates/html/events/event_add.html:12 templates/html/events/page.html:36
 msgid "New Event"
 msgstr "Nouvel Evènement"
 
@@ -3628,8 +3393,7 @@ msgstr "Chargement"
 msgid "This page requires JavaScript"
 msgstr "Cette page a besoin de JavaScript"
 
-#: templates/html/events/month_view.html:3
-#: templates/html/events/page.html:15
+#: templates/html/events/month_view.html:3 templates/html/events/page.html:15
 msgid "Month"
 msgstr "Mois"
 
@@ -3641,15 +3405,13 @@ msgstr "Tous les Evènements"
 msgid "Upcoming"
 msgstr "A venir"
 
-#: templates/html/events/page.html:16
-#: templates/html/events/week_view.html:3
+#: templates/html/events/page.html:16 templates/html/events/week_view.html:3
 #: templates/html/events/week_view.html:25
 #: templates/html/events/week_view.html:29
 msgid "Week"
 msgstr "Semaine"
 
-#: templates/html/events/upcoming.html:3
-#: templates/html/events/upcoming.html:6
+#: templates/html/events/upcoming.html:3 templates/html/events/upcoming.html:6
 msgid "Upcoming Events"
 msgstr "Evènements à venir"
 
@@ -3929,8 +3691,7 @@ msgstr "Supprimer cette Catégorie"
 #: templates/html/finance/category_view.html:29
 #: templates/html/finance/index_transactions.html:3
 #: templates/html/finance/index_transactions.html:5
-#: templates/html/finance/page.html:3
-#: templates/html/finance/page.html:10
+#: templates/html/finance/page.html:3 templates/html/finance/page.html:10
 #: templates/html/finance/transaction_add.html:11
 msgid "Transactions"
 msgstr "Transactions"
@@ -4103,11 +3864,9 @@ msgstr "Supprimer cet Engagement"
 msgid "Due Date"
 msgstr "Date Limite"
 
-#: templates/html/finance/page.html:16
-#: templates/html/reports/index.html:3
+#: templates/html/finance/page.html:16 templates/html/reports/index.html:3
 #: templates/html/reports/index_owned.html:3
-#: templates/html/reports/page.html:3
-#: templates/html/reports/page.html:25
+#: templates/html/reports/page.html:3 templates/html/reports/page.html:25
 #: templates/html/reports/report_add.html:3
 #: templates/html/reports/report_add_populate.html:3
 #: templates/html/reports/report_query.html:3
@@ -4204,8 +3963,12 @@ msgid "Please choose the type of Contact you wish to create"
 msgstr "Merci de choisir le type de contact que vous voulez créer"
 
 #: templates/html/identities/contact_add.html:24
-msgid "Sorry, you can not create new Contacts. You don't have access to any of the available Contact Types"
-msgstr "Désolé, vous ne pouvez pas créer de nouveaux Contacts. Vous n'avez pas accès à tous les Types de Contact disponibles"
+msgid ""
+"Sorry, you can not create new Contacts. You don't have access to any of the "
+"available Contact Types"
+msgstr ""
+"Désolé, vous ne pouvez pas créer de nouveaux Contacts. Vous n'avez pas accès "
+"à tous les Types de Contact disponibles"
 
 #: templates/html/identities/contact_add_typed.html:6
 #: templates/html/identities/contact_type_delete.html:6
@@ -4407,11 +4170,16 @@ msgstr "Nouvel Emplacement"
 
 #: templates/html/infrastructure/item_add.html:14
 msgid "Please choose the type of Infrastructure Item you wish to create"
-msgstr "Merci de choisir le type de Matériels ou Equipements que vous souhaitez créer"
+msgstr ""
+"Merci de choisir le type de Matériels ou Equipements que vous souhaitez créer"
 
 #: templates/html/infrastructure/item_add.html:24
-msgid "Sorry, you can not create new Items. You don't have access to any of the available Infrastructure Item Types"
-msgstr "Désolé, vous ne pouvez pas créer de nouveaux éléments. Vous n'avez pas accès à tous les types Matériels & Equipements disponibles "
+msgid ""
+"Sorry, you can not create new Items. You don't have access to any of the "
+"available Infrastructure Item Types"
+msgstr ""
+"Désolé, vous ne pouvez pas créer de nouveaux éléments. Vous n'avez pas accès "
+"à tous les types Matériels & Equipements disponibles "
 
 #: templates/html/infrastructure/item_add_typed.html:6
 #: templates/html/infrastructure/item_type_delete.html:6
@@ -4588,8 +4356,7 @@ msgstr "Supprimer cet élément"
 #: templates/html/messaging/message_compose.html:3
 #: templates/html/messaging/message_delete.html:3
 #: templates/html/messaging/message_view.html:3
-#: templates/html/messaging/page.html:3
-#: templates/html/messaging/page.html:37
+#: templates/html/messaging/page.html:3 templates/html/messaging/page.html:37
 #: templates/html/messaging/settings_edit.html:3
 #: templates/html/messaging/settings_user_edit.html:3
 #: templates/html/messaging/settings_user_view.html:3
@@ -4853,10 +4620,8 @@ msgstr "Tâches"
 msgid "All Tasks"
 msgstr "Toutes les Tâches"
 
-#: templates/html/projects/page.html:13
-#: templates/html/reports/page.html:13
-#: templates/html/sales/page.html:14
-#: templates/html/services/page.html:14
+#: templates/html/projects/page.html:13 templates/html/reports/page.html:13
+#: templates/html/sales/page.html:14 templates/html/services/page.html:14
 #: templates/html/services/widgets/index_assigned.html:3
 msgid "Assigned to me"
 msgstr "A moi"
@@ -4865,8 +4630,7 @@ msgstr "A moi"
 msgid "Tasks in progress"
 msgstr "Tâche en cours"
 
-#: templates/html/projects/page.html:15
-#: templates/html/projects/page.html:43
+#: templates/html/projects/page.html:15 templates/html/projects/page.html:43
 #: templates/html/projects/project_delete.html:73
 msgid "Projects"
 msgstr "Projets"
@@ -5031,14 +4795,12 @@ msgstr "Nom du Champ"
 msgid "Join"
 msgstr "Fusionner"
 
-#: templates/html/sales/index.html:3
-#: templates/html/sales/index.html.py:9
+#: templates/html/sales/index.html:3 templates/html/sales/index.html.py:9
 #: templates/html/sales/index_assigned.html:3
 #: templates/html/sales/index_assigned.html:7
 #: templates/html/sales/index_owned.html:3
 #: templates/html/sales/index_owned.html:7
-#: templates/html/sales/lead_add.html:3
-#: templates/html/sales/lead_index.html:3
+#: templates/html/sales/lead_add.html:3 templates/html/sales/lead_index.html:3
 #: templates/html/sales/lead_index_owned.html:3
 #: templates/html/sales/opportunity_add.html:3
 #: templates/html/sales/opportunity_delete.html:3
@@ -5053,8 +4815,7 @@ msgstr "Fusionner"
 #: templates/html/sales/ordered_product_delete.html:3
 #: templates/html/sales/ordered_product_edit.html:3
 #: templates/html/sales/ordered_product_view.html:3
-#: templates/html/sales/page.html:3
-#: templates/html/sales/page.html.py:50
+#: templates/html/sales/page.html:3 templates/html/sales/page.html.py:50
 #: templates/html/sales/product_add.html:3
 #: templates/html/sales/product_delete.html:3
 #: templates/html/sales/product_edit.html:3
@@ -5088,8 +4849,7 @@ msgstr "Aucune Vente"
 #: templates/html/sales/lead_index.html:7
 #: templates/html/sales/lead_index_owned.html:3
 #: templates/html/sales/lead_index_owned.html:7
-#: templates/html/sales/lead_view.html:3
-#: templates/html/sales/page.html:18
+#: templates/html/sales/lead_view.html:3 templates/html/sales/page.html:18
 #: templates/html/sales/status_view.html:50
 msgid "Leads"
 msgstr "Client Potentiel"
@@ -5101,8 +4861,7 @@ msgid "New Lead"
 msgstr "Nouveau Client Potentiel"
 
 #: templates/html/sales/lead_delete.html:3
-#: templates/html/sales/lead_edit.html:3
-#: templates/html/sales/lead_view.html:3
+#: templates/html/sales/lead_edit.html:3 templates/html/sales/lead_view.html:3
 #: templates/html/sales/opportunity_edit.html:3
 #: templates/html/sales/order_edit.html:3
 #: templates/html/sales/source_edit.html:3
@@ -5139,8 +4898,7 @@ msgstr "Convertir en Commande"
 #: templates/html/sales/opportunity_index.html:7
 #: templates/html/sales/opportunity_index_owned.html:3
 #: templates/html/sales/opportunity_index_owned.html:7
-#: templates/html/sales/page.html:24
-#: templates/html/sales/status_view.html:53
+#: templates/html/sales/page.html:24 templates/html/sales/status_view.html:53
 msgid "Opportunities"
 msgstr "Opportunitéq"
 
@@ -5178,8 +4936,7 @@ msgid "Weighted Amount"
 msgstr "Budget Estimé"
 
 #: templates/html/sales/order_add.html:3
-#: templates/html/sales/order_add.html:19
-#: templates/html/sales/page.html:56
+#: templates/html/sales/order_add.html:19 templates/html/sales/page.html:56
 #: templates/html/sales/status_delete.html:10
 #, fuzzy
 msgid "New Order"
@@ -5250,8 +5007,7 @@ msgstr "Tous les Clients Potentiels"
 msgid "All Opportunities"
 msgstr "Toutes les Opportunités"
 
-#: templates/html/sales/page.html:30
-#: templates/html/sales/product_add.html:3
+#: templates/html/sales/page.html:30 templates/html/sales/product_add.html:3
 #: templates/html/sales/product_add.html:7
 #: templates/html/sales/product_delete.html:3
 #: templates/html/sales/product_edit.html:3
@@ -5350,8 +5106,7 @@ msgstr "Nouvelle Source"
 #: templates/html/services/index.html:3
 #: templates/html/services/index_assigned.html:3
 #: templates/html/services/index_owned.html:3
-#: templates/html/services/page.html:3
-#: templates/html/services/page.html:53
+#: templates/html/services/page.html:3 templates/html/services/page.html:53
 #: templates/html/services/queue_add.html:3
 #: templates/html/services/queue_delete.html:3
 #: templates/html/services/queue_edit.html:3
@@ -5691,9 +5446,8 @@ msgstr "Par Emplacement"
 msgid "New Report"
 msgstr "Nouveau Rapport"
 
-#, fuzzy
 msgid "New Query Set"
-msgstr "Ensemble de Nouvelle Demande"
+msgstr "Ensemble de Nouvelles Demandes"
 
 msgid "New Function"
 msgstr "Nouvelle Fonction"
@@ -5730,4 +5484,3 @@ msgstr "Connaissance"
 
 msgid "Sales & Stock"
 msgstr "Ventes & Stock"
-
