@@ -87,4 +87,5 @@ Please see http://www.tree.io/ or contact info@tree.io for more details.
 Acknowledgements
 ================
 
+Greek translation contributed by Nick Apostolakis http://nick.oncrete.gr
 French translation contributed by morago.com
