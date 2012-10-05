@@ -91,3 +91,4 @@ Acknowledgements
 * Brasilian translation contributed by Davi Ribeiro
 * Simple Chinese translation contributed by @sunliwen
 * French translation contributed by morago.com
+* An [achievements addon](https://github.com/pascalmouret/treeio-achievements) is available courtesy of Pascal Mouret
