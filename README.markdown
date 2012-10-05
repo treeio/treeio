@@ -4,7 +4,9 @@
 Tree.io Business Management Platform
 ==========================
 
-Tree.io is a powerful business management platform with tons of great features including integrated Project Management, Help Desk (support ticketing) and CRM modules. For a full list of features please see http://www.tree.io
+Tree.io is a powerful business management platform with tons of great features including integrated Project Management, Help Desk (support ticketing) and CRM modules. For a full list of features please see http://www.tree.io 
+
+Click here to watch a [video](http://klewel.com/conferences/djangocon-2012/index.php?talkID=15) of our lightning talk presentation at Djangocon Europe 2012.
 
 For FAQ see the Tree.io community site http://www.tree.io/community/
 
@@ -91,4 +93,4 @@ Acknowledgements
 * Brasilian translation contributed by Davi Ribeiro
 * Simple Chinese translation contributed by @sunliwen
 * French translation contributed by morago.com
-* An [achievements addon](https://github.com/pascalmouret/treeio-achievements) is available courtesy of Pascal Mouret
+* An [achievements addon](https://github.com/pascalmouret/treeio-achievements) is available courtesy of Pascal Mouret as shown in our [Djangocon Europe video](http://klewel.com/conferences/djangocon-2012/index.php?talkID=15).
