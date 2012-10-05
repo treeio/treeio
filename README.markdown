@@ -88,4 +88,6 @@ Acknowledgements
 ================
 
 * Greek translation contributed by Nick Apostolakis http://nick.oncrete.gr
+* Brasilian translation contributed by Davi Ribeiro
+* Simple Chinese translation contributed by @sunliwen
 * French translation contributed by morago.com
