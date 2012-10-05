@@ -165,13 +165,13 @@ def logo_image(request, gif=False, response_format='html'):
     logofile = ''
     if customlogo:
         try:
-            logofile = open(customlogo, 'r')
+            logofile = open(customlogo, 'rb')
         except:
             pass
     
     if not logofile:
         try:
-            logofile = open(logopath, 'r')
+            logofile = open(logopath, 'rb')
         except:
             pass
     
