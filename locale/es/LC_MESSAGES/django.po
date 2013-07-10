@@ -5,7 +5,7 @@
 #
 msgid ""
 msgstr ""
-"PO-Revision-Date: 2013-07-10 12:16-0500\n"
+"PO-Revision-Date: 2013-07-10 12:21-0500\n"
 "Last-Translator: Sebastian Tabares Amaya <sytabaresa@gmail.com>\n"
 "X-Translated-Using: django-rosetta 0.6.2\n"
 "MIME-Version: 1.0\n"
@@ -777,7 +777,6 @@ msgid "This is your only Perspective."
 msgstr "Esta es tu única Prespectiva"
 
 #: core/administration/views.py:258
-#, fuzzy
 msgid "This is you!"
 msgstr "Este es Usted!"
 
