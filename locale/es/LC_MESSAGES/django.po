@@ -5,7 +5,7 @@
 #
 msgid ""
 msgstr ""
-"PO-Revision-Date: 2013-07-10 17:53-0500\n"
+"PO-Revision-Date: 2013-07-10 18:06-0500\n"
 "Last-Translator: Sebastian Tabares Amaya <sytabaresa@gmail.com>\n"
 "X-Translated-Using: django-rosetta 0.6.2\n"
 "MIME-Version: 1.0\n"
@@ -8357,7 +8357,7 @@ msgid "Sorry, but we were unable to find what you're after."
 msgstr "Lo sentimos, pero no hemos podido encontrar lo que está buscando."
 
 msgid "Maybe, try to search for it?"
-msgstr ""
+msgstr "Tal vez, puede buscarlo?"
 
 msgid "Server Error"
 msgstr "Error del servidor"
