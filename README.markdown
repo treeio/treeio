@@ -61,7 +61,7 @@ Install the database (Example showing MySQL)
            > \q
 
 1.  Install your database `python manage.py installdb`
-1.  Setup initial data `python manage.py loaddata data.json`
+1.  Setup initial data `mysql -u treeio -p treeio < sql/mysql-treeio-current.sql`
 
 Test install 
 ------------------------
