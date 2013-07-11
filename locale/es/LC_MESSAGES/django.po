@@ -5,7 +5,7 @@
 #
 msgid ""
 msgstr ""
-"PO-Revision-Date: 2013-07-10 18:06-0500\n"
+"PO-Revision-Date: 2013-07-10 19:40-0500\n"
 "Last-Translator: Sebastian Tabares Amaya <sytabaresa@gmail.com>\n"
 "X-Translated-Using: django-rosetta 0.6.2\n"
 "MIME-Version: 1.0\n"
@@ -3896,7 +3896,7 @@ msgstr "Todo el Mundo"
 
 #: templates/html/core/administration/settings_view.html:29
 msgid "User and Group"
-msgstr "Usuario y GRupo"
+msgstr "Usuario y Grupo"
 
 #: templates/html/core/administration/settings_view.html:31
 msgid "User Only"
@@ -5458,7 +5458,7 @@ msgstr "Lista de Destinatarios"
 
 #: templates/html/forest/email_index.html:75
 msgid "Compose Message"
-msgstr "COmponer Mensaje"
+msgstr "Componer Mensaje"
 
 #: templates/html/forest/email_index.html:100
 msgid "Preview E-mail"
@@ -7583,11 +7583,11 @@ msgstr "Nunca (desactivado)"
 
 #: account/forms.py:104 templates/html/account/settings_view.html:45
 msgid "As-it-happens"
-msgstr "Συμβαίνει"
+msgstr "Cuando pase"
 
 #: account/models.py:16 templates/html/account/settings_view.html:46
 msgid "Daily"
-msgstr "Ημερήσια"
+msgstr "Diariamente"
 
 #: account/models.py:17 templates/html/account/settings_view.html:47
 msgid "Weekly"
@@ -7726,8 +7726,9 @@ msgid ""
 "                \t<br />Please check your e-mail box for instructions on how "
 "to restore your password"
 msgstr ""
-"Σασ στέιλαμε μήνυμα.n                \t<br />Παρακαλώ ελέγξτε το e-mail σας "
-"για οδηγίες για το πως να ανακτήσετε το συνθηματικό σας"
+"Te hemos enviado un mensaje. \n"
+"\t\t<br />Por favor verifique su bandeja de e-mail para ver instrucciones de "
+"cómo recuperar su contraseña"
 
 #: templates/html/core/password_reset_done.html:24
 #, fuzzy
@@ -8252,7 +8253,7 @@ msgstr "Uso"
 #: templates/html/sales/order_view.html:133
 #, python-format
 msgid "Discount (%)"
-msgstr "Скидка (%)"
+msgstr "Descuento (%)"
 
 msgid "No Widgets yet"
 msgstr "No hay Widgets aún"
