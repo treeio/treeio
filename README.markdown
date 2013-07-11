@@ -89,6 +89,7 @@ Please see http://www.tree.io/ or contact info@tree.io for more details.
 Acknowledgements
 ================
 
+* Spanish translation contributed to by @sytabaresa
 * Greek translation contributed by Nick Apostolakis http://nick.oncrete.gr
 * Brasilian translation contributed by Davi Ribeiro
 * Simple Chinese translation contributed by @sunliwen
