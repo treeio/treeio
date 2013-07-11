@@ -5,7 +5,7 @@
 #
 msgid ""
 msgstr ""
-"PO-Revision-Date: 2013-07-10 12:21-0500\n"
+"PO-Revision-Date: 2013-07-10 22:49-0500\n"
 "Last-Translator: Sebastian Tabares Amaya <sytabaresa@gmail.com>\n"
 "X-Translated-Using: django-rosetta 0.6.2\n"
 "MIME-Version: 1.0\n"
@@ -116,7 +116,7 @@ msgstr "No"
 #: templates/html/core/administration/group_view.html:30
 #: templates/html/core/administration/settings_view.html:17
 msgid "Default Perspective"
-msgstr "Perspectiva Predeterminada"
+msgstr "Vista Predeterminada"
 
 #: account/forms.py:103 core/administration/forms.py:88
 #: templates/html/account/settings_view.html:26
@@ -135,154 +135,195 @@ msgstr "Notificaciones de e-mail"
 
 #: changes/forms.py:17 changes/forms.py:28 events/forms.py:16
 #: finance/forms.py:21 finance/forms.py:32 forest/forms.py:36
+#: identities/forms.py:120 infrastructure/forms.py:48
 #: infrastructure/forms.py:371 infrastructure/forms.py:388
 #: knowledge/forms.py:15 knowledge/forms.py:26 projects/forms.py:48
 #: projects/forms.py:65 sales/forms.py:291 sales/forms.py:307
 #: services/forms.py:98 services/forms.py:114
 #: templates/html/changes/set_delete.html:11
+#: templates/html/changes/set_delete.html:27
 #: templates/html/changes/set_edit.html:11
 #: templates/html/changes/set_view.html:12
 #: templates/html/changes/status_delete.html:12
+#: templates/html/changes/status_delete.html:29
 #: templates/html/changes/status_edit.html:12
 #: templates/html/changes/status_view.html:13
 #: templates/html/core/administration/group_delete.html:11
+#: templates/html/core/administration/group_delete.html:29
 #: templates/html/core/administration/group_edit.html:11
 #: templates/html/core/administration/group_view.html:12
 #: templates/html/core/administration/page_delete.html:11
+#: templates/html/core/administration/page_delete.html:33
 #: templates/html/core/administration/page_edit.html:11
-#: templates/html/core/administration/page_view.html:11
 #: templates/html/core/administration/pagefolder_delete.html:11
+#: templates/html/core/administration/pagefolder_delete.html:32
 #: templates/html/core/administration/pagefolder_edit.html:11
 #: templates/html/core/administration/pagefolder_view.html:11
+#: templates/html/core/administration/page_view.html:11
 #: templates/html/core/administration/perspective_delete.html:15
+#: templates/html/core/administration/perspective_delete.html:55
 #: templates/html/core/administration/perspective_edit.html:14
 #: templates/html/core/administration/perspective_view.html:15
 #: templates/html/core/administration/user_delete.html:12
+#: templates/html/core/administration/user_delete.html:44
 #: templates/html/core/administration/user_edit.html:12
 #: templates/html/core/administration/user_password.html:12
 #: templates/html/core/administration/user_view.html:12
 #: templates/html/core/trash/index.html:35
 #: templates/html/core/trash/object_delete.html:13
+#: templates/html/core/trash/object_delete.html:30
 #: templates/html/documents/document_add_typed.html:17
 #: templates/html/documents/document_delete.html:13
+#: templates/html/documents/document_delete.html:31
 #: templates/html/documents/document_edit.html:13
 #: templates/html/documents/document_view.html:13
 #: templates/html/documents/file_delete.html:13
+#: templates/html/documents/file_delete.html:31
 #: templates/html/documents/file_edit.html:13
 #: templates/html/documents/file_upload_typed.html:17
 #: templates/html/documents/file_view.html:13
 #: templates/html/documents/folder_add_typed.html:17
 #: templates/html/documents/folder_delete.html:17
+#: templates/html/documents/folder_delete.html:35
 #: templates/html/documents/folder_edit.html:17
 #: templates/html/documents/folder_view.html:17
 #: templates/html/documents/weblink_add_typed.html:17
 #: templates/html/documents/weblink_delete.html:13
+#: templates/html/documents/weblink_delete.html:31
 #: templates/html/documents/weblink_edit.html:13
 #: templates/html/documents/weblink_view.html:13
 #: templates/html/events/event_delete.html:12
+#: templates/html/events/event_delete.html:46
 #: templates/html/events/event_edit.html:12
 #: templates/html/events/event_view.html:13
 #: templates/html/finance/account_delete.html:11
+#: templates/html/finance/account_delete.html:31
 #: templates/html/finance/account_edit.html:11
 #: templates/html/finance/account_view.html:11
-#: templates/html/finance/asset_delete.html:3
 #: templates/html/finance/asset_delete.html:11
+#: templates/html/finance/asset_delete.html:28
+#: templates/html/finance/asset_delete.html:3
 #: templates/html/finance/asset_edit.html:11
 #: templates/html/finance/asset_view.html:11
-#: templates/html/finance/category_delete.html:3
 #: templates/html/finance/category_delete.html:11
+#: templates/html/finance/category_delete.html:28
+#: templates/html/finance/category_delete.html:3
 #: templates/html/finance/category_edit.html:11
 #: templates/html/finance/category_view.html:12
-#: templates/html/finance/currency_delete.html:3
 #: templates/html/finance/currency_delete.html:11
+#: templates/html/finance/currency_delete.html:28
+#: templates/html/finance/currency_delete.html:3
 #: templates/html/finance/currency_edit.html:17
 #: templates/html/finance/currency_view.html:11
-#: templates/html/finance/equity_delete.html:3
 #: templates/html/finance/equity_delete.html:11
+#: templates/html/finance/equity_delete.html:3
 #: templates/html/finance/equity_edit.html:11
 #: templates/html/finance/equity_view.html:11
-#: templates/html/finance/liability_delete.html:3
 #: templates/html/finance/liability_delete.html:11
+#: templates/html/finance/liability_delete.html:28
+#: templates/html/finance/liability_delete.html:3
 #: templates/html/finance/liability_edit.html:11
 #: templates/html/finance/liability_view.html:11
-#: templates/html/finance/receivable_delete.html:3
 #: templates/html/finance/receivable_delete.html:11
+#: templates/html/finance/receivable_delete.html:28
+#: templates/html/finance/receivable_delete.html:3
 #: templates/html/finance/receivable_edit.html:11
 #: templates/html/finance/receivable_view.html:11
-#: templates/html/finance/tax_delete.html:3
 #: templates/html/finance/tax_delete.html:11
+#: templates/html/finance/tax_delete.html:28
+#: templates/html/finance/tax_delete.html:3
 #: templates/html/finance/tax_edit.html:11
 #: templates/html/finance/tax_view.html:11
-#: templates/html/finance/transaction_delete.html:3
 #: templates/html/finance/transaction_delete.html:11
+#: templates/html/finance/transaction_delete.html:28
+#: templates/html/finance/transaction_delete.html:3
 #: templates/html/finance/transaction_edit.html:11
 #: templates/html/finance/transaction_view.html:11
 #: templates/html/identities/contact_delete.html:11
+#: templates/html/identities/contact_delete.html:44
 #: templates/html/identities/contact_edit.html:11
 #: templates/html/identities/contact_me.html:14
 #: templates/html/identities/contact_type_delete.html:12
+#: templates/html/identities/contact_type_delete.html:32
 #: templates/html/identities/contact_type_edit.html:18
 #: templates/html/identities/contact_type_view.html:13
 #: templates/html/identities/contact_view.html:12
 #: templates/html/identities/field_delete.html:17
+#: templates/html/identities/field_delete.html:34
 #: templates/html/identities/field_edit.html:17
 #: templates/html/identities/field_view.html:18
 #: templates/html/identities/location_delete.html:11
+#: templates/html/identities/location_delete.html:44
 #: templates/html/identities/location_edit.html:11
 #: templates/html/identities/location_view.html:11
 #: templates/html/infrastructure/field_delete.html:17
+#: templates/html/infrastructure/field_delete.html:34
 #: templates/html/infrastructure/field_edit.html:17
 #: templates/html/infrastructure/field_view.html:18
 #: templates/html/infrastructure/item_delete.html:11
+#: templates/html/infrastructure/item_delete.html:44
 #: templates/html/infrastructure/item_edit.html:11
 #: templates/html/infrastructure/item_status_delete.html:17
+#: templates/html/infrastructure/item_status_delete.html:34
 #: templates/html/infrastructure/item_status_edit.html:17
 #: templates/html/infrastructure/item_status_view.html:43
 #: templates/html/infrastructure/item_type_delete.html:12
+#: templates/html/infrastructure/item_type_delete.html:29
 #: templates/html/infrastructure/item_type_edit.html:18
 #: templates/html/infrastructure/item_type_view.html:44
 #: templates/html/infrastructure/item_view.html:30
 #: templates/html/infrastructure/location_delete.html:10
+#: templates/html/infrastructure/location_delete.html:43
 #: templates/html/infrastructure/location_edit.html:10
 #: templates/html/infrastructure/location_view.html:17
 #: templates/html/infrastructure/service_record_delete.html:11
+#: templates/html/infrastructure/service_record_delete.html:28
 #: templates/html/infrastructure/service_record_edit.html:11
 #: templates/html/infrastructure/service_record_view.html:20
 #: templates/html/knowledge/category_delete.html:13
+#: templates/html/knowledge/category_delete.html:31
 #: templates/html/knowledge/category_edit.html:13
 #: templates/html/knowledge/category_view.html:13
 #: templates/html/knowledge/folder_add_folder.html:15
 #: templates/html/knowledge/folder_delete.html:17
+#: templates/html/knowledge/folder_delete.html:35
 #: templates/html/knowledge/folder_edit.html:17
 #: templates/html/knowledge/folder_view.html:17
 #: templates/html/knowledge/item_add_folder.html:15
 #: templates/html/knowledge/item_delete.html:13
+#: templates/html/knowledge/item_delete.html:31
 #: templates/html/knowledge/item_edit.html:13
 #: templates/html/knowledge/item_view.html:13
 #: templates/html/messaging/message_delete.html:33
+#: templates/html/messaging/message_delete.html:51
 #: templates/html/messaging/message_view.html:30
 #: templates/html/messaging/message_view.html:61
 #: templates/html/messaging/message_view.html:97
 #: templates/html/messaging/mlist_view.html:18
 #: templates/html/messaging/stream_delete.html:29
+#: templates/html/messaging/stream_delete.html:47
 #: templates/html/messaging/stream_edit.html:29
 #: templates/html/messaging/stream_view.html:12
 #: templates/html/messaging/tags/message_list.html:41
 #: templates/html/projects/index_by_status.html:47
 #: templates/html/projects/milestone_add_typed.html:16
 #: templates/html/projects/milestone_delete.html:14
+#: templates/html/projects/milestone_delete.html:32
 #: templates/html/projects/milestone_edit.html:14
 #: templates/html/projects/milestone_view.html:14
 #: templates/html/projects/project_add_typed.html:16
 #: templates/html/projects/project_delete.html:16
+#: templates/html/projects/project_delete.html:42
 #: templates/html/projects/project_edit.html:16
 #: templates/html/projects/project_view.html:16
 #: templates/html/projects/status_delete.html:14
+#: templates/html/projects/status_delete.html:41
 #: templates/html/projects/status_edit.html:13
 #: templates/html/projects/task_add_subtask.html:14
 #: templates/html/projects/task_add_to_milestone.html:14
 #: templates/html/projects/task_add_typed.html:16
 #: templates/html/projects/task_delete.html:14
+#: templates/html/projects/task_delete.html:32
 #: templates/html/projects/task_edit.html:14
 #: templates/html/projects/task_time_add.html:13
 #: templates/html/projects/task_time_delete.html:13
@@ -295,47 +336,61 @@ msgstr "Notificaciones de e-mail"
 #: templates/html/reports/report_view.html:11
 #: templates/html/reports/tags/chart.html:11
 #: templates/html/sales/lead_delete.html:12
+#: templates/html/sales/lead_delete.html:32
 #: templates/html/sales/lead_edit.html:12
 #: templates/html/sales/lead_view.html:13
 #: templates/html/sales/opportunity_delete.html:13
+#: templates/html/sales/opportunity_delete.html:33
 #: templates/html/sales/opportunity_edit.html:13
 #: templates/html/sales/opportunity_view.html:13
 #: templates/html/sales/order_delete.html:13
+#: templates/html/sales/order_delete.html:31
 #: templates/html/sales/order_edit.html:13
-#: templates/html/sales/order_invoice_view.html:14
-#: templates/html/sales/order_view.html:14
 #: templates/html/sales/ordered_product_add.html:11
 #: templates/html/sales/ordered_product_delete.html:14
+#: templates/html/sales/ordered_product_delete.html:31
 #: templates/html/sales/ordered_product_edit.html:15
 #: templates/html/sales/ordered_product_view.html:15
+#: templates/html/sales/order_invoice_view.html:14
+#: templates/html/sales/order_view.html:14
 #: templates/html/sales/product_delete.html:12
+#: templates/html/sales/product_delete.html:32
 #: templates/html/sales/product_edit.html:12
 #: templates/html/sales/product_view.html:13
 #: templates/html/sales/source_delete.html:13
+#: templates/html/sales/source_delete.html:42
 #: templates/html/sales/source_edit.html:13
 #: templates/html/sales/source_view.html:14
 #: templates/html/sales/status_delete.html:13
+#: templates/html/sales/status_delete.html:42
 #: templates/html/sales/status_edit.html:19
 #: templates/html/sales/status_view.html:14
 #: templates/html/sales/subscription_delete.html:15
+#: templates/html/sales/subscription_delete.html:36
 #: templates/html/sales/subscription_edit.html:12
 #: templates/html/sales/subscription_view.html:15
 #: templates/html/services/agent_delete.html:13
+#: templates/html/services/agent_delete.html:48
 #: templates/html/services/agent_edit.html:12
 #: templates/html/services/agent_view.html:13
 #: templates/html/services/queue_delete.html:13
+#: templates/html/services/queue_delete.html:56
 #: templates/html/services/queue_edit.html:12
 #: templates/html/services/queue_view.html:13
 #: templates/html/services/service_delete.html:14
+#: templates/html/services/service_delete.html:49
 #: templates/html/services/service_edit.html:14
 #: templates/html/services/service_view.html:15
 #: templates/html/services/sla_delete.html:13
+#: templates/html/services/sla_delete.html:50
 #: templates/html/services/sla_edit.html:12
 #: templates/html/services/sla_view.html:13
 #: templates/html/services/status_delete.html:12
+#: templates/html/services/status_delete.html:41
 #: templates/html/services/status_edit.html:12
 #: templates/html/services/status_view.html:13
 #: templates/html/services/ticket_delete.html:13
+#: templates/html/services/ticket_delete.html:48
 #: templates/html/services/ticket_edit.html:12
 #: templates/html/services/ticket_view.html:13
 msgid "Delete"
@@ -725,9 +780,8 @@ msgstr "Logo"
 
 #: core/administration/forms.py:79 identities/forms.py:119
 #: infrastructure/forms.py:47
-#, fuzzy
 msgid "Keep existing: "
-msgstr "Mantener los existentes"
+msgstr "Mantener los existentes:"
 
 #: core/administration/forms.py:86
 #: templates/html/core/administration/settings_view.html:24
@@ -744,7 +798,6 @@ msgid "Modules"
 msgstr "Módulos"
 
 #: core/administration/forms.py:180
-#, fuzzy
 msgid "Used to log in"
 msgstr "Usado para ingresar"
 
@@ -771,10 +824,12 @@ msgid ""
 "This is your only Perspective with Administration module. You would be "
 "locked out!"
 msgstr ""
+"Esta es su única vista con el módulo de administración. Usted se ha quedado "
+"bloqueado!"
 
 #: core/administration/views.py:126
 msgid "This is your only Perspective."
-msgstr "Esta es tu única Prespectiva"
+msgstr "Esta es su única Vista."
 
 #: core/administration/views.py:258
 msgid "This is you!"
@@ -786,10 +841,9 @@ msgstr "Peso"
 
 #: core/dashboard/views.py:30
 msgid "title"
-msgstr "Título"
+msgstr "título"
 
 #: core/dashboard/views.py:31
-#, fuzzy
 msgid "module_title"
 msgstr "titulo_módulo"
 
@@ -878,17 +932,14 @@ msgid " hours ago"
 msgstr " horas antes"
 
 #: core/templatetags/modules.py:590
-#, fuzzy
 msgid "1 hour ago"
-msgstr "1 hora restante"
+msgstr "1 hora antes"
 
 #: core/templatetags/modules.py:592
-#, fuzzy
 msgid " minutes ago"
-msgstr "minutos restantes"
+msgstr " minutos antes"
 
-#: core/templatetags/modules.py:594
-#, fuzzy
+#: core/templatetags/modules.py:591
 msgid "a moment ago"
 msgstr "un momento antes"
 
@@ -991,9 +1042,8 @@ msgid "End"
 msgstr "Fin"
 
 #: events/forms.py:102
-#, fuzzy
 msgid "End date can not be before the start date"
-msgstr "Fecha final no puede estar antes que la fecha de inicio"
+msgstr "La Fecha de finalización no puede ser anterior a la fecha de inicio"
 
 #: events/forms.py:116
 msgid "Go to date"
@@ -1105,11 +1155,11 @@ msgstr "Tipo de Activo"
 
 #: finance/forms.py:197
 msgid "Equity type"
-msgstr "Tipo de Capital Social"
+msgstr "Tipo de capital social"
 
 #: finance/forms.py:198
 msgid "Issue price"
-msgstr "Precio de la emisión"
+msgstr "Precio emisión"
 
 #: finance/forms.py:199 sales/forms.py:505
 msgid "Sell price"
@@ -1158,7 +1208,7 @@ msgstr "Tipo de Capital Social"
 #: templates/html/sales/order_view.html:84
 #: templates/html/sales/ordered_product_edit.html:74
 msgid "Source"
-msgstr "Orígen"
+msgstr "Fuente"
 
 #: finance/forms.py:291 finance/forms.py:332 finance/forms.py:446
 #: finance/forms.py:464 finance/forms.py:537
@@ -1190,7 +1240,7 @@ msgstr "Cuenta de Banco"
 
 #: finance/forms.py:293 finance/forms.py:466
 msgid "Due date"
-msgstr "Fecha Límite"
+msgstr "Fecha límite"
 
 #: finance/forms.py:297 finance/forms.py:338 finance/forms.py:470
 #: templates/html/finance/liability_delete.html:62
@@ -1256,7 +1306,7 @@ msgstr "Código"
 
 #: finance/models.py:18
 msgid "name"
-msgstr "Nombre"
+msgstr "nombre"
 
 #: finance/models.py:19
 msgid "symbol"
@@ -1264,7 +1314,7 @@ msgstr "Símbolo"
 
 #: finance/models.py:20
 msgid "If no symbol is entered, the 3 letter code will be used."
-msgstr "Si ningun símbolo es escrito, el código de ltrea 3 será usado"
+msgstr "Si ningun símbolo es escrito, el código de letra 3 será usado"
 
 #: finance/models.py:21
 msgid "factor"
@@ -1318,10 +1368,6 @@ msgstr "Obligatorio"
 msgid "Fields"
 msgstr "Campos"
 
-#: identities/forms.py:120 infrastructure/forms.py:48
-msgid "Delete "
-msgstr "Eliminar"
-
 #: identities/forms.py:220
 msgid "Attach to User"
 msgstr "Adjuntar a Usuario"
@@ -1354,7 +1400,6 @@ msgid "Supplier"
 msgstr "Proveedor"
 
 #: infrastructure/forms.py:139
-#, fuzzy
 msgid "Asset Record"
 msgstr "Registro de Activos"
 
@@ -1420,7 +1465,7 @@ msgstr "Tema"
 #: templates/html/messaging/stream_view.html:6
 #: templates/html/services/ticket_view.html:131
 msgid "Stream"
-msgstr "Fuente"
+msgstr "Flujo"
 
 #: messaging/forms.py:108 messaging/forms.py:134
 msgid "To"
@@ -1447,7 +1492,6 @@ msgid "Outgoing Mail Server"
 msgstr "Servidor de Correo Saliente"
 
 #: messaging/forms.py:197
-#, fuzzy
 msgid "Sender Contact Details"
 msgstr "Detalles  del Remitente"
 
@@ -1455,15 +1499,15 @@ msgstr "Detalles  del Remitente"
 #: templates/html/core/administration/group_view.html:48
 #: templates/html/identities/group_view.html:65
 msgid "Members"
-msgstr "Mienbros"
+msgstr "Miembros"
 
 #: messaging/forms.py:202
 msgid "Opt-In Template"
-msgstr ""
+msgstr "Formulario de inscripción"
 
 #: messaging/models.py:72 templates/html/messaging/page.html:17
 msgid "Streams"
-msgstr "Fuentes"
+msgstr "Flujos"
 
 #: news/views.py:50 templates/html/news/page.html:14
 msgid "All Activity"
@@ -1479,10 +1523,9 @@ msgstr "Principales Noticias"
 
 #: news/views.py:126 templates/html/account/page.html:14
 #: templates/html/news/my_watchlist.html:4 templates/html/news/page.html:3
-#: templates/html/news/page.html.py:15
-#, fuzzy
+#: templates/html/news/page.html.py:16
 msgid "My Watchlist"
-msgstr "My lista de Seguimiento"
+msgstr "Mi lista de Seguimiento"
 
 #: news/views.py:128
 msgid "Updates on your watchlist in Tree.io"
@@ -1491,7 +1534,7 @@ msgstr "Actualizar lista de seguimiento en Tree.io"
 #: news/views.py:163 templates/html/news/my_activity.html:4
 #: templates/html/news/page.html:16
 msgid "My Activity"
-msgstr "My Actividad"
+msgstr "Mi Actividad"
 
 #: news/views.py:206
 msgid "Activity"
@@ -1588,7 +1631,6 @@ msgstr "Mas alto"
 #: projects/forms.py:223 projects/models.py:117 projects/models.py:133
 #: services/forms.py:214 services/forms.py:216 services/models.py:144
 #: services/models.py:147 services/models.py:168 services/models.py:175
-#, fuzzy
 msgid "High"
 msgstr "Alto"
 
@@ -1601,7 +1643,6 @@ msgstr "Normal"
 #: projects/forms.py:223 projects/models.py:118 projects/models.py:133
 #: services/forms.py:214 services/forms.py:216 services/models.py:144
 #: services/models.py:147 services/models.py:168 services/models.py:175
-#, fuzzy
 msgid "Low"
 msgstr "Bajo"
 
@@ -1652,7 +1693,6 @@ msgid "0 minutes"
 msgstr "0 minutos"
 
 #: reports/forms.py:59
-#, fuzzy
 msgid "Choose an Object to Report on"
 msgstr "Elegir un Objeto a Reportar"
 
@@ -1663,28 +1703,27 @@ msgstr "Moneda Base"
 
 #: sales/forms.py:196 templates/html/sales/settings_view.html:27
 msgid "Default Lead Status"
-msgstr ""
+msgstr "Estado de Clientes Potenciales predeterminado"
 
 #: sales/forms.py:197 templates/html/sales/settings_view.html:35
 msgid "Default Opportunity Status"
-msgstr "Estatus de Oportunidad Predeterminado"
+msgstr "Estado de Oportunidad Predeterminado"
 
 #: sales/forms.py:198 templates/html/sales/settings_view.html:43
 msgid "Default Order Status"
-msgstr "Estado de Orden Predeterminado"
+msgstr "Estado de Pedido Predeterminado"
 
 #: sales/forms.py:199 templates/html/sales/settings_view.html:51
 msgid "Default Order Source"
-msgstr "Estado de Fuente Predeterminado"
+msgstr "Pedido Fuente Predeterminado"
 
 #: sales/forms.py:200 templates/html/sales/settings_view.html:59
-#, fuzzy
 msgid "Default Order Product"
-msgstr "Orden de Producto Predeterminado"
+msgstr "Pedido de Producto Predeterminado"
 
 #: sales/forms.py:201 templates/html/sales/settings_view.html:67
 msgid "Order Fulfilment Status"
-msgstr "Estatus de la Orden de Cumplimiento"
+msgstr "Estado del Pedido de Cumplimiento"
 
 #: sales/forms.py:306 sales/forms.py:351 sales/forms.py:387
 msgid "Status:"
@@ -1841,7 +1880,7 @@ msgstr "Método de contacto"
 
 #: sales/forms.py:902
 msgid "Expected date"
-msgstr "Fecha prevista"
+msgstr "Fecha esperada"
 
 #: sales/forms.py:903
 msgid "Closed date"
@@ -1857,7 +1896,7 @@ msgid "Probability"
 msgstr "Probabilidad"
 
 #: services/forms.py:36 templates/html/services/settings_view.html:19
-#, fuzzy
+#: services/forms.py:325
 msgid "Default Ticket Status"
 msgstr "Estado de la Solicitud  Predeterminado"
 
@@ -1867,7 +1906,7 @@ msgstr "Cola por Defecto"
 
 #: services/forms.py:38
 msgid "Notify Caller By E-mail"
-msgstr "Notificar a quien llame por Correo Electrónico"
+msgstr "Notificar al remitente por e-mail"
 
 #: services/forms.py:39
 msgid "E-mail Template"
@@ -1918,15 +1957,11 @@ msgstr "Cuerpo"
 
 #: services/forms.py:260
 msgid "Notify caller"
-msgstr "Notificar a quien llame"
+msgstr "Notificar al remitente"
 
 #: services/forms.py:261
 msgid "Set as Resolution"
 msgstr "Establecer como Resolución"
-
-#: services/forms.py:325
-msgid "Default ticket status"
-msgstr "Estado Predeterminado de la Solicitud"
 
 #: services/forms.py:326
 msgid "Default ticket priority"
@@ -1951,7 +1986,7 @@ msgstr "Código de la Solicitud"
 
 #: services/forms.py:332
 msgid "Message stream"
-msgstr "Fuente del mensaje"
+msgstr "Flujo del mensaje"
 
 #: services/forms.py:380
 msgid "Response time"
@@ -2838,7 +2873,7 @@ msgstr "Otros Grupos"
 
 #: templates/html/account/page.html:13
 msgid "My Account"
-msgstr "My Cuenta"
+msgstr "Mi Cuenta"
 
 #: templates/html/account/page.html:15
 #: templates/html/account/settings_edit.html:3
@@ -3174,63 +3209,6 @@ msgstr "Eliminar este Grupo de Cambios"
 msgid "WARNING: This cannot be undone"
 msgstr "PRECAUCIÓN: Esto no se puede deshacer"
 
-#: templates/html/changes/set_delete.html:27
-#: templates/html/changes/status_delete.html:29
-#: templates/html/core/administration/group_delete.html:29
-#: templates/html/core/administration/page_delete.html:33
-#: templates/html/core/administration/pagefolder_delete.html:32
-#: templates/html/core/administration/perspective_delete.html:55
-#: templates/html/core/administration/user_delete.html:44
-#: templates/html/core/trash/object_delete.html:30
-#: templates/html/documents/document_delete.html:31
-#: templates/html/documents/file_delete.html:31
-#: templates/html/documents/folder_delete.html:35
-#: templates/html/documents/weblink_delete.html:31
-#: templates/html/events/event_delete.html:46
-#: templates/html/finance/account_delete.html:31
-#: templates/html/finance/asset_delete.html:28
-#: templates/html/finance/category_delete.html:28
-#: templates/html/finance/currency_delete.html:28
-#: templates/html/finance/liability_delete.html:28
-#: templates/html/finance/receivable_delete.html:28
-#: templates/html/finance/tax_delete.html:28
-#: templates/html/finance/transaction_delete.html:28
-#: templates/html/identities/contact_delete.html:44
-#: templates/html/identities/contact_type_delete.html:32
-#: templates/html/identities/field_delete.html:34
-#: templates/html/identities/location_delete.html:44
-#: templates/html/infrastructure/field_delete.html:34
-#: templates/html/infrastructure/item_delete.html:44
-#: templates/html/infrastructure/item_status_delete.html:34
-#: templates/html/infrastructure/item_type_delete.html:29
-#: templates/html/infrastructure/location_delete.html:43
-#: templates/html/infrastructure/service_record_delete.html:28
-#: templates/html/knowledge/category_delete.html:31
-#: templates/html/knowledge/folder_delete.html:35
-#: templates/html/knowledge/item_delete.html:31
-#: templates/html/messaging/message_delete.html:51
-#: templates/html/messaging/stream_delete.html:47
-#: templates/html/projects/milestone_delete.html:32
-#: templates/html/projects/project_delete.html:42
-#: templates/html/projects/status_delete.html:41
-#: templates/html/projects/task_delete.html:32
-#: templates/html/sales/lead_delete.html:32
-#: templates/html/sales/opportunity_delete.html:33
-#: templates/html/sales/order_delete.html:31
-#: templates/html/sales/ordered_product_delete.html:31
-#: templates/html/sales/product_delete.html:32
-#: templates/html/sales/source_delete.html:42
-#: templates/html/sales/status_delete.html:42
-#: templates/html/sales/subscription_delete.html:36
-#: templates/html/services/agent_delete.html:48
-#: templates/html/services/queue_delete.html:56
-#: templates/html/services/service_delete.html:49
-#: templates/html/services/sla_delete.html:50
-#: templates/html/services/status_delete.html:41
-#: templates/html/services/ticket_delete.html:48
-msgid "Yes, Delete"
-msgstr "SI, Eliminar"
-
 #: templates/html/changes/set_delete.html:28
 #: templates/html/changes/status_delete.html:30
 #: templates/html/core/administration/group_delete.html:30
@@ -3292,7 +3270,7 @@ msgstr "Cancelar"
 #: templates/html/changes/set_delete.html:57
 #: templates/html/changes/set_view.html:42
 msgid "Resolved By"
-msgstr "Resuelto por"
+msgstr "Resuelto Por"
 
 #: templates/html/changes/set_delete.html:63
 #: templates/html/changes/set_view.html:48
@@ -3638,7 +3616,6 @@ msgid "Trash"
 msgstr "Basura"
 
 #: templates/html/core/invitation_retrieve.html:16
-#, fuzzy
 msgid "invited you to join the Tree.io service"
 msgstr "Estas invitado a unirte al servicio de Tree.io"
 
@@ -3693,7 +3670,7 @@ msgstr "Grupos"
 #: templates/html/core/administration/user_invite.html:3
 #: templates/html/core/administration/user_invite.html:5
 msgid "Invite People"
-msgstr "Invitar Gente"
+msgstr "Invitar Personas"
 
 #: templates/html/core/page.html:18
 msgid "Global Settings"
@@ -3718,9 +3695,8 @@ msgid "Thank you!"
 msgstr "Gracias!"
 
 #: templates/html/core/password_reset_form.html:3
-#, fuzzy
 msgid "Password Reset"
-msgstr "Reiniciar Contraseña"
+msgstr "Restablecer  Contraseña"
 
 #: templates/html/core/password_reset_form.html:15
 msgid ""
@@ -3737,7 +3713,7 @@ msgstr "¿Olvidó su contraseña?"
 #: templates/html/core/administration/group_add.html:8
 #: templates/html/core/administration/index_groups.html:8
 msgid "New Group"
-msgstr "NUevo Grupo"
+msgstr "Nuevo Grupo"
 
 #: templates/html/core/administration/group_add.html:20
 msgid "Create Group"
@@ -3909,13 +3885,12 @@ msgid "Delete this Perspective"
 msgstr "Eliminar esta Vista"
 
 #: templates/html/core/administration/settings_view.html:27
-#, fuzzy
 msgid "Everyone"
 msgstr "Todo el Mundo"
 
 #: templates/html/core/administration/settings_view.html:29
 msgid "User and Group"
-msgstr "Usuario y GRupo"
+msgstr "Usuario y Grupo"
 
 #: templates/html/core/administration/settings_view.html:31
 msgid "User Only"
@@ -3926,7 +3901,6 @@ msgid "Default Time Zone"
 msgstr "Zona Horaria Predeterminada"
 
 #: templates/html/core/administration/settings_view.html:53
-#, fuzzy
 msgid "Default"
 msgstr "Predetermirado"
 
@@ -3949,7 +3923,7 @@ msgstr ""
 
 #: templates/html/core/administration/user_invite.html:23
 msgid "Done! We have sent invitations to the following addresses"
-msgstr "Echo! Hemos  enviado invitaciones a las siguientes direcciones"
+msgstr "Hecho! Hemos  enviado invitaciones a las siguientes direcciones"
 
 #: templates/html/core/administration/user_invite.html:32
 msgid "You've exceeded the maximum number of users"
@@ -3957,7 +3931,6 @@ msgstr "Usted ha excedido el número máximo de usuarios"
 
 #: templates/html/core/administration/user_invite.html:36
 #: templates/html/core/widgets/welcome.html:74
-#, fuzzy
 msgid "Check the Control Panel"
 msgstr "Revizar el Panel de Control"
 
@@ -3971,7 +3944,7 @@ msgstr "puedes invitarlo"
 
 #: templates/html/core/administration/user_invite.html:42
 msgid "more people to Tree.io"
-msgstr "mas gente a Tree.io"
+msgstr "mas personas a Tree.io"
 
 #: templates/html/core/administration/user_invite.html:43
 #: templates/html/core/widgets/welcome.html:48
@@ -4029,7 +4002,7 @@ msgstr "Agregar Widget de \"Inicio Rápido\" "
 
 #: templates/html/core/hints/documents.html:6
 msgid "there are no Documents"
-msgstr "No hay documentos"
+msgstr "no hay Documentos"
 
 #: templates/html/core/hints/documents.html:7
 msgid "Create a Document"
@@ -4045,7 +4018,7 @@ msgstr "Subir Archivos"
 
 #: templates/html/core/hints/documents_weblinks.html:6
 msgid "there are no Web Links"
-msgstr "No hay un Enlance Web"
+msgstr "no hay Enlances Web"
 
 #: templates/html/core/hints/documents_weblinks.html:7
 msgid "Create a Web Link"
@@ -4061,7 +4034,7 @@ msgstr "Ahora puedes integrar Tree.io con otros servicios"
 
 #: templates/html/core/hints/events_all.html:6
 msgid "there are no Events"
-msgstr "No hay eventos"
+msgstr "no hay Eventos"
 
 #: templates/html/core/hints/events_all.html:7
 msgid "Create an Event"
@@ -4069,7 +4042,7 @@ msgstr "Crear eventos"
 
 #: templates/html/core/hints/finance_assets.html:6
 msgid "there are no Assets"
-msgstr "No hay Activos"
+msgstr "no hay Activos"
 
 #: templates/html/core/hints/finance_assets.html:7
 msgid "Create an Asset"
@@ -4077,7 +4050,7 @@ msgstr "Crear un Activo"
 
 #: templates/html/core/hints/finance_categories.html:6
 msgid "there are no Categories"
-msgstr "No hay Categorias"
+msgstr "no hay Categorias"
 
 #: templates/html/core/hints/finance_categories.html:7
 msgid "Create a Category"
@@ -4085,15 +4058,15 @@ msgstr "Crear Categoria"
 
 #: templates/html/core/hints/finance_equities.html:6
 msgid "there are no Equities"
-msgstr "No hay Acciones"
+msgstr "no hay Capital Social"
 
 #: templates/html/core/hints/finance_equities.html:7
 msgid "Create an Equity"
-msgstr "Crear una Acción"
+msgstr "Crear un Capital Social"
 
 #: templates/html/core/hints/finance_liabilities.html:6
 msgid "there are no Liabilities"
-msgstr "No hay Pasivos"
+msgstr "no hay Pasivos"
 
 #: templates/html/core/hints/finance_liabilities.html:7
 msgid "Create a Liability"
@@ -4101,7 +4074,7 @@ msgstr "Crear pasivo"
 
 #: templates/html/core/hints/finance_receivables.html:6
 msgid "there are no Receivables"
-msgstr "No hay cuentas por cobrar"
+msgstr "no hay cuentas por cobrar"
 
 #: templates/html/core/hints/finance_receivables.html:7
 msgid "Create a Receivable"
@@ -4109,22 +4082,17 @@ msgstr "Crear una cuenta por cobrar"
 
 #: templates/html/core/hints/finance_transactions.html:6
 msgid "there are no Transactions"
-msgstr "No hay Transacciones"
+msgstr "no hay Transacciones"
 
 #: templates/html/core/hints/finance_transactions.html:7
 msgid "Create a Transaction"
 msgstr "Crear Transaccion"
-
-#: templates/html/core/hints/messaging_compose.html:6
-msgid "No messages"
-msgstr "Ningun Mensaje"
 
 #: templates/html/core/hints/messaging_compose.html:7
 msgid "Post the first message"
 msgstr "Enviar el primer mensje"
 
 #: templates/html/core/hints/messaging_stream.html:6
-#, fuzzy
 msgid "You can link your mailbox to this stream"
 msgstr "Usted puede enlazar su Correo Electrónico a este flujo"
 
@@ -4138,7 +4106,7 @@ msgstr "Entrante"
 
 #: templates/html/core/hints/messaging_stream.html:17
 msgid "Outgoing (SMTP)"
-msgstr "Servidor Saliente (SMTP)"
+msgstr "Saliente (SMTP)"
 
 #: templates/html/core/hints/news.html:7
 msgid "Get all the news in one place"
@@ -4146,7 +4114,7 @@ msgstr "Tenga todas las noticias en un solo lugar"
 
 #: templates/html/core/hints/perspective_delete.html:6
 msgid "Sorry you can not delete this Perspective"
-msgstr "Lo sentimos, usted no puede eliminar esta perspectiva"
+msgstr "Lo sentimos, usted no puede eliminar esta vista"
 
 #: templates/html/core/hints/perspective_view.html:6
 msgid "Some of your changes haven't been saved"
@@ -4163,7 +4131,7 @@ msgstr "Crear un Proyecto"
 
 #: templates/html/core/hints/reports.html:6
 msgid "Get crystal clear, tailored reports"
-msgstr "Obtener, informes a medida claros como el cristal"
+msgstr "Obtener informes a medida claros como el cristal"
 
 #: templates/html/core/hints/reports.html:7
 msgid "Create a Report"
@@ -4183,15 +4151,15 @@ msgstr "Crear una Orden de Venta"
 
 #: templates/html/core/hints/sales_leads.html:6
 msgid "there are no Leads"
-msgstr ""
+msgstr "no hay Clientes Potenciales"
 
 #: templates/html/core/hints/sales_leads.html:7
 msgid "Create a Lead"
-msgstr ""
+msgstr "Crear Cliente Potencial"
 
 #: templates/html/core/hints/sales_opportunities.html:6
 msgid "there are no Opportunities"
-msgstr "No hay Oportunidades"
+msgstr "no hay Oportunidades"
 
 #: templates/html/core/hints/sales_opportunities.html:7
 msgid "Create an Opportunity"
@@ -4199,7 +4167,7 @@ msgstr "Crear Oportunidad"
 
 #: templates/html/core/hints/sales_products.html:6
 msgid "there are no Products"
-msgstr "No hay Productos"
+msgstr "no hay Productos"
 
 #: templates/html/core/hints/sales_products.html:7
 msgid "Create a Product"
@@ -4211,29 +4179,27 @@ msgstr "Usted ha buscado"
 
 #: templates/html/core/hints/service_catalogue.html:6
 msgid "there are no Services yet"
-msgstr "No hay Servicios aún"
+msgstr "no hay Servicios aún"
 
 #: templates/html/core/hints/service_sla.html:6
 msgid "there are no Service Level Agreements yet"
-msgstr "No hay acuerdos de nivel de servicio aún"
+msgstr "no hay Acuerdos de Nivel de Servicio aún"
 
 #: templates/html/core/hints/services.html:6
-#, fuzzy
 msgid "to get started with support"
-msgstr "Para iniciar con soporte"
+msgstr "para iniciar con soporte"
 
 #: templates/html/core/hints/services.html:7
 msgid "Create a Queue"
 msgstr "Crear una cola"
 
 #: templates/html/core/hints/services.html:8
-#, fuzzy
 msgid ""
 "you can even link it to a Message Stream to get tickets automatically "
 "created from messaging!"
 msgstr ""
-"incluso se puede conectar a un flujo de mensajes para conseguir entradas "
-"creadas automáticamente d mensajería!"
+"incluso se puede conectar a un flujo de mensajes para conseguir solicitudes "
+"creadas automáticamente de mensajería!"
 
 #: templates/html/core/hints/user_denied.html:6
 msgid "Access Denied"
@@ -4258,8 +4224,8 @@ msgstr "Verifique "
 #: templates/html/core/search/query_view.html:47
 msgid "Use fewer words (results have to match the exact phrase you type)"
 msgstr ""
-"Verwenden Sie weniger Worte (Ergebnisse müssen genau der eingegebenen Phrase "
-"entsprechen)"
+"Use pocas palabras (los resultados coincidirán con la frase exacta que "
+"escriba)"
 
 #: templates/html/core/tags/comments_likes.html:24
 msgid "You like this"
@@ -4290,7 +4256,7 @@ msgstr "y"
 #: templates/html/core/tags/comments_likes.html:57
 #: templates/html/core/tags/comments_likes.html:73
 msgid "You"
-msgstr "Usted"
+msgstr "A usted"
 
 #: templates/html/core/tags/comments_likes.html:62
 msgid "like this"
@@ -4298,7 +4264,7 @@ msgstr "le gusta"
 
 #: templates/html/core/tags/comments_likes.html:78
 msgid "don't like this"
-msgstr "No me gunta ento"
+msgstr "No me gusta esto"
 
 #: templates/html/core/tags/demo_user.html:3
 msgid "Return to the Website"
@@ -4407,7 +4373,7 @@ msgstr "Invitar a otras personas"
 
 #: templates/html/core/widgets/welcome.html:56
 msgid "Manage your Tree.io"
-msgstr "Administrar su TRee.io"
+msgstr "Administrar su Tree.io"
 
 #: templates/html/core/widgets/welcome.html:60
 msgid "Upload your logo"
@@ -4714,7 +4680,7 @@ msgstr "necesita su aprobación"
 #: templates/html/events/integration_add.html:43
 #: templates/html/identities/integration_add.html:43
 msgid "Please proceed to "
-msgstr "Por favor, proceda con"
+msgstr "Por favor proceda con"
 
 #: templates/html/events/integration_add.html:57
 #: templates/html/identities/integration_add.html:57
@@ -4772,6 +4738,7 @@ msgstr "Otorgar acceso"
 msgid "Powered by"
 msgstr "Impulsado por"
 
+# este tiene un espacio al final
 #: templates/html/base.html:132
 msgid "Powered by "
 msgstr "Impulsado por "
@@ -4903,7 +4870,6 @@ msgstr "Saldo"
 
 #: templates/html/finance/account_view.html:42
 #: templates/html/finance/account_view.html:48
-#, fuzzy
 msgid "Balance in"
 msgstr "Equilibrio en"
 
@@ -4975,7 +4941,7 @@ msgstr "Valor Actual"
 
 #: templates/html/finance/asset_view.html:44
 msgid "Lifetime (Years)"
-msgstr "Longevidad (en años)"
+msgstr "Longevidad (en Años)"
 
 #: templates/html/finance/asset_view.html:72
 #: templates/html/finance/index_assets.html:43
@@ -5002,7 +4968,7 @@ msgstr "ACTIVOS"
 
 #: templates/html/finance/balance_sheet.html:33
 msgid "Non-Current Assets"
-msgstr "Activos No-Corrientes"
+msgstr "Activos No Corrientes"
 
 #: templates/html/finance/balance_sheet.html:37
 msgid "Property, Plant and Equipment"
@@ -5046,7 +5012,7 @@ msgstr "PASIVOS"
 
 #: templates/html/finance/balance_sheet.html:78
 msgid "Non-Current Liabilities"
-msgstr "Pasivos No-Corrientes"
+msgstr "Pasivos No Corrientes"
 
 #: templates/html/finance/balance_sheet.html:82
 msgid "Borrowings"
@@ -5086,7 +5052,7 @@ msgstr "Total Patrimonio Neto"
 
 #: templates/html/finance/balance_sheet.html:122
 msgid "Total Equity and Liabilities"
-msgstr "Total Patrimonio Neto y Pasivo"
+msgstr "Total Patrimonio Neto y Pasivos"
 
 #: templates/html/finance/category_add.html:3
 #: templates/html/finance/category_add.html:6
@@ -5179,18 +5145,18 @@ msgstr "Factor de intercambio"
 #: templates/html/finance/equity_add.html:8
 #: templates/html/finance/index_equities.html:10
 msgid "New Equity"
-msgstr "Nuevo Capital Accionario"
+msgstr "Nuevo Capital Social"
 
 #: templates/html/finance/equity_add.html:5
 #: templates/html/finance/index_equities.html:3
 #: templates/html/finance/index_equities.html:5
 #: templates/html/finance/page.html:16
 msgid "Equities"
-msgstr "Patrimonio Neto"
+msgstr "Capital Social"
 
 #: templates/html/finance/equity_add.html:18
 msgid "Create Equity"
-msgstr "Crear capital"
+msgstr "Crear capital Social"
 
 #: templates/html/finance/equity_delete.html:3
 #: templates/html/finance/equity_delete.html:6
@@ -5199,11 +5165,11 @@ msgstr "Crear capital"
 #: templates/html/finance/equity_view.html:3
 #: templates/html/finance/equity_view.html:6
 msgid "Equity"
-msgstr "Acción"
+msgstr "Capital Social"
 
 #: templates/html/finance/equity_delete.html:17
 msgid "Delete this Equity"
-msgstr "Eliminar esta Acción"
+msgstr "Eliminar este Capital Social"
 
 #: templates/html/finance/equity_delete.html:41
 #: templates/html/finance/equity_view.html:39
@@ -5255,6 +5221,7 @@ msgstr "Sin Cuentas"
 msgid "Type"
 msgstr "Tipo"
 
+# Este tiene un espacio al final
 #: templates/html/finance/liability_view.html:63
 #: templates/html/finance/liability_view.html:69
 #: templates/html/finance/receivable_view.html:63
@@ -5264,7 +5231,6 @@ msgstr "Tipo"
 #: templates/html/finance/index_assets.html:42
 #: templates/html/finance/tags/liability_list.html:15
 #: templates/html/finance/tags/transaction_list.html:13
-#, fuzzy
 msgid "Value in "
 msgstr "Valor en "
 
@@ -5279,7 +5245,7 @@ msgstr "Categorias"
 
 #: templates/html/finance/index_equities.html:43
 msgid "Sell Price in "
-msgstr "Precio de venta en"
+msgstr "Precio de Venta en"
 
 #: templates/html/finance/index_liabilities.html:10
 #: templates/html/finance/liability_add.html:3
@@ -5454,20 +5420,7 @@ msgstr "Seleccionar"
 msgid "Statistics"
 msgstr "Estadisticas"
 
-#: templates/html/forest/breeze_index.html:3
-#: templates/html/forest/breeze_update.html:3
-#: templates/html/forest/email_index.html:3 templates/html/forest/index.html:3
-#: templates/html/forest/instance_statistics.html:3
-#: templates/html/forest/instance_view.html:3
-#: templates/html/forest/package_view.html:3
-#: templates/html/forest/packages.html:3 templates/html/forest/page.html:3
-#: templates/html/forest/page.html.py:34 templates/html/forest/recent.html:3
-#, fuzzy
-msgid "Forest"
-msgstr "Bosque"
-
 #: templates/html/forest/breeze_update.html:14
-#, fuzzy
 msgid "Update Statistics for Instances"
 msgstr "Actualizar Estadistics de Estancias"
 
@@ -5490,7 +5443,7 @@ msgstr "Lista de Destinatarios"
 
 #: templates/html/forest/email_index.html:75
 msgid "Compose Message"
-msgstr "COmponer Mensaje"
+msgstr "Componer Mensaje"
 
 #: templates/html/forest/email_index.html:100
 msgid "Preview E-mail"
@@ -5510,7 +5463,7 @@ msgstr "Instancias"
 #: templates/html/forest/email_index.html:119
 #: templates/html/forest/instance_view.html:22
 msgid "Domain"
-msgstr "Dowinio"
+msgstr "Dominio"
 
 #: templates/html/forest/email_index.html:121
 msgid "E-mail"
@@ -5538,7 +5491,6 @@ msgid "Created"
 msgstr "Creado"
 
 #: templates/html/forest/instance_view.html:68
-#, fuzzy
 msgid "Referrer"
 msgstr "Referente"
 
@@ -5548,9 +5500,8 @@ msgstr "Induntria"
 
 #: templates/html/forest/instance_view.html:83
 #: templates/html/sales/settings_view.html:113
-#, fuzzy
 msgid "Sale Orders"
-msgstr "Para la venta"
+msgstr "Ordenes de  venta"
 
 #: templates/html/forest/instance_view.html:88
 msgid "Messages"
@@ -5561,8 +5512,9 @@ msgstr "Mensajes"
 #: templates/html/messaging/mlist_view.html:59
 #: templates/html/messaging/stream_view.html:53
 #: templates/html/messaging/unread.html:41
+#: templates/html/core/hints/messaging_compose.html:6
 msgid "No Messages"
-msgstr "NIngun Mensaje"
+msgstr "Sin Mensajes"
 
 #: templates/html/forest/package_view.html:35
 msgid "Max Users"
@@ -5659,7 +5611,7 @@ msgstr "Identidades"
 
 #: templates/html/identities/contact_add.html:14
 msgid "Please choose the type of Contact you wish to create"
-msgstr "Por favor, seleccione el tipo de Contacto que desea crear"
+msgstr "Por favor seleccione el tipo de Contacto que desea crear"
 
 #: templates/html/identities/contact_add.html:25
 msgid ""
@@ -5793,7 +5745,7 @@ msgstr "Nueva Ubicacíon"
 
 #: templates/html/identities/location_add.html:3
 msgid "identities"
-msgstr "Identidades"
+msgstr "identidades"
 
 #: templates/html/identities/location_add.html:16
 #: templates/html/infrastructure/location_add.html:17
@@ -5876,7 +5828,7 @@ msgstr "Eliminar Campo"
 #: templates/html/knowledge/category_delete.html:43
 #: templates/html/knowledge/category_view.html:69
 msgid "No Items"
-msgstr "ningun Elemento"
+msgstr "Ningun Elemento"
 
 #: templates/html/infrastructure/index.html:45
 #: templates/html/infrastructure/index_owned.html:41
@@ -5905,7 +5857,7 @@ msgstr "Nuevo Elemento"
 #: templates/html/infrastructure/item_add.html:14
 msgid "Please choose the type of Infrastructure Item you wish to create"
 msgstr ""
-"Por favor, seleccione el Tipo de Elemento de Infraestructura que desea crear"
+"Por favor seleccione el Tipo de Elemento de Infraestructura que desea crear"
 
 #: templates/html/infrastructure/item_add.html:25
 msgid ""
@@ -6058,7 +6010,7 @@ msgstr "Estados de los Elementos"
 #: templates/html/knowledge/item_view.html:3
 #: templates/html/knowledge/page.html:3
 msgid "Knowledge base"
-msgstr "Base de Conocimientos"
+msgstr "Base de conocimientos"
 
 #: templates/html/knowledge/folder_add.html:3
 #: templates/html/knowledge/folder_add_folder.html:3
@@ -6081,7 +6033,7 @@ msgstr "Elementos Modificados Recientemente"
 
 #: templates/html/knowledge/index_categories.html:31
 msgid "No Categories Available"
-msgstr "No hay categorias Disponibles"
+msgstr "Sin categorias Disponibles"
 
 #: templates/html/knowledge/item_delete.html:7
 #: templates/html/knowledge/item_edit.html:5
@@ -6141,7 +6093,7 @@ msgstr "Nuevo Mensaje"
 #: templates/html/messaging/page.html:55
 #: templates/html/messaging/stream_add.html:7
 msgid "New Stream"
-msgstr "Nueva Fuente"
+msgstr "Nuevo Flujo"
 
 #: templates/html/messaging/message_compose.html:18
 #: templates/html/messaging/stream_view.html:96
@@ -6168,7 +6120,7 @@ msgstr "Responder"
 
 #: templates/html/messaging/message_view.html:141
 msgid "Send Reply"
-msgstr "Rembiar"
+msgstr "Reembiar"
 
 #: templates/html/messaging/mlist_add.html:3
 #: templates/html/messaging/mlist_view.html:6
@@ -6218,17 +6170,16 @@ msgstr "Lista de Mensajes"
 
 #: templates/html/messaging/stream_add.html:15
 #: templates/html/messaging/stream_edit.html:37
-#, fuzzy
 msgid "Stream Title"
-msgstr "Título de fuente"
+msgstr "Título del flujo"
 
 #: templates/html/messaging/stream_add.html:25
 msgid "Create Stream"
-msgstr "Crear fuente"
+msgstr "Crear Flujo"
 
 #: templates/html/messaging/stream_delete.html:36
 msgid "Delete this Stream"
-msgstr "Eliminar esta funte"
+msgstr "Eliminar este Flujo"
 
 #: templates/html/messaging/widgets/new_messages.html:3
 msgid "New messages"
@@ -6259,7 +6210,6 @@ msgid "News by Module"
 msgstr "Noticias por Módulo"
 
 #: templates/html/news/top_news.html:5
-#, fuzzy
 msgid "Top"
 msgstr "Arriba"
 
@@ -6429,7 +6379,7 @@ msgstr "Tareas"
 
 #: templates/html/projects/milestone_view.html:142
 msgid "No Tasks"
-msgstr "Ninguna Tarea"
+msgstr "Sin Tareas"
 
 #: templates/html/projects/milestone_view.html:143
 #: templates/html/projects/project_view.html:143
@@ -6586,7 +6536,7 @@ msgstr "Historial"
 
 #: templates/html/projects/task_view.html:303
 msgid "Update Task"
-msgstr "Actualizar tarea"
+msgstr "Actualizar Tarea"
 
 #: templates/html/projects/widgets/tasks_assigned_to_me.html:3
 msgid "Tasks assigned to me"
@@ -6626,7 +6576,7 @@ msgstr "Editar Gráfico"
 
 #: templates/html/reports/chart_edit.html:18
 msgid "Delete Chart"
-msgstr "eliminar Gráfico"
+msgstr "Eliminar Gráfico"
 
 #: templates/html/reports/chart_edit.html:30
 msgid "Save Chart"
@@ -6767,7 +6717,7 @@ msgstr "Soporte de Ventas"
 #: templates/html/sales/lead_view.html:7
 #: templates/html/sales/opportunity_view.html:56
 msgid "Lead"
-msgstr ""
+msgstr "Cliente Potencial"
 
 #: templates/html/sales/lead_delete.html:21
 msgid "Delete this Lead?"
@@ -6795,7 +6745,7 @@ msgstr "Convertir en Oportunidad"
 #: templates/html/sales/lead_view.html:15
 #: templates/html/sales/opportunity_view.html:14
 msgid "Convert To Order"
-msgstr "Convertir en Orden"
+msgstr "Convertir en Pedido"
 
 #: templates/html/sales/lead_view.html:116
 #: templates/html/sales/opportunity_view.html:162
@@ -6804,7 +6754,7 @@ msgstr "Auto"
 
 #: templates/html/sales/lead_view.html:155
 msgid "Update Lead"
-msgstr ""
+msgstr "Actualizar Cliente Potencial"
 
 #: templates/html/sales/opportunity_add.html:5
 #: templates/html/sales/opportunity_index.html:3
@@ -6884,11 +6834,11 @@ msgstr "Nuevo Pedido"
 #: templates/html/sales/ordered_product_delete.html:38
 #: templates/html/sales/ordered_product_view.html:40
 msgid "Order"
-msgstr "Ordenar"
+msgstr "Pedido"
 
 #: templates/html/sales/order_add.html:22
 msgid "Create Order"
-msgstr "Crear Orden"
+msgstr "Crear Pedido"
 
 #: templates/html/sales/order_delete.html:7
 #: templates/html/sales/order_edit.html:7
@@ -6916,7 +6866,7 @@ msgstr "Pago"
 
 #: templates/html/sales/order_invoice_view.html:85
 msgid "Order Reference"
-msgstr "Referencia de la Orden"
+msgstr "Referencia del Pedido"
 
 #: templates/html/sales/order_invoice_view.html:95
 #: templates/html/sales/order_view.html:133
@@ -6942,7 +6892,7 @@ msgstr "Subtotal"
 #: templates/html/sales/order_invoice_view.html:140
 #: templates/html/sales/order_view.html:195
 msgid "No Ordered Products"
-msgstr "No hay Productos Ordenados"
+msgstr "No hay Productos Pedidos"
 
 #: templates/html/sales/order_invoice_view.html:141
 #: templates/html/sales/order_view.html:196
@@ -6952,7 +6902,7 @@ msgstr "Aregar un Elemento"
 #: templates/html/sales/order_view.html:121
 #: templates/html/sales/ordered_product_edit.html:88
 msgid "Ordered Products"
-msgstr "Productos Ordenados"
+msgstr "Productos Pedidos"
 
 #: templates/html/sales/order_view.html:190
 msgid "Balance Due"
@@ -6960,11 +6910,11 @@ msgstr "Saldo a Pagar"
 
 #: templates/html/sales/order_view.html:308
 msgid "Update Order"
-msgstr "Actualizar Orden"
+msgstr "Actualizar Pedido"
 
 #: templates/html/sales/ordered_product_add.html:3
 msgid "New Ordered Product"
-msgstr "Nuevo Producto Ordenado"
+msgstr "Nuevo Producto Pedido"
 
 #: templates/html/sales/ordered_product_add.html:12
 msgid "Add Ordered Product"
@@ -6977,11 +6927,11 @@ msgstr "Agregar Producto Ordenado"
 #: templates/html/sales/ordered_product_view.html:3
 #: templates/html/sales/ordered_product_view.html:9
 msgid "Ordered Product"
-msgstr "Producto Ordenado"
+msgstr "Producto Pedido"
 
 #: templates/html/sales/ordered_product_delete.html:20
 msgid "Delete this Ordered Product?"
-msgstr "¿Eliminar este Producto Ordenado?"
+msgstr "¿Eliminar este Producto Pedido?"
 
 #: templates/html/sales/page.html:15
 msgid "All Sale Orders"
@@ -7149,11 +7099,11 @@ msgstr "¿Eliminar esta Fuente?"
 #: templates/html/sales/status_delete.html:66
 #: templates/html/sales/status_view.html:53
 msgid "Orders"
-msgstr "Ordenes"
+msgstr "Pedidos"
 
 #: templates/html/sales/source_edit.html:7
 msgid "Order Source"
-msgstr "Fuente de la Orden"
+msgstr "Fuente del Pedido"
 
 #: templates/html/sales/source_edit.html:18
 msgid "By Source"
@@ -7161,17 +7111,17 @@ msgstr "Por Fuente"
 
 #: templates/html/sales/source_view.html:52
 msgid "Orders From"
-msgstr "Ordenes Desde"
+msgstr "Pedidos Desde"
 
 #: templates/html/sales/status_delete.html:7
 #: templates/html/sales/status_edit.html:13
 #: templates/html/sales/status_view.html:7
 msgid "Order Status"
-msgstr "Estado de la Orden"
+msgstr "Estado del Pedido"
 
 #: templates/html/sales/status_delete.html:31
 msgid "Delete this Order Status?"
-msgstr "¿Eliminar este Estado de Orden?"
+msgstr "¿Eliminar este Estado de Pedido?"
 
 #: templates/html/sales/status_view.html:45
 msgid "Available For"
@@ -7179,7 +7129,7 @@ msgstr "Disponible por"
 
 #: templates/html/sales/status_view.html:64
 msgid "Orders With Status"
-msgstr "Ordenes con Estado"
+msgstr "Pedidos con Estado"
 
 #: templates/html/sales/subscription_add.html:21
 msgid "Create Subscription"
@@ -7213,11 +7163,11 @@ msgstr "Ver Suscripción"
 
 #: templates/html/sales/subscription_view.html:96
 msgid "No Invoices"
-msgstr "No hay Facturas"
+msgstr "Sin Facturas"
 
 #: templates/html/sales/tags/order_list.html:9
 msgid "Order #"
-msgstr "Orden #"
+msgstr "Pedido #"
 
 #: templates/html/sales/tags/order_list.html:14
 msgid "Date Opened"
@@ -7288,7 +7238,7 @@ msgstr "Hasta"
 #: templates/html/services/widgets/index.html:11
 #: templates/html/services/widgets/index_assigned.html:11
 msgid "No Active Tickets"
-msgstr "No hay Solicitudes Activas"
+msgstr "Sin Solicitudes Activas"
 
 #: templates/html/services/index.html:49
 #: templates/html/services/index_assigned.html:48
@@ -7303,7 +7253,7 @@ msgstr "Crear una solicitud"
 #: templates/html/services/index_assigned.html:58
 #: templates/html/services/index_owned.html:59
 msgid "Unclassified Tickets"
-msgstr "Solicitudes Sin Clasificación"
+msgstr "Solicitudes sin Clasificación"
 
 #: templates/html/services/page.html:12
 msgid "All Tickets"
@@ -7404,9 +7354,8 @@ msgid "Create a Service Level Agreement"
 msgstr "Crear un Acuerdo de Nivel de Servicio"
 
 #: templates/html/services/settings_view.html:35
-#, fuzzy
 msgid "Notify Caller By Email"
-msgstr "Notificar a quien llame via correo electronico"
+msgstr "Notificar al remitente por correo electronico"
 
 #: templates/html/services/settings_view.html:98
 msgid "Example E-mail"
@@ -7469,7 +7418,7 @@ msgstr "Nadie"
 
 #: templates/html/services/ticket_view.html:230
 msgid "Update Ticket"
-msgstr "Actualizar la solicitud"
+msgstr "Actualizar la Solicitud"
 
 #: templates/html/services/widgets/index.html:3
 msgid "Active Support Tickets"
@@ -7542,3 +7491,852 @@ msgstr "Invitar a Tree.io"
 #: templates/html/reports/page.html:14
 msgid "Created by me"
 msgstr "Creados por mi"
+
+#: messaging/forms.py:96 messaging/forms.py:115
+msgid "Mark all"
+msgstr "Marcar todo"
+
+#: messaging/forms.py:96 messaging/forms.py:115
+msgid "Mark all as Read"
+msgstr "Marcar todo como leido"
+
+msgid "News: My Watchlist"
+msgstr "Noticias: Mi Lista de Seguimiento"
+
+#: templates/html/news/widgets/my_watchlist.html:3
+#: templates/html/news/widgets/index.html:3
+#: templates/html/events/widgets/my_watchlist.html:3
+msgid "News: All Activity"
+msgstr "Noticias: Toda la Actividad"
+
+#: services/forms.py:325
+msgid "Default ticket status"
+msgstr "Estado de la solicitud  Predeterminado"
+
+#: templates/html/changes/set_add.html:23
+msgid "Create Set"
+msgstr "Crear Grupo"
+
+#: templates/html/core/hints/messaging_compose.html:6
+msgid "No messages"
+msgstr "Sin mensajes"
+
+#: templates/html/core/trash/object_delete.html:26
+msgid "WARNING: This can not be undone"
+msgstr "PRECAUCIÓN: Esto no se puede deshacer"
+
+#: templates/html/finance/liability_view.html:63
+#: templates/html/finance/liability_view.html:69
+#: templates/html/finance/receivable_view.html:63
+#: templates/html/finance/receivable_view.html:69
+#: templates/html/finance/transaction_view.html:64
+#: templates/html/finance/transaction_view.html:70
+msgid "Value in"
+msgstr "Valor en"
+
+#: templates/html/sales/lead_add.html:21
+msgid "Create Lead"
+msgstr "Crear Cliente Potencial"
+
+#: events/views.py:481
+msgid "You have successfully updated Calendar"
+msgstr "Has actualizado el Calendario de manera correcta"
+
+#: identities/views.py:788
+msgid "You have successfully updated Contacts"
+msgstr "Has actualizado los Contactos de manera correcta"
+
+#: services/emails.py:80
+#, python-format
+msgid ""
+"Your message is received and a ticket is created, ticket reference is [%s]"
+msgstr ""
+"Su mensaje es recibido y una Solicitud es creada, La referencia de la "
+"Solicitud es [%s]"
+
+#: templates/html/projects/task_view.html:213
+msgid "Start Work"
+msgstr "Empezar a Trabajar"
+
+#: templates/html/projects/task_view.html:217
+msgid "Add Work"
+msgstr "Agregar Trabajo"
+
+#: account/forms.py:104
+msgid "Never (disabled)"
+msgstr "Nunca (desactivado)"
+
+#: account/forms.py:104 templates/html/account/settings_view.html:45
+msgid "As-it-happens"
+msgstr "Cuando pase"
+
+#: account/models.py:16 templates/html/account/settings_view.html:46
+msgid "Daily"
+msgstr "Diariamente"
+
+#: account/models.py:17 templates/html/account/settings_view.html:47
+msgid "Weekly"
+msgstr "Semanalmente"
+
+#: account/models.py:18 templates/html/account/settings_view.html:48
+msgid "Monthly"
+msgstr "Mensualmente"
+
+#: core/forms.py:327
+msgid "Can't connect to engine. Error is "
+msgstr "No se puede conectar al motor. El error es"
+
+#: core/forms.py:331
+msgid "Can't create database. SQL error is"
+msgstr "No se puede crear la base de datos. El error SQL es"
+
+#: core/api/doc.py:120
+msgid ""
+"Function deletes object with object_ptr. If you declare \"trash\" parameter "
+"as true, object is marked as trash."
+msgstr ""
+"La función elimina objetos con object_ptr. Si usted declara el parámetro "
+"\"trash\" como verdadero, el objeto en marcado como basura."
+
+#: core/api/doc.py:122
+msgid "Function gets info about object and returns following fields:"
+msgstr ""
+"La función obtiene informacion acerca del objeto y devuelve los siguientes "
+"campos:"
+
+#: core/api/doc.py:129
+msgid "Function creates entry with following fields:"
+msgstr "La función crea la entrada con los siguientes campos:"
+
+#: core/api/doc.py:131
+msgid "Function updates following fields:"
+msgstr "La funcion actualiza los siguientes campos:"
+
+#: finance/models.py:28
+msgid "Specifies the ratio to the base currency, e.g. 1.324"
+msgstr "Especifica la relación de la moneda base, ejemplo 1.324"
+
+#: identities/forms.py:61 infrastructure/forms.py:258
+msgid ""
+"Sorry, field names can only contain letters, numbers, hyphens (-) and "
+"underscores (_)"
+msgstr ""
+"Lo sentimos, los campos solo pueden tener letras, númmeros, guiones (-) y "
+"barras al piso (_)"
+
+#: identities/forms.py:101
+msgid "Contact Type with such name already exists."
+msgstr "Ya existe un Tipo de Contacto con ese nombre"
+
+#: messaging/forms.py:25
+msgid "UNSEEN"
+msgstr "OCULTO"
+
+#: messaging/forms.py:45 templates/html/messaging/settings_view.html:26
+msgid "Default IMAP Folder"
+msgstr "Carpeta IMAP Predeterminada"
+
+#: messaging/forms.py:54 templates/html/messaging/settings_view.html:35
+msgid "Signature"
+msgstr "Firma"
+
+#: messaging/views.py:316
+msgid "E-mails fetched successfully."
+msgstr "Correos Electrónicos entragados correctamente."
+
+#: messaging/views.py:320
+msgid ""
+"Failed to retrieve messages for this stream. Please check stream settings"
+msgstr ""
+"No se pudo recuperar los mensajes de este flujo. Por favor, compruebe la "
+"configuración de flujo"
+
+#: news/forms.py:59
+msgid "About"
+msgstr "Acerca de"
+
+#: projects/ajax.py:26
+#, python-format
+msgid "%(ot)s \"%(t)s\" dates have been updated."
+msgstr " %(ot)s \"%(t)s\"  fechas han sido actualizadas."
+
+#: reports/forms.py:103
+msgid "Please enter a field to group your data by."
+msgstr "Por favor ingrese un campo para agrupar los datos."
+
+#: templates/html/base.html:114
+msgid "No users online"
+msgstr "Ningun usuario en línea"
+
+#: templates/html/base.html:122
+msgid "Click on user in userlist to start conference"
+msgstr "Seleccione el usuario en la lista para empezar la conferencia"
+
+#: templates/html/account/settings_view.html:56
+msgid "Receive notifications for modules"
+msgstr "Recibir notificaciones para los módulos"
+
+#: templates/html/core/database_setup.html:3
+#, fuzzy
+msgid "Set domain up"
+msgstr "Configurar dominio"
+
+#: templates/html/core/database_setup.html:19
+msgid "Create"
+msgstr "Crear "
+
+#: templates/html/core/password_reset_done.html:16
+msgid ""
+"We've sent you a message.\n"
+"                \t<br />Please check your e-mail box for instructions on how "
+"to restore your password"
+msgstr ""
+"Te hemos enviado un mensaje. \n"
+"\t\t<br />Por favor verifique su bandeja de e-mail para ver instrucciones de "
+"cómo recuperar su contraseña"
+
+#: templates/html/core/password_reset_done.html:24
+#, fuzzy
+msgid "Send me back to the log in screen"
+msgstr "Enviarme a la página de acceso"
+
+#: templates/html/core/user_login.html:34
+msgid "Don't have an account"
+msgstr "No tiene una cuenta"
+
+#: templates/html/core/user_login.html:34
+msgid "Sign up"
+msgstr "Registrarse"
+
+#: templates/html/core/administration/contact_settings.html:6
+msgid "Contact settings"
+msgstr "Configuración de Contactos"
+
+#: templates/html/core/administration/contact_settings.html:19
+msgid "Personal contact"
+msgstr "Contacto Personal"
+
+#: templates/html/core/administration/contact_settings.html:23
+msgid "Company"
+msgstr "Compañia"
+
+#: templates/html/core/administration/setup.html:3
+msgid "Setup"
+msgstr "Configurar"
+
+#: templates/html/core/administration/setup.html:7
+msgid "Setup Guide"
+msgstr "Guia de Configuración"
+
+#: templates/html/core/administration/setup.html:16
+msgid "Quick Setup Guide"
+msgstr "Guia de Configuración Rápida"
+
+#: templates/html/core/administration/setup.html:17
+msgid "Start off in three easy steps"
+msgstr "Comience en tres sencillos pasos"
+
+#: templates/html/core/ajax/tags_box.html:16
+#: templates/html/core/tags/tags_box.html:16
+msgid "no tags"
+msgstr "Sin etiquetas"
+
+#: templates/html/core/billing/information.html:3
+#: templates/html/core/billing/information.html:9
+#: templates/html/core/billing/information.html:115
+#: templates/html/core/billing/overview.html:10
+#: templates/html/core/billing/upgrade.html:9
+msgid "Billing Information"
+msgstr "Información de Facturacion"
+
+#: templates/html/core/billing/information.html:3
+#: templates/html/core/billing/information.html:5
+#: templates/html/core/billing/overview.html:3
+#: templates/html/core/billing/overview.html:6
+#: templates/html/core/billing/upgrade.html:3
+#: templates/html/core/billing/upgrade.html:5
+msgid "Billing"
+msgstr "Facturación"
+
+#: templates/html/core/billing/information.html:8
+#: templates/html/core/billing/overview.html:11
+#: templates/html/core/billing/upgrade.html:8
+msgid "Upgrade Account"
+msgstr "Actualizar cuenta"
+
+#: templates/html/core/billing/information.html:99
+msgid "Administrative Contact"
+msgstr "Contacto Administrativo"
+
+#: templates/html/core/billing/information.html:101
+msgid "We will use these details to email you invoices"
+msgstr ""
+"Usaremos esta información para enviarle por correo electrónico sus facturas"
+
+#: templates/html/messaging/emailbox_add.html:7
+#: templates/html/messaging/emailbox_delete.html:5
+#: templates/html/messaging/emailbox_edit.html:7
+#: templates/html/messaging/settings_edit.html:7
+#: templates/html/messaging/settings_user_edit.html:7
+#: templates/html/messaging/settings_user_view.html:7
+#: templates/html/messaging/settings_view.html:7
+msgid "Email"
+msgstr "Correo Electrónico"
+
+#: templates/html/core/billing/information.html:104
+msgid "Company Name"
+msgstr "Nombre de la Compañia"
+
+#: templates/html/core/billing/information.html:117
+msgid "This connection is secured by 256-bit SSL"
+msgstr "Esta conexión está asegurada con cifrado SSL de 256 bits "
+
+#: templates/html/core/billing/information.html:118
+msgid "First name"
+msgstr "Nombre"
+
+#: templates/html/core/billing/information.html:119
+msgid "Last name"
+msgstr "Apellido"
+
+#: templates/html/core/billing/information.html:120
+msgid "Street Address"
+msgstr "Dirección"
+
+#: templates/html/core/billing/information.html:121
+msgid "City"
+msgstr "Ciudad"
+
+#: templates/html/core/billing/information.html:122
+msgid "Postal / Zip Code"
+msgstr "Código postal"
+
+#: templates/html/core/billing/information.html:123
+msgid "Country"
+msgstr "País"
+
+#: templates/html/core/billing/information.html:124
+msgid "Credit Card Number"
+msgstr "Número de Targeta de Crédito"
+
+#: templates/html/core/billing/information.html:127
+#, fuzzy
+msgid "Card Security Code"
+msgstr "Targeta con código de seguridad"
+
+#: templates/html/core/billing/information.html:131
+msgid "Update"
+msgstr "Actualizar"
+
+#: templates/html/core/billing/overview.html:3
+#: templates/html/core/billing/overview.html:9
+msgid "Overview"
+msgstr "Resumen"
+
+#: templates/html/core/billing/upgrade.html:3
+#: templates/html/core/billing/upgrade.html:93
+msgid "Upgrade"
+msgstr "Actualizar"
+
+#: templates/html/core/billing/upgrade.html:58
+msgid "Please"
+msgstr "Por favor"
+
+#: templates/html/core/billing/upgrade.html:58
+msgid "update your billing details"
+msgstr "Actualizar los detalles de su facturación"
+
+#: templates/html/core/billing/upgrade.html:58
+msgid "in order to upgrade."
+msgstr "con el fin de actualizar."
+
+#: templates/html/core/billing/upgrade.html:67
+msgid "Account Information"
+msgstr "Información de la cuenta"
+
+#: templates/html/core/billing/upgrade.html:84
+msgid "Add Users"
+msgstr "Agregar Usuarios"
+
+#: templates/html/core/hints/gantt.html:6
+msgid "Gantt Chart can't be created for this project"
+msgstr "El Gráfico de Gantt no puede ser creado para este proyecto"
+
+#: templates/html/core/hints/gantt.html:7
+msgid "Please add Start and End dates to your Milestones and Tasks"
+msgstr ""
+"Por favor agrege una Fecha de Inicio y Finalización a sus Hitos y Tareas"
+
+#: templates/html/core/hints/notification_settings.html:6
+msgid "there are no Notifications"
+msgstr "no hay Notificaciones"
+
+#: templates/html/core/hints/notification_settings.html:7
+msgid "Create a Notification"
+msgstr "Crear notificacíon"
+
+#: templates/html/core/tags/attachments.html:4
+#: templates/html/core/tags/attachments_record.html:4
+msgid "Drop files here to upload"
+msgstr "Soltar archivos aqui para cargar"
+
+#: templates/html/core/tags/attachments.html:23
+#: templates/html/core/tags/attachments_block.html:8
+msgid "added by"
+msgstr "agregados por"
+
+#: templates/html/core/tags/attachments_count.html:1
+msgid "attachment"
+msgstr "adjunto"
+
+#: templates/html/core/tags/attachments_count.html:1
+msgid "attachments"
+msgstr "adjuntos"
+
+#: templates/html/core/tags/easy_invite_failure.html:1
+msgid ""
+"There was a problem sending this invite. Please check the email address or "
+"try again later."
+msgstr ""
+"Hubo un problema al enviar la invitación. Por favor verifique la dirección "
+"de correo electrónico o inténtelo de nuevo más tarde."
+
+#: templates/html/core/tags/easy_invite_success.html:1
+msgid "Sent invite"
+msgstr "Enviar Invitación"
+
+#: templates/html/documents/document_view.html:47
+#: templates/html/documents/file_view.html:44
+#: templates/html/documents/weblink_view.html:46
+#: templates/html/events/event_view.html:44
+#: templates/html/knowledge/item_view.html:47
+msgid "Created By"
+msgstr "Creado Por"
+
+#: templates/html/documents/folder_view.html:50
+msgid "Add Folder"
+msgstr "Agregar Carpeta"
+
+#: templates/html/events/widgets/week_view.html:3
+msgid "Calendar: This Week"
+msgstr "Calendario: Esta Semana"
+
+#: templates/html/messaging/settings_view.html:40
+msgid "Not used"
+msgstr "No Usado"
+
+#: templates/html/messaging/stream_delete.html:28
+#: templates/html/messaging/stream_edit.html:28
+#: templates/html/messaging/stream_view.html:11
+msgid "Check Mail"
+msgstr "Revizar Correo"
+
+#: templates/html/news/index.html:55 templates/html/news/my_activity.html:47
+#: templates/html/news/my_watchlist.html:56 templates/html/news/social.html:46
+#: templates/html/news/top_news.html:57
+#: templates/html/news/widgets/index.html:34
+#: templates/html/news/widgets/social.html:34
+msgid "Recipients"
+msgstr "Destinatarios"
+
+#: templates/html/news/page.html:15
+msgid "Social Posts"
+msgstr "Mensajes Sociales"
+
+#: templates/html/projects/gantt_view.html:37
+msgid "A Gantt Chart needs Milestones or Tasks with both Start & End Dates"
+msgstr ""
+"Un Gráfico de Gantt necesita un Hito o Tarea con sus respectivas fechas de "
+"inicio y finalización"
+
+#: templates/html/projects/gantt_view.html:38
+msgid "Create a new Milestone"
+msgstr "Crear un nuevo Hito"
+
+#: templates/html/projects/gantt_view.html:39
+msgid "Create a new Task"
+msgstr "Crear una nueva Tarea"
+
+#: templates/html/projects/index.html:63 templates/html/projects/index.html:84
+#: templates/html/projects/index_assigned.html:65
+#: templates/html/projects/index_assigned.html:86
+#: templates/html/projects/index_owned.html:63
+#: templates/html/projects/index_owned.html:84
+#: templates/html/services/index.html:49
+msgid "Show More"
+msgstr "Ver Mas"
+
+#: templates/html/projects/project_view.html:233
+msgid "Update Project"
+msgstr "Actualizar Proyecto"
+
+#: templates/html/projects/task_view.html:158
+msgid "Blocks"
+msgstr "Bloques"
+
+#: templates/html/reports/index.html:45
+msgid "Created by"
+msgstr "Creado por"
+
+#: templates/html/reports/report_edit.html:42
+msgid "Aggregation"
+msgstr "Agregación"
+
+#: templates/html/sales/status_add.html:3
+msgid "Add Status"
+msgstr "Agregar Estado"
+
+#: core/forms.py:90
+msgid "That username doesn't have an associated email."
+msgstr "Ese usuario no tiene un correo electrónico asociado."
+
+#: core/administration/forms.py:103
+msgid "Detaul group"
+msgstr "Grupo por defecto"
+
+#: messaging/forms.py:111
+msgid "Send as an email to"
+msgstr "Enviar como correo electrónico a"
+
+#: messaging/forms.py:125
+msgid ""
+"That stream doesn't have an outgoing email. Check Email Settings or deselect "
+"recipient below."
+msgstr ""
+"Esa fuente no tiene un correo electrónico saliente. Revise las "
+"Configuraciones del Correo Electrónico o deshabilite el receptor a "
+"continuacion:"
+
+#: messaging/forms.py:141
+msgid "Email Name"
+msgstr "Nombre del Correo Electrónico"
+
+#: messaging/forms.py:142
+msgid "Server Name"
+msgstr "Nombre del Servidor"
+
+#: messaging/forms.py:144
+msgid "Server Username"
+msgstr "Nombre de Usuario del Servidor"
+
+#: messaging/forms.py:145
+msgid "Server Password"
+msgstr "Contraseña del Servidor"
+
+#: messaging/forms.py:160
+msgid "Email Incoming"
+msgstr "Correo Entrante"
+
+#: messaging/forms.py:165
+msgid "Email Outgoing"
+msgstr "Correo Saliente"
+
+#: reports/forms.py:28
+msgid "Choose an Object to Report on: "
+msgstr "Elija un Objeto para Reportar sobre:"
+
+#: templates/html/base.html:56
+msgid "Mobile-version<sup>alpha</sup>"
+msgstr "Versión móvil<sup>alpha</sup>"
+
+#: templates/html/account/notification_index.html:3
+#: templates/html/account/notification_index.html:7
+#: templates/html/account/page.html:12
+#: templates/html/core/tags/user_block.html:9
+msgid "Notifications"
+msgstr "Notificaciones"
+
+#: templates/html/account/notification_index.html:12
+msgid "Delete All"
+msgstr "Eliminar Todo"
+
+#: templates/html/account/notification_index.html:43
+msgid "There are no notifications for you."
+msgstr "no hay notificaciones para usted."
+
+#: templates/html/account/page.html:11
+msgid "Your Account"
+msgstr "Su Cuenta"
+
+#: templates/html/core/password_reset_done.html:13
+msgid "E-mail sent"
+msgstr "Correo electrónico enviado"
+
+#: templates/html/core/password_reset_form.html:13
+msgid ""
+"Forgotten your password? Enter your username below, and we'll send you a new "
+"one"
+msgstr ""
+"¿Olvidó su contraseña? Ingrese su nombre de usuario a continuación y le "
+"enviaremos una nueva"
+
+#: templates/html/core/administration/group_delete.html:22
+msgid ""
+"WARNING: This cannot be undone. All Users assigned to this group as default "
+"will be deleted.<br />\n"
+"                    All Objects owned by those Users will be deleted"
+msgstr ""
+"PRECAUCIÓN: Esto no se puede deshacer. Todos los usuarios asignados a este "
+"grupo como predeterminado serán eliminados.<br />\n"
+"Todos los Objetos de propiedad de estos Usuarios serán eliminados"
+
+#: templates/html/core/search/query_view.html:41
+msgid "There's nothing found"
+msgstr "No se ha encontrado nada"
+
+#: templates/html/core/tags/user_block.html:3
+msgid "logout"
+msgstr "Cerrar sesión"
+
+#: templates/html/documents/index.html:33
+msgid "No Documents available"
+msgstr "Sin Documentos disponibles"
+
+#: templates/html/events/integration_index.html:51
+msgid "Sync Now"
+msgstr "Sincronizar Ahora"
+
+#: templates/html/finance/account_delete.html:6
+msgid "Delete Account"
+msgstr "Eliminar Cuenta"
+
+#: templates/html/finance/index_assets.html:80
+msgid "No Assets"
+msgstr "Sin Activos"
+
+#: templates/html/finance/index_equities.html:72
+msgid "No Equities"
+msgstr "Sin Capital Social"
+
+#: templates/html/finance/index_liabilities.html:56
+msgid "No Liabilities"
+msgstr "Sin Pasivos"
+
+#: templates/html/finance/index_receivables.html:52
+msgid "No Receivables"
+msgstr "Sin Cuentas por Cobrar"
+
+#: templates/html/messaging/emailbox_add.html:11
+#: templates/html/messaging/emailbox_delete.html:8
+#: templates/html/messaging/emailbox_edit.html:11
+#: templates/html/messaging/settings_user_view.html:11
+msgid "New Email Box"
+msgstr "Nueva Bandeja de Correo Electrónico"
+
+#: templates/html/messaging/emailbox_delete.html:16
+msgid "Delete this Email Box"
+msgstr "Eliminar esta Bandeja"
+
+#: templates/html/messaging/page.html:22
+msgid "Email Settings"
+msgstr "Configuraciones del Correo Electrónico"
+
+#: templates/html/projects/task_view.html:262
+#: templates/html/projects/task_view.html:265
+#: templates/html/projects/task_view.html:268
+#: templates/html/projects/task_view.html:271
+#: templates/html/services/ticket_view.html:160
+#: templates/html/services/ticket_view.html:163
+#: templates/html/services/ticket_view.html:166
+#: templates/html/services/ticket_view.html:169
+msgid "on"
+msgstr "en"
+
+#: templates/html/projects/task_view.html:262
+#: templates/html/projects/task_view.html:265
+#: templates/html/projects/task_view.html:268
+#: templates/html/projects/task_view.html:271
+#: templates/html/services/ticket_view.html:160
+#: templates/html/services/ticket_view.html:163
+#: templates/html/services/ticket_view.html:166
+#: templates/html/services/ticket_view.html:169
+msgid "at"
+msgstr "a"
+
+#: templates/html/projects/task_view.html:287
+msgid "Update task"
+msgstr "Actualizar tarea"
+
+#: templates/html/reports/page.html:12
+msgid "My Reports"
+msgstr "Mis Reportes"
+
+#: templates/html/reports/page.html:14
+msgid "By Module"
+msgstr "Por Módulo"
+
+#: templates/html/reports/page.html:31
+#: templates/html/reports/report_add.html:6
+msgid "New Template"
+msgstr "Nueva Plantilla"
+
+#: templates/html/reports/report_add.html:34
+msgid "Join"
+msgstr "Unirse"
+
+#: templates/html/sales/index.html:52
+#: templates/html/sales/index_assigned.html:49
+#: templates/html/sales/index_owned.html:50
+msgid "No sale orders"
+msgstr "Sin ordenes de ventas"
+
+#: templates/html/sales/opportunity_index.html:58
+#: templates/html/sales/opportunity_index_owned.html:58
+msgid "Closed"
+msgstr "Cerrado"
+
+#: templates/html/sales/order_view.html:3
+msgid "Sale Order View"
+msgstr "Vista de Orden de Venta"
+
+#: templates/html/sales/product_index.html:48
+#: templates/html/sales/product_index_owned.html:48
+msgid "No Products"
+msgstr "Sin Productos"
+
+#: templates/html/sales/tags/order_list.html:10
+msgid "UNPAID"
+msgstr "SIN PAGAR"
+
+#: templates/html/services/ticket_view.html:185
+msgid "Update ticket"
+msgstr "Actualizar la solicitud"
+
+#: templates/html/base.html:116
+msgid "Hello, how can I help you today?"
+msgstr "Hola, ¿en que puedo ayudarlo yoy?"
+
+#: templates/html/forest/breeze_usage.html:3
+msgid "Usage / Time"
+msgstr "Uso / Tiempo"
+
+#: templates/html/forest/page.html:23
+msgid "Usage"
+msgstr "Uso"
+
+#: templates/html/sales/order_invoice_view.html:95
+#: templates/html/sales/order_view.html:133
+#, python-format
+msgid "Discount (%)"
+msgstr "Descuento (%)"
+
+msgid "No Widgets yet"
+msgstr "No hay Widgets aún"
+
+msgid "Last Modified"
+msgstr "Última Modificación"
+
+msgid "No Templates available"
+msgstr "Ninguna Plantilla disponible"
+
+msgid "No Sale Orders"
+msgstr "Sin Ordenes de venta"
+
+msgid "No Leads"
+msgstr "Sin Clientes Potenciales"
+
+msgid "Open"
+msgstr "Abierto"
+
+msgid "No Opportunities"
+msgstr "Sin Oportunidades"
+
+msgid "No Queues"
+msgstr "Ninguna Cola"
+
+msgid "No Services"
+msgstr "Sin Servicios"
+
+msgid "No Service Level Agreements"
+msgstr "Sin Acuerdos de Nivel de Servicios"
+
+msgid "Create a Report From This Template"
+msgstr "Crear Reporte a partir de esta Plantilla"
+
+msgid "Menu"
+msgstr "Menú"
+
+msgid "%s has been updated."
+msgstr "%s: han sido actualizados."
+
+msgid "%s assigned to %s.<br />"
+msgstr "%s: asignados a %s.<br />"
+
+msgid "%s \"%s\" deleted."
+msgstr "%s \"%s\" borrados."
+
+msgid "%s has been edited."
+msgstr "%s: han sido editados."
+
+msgid "%s changed to \"%s\".<br />"
+msgstr "%s cambiados a \"%s\".<br />"
+
+msgid "%s created."
+msgstr "%s creados."
+
+msgid "%s changed from \"%s\" to \"%s\".<br />"
+msgstr "%s  cambiados \"%s\" a \"%s\".<br />"
+
+msgid " %s moved to <a href=\"%s\">%s</a>"
+msgstr " %s movido a <a href=\"%s\">%s</a>"
+
+msgid "%s has been edited. %s has been moved to <a href=\"%s\">%s</a>"
+msgstr "%s: han sido editados. %s han sido movidos a <a href=\"%s\">%s</a>"
+
+msgid "%s has been edited. %s status changed from %s to %s."
+msgstr "%s: han sido editados. %s: estados cambiados de %s a %s."
+
+# Widgets
+msgid "Tasks Assigned To Me"
+msgstr "Tareas asignadas a Mi"
+
+msgid "Active Service Tickets"
+msgstr "Solicitudes de Servicio Activas"
+
+msgid "New Messages"
+msgstr "Nuevos Mensajes"
+
+msgid "Service Tickets Assigned to me"
+msgstr "Solicitudes de Servicio Asignadas a mí"
+
+msgid "Quick Start"
+msgstr "Inicio Rápido"
+
+#: templates/html/events/widgets/my_watchlist.html:19
+#: templates/html/news/widgets/my_watchlist.html:19
+msgid "Nothing new yet."
+msgstr "Nada nuevo aún."
+
+#: templates/html/events/widgets/my_watchlist.html:13
+#: templates/html/news/widgets/my_watchlist.html:13
+msgid "See more "
+msgstr "Ver mas "
+
+#: news/widgets.py:12
+msgid "News: Social Activity"
+msgstr "Noticias: Actividad Social"
+
+msgid "Page Not Found"
+msgstr "Página no encontrada"
+
+msgid "Sorry, but we were unable to find what you're after."
+msgstr "Lo sentimos, pero no hemos podido encontrar lo que está buscando."
+
+msgid "Maybe, try to search for it?"
+msgstr "Tal vez, puede buscarlo?"
+
+msgid "Server Error"
+msgstr "Error del servidor"
+
+msgid "Sorry, but it looks like something went wrong on our side."
+msgstr "Lo sentimos, pero parece que algo salió mal de nuestro lado."
+
+msgid ""
+"Please, give us a few minutes, and we'll strive to get it fixed as soon as "
+"possible."
+msgstr ""
+"Por favor, espera unos minutos, nos estamos esforzamos para que se arregle "
+"lo antes posible."
+
+#~ msgid "description"
+#~ msgstr "descripción"
