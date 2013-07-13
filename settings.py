@@ -148,7 +148,6 @@ INSTALLED_APPS = (
     'treeio.services',
     'dajaxice',
     'dajax',
-    'nuconnector',
     'coffin',
     'captcha',
     'south',
