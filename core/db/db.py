@@ -35,7 +35,7 @@ class DatabaseDict(UserDict.DictMixin, dict):
             db.setdefault('TEST_COLLATION', None)
             db.setdefault('TEST_NAME', None)
             db.setdefault('TEST_MIRROR', None)
-            db.setdefault('TIME_ZONE', 'Europe/London')
+            db.setdefault('TIME_ZONE', 'UTC0')
             for setting in ('NAME', 'USER', 'PASSWORD', 'HOST', 'PORT'):
                 db.setdefault(setting, '')
 
