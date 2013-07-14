@@ -35,9 +35,9 @@ def setup_domain(domain):
     return box
 
 def setup_domain_database(domain, load_initial = False):
-    from treeio.core.db.creation import DatabaseCreation
-
-    dc = DatabaseCreation(domain)
-    dc.create_db(load_initial)
-    dc.connection.close()
+    #from treeio.core.db.creation import DatabaseCreation
+    pass
+    #dc = DatabaseCreation(domain)
+    #dc.create_db(load_initial)
+    #dc.connection.close()
 
