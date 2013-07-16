@@ -27,6 +27,11 @@ MANAGERS = ADMINS
 from core.db import DatabaseDict
 DATABASES = DatabaseDict()
 
+import sys
+if 'test' in sys.argv or 'test_coverage' in sys.argv: #Covers regular testing and django-coverage
+    DATABASES = {'default':{}}
+    DATABASES['default']['ENGINE'] = 'sqlite3'
+
 # Local time zone for this installation. Choices can be found here:
 # http://en.wikipedia.org/wiki/List_of_tz_zones_by_name
 # although not all choices may be available on all operating systems.
@@ -150,9 +155,9 @@ INSTALLED_APPS = (
     'dajax',
     'coffin',
     'captcha',
-    'nuconnector',
     'south',
 )
+
 
 TEST_RUNNER = 'treeio.core.test_runner.CustomTestRunner'
 

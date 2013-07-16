@@ -15,14 +15,12 @@ from django.contrib import messages
 from django.utils.translation import ugettext as _
 from django.db.models import Q
 from treeio.core.rendering import render_to_response
-from treeio.core.models import Object, ModuleSetting, IntegrationResource
+from treeio.core.models import Object, ModuleSetting
 from treeio.core.views import user_denied
 from treeio.core.decorators import treeio_login_required, handle_response_format
 from treeio.events.models import Event
 from treeio.events.forms import EventForm, GoToDateForm, FilterForm, MassActionForm
 from treeio.events.rendering import EventCollection
-from treeio.events import integration
-from nuconnector import Connector, DataBlock
 from datetime import datetime
 from dateutil.relativedelta import relativedelta
 import calendar
@@ -355,132 +353,6 @@ def event_add(request, date=None, hour=12, response_format='html'):
     return render_to_response('events/event_add', 
                               {'form': form},
                                context_instance=RequestContext(request), response_format=response_format)
-
-
-#
-# Integration
-#
-
-@treeio_login_required
-@handle_response_format
-def integration_index(request, response_format='html'):
-    "Integration index page"
-    
-    user = request.user.get_profile()
-    active_resources = ModuleSetting.get_for_module('treeio.events', 'integration_resource', user=user, strict=True)
-    
-    conf = ModuleSetting.get('nuvius_profile', user=user, strict=True)
-    try:
-        profile = conf[0].loads()
-    except IndexError:
-        profile = None
-    
-    available_resources = []
-    response = None
-    if profile:
-        connector = Connector(request, profile_id=profile['id'])
-        response = connector.collect('/service/calendar/event/', no_cache=True)
-        
-        resources = getattr(response.data.info, 'applications', [])
-        for resource in resources:
-            active = [int(res.loads().resource_id) for res in active_resources]
-            if not resource.id.raw in active:
-                available_resources.append(resource)
-    
-    message = None
-    if 'message' in request.session:
-        message = request.session.get('message')
-        del request.session['message']
-        
-    context = {'active_resources': active_resources,
-               'available_resources': available_resources,
-               'message': message,
-               'response': response,
-               'profile': profile}
-    
-    return render_to_response('events/integration_index', context,
-                              context_instance=RequestContext(request), response_format=response_format)
-
-@treeio_login_required
-@handle_response_format
-def integration_add(request, resource_id, response_format='html'):
-    "Integration add new resource page"
-    
-    user = request.user.get_profile()
-    
-    conf = ModuleSetting.get('nuvius_profile', user=user)
-    try:
-        profile = conf[0].loads()
-    except IndexError:
-        profile = None
-    
-    resource = None
-    data = None
-    if profile:
-        connector = Connector(request, profile_id=profile['id'])
-        resource = DataBlock(connector.get_app(resource_id))
-        if request.POST and 'add' in request.POST:
-            resource = IntegrationResource(profile['id'], resource_id, resource.application.name.raw, '9rw')
-            conf = ModuleSetting.add_for_module('integration_resource', '', 'treeio.events', user=user)
-            conf.dumps(resource).save()
-            return HttpResponseRedirect(reverse('events_integration_index'))
-        else:
-            data = connector.get('/service/calendar/event/data.json/id' + profile['id'] + '/app' + unicode(resource_id),
-                                 no_cache=True)
-            data = DataBlock(data)
-            if data.result_name == 'success':
-                pass
-            elif data.result_name == 'redirect':
-                next = request.build_absolute_uri(reverse('events_integration_add', args=[resource_id]))
-                data = connector.get('/service/calendar/event/data.json/id' + profile['id'] + '/app' + unicode(resource_id),
-                                     parameters={'next': next},  no_cache=True)
-            data = DataBlock(data)
-        
-    context = {'resource_id': resource_id, 'resource': resource, 'data': data}
-    
-    return render_to_response('events/integration_add', context,
-                              context_instance=RequestContext(request), response_format=response_format)
-
-
-@handle_response_format
-@treeio_login_required
-def integration_view(request, conf_id, response_format='html'):
-    "Integration view resource page"
-    
-    user = request.user.get_profile()
-    
-    resconf = get_object_or_404(ModuleSetting, pk=conf_id)
-    res = resconf.loads()
-    
-    conf = ModuleSetting.get('nuvius_profile', user=user)
-    try:
-        profile = conf[0].loads()
-    except IndexError:
-        profile = None
-    
-    resource = None
-    if profile:
-        connector = Connector(request, profile_id=profile['id'])
-        resource = DataBlock(connector.get_app(res.resource_id))
-        if request.POST and 'delete' in request.POST:
-            resconf.delete()
-            return HttpResponseRedirect(reverse('events_integration_index'))
-        
-    context = {'conf_id': conf_id, 'resource': resource}
-    
-    return render_to_response('events/integration_view', context,
-                              context_instance=RequestContext(request), response_format=response_format)
-
-@handle_response_format
-@treeio_login_required
-def integration_sync(request, response_format='html'):
-    
-    if request.POST and 'sync' in request.POST:
-        user = request.user.get_profile()
-        integration.sync(user)
-        messages.add_message(request, messages.INFO, _("You have successfully updated Calendar"))
-    
-    return HttpResponseRedirect(reverse('events_integration_index'))
 
 @treeio_login_required
 def ical_all_event(request, response_format='ical'):

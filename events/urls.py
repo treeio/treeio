@@ -30,16 +30,6 @@ urlpatterns = patterns('treeio.events.views',
         url(r'^event/delete/(?P<event_id>\d+)(\.(?P<response_format>\w+))?/?$', 
             'event_delete', name='events_event_delete'),
         
-        # Integration
-        url(r'^settings/integration(\.(?P<response_format>\w+))?/?$',
-            'integration_index', name='events_integration_index'),
-        url(r'^settings/integration/sync(\.(?P<response_format>\w+))?/?$',
-            'integration_sync', name='events_integration_sync'),
-        url(r'^settings/integration/add/(?P<resource_id>\d+)(\.(?P<response_format>\w+))?/?$',
-            'integration_add', name='events_integration_add'),
-        url(r'^settings/integration/view/(?P<conf_id>\d+)(\.(?P<response_format>\w+))?/?$',
-            'integration_view', name='events_integration_view'),
-            
             
         # Export iCalendar
         url(r'^ical/?$', 'ical_all_event', name='events_all_ical'),

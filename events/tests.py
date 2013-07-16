@@ -151,19 +151,6 @@ class EventsViewsTest(TestCase):
         response = self.client.get(reverse('events_event_delete', args=[self.event.id]))
         self.assertEquals(response.status_code, 200)
         
-        
-        
-    # Integration
-    
-    def test_events_settings_view(self):
-        "Test index page with login at /events/integration/"
-        response = self.client.post('/accounts/login',
-                                    {'username': self.username, 'password': self.password })
-        self.assertRedirects(response, '/') 
-        response = self.client.get(reverse('events_integration_index'))
-        self.assertEquals(response.status_code, 200)
-        
-        
     ######################################
     # Testing views when user is not logged in
     ######################################  
@@ -220,14 +207,5 @@ class EventsViewsTest(TestCase):
     def test_event_delete_out(self):
         "Testing /calendar/event/delete/<event_id>"
         response = self.client.get(reverse('events_event_delete', args=[self.event.id]))
-        self.assertRedirects(response, reverse('user_login')) 
-        
-        
-        
-    # Integration
-    
-    def test_events_settings_view_out(self):
-        "Testing /events/integration/"
-        response = self.client.get(reverse('events_integration_index'))
         self.assertRedirects(response, reverse('user_login')) 
         

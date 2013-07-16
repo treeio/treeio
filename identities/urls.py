@@ -75,16 +75,6 @@ urlpatterns = patterns('treeio.identities.views',
         url(r'^location/add(\.(?P<response_format>\w+))?/?$', 'location_add', name='identities_location_add'), 
         
         
-        # Integration
-        url(r'^settings/integration(\.(?P<response_format>\w+))?/?$',
-            'integration_index', name='identities_integration_index'),
-        url(r'^settings/integration/sync(\.(?P<response_format>\w+))?/?$',
-            'integration_sync', name='identities_integration_sync'),
-        url(r'^settings/integration/add/(?P<resource_id>\d+)(\.(?P<response_format>\w+))?/?$',
-            'integration_add', name='identities_integration_add'),
-        url(r'^settings/integration/view/(?P<conf_id>\d+)(\.(?P<response_format>\w+))?/?$',
-            'integration_view', name='identities_integration_view'),
-        
         # AJAX callbacks
         url(r'^ajax/users(\.(?P<response_format>\w+))?/?$', 
             'ajax_user_lookup', name='identities_ajax_user_lookup'),

@@ -252,19 +252,6 @@ class IdentitiesViewsTest(TestCase):
         self.assertEquals(response.status_code, 200)
         
         
-        
-    # Integration
-    
-    def test_contact_integration_index(self):
-        "Test index page with login at /contacts/integration/"
-        response = self.client.post('/accounts/login',
-                                    {'username': self.username, 'password': self.password })
-        self.assertRedirects(response, '/') 
-        response = self.client.get(reverse('identities_integration_index'))
-        self.assertEquals(response.status_code, 200)
-      
-      
-        
     ######################################
     # Testing views when user is not logged in
     ######################################   
@@ -373,10 +360,3 @@ class IdentitiesViewsTest(TestCase):
         response = self.client.get(reverse('identities_settings_view'))
         self.assertRedirects(response, reverse('user_login'))
         
-        
-    # Integration
-    
-    def test_contact_integration_index_out(self):
-        "Testing /contacts/integration/"
-        response = self.client.get(reverse('identities_integration_index'))
-        self.assertRedirects(response, reverse('user_login'))

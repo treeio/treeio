@@ -17,7 +17,7 @@ from django.contrib import messages
 from django.db.models import Q
 from treeio.core.rendering import render_to_response
 from treeio.core.forms import LocationForm
-from treeio.core.models import User, Group, Object, Location, ModuleSetting, IntegrationResource, AccessEntity
+from treeio.core.models import User, Group, Object, Location, ModuleSetting, AccessEntity
 from treeio.core.views import user_denied
 from treeio.core.decorators import treeio_login_required, handle_response_format
 from treeio.identities.csvapi import ProcessContacts
@@ -25,8 +25,6 @@ from treeio.identities.models import Contact, ContactType, ContactField
 from treeio.identities.forms import ContactForm, FilterForm, ContactTypeForm, ContactFieldForm, \
                                       MassActionForm
 from treeio.identities.objects import get_contact_objects
-from treeio.identities import integration
-from nuconnector import Connector, DataBlock
 
 
 def _get_filter_query(args):
@@ -660,138 +658,6 @@ def location_delete(request, location_id, response_format='html'):
 
     return render_to_response('identities/location_delete', context,
                               context_instance=RequestContext(request), response_format=response_format)
-
-
-#
-# Integration
-#
-
-@treeio_login_required
-@handle_response_format
-def integration_index(request, response_format='html'):
-    "Integration index page"
-    
-    user = request.user.get_profile()
-    active_resources = ModuleSetting.get_for_module('treeio.identities', 'integration_resource', user=user, strict=True)
-    
-    conf = ModuleSetting.get('nuvius_profile', user=user, strict=True)
-    try:
-        profile = conf[0].loads()
-    except IndexError:
-        profile = None
-    
-    available_resources = []
-    response = None
-    if profile:
-        connector = Connector(request, profile_id=profile['id'])
-        response = connector.collect('/service/contact-book/contact/', no_cache=True)
-        
-        resources = getattr(response.data.info, 'applications', [])
-        for resource in resources:
-            active = [int(res.loads().resource_id) for res in active_resources]
-            if not resource.id.raw in active:
-                available_resources.append(resource)
-    
-    message = None
-    if 'message' in request.session:
-        message = request.session.get('message')
-        del request.session['message']
-        
-    context = _get_default_context(request)
-    context.update({'active_resources': active_resources,
-                    'available_resources': available_resources,
-                    'message': message,
-                    'response': response,
-                    'profile': profile})
-    
-    return render_to_response('identities/integration_index', context,
-                              context_instance=RequestContext(request), response_format=response_format)
-
-@treeio_login_required
-@handle_response_format
-def integration_add(request, resource_id, response_format='html'):
-    "Integration add new resource page"
-    
-    user = request.user.get_profile()
-    
-    conf = ModuleSetting.get('nuvius_profile', user=user)
-    try:
-        profile = conf[0].loads()
-    except IndexError:
-        profile = None
-    
-    resource = None
-    data = None
-    if profile:
-        connector = Connector(request, profile_id=profile['id'])
-        resource = DataBlock(connector.get_app(resource_id))
-        if request.POST and 'add' in request.POST:
-            resource = IntegrationResource(profile['id'], resource_id, resource.application.name.raw, '9rw')
-            conf = ModuleSetting.add_for_module('integration_resource', '', 'treeio.identities', user=user)
-            conf.dumps(resource).save()
-            return HttpResponseRedirect(reverse('identities_integration_index'))
-        else:
-            data = connector.get('/service/contact-book/contact/data.json/id' + profile['id'] + '/app' + unicode(resource_id), no_cache=True)
-            data = DataBlock(data)
-            if data.result_name == 'success':
-                pass
-            elif data.result_name == 'redirect':
-                next = request.build_absolute_uri(reverse('identities_integration_add', args=[resource_id]))
-                data = connector.get('/service/contact-book/contact/data.json/id' + profile['id'] + '/app' + unicode(resource_id),
-                                     parameters={'next': next}, no_cache=True)
-            data = DataBlock(data)
-
-    context = _get_default_context(request)
-    context.update({'resource_id': resource_id, 'resource': resource, 'data': data})
-    
-    return render_to_response('identities/integration_add', context,
-                              context_instance=RequestContext(request), response_format=response_format)
-
-
-@handle_response_format
-@treeio_login_required
-def integration_view(request, conf_id, response_format='html'):
-    "Integration view resource page"
-    
-    user = request.user.get_profile()
-    
-    resconf = get_object_or_404(ModuleSetting, pk=conf_id)
-    res = resconf.loads()
-    
-    conf = ModuleSetting.get('nuvius_profile', user=user)
-    try:
-        profile = conf[0].loads()
-    except IndexError:
-        profile = None
-    
-    resource = None
-    if profile:
-        connector = Connector(request, profile_id=profile['id'])
-        resource = DataBlock(connector.get_app(res.resource_id))
-        if request.POST and 'delete' in request.POST:
-            resconf.delete()
-            return HttpResponseRedirect(reverse('identities_integration_index'))
-    
-    context = _get_default_context(request)
-    context.update({'conf_id': conf_id, 'resource': resource})
-    
-    return render_to_response('identities/integration_view', context,
-                              context_instance=RequestContext(request), response_format=response_format)
-
-@handle_response_format
-@treeio_login_required
-def integration_sync(request, response_format='html'):
-    
-    if request.POST and 'sync' in request.POST:
-        user = request.user.get_profile()
-        integration.sync(user)
-        messages.add_message(request, messages.INFO, _("You have successfully updated Contacts"))
-    
-    return HttpResponseRedirect(reverse('identities_integration_index'))
-
-
-
-
 
 
 #
