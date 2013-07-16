@@ -3,6 +3,5 @@
 core/db/dbsettings.json
 .*.swp
 treeio.db
-static/media/identities/
 doc/_build
 build/*
