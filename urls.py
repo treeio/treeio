@@ -65,9 +65,6 @@ urlpatterns = patterns('',
     # Close iframe
     url(r'^iframe/?$', 'treeio.core.views.iframe_close', name='core_iframe_close'),
     
-    # Nuvius Connector
-    (r'^nuconnector/', include('nuconnector.urls')),
-
     # Captcha Config
     url(r'^captcha/', include('captcha.urls')),
     
