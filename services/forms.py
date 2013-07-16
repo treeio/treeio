@@ -466,7 +466,6 @@ class FilterForm(forms.ModelForm):
             del self.fields['status']
         else:
             self.fields['status'].queryset = Object.filter_permitted(user, TicketStatus.objects, mode='x')
-            self.fields['status'].required = False
             self.fields['status'].label = _("Status")
         
         self.fields['service'].queryset = Object.filter_permitted(user, Service.objects, mode='x')
@@ -532,7 +531,7 @@ class AgentFilterForm(forms.ModelForm):
         "Sets allowed values"
         super(AgentFilterForm, self).__init__(*args, **kwargs)
         
-        self.fields['related_user'].required = False
+        self.fields['related_user'].required = True
         self.fields['related_user'].label = _("Related user")
         
         

@@ -891,8 +891,6 @@ def settings_view(request, response_format='html'):
         try:
             ticket.status
         except:
-            ticket.status = None
-        if not ticket.status:
             try:
                 ticket.status = statuses[0]
             except IndexError:
