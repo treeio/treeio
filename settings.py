@@ -150,6 +150,7 @@ INSTALLED_APPS = (
     'dajax',
     'coffin',
     'captcha',
+    'nuconnector',
     'south',
 )
 
