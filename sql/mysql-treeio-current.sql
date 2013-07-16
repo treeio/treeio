@@ -2735,6 +2735,7 @@ CREATE TABLE `projects_task` (
   `end_date` datetime DEFAULT NULL,
   `priority` int(11) NOT NULL,
   `estimated_time` int(11) DEFAULT NULL,
+  `depends_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`object_ptr_id`),
   KEY `projects_task_63f17a16` (`parent_id`),
   KEY `projects_task_499df97c` (`project_id`),
