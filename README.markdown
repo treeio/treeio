@@ -48,20 +48,21 @@ Create a clone of this repository
 ------------------------
 
 1.  Clone the repo by running: `git clone https://github.com/treeio/treeio.git`
-1.  Install dependencies: `pip install -r requirements.pip`
+1.  Install dependencies: `sudo pip install -r requirements.pip`
 1.  Run the patch: `python related_fields_patch.py`
 
 
 Install the database (Example showing MySQL)
 ------------------------
 
-    $ mysql -u username -p
-           > create database database_name;
-           > grant all privileges on database_name.* to some_user@localhost identified by 'some_password';
+    $ mysql -u treeio -ptreeio
+           > create database treeio;
+           > grant all privileges on treeio.* to treeio@localhost identified by 'treeio';
            > \q
 
-1.  Install your database `python manage.py installdb`
-1.  Setup initial data: `python manage.py loaddata data.json` or if using mysql: `mysql -u treeio -p treeio < sql/mysql-treeio-current.sql`
+1.  Install python mysql driver: `sudo apt-get install python-mysqldb`
+1.  Install your database: `python manage.py installdb`
+1.  Setup initial data: `python manage.py loaddata data.json` or if using mysql: `mysql -u treeio -ptreeio treeio < sql/mysql-treeio-current.sql`
 
 Test install 
 ------------------------
