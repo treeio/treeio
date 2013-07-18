@@ -12,10 +12,20 @@ For FAQ see the Tree.io community site http://www.tree.io/community/
 
 There is also a pre-built micro [Amazon AMI Image](https://console.aws.amazon.com/ec2/home?region=us-east-1#launchAmi=ami-6af22f03&source=tree.io) available which will run on [Amazon's Free Usage Tier](http://aws.amazon.com/free/) for 1 year.
 
+Docker Container Installation
+=============================
+
+07/2013: I have created a Docker container and a shell script to create a postgresql instance and a dynamically configured treeio instance.
+
+To use this you only need to [install Docker](http://www.docker.io/gettingstarted/) and run this script: https://gist.github.com/funkotron/6025664
+
+
 License
 =======
 
 Tree.io is licensed under the MIT License. See the `LICENSE` file.
+
+Tree.io comes with no warranty, Tree.io Ltd. can accept no responsibility for any damages, losses etc.
 
 
 Installation on Ubuntu or Debian with MySQL
