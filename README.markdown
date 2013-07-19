@@ -94,7 +94,6 @@ Support
 =======
 
 Commercial installation and support is available from Tree.io Ltd, London, UK.
-Our community support forum is the first stop for any questions http://www.tree.io/community
 Please see http://www.tree.io/ or contact info@tree.io for more details.
 
 Acknowledgements
