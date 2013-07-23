@@ -20,6 +20,5 @@ simplejson
 sphinx
 johnny-cache
 django-pandora
-minidetector
 gunicorn
 
