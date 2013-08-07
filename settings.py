@@ -55,7 +55,9 @@ HARDTREE_API_CONSUMER_DB = 'gis'
 OAUTH_DATA_STORE = 'treeio.core.api.auth.store.store'
 
 
-# Static files location for Hardtree
+# Static files location for Tree.io
+STATIC_ROOT =path.join(PROJECT_ROOT,'static')
+STATIC_URL =path.join(PROJECT_ROOT,'static')
 STATIC_DOC_ROOT = path.join(PROJECT_ROOT, 'static')
 
 # Absolute path to the directory that holds media.
