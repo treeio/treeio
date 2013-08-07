@@ -46,7 +46,7 @@ Install any dependencies
 1.  Upgrade your system `sudo apt-get upgrade` (Recommended but optional)
 1.  `sudo apt-get install python build-essential python-dev`
 1.  `sudo apt-get build-dep python-lxml python-imaging`
-1.  `sudo apt-get install git python-flup python-pip`
+1.  `sudo apt-get install git python-flup python-pip python-virtualenv`
 
 
 Install services (In Production)
@@ -60,8 +60,12 @@ Alternatively you can use Apache, see this [community post](http://tree.io/en/co
 Create a clone of this repository
 ------------------------
 
+1.  Make a directory for treeio and go inside `mkdir treeio && cd treeio`
 1.  Clone the repo by running: `git clone https://github.com/treeio/treeio.git`
-1.  Install dependencies: `sudo pip install -r requirements.pip`
+2.  Go into this directory `cd treeio` (The directory structure should be `treeio/treeio/<project files>`)
+2.  Create a virtual environment to keep your packages & versions thereof separate from the rest of the system `virtualenv venv`
+3.  Activate the virtual environment `source ./venv/bin/activate`
+1.  Install dependencies: `pip install -r requirements.pip`
 1.  Run the patch: `python related_fields_patch.py`
 
 
