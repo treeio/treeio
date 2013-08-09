@@ -77,7 +77,7 @@ Install the database (Example showing MySQL)
            > grant all privileges on treeio.* to treeio@localhost identified by 'treeio';
            > \q
 
-1.  Install python mysql driver: `sudo apt-get install python-mysqldb`
+1.  Install mysql, client libraries and python driver: `sudo apt-get install mysql-server mysql libmysqlclient-dev python-mysqldb`
 1.  Install your database: `python manage.py installdb`
 1.  Setup initial data: `python manage.py loaddata data.json` or if using mysql: `mysql -u treeio -ptreeio treeio < sql/mysql-treeio-current.sql`
 
