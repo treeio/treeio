@@ -30,7 +30,7 @@ DATABASES = DatabaseDict()
 import sys
 if 'test' in sys.argv or 'test_coverage' in sys.argv: #Covers regular testing and django-coverage
     DATABASES = {'default':{}}
-    DATABASES['default']['ENGINE'] = 'sqlite3'
+    DATABASES['default']['ENGINE'] = 'django.db.backends.sqlite3'
 
 # Local time zone for this installation. Choices can be found here:
 # http://en.wikipedia.org/wiki/List_of_tz_zones_by_name
@@ -57,7 +57,7 @@ OAUTH_DATA_STORE = 'treeio.core.api.auth.store.store'
 
 # Static files location for Tree.io
 STATIC_ROOT =path.join(PROJECT_ROOT,'static')
-STATIC_URL =path.join(PROJECT_ROOT,'static')
+STATIC_URL =path.join(PROJECT_ROOT,'static/')
 STATIC_DOC_ROOT = path.join(PROJECT_ROOT, 'static')
 
 # Absolute path to the directory that holds media.
