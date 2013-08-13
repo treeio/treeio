@@ -1,3 +1,4 @@
+{% load i18n %}
 <div class="attachment-record-block" object="{{ update_id }}">
     {% for attachment in attachments %}
         {% if attachment.uploaded_by == request.user.get_profile() %}<a class="delete-attachment ajax-link-out" attachment="{{ attachment.id }}" title="{% trans %}Delete{% endtrans %}"><img class="margin-bottom" src="/static/icons/delete.png"/></a>{% endif %}
