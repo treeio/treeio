@@ -54,7 +54,7 @@ urlpatterns = patterns('',
     (r'^api/', include('treeio.core.api.urls')),
     
     # Forest
-    if_installed('treeio.forest', r'^forest/', include('treeio.forest.urls')),
+    # if_installed('treeio.forest', r'^forest/', include('treeio.forest.urls')),
 
     # Mobile handler
     url(r'^m(?P<url>.+)?$', 'treeio.core.views.mobile_view', name='core_mobile_view'),
