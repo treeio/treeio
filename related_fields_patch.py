@@ -5,9 +5,6 @@ from subprocess import Popen, PIPE
 
 patch_file = os.path.join(os.path.abspath('.'),'bin','django-related-fields.patch')
 
-try:
-	process = Popen(['patch','-p1'],stdin=PIPE,shell=False,cwd=sys.argv[1])
-	process.communicate(open(patch_file).read())
-	process.kill()
-except:
-	pass
+process = Popen(['patch','-p1'],stdin=PIPE,shell=False,cwd=sys.argv[1])
+process.communicate(open(patch_file).read())
+process.kill()
