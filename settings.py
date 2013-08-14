@@ -60,6 +60,11 @@ OAUTH_DATA_STORE = 'treeio.core.api.auth.store.store'
 STATIC_ROOT =path.join(PROJECT_ROOT,'static')
 STATIC_URL =path.join(PROJECT_ROOT,'static/')
 STATIC_DOC_ROOT = path.join(PROJECT_ROOT, 'static')
+STATICFILES_FINDERS = (
+    'django.contrib.staticfiles.finders.FileSystemFinder',
+    'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+    'dajaxice.finders.DajaxiceFinder',
+)
 
 # Absolute path to the directory that holds media.
 # Example: "/home/media/media.lawrence.com/"
@@ -91,7 +96,7 @@ SECRET_KEY = 'z_#oc^n&z0c2lix=s$4+z#lsb9qd32qtb!#78nk7=5$_k3lq16'
 #     'django.template.loaders.app_directories.load_template_source',
 #     'django.template.loaders.eggs.load_template_source',
 # )
-if DEBUG or TESTING:
+if DEBUG or True or TESTING:
     TEMPLATE_LOADERS = [
         'django.template.loaders.filesystem.Loader',
         'django.template.loaders.app_directories.Loader',
@@ -112,6 +117,7 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     "django.core.context_processors.debug",
     "django.core.context_processors.media",
     "django.core.context_processors.request",
+    'django.contrib.messages.context_processors.messages',
 )
 
 
