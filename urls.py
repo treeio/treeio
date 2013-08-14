@@ -10,7 +10,8 @@ from django.conf.urls.defaults import *
 from django.conf import settings
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 from django.contrib import admin
-from dajaxice.core import dajaxice_autodiscover
+
+from dajaxice.core import dajaxice_autodiscover, dajaxice_config
 dajaxice_autodiscover()
 
 def if_installed(appname, *args, **kwargs):
@@ -69,8 +70,7 @@ urlpatterns = patterns('',
     # Captcha Config
     url(r'^captcha/', include('captcha.urls')),
     
-    url(r'^%s/' % settings.DAJAXICE_MEDIA_PREFIX, include('dajaxice.urls')),
-
+    url(dajaxice_config.dajaxice_url, include('dajaxice.urls')),
     # Uncomment the admin/doc line below and add 'django.contrib.admindocs' 
     # to INSTALLED_APPS to enable admin documentation:
     # (r'^admin/doc/', include('django.contrib.admindocs.urls')),
