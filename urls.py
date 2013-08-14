@@ -8,6 +8,7 @@ Hardtree URLs
 """
 from django.conf.urls.defaults import *
 from django.conf import settings
+from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 from django.contrib import admin
 from dajaxice.core import dajaxice_autodiscover
 dajaxice_autodiscover()
@@ -84,3 +85,4 @@ if 'rosetta' in settings.INSTALLED_APPS:
     urlpatterns += patterns('',
         url(r'^rosetta/', include('rosetta.urls')),
     )
+urlpatterns += staticfiles_urlpatterns()
