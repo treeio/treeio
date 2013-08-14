@@ -1,4 +1,5 @@
 {% load i18n %}
+{% load dajaxice_templatetags %}
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
@@ -27,10 +28,12 @@
     <link rel="stylesheet" href="/static/ie.css" media="all" />
     <![endif]-->
 	
-	{# Debug 
-    <script src="/static/js/jquery-1.4.2.js" type="text/javascript" charset="utf-8"></script>
-    <script src="/static/js/jquery.form.js" type="text/javascript" charset="utf-8"></script>
-    <script src="/static/js/jquery-ui-full.min.js" type="text/javascript" charset="utf-8"></script>
+	{# Debug  #}
+    <script src="/static/js/jquery-1.10.2.min.js"></script>
+    <script src="/static/js/jquery-migrate-1.2.1.min.js"></script>
+    <script src="/static/js/jquery.cookie.js" type="text/javascript" charset="utf-8"></script>
+    <script src="/static/js/jquery.form.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="/static/js/jquery-ui-1.10.3/ui/minified/jquery-ui.min.js"></script>
     <script src="/static/js/jquery-ui-timepicker-addon.min.js" type="text/javascript" charset="utf-8"></script>
     <script src="/static/js/jquery.gritter.min.js" type="text/javascript" charset="utf-8"></script>
     <script src="/static/js/tinymce/jscripts/tiny_mce/tiny_mce.js" type="text/javascript" charset="utf-8"></script>
@@ -39,17 +42,16 @@
 	<script src="/static/js/colorbox/jquery.colorbox-min.js" type="text/javascript" charset="utf-8"></script>
     <script src="/static/js/hashchange.js" type="text/javascript" charset="utf-8"></script>
     <script src="/static/js/highcharts.js" type="text/javascript" charset="utf-8"></script>
-  	<script src="/static/js/treeio.js" type="text/javascript" charset="utf-8"></script>
+  	<script src="/static/js/hardtree.js" type="text/javascript" charset="utf-8"></script>
     <script src="/static/js/jquery.flexbox.min.js" type="text/javascript" charset="utf-8"></script>
     <script src="/static/js/jquery.ba-serializeobject.js" type="text/javascript" charset="utf-8"></script>
     <script src="/static/js/jquery.dajax.core.js" type="text/javascript" charset="utf-8"></script>
-    <script src="/static/js/chat.js" type="text/javascript" charset="utf-8"></script>
     <script src="/static/js/date.js" type="text/javascript" charset="utf-8"></script>
     <script src="/static/js/jquery.ganttView.js" type="text/javascript" charset="utf-8"></script> 
 	<script src="/static/js/fileuploader.js" type="text/javascript" charset="utf-8"></script>
 	<script src="/static/js/jquery.tipsy.js" type="text/javascript" charset="utf-8"></script>
-	#}
-	{# Production #}
+	
+	{# Production 
   	<script src="/static/js/jquery-stuff-and-ui.min.js" type="text/javascript" charset="utf-8"></script>
     <script src="/static/js/tinymce/jscripts/tiny_mce/tiny_mce.js" type="text/javascript" charset="utf-8"></script>
   	<script src="/static/js/tinymce/jscripts/tiny_mce/jquery.tinymce.js" type="text/javascript" charset="utf-8"></script>
@@ -57,9 +59,8 @@
   	<script src="/static/js/12o_super_mini.js" type="text/javascript" charset="utf-8"></script>
     <script src="/static/js/jquery.ba-serializeobject.js" type="text/javascript" charset="utf-8"></script>
     <script src="/static/js/jquery.dajax.core.js" type="text/javascript" charset="utf-8"></script>
-     
-    {{ dajaxice_js_import() }}
-	
+    #} 
+    {{ dajaxice_js_import() }}	
 </head>
 
 <body>
