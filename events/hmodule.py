@@ -20,11 +20,3 @@ URL_PATTERNS = [
                 '^/calendar/',
                 ]
 
-
-#
-# Cron
-#
-
-from treeio.events.cron import cron_integration
-
-CRON = [cron_integration]
