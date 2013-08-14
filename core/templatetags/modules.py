@@ -91,8 +91,7 @@ register.object(modules_header_block)
 def dajaxice_js_import(context):
     "Thin wrapper for dajaxice"
     
-    return Markup(coffinshortcuts.render_to_string('dajaxice/dajaxice_js_import.html',
-                                                   dajaxice_orig_tag(context)))
+    return Markup(dajaxice_orig_tag(context))
 
 register.object(dajaxice_js_import)
 
