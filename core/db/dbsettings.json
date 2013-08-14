@@ -1,1 +1,0 @@
-{"default": {"ENGINE": "django.db.backends.postgresql_psycopg2", "HOST": "172.16.42.1", "PASSWORD": "71eba6e8554", "PORT":49153, "NAME": "treeio", "USER": "postgres"}}
