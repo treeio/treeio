@@ -20,7 +20,7 @@ from treeio.core.models import Comment, Object, UpdateRecord, Tag
 from treeio.core.forms import TagsForm
 from treeio.core.ajax import converter
 from dajaxice.core import dajaxice_functions
-from dajax.core.Dajax import Dajax
+from dajax.core import Dajax
 
 def comments_likes(request, target, form, expand=True):
     dajax = Dajax()
