@@ -123,6 +123,9 @@ TEMPLATE_CONTEXT_PROCESSORS = (
 
 MIDDLEWARE_CLASSES = (
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'treeio.core.middleware.user.AuthMiddleware',
+    'django.contrib.auth.middleware.AuthenticationMiddleware',
+    "treeio.core.middleware.user.LanguageMiddleware",
     "django.middleware.locale.LocaleMiddleware",
     'django.middleware.common.CommonMiddleware',
     'johnny.middleware.LocalStoreClearMiddleware',
@@ -131,15 +134,12 @@ MIDDLEWARE_CLASSES = (
 #    'treeio.core.middleware.domain.DomainMiddleware',
     'treeio.core.middleware.user.SSLMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
-    'treeio.core.middleware.user.AuthMiddleware',
-    'django.contrib.auth.middleware.AuthenticationMiddleware',
     'treeio.core.middleware.chat.ChatAjaxMiddleware',
     "django.contrib.messages.middleware.MessageMiddleware",
     "treeio.core.middleware.modules.ModuleDetect",
     "minidetector.Middleware",
     "treeio.core.middleware.user.CommonMiddleware",
     "treeio.core.middleware.user.PopupMiddleware",
-    "treeio.core.middleware.user.LanguageMiddleware",
 )
 
 
