@@ -1,3 +1,4 @@
+{% load i18n %}
 {% extends "html/page.html" %}
 
 {% block title %}{% trans %}Calendar{% endtrans %}{% endblock %}
@@ -15,7 +16,7 @@
         <a href="{% url events_month %}" class="sidebar-link {% block class_month %}{% endblock %}">{% trans %}Month{% endtrans %}</a>
         <a href="{% url events_week %}" class="sidebar-link {% block class_week %}{% endblock %}">{% trans %}Week{% endtrans %}</a>
         <a href="{% url events_day %}" class="sidebar-link {% block class_day %}{% endblock %}">{% trans %}Day{% endtrans %}</a>
-        <span class="sidebar-header">{% trans %}Settings{% endtrans %}</span>
+        <!-- <span class="sidebar-header">{% trans %}Settings{% endtrans %}</span> -->
         </div>
 		</td>
         <td class="module-content">

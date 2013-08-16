@@ -20,10 +20,3 @@ URL_PATTERNS = [
                 '^/contacts/',
                 ]
 
-#
-# Cron
-#
-
-from treeio.identities.cron import cron_integration
-
-CRON = [cron_integration]

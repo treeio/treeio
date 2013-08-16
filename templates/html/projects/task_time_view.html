@@ -1,3 +1,4 @@
+{% load i18n %}
 {% extends "html/projects/page.html" %}
 
 {% block title %} {{ task_time_slot.get_time_string() }} | {{ task|htsafe }} | {% trans %}Project Management{% endtrans %}{% endblock %}

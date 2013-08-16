@@ -245,6 +245,7 @@ class LanguageMiddleware():
             except IndexError:
                 pass
         translation.activate(lang)
+        request.session['django_language'] = lang
         
 
 

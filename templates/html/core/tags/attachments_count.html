@@ -1,3 +1,4 @@
+{% load i18n %}
 <span class="quiet small attachments-count" style="padding:0 10px" title="{% if count == 1 %}{{ count }} {% trans %}attachment{% endtrans %}{% else %}{{ count }} {% trans %}attachments{% endtrans %}{% endif %}">
 	<img class="margin-bottom" alt="Tags" src="/static/icons/attach.gif" /> {{ count }}
 </span>

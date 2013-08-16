@@ -9,7 +9,7 @@ News ajax views
 
 
 from dajaxice.core import dajaxice_functions
-from dajax.core.Dajax import Dajax
+from dajax.core import Dajax
 from django.template import RequestContext
 from django.db.models import Q
 from treeio.core.rendering import render_to_string

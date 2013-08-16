@@ -1,3 +1,4 @@
+{% load i18n %}
 {% for user in users %}
 {% set contact = user.get_contact() %}
 <div class="content-list-item content-list-item-{{ loop.cycle('odd', 'even') }}">

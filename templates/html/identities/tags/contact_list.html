@@ -1,3 +1,4 @@
+{% load i18n %}
 {% for g in contacts|group_by_letter %}
 <h4 class="group-by-letter">{{g.0|upper}}</h4>
 {% for contact in g.1 %}
