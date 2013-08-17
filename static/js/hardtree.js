@@ -35,25 +35,25 @@ var treeio = {
                       width: "70%"
                 });
             } else {
-                $(this).tinymce({
-                  script_url : '/static/js/tinymce/jscripts/tiny_mce/tiny_mce.js',
-                  theme : 'advanced',
-                    skin : "cirkuit",
-                    relative_urls: false,
-                    plugins : "safari,table,advhr,inlinepopups,insertdatetime,preview,searchreplace,contextmenu,paste,fullscreen,nonbreaking,visualchars,xhtmlxtras",
-                  theme_advanced_statusbar_location : 'bottom',
-                  theme_advanced_toolbar_location : 'top',
-                  theme_advanced_toolbar_align : 'left',
-                  theme_advanced_path : false, 
-                  theme_advanced_resizing : true, 
-                  theme_advanced_resize_horizontal : true, 
-                  theme_advanced_resizing_use_cookie : true,
-                  theme_advanced_disable : 'justifyleft,justifycenter,justifyright,justifyfull,outdent,indent,image,help,hr,removeformat,formatselect,fontselect,fontsizeselect,styleselect,sub,sup,forecolor,backcolor,forecolorpicker,backcolorpicker,charmap,visualaid,anchor,newdocument,blockquote',
-                  theme_advanced_buttons1 : 'bold,italic,underline,strikethrough,|,undo,redo,|,cut,copy,paste,link,unlink,cleanup,|,bullist,numlist,|,code',
-                  theme_advanced_buttons2 : '',
-                  theme_advanced_buttons3 : '',
-                    width: "70%"
-                });
+                // $(this).tinymce({
+                //   script_url : '/static/js/tinymce/jscripts/tiny_mce/tiny_mce.js',
+                //   theme : 'advanced',
+                //     skin : "cirkuit",
+                //     relative_urls: false,
+                //     plugins : "safari,table,advhr,inlinepopups,insertdatetime,preview,searchreplace,contextmenu,paste,fullscreen,nonbreaking,visualchars,xhtmlxtras",
+                //   theme_advanced_statusbar_location : 'bottom',
+                //   theme_advanced_toolbar_location : 'top',
+                //   theme_advanced_toolbar_align : 'left',
+                //   theme_advanced_path : false, 
+                //   theme_advanced_resizing : true, 
+                //   theme_advanced_resize_horizontal : true, 
+                //   theme_advanced_resizing_use_cookie : true,
+                //   theme_advanced_disable : 'justifyleft,justifycenter,justifyright,justifyfull,outdent,indent,image,help,hr,removeformat,formatselect,fontselect,fontsizeselect,styleselect,sub,sup,forecolor,backcolor,forecolorpicker,backcolorpicker,charmap,visualaid,anchor,newdocument,blockquote',
+                //   theme_advanced_buttons1 : 'bold,italic,underline,strikethrough,|,undo,redo,|,cut,copy,paste,link,unlink,cleanup,|,bullist,numlist,|,code',
+                //   theme_advanced_buttons2 : '',
+                //   theme_advanced_buttons3 : '',
+                //     width: "70%"
+                // });
             }
         }
     });
@@ -67,7 +67,7 @@ var treeio = {
       obj = $('textarea');
     }
         obj.each(function() {
-            tinyMCE.execCommand('mceRemoveControl',false,$(this).attr('id'));
+            tinyMCE.execCommand('mceRemoveControl',false,$(this).attr2('id'));
         })
     },
     
@@ -80,10 +80,11 @@ var treeio = {
         var menu = $(".menu-item a[href=\"\#" + url + "\"]");
         if (menu.length) {
             if (!menu.hasClass('active')) {
-                block = $('#module-' + menu.attr('id').substring(5));
+                var modname = menu.attr2('id').substring(5);
+                block = $('#module-' + modname);
                 if (block.length) {
                     $('.module-block').each(function() {
-                      if ($(this).attr('id') != block.attr('id')) {
+                      if ($(this).attr2('id') != block.attr2('id')) {
                         $(this).css('display', 'none');
                         $(this).data('active', false);
                       } else {
@@ -102,6 +103,7 @@ var treeio = {
         }
         if (url) {
             url = treeio.prepare_url(url);
+            //url = treeio.utils.strip_host(url);
             $("#loading-status").css('display', 'block');
             $("#loading-status-text").html('Loading...');
             $.ajax({
@@ -127,6 +129,8 @@ var treeio = {
     },
 
    'process_ajax': function(data, status, xhr) {
+       console.log(status);
+       console.log(data);
         if (!data) {
           return;
         }
@@ -169,7 +173,7 @@ var treeio = {
           }
         var block = $("#module-" + module);
         $('.module-block').each(function() {
-          if ($(this).attr('id') != block.attr('id')) {
+          if ($(this).attr2('id') != block.attr2('id')) {
             $(this).css('display', 'none');
             $(this).data('active', false);
           } else {
@@ -275,21 +279,22 @@ var treeio = {
           var links = $('a');
       }
       links.each(function() {
+          if ($.type($(this).attr('href')) === "string"){
           if ($(this).attr('href') && !$(this).hasClass('ajax-link-out') &&  
-		   !$(this).hasClass('ajax-link') && !$(this).attr('target') &&
+		   !$(this).hasClass('ajax-link') && !$(this).attr2('target') &&
            !($(this).attr('href').substring(0,3) == 'www') &&
            !($(this).attr('href').substring(0,5) == 'http:') &&
            !($(this).attr('href').substring(0,6) == 'https:') &&
            !($(this).attr('href').substring(0,4) == 'ftp:') &&
            !($(this).attr('href').substring(0,7) == 'mailto:') &&
            ($(this).attr('href').indexOf('#') == -1)) {
-            $(this).attr("href", ("#" + $(this).attr("href").replace("?", "!")));
+            $(this).attr('href', ("#" + $(this).attr('href').replace("?", "!")));
               if ($.browser.msie && $.browser.version.substr(0,1)<7) {
                   var prefix = window.location.href.replace(window.location.hash, '');
-                  $(this).attr("href", $(this).attr("href").replace(prefix, ""));
+                  $(this).attr('href', $(this).attr('href').replace(prefix, ""));
               }
           }
-      })
+      }})
   },
   
   'add_data': function(newdata) {
@@ -331,8 +336,8 @@ var treeio = {
     	  $(this).click(function() {
     		  var target = $(this).parents($(this).attr('target'));
 	    	  var targetid = treeio.utils.generate_id();
-	    	  target.attr('id', targetid);
-	    	  $(this).attr('target', '#'+targetid);
+	    	  target.attr2('id', targetid);
+	          $(this).attr('target', '#'+targetid);
     		  var callback = eval($(this).attr('callback'));
     		  var cargs = eval('('+$(this).attr('args')+')');
     		  if (cargs) {
@@ -423,7 +428,7 @@ var treeio = {
   'put_datepicker': function(doc) {
         $('input.datepicker', doc).each(function() {
             var options = {};
-            var initial = $(this).attr('initial');
+            var initial = $(this).attr2('initial');
             if (initial) {
               initial = parseInt(initial) * 1000;
               var dinit = new Date(initial);
@@ -433,7 +438,7 @@ var treeio = {
         })
         $('input.datetimepicker', doc).each(function() {
             var options = {stepMinute: 5, hour: 12, minute: 00, firstDay: 1};
-            var initial = $(this).attr('initial');
+            var initial = $(this).attr2('initial');
             if (initial) {
               initial = parseInt(initial) * 1000;
               var dinit = new Date(initial);
@@ -450,7 +455,7 @@ var treeio = {
         $('input[type=checkbox].group-control', doc).each(function() {
           $(this).data('form', $('ul.mass-form', doc));
           $(this).click(function() {
-            $('input[type=checkbox].group-'+$(this).attr('name')).attr('checked', $(this).attr('checked'));
+            $('input[type=checkbox].group-'+$(this).attr2('name')).attr2('checked', $(this).attr2('checked'));
             $(this).data('form').fadeTo("fast", 1);
           });
         });
@@ -501,36 +506,41 @@ var treeio = {
     'prepare_popup_content': function(popupdata) {
         var popupid = popupdata.popup_id;
         if ($('#'+popupid).length) {
-            var popup = $('#'+popupid);
-            $("a", popup).each(function(){
-                  if ($(this).attr('href') && !$(this).hasClass('popup-link') && !$(this).hasClass('ajax-link-out') && !$(this).attr('target') &&
-                      !($(this).attr('href').substring(0,3) == 'www') && !($(this).attr('href').substring(0,5) == 'http:') &&
-                      !($(this).attr('href').substring(0,6) == 'https:') && !($(this).attr('href').substring(0,4) == 'ftp:') &&
-                      !($(this).attr('href').substring(0,7) == 'mailto:')) {
-                          if ($(this).attr('href').indexOf(popupid) == -1 ) {
-                            $(this).data("href", "/user/popup/" + popupid + "/url=" + $(this).attr("href"));
-                          } else {
-                            $(this).data("href", $(this).attr("href"));
+            popup = $('#'+popupid);
+                $("a", popup).each(function(){
+                    href = $(this).attr2('href');
+                    if ($.type(href) == "string"){
+                      href = treeio.utils.strip_host(href);
+                      if (href && !$(this).hasClass('popup-link') && !$(this).hasClass('ajax-link-out') && !$(this).attr('target') &&
+                          !(href.substring(0,3) == 'www') && !(href.substring(0,5) == 'http:') &&
+                          !(href.substring(0,6) == 'https:') && !(href.substring(0,4) == 'ftp:') &&
+                          !(href.substring(0,7) == 'mailto:')) {
+                              if (href.indexOf(popupid) == -1 ) {
+                                $(this).data("href", "/user/popup/" + popupid + "/url=" + $(this).attr("href"));
+                              } else {
+                                $(this).data("href", $(this).attr("href"));
+                              }
+                              if ($.browser.msie && $.browser.version.substr(0, 1) < 7) {
+                                  var prefix = window.location.href.replace(window.location.hash, '');
+                                  $(this).data("href", $(this).data("href").replace(prefix, "/"));
+                              }
+                              $(this).click(function(){
+                                  $("#loading-status").css('display', 'block');
+                                  url = $(this).data("href");
+                                  $.ajax({
+                                      url: url,
+                                      dataType: 'json',
+                                      success: treeio.process_popup_data
+                                  });
+                                  return false;
+                              })
                           }
-                          if ($.browser.msie && $.browser.version.substr(0, 1) < 7) {
-                              var prefix = window.location.href.replace(window.location.hash, '');
-                              $(this).data("href", $(this).data("href").replace(prefix, "/"));
-                          }
-                          $(this).click(function(){
-                              $("#loading-status").css('display', 'block');
-                              url = $(this).data("href");
-                              $.ajax({
-                                  url: url,
-                                  dataType: 'json',
-                                  success: treeio.process_popup_data
-                              });
-                              return false;
-                          })
-                  }
-            });
+                      }
+                });
             treeio.prepare_popups(popup);
             $("form", popup).each(function() {
                 url = $(this).attr('action');
+                url = treeio.utils.strip_host(url);
                 if (url) {
                   if (url.indexOf('/user/popup/') == -1) {
                     url = '/user/popup/' + popupdata.popup_id + '/url=' + url;
@@ -570,16 +580,16 @@ var treeio = {
                  // Object created, close popup
                  if (popup.data('field')) {
                      var doc = $('#' + popup.data('module'));
-                     var field = $('#' + popup.data('field'), doc);
+                     var field = $(popup.data('field'), doc);
                      if (field.hasClass('autocomplete')) {
                          field.val(data.popup.object.name);
-                         var idfield = $('#' + field.attr('id').replace('autocomplete_', ''), doc);
+                         var idfield = $('#' + field.attr2('id').replace('autocomplete_', ''), doc);
                          idfield.each(function() {
                             $(this).val(data.popup.object.id); 
                          });
                      } else if (field.hasClass('duplicates')) {
                          field.val(data.popup.object.name);
-                         var idfield = $('#' + field.attr('id').replace('duplicates_', ''), doc);
+                         var idfield = $('#' + field.attr2('id').replace('duplicates_', ''), doc);
                          idfield.each(function() {
                             $(this).val(data.popup.object.id); 
                          });
@@ -593,7 +603,7 @@ var treeio = {
                      $("#loading-status").css('display', 'block');
                      if (popupparents.length > 0) {
                        $(popupparents).first().each(function() {
-                         url = '/user/popup/' + $(this).attr('id') + '/url=' + $(this).parent().data('link').replace('#','');
+                         url = '/user/popup/' + $(this).attr2('id') + '/url=' + $(this).parent().data('link').replace('#','');
                        });
                      }
                      $.ajax({
@@ -611,7 +621,7 @@ var treeio = {
                  $("#loading-status").css('display', 'block');
                  if (popupparents.length > 0) {
                    $(popupparents).first().each(function() {
-                     url = '/user/popup/' + $(this).attr('id') + '/url=' + $(this).parent().data('link').replace('#','');
+                     url = '/user/popup/' + $(this).attr2('id') + '/url=' + $(this).parent().data('link').replace('#','');
                    });
                  }
                  $.ajax({
@@ -639,7 +649,7 @@ var treeio = {
         $('a.popup-link', doc).each(function() {
           if (!$(this).hasClass('popup-link-out')) {
             $(this).click(function() {
-                var popupid = doc.attr('id') + '-popup-' + $(this).attr('id') + "-" + Date.now();
+                var popupid = doc.attr2('id') + '-popup-' + $(this).attr2('id') + "-" + Date.now();
                 if ($('#'+popupid).length) {
                     return false;
                 }
@@ -665,10 +675,10 @@ var treeio = {
                     }
                 });
                 var popupinner = $('<div></div>').addClass('popup-block-inner')
-                popupinner.attr('id', popupid);
-                if ($(this).attr('field')) {
-                    popupinner.data('field', $(this).attr('field'));
-                    popupinner.data('module', doc.attr('id'));
+                popupinner.attr2('id', popupid);
+                if ($(this).attr2('field')) {
+                    popupinner.data('field', $(this).attr2('field'));
+                    popupinner.data('module', doc.attr2('id'));
                 }
                 popup.append(popupclose);
                 popup.append(popuplinkopen);
@@ -697,7 +707,8 @@ var treeio = {
                 popup.draggable({handle: 'div.popup-title-block',
                                  opacity: 0.5,
                                  addClasses: false});
-                url = '/user/popup/' + popupid + "/url=" + $(this).attr('href').replace('#', '');
+                clean_href = treeio.utils.strip_host($(this).attr2('href'));
+                url = '/user/popup/' + popupid + "/url=" + clean_href.replace('#', '');
                 if ($.browser.msie && $.browser.version.substr(0,1)<7) {
                     url = '/user/popup/' + popupid + "/url=/" + $(this).attr('href').replace('#', '');
                     var prefix = window.location.href.replace(window.location.hash, '');
@@ -717,9 +728,9 @@ var treeio = {
     
     'prepare_autocomplete': function(doc) {
         $('input.autocomplete', doc).each(function() {
-            $(this).data('hidden_field', $("#id_" + $(this).attr('name').replace("autocomplete_", ""), doc));
+            $(this).data('hidden_field', $("#id_" + $(this).attr2('name').replace("autocomplete_", ""), doc));
             $(this).autocomplete({
-                'source': $(this).attr('callback') + ".json",
+                'source': $(this).attr2('callback') + ".json",
                 'focus': function(event, ui) {
                         $(this).val(ui.item.label);
                         $(this).data('hidden_field').val(ui.item.value);
@@ -739,7 +750,7 @@ var treeio = {
         });
         
         $('input.multicomplete', doc).each(function() {
-          $(this).data('hidden_fields', $("#" + $(this).attr('name').replace("multicomplete_", "multi_"), doc));
+          $(this).data('hidden_fields', $("#" + $(this).attr2('name').replace("multicomplete_", "multi_"), doc));
           // don't navigate away from the field on tab when selecting an item
           $(this).bind( "keydown", function( event ) {
             if ( event.keyCode === $.ui.keyCode.TAB &&
@@ -754,14 +765,14 @@ var treeio = {
               var fields = $('input',$(this).data('hidden_fields'));
               for (var i=0; i<fields.length; i++)
               {
-                var label = $(fields[i]).attr('label');
+                var label = $(fields[i]).attr2('label');
                 if ($.inArray(label, terms) == -1) {
                   $(fields[i]).remove();
                 }
               }
             }
           })
-          var callback = $(this).attr('callback') + ".json"
+          var callback = $(this).attr2('callback') + ".json"
           $(this).autocomplete({
             source: function( request, response ) {
               $.getJSON(callback, {
@@ -786,8 +797,8 @@ var treeio = {
               terms.push( "" );
               var fields = $(this).data('hidden_fields');
               var hidden = $('<input>');
-              hidden.attr('type', 'hidden').attr('name', $(this).attr('name').replace("multicomplete_", ""))
-              .attr('id', 'id_' + hidden.attr('name')).attr('value', ui.item.value).attr('label', ui.item.label);
+              hidden.attr2('type', 'hidden').attr2('name', $(this).attr2('name').replace("multicomplete_", ""))
+              .attr2('id', 'id_' + hidden.attr2('name')).attr2('value', ui.item.value).attr2('label', ui.item.label);
               this.value = terms.join( ", " );
               fields.append(hidden);
         
@@ -795,7 +806,7 @@ var treeio = {
               var fields = $('input',$(this).data('hidden_fields'));
               for (var i=0; i<fields.length; i++)
               {
-                var label = $(fields[i]).attr('label');
+                var label = $(fields[i]).attr2('label');
                 if ($.inArray(label, terms) == -1) {
                   $(fields[i]).remove();
                 }
@@ -808,9 +819,9 @@ var treeio = {
   
     'prepare_search_duplicates': function(doc) {
         $('input.duplicates', doc).each(function() {
-            $(this).data('hidden_field', $("#id_" + $(this).attr('name').replace("duplicates_", ""), doc));
+            $(this).data('hidden_field', $("#id_" + $(this).attr2('name').replace("duplicates_", ""), doc));
             $(this).autocomplete({
-                'source': $(this).attr('callback') + ".json",
+                'source': $(this).attr2('callback') + ".json",
                 'focus': function(event, ui) {
                         $(this).val(ui.item.label);
                         return false;
@@ -827,7 +838,7 @@ var treeio = {
 
         $('.delete-attachment', doc).each(function() {
            $(this).click(function() {
-               Dajaxice.treeio.account.attachment_delete(Dajax.process, {'attachment_id': $(this).attr('attachment')});
+               Dajaxice.treeio.account.attachment_delete(Dajax.process, {'attachment_id': $(this).attr2('attachment')});
                return false;
            });
         });
@@ -846,7 +857,7 @@ var treeio = {
                     //alert( "All complete!" ) ;
                 },
                 params: {
-                    'csrf_token': $(this).attr('csrf'),
+                    'csrf_token': $(this).attr2('csrf'),
                     'csrf_name': 'csrfmiddlewaretoken',
                     'csrf_xname': 'X-CSRFToken'
                 },
@@ -868,7 +879,7 @@ var treeio = {
                     //alert( "All complete!" ) ;
                 },
                 params: {
-                    'csrf_token': $(this).attr('csrf'),
+                    'csrf_token': $(this).attr2('csrf'),
                     'csrf_name': 'csrfmiddlewaretoken',
                     'csrf_xname': 'X-CSRFToken'
                 },
@@ -881,7 +892,7 @@ var treeio = {
     'prepare_invites': function(doc) {
           $('.easy-invite', doc).each(function() {
            $(this).click(function() {
-               Dajaxice.treeio.account.easy_invite(Dajax.process, {'emails': $(this).attr('emails')});
+               Dajaxice.treeio.account.easy_invite(Dajax.process, {'emails': $(this).attr2('emails')});
                return false;
              });
            });
@@ -897,7 +908,7 @@ var treeio = {
     });
     $('a.comment-button', doc).each(function() {
       $(this).click(function() {
-        var commentslikes = $('div.comments-likes-box-'+$(this).attr('object'));
+        var commentslikes = $('div.comments-likes-box-'+$(this).attr2('object'));
         commentslikes.toggle();
         if (commentslikes.css('display') != 'none') {
           $('textarea:visible:first', commentslikes).focus();
@@ -916,7 +927,8 @@ var treeio = {
       })
     });
     $('form.like-form', doc).each(function() {
-    	var targetid = 'comments-likes-box-' + $(this).attr('object');
+        var objectid = $(this).attr2('object');
+    	var targetid = 'comments-likes-box-' + objectid;
     	var target = $('#'+targetid);
     	$(this).attr('target', targetid);
     	$(this).submit(function() {
@@ -942,13 +954,13 @@ var treeio = {
 	      $(this).parent('form').submit();
 	    });
 	    $(this).parent('form').submit(function() {
-    	  	var targetid = $(this).attr('target');
+    	  	var targetid = $(this).attr2('target');
     	  	var target = $(this).parents(targetid);
     	  	targetid = treeio.utils.generate_id();
-    	  	target.attr('id', targetid);
+    	  	target.attr2('id', targetid);
     		var args = {
     			'target': '#'+targetid,
-    			'object_id': $(this).attr('object'),
+    			'object_id': $(this).attr2('object'),
     			'edit': true,
     			'formdata': $(this).serializeObject()
     		};
@@ -968,16 +980,18 @@ var treeio = {
   
   'prepare_forms': function(doc) {
     $('form', doc).each(function() {
+    
+    url = $(this).attr('action');
       if (!$(this).hasClass('like-form') && !$(this).hasClass('tags-form')) {
-	      url = $(this).attr('action');
 	      if (!url) {
 	        url = location.hash.substring(1);
 	      }
-	      if ($(this).attr('method')=='get') {
-	        $(this).attr('action', url);
+	      if ($(this).attr2('method')=='get') {
+	          $(this).attr('action', url);
 	        var options = {
 	          'beforeSubmit': function(data, form) {
 	            var url = form.attr('action');
+                    console.log(url);
 	            if (url.indexOf('!') != -1) {
 	              url = url.substring(0, url.indexOf('!'));
 	            }
@@ -989,6 +1003,7 @@ var treeio = {
 	        $(this).ajaxForm(options);
 	      } else {
 	        url = treeio.prepare_url(url);
+                console.log("PREPARE"+url);
 	        var options = {
 	          'beforeSubmit': function(data) {
 	              $("#loading-status").css('display', 'block');
@@ -1011,18 +1026,18 @@ var treeio = {
   'prepare_dropdown_menus': function() {
     $("a.menu-dropdown-link").each(function() {
         $(this).click(function() {
-          var dropmenu = $('#'+$(this).attr('dropdown'));
+          var dropmenu = $('#'+$(this).attr2('dropdown'));
           $(this).addClass('menu-dropdown-link-active');
           dropmenu.slideDown('fast').show();
         });
         $(this).hover(function() {
-          var dropmenu = $('#'+$(this).attr('dropdown'));
+          var dropmenu = $('#'+$(this).attr2('dropdown'));
           $(this).addClass('menu-dropdown-link-active');
           dropmenu.slideDown('fast').show();
         })
         $(this).parent().hover(function() {}, function() {
           var droplink = $(this).children("a.menu-dropdown-link");
-          var dropmenu = $(this).children('#'+droplink.attr('dropdown'));
+          var dropmenu = $(this).children('#'+droplink.attr2('dropdown'));
           dropmenu.slideUp('fast');
           droplink.removeClass('menu-dropdown-link-active');
         });
@@ -1071,6 +1086,15 @@ treeio.utils = {
 		  i++;
 	  }
 	  return uniqid;
+  },
+
+  'strip_host': function(url) {
+    var host = window.location.host;
+    var hostless = url.substring(url.indexOf(host)+host.length);
+    if (hostless.indexOf('#') >= 0) {
+        hostless = hostless.split('#')[1];
+    }
+    return hostless;
   }
 }
 
@@ -1089,7 +1113,7 @@ treeio.modules = {
                                items: 'div.widget-block',
                                cursor: 'move',
                                update: function() {
-                                   var url = $(this).attr('callback') + "?" + $(this).sortable("serialize");
+                                   var url = $(this).attr2('callback') + "?" + $(this).sortable("serialize");
                                    $.ajax({url: url});
                                },
                                start: function(event, ui) {
@@ -1118,7 +1142,7 @@ treeio.modules = {
                     $(this).click(function() {
                         $(this).toggleClass('setup-module-box-active');
                         $('input', $(this)).each(function() {
-                            $(this).attr('checked', !$(this).attr('checked'));
+                            $(this).attr2('checked', !$(this).attr2('checked'));
                         }) 
                     });
                 });
@@ -1133,7 +1157,7 @@ treeio.modules = {
                     var start = $(this).data('start');
                     var now = Date.now();
                     if (start == null) {
-                        var elapsed = parseInt($(this).attr('diff'));
+                        var elapsed = parseInt($(this).attr2('diff'));
                         start = now - elapsed * 1000;
                         $(this).data('start', start);
                     }
@@ -1205,9 +1229,9 @@ treeio.modules = {
           /*//LIVE CHARTS
              $('div.chart').each(function(){
                var divid = $.uuid('chart-');
-               $(this).attr('id', divid);
+               $(this).attr2('id', divid);
                var settings = {
-                 url: '/reports/chart/'+$(this).attr('chart')+'/options/'+divid,
+                 url: '/reports/chart/'+$(this).attr2('chart')+'/options/'+divid,
                  dataType: 'json',
                  success: function(data) {
                    var options = data;
@@ -1292,7 +1316,11 @@ treeio.nuvius = {
   'close_iframe': function() {
       $.colorbox.close();
   }
+
 }
+
+
+
 
 /* Init */
 
@@ -1313,7 +1341,24 @@ $(function() {
               $(window).hashchange();
       }
       });
+    function csrfSafeMethod(method) {
+        // these HTTP methods do not require CSRF protection
+        return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+    }
+    $.ajaxSetup({
+        crossDomain: false, // obviates need for sameOrigin test
+        beforeSend: function(xhr, settings) {
+            if (!csrfSafeMethod(settings.type)) {
+                var csrftoken = $.cookie('csrftoken');
+                xhr.setRequestHeader("X-CSRFToken", csrftoken);
+            }
+        }
+    });
   });
+    
+
+
+
   // Prepare perspective switcher
   $('#perspective_switch').each(function() {
       url = $(this).attr('action');
@@ -1356,7 +1401,7 @@ $(function() {
   $(".module-block").each(function() {
       doc = $(this)
       if ($("form").length) {
-        treeio.prepare_forms(doc);
+        // treeio.prepare_forms(doc);
         treeio.prepare_comments(doc);
         if ($("textarea").length) {
           treeio.put_mce(doc);
@@ -1371,7 +1416,7 @@ $(function() {
       treeio.prepare_invites(doc);
       treeio.prepare_popups(doc);
       treeio.showhidejs(doc);
-      module_name = $(this).attr('id').substring(7);
+      module_name = $(this).attr2('id').substring(7);
       treeio.prepare_module_stuff(module_name);
       // Hide splash in case something went wrong
       window.setTimeout("$('#loading-splash').fadeOut();", 5000);

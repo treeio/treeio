@@ -5,7 +5,7 @@
 
 from datetime import datetime, time
 from dajaxice.core import dajaxice_functions
-from dajax.core.Dajax import Dajax
+from dajax.core import Dajax
 from treeio.projects.models import Task, Milestone
 from django.contrib import messages
 from django.utils.translation import ugettext as _

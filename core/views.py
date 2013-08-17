@@ -10,7 +10,7 @@ Core module views
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.sessions.models import Session
 from django.contrib.sites.models import RequestSite
-from django.contrib.csrf.middleware import CsrfMiddleware as csrf
+# from django.contrib.csrf.middleware import CsrfMiddleware as csrf
 from django.utils.encoding import smart_unicode
 from django.views.decorators.csrf import csrf_protect
 from django.views.decorators.cache import cache_control
@@ -215,7 +215,7 @@ def ajax_popup(request, popup_id='', url='/'):
         kwargs['response_format'] = 'ajax'
         response = view(*args, **kwargs)
             
-        response = csrf().process_response(request, response)
+        # response = csrf().process_response(request, response)
     
     module_inner = ""
     regexp = r"<!-- module_content_inner -->(?P<module_inner>.*?)<!-- /module_content_inner -->"
@@ -279,7 +279,7 @@ def mobile_view(request, url='/'):
     kwargs['response_format'] = 'html'
     response = view(*args, **kwargs)
     
-    response = csrf().process_response(request, response)
+    # response = csrf().process_response(request, response)
     
     if response.status_code == 302 and not response['Location'][:2] == '/m':
         response['Location'] = '/m' + response['Location']  

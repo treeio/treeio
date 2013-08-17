@@ -1,14 +1,14 @@
---- ./db/models/fields/related.py	2011-11-08 20:35:16.000000000 +0000
-+++ ./db/models/fields/related.py	2011-11-08 20:44:53.000000000 +0000
-@@ -323,8 +323,9 @@
-         # If null=True, we can assign null here, but otherwise the value needs
-         # to be an instance of the related class.
-         if value is None and self.field.null == False:
--            raise ValueError('Cannot assign None: "%s.%s" does not allow null values.' %
--                                (instance._meta.object_name, self.field.name))
-+            pass # Sorry, Django!
-+            #raise ValueError('Cannot assign None: "%s.%s" does not allow null values.' %
-+            #                    (instance._meta.object_name, self.field.name))
-         elif value is not None and not isinstance(value, self.field.rel.to):
-             raise ValueError('Cannot assign "%r": "%s.%s" must be a "%s" instance.' %
-                                 (value, instance._meta.object_name,
+--- ./db/models/fields/related.py	2013-08-13 21:05:59.418270268 +0100
++++ ./db/models/fields/related.py	2013-08-13 21:05:46.298269910 +0100
+@@ -309,8 +309,9 @@
+ 
+         related_pk = getattr(instance, self.related.field.rel.get_related_field().attname)
+         if related_pk is None:
+-            raise ValueError('Cannot assign "%r": "%s" instance isn\'t saved in the database.' %
+-                                (value, instance._meta.object_name))
++            pass
++            #raise ValueError('Cannot assign "%r": "%s" instance isn\'t saved in the database.' %
++                                #(value, instance._meta.object_name))
+ 
+         # Set the value of the related field to the value of the related object's related field
+         setattr(value, self.related.field.attname, related_pk)

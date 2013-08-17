@@ -1,3 +1,5 @@
+{% load i18n %}
+{% load dajaxice_templatetags %}
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
@@ -26,10 +28,12 @@
     <link rel="stylesheet" href="/static/ie.css" media="all" />
     <![endif]-->
 	
-	{# Debug 
-    <script src="/static/js/jquery-1.4.2.js" type="text/javascript" charset="utf-8"></script>
-    <script src="/static/js/jquery.form.js" type="text/javascript" charset="utf-8"></script>
-    <script src="/static/js/jquery-ui-full.min.js" type="text/javascript" charset="utf-8"></script>
+	{# Debug  #}
+    <script src="/static/js/jquery-1.10.2.min.js"></script>
+    <script src="/static/js/jquery-migrate-1.2.1.min.js"></script>
+    <script src="/static/js/jquery.cookie.js" type="text/javascript" charset="utf-8"></script>
+    <script src="/static/js/jquery.form.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="/static/js/jquery-ui-1.10.3/ui/minified/jquery-ui.min.js"></script>
     <script src="/static/js/jquery-ui-timepicker-addon.min.js" type="text/javascript" charset="utf-8"></script>
     <script src="/static/js/jquery.gritter.min.js" type="text/javascript" charset="utf-8"></script>
     <script src="/static/js/tinymce/jscripts/tiny_mce/tiny_mce.js" type="text/javascript" charset="utf-8"></script>
@@ -38,17 +42,16 @@
 	<script src="/static/js/colorbox/jquery.colorbox-min.js" type="text/javascript" charset="utf-8"></script>
     <script src="/static/js/hashchange.js" type="text/javascript" charset="utf-8"></script>
     <script src="/static/js/highcharts.js" type="text/javascript" charset="utf-8"></script>
-  	<script src="/static/js/treeio.js" type="text/javascript" charset="utf-8"></script>
+  	<script src="/static/js/hardtree.js" type="text/javascript" charset="utf-8"></script>
     <script src="/static/js/jquery.flexbox.min.js" type="text/javascript" charset="utf-8"></script>
     <script src="/static/js/jquery.ba-serializeobject.js" type="text/javascript" charset="utf-8"></script>
     <script src="/static/js/jquery.dajax.core.js" type="text/javascript" charset="utf-8"></script>
-    <script src="/static/js/chat.js" type="text/javascript" charset="utf-8"></script>
     <script src="/static/js/date.js" type="text/javascript" charset="utf-8"></script>
     <script src="/static/js/jquery.ganttView.js" type="text/javascript" charset="utf-8"></script> 
 	<script src="/static/js/fileuploader.js" type="text/javascript" charset="utf-8"></script>
 	<script src="/static/js/jquery.tipsy.js" type="text/javascript" charset="utf-8"></script>
-	#}
-	{# Production #}
+	
+	{# Production 
   	<script src="/static/js/jquery-stuff-and-ui.min.js" type="text/javascript" charset="utf-8"></script>
     <script src="/static/js/tinymce/jscripts/tiny_mce/tiny_mce.js" type="text/javascript" charset="utf-8"></script>
   	<script src="/static/js/tinymce/jscripts/tiny_mce/jquery.tinymce.js" type="text/javascript" charset="utf-8"></script>
@@ -56,9 +59,8 @@
   	<script src="/static/js/12o_super_mini.js" type="text/javascript" charset="utf-8"></script>
     <script src="/static/js/jquery.ba-serializeobject.js" type="text/javascript" charset="utf-8"></script>
     <script src="/static/js/jquery.dajax.core.js" type="text/javascript" charset="utf-8"></script>
-     
-    {{ dajaxice_js_import() }}
-	
+    #} 
+    {{ dajaxice_js_import() }}	
 </head>
 
 <body>
@@ -100,36 +102,7 @@
 			<div class="toolbar-links">
 				{{ core_perspective_switch() }}
 						  
-				<a id="open-chat"><img src="/static/icons/chat.gif" id="chat-icon" class="margin-bottom" /> {% trans %}Chat{% endtrans %}</a>
-
-			<div id="chat-frame" class="chat">
-			
-				<div id="chat-title-block">
-				  <div id="chat-title">{% trans %}Chat{% endtrans %}</div>
-				  <div id="chat-close"></div>
-				  <div class="clear"></div>
-				</div>
-				    	
-				<div class="chat-users">
-				    <p>{% trans %}No users online{% endtrans %}</p>
-				</div>
-				
-				<div class="chat-window">		
-					<div class="chat-tabs" id="chat-tabs">
-				    	<ul></ul>
-					</div>
-				  	<p style="margin-left:5px">
-				  		{% trans %}Click on user in userlist to start conference{% endtrans %}.
-					</p>	
-					<div class="chat-input">
-						<form>
-								<input type="text" id="chat-input-msg" />
-							<img src="/static/icons/chat.gif" />
-				    	</form>
-					</div>		
-				</div>
-			</div>
-        <span class="small">{% trans %}Powered by {% endtrans %}<a href="http://tree.io/" style="padding: 0;">Tree.io</a></span>
+        <span class="small powered-by">{% trans %}Powered by {% endtrans %}<a href="http://tree.io/" style="padding: 0;">Tree.io</a></span>
 		</div>
 		  <span class="hide_toolbar">
 		  <img src="/static/icons/down.gif"/>

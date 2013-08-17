@@ -1,3 +1,4 @@
+{% load i18n %}
 {% for event in paginate(events) %}
 <div class="content-list-item content-list-item-{{ loop.cycle('odd', 'even') }}">
     <div class="content-list-tick">

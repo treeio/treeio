@@ -1,3 +1,4 @@
+{% load i18n %}
 {% if groups %}
 {% for grouper, list in groups %}
 <h4>{{groupname|replace('_',' ')|title()}}: {% if grouper %}{{grouper}}{% else %}None{% endif %}</h4>

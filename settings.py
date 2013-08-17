@@ -28,9 +28,10 @@ from core.db import DatabaseDict
 DATABASES = DatabaseDict()
 
 import sys
-if 'test' in sys.argv or 'test_coverage' in sys.argv: #Covers regular testing and django-coverage
+TESTING = 'test' in sys.argv or 'test_coverage' in sys.argv #Covers regular testing and django-coverage
+if TESTING: 
     DATABASES = {'default':{}}
-    DATABASES['default']['ENGINE'] = 'sqlite3'
+    DATABASES['default']['ENGINE'] = 'django.db.backends.sqlite3'
 
 # Local time zone for this installation. Choices can be found here:
 # http://en.wikipedia.org/wiki/List_of_tz_zones_by_name
@@ -57,8 +58,13 @@ OAUTH_DATA_STORE = 'treeio.core.api.auth.store.store'
 
 # Static files location for Tree.io
 STATIC_ROOT =path.join(PROJECT_ROOT,'static')
-STATIC_URL =path.join(PROJECT_ROOT,'static')
+STATIC_URL =path.join(PROJECT_ROOT,'static/')
 STATIC_DOC_ROOT = path.join(PROJECT_ROOT, 'static')
+STATICFILES_FINDERS = (
+    'django.contrib.staticfiles.finders.FileSystemFinder',
+    'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+    'dajaxice.finders.DajaxiceFinder',
+)
 
 # Absolute path to the directory that holds media.
 # Example: "/home/media/media.lawrence.com/"
@@ -85,41 +91,57 @@ ADMIN_MEDIA_PREFIX = '/static-admin/'
 SECRET_KEY = 'z_#oc^n&z0c2lix=s$4+z#lsb9qd32qtb!#78nk7=5$_k3lq16'
 
 # List of callables that know how to import templates from various sources.
-TEMPLATE_LOADERS = (
-    'django.template.loaders.filesystem.load_template_source',
-    'django.template.loaders.app_directories.load_template_source',
-    'django.template.loaders.eggs.load_template_source',
-)
-
+# TEMPLATE_LOADERS = (
+#     'django.template.loaders.filesystem.load_template_source',
+#     'django.template.loaders.app_directories.load_template_source',
+#     'django.template.loaders.eggs.load_template_source',
+# )
+if DEBUG or TESTING:
+    TEMPLATE_LOADERS = [
+        'django.template.loaders.filesystem.Loader',
+        'django.template.loaders.app_directories.Loader',
+        'django.template.loaders.eggs.Loader',
+    ]
+else:
+    TEMPLATE_LOADERS = [
+        ('django.template.loaders.cached.Loader',(
+            'django.template.loaders.filesystem.Loader',
+            'django.template.loaders.app_directories.Loader',
+            'django.template.loaders.eggs.Loader',
+            )),
+    ]
 
 TEMPLATE_CONTEXT_PROCESSORS = (
-    "django.core.context_processors.auth",
-    "django.core.context_processors.debug",
+    "django.contrib.auth.context_processors.auth",
     "django.core.context_processors.i18n",
+    "django.core.context_processors.debug",
     "django.core.context_processors.media",
     "django.core.context_processors.request",
+    'django.contrib.messages.context_processors.messages',
 )
 
 
 MIDDLEWARE_CLASSES = (
+    'django.contrib.sessions.middleware.SessionMiddleware',
+    'treeio.core.middleware.user.AuthMiddleware',
+    'django.contrib.auth.middleware.AuthenticationMiddleware',
+    "treeio.core.middleware.user.LanguageMiddleware",
+    "django.middleware.locale.LocaleMiddleware",
+    'django.middleware.common.CommonMiddleware',
     'johnny.middleware.LocalStoreClearMiddleware',
     'johnny.middleware.QueryCacheMiddleware',
     'django.middleware.gzip.GZipMiddleware',
 #    'treeio.core.middleware.domain.DomainMiddleware',
     'treeio.core.middleware.user.SSLMiddleware',
-    'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
-    'django.contrib.sessions.middleware.SessionMiddleware',
-    'treeio.core.middleware.user.AuthMiddleware',
-    'django.contrib.auth.middleware.AuthenticationMiddleware',
     'treeio.core.middleware.chat.ChatAjaxMiddleware',
     "django.contrib.messages.middleware.MessageMiddleware",
     "treeio.core.middleware.modules.ModuleDetect",
     "minidetector.Middleware",
     "treeio.core.middleware.user.CommonMiddleware",
     "treeio.core.middleware.user.PopupMiddleware",
-    "treeio.core.middleware.user.LanguageMiddleware",
 )
+
 
 ROOT_URLCONF = 'treeio.urls'
 
