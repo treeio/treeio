@@ -26,8 +26,8 @@ from django.template.defaultfilters import removetags
 
 EMAIL_SERVER = getattr(settings, 'EMAIL_SERVER', '127.0.0.1')
 IMAP_SERVER = getattr(settings, 'IMAP_SERVER', '')
-EMAIL_USERNAME = getattr(settings, 'EMAIL_USERNAME', '')
-EMAIL_PASSWORD = getattr(settings, 'EMAIL_PASSWORD', '')
+EMAIL_USERNAME = getattr(settings, 'EMAIL_USERNAME', None)
+EMAIL_PASSWORD = getattr(settings, 'EMAIL_PASSWORD', None)
 EMAIL_FROM = getattr(settings, 'EMAIL_FROM', 'noreply@tree.io')
 DEFAULT_SIGNATURE = getattr(settings, 'DEFAULT_SIGNATURE', '')
 
@@ -117,7 +117,8 @@ class BaseEmail(Thread):
             except smtplib.SMTPException:
                 pass
             s.ehlo()
-            s.login(self.username, self.password)
+            if self.username != None:
+                s.login(self.username, self.password)
             s.sendmail(self.fromaddr, self.toaddr, msg.as_string())
             s.close()
             return True
