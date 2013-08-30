@@ -430,8 +430,8 @@ CACHE_KEY_PREFIX = 'treeio_'
 
 EMAIL_SERVER = 'localhost'
 IMAP_SERVER = ''
-EMAIL_USERNAME = ''
-EMAIL_PASSWORD = ''
+EMAIL_USERNAME = None
+EMAIL_PASSWORD = None
 EMAIL_FROM = 'noreply@tree.io'
 DEFAULT_SIGNATURE = """
 Thanks!
