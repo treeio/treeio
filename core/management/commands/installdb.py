@@ -28,21 +28,25 @@ class Command(BaseCommand):
         }
 
         db = {}
-        db['ENGINE'] = raw_input('Enter database engine <mysql,postgresql,oracle,sqlite3> (defaults to sqlite3): ')
+        db['ENGINE'] = raw_input('Enter database engine <mysql,postgresql,postgresql_psycopg2,oracle,sqlite3> (defaults to sqlite3): ')
         if not db['ENGINE']:
             db['ENGINE'] = 'sqlite3'
 
-        if db['ENGINE'] in ('mysql', 'postgresql', 'oracle', 'sqlite3'):
+        if db['ENGINE'] in ('mysql', 'postgresql', 'postgresql_psycopg2', 'oracle', 'sqlite3'):
             db['ENGINE'] = 'django.db.backends.' + db['ENGINE']
         else:
-            raise CommandError('Unkown database engine: %s' % db['ENGINE'])
+            raise CommandError('Unknown database engine: %s' % db['ENGINE'])
 
-        db['NAME'] = raw_input('Enter database name (defaults to treeio.db): ')
-
-        if not db['NAME']:
-            db['NAME'] = 'treeio.db'
+        if db['ENGINE'].endswith('sqlite3'):
+            db['NAME'] = raw_input('Enter database name (defaults to treeio.db): ')
+            if not db['NAME']:
+                db['NAME'] = 'treeio.db'
 
         if not db['ENGINE'].endswith('sqlite3'):
+            db['NAME'] = raw_input('Enter database name (defaults to treeio): ')
+            if not db['NAME']:
+                db['NAME'] = 'treeio'
+
             db['USER'] = raw_input('Database user (defaults to treeio): ')
             if not db['USER']:
                 db['USER'] = 'treeio'
