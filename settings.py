@@ -371,6 +371,8 @@ HARDTREE_HELP_SOURCE = 'http://www.tree.io/help'
 HARDTREE_LANGUAGES = (('en', u'English'), ('ru', u'Русский'), ('es', u'Español'), ('de', u'Deutsche'), ('zh_CN', u'简体中文'), ('fr', u'Français'), ('el', u'ελληνικά'), ('pt_BR', u'português'))
 HARDTREE_LANGUAGES_DEFAULT = 'en'
 
+LOCALE_PATHS = (PROJECT_ROOT + "/locale",)
+
 HARDTREE_AJAX_RELOAD_ON_REDIRECT = ('home',
                                     'user_login',
                                     'account_settings_view',
