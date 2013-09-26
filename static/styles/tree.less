@@ -10,6 +10,13 @@
 	-o-box-shadow: @depth;
 	box-shadow: @depth;
 }
+.shadow-x (@depth: 0 2px 4px rgba(0,0,0,.3), @rest){
+	-webkit-box-shadow: @depth, @rest;
+	-moz-box-shadow: @depth, @rest;
+	-o-box-shadow: @depth, @rest;
+	box-shadow: @depth, @rest;
+}
+
 .bordered (@color) {
 	border: 1px solid @color;
 }
@@ -1232,7 +1239,7 @@ a.password-link:active, a.password-link-active {
 	font-weight: bold;
 	.background-gradient(#6693BC, #5E87B0);
 	.bordered(#336387);
-	.shadow(0 1px 0 rgba(0, 0, 0, 0.1), 0 1px 0 #8A9CC2 inset);
+	.shadow-x(0 1px 0 rgba(0, 0, 0, 0.1), 0 1px 0 #8A9CC2 inset);
 }
 
 .content-form input[type="submit"]:hover {
@@ -1249,7 +1256,7 @@ a.password-link:active, a.password-link-active {
 
 .special input[type="submit"] {
 	.background-gradient(#75AE5C, #67A54B);
-	.shadow(0 1px 0 rgba(0, 0, 0, 0.1), 0 1px 0 #98C286 inset);
+	.shadow-x(0 1px 0 rgba(0, 0, 0, 0.1), 0 1px 0 #98C286 inset);
 	.bordered(#3B6E22);
 }
 
@@ -2235,6 +2242,10 @@ th, td {
 	padding: 7px; /* border-size */
 }
 
+.popup-block .ui-autocomplete {
+  z-index: 99999;
+}
+
 .popup-close, .popup-link-open {
   background: url("/static/modules/popup.gif") no-repeat scroll 0 0 transparent;
   width: 16px;
@@ -2450,7 +2461,7 @@ li.notify-caller label {
 	rgba(255,255,255,0) 15px,
 	rgba(255,255,255,0) 30px
 	), -moz-linear-gradient(#9bdd62 0%, #74d04c 100%);
-	.shadow(inset 0px 1px 0px 0px #74d04c, inset 0px -1px 1px #74d04c);
+	.shadow-x(inset 0px 1px 0px 0px #74d04c, inset 0px -1px 1px #74d04c);
 }
 
 .meter-text {
