@@ -47,6 +47,7 @@ Install any dependencies
 1.  `sudo apt-get install python build-essential python-dev`
 1.  `sudo apt-get build-dep python-lxml python-imaging`
 1.  `sudo apt-get install git python-flup python-pip python-virtualenv`
+1.  Install system prerequisites for image processing module according to [instuctions](https://github.com/python-imaging/Pillow#platform-specific-instructions)
 
 
 Install services (In Production)
