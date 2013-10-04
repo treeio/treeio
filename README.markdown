@@ -47,7 +47,6 @@ Install any dependencies
 1.  `sudo apt-get install python build-essential python-dev`
 1.  `sudo apt-get build-dep python-lxml python-imaging`
 1.  `sudo apt-get install git python-flup python-pip python-virtualenv`
-1.  Install system prerequisites for image processing module according to [instuctions](https://github.com/python-imaging/Pillow#platform-specific-instructions)
 
 
 Install services (In Production)
@@ -66,6 +65,7 @@ Create a clone of this repository
 2.  Go into this directory `cd treeio` (The directory structure should be `treeio/treeio/<project files>`)
 2.  Create a virtual environment to keep your packages & versions thereof separate from the rest of the system `virtualenv venv`
 3.  Activate the virtual environment `source ./venv/bin/activate`
+4.  Install system prerequisites for image processing module according to [instuctions](https://github.com/python-imaging/Pillow#platform-specific-instructions)
 1.  Install dependencies: `pip install -r requirements.pip`
 2.  ```DJANGO_DIR=`python -c "import django; import os; print os.path.dirname(django.__file__)"` ```
 1.  Run the patch: `python related_fields_patch.py $DJANGO_DIR`
