@@ -18,8 +18,8 @@ Return a PIL Image class instance which have generated identicon image.
 ```size``` specifies `patch size`. Generated image size is 3 * ```size```.
 """
 # g
-# PIL Modules
-import Image, ImageDraw, ImagePath, ImageColor
+# Pillow Modules
+from PIL import Image, ImageDraw, ImagePath, ImageColor
 
 __all__ = ['render_identicon', 'IdenticonRendererBase']
 
