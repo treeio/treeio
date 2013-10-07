@@ -185,7 +185,7 @@ class ContactForm(forms.Form):
         destination = open(settings.MEDIA_ROOT + filepath, 'wb+')
         for chunk in file.chunks():
             destination.write(chunk)
-            destination.close()
+        destination.close()
         return settings.MEDIA_URL + filepath
     
     def _image_resize(self, filepath):
