@@ -110,7 +110,7 @@ Acknowledgements
 
 * Spanish translation contributed to by @sytabaresa
 * Greek translation contributed by Nick Apostolakis http://nick.oncrete.gr
-* Brasilian translation contributed by Davi Ribeiro
+* Brasilian Portugese translation contributed by Davi Ribeiro
 * Simple Chinese translation contributed by @sunliwen
 * French translation contributed by morago.com
 * An [achievements addon](https://github.com/pascalmouret/treeio-achievements) is available courtesy of Pascal Mouret as shown in our [Djangocon Europe video](http://klewel.com/conferences/djangocon-2012/index.php?talkID=15).
