@@ -14,7 +14,7 @@ from django.utils.html import escape
 from jinja2.loaders import TemplateNotFound
 from treeio.core.models import Module
 from treeio.core.rss import verify_secret_key
-import simplejson as json
+import json
 import re
 
 def treeio_login_required(f):

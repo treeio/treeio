@@ -13,7 +13,7 @@ from treeio.core.conf import settings
 from treeio.core.models import UpdateRecord
 from treeio.core.ajax.converter import preprocess_context as preprocess_context_ajax, convert_to_ajax
 import hashlib, random, os, codecs, re, subprocess
-import simplejson as json
+import json
 
 
 def _preprocess_context_html(context):

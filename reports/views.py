@@ -22,7 +22,7 @@ from treeio.reports.models import Report, Field, Model, Chart
 from treeio.reports.helpers import dumps, loads, aggregate_functions, number_field_regex
 from itertools import groupby
 from datetime import datetime
-import simplejson as json
+import json
 import re
 
 def _get_default_context(request):

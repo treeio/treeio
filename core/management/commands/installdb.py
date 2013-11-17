@@ -5,7 +5,7 @@
 
 from django.core.management.base import BaseCommand, CommandError
 from treeio.core.conf import settings
-import simplejson as json
+import json
 import subprocess
 from os import path
 import sys

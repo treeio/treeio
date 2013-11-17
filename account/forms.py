@@ -6,7 +6,7 @@
 """
 Core forms
 """
-import simplejson as json
+import json
 
 from django import forms
 from treeio.account.models import NotificationSetting, notification_types

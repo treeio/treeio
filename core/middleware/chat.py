@@ -5,7 +5,7 @@
 
 # -*- coding:utf-8 -*-
 
-import simplejson as json
+import json
 from time import sleep
 from django.http import HttpResponse, HttpRequest
 from treeio.core.conf import settings
