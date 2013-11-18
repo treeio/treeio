@@ -51,7 +51,7 @@ SITE_ID = 1
 USE_I18N = True
 FORMAT_MODULE_PATH = 'treeio.formats'
 
-HARDTREE_API_CONSUMER_DB = 'gis'
+HARDTREE_API_CONSUMER_DB = 'default'
 # OAUTH_DATA_STORE is needed for correct database setting up
 OAUTH_DATA_STORE = 'treeio.core.api.auth.store.store'
 
