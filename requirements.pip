@@ -15,7 +15,6 @@ django-simple-captcha
 unidecode
 django-websocket
 docutils
-simplejson
 sphinx
 johnny-cache
 django-pandora

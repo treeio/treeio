@@ -21,7 +21,7 @@ from treeio.core.views import ajax_popup
 from treeio.core.conf import settings
 from django.db import models
 from django.core.cache import cache
-import simplejson as json
+import json
 import time
 
 

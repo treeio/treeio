@@ -7,7 +7,7 @@
 API Project Management: test suites
 """
 from time import sleep
-import simplejson as json
+import json
 from datetime import datetime
 from django.test import TestCase
 from django.test.client import Client

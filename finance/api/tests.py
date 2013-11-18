@@ -5,7 +5,7 @@
 
 #-*- coding: utf-8 -*-
 
-import simplejson as json
+import json
 from django.test import TestCase
 from django.test.client import Client
 from django.core.urlresolvers import reverse

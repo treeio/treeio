@@ -18,7 +18,7 @@ from treeio.core.dashboard.forms import WidgetForm
 from django.utils.translation import ugettext as _
 from treeio.core.conf import settings
 from jinja2 import Markup
-import simplejson as json
+import json
 import re
 import copy
 

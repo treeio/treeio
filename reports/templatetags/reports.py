@@ -18,7 +18,7 @@ from datetime import datetime, timedelta
 import hashlib
 from treeio.reports.helpers import loads, aggregate_functions, number_field_regex
 from treeio.reports.views import _get_report_content
-import simplejson as json
+import json
 
 register = template.Library()
 

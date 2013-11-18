@@ -28,7 +28,7 @@ from treeio.identities.models import ContactValue
 from jinja2 import Markup
 from os.path import join
 import re
-import simplejson as json
+import json
 import urllib2
 import random
 

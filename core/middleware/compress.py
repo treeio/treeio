@@ -11,7 +11,7 @@ from treeio.core.conf import settings
 
 def _minify_json(data):
     "Compress JSON"
-    import simplejson as json
+    import json
     return json.dumps(json.loads(data))
  
 class SpacelessMiddleware(object):

@@ -21,7 +21,7 @@ from treeio.projects.forms import ProjectForm, MilestoneForm, TaskForm, FilterFo
                                     MassActionForm, TaskTimeSlotForm, TaskStatusForm, SettingsForm
 from django.utils.translation import ugettext as _
 from datetime import datetime
-import simplejson as json
+import json
 
 
 def _get_filter_query(args):
