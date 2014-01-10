@@ -114,3 +114,7 @@ Acknowledgements
 * Simple Chinese translation contributed by @sunliwen
 * French translation contributed by morago.com
 * An [achievements addon](https://github.com/pascalmouret/treeio-achievements) is available courtesy of Pascal Mouret as shown in our [Djangocon Europe video](http://klewel.com/conferences/djangocon-2012/index.php?talkID=15).
+
+
+[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/treeio/treeio/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
+
