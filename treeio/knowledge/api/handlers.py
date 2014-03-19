@@ -7,12 +7,9 @@
 
 from __future__ import absolute_import, with_statement
 
-__all__ = ['KnowledgeFolderHandler',
-           'KnowledgeCategoryHandler',
-           'KnowledgeItemHandler',
-           ]
+__all__ = ['KnowledgeFolderHandler', 'KnowledgeCategoryHandler',
+           'KnowledgeItemHandler']
 
-from treeio.core.api.utils import rc
 from treeio.core.api.handlers import ObjectHandler, getOrNone
 from treeio.knowledge.models import KnowledgeFolder, KnowledgeCategory, KnowledgeItem
 from treeio.knowledge.forms import KnowledgeFolderForm, KnowledgeItemForm, KnowledgeCategoryForm, \
@@ -20,14 +17,16 @@ from treeio.knowledge.forms import KnowledgeFolderForm, KnowledgeItemForm, Knowl
 
 
 class KnowledgeFolderHandler(ObjectHandler):
-
     "Entrypoint for KnowledgeFolder model."
     model = KnowledgeFolder
     form = KnowledgeFolderForm
 
-    @staticmethod
-    def resource_uri():
-        return ('api_knowledge_folders', ['id'])
+    @classmethod
+    def resource_uri(cls, obj=None):
+        object_id = "id"
+        if obj is not None:
+            object_id = obj.id
+        return ('api_knowledge_folders', [object_id])
 
     def check_create_permission(self, request, mode):
         return True
@@ -44,14 +43,16 @@ class KnowledgeFolderHandler(ObjectHandler):
 
 
 class KnowledgeCategoryHandler(ObjectHandler):
-
     "Entrypoint for KnowledgeCategory model."
     model = KnowledgeCategory
     form = KnowledgeCategoryForm
 
-    @staticmethod
-    def resource_uri():
-        return ('api_knowledge_categories', ['id'])
+    @classmethod
+    def resource_uri(cls, obj=None):
+        object_id = "id"
+        if obj is not None:
+            object_id = obj.id
+        return ('api_knowledge_categories', [object_id])
 
     def flatten_dict(self, request):
         return {'data': request.data}
@@ -61,14 +62,16 @@ class KnowledgeCategoryHandler(ObjectHandler):
 
 
 class KnowledgeItemHandler(ObjectHandler):
-
     "Entrypoint for KnowledgeItem model."
     model = KnowledgeItem
     form = KnowledgeItemForm
 
-    @staticmethod
-    def resource_uri():
-        return ('api_knowledge_items', ['id'])
+    @classmethod
+    def resource_uri(cls, obj=None):
+        object_id = "id"
+        if obj is not None:
+            object_id = obj.id
+        return ('api_knowledge_items', [object_id])
 
     def flatten_dict(self, request):
         return {'data': request.data}

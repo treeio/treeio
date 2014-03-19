@@ -11,6 +11,7 @@ import json
 from datetime import datetime
 from django.test import TestCase
 from django.test.client import Client
+from django.test.utils import override_settings
 from django.core.urlresolvers import reverse
 from django.contrib.auth.models import User as DjangoUser
 
@@ -19,8 +20,8 @@ from treeio.core.models import User, Group, Perspective, ModuleSetting, Object
 from treeio.projects.models import Project, Milestone, Task, TaskStatus, TaskTimeSlot
 
 
+@override_settings(HARDTREE_API_AUTH_ENGINE='basic')
 class ProjectsAPITest(TestCase):
-
     "Projects functional tests for api"
     username = "api_test"
     password = "api_password"

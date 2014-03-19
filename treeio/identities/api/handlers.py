@@ -7,11 +7,7 @@
 
 from __future__ import absolute_import, with_statement
 
-__all__ = ['ContactFieldHandler',
-           'ContactTypeHandler',
-           'CategoryHandler',
-           'ContactHandler',
-           ]
+__all__ = ['ContactFieldHandler', 'ContactTypeHandler', 'ContactHandler']
 
 from treeio.core.api.utils import rc
 from treeio.identities.models import ContactField, ContactType, Contact, ContactValue
@@ -20,15 +16,16 @@ from treeio.core.api.handlers import ObjectHandler, getOrNone
 
 
 class ContactFieldHandler(ObjectHandler):
-
     "Entrypoint for ContactField model."
-
     model = ContactField
     form = ContactFieldForm
 
-    @staticmethod
-    def resource_uri():
-        return ('api_identities_fields', ['id'])
+    @classmethod
+    def resource_uri(cls, obj=None):
+        object_id = "id"
+        if obj is not None:
+            object_id = obj.id
+        return ('api_identities_fields', [object_id])
 
     def flatten_dict(self, request):
         return {'data': super(ObjectHandler, self).flatten_dict(request.data)}
@@ -38,32 +35,35 @@ class ContactFieldHandler(ObjectHandler):
 
 
 class ContactTypeHandler(ObjectHandler):
-
     "Entrypoint for ContactType model."
-
     model = ContactType
     form = ContactTypeForm
     fields = ('id',) + ContactTypeForm._meta.fields
 
-    @staticmethod
-    def resource_uri():
-        return ('api_identities_types', ['id'])
+    @classmethod
+    def resource_uri(cls, obj=None):
+        object_id = "id"
+        if obj is not None:
+            object_id = obj.id
+        return ('api_identities_types', [object_id])
 
     def check_create_permission(self, request, mode):
         return request.user.get_profile().is_admin('treeio.identities')
 
 
 class ContactHandler(ObjectHandler):
-
     "Entrypoint for Contact model."
     model = Contact
     form = ContactForm
     fields = ['id', ('contactvalue_set', ('name', 'value'))] + \
         [i.name for i in model._meta.local_fields if i.name != 'object_ptr']
 
-    @staticmethod
-    def resource_uri():
-        return ('api_identities_contacts', ['id'])
+    @classmethod
+    def resource_uri(cls, obj=None):
+        object_id = "id"
+        if obj is not None:
+            object_id = obj.id
+        return ('api_identities_contacts', [object_id])
 
     def create_instance(self, request, *args, **kwargs):
         return None

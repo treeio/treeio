@@ -7,14 +7,9 @@
 
 from __future__ import absolute_import, with_statement
 
-__all__ = ['ItemFieldHandler',
-           'ItemTypeHandler',
-           'ItemTypeHandler',
-           'ItemStatusHandler',
-           'ItemServicingHandler',
-           'ItemHandler',
-           'LocationHandler',
-           ]
+__all__ = ['ItemFieldHandler', 'ItemTypeHandler', 'ItemTypeHandler',
+           'ItemStatusHandler', 'ItemServicingHandler', 'ItemHandler',
+           'LocationHandler']
 
 from treeio.core.api.utils import rc
 from treeio.core.api.handlers import ObjectHandler, getOrNone
@@ -31,73 +26,80 @@ class InfrastructureCommonHandler(ObjectHandler):
 
 
 class ItemFieldHandler(InfrastructureCommonHandler):
-
     "Entrypoint for ItemField model."
     model = ItemField
     form = ItemFieldForm
 
-    @staticmethod
-    def resource_uri():
-        return ('api_infrastructure_fields', ['id'])
+    @classmethod
+    def resource_uri(cls, obj=None):
+        object_id = "id"
+        if obj is not None:
+            object_id = obj.id
+        return ('api_infrastructure_fields', [object_id])
 
     def flatten_dict(self, request):
         return {'data': super(ObjectHandler, self).flatten_dict(request.data)}
 
 
 class ItemTypeHandler(InfrastructureCommonHandler):
-
     "Entrypoint for ItemType model."
-
     model = ItemType
     form = ItemTypeForm
 
     fields = ('id',) + ItemTypeForm._meta.fields
 
-    @staticmethod
-    def resource_uri():
-        return ('api_infrastructure_types', ['id'])
+    @classmethod
+    def resource_uri(cls, obj=None):
+        object_id = "id"
+        if obj is not None:
+            object_id = obj.id
+        return ('api_infrastructure_types', [object_id])
 
 
 class ItemStatusHandler(InfrastructureCommonHandler):
-
     "Entrypoint for ItemStatus model."
-
     model = ItemStatus
     form = ItemStatusForm
 
-    @staticmethod
-    def resource_uri():
-        return ('api_infrastructure_statuses', ['id'])
+    @classmethod
+    def resource_uri(cls, obj=None):
+        object_id = "id"
+        if obj is not None:
+            object_id = obj.id
+        return ('api_infrastructure_statuses', [object_id])
 
     def flatten_dict(self, request):
         return {'data': super(ObjectHandler, self).flatten_dict(request.data)}
 
 
 class ItemServicingHandler(InfrastructureCommonHandler):
-
     "Entrypoint for ItemServicing model."
     model = ItemServicing
     form = ServiceRecordForm
     fields = ('id',) + form._meta.fields
 
-    @staticmethod
-    def resource_uri():
-        return ('api_infrastructure_service_records', ['id'])
+    @classmethod
+    def resource_uri(cls, obj=None):
+        object_id = "id"
+        if obj is not None:
+            object_id = obj.id
+        return ('api_infrastructure_service_records', [object_id])
 
 
 class ItemHandler(ObjectHandler):
-
     "Entrypoint for Item model."
-
     model = Item
     form = ItemForm
 
     fields = ['id', ('itemvalue_set', ('name', 'value'))] + \
         [i.name for i in Item._meta.local_fields if i.name != 'object_ptr']
 
-    @staticmethod
-    def resource_uri():
-        return ('api_infrastructure_items', ['id'])
+    @classmethod
+    def resource_uri(cls, obj=None):
+        object_id = "id"
+        if obj is not None:
+            object_id = obj.id
+        return ('api_infrastructure_items', [object_id])
 
     def create(self, request, *args, **kwargs):
         if request.data is None:
@@ -146,15 +148,16 @@ class ItemHandler(ObjectHandler):
 
 
 class LocationHandler(ObjectHandler):
-
     "Entrypoint for Location model."
-
     model = Location
     form = LocationForm
 
-    @staticmethod
-    def resource_uri():
-        return ('api_infrastructure_locations', ['id'])
+    @classmethod
+    def resource_uri(cls, obj=None):
+        object_id = "id"
+        if obj is not None:
+            object_id = obj.id
+        return ('api_infrastructure_locations', [object_id])
 
     def flatten_dict(self, request):
         dct = super(LocationHandler, self).flatten_dict(request)

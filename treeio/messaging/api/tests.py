@@ -10,6 +10,7 @@ Messaging: test api
 import json
 from django.test import TestCase
 from django.test.client import Client
+from django.test.utils import override_settings
 from django.core.urlresolvers import reverse
 from django.contrib.auth.models import User as DjangoUser
 from treeio.core.models import User, Group, Perspective, ModuleSetting, Object
@@ -17,6 +18,7 @@ from treeio.messaging.models import Message, MessageStream, MailingList
 from treeio.identities.models import Contact, ContactType
 
 
+@override_settings(HARDTREE_API_AUTH_ENGINE='basic')
 class MessagingApiTest(TestCase):
 
     "Messaging functional tests for api"

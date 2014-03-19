@@ -10,16 +10,16 @@ Infrastructure: test api
 import json
 from django.test import TestCase
 from django.test.client import Client
+from django.test.utils import override_settings
 from django.core.urlresolvers import reverse
 from django.contrib.auth.models import User as DjangoUser
 from treeio.core.models import User, Group, Perspective, ModuleSetting, Object
 from treeio.infrastructure.models import Item, ItemValue, ItemField, ItemType, ItemStatus, ItemServicing
 
 
+@override_settings(HARDTREE_API_AUTH_ENGINE='basic')
 class InfrastructureApiTest(TestCase):
-
     "Infrastructure functional tests for api"
-
     username = "api_test"
     password = "api_password"
     prepared = False
@@ -219,7 +219,6 @@ class InfrastructureApiTest(TestCase):
                    "status": self.status.id, "test___1": "api test"}
         response = self.client.put(path=reverse('api_infrastructure_items', kwargs={'object_ptr': self.item.id}),
                                    content_type=self.content_type,  data=json.dumps(updates), **self.authentication_headers)
-        print response.content
         self.assertEquals(response.status_code, 200)
 
         data = json.loads(response.content)

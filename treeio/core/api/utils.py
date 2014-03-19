@@ -57,32 +57,7 @@ class rc_factory(object):
         except TypeError:
             raise AttributeError(attr)
 
-        class HttpResponseWrapper(HttpResponse):
-
-            """
-            Wrap HttpResponse and make sure that the internal _is_string 
-            flag is updated when the _set_content method (via the content 
-            property) is called
-            """
-
-            def _set_content(self, content):
-                """
-                Set the _container and _is_string properties based on the 
-                type of the value parameter. This logic is in the construtor
-                for HttpResponse, but doesn't get repeated when setting 
-                HttpResponse.content although this bug report (feature request)
-                suggests that it should: http://code.djangoproject.com/ticket/9403 
-                """
-                if not isinstance(content, basestring) and hasattr(content, '__iter__'):
-                    self._container = content
-                    self._is_string = False
-                else:
-                    self._container = [content]
-                    self._is_string = True
-
-            content = property(HttpResponse._get_content, _set_content)
-
-        return HttpResponseWrapper(r, content_type='text/plain', status=c)
+        return HttpResponse(r, content_type='text/plain', status=c)
 
 rc = rc_factory()
 
@@ -273,7 +248,7 @@ class Mimer(object):
 
             if loadee:
                 try:
-                    self.request.data = loadee(self.request.raw_post_data)
+                    self.request.data = loadee(self.request.body)
 
                     # Reset both POST and PUT from request, as its
                     # misleading having their presence around.

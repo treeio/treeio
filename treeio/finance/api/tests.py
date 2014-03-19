@@ -8,6 +8,7 @@
 import json
 from django.test import TestCase
 from django.test.client import Client
+from django.test.utils import override_settings
 from django.core.urlresolvers import reverse
 from django.contrib.auth.models import User as DjangoUser
 from treeio.core.models import User, Group, Perspective, ModuleSetting, Object
@@ -15,6 +16,7 @@ from treeio.finance.models import Transaction, Liability, Category, Account, Equ
 from treeio.identities.models import Contact, ContactType
 
 
+@override_settings(HARDTREE_API_AUTH_ENGINE='basic')
 class FinanceAPITest(TestCase):
 
     "Finance api tests"

@@ -7,10 +7,7 @@
 
 from __future__ import absolute_import, with_statement
 
-__all__ = ['MailingListHandler',
-           'MessageStreamHandler',
-           'MessageHandler',
-           ]
+__all__ = ['MailingListHandler', 'MessageStreamHandler', 'MessageHandler']
 
 import re
 from treeio.core.api.utils import rc
@@ -23,46 +20,49 @@ from treeio.messaging.forms import MessageForm, MessageStreamForm, MessageReplyF
 
 
 class MailingListHandler(ObjectHandler):
-
     "Entrypoint for MailingList model."
-
     model = MailingList
     form = MailingListForm
 
     fields = ('id',) + MailingListForm._meta.fields
 
-    @staticmethod
-    def resource_uri():
-        return ('api_messaging_mlist', ['id'])
+    @classmethod
+    def resource_uri(cls, obj=None):
+        object_id = "id"
+        if obj is not None:
+            object_id = obj.id
+        return ('api_messaging_mlist', [object_id])
 
     def check_create_permission(self, request, mode):
         return True
 
 
 class MessageStreamHandler(ObjectHandler):
-
     "Entrypoint for MessageStream model."
-
     model = MessageStream
     form = MessageStreamForm
 
-    @staticmethod
-    def resource_uri():
-        return ('api_messaging_streams', ['id'])
+    @classmethod
+    def resource_uri(cls, obj=None):
+        object_id = "id"
+        if obj is not None:
+            object_id = obj.id
+        return ('api_messaging_streams', [object_id])
 
     def check_create_permission(self, request, mode):
         return True
 
 
 class MessageHandler(ObjectHandler):
-
     "Entrypoint for Message model."
-
     model = Message
 
-    @staticmethod
-    def resource_uri():
-        return ('api_messaging_messages', ['id'])
+    @classmethod
+    def resource_uri(cls, obj=None):
+        object_id = "id"
+        if obj is not None:
+            object_id = obj.id
+        return ('api_messaging_messages', [object_id])
 
     def create(self, request, *args, **kwargs):
         "Send email to some recipients"

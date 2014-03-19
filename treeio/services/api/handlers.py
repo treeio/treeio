@@ -7,14 +7,9 @@
 
 from __future__ import absolute_import, with_statement
 
-__all__ = ['TicketStatusHandler',
-           'ServiceHandler',
-           'ServiceLevelAgreementHandler',
-           'ServiceAgentHandler',
-           'TicketQueueHandler',
-           'TicketRecordHandler',
-           'TicketHandler',
-           ]
+__all__ = ['TicketStatusHandler', 'ServiceHandler',
+           'ServiceLevelAgreementHandler', 'ServiceAgentHandler',
+           'TicketQueueHandler', 'TicketRecordHandler', 'TicketHandler']
 
 from treeio.core.api.utils import rc
 from piston.handler import BaseHandler
@@ -27,30 +22,32 @@ from treeio.services.views import _get_default_context
 
 
 class TicketStatusHandler(ObjectHandler):
-
     "Entrypoint for TicketStatus model."
-
     model = TicketStatus
     form = TicketStatusForm
 
-    @staticmethod
-    def resource_uri():
-        return ('api_services_status', ['id'])
+    @classmethod
+    def resource_uri(cls, obj=None):
+        object_id = "id"
+        if obj is not None:
+            object_id = obj.id
+        return ('api_services_status', [object_id])
 
     def check_create_permission(self, request, mode):
         return request.user.get_profile().is_admin('treeio.services')
 
 
 class ServiceHandler(ObjectHandler):
-
     "Entrypoint for Service model."
-
     model = Service
     form = ServiceForm
 
-    @staticmethod
-    def resource_uri():
-        return ('api_services', ['id'])
+    @classmethod
+    def resource_uri(cls, obj=None):
+        object_id = "id"
+        if obj is not None:
+            object_id = obj.id
+        return ('api_services', [object_id])
 
     def check_create_permission(self, request, mode):
         return request.user.get_profile().is_admin('treeio.services')
@@ -61,61 +58,65 @@ class ServiceHandler(ObjectHandler):
 
 
 class ServiceLevelAgreementHandler(ObjectHandler):
-
     "Entrypoint for ServiceLevelAgreement model."
-
     model = ServiceLevelAgreement
     form = ServiceLevelAgreementForm
 
-    @staticmethod
-    def resource_uri():
-        return ('api_services_sla', ['id'])
+    @classmethod
+    def resource_uri(cls, obj=None):
+        object_id = "id"
+        if obj is not None:
+            object_id = obj.id
+        return ('api_services_sla', [object_id])
 
     def check_create_permission(self, request, mode):
         return request.user.get_profile().is_admin('treeio.services')
 
 
 class ServiceAgentHandler(ObjectHandler):
-
     "Entrypoint for ServiceAgent model."
-
     model = ServiceAgent
     form = AgentForm
 
-    @staticmethod
-    def resource_uri():
-        return ('api_services_agents', ['id'])
+    @classmethod
+    def resource_uri(cls, obj=None):
+        object_id = "id"
+        if obj is not None:
+            object_id = obj.id
+        return ('api_services_agents', [object_id])
 
     def check_create_permission(self, request, mode):
         return request.user.get_profile().is_admin('treeio.services')
 
 
 class TicketQueueHandler(ObjectHandler):
-
     "Entrypoint for TicketQueue model."
-
     model = TicketQueue
     form = QueueForm
 
-    @staticmethod
-    def resource_uri():
-        return ('api_services_queues', ['id'])
+    @classmethod
+    def resource_uri(cls, obj=None):
+        object_id = "id"
+        if obj is not None:
+            object_id = obj.id
+        return ('api_services_queues', [object_id])
 
     def check_create_permission(self, request, mode):
         return request.user.get_profile().is_admin('treeio.services')
 
 
 class TicketRecordHandler(BaseHandler):
-
     "Entrypoint for TicketRecord model."
-
     model = TicketRecord
     allowed_methods = ('GET', 'POST')
     fields = ('body', 'record_type', 'author', 'comments')
 
-    @staticmethod
-    def resource_uri():
-        return ('api_services_ticket_records', ['id'])
+    @classmethod
+    def resource_uri(cls, obj=None):
+        object_id = "id"
+        if obj is not None:
+            object_id = obj.id
+        return ('api_services_ticket_records', [object_id])
 
     @staticmethod
     def get_ticket(request, kwargs):
@@ -169,15 +170,16 @@ class TicketRecordHandler(BaseHandler):
 
 
 class TicketHandler(ObjectHandler):
-
     "Entrypoint for Ticket model."
-
     model = Ticket
     form = TicketForm
 
-    @staticmethod
-    def resource_uri():
-        return ('api_services_tickets', ['id'])
+    @classmethod
+    def resource_uri(cls, obj=None):
+        object_id = "id"
+        if obj is not None:
+            object_id = obj.id
+        return ('api_services_tickets', [object_id])
 
     def check_create_permission(self, request, mode):
         request.context = _get_default_context(request)

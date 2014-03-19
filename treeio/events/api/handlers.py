@@ -7,7 +7,7 @@
 
 from __future__ import absolute_import, with_statement
 
-__all__ = ['EventHandler', ]
+__all__ = ['EventHandler']
 
 from treeio.events.models import Event
 from treeio.events.forms import EventForm
@@ -15,14 +15,16 @@ from treeio.core.api.handlers import ObjectHandler
 
 
 class EventHandler(ObjectHandler):
-
     "Entrypoint for Event model."
     model = Event
     form = EventForm
 
-    @staticmethod
-    def resource_uri():
-        return ('api_events', ['id'])
+    @classmethod
+    def resource_uri(cls, obj=None):
+        object_id = "id"
+        if obj is not None:
+            object_id = obj.id
+        return ('api_events', [object_id])
 
     def check_create_permission(self, request, mode):
         return True

@@ -7,10 +7,8 @@
 
 from __future__ import absolute_import, with_statement
 
-__all__ = ['FolderHandler',
-           'FileHandler',
-           'DocumentHandler',
-           'WebLinkHandler', ]
+__all__ = ['FolderHandler', 'FileHandler', 'DocumentHandler',
+           'WebLinkHandler']
 
 from treeio.core.api.handlers import ObjectHandler, getOrNone
 from treeio.documents.models import Document, Folder, File, WebLink
@@ -18,15 +16,16 @@ from treeio.documents.forms import FolderForm, DocumentForm, FileForm, FilterFor
 
 
 class FolderHandler(ObjectHandler):
-
     "Entrypoint for Folder model."
-
     model = Folder
     form = FolderForm
 
-    @staticmethod
-    def resource_uri():
-        return ('api_documents_folders', ['id'])
+    @classmethod
+    def resource_uri(cls, obj=None):
+        object_id = "id"
+        if obj is not None:
+            object_id = obj.id
+        return ('api_documents_folders', [object_id])
 
     def flatten_dict(self, request):
         dct = super(FolderHandler, self).flatten_dict(request)
@@ -35,7 +34,6 @@ class FolderHandler(ObjectHandler):
 
 
 class CommonHandler(ObjectHandler):
-
     def check_create_permission(self, request, mode):
         if request.data.has_key('folder'):
             folder = getOrNone(Folder, pk=request.data['folder'])
@@ -50,36 +48,39 @@ class CommonHandler(ObjectHandler):
 
 
 class FileHandler(CommonHandler):
-
     "Entrypoint for File model."
-
     model = File
     form = FileForm
 
-    @staticmethod
-    def resource_uri():
-        return ('api_documents_files', ['id'])
+    @classmethod
+    def resource_uri(cls, obj=None):
+        object_id = "id"
+        if obj is not None:
+            object_id = obj.id
+        return ('api_documents_files', [object_id])
 
 
 class DocumentHandler(CommonHandler):
-
     "Entrypoint for Document model."
-
     model = Document
     form = DocumentForm
 
-    @staticmethod
-    def resource_uri():
-        return ('api_documents_documents', ['id'])
+    @classmethod
+    def resource_uri(cls, obj=None):
+        object_id = "id"
+        if obj is not None:
+            object_id = obj.id
+        return ('api_documents_documents', [object_id])
 
 
 class WebLinkHandler(CommonHandler):
-
     "Entrypoint for WebLink model."
-
     model = WebLink
     form = WebLinkForm
 
-    @staticmethod
-    def resource_uri():
-        return ('api_documents_weblinks', ['id'])
+    @classmethod
+    def resource_uri(cls, obj=None):
+        object_id = "id"
+        if obj is not None:
+            object_id = obj.id
+        return ('api_documents_weblinks', [object_id])

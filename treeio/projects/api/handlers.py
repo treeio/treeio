@@ -7,14 +7,9 @@
 
 from __future__ import absolute_import, with_statement
 
-__all__ = ['ProjectHandler',
-           'TaskStatusHandler',
-           'MilestoneHandler',
-           'TaskHandler',
-           'StartTaskTimeHandler',
-           'StopTaskTimeHandler',
-           'TaskTimeHandler',
-           ]
+__all__ = ['ProjectHandler', 'TaskStatusHandler', 'MilestoneHandler',
+           'TaskHandler', 'StartTaskTimeHandler', 'StopTaskTimeHandler',
+           'TaskTimeHandler']
 
 from datetime import datetime
 from treeio.core.api.utils import rc
@@ -50,9 +45,12 @@ class ProjectHandler(ObjectHandler):
             return check_parent_perm(request, Project, request.data['parent'], mode)
         return True
 
-    @staticmethod
-    def resource_uri():
-        return ('api_projects', ['id'])
+    @classmethod
+    def resource_uri(cls, obj=None):
+        object_id = "id"
+        if obj is not None:
+            object_id = obj.id
+        return ('api_projects', [object_id])
 
 
 class TaskStatusHandler(ObjectHandler):
@@ -65,9 +63,12 @@ class TaskStatusHandler(ObjectHandler):
     def check_create_permission(self, request, mode):
         return request.user.get_profile().is_admin('treeio.projects')
 
-    @staticmethod
-    def resource_uri():
-        return ('api_projects_status', ['id'])
+    @classmethod
+    def resource_uri(cls, obj=None):
+        object_id = "id"
+        if obj is not None:
+            object_id = obj.id
+        return ('api_projects_status', [object_id])
 
 
 class MilestoneHandler(ObjectHandler):
@@ -87,9 +88,12 @@ class MilestoneHandler(ObjectHandler):
             return check_parent_perm(request, Project, request.data['project'], mode)
         return True
 
-    @staticmethod
-    def resource_uri():
-        return ('api_projects_milestones', ['id'])
+    @classmethod
+    def resource_uri(cls, obj=None):
+        object_id = "id"
+        if obj is not None:
+            object_id = obj.id
+        return ('api_projects_milestones', [object_id])
 
 
 class TaskHandler(ObjectHandler):
@@ -117,16 +121,19 @@ class TaskHandler(ObjectHandler):
             request.data.setdefault('parent', None)
         return True
 
-    @staticmethod
-    def resource_uri():
-        return ('api_projects_tasks', ['id'])
+    @classmethod
+    def resource_uri(cls, obj=None):
+        object_id = "id"
+        if obj is not None:
+            object_id = obj.id
+        return ('api_projects_tasks', [object_id])
 
 
 class StartTaskTimeHandler(BaseHandler):
 
     "Start TaskTimeSlot for preselected Task"
 
-    model = True  # for auto documentation
+    # model = True  # for auto documentation
     allowed_methods = ('GET',)
 
     def read(self, request, task_id, *args, **kwargs):
@@ -146,16 +153,19 @@ class StartTaskTimeHandler(BaseHandler):
             return task_time_slot
         return ("The task isn't in progress", 401)
 
-    @staticmethod
-    def resource_uri():
-        return ('api_projects_tasktime_start', ['task_id'])
+    @classmethod
+    def resource_uri(cls, obj=None):
+        object_id = "task_id"
+        if obj is not None:
+            object_id = obj.id
+        return ('api_projects_tasktime_start', [object_id])
 
 
 class StopTaskTimeHandler(BaseHandler):
 
     "Stop TaskTimeSlot for preselected Task"
 
-    model = True  # for auto documentation
+    # model = True  # for auto documentation
     allowed_methods = ('POST',)
 
     def create(self, request, slot_id, *args, **kwargs):
@@ -173,9 +183,12 @@ class StopTaskTimeHandler(BaseHandler):
 
         return rc.ALL_OK
 
-    @staticmethod
-    def resource_uri():
-        return ('api_projects_tasktime_stop', ['slot_id'])
+    @classmethod
+    def resource_uri(cls, obj=None):
+        object_id = "slot_id"
+        if obj is not None:
+            object_id = obj.id
+        return ('api_projects_tasktime_stop', [object_id])
 
 
 class TaskTimeHandler(ObjectHandler):
@@ -209,6 +222,9 @@ class TaskTimeHandler(ObjectHandler):
             return False
         return True
 
-    @staticmethod
-    def resource_uri():
-        return ('api_projects_tasktimes', ['id'])
+    @classmethod
+    def resource_uri(cls, obj=None):
+        object_id = "id"
+        if obj is not None:
+            object_id = obj.id
+        return ('api_projects_tasktimes', [object_id])

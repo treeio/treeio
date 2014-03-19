@@ -7,7 +7,7 @@
 
 from __future__ import absolute_import, with_statement
 
-__all__ = ['UpdateRecordHandler', ]
+__all__ = ['UpdateRecordHandler']
 
 from treeio.core.api.utils import rc
 from piston.handler import BaseHandler
@@ -25,9 +25,12 @@ class UpdateRecordHandler(BaseHandler):
     allowed_methods = ('GET', 'DELETE')
     fields = ('id', 'full_message', 'author', 'sender')
 
-    @staticmethod
-    def resource_uri():
-        return ('api_news_update_records', ['id'])
+    @classmethod
+    def resource_uri(cls, obj=None):
+        object_id = "id"
+        if obj is not None:
+            object_id = obj.id
+        return ('api_news_update_records', [object_id])
 
     def read(self, request, record_id=None, *args, **kwargs):
         "Function shows messages in the news"

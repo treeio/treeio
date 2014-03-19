@@ -7,15 +7,9 @@
 
 from __future__ import absolute_import, with_statement
 
-__all__ = ['CurrencyHandler',
-           'TaxHandler',
-           'CategoryHandler',
-           'AssetHandler',
-           'AccountHandler',
-           'EquityHandler',
-           'LiabilityHandler',
-           'TransactionHandler',
-           ]
+__all__ = ['CurrencyHandler', 'TaxHandler', 'CategoryHandler', 'AssetHandler',
+           'AccountHandler', 'EquityHandler', 'LiabilityHandler',
+           'TransactionHandler']
 
 from django.core.exceptions import ObjectDoesNotExist
 
@@ -46,9 +40,12 @@ class CurrencyHandler(ObjectHandler):
     model = Currency
     form = CurrencyForm
 
-    @staticmethod
-    def resource_uri():
-        return ('api_finance_currencies', ['id'])
+    @classmethod
+    def resource_uri(cls, obj=None):
+        object_id = "id"
+        if obj is not None:
+            object_id = obj.id
+        return ('api_finance_currencies', [object_id])
 
     def create(self, request, *args, **kwargs):
         if request.data is None:
@@ -77,36 +74,48 @@ class TaxHandler(FinanceCommonHandler):
     model = Tax
     form = TaxForm
 
-    @staticmethod
-    def resource_uri():
-        return ('api_finance_taxes', ['id'])
+    @classmethod
+    def resource_uri(cls, obj=None):
+        object_id = "id"
+        if obj is not None:
+            object_id = obj.id
+        return ('api_finance_taxes', [object_id])
 
 
 class CategoryHandler(FinanceCommonHandler):
     model = Category
     form = CategoryForm
 
-    @staticmethod
-    def resource_uri():
-        return ('api_finance_categories', ['id'])
+    @classmethod
+    def resource_uri(cls, obj=None):
+        object_id = "id"
+        if obj is not None:
+            object_id = obj.id
+        return ('api_finance_categories', [object_id])
 
 
 class AssetHandler(FinanceCommonHandler):
     model = Asset
     form = AssetForm
 
-    @staticmethod
-    def resource_uri():
-        return ('api_finance_assets', ['id'])
+    @classmethod
+    def resource_uri(cls, obj=None):
+        object_id = "id"
+        if obj is not None:
+            object_id = obj.id
+        return ('api_finance_assets', [object_id])
 
 
 class AccountHandler(FinanceCommonHandler):
     model = Account
     form = AccountForm
 
-    @staticmethod
-    def resource_uri():
-        return ('api_finance_accounts', ['id'])
+    @classmethod
+    def resource_uri(cls, obj=None):
+        object_id = "id"
+        if obj is not None:
+            object_id = obj.id
+        return ('api_finance_accounts', [object_id])
 
     def create(self, request, *args, **kwargs):
         if request.data is None:
@@ -132,18 +141,24 @@ class EquityHandler(FinanceCommonHandler):
     model = Equity
     form = EquityForm
 
-    @staticmethod
-    def resource_uri():
-        return ('api_finance_equities', ['id'])
+    @classmethod
+    def resource_uri(cls, obj=None):
+        object_id = "id"
+        if obj is not None:
+            object_id = obj.id
+        return ('api_finance_equities', [object_id])
 
 
 class LiabilityHandler(FinanceCommonHandler):
     model = Liability
     form = LiabilityForm
 
-    @staticmethod
-    def resource_uri():
-        return ('api_finance_liabilities', ['id'])
+    @classmethod
+    def resource_uri(cls, obj=None):
+        object_id = "id"
+        if obj is not None:
+            object_id = obj.id
+        return ('api_finance_liabilities', [object_id])
 
     def create(self, request, *args, **kwargs):
         if request.data is None:
@@ -170,9 +185,12 @@ class TransactionHandler(FinanceCommonHandler):
     model = Transaction
     form = TransactionForm
 
-    @staticmethod
-    def resource_uri():
-        return ('api_finance_transactions', ['id'])
+    @classmethod
+    def resource_uri(cls, obj=None):
+        object_id = "id"
+        if obj is not None:
+            object_id = obj.id
+        return ('api_finance_transactions', [object_id])
 
     def create(self, request, *args, **kwargs):
         if request.data is None:

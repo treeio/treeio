@@ -7,16 +7,9 @@
 
 from __future__ import absolute_import, with_statement
 
-__all__ = ['SaleCommonHandler',
-           'SaleStatusHandler',
-           'ProductHandler',
-           'SaleSourceHandler',
-           'LeadHandler',
-           'OpportunityHandler',
-           'SaleOrderHandler',
-           'SubscriptionHandler',
-           'OrderedProductHandler',
-           ]
+__all__ = ['SaleCommonHandler', 'SaleStatusHandler', 'ProductHandler',
+           'SaleSourceHandler', 'LeadHandler', 'OpportunityHandler',
+           'SaleOrderHandler', 'SubscriptionHandler', 'OrderedProductHandler']
 
 from treeio.core.api.utils import rc
 from treeio.core.api.handlers import ObjectHandler, getOrNone
@@ -43,9 +36,12 @@ class SaleStatusHandler(SaleCommonHandler):
     model = SaleStatus
     form = SaleStatusForm
 
-    @staticmethod
-    def resource_uri():
-        return ('api_sales_status', ['id'])
+    @classmethod
+    def resource_uri(cls, obj=None):
+        object_id = "id"
+        if obj is not None:
+            object_id = obj.id
+        return ('api_sales_status', [object_id])
 
 
 class ProductHandler(SaleCommonHandler):
@@ -55,9 +51,12 @@ class ProductHandler(SaleCommonHandler):
     model = Product
     form = ProductForm
 
-    @staticmethod
-    def resource_uri():
-        return ('api_sales_products', ['id'])
+    @classmethod
+    def resource_uri(cls, obj=None):
+        object_id = "id"
+        if obj is not None:
+            object_id = obj.id
+        return ('api_sales_products', [object_id])
 
     def flatten_dict(self, request):
         dct = super(ProductHandler, self).flatten_dict(request)
@@ -72,9 +71,12 @@ class SaleSourceHandler(SaleCommonHandler):
     model = SaleSource
     form = SaleSourceForm
 
-    @staticmethod
-    def resource_uri():
-        return ('api_sales_sources', ['id'])
+    @classmethod
+    def resource_uri(cls, obj=None):
+        object_id = "id"
+        if obj is not None:
+            object_id = obj.id
+        return ('api_sales_sources', [object_id])
 
 
 class LeadHandler(SaleCommonHandler):
@@ -85,9 +87,12 @@ class LeadHandler(SaleCommonHandler):
     form = LeadForm
     fields = ('id',) + LeadForm._meta.fields
 
-    @staticmethod
-    def resource_uri():
-        return ('api_sales_leads', ['id'])
+    @classmethod
+    def resource_uri(cls, obj=None):
+        object_id = "id"
+        if obj is not None:
+            object_id = obj.id
+        return ('api_sales_leads', [object_id])
 
 
 class OpportunityHandler(SaleCommonHandler):
@@ -98,9 +103,12 @@ class OpportunityHandler(SaleCommonHandler):
     form = OpportunityForm
     fields = ('id',) + OpportunityForm._meta.fields
 
-    @staticmethod
-    def resource_uri():
-        return ('api_sales_opportunities', ['id'])
+    @classmethod
+    def resource_uri(cls, obj=None):
+        object_id = "id"
+        if obj is not None:
+            object_id = obj.id
+        return ('api_sales_opportunities', [object_id])
 
     def flatten_dict(self, request):
         dct = super(OpportunityHandler, self).flatten_dict(request)
@@ -165,9 +173,12 @@ class SaleOrderHandler(SaleCommonHandler):
     fields = ('id', 'payment', 'total', 'total_display') + \
         OrderForm._meta.fields
 
-    @staticmethod
-    def resource_uri():
-        return ('api_sales_orders', ['id'])
+    @classmethod
+    def resource_uri(cls, obj=None):
+        object_id = "id"
+        if obj is not None:
+            object_id = obj.id
+        return ('api_sales_orders', [object_id])
 
     def flatten_dict(self, request):
         dct = super(SaleOrderHandler, self).flatten_dict(request)
@@ -190,9 +201,12 @@ class SubscriptionHandler(SaleCommonHandler):
     model = Subscription
     form = SubscriptionForm
 
-    @staticmethod
-    def resource_uri():
-        return ('api_sales_subscriptions', ['id'])
+    @classmethod
+    def resource_uri(cls, obj=None):
+        object_id = "id"
+        if obj is not None:
+            object_id = obj.id
+        return ('api_sales_subscriptions', [object_id])
 
     def create(self, request, *args, **kwargs):
         if request.data is None:
@@ -237,9 +251,12 @@ class OrderedProductHandler(SaleCommonHandler):
     model = OrderedProduct
     form = OrderedProductForm
 
-    @staticmethod
-    def resource_uri():
-        return ('api_sales_ordered_products', ['id'])
+    @classmethod
+    def resource_uri(cls, obj=None):
+        object_id = "id"
+        if obj is not None:
+            object_id = obj.id
+        return ('api_sales_ordered_products', [object_id])
 
     def create(self, request, object_ptr, *args, **kwargs):
         if request.data is None:

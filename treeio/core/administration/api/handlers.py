@@ -7,13 +7,8 @@
 
 from __future__ import absolute_import, with_statement
 
-__all__ = ['GroupHandler',
-           'UserHandler',
-           'ModuleHandler',
-           'PerspectiveHandler',
-           'PageFolderHandler',
-           'PageHandler',
-           ]
+__all__ = ['GroupHandler', 'UserHandler', 'ModuleHandler',
+           'PerspectiveHandler', 'PageFolderHandler', 'PageHandler']
 
 from django.utils.translation import ugettext as _
 
@@ -27,16 +22,17 @@ from treeio.core.administration.forms import PerspectiveForm, UserForm, GroupFor
 
 
 class GroupHandler(AccessHandler):
-
     "Entrypoint for Group model."
-
     model = Group
     form = GroupForm
     fields = ('id', 'name', 'parent', 'perspective', 'details')
 
-    @staticmethod
-    def resource_uri():
-        return ('api_admin_groups', ['id'])
+    @classmethod
+    def resource_uri(cls, obj=None):
+        object_id = "id"
+        if obj is not None:
+            object_id = obj.id
+        return ('api_admin_groups', [object_id])
 
     @staticmethod
     def perspective(data):
@@ -44,18 +40,19 @@ class GroupHandler(AccessHandler):
 
 
 class UserHandler(AccessHandler):
-
     "Entrypoint for User model."
-
     model = User
     form = UserForm
     allowed_methods = ('GET', 'DELETE')
     fields = ('id', 'name', 'default_group', 'other_groups',
               'disabled', 'last_access', 'perspective')
 
-    @staticmethod
-    def resource_uri():
-        return ('api_admin_users', ['id'])
+    @classmethod
+    def resource_uri(cls, obj=None):
+        object_id = "id"
+        if obj is not None:
+            object_id = obj.id
+        return ('api_admin_users', [object_id])
 
     @staticmethod
     def perspective(data):
@@ -90,32 +87,34 @@ class UserHandler(AccessHandler):
 
 
 class ModuleHandler(BaseHandler):
-
     "Entrypoint for Module model."
-
     allowed_methods = ('GET',)
     model = Module
     exclude = ('object_type', 'object_ptr', 'object_name')
 
     read = module_admin_required()(BaseHandler.read)
 
-    @staticmethod
-    def resource_uri():
-        return ('api_admin_modules', ['id'])
+    @classmethod
+    def resource_uri(cls, obj=None):
+        object_id = "id"
+        if obj is not None:
+            object_id = obj.id
+        return ('api_admin_modules', [object_id])
 
 
 class PerspectiveHandler(ObjectHandler):
-
     "Entrypoint for Perspective model."
-
     model = Perspective
     form = PerspectiveForm
 
     fields = ('id',) + form._meta.fields
 
-    @staticmethod
-    def resource_uri():
-        return ('api_admin_perspectives', ['id'])
+    @classmethod
+    def resource_uri(cls, obj=None):
+        object_id = "id"
+        if obj is not None:
+            object_id = obj.id
+        return ('api_admin_perspectives', [object_id])
 
     def check_create_permission(self, request, mode):
         return request.user.get_profile().is_admin('treeio.core')
@@ -181,14 +180,16 @@ class PerspectiveHandler(ObjectHandler):
 
 
 class PageFolderHandler(ObjectHandler):
-
     "Entrypoint for PageFolder model."
     model = PageFolder
     form = PageFolderForm
 
-    @staticmethod
-    def resource_uri():
-        return ('api_admin_folders', ['id'])
+    @classmethod
+    def resource_uri(cls, obj=None):
+        object_id = "id"
+        if obj is not None:
+            object_id = obj.id
+        return ('api_admin_folders', [object_id])
 
     def check_instance_permission(self, request, inst, mode):
         return request.user.get_profile().is_admin('treeio.core')
@@ -198,14 +199,16 @@ class PageFolderHandler(ObjectHandler):
 
 
 class PageHandler(ObjectHandler):
-
     "Entrypoint for Page model."
     model = Page
     form = PageForm
 
-    @staticmethod
-    def resource_uri():
-        return ('api_admin_pages', ['id'])
+    @classmethod
+    def resource_uri(cls, obj=None):
+        object_id = "id"
+        if obj is not None:
+            object_id = obj.id
+        return ('api_admin_pages', [object_id])
 
     def check_instance_permission(self, request, inst, mode):
         return request.user.get_profile().is_admin('treeio.core')

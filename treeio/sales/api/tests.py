@@ -8,6 +8,7 @@
 import json
 from django.test import TestCase
 from django.test.client import Client
+from django.test.utils import override_settings
 from django.core.urlresolvers import reverse
 from django.contrib.auth.models import User as DjangoUser
 from treeio.core.models import User, Group, Perspective, ModuleSetting, Object
@@ -17,8 +18,8 @@ from treeio.sales.models import SaleOrder, Product, OrderedProduct, Subscription
 from treeio.finance.models import Currency
 
 
+@override_settings(HARDTREE_API_AUTH_ENGINE='basic')
 class SalesAPITest(TestCase):
-
     "Sales functional tests for views"
 
     username = "api_test"
