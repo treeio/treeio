@@ -1299,14 +1299,3 @@ def gantt_view(request, project_id, response_format='html'):
                                'project': project,
                                'projects': projects},
                               context_instance=RequestContext(request), response_format=response_format)
-
-
-#@treeio_login_required
-def task_ajax(request, response_format='html'):
-    "For AJAX"
-    print request
-    if request.POST:
-        print request.POST
-
-    # return HttpResponse(options,
-    # mimetype=settings.HARDTREE_RESPONSE_FORMATS['json'])

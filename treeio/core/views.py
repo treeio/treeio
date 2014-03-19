@@ -575,8 +575,8 @@ def ajax_upload(request, object_id=None, record=None):
                             'update_id': None}
 
             return HttpResponse(json.dumps(ret_json))
-    except Exception, e:
-        print e
+    except:
+        pass
 
 
 @treeio_login_required

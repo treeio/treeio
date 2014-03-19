@@ -337,8 +337,7 @@ def stream_checkmail(request, stream_id, response_format='html'):
         stream.process_email()
         messages.add_message(
             request, messages.INFO, _("E-mails fetched successfully."), fail_silently=True)
-    except Exception, e:
-        print e
+    except:
         try:
             messages.add_message(request, messages.ERROR, _(
                 "Failed to retrieve messages for this stream. Please check stream settings"), fail_silently=True)

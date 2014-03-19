@@ -217,7 +217,6 @@ class ProjectsAPITest(TestCase):
                        'details': '<p>test details</p>'}
         response = self.client.post(reverse('api_projects'), data=json.dumps(new_project),
                                     content_type=self.content_type, **self.authentication_headers)
-        # print response.request
         self.assertEquals(response.status_code, 200)
 
         # check data in response

@@ -190,8 +190,8 @@ def attachment(request, object_id, update_id=None):
             dajax.add_data(
                 {'target': 'div.attachment-record-block[object="%s"]' % update_id, 'content': update_markup}, 'treeio.add_data')
 
-    except Exception, e:
-        print e
+    except:
+        pass
 
     return dajax.json()
 

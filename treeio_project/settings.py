@@ -32,6 +32,7 @@ TESTING = 'test' in sys.argv or 'test_coverage' in sys.argv  #Covers regular tes
 if TESTING:
     DATABASES = {'default': {}}
     DATABASES['default']['ENGINE'] = 'django.db.backends.sqlite3'
+    HARDTREE_API_AUTH_ENGINE = 'basic'
 
 # Local time zone for this installation. Choices can be found here:
 # http://en.wikipedia.org/wiki/List_of_tz_zones_by_name

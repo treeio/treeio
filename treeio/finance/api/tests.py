@@ -211,7 +211,6 @@ class FinanceAPITest(TestCase):
                    "initial_value": '40.0'}
         response = self.client.put(path=reverse('api_finance_assets', kwargs={'object_ptr': self.asset.id}),
                                    content_type=self.content_type,  data=json.dumps(updates), **self.authentication_headers)
-        print response.content
         self.assertEquals(response.status_code, 200)
 
         data = json.loads(response.content)
@@ -316,7 +315,6 @@ class FinanceAPITest(TestCase):
                    "datetime": "2011-03-21 11:04:42", "target": self.contact.id, "account": self.account.id, "source": self.contact.id}
         response = self.client.put(path=reverse('api_finance_transactions', kwargs={'object_ptr': self.transaction.id}),
                                    content_type=self.content_type,  data=json.dumps(updates), **self.authentication_headers)
-        print response.content
         self.assertEquals(response.status_code, 200)
 
         data = json.loads(response.content)

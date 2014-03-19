@@ -168,8 +168,6 @@ class ServicesViewsTest(TestCase):
                    'service': self.service.id, 'provider': self.contact.id}
         response = self.client.put(path=reverse('api_services_sla', kwargs={'object_ptr': self.sla.id}),
                                    content_type=self.content_type,  data=json.dumps(updates), **self.authentication_headers)
-        print 'content:'
-        print response.content
         self.assertEquals(response.status_code, 200)
 
     def test_get_agents_list(self):

@@ -72,7 +72,6 @@ class CoreAPITest(TestCase):
     def test_get_group(self):
         response = self.client.get(path=reverse('api_admin_groups', kwargs={
                                    'accessentity_ptr': self.group.id}), **self.authentication_headers)
-        print response.content
         self.assertEquals(response.status_code, 200)
 
     def test_update_group(self):
@@ -80,7 +79,6 @@ class CoreAPITest(TestCase):
                    '<p>api details</p>', 'perspective': self.perspective.id}
         response = self.client.put(path=reverse('api_admin_groups', kwargs={'accessentity_ptr': self.group.id}),
                                    content_type=self.content_type,  data=json.dumps(updates), **self.authentication_headers)
-        print response.content
         self.assertEquals(response.status_code, 200)
 
         data = json.loads(response.content)
@@ -97,7 +95,6 @@ class CoreAPITest(TestCase):
     def test_get_user(self):
         response = self.client.get(path=reverse('api_admin_users', kwargs={
                                    'accessentity_ptr': self.user.id}), **self.authentication_headers)
-        print response.content
         self.assertEquals(response.status_code, 200)
 
     def test_update_user(self):
