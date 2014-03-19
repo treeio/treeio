@@ -5,7 +5,9 @@
 
 from useragents import search_strings
 
+
 class Middleware(object):
+
     @staticmethod
     def process_request(request):
         """Adds a "mobile" attribute to the request which is True or False
@@ -13,8 +15,8 @@ class Middleware(object):
            small-screen device such as a phone or a PDA"""
 
         if request.META.has_key("HTTP_X_OPERAMINI_FEATURES"):
-            #Then it's running opera mini. 'Nuff said.
-            #Reference from:
+            # Then it's running opera mini. 'Nuff said.
+            # Reference from:
             # http://dev.opera.com/articles/view/opera-mini-request-headers/
             request.mobile = True
             return None
@@ -37,9 +39,10 @@ class Middleware(object):
                     request.mobile = True
                     return None
 
-        #Otherwise it's not a mobile
+        # Otherwise it's not a mobile
         request.mobile = False
         return None
+
 
 def detect_mobile(view):
     """View Decorator that adds a "mobile" attribute to the request which is

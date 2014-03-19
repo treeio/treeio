@@ -16,10 +16,13 @@ from django.utils.translation import ugettext as _
 from treeio.core.decorators import preprocess_form
 preprocess_form()
 
+
 class SettingsForm(Form):
+
     """ Administration settings form """
 
-    default_task_status = ModelChoiceField(label='Default Task Status', queryset=[])
+    default_task_status = ModelChoiceField(
+        label='Default Task Status', queryset=[])
 
     def __init__(self, user, *args, **kwargs):
         "Sets choices and initial value"
@@ -28,7 +31,8 @@ class SettingsForm(Form):
                                                                               TaskStatus.objects, mode='x')
 
         try:
-            conf = ModuleSetting.get_for_module('treeio.projects', 'default_task_status')[0]
+            conf = ModuleSetting.get_for_module(
+                'treeio.projects', 'default_task_status')[0]
             default_task_status = TaskStatus.objects.get(pk=long(conf.value))
             self.fields['default_task_status'].initial = default_task_status.id
         except Exception:
@@ -38,20 +42,23 @@ class SettingsForm(Form):
         "Form processor"
         try:
             ModuleSetting.set_for_module('default_task_status',
-                                         self.cleaned_data['default_task_status'].id,
+                                         self.cleaned_data[
+                                             'default_task_status'].id,
                                          'treeio.projects')
 
         except Exception:
             return False
 
+
 class MassActionForm(Form):
+
     """ Mass action form for Tasks and Milestones """
 
     status = ModelChoiceField(queryset=[], required=False)
     project = ModelChoiceField(queryset=[], required=False)
     milestone = ModelChoiceField(queryset=[], required=False)
     delete = ChoiceField(label=_("Delete"), choices=(('', '-----'), ('delete', _('Delete Completely')),
-                                                    ('trash', _('Move to Trash'))), required=False)
+                                                     ('trash', _('Move to Trash'))), required=False)
     instance = None
 
     def __init__(self, user, *args, **kwargs):
@@ -61,14 +68,18 @@ class MassActionForm(Form):
 
         super(MassActionForm, self).__init__(*args, **kwargs)
 
-        self.fields['status'].queryset = Object.filter_permitted(user, TaskStatus.objects, mode='x')
+        self.fields['status'].queryset = Object.filter_permitted(
+            user, TaskStatus.objects, mode='x')
         self.fields['status'].label = _("Mark as")
-        self.fields['project'].queryset = Object.filter_permitted(user, Project.objects, mode='x')
+        self.fields['project'].queryset = Object.filter_permitted(
+            user, Project.objects, mode='x')
         self.fields['project'].label = _("Move to Project")
-        self.fields['milestone'].queryset = Object.filter_permitted(user, Milestone.objects, mode='x')
+        self.fields['milestone'].queryset = Object.filter_permitted(
+            user, Milestone.objects, mode='x')
         self.fields['milestone'].label = _("Move to Milestone")
         self.fields['delete'] = ChoiceField(label=_("Delete"), choices=(('', '-----'),
-                                                                        ('delete', _('Delete Completely')),
+                                                                        ('delete', _(
+                                                                            'Delete Completely')),
                                                                         ('trash', _('Move to Trash'))), required=False)
 
     def save(self, *args, **kwargs):
@@ -90,85 +101,104 @@ class MassActionForm(Form):
                         self.instance.save()
 
 
-
 class ProjectForm(ModelForm):
+
     """ Project form """
-    name = CharField(widget=TextInput(attrs={'size':'50'}))
+    name = CharField(widget=TextInput(attrs={'size': '50'}))
 
     def __init__(self, user, project_id, *args, **kwargs):
-        super(ProjectForm, self ).__init__(*args, **kwargs)
+        super(ProjectForm, self).__init__(*args, **kwargs)
 
         self.fields['name'].label = _("Name")
 
-        self.fields['parent'].queryset = Object.filter_permitted(user, Project.objects, mode='x')
+        self.fields['parent'].queryset = Object.filter_permitted(
+            user, Project.objects, mode='x')
         self.fields['parent'].label = _("Parent")
         if project_id:
             self.fields['parent'].initial = project_id
 
-        self.fields['manager'].queryset = Object.filter_permitted(user, Contact.objects, mode='x')
+        self.fields['manager'].queryset = Object.filter_permitted(
+            user, Contact.objects, mode='x')
         self.fields['manager'].label = _("Manager")
         self.fields['manager'].widget.attrs.update({'class': 'autocomplete',
                                                     'callback': reverse('identities_ajax_contact_lookup')})
-        self.fields['manager'].widget.attrs.update({'popuplink': reverse('identities_contact_add')})
+        self.fields['manager'].widget.attrs.update(
+            {'popuplink': reverse('identities_contact_add')})
 
         self.fields['client'].label = _("Client")
-        self.fields['client'].queryset = Object.filter_permitted(user, Contact.objects, mode='x')
+        self.fields['client'].queryset = Object.filter_permitted(
+            user, Contact.objects, mode='x')
         self.fields['client'].widget.attrs.update({'class': 'autocomplete',
                                                    'callback': reverse('identities_ajax_contact_lookup')})
-        self.fields['client'].widget.attrs.update({'popuplink': reverse('identities_contact_add')})
+        self.fields['client'].widget.attrs.update(
+            {'popuplink': reverse('identities_contact_add')})
 
         self.fields['details'].label = _("Details")
 
     class Meta:
+
         "Project"
         model = Project
         fields = ('name', 'parent', 'manager', 'client', 'details')
 
+
 class MilestoneForm(ModelForm):
+
     """ Milestone form """
-    name = CharField(widget=TextInput(attrs={'size':'50'}))
+    name = CharField(widget=TextInput(attrs={'size': '50'}))
 
     def __init__(self, user, project_id, *args, **kwargs):
-        super(MilestoneForm, self ).__init__(*args, **kwargs)
+        super(MilestoneForm, self).__init__(*args, **kwargs)
 
         self.fields['name'].label = _("Name")
 
         self.fields['project'].label = _("Project")
-        self.fields['project'].queryset = Object.filter_permitted(user, Project.objects, mode='x')
+        self.fields['project'].queryset = Object.filter_permitted(
+            user, Project.objects, mode='x')
         if project_id:
             self.fields['project'].initial = project_id
 
         self.fields['status'].label = _("Status")
-        self.fields['status'].queryset = Object.filter_permitted(user, TaskStatus.objects, mode='x')
+        self.fields['status'].queryset = Object.filter_permitted(
+            user, TaskStatus.objects, mode='x')
         try:
-            conf = ModuleSetting.get_for_module('treeio.projects', 'default_task_status')[0]
+            conf = ModuleSetting.get_for_module(
+                'treeio.projects', 'default_task_status')[0]
             self.fields['status'].initial = long(conf.value)
         except Exception:
             pass
 
         # Set datepicker
         self.fields['start_date'].label = _("Start date")
-        self.fields['start_date'].widget.attrs.update({'class': 'datetimepicker'})
+        self.fields['start_date'].widget.attrs.update(
+            {'class': 'datetimepicker'})
         self.fields['end_date'].label = _("End date")
-        self.fields['end_date'].widget.attrs.update({'class': 'datetimepicker'})
+        self.fields['end_date'].widget.attrs.update(
+            {'class': 'datetimepicker'})
 
         if 'instance' in kwargs:
             instance = kwargs['instance']
             if instance.start_date:
-                self.fields['start_date'].widget.attrs.update({'initial': instance.start_date.strftime('%s')})
+                self.fields['start_date'].widget.attrs.update(
+                    {'initial': instance.start_date.strftime('%s')})
             if instance.end_date:
-                self.fields['end_date'].widget.attrs.update({'initial': instance.end_date.strftime('%s')})
+                self.fields['end_date'].widget.attrs.update(
+                    {'initial': instance.end_date.strftime('%s')})
 
         self.fields['details'].label = _("Details")
 
     class Meta:
+
         "Milestone"
         model = Milestone
-        fields = ('name', 'project', 'status', 'start_date', 'end_date', 'details')
+        fields = (
+            'name', 'project', 'status', 'start_date', 'end_date', 'details')
+
 
 class TaskForm(ModelForm):
+
     """ Task form """
-    name = CharField(widget=TextInput(attrs={'size':'50'}))
+    name = CharField(widget=TextInput(attrs={'size': '50'}))
 
     def __init__(self, user, parent, project_id, milestone_id, *args, **kwargs):
         "Populates form with fields from given Project"
@@ -176,12 +206,14 @@ class TaskForm(ModelForm):
 
         self.fields['name'].label = _("Name")
         self.fields['name'].widget.attrs.update({'class': 'duplicates',
-                                           'callback': reverse('projects_ajax_task_lookup')})
+                                                 'callback': reverse('projects_ajax_task_lookup')})
 
         self.fields['status'].label = _("Status")
-        self.fields['status'].queryset = Object.filter_permitted(user, TaskStatus.objects, mode='x')
+        self.fields['status'].queryset = Object.filter_permitted(
+            user, TaskStatus.objects, mode='x')
         try:
-            conf = ModuleSetting.get_for_module('treeio.projects', 'default_task_status')[0]
+            conf = ModuleSetting.get_for_module(
+                'treeio.projects', 'default_task_status')[0]
             self.fields['status'].initial = long(conf.value)
         except Exception:
             pass
@@ -194,7 +226,8 @@ class TaskForm(ModelForm):
                                                      'callback': reverse('identities_ajax_user_lookup')})
 
         self.fields['caller'].label = _("Caller")
-        self.fields['caller'].queryset = Object.filter_permitted(user, Contact.objects, mode='x')
+        self.fields['caller'].queryset = Object.filter_permitted(
+            user, Contact.objects, mode='x')
 
         if not self.instance.id:
             contact = user.get_contact()
@@ -204,15 +237,18 @@ class TaskForm(ModelForm):
 
         self.fields['caller'].widget.attrs.update({'class': 'autocomplete',
                                                    'callback': reverse('identities_ajax_contact_lookup')})
-        self.fields['caller'].widget.attrs.update({'popuplink': reverse('identities_contact_add')})
+        self.fields['caller'].widget.attrs.update(
+            {'popuplink': reverse('identities_contact_add')})
 
         self.fields['project'].label = _("Project")
-        self.fields['project'].queryset = Object.filter_permitted(user, Project.objects, mode='x')
+        self.fields['project'].queryset = Object.filter_permitted(
+            user, Project.objects, mode='x')
         if project_id:
             self.fields['project'].initial = project_id
 
         self.fields['milestone'].label = _("Milestone")
-        self.fields['milestone'].queryset = Object.filter_permitted(user, Milestone.objects, mode='x')
+        self.fields['milestone'].queryset = Object.filter_permitted(
+            user, Milestone.objects, mode='x')
         if milestone_id:
             self.fields['milestone'].initial = milestone_id
 
@@ -224,33 +260,40 @@ class TaskForm(ModelForm):
         self.fields['depends'].widget.attrs.update({'class': 'autocomplete',
                                                    'callback': reverse('projects_ajax_task_lookup')})
 
-        self.fields['milestone'].queryset = Object.filter_permitted(user, Milestone.objects, mode='x')
-        self.fields['parent'].queryset = Object.filter_permitted(user, Task.objects, mode='x')
+        self.fields['milestone'].queryset = Object.filter_permitted(
+            user, Milestone.objects, mode='x')
+        self.fields['parent'].queryset = Object.filter_permitted(
+            user, Task.objects, mode='x')
 
         self.fields['priority'].label = _("Priority")
         self.fields['priority'].initial = 3
-        self.fields['priority'].choices = ((5, _('Highest')), (4, _('High')), (3, _('Normal')), (2, _('Low')), (1, _('Lowest')))
+        self.fields['priority'].choices = ((5, _('Highest')), (
+            4, _('High')), (3, _('Normal')), (2, _('Low')), (1, _('Lowest')))
 
-        self.fields['parent'].queryset = Object.filter_permitted(user, Task.objects, mode='x')
+        self.fields['parent'].queryset = Object.filter_permitted(
+            user, Task.objects, mode='x')
         if parent:
             self.fields['parent'].initial = parent.id
             self.fields['project'].initial = parent.project_id
             if parent.milestone_id:
                 self.fields['milestone'].initial = parent.milestone_id
 
-
         # Set datepicker
         self.fields['start_date'].label = _("Start date")
-        self.fields['start_date'].widget.attrs.update({'class': 'datetimepicker'})
+        self.fields['start_date'].widget.attrs.update(
+            {'class': 'datetimepicker'})
         self.fields['end_date'].label = _("End date")
-        self.fields['end_date'].widget.attrs.update({'class': 'datetimepicker'})
+        self.fields['end_date'].widget.attrs.update(
+            {'class': 'datetimepicker'})
 
         if 'instance' in kwargs:
             instance = kwargs['instance']
             if instance.start_date:
-                self.fields['start_date'].widget.attrs.update({'initial': instance.start_date.strftime('%s')})
+                self.fields['start_date'].widget.attrs.update(
+                    {'initial': instance.start_date.strftime('%s')})
             if instance.end_date:
-                self.fields['end_date'].widget.attrs.update({'initial': instance.end_date.strftime('%s')})
+                self.fields['end_date'].widget.attrs.update(
+                    {'initial': instance.end_date.strftime('%s')})
 
         self.fields['details'].label = _("Details")
         self.fields['estimated_time'].label = _("Estimated time")
@@ -278,14 +321,17 @@ class TaskForm(ModelForm):
         return instance
 
     class Meta:
+
         "Task"
         model = Task
         fields = ('name', 'parent', 'depends', 'assigned', 'project', 'milestone', 'caller',
                   'priority', 'status', 'start_date', 'end_date', 'estimated_time', 'details')
 
+
 class TaskTimeSlotForm(ModelForm):
+
     """ Task time slot form """
-    minutes = IntegerField(widget=TextInput(attrs={'size':'5'}))
+    minutes = IntegerField(widget=TextInput(attrs={'size': '5'}))
 
     def __init__(self, user, task_id, *args, **kwargs):
         super(TaskTimeSlotForm, self).__init__(*args, **kwargs)
@@ -294,15 +340,18 @@ class TaskTimeSlotForm(ModelForm):
         self.fields['time_to'].label = _("Finished")
 
         # Set datepicker
-        self.fields['time_from'].widget.attrs.update({'class': 'datetimepicker'})
+        self.fields['time_from'].widget.attrs.update(
+            {'class': 'datetimepicker'})
         self.fields['time_to'].widget.attrs.update({'class': 'datetimepicker'})
 
         if 'instance' in kwargs:
             instance = kwargs['instance']
             if instance.time_from:
-                self.fields['time_from'].widget.attrs.update({'initial': instance.time_from.strftime('%s')})
+                self.fields['time_from'].widget.attrs.update(
+                    {'initial': instance.time_from.strftime('%s')})
             if instance.time_to:
-                self.fields['time_to'].widget.attrs.update({'initial': instance.time_to.strftime('%s')})
+                self.fields['time_to'].widget.attrs.update(
+                    {'initial': instance.time_to.strftime('%s')})
 
         self.fields['minutes'].label = _("Minutes")
         self.fields['details'].label = _("Details")
@@ -337,13 +386,16 @@ class TaskTimeSlotForm(ModelForm):
         return super(TaskTimeSlotForm, self).save(*args, **kwargs)
 
     class Meta:
+
         "TaskTimeSlot"
         model = TaskTimeSlot
         fields = ('time_from', 'time_to', 'minutes', 'details')
 
+
 class TaskStatusForm(ModelForm):
+
     """ TaskStatus form """
-    name = CharField(widget=TextInput(attrs={'size':'30'}))
+    name = CharField(widget=TextInput(attrs={'size': '30'}))
 
     def __init__(self, user, *args, **kwargs):
         super(TaskStatusForm, self).__init__(*args, **kwargs)
@@ -354,11 +406,14 @@ class TaskStatusForm(ModelForm):
         self.fields['details'].label = _("Details")
 
     class Meta:
+
         "TaskStatus"
         model = TaskStatus
         fields = ('name', 'active', 'hidden', 'details')
 
+
 class FilterForm(ModelForm):
+
     """ Filter form definition """
 
     def __init__(self, user, skip=[], *args, **kwargs):
@@ -368,7 +423,8 @@ class FilterForm(ModelForm):
         if 'caller' in skip:
             del self.fields['caller']
         else:
-            self.fields['caller'].queryset = Object.filter_permitted(user, Contact.objects, mode='x')
+            self.fields['caller'].queryset = Object.filter_permitted(
+                user, Contact.objects, mode='x')
             self.fields['caller'].required = False
             self.fields['caller'].widget.attrs.update({'class': 'autocomplete',
                                                        'callback': reverse('identities_ajax_contact_lookup')})
@@ -377,7 +433,8 @@ class FilterForm(ModelForm):
         if 'status' in skip:
             del self.fields['status']
         else:
-            self.fields['status'].queryset = Object.filter_permitted(user, TaskStatus.objects, mode='x')
+            self.fields['status'].queryset = Object.filter_permitted(
+                user, TaskStatus.objects, mode='x')
             self.fields['status'].required = False
 
         self.fields['assigned'].label = _("Assigned")
@@ -392,23 +449,26 @@ class FilterForm(ModelForm):
         if 'project' in skip:
             del self.fields['project']
         else:
-            self.fields['project'].queryset = Object.filter_permitted(user, Project.objects, mode='x')
+            self.fields['project'].queryset = Object.filter_permitted(
+                user, Project.objects, mode='x')
             self.fields['project'].required = False
 
         self.fields['milestone'].label = _("Milestone")
         if 'milestone' in skip:
             del self.fields['milestone']
         else:
-            self.fields['milestone'].queryset = Object.filter_permitted(user, Milestone.objects, mode='x')
-
+            self.fields['milestone'].queryset = Object.filter_permitted(
+                user, Milestone.objects, mode='x')
 
     class Meta:
+
         "FilterForm"
         model = Task
         fields = ('caller', 'status', 'project', 'milestone', 'assigned')
 
 
 class TaskRecordForm(ModelForm):
+
     """ TaskRecord form """
 
     def __init__(self, user, *args, **kwargs):
@@ -418,6 +478,7 @@ class TaskRecordForm(ModelForm):
         self.fields['body'].label = _("Details")
 
     class Meta:
+
         "TaskRecordForm"
         model = UpdateRecord
         fields = ['body']

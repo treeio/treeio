@@ -9,9 +9,10 @@ Conversion rules for AJAX response
 
 import re
 
+
 def title(page, response):
     "Extract <title></title>"
-    
+
     regexp = r"<head>.*?<title>(?P<title>.*?)</title>.*?</head>"
     blocks = re.finditer(regexp, page, re.DOTALL)
     for block in blocks:
@@ -19,9 +20,10 @@ def title(page, response):
 
     return response
 
+
 def module_content(page, response):
     "Extract module_content"
-    
+
     regexp = r"<!-- module_content -->(?P<module_content>.*?)<!-- /module_content -->"
     blocks = re.finditer(regexp, page, re.DOTALL)
     for block in blocks:
@@ -36,8 +38,8 @@ RULESET = [title,
 
 def apply_rules(page, response={}):
     "Applies all rules"
-    
+
     for rule in RULESET:
         response = rule(page, response)
-    
+
     return response

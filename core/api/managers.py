@@ -12,9 +12,12 @@ SECRET_SIZE = 32
 
 CONSUMER_DB = getattr(settings, 'HARDTREE_API_CONSUMER_DB', 'default')
 
+
 class KeyManager(models.Manager):
+
     '''Add support for random key/secret generation
     '''
+
     def generate_random_codes(self):
         key = User.objects.make_random_password(length=KEY_SIZE)
         secret = User.objects.make_random_password(length=SECRET_SIZE)
@@ -26,6 +29,7 @@ class KeyManager(models.Manager):
 
 
 class ConsumerManager(KeyManager):
+
     def create_consumer(self, name, description=None, user=None, using=CONSUMER_DB):
         """
         Shortcut to create a consumer with random key/secret.
@@ -46,6 +50,7 @@ class ConsumerManager(KeyManager):
 
     _default_consumer = None
 
+
 class ResourceManager(models.Manager):
     _default_resource = None
 
@@ -56,9 +61,11 @@ class ResourceManager(models.Manager):
         if not self._default_resource:
             self._default_resource = self.get(name=name)
 
-        return self._default_resource        
+        return self._default_resource
+
 
 class TokenManager(KeyManager):
+
     def create_token(self, consumer_id, token_type, timestamp, user=None, using=None):
         """
         Shortcut to create a token with random key/secret.
@@ -68,8 +75,8 @@ class TokenManager(KeyManager):
         else:
             manager = self
 
-        token, created = manager.get_or_create(consumer_id=consumer_id, 
-                                               token_type=token_type, 
+        token, created = manager.get_or_create(consumer_id=consumer_id,
+                                               token_type=token_type,
                                                timestamp=timestamp,
                                                user=user)
 
@@ -78,4 +85,3 @@ class TokenManager(KeyManager):
             token.save()
 
         return token
-        

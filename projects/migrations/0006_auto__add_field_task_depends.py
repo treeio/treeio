@@ -4,19 +4,19 @@ from south.db import db
 from south.v2 import SchemaMigration
 from django.db import models
 
+
 class Migration(SchemaMigration):
 
     def forwards(self, orm):
-        
-        # Adding field 'Task.depends'
-        db.add_column('projects_task', 'depends', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['projects.Task'], null=True, blank=True), keep_default=False)
 
+        # Adding field 'Task.depends'
+        db.add_column('projects_task', 'depends', self.gf('django.db.models.fields.related.ForeignKey')(
+            to=orm['projects.Task'], null=True, blank=True), keep_default=False)
 
     def backwards(self, orm):
-        
+
         # Deleting field 'Task.depends'
         db.delete_column('projects_task', 'depends_id')
-
 
     models = {
         'auth.group': {

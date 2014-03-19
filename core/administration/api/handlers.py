@@ -25,7 +25,9 @@ from treeio.core.api.decorators import module_admin_required
 from treeio.core.models import User, Group, Perspective, Module, Page, PageFolder
 from treeio.core.administration.forms import PerspectiveForm, UserForm, GroupForm, PageForm, PageFolderForm
 
+
 class GroupHandler(AccessHandler):
+
     "Entrypoint for Group model."
 
     model = Group
@@ -40,13 +42,16 @@ class GroupHandler(AccessHandler):
     def perspective(data):
         return data.get_perspective()
 
+
 class UserHandler(AccessHandler):
+
     "Entrypoint for User model."
 
     model = User
     form = UserForm
     allowed_methods = ('GET', 'DELETE')
-    fields = ('id', 'name', 'default_group', 'other_groups', 'disabled', 'last_access', 'perspective')
+    fields = ('id', 'name', 'default_group', 'other_groups',
+              'disabled', 'last_access', 'perspective')
 
     @staticmethod
     def resource_uri():
@@ -83,7 +88,9 @@ class UserHandler(AccessHandler):
         else:
             rc.BAD_REQUEST
 
+
 class ModuleHandler(BaseHandler):
+
     "Entrypoint for Module model."
 
     allowed_methods = ('GET',)
@@ -96,7 +103,9 @@ class ModuleHandler(BaseHandler):
     def resource_uri():
         return ('api_admin_modules', ['id'])
 
+
 class PerspectiveHandler(ObjectHandler):
+
     "Entrypoint for Perspective model."
 
     model = Perspective
@@ -117,12 +126,13 @@ class PerspectiveHandler(ObjectHandler):
     @module_admin_required()
     def delete_instance(self, request, inst):
         # Don't let users delete their last perspective
-        other_perspectives = Perspective.objects.filter(trash=False).exclude(id=inst.id)
+        other_perspectives = Perspective.objects.filter(
+            trash=False).exclude(id=inst.id)
         admin_module = Module.objects.all().filter(name='treeio.core')[0]
         if not other_perspectives:
             self.status = 401
             return _("This is your only Perspective.")
-        elif not other_perspectives.filter(Q(modules=admin_module)|Q(modules__isnull=True)):
+        elif not other_perspectives.filter(Q(modules=admin_module) | Q(modules__isnull=True)):
             self.status = 401
             return _("This is your only Perspective with Administration module. You would be locked out!")
         elif 'trash' in request.REQUEST:
@@ -138,7 +148,8 @@ class PerspectiveHandler(ObjectHandler):
         if request.data is None:
             return rc.BAD_REQUEST
 
-        pkfield = kwargs.get(self.model._meta.pk.name) or request.data.get(self.model._meta.pk.name)
+        pkfield = kwargs.get(self.model._meta.pk.name) or request.data.get(
+            self.model._meta.pk.name)
 
         if not pkfield:
             return rc.BAD_REQUEST
@@ -155,18 +166,22 @@ class PerspectiveHandler(ObjectHandler):
             perspective = form.save()
 
             admin_module = Module.objects.filter(name='treeio.core')[0]
-            other_perspectives = Perspective.objects.filter(trash=False).exclude(id=perspective.id)
+            other_perspectives = Perspective.objects.filter(
+                trash=False).exclude(id=perspective.id)
             modules = perspective.modules.all()
             if modules and not admin_module in modules:
-                if not other_perspectives.filter(Q(modules=admin_module)|Q(modules__isnull=True)):
+                if not other_perspectives.filter(Q(modules=admin_module) | Q(modules__isnull=True)):
                     perspective.modules.add(admin_module)
-                    request.session['message'] = _("This is your only Perspective with Administration module. You would be locked out!")
+                    request.session['message'] = _(
+                        "This is your only Perspective with Administration module. You would be locked out!")
             return obj
         else:
             self.status = 400
             return form.errors
 
+
 class PageFolderHandler(ObjectHandler):
+
     "Entrypoint for PageFolder model."
     model = PageFolder
     form = PageFolderForm
@@ -181,7 +196,9 @@ class PageFolderHandler(ObjectHandler):
     def flatten_dict(self, request):
         return {'data': super(ObjectHandler, self).flatten_dict(request.data)}
 
+
 class PageHandler(ObjectHandler):
+
     "Entrypoint for Page model."
     model = Page
     form = PageForm

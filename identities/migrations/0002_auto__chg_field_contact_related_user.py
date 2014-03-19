@@ -9,19 +9,20 @@ from south.db import db
 from south.v2 import SchemaMigration
 from django.db import models
 
+
 class Migration(SchemaMigration):
 
     def forwards(self, orm):
-        
-        # Changing field 'Contact.related_user'
-        db.alter_column('identities_contact', 'related_user_id', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['core.AccessEntity'], null=True))
 
+        # Changing field 'Contact.related_user'
+        db.alter_column('identities_contact', 'related_user_id', self.gf(
+            'django.db.models.fields.related.ForeignKey')(to=orm['core.AccessEntity'], null=True))
 
     def backwards(self, orm):
-        
-        # Changing field 'Contact.related_user'
-        db.alter_column('identities_contact', 'related_user_id', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['core.User'], null=True))
 
+        # Changing field 'Contact.related_user'
+        db.alter_column('identities_contact', 'related_user_id', self.gf(
+            'django.db.models.fields.related.ForeignKey')(to=orm['core.User'], null=True))
 
     models = {
         'auth.group': {

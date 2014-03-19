@@ -9,54 +9,74 @@ from south.db import db
 from south.v2 import SchemaMigration
 from django.db import models
 
+
 class Migration(SchemaMigration):
 
     def forwards(self, orm):
-        
+
         # Adding model 'EmailBox'
         db.create_table('messaging_emailbox', (
-            ('object_ptr', self.gf('django.db.models.fields.related.OneToOneField')(to=orm['core.Object'], unique=True, primary_key=True)),
-            ('email_name', self.gf('django.db.models.fields.CharField')(max_length=255)),
-            ('email_type', self.gf('django.db.models.fields.CharField')(max_length=255)),
-            ('server_name', self.gf('django.db.models.fields.CharField')(max_length=255)),
-            ('server_type', self.gf('django.db.models.fields.CharField')(max_length=255)),
-            ('server_username', self.gf('django.db.models.fields.CharField')(max_length=255)),
-            ('server_password', self.gf('django.db.models.fields.CharField')(max_length=255)),
-            ('last_checked', self.gf('django.db.models.fields.DateTimeField')(null=True, blank=True)),
+            ('object_ptr', self.gf('django.db.models.fields.related.OneToOneField')(
+                to=orm['core.Object'], unique=True, primary_key=True)),
+            ('email_name', self.gf(
+                'django.db.models.fields.CharField')(max_length=255)),
+            ('email_type', self.gf(
+                'django.db.models.fields.CharField')(max_length=255)),
+            ('server_name', self.gf(
+                'django.db.models.fields.CharField')(max_length=255)),
+            ('server_type', self.gf(
+                'django.db.models.fields.CharField')(max_length=255)),
+            ('server_username', self.gf(
+                'django.db.models.fields.CharField')(max_length=255)),
+            ('server_password', self.gf(
+                'django.db.models.fields.CharField')(max_length=255)),
+            ('last_checked', self.gf('django.db.models.fields.DateTimeField')
+             (null=True, blank=True)),
         ))
         db.send_create_signal('messaging', ['EmailBox'])
 
         # Adding model 'MessageStream'
         db.create_table('messaging_messagestream', (
-            ('object_ptr', self.gf('django.db.models.fields.related.OneToOneField')(to=orm['core.Object'], unique=True, primary_key=True)),
-            ('name', self.gf('django.db.models.fields.CharField')(max_length=255)),
-            ('email_incoming', self.gf('django.db.models.fields.related.ForeignKey')(blank=True, related_name='incoming', null=True, to=orm['messaging.EmailBox'])),
-            ('email_outgoing', self.gf('django.db.models.fields.related.ForeignKey')(blank=True, related_name='outgoing', null=True, to=orm['messaging.EmailBox'])),
+            ('object_ptr', self.gf('django.db.models.fields.related.OneToOneField')(
+                to=orm['core.Object'], unique=True, primary_key=True)),
+            ('name', self.gf('django.db.models.fields.CharField')
+             (max_length=255)),
+            ('email_incoming', self.gf('django.db.models.fields.related.ForeignKey')(
+                blank=True, related_name='incoming', null=True, to=orm['messaging.EmailBox'])),
+            ('email_outgoing', self.gf('django.db.models.fields.related.ForeignKey')(
+                blank=True, related_name='outgoing', null=True, to=orm['messaging.EmailBox'])),
         ))
         db.send_create_signal('messaging', ['MessageStream'])
 
         # Adding model 'Message'
         db.create_table('messaging_message', (
-            ('object_ptr', self.gf('django.db.models.fields.related.OneToOneField')(to=orm['core.Object'], unique=True, primary_key=True)),
-            ('title', self.gf('django.db.models.fields.CharField')(max_length=255, null=True, blank=True)),
+            ('object_ptr', self.gf('django.db.models.fields.related.OneToOneField')(
+                to=orm['core.Object'], unique=True, primary_key=True)),
+            ('title', self.gf('django.db.models.fields.CharField')
+             (max_length=255, null=True, blank=True)),
             ('body', self.gf('django.db.models.fields.TextField')()),
-            ('author', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['identities.Contact'])),
-            ('stream', self.gf('django.db.models.fields.related.ForeignKey')(related_name='stream', to=orm['messaging.MessageStream'])),
-            ('reply_to', self.gf('django.db.models.fields.related.ForeignKey')(blank=True, related_name='child_set', null=True, to=orm['messaging.Message'])),
+            ('author', self.gf('django.db.models.fields.related.ForeignKey')
+             (to=orm['identities.Contact'])),
+            ('stream', self.gf('django.db.models.fields.related.ForeignKey')
+             (related_name='stream', to=orm['messaging.MessageStream'])),
+            ('reply_to', self.gf('django.db.models.fields.related.ForeignKey')(
+                blank=True, related_name='child_set', null=True, to=orm['messaging.Message'])),
         ))
         db.send_create_signal('messaging', ['Message'])
 
         # Adding M2M table for field read_by on 'Message'
         db.create_table('messaging_message_read_by', (
-            ('id', models.AutoField(verbose_name='ID', primary_key=True, auto_created=True)),
-            ('message', models.ForeignKey(orm['messaging.message'], null=False)),
+            ('id', models.AutoField(
+                verbose_name='ID', primary_key=True, auto_created=True)),
+            ('message', models.ForeignKey(
+                orm['messaging.message'], null=False)),
             ('user', models.ForeignKey(orm['core.user'], null=False))
         ))
-        db.create_unique('messaging_message_read_by', ['message_id', 'user_id'])
-
+        db.create_unique(
+            'messaging_message_read_by', ['message_id', 'user_id'])
 
     def backwards(self, orm):
-        
+
         # Deleting model 'EmailBox'
         db.delete_table('messaging_emailbox')
 
@@ -68,7 +88,6 @@ class Migration(SchemaMigration):
 
         # Removing M2M table for field read_by on 'Message'
         db.delete_table('messaging_message_read_by')
-
 
     models = {
         'auth.group': {

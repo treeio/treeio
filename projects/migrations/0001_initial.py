@@ -9,63 +9,95 @@ from south.db import db
 from south.v2 import SchemaMigration
 from django.db import models
 
+
 class Migration(SchemaMigration):
 
     def forwards(self, orm):
-        
+
         # Adding model 'Project'
         db.create_table('projects_project', (
-            ('object_ptr', self.gf('django.db.models.fields.related.OneToOneField')(to=orm['core.Object'], unique=True, primary_key=True)),
-            ('name', self.gf('django.db.models.fields.CharField')(max_length=255)),
-            ('parent', self.gf('django.db.models.fields.related.ForeignKey')(blank=True, related_name='child_set', null=True, to=orm['projects.Project'])),
-            ('manager', self.gf('django.db.models.fields.related.ForeignKey')(blank=True, related_name='manager', null=True, to=orm['identities.Contact'])),
-            ('client', self.gf('django.db.models.fields.related.ForeignKey')(blank=True, related_name='client', null=True, to=orm['identities.Contact'])),
-            ('details', self.gf('django.db.models.fields.TextField')(max_length=255, null=True, blank=True)),
+            ('object_ptr', self.gf('django.db.models.fields.related.OneToOneField')(
+                to=orm['core.Object'], unique=True, primary_key=True)),
+            ('name', self.gf('django.db.models.fields.CharField')
+             (max_length=255)),
+            ('parent', self.gf('django.db.models.fields.related.ForeignKey')(
+                blank=True, related_name='child_set', null=True, to=orm['projects.Project'])),
+            ('manager', self.gf('django.db.models.fields.related.ForeignKey')(
+                blank=True, related_name='manager', null=True, to=orm['identities.Contact'])),
+            ('client', self.gf('django.db.models.fields.related.ForeignKey')(
+                blank=True, related_name='client', null=True, to=orm['identities.Contact'])),
+            ('details', self.gf('django.db.models.fields.TextField')
+             (max_length=255, null=True, blank=True)),
         ))
         db.send_create_signal('projects', ['Project'])
 
         # Adding model 'TaskStatus'
         db.create_table('projects_taskstatus', (
-            ('object_ptr', self.gf('django.db.models.fields.related.OneToOneField')(to=orm['core.Object'], unique=True, primary_key=True)),
-            ('name', self.gf('django.db.models.fields.CharField')(max_length=255)),
-            ('details', self.gf('django.db.models.fields.TextField')(max_length=255, null=True, blank=True)),
-            ('active', self.gf('django.db.models.fields.BooleanField')(default=False)),
-            ('hidden', self.gf('django.db.models.fields.BooleanField')(default=False)),
+            ('object_ptr', self.gf('django.db.models.fields.related.OneToOneField')(
+                to=orm['core.Object'], unique=True, primary_key=True)),
+            ('name', self.gf('django.db.models.fields.CharField')
+             (max_length=255)),
+            ('details', self.gf('django.db.models.fields.TextField')
+             (max_length=255, null=True, blank=True)),
+            ('active', self.gf('django.db.models.fields.BooleanField')
+             (default=False)),
+            ('hidden', self.gf('django.db.models.fields.BooleanField')
+             (default=False)),
         ))
         db.send_create_signal('projects', ['TaskStatus'])
 
         # Adding model 'Milestone'
         db.create_table('projects_milestone', (
-            ('object_ptr', self.gf('django.db.models.fields.related.OneToOneField')(to=orm['core.Object'], unique=True, primary_key=True)),
-            ('project', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['projects.Project'])),
-            ('name', self.gf('django.db.models.fields.CharField')(max_length=255)),
-            ('status', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['projects.TaskStatus'])),
-            ('details', self.gf('django.db.models.fields.TextField')(max_length=255, null=True, blank=True)),
-            ('start_date', self.gf('django.db.models.fields.DateTimeField')(null=True, blank=True)),
-            ('end_date', self.gf('django.db.models.fields.DateTimeField')(null=True, blank=True)),
+            ('object_ptr', self.gf('django.db.models.fields.related.OneToOneField')(
+                to=orm['core.Object'], unique=True, primary_key=True)),
+            ('project', self.gf('django.db.models.fields.related.ForeignKey')
+             (to=orm['projects.Project'])),
+            ('name', self.gf('django.db.models.fields.CharField')
+             (max_length=255)),
+            ('status', self.gf('django.db.models.fields.related.ForeignKey')
+             (to=orm['projects.TaskStatus'])),
+            ('details', self.gf('django.db.models.fields.TextField')
+             (max_length=255, null=True, blank=True)),
+            ('start_date', self.gf('django.db.models.fields.DateTimeField')
+             (null=True, blank=True)),
+            ('end_date', self.gf('django.db.models.fields.DateTimeField')
+             (null=True, blank=True)),
         ))
         db.send_create_signal('projects', ['Milestone'])
 
         # Adding model 'Task'
         db.create_table('projects_task', (
-            ('object_ptr', self.gf('django.db.models.fields.related.OneToOneField')(to=orm['core.Object'], unique=True, primary_key=True)),
-            ('parent', self.gf('django.db.models.fields.related.ForeignKey')(blank=True, related_name='child_set', null=True, to=orm['projects.Task'])),
-            ('project', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['projects.Project'])),
-            ('milestone', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['projects.Milestone'], null=True, blank=True)),
-            ('status', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['projects.TaskStatus'])),
-            ('name', self.gf('django.db.models.fields.CharField')(max_length=255)),
-            ('details', self.gf('django.db.models.fields.TextField')(max_length=255, null=True, blank=True)),
-            ('caller', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['identities.Contact'], null=True, blank=True)),
-            ('start_date', self.gf('django.db.models.fields.DateTimeField')(null=True, blank=True)),
-            ('end_date', self.gf('django.db.models.fields.DateTimeField')(null=True, blank=True)),
-            ('priority', self.gf('django.db.models.fields.IntegerField')(default=3)),
-            ('estimated_time', self.gf('django.db.models.fields.IntegerField')(null=True, blank=True)),
+            ('object_ptr', self.gf('django.db.models.fields.related.OneToOneField')(
+                to=orm['core.Object'], unique=True, primary_key=True)),
+            ('parent', self.gf('django.db.models.fields.related.ForeignKey')(
+                blank=True, related_name='child_set', null=True, to=orm['projects.Task'])),
+            ('project', self.gf('django.db.models.fields.related.ForeignKey')
+             (to=orm['projects.Project'])),
+            ('milestone', self.gf('django.db.models.fields.related.ForeignKey')(
+                to=orm['projects.Milestone'], null=True, blank=True)),
+            ('status', self.gf('django.db.models.fields.related.ForeignKey')
+             (to=orm['projects.TaskStatus'])),
+            ('name', self.gf('django.db.models.fields.CharField')
+             (max_length=255)),
+            ('details', self.gf('django.db.models.fields.TextField')
+             (max_length=255, null=True, blank=True)),
+            ('caller', self.gf('django.db.models.fields.related.ForeignKey')
+             (to=orm['identities.Contact'], null=True, blank=True)),
+            ('start_date', self.gf('django.db.models.fields.DateTimeField')
+             (null=True, blank=True)),
+            ('end_date', self.gf('django.db.models.fields.DateTimeField')
+             (null=True, blank=True)),
+            ('priority', self.gf(
+                'django.db.models.fields.IntegerField')(default=3)),
+            ('estimated_time', self.gf('django.db.models.fields.IntegerField')
+             (null=True, blank=True)),
         ))
         db.send_create_signal('projects', ['Task'])
 
         # Adding M2M table for field assigned on 'Task'
         db.create_table('projects_task_assigned', (
-            ('id', models.AutoField(verbose_name='ID', primary_key=True, auto_created=True)),
+            ('id', models.AutoField(
+                verbose_name='ID', primary_key=True, auto_created=True)),
             ('task', models.ForeignKey(orm['projects.task'], null=False)),
             ('user', models.ForeignKey(orm['core.user'], null=False))
         ))
@@ -73,27 +105,34 @@ class Migration(SchemaMigration):
 
         # Adding model 'TaskTimeSlot'
         db.create_table('projects_tasktimeslot', (
-            ('object_ptr', self.gf('django.db.models.fields.related.OneToOneField')(to=orm['core.Object'], unique=True, primary_key=True)),
-            ('task', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['projects.Task'])),
+            ('object_ptr', self.gf('django.db.models.fields.related.OneToOneField')(
+                to=orm['core.Object'], unique=True, primary_key=True)),
+            ('task', self.gf('django.db.models.fields.related.ForeignKey')
+             (to=orm['projects.Task'])),
             ('time_from', self.gf('django.db.models.fields.DateTimeField')()),
-            ('time_to', self.gf('django.db.models.fields.DateTimeField')(null=True, blank=True)),
-            ('timezone', self.gf('django.db.models.fields.IntegerField')(default=0)),
-            ('details', self.gf('django.db.models.fields.TextField')(max_length=255, null=True, blank=True)),
+            ('time_to', self.gf('django.db.models.fields.DateTimeField')
+             (null=True, blank=True)),
+            ('timezone', self.gf(
+                'django.db.models.fields.IntegerField')(default=0)),
+            ('details', self.gf('django.db.models.fields.TextField')
+             (max_length=255, null=True, blank=True)),
         ))
         db.send_create_signal('projects', ['TaskTimeSlot'])
 
         # Adding model 'TaskRecord'
         db.create_table('projects_taskrecord', (
-            ('object_ptr', self.gf('django.db.models.fields.related.OneToOneField')(to=orm['core.Object'], unique=True, primary_key=True)),
-            ('task', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['projects.Task'])),
-            ('record_type', self.gf('django.db.models.fields.CharField')(max_length=256)),
+            ('object_ptr', self.gf('django.db.models.fields.related.OneToOneField')(
+                to=orm['core.Object'], unique=True, primary_key=True)),
+            ('task', self.gf('django.db.models.fields.related.ForeignKey')
+             (to=orm['projects.Task'])),
+            ('record_type', self.gf(
+                'django.db.models.fields.CharField')(max_length=256)),
             ('details', self.gf('django.db.models.fields.TextField')()),
         ))
         db.send_create_signal('projects', ['TaskRecord'])
 
-
     def backwards(self, orm):
-        
+
         # Deleting model 'Project'
         db.delete_table('projects_project')
 
@@ -114,7 +153,6 @@ class Migration(SchemaMigration):
 
         # Deleting model 'TaskRecord'
         db.delete_table('projects_taskrecord')
-
 
     models = {
         'auth.group': {

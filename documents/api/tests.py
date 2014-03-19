@@ -15,15 +15,17 @@ from django.contrib.auth.models import User as DjangoUser
 from treeio.core.models import User, Group, Perspective, ModuleSetting, Object
 from treeio.documents.models import Folder, Document, File, WebLink
 
+
 class DocumentsViewsTest(TestCase):
+
     "Documents functional tests for api"
 
     username = "api_test"
     password = "api_password"
     prepared = False
-    authentication_headers ={"CONTENT_TYPE": "application/json",
-                             "HTTP_AUTHORIZATION" : "Basic YXBpX3Rlc3Q6YXBpX3Bhc3N3b3Jk" }
-    content_type ='application/json'
+    authentication_headers = {"CONTENT_TYPE": "application/json",
+                              "HTTP_AUTHORIZATION": "Basic YXBpX3Rlc3Q6YXBpX3Bhc3N3b3Jk"}
+    content_type = 'application/json'
 
     def setUp(self):
         "Initial Setup"
@@ -94,15 +96,17 @@ class DocumentsViewsTest(TestCase):
 
     def test_get_folders_list(self):
         """ Test index page api/documents/folders """
-        response = self.client.get(path=reverse('api_documents_folders'), **self.authentication_headers)
+        response = self.client.get(
+            path=reverse('api_documents_folders'), **self.authentication_headers)
         self.assertEquals(response.status_code, 200)
 
     def test_get_folder(self):
-        response = self.client.get(path=reverse('api_documents_folders', kwargs={'object_ptr': self.folder.id}), **self.authentication_headers)
+        response = self.client.get(path=reverse('api_documents_folders', kwargs={
+                                   'object_ptr': self.folder.id}), **self.authentication_headers)
         self.assertEquals(response.status_code, 200)
 
     def test_update_folder(self):
-        updates = { "name": "Api_folder_name" }
+        updates = {"name": "Api_folder_name"}
         response = self.client.put(path=reverse('api_documents_folders', kwargs={'object_ptr': self.folder.id}),
                                    content_type=self.content_type,  data=json.dumps(updates), **self.authentication_headers)
         self.assertEquals(response.status_code, 200)
@@ -112,11 +116,13 @@ class DocumentsViewsTest(TestCase):
 
     def test_get_files_list(self):
         """ Test index page api/documents/files """
-        response = self.client.get(path=reverse('api_documents_files'), **self.authentication_headers)
+        response = self.client.get(
+            path=reverse('api_documents_files'), **self.authentication_headers)
         self.assertEquals(response.status_code, 200)
 
     def test_get_file(self):
-        response = self.client.get(path=reverse('api_documents_files', kwargs={'object_ptr': self.file.id}), **self.authentication_headers)
+        response = self.client.get(path=reverse('api_documents_files', kwargs={
+                                   'object_ptr': self.file.id}), **self.authentication_headers)
         self.assertEquals(response.status_code, 200)
 
 #    def test_update_file(self):
@@ -130,15 +136,18 @@ class DocumentsViewsTest(TestCase):
 
     def test_get_documents_list(self):
         """ Test index page api/documents/documents """
-        response = self.client.get(path=reverse('api_documents_documents'), **self.authentication_headers)
+        response = self.client.get(
+            path=reverse('api_documents_documents'), **self.authentication_headers)
         self.assertEquals(response.status_code, 200)
 
     def test_get_document(self):
-        response = self.client.get(path=reverse('api_documents_documents', kwargs={'object_ptr': self.document.id}), **self.authentication_headers)
+        response = self.client.get(path=reverse('api_documents_documents', kwargs={
+                                   'object_ptr': self.document.id}), **self.authentication_headers)
         self.assertEquals(response.status_code, 200)
 
     def test_update_document(self):
-        updates = { "title": "Api_title", "folder": self.folder.id, "body": "Api test body" }
+        updates = {"title": "Api_title",
+                   "folder": self.folder.id, "body": "Api test body"}
         response = self.client.put(path=reverse('api_documents_documents', kwargs={'object_ptr': self.document.id}),
                                    content_type=self.content_type,  data=json.dumps(updates), **self.authentication_headers)
         self.assertEquals(response.status_code, 200)
@@ -150,15 +159,18 @@ class DocumentsViewsTest(TestCase):
 
     def test_get_weblinks_list(self):
         """ Test index page api/documents/weblinks """
-        response = self.client.get(path=reverse('api_documents_weblinks'), **self.authentication_headers)
+        response = self.client.get(
+            path=reverse('api_documents_weblinks'), **self.authentication_headers)
         self.assertEquals(response.status_code, 200)
 
     def test_get_weblink(self):
-        response = self.client.get(path=reverse('api_documents_weblinks', kwargs={'object_ptr': self.link.id}), **self.authentication_headers)
+        response = self.client.get(path=reverse('api_documents_weblinks', kwargs={
+                                   'object_ptr': self.link.id}), **self.authentication_headers)
         self.assertEquals(response.status_code, 200)
 
     def test_update_weblink(self):
-        updates = { "title": "Api_title", "folder": self.folder.id, "url": "http://Api-test-body" }
+        updates = {"title": "Api_title", "folder": self.folder.id,
+                   "url": "http://Api-test-body"}
         response = self.client.put(path=reverse('api_documents_weblinks', kwargs={'object_ptr': self.link.id}),
                                    content_type=self.content_type,  data=json.dumps(updates), **self.authentication_headers)
         self.assertEquals(response.status_code, 200)

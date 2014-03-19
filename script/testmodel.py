@@ -8,7 +8,8 @@
 OBJECTS_NUM = 100
 
 # setup environment
-import sys, os
+import sys
+import os
 sys.path.append('../')
 os.environ['DJANGO_SETTINGS_MODULE'] = 'settings'
 
@@ -22,7 +23,7 @@ setup_environ(settings)
 user = User.objects.all()[0]
 
 for i in range(0, OBJECTS_NUM):
-    project = Project(name='test'+unicode(i))
+    project = Project(name='test' + unicode(i))
     project.set_user(user)
     project.save()
     objects = Object.filter_permitted(user, Project.objects)

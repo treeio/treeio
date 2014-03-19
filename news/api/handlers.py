@@ -7,7 +7,7 @@
 
 from __future__ import absolute_import, with_statement
 
-__all__ = ['UpdateRecordHandler',]
+__all__ = ['UpdateRecordHandler', ]
 
 from treeio.core.api.utils import rc
 from piston.handler import BaseHandler
@@ -15,7 +15,9 @@ from treeio.core.models import UpdateRecord
 from treeio.news.forms import UpdateRecordForm
 from treeio.news.views import _get_filter_query
 
+
 class UpdateRecordHandler(BaseHandler):
+
     "Entrypoint for UpdateRecord model."
 
     model = UpdateRecord
@@ -38,7 +40,8 @@ class UpdateRecordHandler(BaseHandler):
                 return UpdateRecord.objects.filter(query).distinct()
         except self.model.DoesNotExist:
             return rc.NOT_FOUND
-        except self.model.MultipleObjectsReturned: # should never happen, since we're using a PK
+        # should never happen, since we're using a PK
+        except self.model.MultipleObjectsReturned:
             return rc.BAD_REQUEST
 
     def delete(self, request, record_id=None, *args, **kwargs):
@@ -53,6 +56,3 @@ class UpdateRecordHandler(BaseHandler):
             return rc.DUPLICATE_ENTRY
         except self.model.DoesNotExist:
             return rc.NOT_HERE
-
-
-

@@ -9,25 +9,31 @@ from south.db import db
 from south.v2 import SchemaMigration
 from django.db import models
 
+
 class Migration(SchemaMigration):
 
     def forwards(self, orm):
-        
+
         # Deleting model 'Notification'
         db.delete_table('core_notification')
 
         # Adding model 'Comment'
         db.create_table('core_comment', (
-            ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('author', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['core.User'], null=True, blank=True)),
-            ('body', self.gf('django.db.models.fields.TextField')(null=True, blank=True)),
-            ('date_created', self.gf('django.db.models.fields.DateTimeField')(default=datetime.datetime.now)),
+            ('id', self.gf('django.db.models.fields.AutoField')
+             (primary_key=True)),
+            ('author', self.gf('django.db.models.fields.related.ForeignKey')
+             (to=orm['core.User'], null=True, blank=True)),
+            ('body', self.gf('django.db.models.fields.TextField')
+             (null=True, blank=True)),
+            ('date_created', self.gf('django.db.models.fields.DateTimeField')
+             (default=datetime.datetime.now)),
         ))
         db.send_create_signal('core', ['Comment'])
 
         # Adding M2M table for field likes on 'Comment'
         db.create_table('core_comment_likes', (
-            ('id', models.AutoField(verbose_name='ID', primary_key=True, auto_created=True)),
+            ('id', models.AutoField(
+                verbose_name='ID', primary_key=True, auto_created=True)),
             ('comment', models.ForeignKey(orm['core.comment'], null=False)),
             ('user', models.ForeignKey(orm['core.user'], null=False))
         ))
@@ -35,7 +41,8 @@ class Migration(SchemaMigration):
 
         # Adding M2M table for field dislikes on 'Comment'
         db.create_table('core_comment_dislikes', (
-            ('id', models.AutoField(verbose_name='ID', primary_key=True, auto_created=True)),
+            ('id', models.AutoField(
+                verbose_name='ID', primary_key=True, auto_created=True)),
             ('comment', models.ForeignKey(orm['core.comment'], null=False)),
             ('user', models.ForeignKey(orm['core.user'], null=False))
         ))
@@ -43,128 +50,185 @@ class Migration(SchemaMigration):
 
         # Adding model 'Tag'
         db.create_table('core_tag', (
-            ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('name', self.gf('django.db.models.fields.CharField')(max_length=512)),
-            ('date_created', self.gf('django.db.models.fields.DateTimeField')(default=datetime.datetime.now)),
+            ('id', self.gf('django.db.models.fields.AutoField')
+             (primary_key=True)),
+            ('name', self.gf('django.db.models.fields.CharField')
+             (max_length=512)),
+            ('date_created', self.gf('django.db.models.fields.DateTimeField')
+             (default=datetime.datetime.now)),
         ))
         db.send_create_signal('core', ['Tag'])
 
         # Adding model 'RevisionField'
         db.create_table('core_revisionfield', (
-            ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('revision', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['core.Revision'])),
-            ('field_type', self.gf('django.db.models.fields.CharField')(max_length=512, null=True, blank=True)),
-            ('field', self.gf('django.db.models.fields.CharField')(max_length=512, null=True, blank=True)),
-            ('value', self.gf('django.db.models.fields.TextField')(null=True, blank=True)),
-            ('value_key', self.gf('django.db.models.fields.related.ForeignKey')(blank=True, related_name='revisionfield_key', null=True, to=orm['core.Object'])),
-            ('value_key_acc', self.gf('django.db.models.fields.related.ForeignKey')(blank=True, related_name='revisionfield_key_acc', null=True, to=orm['core.AccessEntity'])),
+            ('id', self.gf('django.db.models.fields.AutoField')
+             (primary_key=True)),
+            ('revision', self.gf('django.db.models.fields.related.ForeignKey')
+             (to=orm['core.Revision'])),
+            ('field_type', self.gf('django.db.models.fields.CharField')
+             (max_length=512, null=True, blank=True)),
+            ('field', self.gf('django.db.models.fields.CharField')
+             (max_length=512, null=True, blank=True)),
+            ('value', self.gf('django.db.models.fields.TextField')
+             (null=True, blank=True)),
+            ('value_key', self.gf('django.db.models.fields.related.ForeignKey')(
+                blank=True, related_name='revisionfield_key', null=True, to=orm['core.Object'])),
+            ('value_key_acc', self.gf('django.db.models.fields.related.ForeignKey')(
+                blank=True, related_name='revisionfield_key_acc', null=True, to=orm['core.AccessEntity'])),
         ))
         db.send_create_signal('core', ['RevisionField'])
 
         # Adding M2M table for field value_m2m on 'RevisionField'
         db.create_table('core_revisionfield_value_m2m', (
-            ('id', models.AutoField(verbose_name='ID', primary_key=True, auto_created=True)),
-            ('revisionfield', models.ForeignKey(orm['core.revisionfield'], null=False)),
+            ('id', models.AutoField(
+                verbose_name='ID', primary_key=True, auto_created=True)),
+            ('revisionfield', models.ForeignKey(
+                orm['core.revisionfield'], null=False)),
             ('object', models.ForeignKey(orm['core.object'], null=False))
         ))
-        db.create_unique('core_revisionfield_value_m2m', ['revisionfield_id', 'object_id'])
+        db.create_unique(
+            'core_revisionfield_value_m2m', ['revisionfield_id', 'object_id'])
 
         # Adding M2M table for field value_m2m_acc on 'RevisionField'
         db.create_table('core_revisionfield_value_m2m_acc', (
-            ('id', models.AutoField(verbose_name='ID', primary_key=True, auto_created=True)),
-            ('revisionfield', models.ForeignKey(orm['core.revisionfield'], null=False)),
-            ('accessentity', models.ForeignKey(orm['core.accessentity'], null=False))
+            ('id', models.AutoField(
+                verbose_name='ID', primary_key=True, auto_created=True)),
+            ('revisionfield', models.ForeignKey(
+                orm['core.revisionfield'], null=False)),
+            ('accessentity', models.ForeignKey(
+                orm['core.accessentity'], null=False))
         ))
-        db.create_unique('core_revisionfield_value_m2m_acc', ['revisionfield_id', 'accessentity_id'])
+        db.create_unique(
+            'core_revisionfield_value_m2m_acc', ['revisionfield_id', 'accessentity_id'])
 
         # Adding model 'Revision'
         db.create_table('core_revision', (
-            ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('previous', self.gf('django.db.models.fields.related.OneToOneField')(blank=True, related_name='next_set', unique=True, null=True, to=orm['core.Revision'])),
-            ('object', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['core.Object'])),
-            ('change_type', self.gf('django.db.models.fields.CharField')(max_length=512, null=True, blank=True)),
-            ('date_created', self.gf('django.db.models.fields.DateTimeField')(default=datetime.datetime.now)),
+            ('id', self.gf('django.db.models.fields.AutoField')
+             (primary_key=True)),
+            ('previous', self.gf('django.db.models.fields.related.OneToOneField')(
+                blank=True, related_name='next_set', unique=True, null=True, to=orm['core.Revision'])),
+            ('object', self.gf('django.db.models.fields.related.ForeignKey')
+             (to=orm['core.Object'])),
+            ('change_type', self.gf('django.db.models.fields.CharField')
+             (max_length=512, null=True, blank=True)),
+            ('date_created', self.gf('django.db.models.fields.DateTimeField')
+             (default=datetime.datetime.now)),
         ))
         db.send_create_signal('core', ['Revision'])
 
         # Adding model 'Invitation'
         db.create_table('core_invitation', (
-            ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('email', self.gf('django.db.models.fields.EmailField')(max_length=75)),
-            ('key', self.gf('django.db.models.fields.CharField')(max_length=256)),
-            ('sender', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['core.User'], null=True, blank=True)),
-            ('default_group', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['core.Group'], null=True, blank=True)),
-            ('date_created', self.gf('django.db.models.fields.DateTimeField')(default=datetime.datetime.now)),
+            ('id', self.gf('django.db.models.fields.AutoField')
+             (primary_key=True)),
+            ('email', self.gf('django.db.models.fields.EmailField')
+             (max_length=75)),
+            ('key', self.gf('django.db.models.fields.CharField')
+             (max_length=256)),
+            ('sender', self.gf('django.db.models.fields.related.ForeignKey')
+             (to=orm['core.User'], null=True, blank=True)),
+            ('default_group', self.gf('django.db.models.fields.related.ForeignKey')(
+                to=orm['core.Group'], null=True, blank=True)),
+            ('date_created', self.gf('django.db.models.fields.DateTimeField')
+             (default=datetime.datetime.now)),
         ))
         db.send_create_signal('core', ['Invitation'])
 
         # Adding model 'AccessEntity'
         db.create_table('core_accessentity', (
-            ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('last_updated', self.gf('django.db.models.fields.DateTimeField')(auto_now=True, blank=True)),
+            ('id', self.gf('django.db.models.fields.AutoField')
+             (primary_key=True)),
+            ('last_updated', self.gf('django.db.models.fields.DateTimeField')
+             (auto_now=True, blank=True)),
         ))
         db.send_create_signal('core', ['AccessEntity'])
 
         # Adding model 'UpdateRecord'
         db.create_table('core_updaterecord', (
-            ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('author', self.gf('django.db.models.fields.related.ForeignKey')(blank=True, related_name='sent_updates', null=True, to=orm['core.User'])),
-            ('sender', self.gf('django.db.models.fields.related.ForeignKey')(blank=True, related_name='sent_updates', null=True, to=orm['core.Object'])),
-            ('record_type', self.gf('django.db.models.fields.CharField')(max_length=32)),
-            ('url', self.gf('django.db.models.fields.CharField')(max_length=512, null=True, blank=True)),
-            ('body', self.gf('django.db.models.fields.TextField')(default='', null=True, blank=True)),
-            ('score', self.gf('django.db.models.fields.IntegerField')(default=0)),
-            ('format_message', self.gf('django.db.models.fields.TextField')(null=True, blank=True)),
-            ('format_strings', self.gf('django.db.models.fields.TextField')(null=True, blank=True)),
-            ('date_created', self.gf('django.db.models.fields.DateTimeField')(default=datetime.datetime.now)),
+            ('id', self.gf('django.db.models.fields.AutoField')
+             (primary_key=True)),
+            ('author', self.gf('django.db.models.fields.related.ForeignKey')(
+                blank=True, related_name='sent_updates', null=True, to=orm['core.User'])),
+            ('sender', self.gf('django.db.models.fields.related.ForeignKey')(
+                blank=True, related_name='sent_updates', null=True, to=orm['core.Object'])),
+            ('record_type', self.gf(
+                'django.db.models.fields.CharField')(max_length=32)),
+            ('url', self.gf('django.db.models.fields.CharField')
+             (max_length=512, null=True, blank=True)),
+            ('body', self.gf('django.db.models.fields.TextField')
+             (default='', null=True, blank=True)),
+            ('score', self.gf(
+                'django.db.models.fields.IntegerField')(default=0)),
+            ('format_message', self.gf('django.db.models.fields.TextField')
+             (null=True, blank=True)),
+            ('format_strings', self.gf('django.db.models.fields.TextField')
+             (null=True, blank=True)),
+            ('date_created', self.gf('django.db.models.fields.DateTimeField')
+             (default=datetime.datetime.now)),
         ))
         db.send_create_signal('core', ['UpdateRecord'])
 
         # Adding M2M table for field about on 'UpdateRecord'
         db.create_table('core_updaterecord_about', (
-            ('id', models.AutoField(verbose_name='ID', primary_key=True, auto_created=True)),
-            ('updaterecord', models.ForeignKey(orm['core.updaterecord'], null=False)),
+            ('id', models.AutoField(
+                verbose_name='ID', primary_key=True, auto_created=True)),
+            ('updaterecord', models.ForeignKey(
+                orm['core.updaterecord'], null=False)),
             ('object', models.ForeignKey(orm['core.object'], null=False))
         ))
-        db.create_unique('core_updaterecord_about', ['updaterecord_id', 'object_id'])
+        db.create_unique(
+            'core_updaterecord_about', ['updaterecord_id', 'object_id'])
 
         # Adding M2M table for field recipients on 'UpdateRecord'
         db.create_table('core_updaterecord_recipients', (
-            ('id', models.AutoField(verbose_name='ID', primary_key=True, auto_created=True)),
-            ('updaterecord', models.ForeignKey(orm['core.updaterecord'], null=False)),
-            ('accessentity', models.ForeignKey(orm['core.accessentity'], null=False))
+            ('id', models.AutoField(
+                verbose_name='ID', primary_key=True, auto_created=True)),
+            ('updaterecord', models.ForeignKey(
+                orm['core.updaterecord'], null=False)),
+            ('accessentity', models.ForeignKey(
+                orm['core.accessentity'], null=False))
         ))
-        db.create_unique('core_updaterecord_recipients', ['updaterecord_id', 'accessentity_id'])
+        db.create_unique(
+            'core_updaterecord_recipients', ['updaterecord_id', 'accessentity_id'])
 
         # Adding M2M table for field comments on 'UpdateRecord'
         db.create_table('core_updaterecord_comments', (
-            ('id', models.AutoField(verbose_name='ID', primary_key=True, auto_created=True)),
-            ('updaterecord', models.ForeignKey(orm['core.updaterecord'], null=False)),
+            ('id', models.AutoField(
+                verbose_name='ID', primary_key=True, auto_created=True)),
+            ('updaterecord', models.ForeignKey(
+                orm['core.updaterecord'], null=False)),
             ('comment', models.ForeignKey(orm['core.comment'], null=False))
         ))
-        db.create_unique('core_updaterecord_comments', ['updaterecord_id', 'comment_id'])
+        db.create_unique(
+            'core_updaterecord_comments', ['updaterecord_id', 'comment_id'])
 
         # Adding M2M table for field likes on 'UpdateRecord'
         db.create_table('core_updaterecord_likes', (
-            ('id', models.AutoField(verbose_name='ID', primary_key=True, auto_created=True)),
-            ('updaterecord', models.ForeignKey(orm['core.updaterecord'], null=False)),
+            ('id', models.AutoField(
+                verbose_name='ID', primary_key=True, auto_created=True)),
+            ('updaterecord', models.ForeignKey(
+                orm['core.updaterecord'], null=False)),
             ('user', models.ForeignKey(orm['core.user'], null=False))
         ))
-        db.create_unique('core_updaterecord_likes', ['updaterecord_id', 'user_id'])
+        db.create_unique(
+            'core_updaterecord_likes', ['updaterecord_id', 'user_id'])
 
         # Adding M2M table for field dislikes on 'UpdateRecord'
         db.create_table('core_updaterecord_dislikes', (
-            ('id', models.AutoField(verbose_name='ID', primary_key=True, auto_created=True)),
-            ('updaterecord', models.ForeignKey(orm['core.updaterecord'], null=False)),
+            ('id', models.AutoField(
+                verbose_name='ID', primary_key=True, auto_created=True)),
+            ('updaterecord', models.ForeignKey(
+                orm['core.updaterecord'], null=False)),
             ('user', models.ForeignKey(orm['core.user'], null=False))
         ))
-        db.create_unique('core_updaterecord_dislikes', ['updaterecord_id', 'user_id'])
+        db.create_unique(
+            'core_updaterecord_dislikes', ['updaterecord_id', 'user_id'])
 
         # Deleting field 'Group.last_updated'
         db.delete_column('core_group', 'last_updated')
 
         # Adding field 'Group.accessentity_ptr'
-        db.add_column('core_group', 'accessentity_ptr', self.gf('django.db.models.fields.related.OneToOneField')(to=orm['core.AccessEntity'], unique=True, null=True, blank=True), keep_default=False)
+        db.add_column('core_group', 'accessentity_ptr', self.gf('django.db.models.fields.related.OneToOneField')(
+            to=orm['core.AccessEntity'], unique=True, null=True, blank=True), keep_default=False)
 
         # Deleting field 'Object.group_read'
         db.delete_column('core_object', 'group_read')
@@ -197,27 +261,35 @@ class Migration(SchemaMigration):
         db.delete_column('core_object', 'everybody_read')
 
         # Adding field 'Object.creator'
-        db.add_column('core_object', 'creator', self.gf('django.db.models.fields.related.ForeignKey')(blank=True, related_name='objects_created', null=True, to=orm['core.User']), keep_default=False)
+        db.add_column('core_object', 'creator', self.gf('django.db.models.fields.related.ForeignKey')(
+            blank=True, related_name='objects_created', null=True, to=orm['core.User']), keep_default=False)
 
         # Adding M2M table for field read_access on 'Object'
         db.create_table('core_object_read_access', (
-            ('id', models.AutoField(verbose_name='ID', primary_key=True, auto_created=True)),
+            ('id', models.AutoField(
+                verbose_name='ID', primary_key=True, auto_created=True)),
             ('object', models.ForeignKey(orm['core.object'], null=False)),
-            ('accessentity', models.ForeignKey(orm['core.accessentity'], null=False))
+            ('accessentity', models.ForeignKey(
+                orm['core.accessentity'], null=False))
         ))
-        db.create_unique('core_object_read_access', ['object_id', 'accessentity_id'])
+        db.create_unique(
+            'core_object_read_access', ['object_id', 'accessentity_id'])
 
         # Adding M2M table for field full_access on 'Object'
         db.create_table('core_object_full_access', (
-            ('id', models.AutoField(verbose_name='ID', primary_key=True, auto_created=True)),
+            ('id', models.AutoField(
+                verbose_name='ID', primary_key=True, auto_created=True)),
             ('object', models.ForeignKey(orm['core.object'], null=False)),
-            ('accessentity', models.ForeignKey(orm['core.accessentity'], null=False))
+            ('accessentity', models.ForeignKey(
+                orm['core.accessentity'], null=False))
         ))
-        db.create_unique('core_object_full_access', ['object_id', 'accessentity_id'])
+        db.create_unique(
+            'core_object_full_access', ['object_id', 'accessentity_id'])
 
         # Adding M2M table for field tags on 'Object'
         db.create_table('core_object_tags', (
-            ('id', models.AutoField(verbose_name='ID', primary_key=True, auto_created=True)),
+            ('id', models.AutoField(
+                verbose_name='ID', primary_key=True, auto_created=True)),
             ('object', models.ForeignKey(orm['core.object'], null=False)),
             ('tag', models.ForeignKey(orm['core.tag'], null=False))
         ))
@@ -225,7 +297,8 @@ class Migration(SchemaMigration):
 
         # Adding M2M table for field comments on 'Object'
         db.create_table('core_object_comments', (
-            ('id', models.AutoField(verbose_name='ID', primary_key=True, auto_created=True)),
+            ('id', models.AutoField(
+                verbose_name='ID', primary_key=True, auto_created=True)),
             ('object', models.ForeignKey(orm['core.object'], null=False)),
             ('comment', models.ForeignKey(orm['core.comment'], null=False))
         ))
@@ -233,7 +306,8 @@ class Migration(SchemaMigration):
 
         # Adding M2M table for field likes on 'Object'
         db.create_table('core_object_likes', (
-            ('id', models.AutoField(verbose_name='ID', primary_key=True, auto_created=True)),
+            ('id', models.AutoField(
+                verbose_name='ID', primary_key=True, auto_created=True)),
             ('object', models.ForeignKey(orm['core.object'], null=False)),
             ('user', models.ForeignKey(orm['core.user'], null=False))
         ))
@@ -241,46 +315,62 @@ class Migration(SchemaMigration):
 
         # Adding M2M table for field dislikes on 'Object'
         db.create_table('core_object_dislikes', (
-            ('id', models.AutoField(verbose_name='ID', primary_key=True, auto_created=True)),
+            ('id', models.AutoField(
+                verbose_name='ID', primary_key=True, auto_created=True)),
             ('object', models.ForeignKey(orm['core.object'], null=False)),
             ('user', models.ForeignKey(orm['core.user'], null=False))
         ))
         db.create_unique('core_object_dislikes', ['object_id', 'user_id'])
 
         # Changing field 'Object.user'
-        db.alter_column('core_object', 'user_id', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['core.User'], null=True))
+        db.alter_column('core_object', 'user_id', self.gf(
+            'django.db.models.fields.related.ForeignKey')(to=orm['core.User'], null=True))
 
         # Deleting field 'User.last_updated'
         db.delete_column('core_user', 'last_updated')
 
         # Adding field 'User.accessentity_ptr'
-        db.add_column('core_user', 'accessentity_ptr', self.gf('django.db.models.fields.related.OneToOneField')(to=orm['core.AccessEntity'], unique=True, null=True, blank=True), keep_default=False)
+        db.add_column('core_user', 'accessentity_ptr', self.gf('django.db.models.fields.related.OneToOneField')(
+            to=orm['core.AccessEntity'], unique=True, null=True, blank=True), keep_default=False)
 
         # Adding field 'User.disabled'
-        db.add_column('core_user', 'disabled', self.gf('django.db.models.fields.BooleanField')(default=False), keep_default=False)
+        db.add_column('core_user', 'disabled', self.gf(
+            'django.db.models.fields.BooleanField')(default=False), keep_default=False)
 
         # Adding field 'User.last_access'
-        db.add_column('core_user', 'last_access', self.gf('django.db.models.fields.DateTimeField')(default=datetime.datetime.now), keep_default=False)
+        db.add_column('core_user', 'last_access', self.gf('django.db.models.fields.DateTimeField')(
+            default=datetime.datetime.now), keep_default=False)
 
         # Changing field 'User.default_group'
-        db.alter_column('core_user', 'default_group_id', self.gf('django.db.models.fields.related.ForeignKey')(null=True, to=orm['core.AccessEntity']))
-
+        db.alter_column('core_user', 'default_group_id', self.gf(
+            'django.db.models.fields.related.ForeignKey')(null=True, to=orm['core.AccessEntity']))
 
     def backwards(self, orm):
-        
+
         # Adding model 'Notification'
         db.create_table('core_notification', (
-            ('object', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['core.Object'], null=True, blank=True)),
-            ('format_strings', self.gf('django.db.models.fields.TextField')(null=True, blank=True)),
-            ('object_type', self.gf('django.db.models.fields.CharField')(max_length=512, null=True, blank=True)),
-            ('user', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['core.User'])),
-            ('message', self.gf('django.db.models.fields.TextField')(null=True, blank=True)),
-            ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('format_message', self.gf('django.db.models.fields.TextField')(null=True, blank=True)),
-            ('sender', self.gf('django.db.models.fields.related.ForeignKey')(related_name='notification_sent_set', null=True, to=orm['core.User'], blank=True)),
-            ('url', self.gf('django.db.models.fields.CharField')(max_length=512, null=True, blank=True)),
-            ('date_created', self.gf('django.db.models.fields.DateTimeField')(auto_now=True, blank=True)),
-            ('type', self.gf('django.db.models.fields.CharField')(max_length=32)),
+            ('object', self.gf('django.db.models.fields.related.ForeignKey')
+             (to=orm['core.Object'], null=True, blank=True)),
+            ('format_strings', self.gf('django.db.models.fields.TextField')
+             (null=True, blank=True)),
+            ('object_type', self.gf('django.db.models.fields.CharField')
+             (max_length=512, null=True, blank=True)),
+            ('user', self.gf('django.db.models.fields.related.ForeignKey')
+             (to=orm['core.User'])),
+            ('message', self.gf('django.db.models.fields.TextField')
+             (null=True, blank=True)),
+            ('id', self.gf('django.db.models.fields.AutoField')
+             (primary_key=True)),
+            ('format_message', self.gf('django.db.models.fields.TextField')
+             (null=True, blank=True)),
+            ('sender', self.gf('django.db.models.fields.related.ForeignKey')(
+                related_name='notification_sent_set', null=True, to=orm['core.User'], blank=True)),
+            ('url', self.gf('django.db.models.fields.CharField')
+             (max_length=512, null=True, blank=True)),
+            ('date_created', self.gf('django.db.models.fields.DateTimeField')
+             (auto_now=True, blank=True)),
+            ('type', self.gf('django.db.models.fields.CharField')
+             (max_length=32)),
         ))
         db.send_create_signal('core', ['Notification'])
 
@@ -332,41 +422,53 @@ class Migration(SchemaMigration):
         # Removing M2M table for field dislikes on 'UpdateRecord'
         db.delete_table('core_updaterecord_dislikes')
 
-        # User chose to not deal with backwards NULL issues for 'Group.last_updated'
-        raise RuntimeError("Cannot reverse this migration. 'Group.last_updated' and its values cannot be restored.")
+        # User chose to not deal with backwards NULL issues for
+        # 'Group.last_updated'
+        raise RuntimeError(
+            "Cannot reverse this migration. 'Group.last_updated' and its values cannot be restored.")
 
         # Deleting field 'Group.accessentity_ptr'
         db.delete_column('core_group', 'accessentity_ptr_id')
 
         # Adding field 'Object.group_read'
-        db.add_column('core_object', 'group_read', self.gf('django.db.models.fields.BooleanField')(default=False), keep_default=False)
+        db.add_column('core_object', 'group_read', self.gf(
+            'django.db.models.fields.BooleanField')(default=False), keep_default=False)
 
         # Adding field 'Object.user_write'
-        db.add_column('core_object', 'user_write', self.gf('django.db.models.fields.BooleanField')(default=False), keep_default=False)
+        db.add_column('core_object', 'user_write', self.gf(
+            'django.db.models.fields.BooleanField')(default=False), keep_default=False)
 
         # User chose to not deal with backwards NULL issues for 'Object.group'
-        raise RuntimeError("Cannot reverse this migration. 'Object.group' and its values cannot be restored.")
+        raise RuntimeError(
+            "Cannot reverse this migration. 'Object.group' and its values cannot be restored.")
 
         # Adding field 'Object.everybody_execute'
-        db.add_column('core_object', 'everybody_execute', self.gf('django.db.models.fields.BooleanField')(default=False), keep_default=False)
+        db.add_column('core_object', 'everybody_execute', self.gf(
+            'django.db.models.fields.BooleanField')(default=False), keep_default=False)
 
         # Adding field 'Object.user_execute'
-        db.add_column('core_object', 'user_execute', self.gf('django.db.models.fields.BooleanField')(default=False), keep_default=False)
+        db.add_column('core_object', 'user_execute', self.gf(
+            'django.db.models.fields.BooleanField')(default=False), keep_default=False)
 
         # Adding field 'Object.user_read'
-        db.add_column('core_object', 'user_read', self.gf('django.db.models.fields.BooleanField')(default=False), keep_default=False)
+        db.add_column('core_object', 'user_read', self.gf(
+            'django.db.models.fields.BooleanField')(default=False), keep_default=False)
 
         # Adding field 'Object.everybody_write'
-        db.add_column('core_object', 'everybody_write', self.gf('django.db.models.fields.BooleanField')(default=False), keep_default=False)
+        db.add_column('core_object', 'everybody_write', self.gf(
+            'django.db.models.fields.BooleanField')(default=False), keep_default=False)
 
         # Adding field 'Object.group_write'
-        db.add_column('core_object', 'group_write', self.gf('django.db.models.fields.BooleanField')(default=False), keep_default=False)
+        db.add_column('core_object', 'group_write', self.gf(
+            'django.db.models.fields.BooleanField')(default=False), keep_default=False)
 
         # Adding field 'Object.group_execute'
-        db.add_column('core_object', 'group_execute', self.gf('django.db.models.fields.BooleanField')(default=False), keep_default=False)
+        db.add_column('core_object', 'group_execute', self.gf(
+            'django.db.models.fields.BooleanField')(default=False), keep_default=False)
 
         # Adding field 'Object.everybody_read'
-        db.add_column('core_object', 'everybody_read', self.gf('django.db.models.fields.BooleanField')(default=False), keep_default=False)
+        db.add_column('core_object', 'everybody_read', self.gf(
+            'django.db.models.fields.BooleanField')(default=False), keep_default=False)
 
         # Deleting field 'Object.creator'
         db.delete_column('core_object', 'creator_id')
@@ -390,10 +492,13 @@ class Migration(SchemaMigration):
         db.delete_table('core_object_dislikes')
 
         # User chose to not deal with backwards NULL issues for 'Object.user'
-        raise RuntimeError("Cannot reverse this migration. 'Object.user' and its values cannot be restored.")
+        raise RuntimeError(
+            "Cannot reverse this migration. 'Object.user' and its values cannot be restored.")
 
-        # User chose to not deal with backwards NULL issues for 'User.last_updated'
-        raise RuntimeError("Cannot reverse this migration. 'User.last_updated' and its values cannot be restored.")
+        # User chose to not deal with backwards NULL issues for
+        # 'User.last_updated'
+        raise RuntimeError(
+            "Cannot reverse this migration. 'User.last_updated' and its values cannot be restored.")
 
         # Deleting field 'User.accessentity_ptr'
         db.delete_column('core_user', 'accessentity_ptr_id')
@@ -405,8 +510,8 @@ class Migration(SchemaMigration):
         db.delete_column('core_user', 'last_access')
 
         # Changing field 'User.default_group'
-        db.alter_column('core_user', 'default_group_id', self.gf('django.db.models.fields.related.ForeignKey')(null=True, to=orm['core.Group']))
-
+        db.alter_column('core_user', 'default_group_id', self.gf(
+            'django.db.models.fields.related.ForeignKey')(null=True, to=orm['core.Group']))
 
     models = {
         'auth.group': {

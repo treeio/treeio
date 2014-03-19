@@ -19,7 +19,7 @@ from treeio.core.trash.forms import MassActionForm
 
 def _process_mass_form(f):
     "Pre-process request to handle mass action form for Tasks and Milestones"
-    
+
     def wrap(request, *args, **kwargs):
         "Wrap"
         if 'massform' in request.POST:
@@ -37,39 +37,42 @@ def _process_mass_form(f):
                     if 'mass-object' in key:
                         try:
                             object = Object.objects.get(pk=request.POST[key])
-                            form = MassActionForm(request.POST, instance=object)
+                            form = MassActionForm(
+                                request.POST, instance=object)
                             if form.is_valid() and request.user.get_profile().has_permission(object, mode='w'):
                                 form.save()
                         except Exception, e:
                             pass
-            
+
         return f(request, *args, **kwargs)
 
     wrap.__doc__ = f.__doc__
     wrap.__name__ = f.__name__
-    
+
     return wrap
+
 
 @treeio_login_required
 @handle_response_format
 @_process_mass_form
 def index(request, response_format='html'):
     "List of items in Trash"
-    
-    trash = Object.filter_by_request(request, manager=Object.objects.filter(trash=True), 
+
+    trash = Object.filter_by_request(request, manager=Object.objects.filter(trash=True),
                                      mode='r', filter_trash=False)
     massform = MassActionForm()
-    
+
     return render_to_response('core/trash/index',
                               {'trash': trash,
                                'massform': massform},
                               context_instance=RequestContext(request), response_format=response_format)
 
+
 @treeio_login_required
 @handle_response_format
 def object_delete(request, object_id, response_format='html'):
     "Completely delete item"
-    
+
     object = get_object_or_404(Object, pk=object_id)
     if not request.user.get_profile().has_permission(object, mode='w'):
         return user_denied(request, message="You don't have access to this Object")
@@ -84,11 +87,13 @@ def object_delete(request, object_id, response_format='html'):
     return render_to_response('core/trash/object_delete',
                               {'object': object},
                               context_instance=RequestContext(request), response_format=response_format)
+
+
 @treeio_login_required
 @handle_response_format
 def object_untrash(request, object_id, response_format='html'):
     "Untrash item"
-    
+
     object = get_object_or_404(Object, pk=object_id)
     if not request.user.get_profile().has_permission(object, mode='w'):
         return user_denied(request, message="You don't have access to this Object")
@@ -102,4 +107,3 @@ def object_untrash(request, object_id, response_format='html'):
         object.save()
 
     return HttpResponseRedirect(reverse('core_trash'))
-

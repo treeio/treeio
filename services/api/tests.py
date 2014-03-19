@@ -13,19 +13,21 @@ from django.core.urlresolvers import reverse
 from django.contrib.auth.models import User as DjangoUser
 from treeio.core.models import User, Group, Perspective, ModuleSetting, Object
 from treeio.services.models import Ticket, TicketQueue, TicketStatus, ServiceAgent, \
-                                     Service, ServiceLevelAgreement
+    Service, ServiceLevelAgreement
 from treeio.identities.models import Contact, ContactType
 import datetime
 
+
 class ServicesViewsTest(TestCase):
+
     "Services functional tests for api"
 
     username = "api_test"
     password = "api_password"
     prepared = False
-    authentication_headers ={"CONTENT_TYPE": "application/json",
-                             "HTTP_AUTHORIZATION" : "Basic YXBpX3Rlc3Q6YXBpX3Bhc3N3b3Jk" }
-    content_type ='application/json'
+    authentication_headers = {"CONTENT_TYPE": "application/json",
+                              "HTTP_AUTHORIZATION": "Basic YXBpX3Rlc3Q6YXBpX3Bhc3N3b3Jk"}
+    content_type = 'application/json'
     prepared = False
 
     def setUp(self):
@@ -82,16 +84,18 @@ class ServicesViewsTest(TestCase):
             self.status.set_default_user()
             self.status.save()
 
-            self.queue = TicketQueue(name='TestQueue', default_ticket_status=self.status)
+            self.queue = TicketQueue(
+                name='TestQueue', default_ticket_status=self.status)
             self.queue.set_default_user()
             self.queue.save()
 
-            self.ticket = Ticket(name='TestTicket', status=self.status, queue=self.queue)
+            self.ticket = Ticket(
+                name='TestTicket', status=self.status, queue=self.queue)
             self.ticket.set_default_user()
             self.ticket.save()
 
             self.agent = ServiceAgent(related_user=self.user.get_profile(), available_from=datetime.time(9),
-                             available_to=datetime.time(17))
+                                      available_to=datetime.time(17))
             self.agent.set_default_user()
             self.agent.save()
 
@@ -100,7 +104,7 @@ class ServicesViewsTest(TestCase):
             self.service.save()
 
             self.sla = ServiceLevelAgreement(name='test', service=self.service,
-                                        client=self.contact, provider=self.contact)
+                                             client=self.contact, provider=self.contact)
             self.sla.set_default_user()
             self.sla.save()
 
@@ -116,11 +120,13 @@ class ServicesViewsTest(TestCase):
 
     def test_get_ticket_statuses_list(self):
         """ Test index page api/services/status """
-        response = self.client.get(path=reverse('api_services_status'), **self.authentication_headers)
+        response = self.client.get(
+            path=reverse('api_services_status'), **self.authentication_headers)
         self.assertEquals(response.status_code, 200)
 
     def test_get_status(self):
-        response = self.client.get(path=reverse('api_services_status', kwargs={'object_ptr': self.status.id}), **self.authentication_headers)
+        response = self.client.get(path=reverse('api_services_status', kwargs={
+                                   'object_ptr': self.status.id}), **self.authentication_headers)
         self.assertEquals(response.status_code, 200)
 
     def test_update_status(self):
@@ -131,11 +137,13 @@ class ServicesViewsTest(TestCase):
 
     def test_get_services_list(self):
         """ Test index page api/services """
-        response = self.client.get(path=reverse('api_services'), **self.authentication_headers)
+        response = self.client.get(
+            path=reverse('api_services'), **self.authentication_headers)
         self.assertEquals(response.status_code, 200)
 
     def test_get_service(self):
-        response = self.client.get(path=reverse('api_services', kwargs={'object_ptr': self.service.id}), **self.authentication_headers)
+        response = self.client.get(path=reverse(
+            'api_services', kwargs={'object_ptr': self.service.id}), **self.authentication_headers)
         self.assertEquals(response.status_code, 200)
 
     def test_update_service(self):
@@ -146,15 +154,18 @@ class ServicesViewsTest(TestCase):
 
     def test_get_sla_list(self):
         """ Test index page api/services/sla """
-        response = self.client.get(path=reverse('api_services_sla'), **self.authentication_headers)
+        response = self.client.get(
+            path=reverse('api_services_sla'), **self.authentication_headers)
         self.assertEquals(response.status_code, 200)
 
     def test_get_sla(self):
-        response = self.client.get(path=reverse('api_services_sla', kwargs={'object_ptr': self.sla.id}), **self.authentication_headers)
+        response = self.client.get(path=reverse(
+            'api_services_sla', kwargs={'object_ptr': self.sla.id}), **self.authentication_headers)
         self.assertEquals(response.status_code, 200)
 
     def test_update_sla(self):
-        updates = {'name': 'Api update', 'service': self.service.id, 'provider': self.contact.id}
+        updates = {'name': 'Api update',
+                   'service': self.service.id, 'provider': self.contact.id}
         response = self.client.put(path=reverse('api_services_sla', kwargs={'object_ptr': self.sla.id}),
                                    content_type=self.content_type,  data=json.dumps(updates), **self.authentication_headers)
         print 'content:'
@@ -163,38 +174,43 @@ class ServicesViewsTest(TestCase):
 
     def test_get_agents_list(self):
         """ Test index page api/services/agents """
-        response = self.client.get(path=reverse('api_services_agents'), **self.authentication_headers)
+        response = self.client.get(
+            path=reverse('api_services_agents'), **self.authentication_headers)
         self.assertEquals(response.status_code, 200)
 
     def test_get_agent(self):
-        response = self.client.get(path=reverse('api_services_agents', kwargs={'object_ptr': self.agent.id}), **self.authentication_headers)
+        response = self.client.get(path=reverse('api_services_agents', kwargs={
+                                   'object_ptr': self.agent.id}), **self.authentication_headers)
         self.assertEquals(response.status_code, 200)
 
     def test_update_sla(self):
-        updates = { "activate": True, "related_user": User.objects.all()[0].id }
+        updates = {"activate": True, "related_user": User.objects.all()[0].id}
         response = self.client.put(path=reverse('api_services_agents', kwargs={'object_ptr': self.agent.id}),
                                    content_type=self.content_type,  data=json.dumps(updates), **self.authentication_headers)
         self.assertEquals(response.status_code, 200)
 
     def test_get_queues_list(self):
         """ Test index page api/services/queues """
-        response = self.client.get(path=reverse('api_services_queues'), **self.authentication_headers)
+        response = self.client.get(
+            path=reverse('api_services_queues'), **self.authentication_headers)
         self.assertEquals(response.status_code, 200)
 
     def test_get_queue(self):
-        response = self.client.get(path=reverse('api_services_queues', kwargs={'object_ptr': self.queue.id}), **self.authentication_headers)
+        response = self.client.get(path=reverse('api_services_queues', kwargs={
+                                   'object_ptr': self.queue.id}), **self.authentication_headers)
         self.assertEquals(response.status_code, 200)
 
     def test_update_queue(self):
-        updates = { "name": "Api test", "default_ticket_priority": 5, "ticket_code": "api",
-                    "waiting_time" : 300, "default_ticket_status": self.status.id }
+        updates = {"name": "Api test", "default_ticket_priority": 5, "ticket_code": "api",
+                   "waiting_time": 300, "default_ticket_status": self.status.id}
         response = self.client.put(path=reverse('api_services_queues', kwargs={'object_ptr': self.queue.id}),
                                    content_type=self.content_type,  data=json.dumps(updates), **self.authentication_headers)
         self.assertEquals(response.status_code, 200)
 
     def test_get_records(self):
         """ Test index page api/services/ticket/records/{ticket number} """
-        response = self.client.get(path=reverse('api_services_ticket_records', kwargs={'ticket_id': self.ticket.id}), **self.authentication_headers)
+        response = self.client.get(path=reverse('api_services_ticket_records', kwargs={
+                                   'ticket_id': self.ticket.id}), **self.authentication_headers)
         self.assertEquals(response.status_code, 200)
 
     def test_create_record(self):
@@ -208,23 +224,27 @@ class ServicesViewsTest(TestCase):
 
     def test_get_tasks_list(self):
         """ Test index page api/services/tasks """
-        response = self.client.get(path=reverse('api_services_tickets'), **self.authentication_headers)
+        response = self.client.get(
+            path=reverse('api_services_tickets'), **self.authentication_headers)
         self.assertEquals(response.status_code, 200)
 
     def test_get_ticket(self):
-        response = self.client.get(path=reverse('api_services_tickets', kwargs={'object_ptr': self.ticket.id}), **self.authentication_headers)
+        response = self.client.get(path=reverse('api_services_tickets', kwargs={
+                                   'object_ptr': self.ticket.id}), **self.authentication_headers)
         self.assertEquals(response.status_code, 200)
 
     def test_update_ticket(self):
-        updates = {"name": "Api updates", "status": self.status.id, "priority": 3, "urgency": 5}
+        updates = {"name": "Api updates",
+                   "status": self.status.id, "priority": 3, "urgency": 5}
         response = self.client.put(path=reverse('api_services_tickets', kwargs={'object_ptr': self.ticket.id}),
                                    content_type=self.content_type,  data=json.dumps(updates), **self.authentication_headers)
         self.assertEquals(response.status_code, 200)
 
     def test_create_ticket(self):
-        new_ticket = {"name": "Api creates", "status": self.status.id, "priority": 3, "urgency": 5}
+        new_ticket = {"name": "Api creates",
+                      "status": self.status.id, "priority": 3, "urgency": 5}
         response = self.client.post(path=reverse('api_services_tickets',) + '?' + urllib.urlencode({'queue_id': self.queue.id}),
-                                   content_type=self.content_type,  data=json.dumps(new_ticket), **self.authentication_headers)
+                                    content_type=self.content_type,  data=json.dumps(new_ticket), **self.authentication_headers)
         self.assertEquals(response.status_code, 200)
 
         data = json.loads(response.content)

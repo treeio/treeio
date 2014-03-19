@@ -16,9 +16,11 @@ from treeio.core.api.utils import rc
 from treeio.core.api.handlers import ObjectHandler, getOrNone
 from treeio.knowledge.models import KnowledgeFolder, KnowledgeCategory, KnowledgeItem
 from treeio.knowledge.forms import KnowledgeFolderForm, KnowledgeItemForm, KnowledgeCategoryForm, \
-                                     FilterForm, MassActionForm
+    FilterForm, MassActionForm
+
 
 class KnowledgeFolderHandler(ObjectHandler):
+
     "Entrypoint for KnowledgeFolder model."
     model = KnowledgeFolder
     form = KnowledgeFolderForm
@@ -40,7 +42,9 @@ class KnowledgeFolderHandler(ObjectHandler):
                 request.data['parent'] = None
         return dct
 
+
 class KnowledgeCategoryHandler(ObjectHandler):
+
     "Entrypoint for KnowledgeCategory model."
     model = KnowledgeCategory
     form = KnowledgeCategoryForm
@@ -55,7 +59,9 @@ class KnowledgeCategoryHandler(ObjectHandler):
     def check_create_permission(self, request, mode):
         return True
 
+
 class KnowledgeItemHandler(ObjectHandler):
+
     "Entrypoint for KnowledgeItem model."
     model = KnowledgeItem
     form = KnowledgeItemForm

@@ -15,15 +15,17 @@ from treeio.core.models import User, Group, Perspective, ModuleSetting, Object
 from treeio.events.models import Event
 from datetime import datetime
 
+
 class EventsViewsTest(TestCase):
+
     "Events functional tests for api"
 
     username = "api_test"
     password = "api_password"
     prepared = False
-    authentication_headers ={"CONTENT_TYPE": "application/json",
-                             "HTTP_AUTHORIZATION" : "Basic YXBpX3Rlc3Q6YXBpX3Bhc3N3b3Jk" }
-    content_type ='application/json'
+    authentication_headers = {"CONTENT_TYPE": "application/json",
+                              "HTTP_AUTHORIZATION": "Basic YXBpX3Rlc3Q6YXBpX3Bhc3N3b3Jk"}
+    content_type = 'application/json'
 
     def setUp(self):
         "Initial Setup"
@@ -82,15 +84,18 @@ class EventsViewsTest(TestCase):
 
     def test_get_events_list(self):
         """ Test index page api/infrastructure/types """
-        response = self.client.get(path=reverse('api_events'), **self.authentication_headers)
+        response = self.client.get(
+            path=reverse('api_events'), **self.authentication_headers)
         self.assertEquals(response.status_code, 200)
 
     def test_get_field(self):
-        response = self.client.get(path=reverse('api_events', kwargs={'object_ptr': self.event.id}), **self.authentication_headers)
+        response = self.client.get(path=reverse(
+            'api_events', kwargs={'object_ptr': self.event.id}), **self.authentication_headers)
         self.assertEquals(response.status_code, 200)
 
     def test_update_field(self):
-        updates = {"name": "Api_name", "details": "Api details", "start": "2011-03-01 01:12:09", "end": "2011-03-09 13:05:09"}
+        updates = {"name": "Api_name", "details": "Api details",
+                   "start": "2011-03-01 01:12:09", "end": "2011-03-09 13:05:09"}
         response = self.client.put(path=reverse('api_events', kwargs={'object_ptr': self.event.id}),
                                    content_type=self.content_type,  data=json.dumps(updates), **self.authentication_headers)
         self.assertEquals(response.status_code, 200)

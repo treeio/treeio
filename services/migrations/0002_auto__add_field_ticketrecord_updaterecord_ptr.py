@@ -9,19 +9,19 @@ from south.db import db
 from south.v2 import SchemaMigration
 from django.db import models
 
+
 class Migration(SchemaMigration):
 
     def forwards(self, orm):
-        
-        # Adding field 'TicketRecord.updaterecord_ptr'
-        db.add_column('services_ticketrecord', 'updaterecord_ptr', self.gf('django.db.models.fields.related.OneToOneField')(to=orm['core.UpdateRecord'], unique=True, null=True, blank=True), keep_default=False)
 
+        # Adding field 'TicketRecord.updaterecord_ptr'
+        db.add_column('services_ticketrecord', 'updaterecord_ptr', self.gf('django.db.models.fields.related.OneToOneField')(
+            to=orm['core.UpdateRecord'], unique=True, null=True, blank=True), keep_default=False)
 
     def backwards(self, orm):
-        
+
         # Deleting field 'TicketRecord.updaterecord_ptr'
         db.delete_column('services_ticketrecord', 'updaterecord_ptr_id')
-
 
     models = {
         'auth.group': {

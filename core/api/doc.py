@@ -21,6 +21,7 @@ from django.shortcuts import render_to_response
 from django.template import RequestContext
 from django.db import models
 
+
 def get_module(mdl):
     if isinstance(mdl, basestring):
         __import__(mdl)
@@ -30,17 +31,19 @@ def get_module(mdl):
     else:
         raise ValueError("mdl must be string or module type.")
 
+
 def generate_doc(handler_cls):
     """
     Returns a `HandlerDocumentation` object
     for the given handler. Use this to generate
     documentation for your API.
     """
-    if not (type(handler_cls) is ObjectHandlerMetaClass \
-        or type(handler_cls) is handler.HandlerMetaClass):
+    if not (type(handler_cls) is ObjectHandlerMetaClass
+            or type(handler_cls) is handler.HandlerMetaClass):
         raise ValueError("Give me handler, not %s" % type(handler_cls))
 
     return HandlerDocumentation(handler_cls)
+
 
 def get_field_data_type(field):
     """Returns the description for a given field type, if it exists,
@@ -49,7 +52,9 @@ def get_field_data_type(field):
 
     return field.description % field.__dict__
 
+
 class HandlerMethod(object):
+
     def __init__(self, method, stale=False):
         self.method = method
         self.stale = stale
@@ -61,7 +66,7 @@ class HandlerMethod(object):
             if arg in ('self', 'request', 'form'):
                 continue
 
-            didx = len(args)-idx
+            didx = len(args) - idx
 
             if defaults and len(defaults) >= didx:
                 yield (arg, str(defaults[-didx]))
@@ -94,7 +99,8 @@ class HandlerMethod(object):
         if not doc and issubclass(self.method.im_class.model, models.Model):
             fields = None
             if self.method.__name__ == 'read':
-                fields = self.method.im_class.fields if self.method.im_class.fields else tuple( attr.name for attr in self.method.im_class.model._meta.local_fields )
+                fields = self.method.im_class.fields if self.method.im_class.fields else tuple(
+                    attr.name for attr in self.method.im_class.model._meta.local_fields)
             elif self.method.__name__ in ('create', 'update'):
                 to_update = True
                 if hasattr(self.method.im_class, 'form') and \
@@ -106,20 +112,22 @@ class HandlerMethod(object):
                 for field in fields:
                     for mfield in self.method.im_class.model._meta.fields:
                         if mfield.name == field:
-                            yield { 'name' : mfield.name,
-                                    'required': not mfield.blank if to_update else False,
-                                    'type' : get_field_data_type(mfield),
-                                    'verbose' : mfield.verbose_name,
-                                    'help_text': mfield.help_text, }
+                            yield {'name': mfield.name,
+                                   'required': not mfield.blank if to_update else False,
+                                   'type': get_field_data_type(mfield),
+                                   'verbose': mfield.verbose_name,
+                                   'help_text': mfield.help_text, }
                             break
 
     def get_doc(self):
         doc = inspect.getdoc(self.method)
         if not doc and issubclass(self.method.im_class.model, models.Model):
             if self.method.__name__ == 'delete':
-                doc = _('Function deletes object with object_ptr. If you declare "trash" parameter as true, object is marked as trash.')
+                doc = _(
+                    'Function deletes object with object_ptr. If you declare "trash" parameter as true, object is marked as trash.')
             elif self.method.__name__ == 'read':
-                doc = _('Function gets info about object and returns following fields:')
+                doc = _(
+                    'Function gets info about object and returns following fields:')
             elif hasattr(self.method.im_class, 'form'):
                 if not hasattr(self.method.im_class.form, '_meta'):
                     fields = self.method.im_class.fields
@@ -141,12 +149,15 @@ class HandlerMethod(object):
     def __repr__(self):
         return "<Method: %s>" % self.name
 
+
 def _convert(template, params=[]):
     """URI template converter"""
     paths = template % dict([p, "{%s}" % p] for p in params)
     return u'/api%s%s' % (get_script_prefix(), paths)
 
+
 class HandlerDocumentation(object):
+
     def __init__(self, handler):
         self.handler = handler
 
@@ -160,7 +171,7 @@ class HandlerDocumentation(object):
                     yield HandlerMethod(met, stale)
             else:
                 if not stale or met.__name__ == "read" \
-                    and 'GET' in self.allowed_methods:
+                        and 'GET' in self.allowed_methods:
 
                     yield HandlerMethod(met, stale)
 
@@ -188,7 +199,8 @@ class HandlerDocumentation(object):
         name = self.handler.__name__.replace('Handler', '')
         try:
             pattern = re.compile('([A-Z][A-Z][a-z])|([a-z][A-Z])')
-            name = pattern.sub(lambda m: m.group()[:1] + " " + m.group()[1:], name)
+            name = pattern.sub(
+                lambda m: m.group()[:1] + " " + m.group()[1:], name)
         except:
             pass
         return name
@@ -214,7 +226,8 @@ class HandlerDocumentation(object):
             lookup_view, args, kwargs = components
             lookup_view = get_callable(lookup_view, True)
 
-            possibilities = get_resolver('treeio.core.api.urls').reverse_dict.getlist(lookup_view)
+            possibilities = get_resolver(
+                'treeio.core.api.urls').reverse_dict.getlist(lookup_view)
 
             for possibility, pattern in possibilities:
                 for result, params in possibility:
@@ -226,7 +239,7 @@ class HandlerDocumentation(object):
                         if set(kwargs.keys()) != set(params):
                             continue
                         return _convert(result, params)
-            
+
         except:
             return None
 
@@ -243,10 +256,12 @@ class HandlerDocumentation(object):
                 components[i] = value
 
             lookup_view, args, kwargs = components
-            if args or kwargs:  # else this url will be in get_resource_uri_template
+            # else this url will be in get_resource_uri_template
+            if args or kwargs:
                 lookup_view = get_callable(lookup_view, True)
 
-                possibilities = get_resolver('treeio.core.api.urls').reverse_dict.getlist(lookup_view)
+                possibilities = get_resolver(
+                    'treeio.core.api.urls').reverse_dict.getlist(lookup_view)
 
                 for possibility, pattern in possibilities:
                     for result, params in possibility:
@@ -260,11 +275,12 @@ class HandlerDocumentation(object):
     def __repr__(self):
         return u'<Documentation for "%s">' % self.name
 
+
 def documentation_view(request, module):
-    docs = [ ]
+    docs = []
 
     for name, clsmember in inspect.getmembers(get_module(module), inspect.isclass):
         if issubclass(clsmember, handler.BaseHandler) and getattr(clsmember, 'model', None):
             docs.append(generate_doc(clsmember))
 
-    return render_to_response('api/reference.html', { 'docs': docs }, RequestContext(request))
+    return render_to_response('api/reference.html', {'docs': docs}, RequestContext(request))

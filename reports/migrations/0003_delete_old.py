@@ -9,6 +9,7 @@ from south.db import db
 from south.v2 import DataMigration
 from django.db import models
 
+
 class Migration(DataMigration):
 
     def forwards(self, orm):
@@ -16,10 +17,8 @@ class Migration(DataMigration):
         for report in orm['reports.Report'].objects.all():
             report.delete()
 
-
     def backwards(self, orm):
         raise RuntimeError("Cannot reverse this migration.")
-
 
     models = {
         'auth.group': {

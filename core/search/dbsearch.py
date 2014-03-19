@@ -14,7 +14,9 @@ for model in get_models():
         for field in model._meta.fields:
             if isinstance(field, CharField) or isinstance(field, TextField):
                 if not 'password' in field.name and not 'object_name' in field.name and not 'object_type' in field.name and not 'nuvius' in field.name:
-                    params.append('%s__%s' % (model._meta.module_name, field.name))
+                    params.append('%s__%s' %
+                                  (model._meta.module_name, field.name))
+
 
 def search(term):
     "Use database backend for searching"
@@ -30,6 +32,6 @@ def search(term):
         query = query | Q(**kwargs)
 
     #from pprint import pprint
-    #pprint(query_dict)
+    # pprint(query_dict)
 
     return Object.objects.filter(query)

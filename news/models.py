@@ -6,4 +6,3 @@
 """
 News models
 """
-

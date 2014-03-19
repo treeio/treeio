@@ -12,11 +12,13 @@ from django.utils._os import safe_join
 from treeio.core.conf import settings
 import os
 
+
 class FileStorage(FileSystemStorage):
-    
+
     def path(self, name):
         try:
             path = safe_join(getattr(settings, 'MEDIA_ROOT'), name)
         except ValueError:
-            raise SuspiciousOperation("Attempted access to '%s' denied." % name)
+            raise SuspiciousOperation(
+                "Attempted access to '%s' denied." % name)
         return os.path.normpath(path)

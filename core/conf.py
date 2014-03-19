@@ -10,7 +10,9 @@ Multitenancy settings
 from django.conf import LazySettings
 from pandora import box
 
+
 class Settings(LazySettings):
+
     def __getattr__(self, key):
         if key in box:
             return box[key]

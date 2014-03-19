@@ -10,12 +10,12 @@ from treeio.core.models import Object
 from treeio.projects.templatetags.projects import projects_task_list
 
 CONTACT_OBJECTS = {}
-CONTACT_OBJECTS['manager']  = {'label': 'Managed Projects',
-                               'objects': [],
-                               'templatetag': None}
-CONTACT_OBJECTS['client']   = {'label': 'Ordered Projects',
-                               'objects': [],
-                               'templatetag': None}
+CONTACT_OBJECTS['manager'] = {'label': 'Managed Projects',
+                              'objects': [],
+                              'templatetag': None}
+CONTACT_OBJECTS['client'] = {'label': 'Ordered Projects',
+                             'objects': [],
+                             'templatetag': None}
 CONTACT_OBJECTS['task_set'] = {'label': 'Managed Tasks',
                                'objects': [],
                                'templatetag': projects_task_list}
@@ -31,9 +31,9 @@ def get_contact_objects(current_user, contact):
     Returns a dictionary with keys specified as contact attributes
     and values as dictionaries with labels and set of relevant objects.
     """
-    
+
     objects = dict(CONTACT_OBJECTS)
-    
+
     for key in objects:
         if hasattr(contact, key):
             manager = getattr(contact, key)
@@ -41,8 +41,9 @@ def get_contact_objects(current_user, contact):
                 manager = manager.filter(status__hidden=False)
             except:
                 pass
-            objects[key]['objects'] = Object.filter_permitted(current_user, manager)
-    
+            objects[key]['objects'] = Object.filter_permitted(
+                current_user, manager)
+
     return objects
 
 
@@ -51,9 +52,9 @@ def get_user_objects(current_user, user):
     Returns a dictionary with keys specified as contact attributes
     and values as dictionaries with labels and set of relevant objects.
     """
-    
+
     objects = dict(USER_OBJECTS)
-    
+
     for key in objects:
         if hasattr(user, key):
             manager = getattr(user, key)
@@ -61,8 +62,7 @@ def get_user_objects(current_user, user):
                 manager = manager.filter(status__hidden=False)
             except:
                 pass
-            objects[key]['objects'] = Object.filter_permitted(current_user, manager)
-            
-    return objects
+            objects[key]['objects'] = Object.filter_permitted(
+                current_user, manager)
 
-    
+    return objects

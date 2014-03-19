@@ -9,19 +9,24 @@ from south.db import db
 from south.v2 import SchemaMigration
 from django.db import models
 
+
 class Migration(SchemaMigration):
 
     def forwards(self, orm):
-        
+
         # Deleting model 'Template'
         db.delete_table('reports_template')
 
         # Adding model 'Chart'
         db.create_table('reports_chart', (
-            ('object_ptr', self.gf('django.db.models.fields.related.OneToOneField')(to=orm['core.Object'], unique=True, primary_key=True)),
-            ('name', self.gf('django.db.models.fields.CharField')(max_length=255)),
-            ('report', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['reports.Report'])),
-            ('options', self.gf('django.db.models.fields.TextField')(null=True, blank=True)),
+            ('object_ptr', self.gf('django.db.models.fields.related.OneToOneField')(
+                to=orm['core.Object'], unique=True, primary_key=True)),
+            ('name', self.gf('django.db.models.fields.CharField')
+             (max_length=255)),
+            ('report', self.gf('django.db.models.fields.related.ForeignKey')
+             (to=orm['reports.Report'])),
+            ('options', self.gf('django.db.models.fields.TextField')
+             (null=True, blank=True)),
         ))
         db.send_create_signal('reports', ['Chart'])
 
@@ -29,17 +34,21 @@ class Migration(SchemaMigration):
         db.delete_column('reports_report', 'template_id')
 
         # Adding field 'Report.model'
-        db.add_column('reports_report', 'model', self.gf('django.db.models.fields.TextField')(null=True, blank=True), keep_default=False)
-
+        db.add_column('reports_report', 'model', self.gf(
+            'django.db.models.fields.TextField')(null=True, blank=True), keep_default=False)
 
     def backwards(self, orm):
-        
+
         # Adding model 'Template'
         db.create_table('reports_template', (
-            ('model', self.gf('django.db.models.fields.TextField')(null=True, blank=True)),
-            ('object_ptr', self.gf('django.db.models.fields.related.OneToOneField')(to=orm['core.Object'], unique=True, primary_key=True)),
-            ('details', self.gf('django.db.models.fields.TextField')(null=True, blank=True)),
-            ('name', self.gf('django.db.models.fields.CharField')(max_length=512)),
+            ('model', self.gf('django.db.models.fields.TextField')
+             (null=True, blank=True)),
+            ('object_ptr', self.gf('django.db.models.fields.related.OneToOneField')(
+                to=orm['core.Object'], unique=True, primary_key=True)),
+            ('details', self.gf('django.db.models.fields.TextField')
+             (null=True, blank=True)),
+            ('name', self.gf('django.db.models.fields.CharField')
+             (max_length=512)),
         ))
         db.send_create_signal('reports', ['Template'])
 
@@ -47,11 +56,11 @@ class Migration(SchemaMigration):
         db.delete_table('reports_chart')
 
         # Adding field 'Report.template'
-        db.add_column('reports_report', 'template', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['reports.Template'], null=True, blank=True), keep_default=False)
+        db.add_column('reports_report', 'template', self.gf('django.db.models.fields.related.ForeignKey')(
+            to=orm['reports.Template'], null=True, blank=True), keep_default=False)
 
         # Deleting field 'Report.model'
         db.delete_column('reports_report', 'model')
-
 
     models = {
         'auth.group': {

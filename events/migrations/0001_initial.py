@@ -9,39 +9,47 @@ from south.db import db
 from south.v2 import SchemaMigration
 from django.db import models
 
+
 class Migration(SchemaMigration):
 
     def forwards(self, orm):
-        
+
         # Adding model 'Event'
         db.create_table('events_event', (
-            ('object_ptr', self.gf('django.db.models.fields.related.OneToOneField')(to=orm['core.Object'], unique=True, primary_key=True)),
-            ('name', self.gf('django.db.models.fields.CharField')(max_length=255)),
-            ('location', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['core.Location'], null=True, blank=True)),
-            ('details', self.gf('django.db.models.fields.TextField')(max_length=255, null=True, blank=True)),
-            ('start', self.gf('django.db.models.fields.DateTimeField')(null=True, blank=True)),
+            ('object_ptr', self.gf('django.db.models.fields.related.OneToOneField')(
+                to=orm['core.Object'], unique=True, primary_key=True)),
+            ('name', self.gf('django.db.models.fields.CharField')
+             (max_length=255)),
+            ('location', self.gf('django.db.models.fields.related.ForeignKey')
+             (to=orm['core.Location'], null=True, blank=True)),
+            ('details', self.gf('django.db.models.fields.TextField')
+             (max_length=255, null=True, blank=True)),
+            ('start', self.gf('django.db.models.fields.DateTimeField')
+             (null=True, blank=True)),
             ('end', self.gf('django.db.models.fields.DateTimeField')()),
         ))
         db.send_create_signal('events', ['Event'])
 
         # Adding model 'Invitation'
         db.create_table('events_invitation', (
-            ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('contact', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['identities.Contact'])),
-            ('event', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['events.Event'])),
-            ('status', self.gf('django.db.models.fields.CharField')(max_length=255)),
+            ('id', self.gf('django.db.models.fields.AutoField')
+             (primary_key=True)),
+            ('contact', self.gf('django.db.models.fields.related.ForeignKey')
+             (to=orm['identities.Contact'])),
+            ('event', self.gf('django.db.models.fields.related.ForeignKey')
+             (to=orm['events.Event'])),
+            ('status', self.gf('django.db.models.fields.CharField')
+             (max_length=255)),
         ))
         db.send_create_signal('events', ['Invitation'])
 
-
     def backwards(self, orm):
-        
+
         # Deleting model 'Event'
         db.delete_table('events_event')
 
         # Deleting model 'Invitation'
         db.delete_table('events_invitation')
-
 
     models = {
         'auth.group': {

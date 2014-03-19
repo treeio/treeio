@@ -9,19 +9,19 @@ from south.db import db
 from south.v2 import SchemaMigration
 from django.db import models
 
+
 class Migration(SchemaMigration):
 
     def forwards(self, orm):
-        
-        # Adding field 'Attachment.filename'
-        db.add_column('core_attachment', 'filename', self.gf('django.db.models.fields.CharField')(default='', max_length=64), keep_default=False)
 
+        # Adding field 'Attachment.filename'
+        db.add_column('core_attachment', 'filename', self.gf(
+            'django.db.models.fields.CharField')(default='', max_length=64), keep_default=False)
 
     def backwards(self, orm):
-        
+
         # Deleting field 'Attachment.filename'
         db.delete_column('core_attachment', 'filename')
-
 
     models = {
         'auth.group': {

@@ -7,13 +7,15 @@
 
 from __future__ import absolute_import, with_statement
 
-__all__ = ['EventHandler',]
+__all__ = ['EventHandler', ]
 
 from treeio.events.models import Event
 from treeio.events.forms import EventForm
 from treeio.core.api.handlers import ObjectHandler
 
+
 class EventHandler(ObjectHandler):
+
     "Entrypoint for Event model."
     model = Event
     form = EventForm

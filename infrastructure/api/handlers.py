@@ -23,12 +23,15 @@ from treeio.infrastructure.models import Item, ItemField, ItemType, ItemStatus, 
 from treeio.core.forms import LocationForm
 from treeio.infrastructure.forms import ItemForm, ItemTypeForm, ItemStatusForm, ItemFieldForm, ServiceRecordForm
 
+
 class InfrastructureCommonHandler(ObjectHandler):
 
     def check_create_permission(self, request, mode):
         return request.user.get_profile().is_admin('treeio.infrastructure')
 
+
 class ItemFieldHandler(InfrastructureCommonHandler):
+
     "Entrypoint for ItemField model."
     model = ItemField
     form = ItemFieldForm
@@ -40,7 +43,9 @@ class ItemFieldHandler(InfrastructureCommonHandler):
     def flatten_dict(self, request):
         return {'data': super(ObjectHandler, self).flatten_dict(request.data)}
 
+
 class ItemTypeHandler(InfrastructureCommonHandler):
+
     "Entrypoint for ItemType model."
 
     model = ItemType
@@ -52,7 +57,9 @@ class ItemTypeHandler(InfrastructureCommonHandler):
     def resource_uri():
         return ('api_infrastructure_types', ['id'])
 
+
 class ItemStatusHandler(InfrastructureCommonHandler):
+
     "Entrypoint for ItemStatus model."
 
     model = ItemStatus
@@ -65,7 +72,9 @@ class ItemStatusHandler(InfrastructureCommonHandler):
     def flatten_dict(self, request):
         return {'data': super(ObjectHandler, self).flatten_dict(request.data)}
 
+
 class ItemServicingHandler(InfrastructureCommonHandler):
+
     "Entrypoint for ItemServicing model."
     model = ItemServicing
     form = ServiceRecordForm
@@ -75,13 +84,16 @@ class ItemServicingHandler(InfrastructureCommonHandler):
     def resource_uri():
         return ('api_infrastructure_service_records', ['id'])
 
+
 class ItemHandler(ObjectHandler):
+
     "Entrypoint for Item model."
 
     model = Item
     form = ItemForm
 
-    fields = ['id', ('itemvalue_set', ('name', 'value'))] + [i.name for i in Item._meta.local_fields if i.name != 'object_ptr']
+    fields = ['id', ('itemvalue_set', ('name', 'value'))] + \
+        [i.name for i in Item._meta.local_fields if i.name != 'object_ptr']
 
     @staticmethod
     def resource_uri():
@@ -97,7 +109,7 @@ class ItemHandler(ObjectHandler):
 
         attrs = self.flatten_dict(request)
 
-        form = ItemForm( item_type=item_type, **attrs)
+        form = ItemForm(item_type=item_type, **attrs)
         if form.is_valid():
             item = form.save(request)
             return item
@@ -109,7 +121,8 @@ class ItemHandler(ObjectHandler):
         if request.data is None:
             return rc.BAD_REQUEST
 
-        pkfield = kwargs.get(self.model._meta.pk.name) or request.data.get(self.model._meta.pk.name)
+        pkfield = kwargs.get(self.model._meta.pk.name) or request.data.get(
+            self.model._meta.pk.name)
 
         if not pkfield:
             return rc.BAD_REQUEST
@@ -123,7 +136,7 @@ class ItemHandler(ObjectHandler):
 
         attrs = self.flatten_dict(request)
 
-        form = ItemForm( item_type=item.item_type, instance=item, **attrs)
+        form = ItemForm(item_type=item.item_type, instance=item, **attrs)
         if form.is_valid():
             item = form.save(request)
             return item
@@ -131,7 +144,9 @@ class ItemHandler(ObjectHandler):
             self.status = 400
             return form.errors
 
+
 class LocationHandler(ObjectHandler):
+
     "Entrypoint for Location model."
 
     model = Location

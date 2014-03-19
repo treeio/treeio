@@ -20,6 +20,7 @@ import urllib
 
 register = template.Library()
 
+
 @contextfunction
 def permission_block(context, object):
     "Block with objects permissions"
@@ -27,134 +28,148 @@ def permission_block(context, object):
     response_format = 'html'
     if 'response_format' in context:
         response_format = context['response_format']
-        
+
     response_format_tags = response_format
     if 'response_format_tags' in context:
         response_format_tags = context['response_format_tags']
-    
+
     if 'permission' in request.GET:
         if request.user.get_profile().has_permission(object, mode='w'):
             if request.POST:
                 if 'cancel' in request.POST:
                     request.redirect = request.path
                     return Markup(render_to_string('core/tags/permission_block',
-                               {'object': object, 'path': request.path },
-                               context_instance=RequestContext(request),
-                               response_format=response_format))
+                                                   {'object': object,
+                                                       'path': request.path},
+                                                   context_instance=RequestContext(
+                                                       request),
+                                                   response_format=response_format))
                 form = PermissionForm(request.POST, instance=object)
                 if form.is_valid():
                     form.save()
                     request.redirect = request.path
                     return Markup(render_to_string('core/tags/permission_block',
-                               {'object': object, 'path': request.path },
-                               context_instance=RequestContext(request),
-                               response_format=response_format))
+                                                   {'object': object,
+                                                       'path': request.path},
+                                                   context_instance=RequestContext(
+                                                       request),
+                                                   response_format=response_format))
             else:
                 form = PermissionForm(instance=object)
-                
-            context = {'object': object, 'path': request.path, 'form': form }
-            
+
+            context = {'object': object, 'path': request.path, 'form': form}
+
             if 'ajax' in response_format_tags:
                 context = converter.preprocess_context(context)
-                
+
             return Markup(render_to_string('core/tags/permission_block_edit',
-                                       context,
-                                       context_instance=RequestContext(request),
-                                       response_format=response_format))
-    
-    
+                                           context,
+                                           context_instance=RequestContext(
+                                               request),
+                                           response_format=response_format))
+
     return Markup(render_to_string('core/tags/permission_block',
-                               {'object': object, 'path': request.path },
-                               context_instance=RequestContext(request),
-                               response_format=response_format))
-    
+                                   {'object': object, 'path': request.path},
+                                   context_instance=RequestContext(request),
+                                   response_format=response_format))
+
 register.object(permission_block)
 
 
 @contextfunction
 def link_block(context, object):
     "Block with objects links"
-    
+
     request = context['request']
-    
+
     response_format = 'html'
     if 'response_format' in context:
         response_format = context['response_format']
-    
+
     response_format_tags = response_format
     if 'response_format_tags' in context:
         response_format_tags = context['response_format_tags']
-    
+
     if request.GET and 'link_add' in request.GET:
         if request.POST:
-            
+
             if 'cancel' in request.POST:
-                links = Object.filter_by_request(context['request'], object.links)
+                links = Object.filter_by_request(
+                    context['request'], object.links)
                 return Markup(render_to_string('core/tags/link_block',
-                       {'object': object, 'links': links, 'request': request, 'path': request.path },
-                       context_instance=RequestContext(request),
-                       response_format=response_format))
-                
-            form = ObjectLinksForm(request.user.get_profile(), response_format_tags, object, request.POST)
-            
+                                               {'object': object, 'links': links,
+                                                   'request': request, 'path': request.path},
+                                               context_instance=RequestContext(
+                                                   request),
+                                               response_format=response_format))
+
+            form = ObjectLinksForm(
+                request.user.get_profile(), response_format_tags, object, request.POST)
+
             if form.is_valid() and request.user.get_profile().has_permission(object, mode='w'):
                 object.links.add(form.cleaned_data['links'])
-                links = Object.filter_by_request(context['request'], object.links)
+                links = Object.filter_by_request(
+                    context['request'], object.links)
                 return Markup(render_to_string('core/tags/link_block',
-                       {'object': object, 'links': links, 'request': request, 'path': request.path },
-                       context_instance=RequestContext(request),
-                       response_format=response_format))
-        
+                                               {'object': object, 'links': links,
+                                                   'request': request, 'path': request.path},
+                                               context_instance=RequestContext(
+                                                   request),
+                                               response_format=response_format))
+
         links = Object.filter_by_request(context['request'], object.links)
-        form = ObjectLinksForm(request.user.get_profile(), response_format_tags, instance=object)
-        
-        context = {'object': object, 'path': request.path, 'form': form, 'links': links }
-        
+        form = ObjectLinksForm(
+            request.user.get_profile(), response_format_tags, instance=object)
+
+        context = {'object': object, 'path': request.path,
+                   'form': form, 'links': links}
+
         if 'ajax' in response_format_tags:
             context = converter.preprocess_context(context)
-        
+
         rendered_string = render_to_string('core/tags/link_block_edit', context,
-                               context_instance=RequestContext(request),
-                               response_format=response_format)
-        
+                                           context_instance=RequestContext(
+                                               request),
+                                           response_format=response_format)
+
         return Markup(rendered_string)
-    
+
     elif request.GET and 'link_delete' in request.GET:
-        
+
         if request.user.get_profile().has_permission(object, mode='w'):
             try:
                 link = Object.objects.get(pk=request.GET['link_delete'])
                 object.links.remove(link)
             except Exception:
                 pass
-        
+
     links = Object.filter_by_request(context['request'], object.links)
-    
+
     return Markup(render_to_string('core/tags/link_block',
-                                   {'object': object, 'links': links, 'request': request, 
-                                    'path': request.path },
+                                   {'object': object, 'links': links, 'request': request,
+                                    'path': request.path},
                                    context_instance=RequestContext(request),
                                    response_format=response_format))
-    
+
 register.object(link_block)
 
 
 @contextfunction
 def subscription_block(context, object):
     "Block with objects subscriptions"
-    
+
     request = context['request']
-    
+
     response_format = 'html'
     if 'response_format' in context:
         response_format = context['response_format']
-    
+
     response_format_tags = response_format
     if 'response_format_tags' in context:
         response_format_tags = context['response_format_tags']
-        
+
     subscriptions = object.subscribers.all()
-    
+
     subscribed = False
     if request.user.get_profile() in subscriptions:
         subscribed = True
@@ -164,34 +179,36 @@ def subscription_block(context, object):
             if 'cancel' in request.POST:
                 request.redirect = request.path
                 return Markup(render_to_string('core/tags/subscription_block',
-                                   {'object': object, 'subscriptions': subscriptions,
-                                    'request': request, 'path': request.path,
-                                    'subscribed': subscribed },
-                                   context_instance=RequestContext(request),
-                                   response_format=response_format))
+                                               {'object': object, 'subscriptions': subscriptions,
+                                                'request': request, 'path': request.path,
+                                                'subscribed': subscribed},
+                                               context_instance=RequestContext(
+                                                   request),
+                                               response_format=response_format))
             else:
                 form = SubscribeForm(object, request.POST)
                 if form.is_valid():
                     subscriptions = form.save()
-                
+
                 request.redirect = request.path
                 return Markup(render_to_string('core/tags/subscription_block',
-                                   {'object': object, 'subscriptions': subscriptions,
-                                    'request': request, 'path': request.path,
-                                    'subscribed': subscribed },
-                                   context_instance=RequestContext(request),
-                                   response_format=response_format))
-                
+                                               {'object': object, 'subscriptions': subscriptions,
+                                                'request': request, 'path': request.path,
+                                                'subscribed': subscribed},
+                                               context_instance=RequestContext(
+                                                   request),
+                                               response_format=response_format))
+
         else:
             form = SubscribeForm(instance=object)
-            
+
             context = {'object': object, 'subscriptions': subscriptions,
                        'request': request, 'path': request.path,
-                       'subscribed': subscribed, 'form': form }
-            
+                       'subscribed': subscribed, 'form': form}
+
             if 'ajax' in response_format_tags:
                 context = converter.preprocess_context(context)
-                
+
             return Markup(render_to_string('core/tags/subscription_block_add', context,
                           context_instance=RequestContext(request),
                           response_format=response_format))
@@ -205,62 +222,61 @@ def subscription_block(context, object):
         user_id = int(request.GET['unsubscribe'])
         try:
             if request.user.get_profile().id == user_id or \
-                request.user.get_profile().has_permission(object, mode='w'):
+                    request.user.get_profile().has_permission(object, mode='w'):
                 object.subscribers.remove(subscriptions.get(pk=user_id))
                 subscriptions = object.subscribers.all()
                 if user_id == request.user.get_profile().id:
                     subscribed = False
         except Exception:
             pass
-            
-                
+
     return Markup(render_to_string('core/tags/subscription_block',
                                    {'object': object, 'subscriptions': subscriptions,
                                     'request': request, 'path': request.path,
-                                    'subscribed': subscribed },
+                                    'subscribed': subscribed},
                                    context_instance=RequestContext(request),
                                    response_format=response_format))
-    
+
 register.object(subscription_block)
 
 
 @contextfunction
 def comments_likes(context, object, expand=True):
     "Comments and Likes/Dislikes box for an object"
-    
+
     request = context['request']
-    
+
     response_format = 'html'
     if 'response_format' in context:
         response_format = context['response_format']
-    
+
     update = isinstance(object, UpdateRecord)
-    profile  = request.user.get_profile()
-    
+    profile = request.user.get_profile()
+
     if request.POST.get('like', 0) == unicode(object.id):
         object.likes.add(profile)
         if hasattr(object, 'score'):
             object.score += 1
             object.save()
-    
+
     elif request.POST.get('unlike', 0) == unicode(object.id):
         object.likes.remove(profile)
         if hasattr(object, 'score'):
             object.score -= 1
             object.save()
-        
+
     elif request.POST.get('dislike', 0) == unicode(object.id):
         object.dislikes.add(profile)
         if hasattr(object, 'score'):
             object.score += 1
             object.save()
-        
+
     elif request.POST.get('undislike', 0) == unicode(object.id):
         object.dislikes.remove(profile)
         if hasattr(object, 'score'):
             object.score -= 1
             object.save()
-    
+
     elif request.POST.get('commentobject', 0) == unicode(object.id) and 'comment' in request.POST:
         comment = Comment(author=profile,
                           body=request.POST.get('comment'))
@@ -269,15 +285,16 @@ def comments_likes(context, object, expand=True):
             object.score += 1
             object.save()
         object.comments.add(comment)
-    
-    likes      = object.likes.all()
-    dislikes   = object.dislikes.all()
-    comments   = object.comments.all()
-    
-    ilike      = profile in likes
-    idislike   = profile in dislikes
+
+    likes = object.likes.all()
+    dislikes = object.dislikes.all()
+    comments = object.comments.all()
+
+    ilike = profile in likes
+    idislike = profile in dislikes
     icommented = comments.filter(author=profile).exists() or \
-                 comments.filter(author__default_group__in=[profile.default_group_id]+[i.id for i in profile.other_groups.all().only('id')]).exists()
+        comments.filter(author__default_group__in=[
+                        profile.default_group_id] + [i.id for i in profile.other_groups.all().only('id')]).exists()
 
     return Markup(render_to_string('core/tags/comments_likes',
                                    {'object': object,
@@ -289,7 +306,7 @@ def comments_likes(context, object, expand=True):
                                     'ilike': ilike,
                                     'idislike': idislike,
                                     'icommented': icommented,
-                                    'expand': expand },
+                                    'expand': expand},
                                    context_instance=RequestContext(request),
                                    response_format=response_format))
 
@@ -298,17 +315,17 @@ register.object(comments_likes)
 
 @contextfunction
 def tags_box(context, object):
-       
+
     request = context['request']
-    
+
     response_format = 'html'
     if 'response_format' in context:
         response_format = context['response_format']
-    
+
     response_format_tags = response_format
     if 'response_format_tags' in context:
         response_format_tags = context['response_format_tags']
-    
+
     tags = object.tags.all()
     form = None
     if 'tags-edit' in request.GET:
@@ -316,7 +333,8 @@ def tags_box(context, object):
             form = TagsForm(tags, request.POST)
             if form.is_valid():
                 if 'multicomplete_tags' in request.POST:
-                    tag_names = request.POST.get('multicomplete_tags').split(',')
+                    tag_names = request.POST.get(
+                        'multicomplete_tags').split(',')
                     new_tags = []
                     for name in tag_names:
                         name = name.strip()
@@ -329,7 +347,7 @@ def tags_box(context, object):
                             new_tags.append(tag)
                 else:
                     new_tags = form.is_valid()
-                    
+
                 object.tags.clear()
                 for tag in new_tags:
                     object.tags.add(tag)
@@ -337,15 +355,15 @@ def tags_box(context, object):
                 form = None
         else:
             form = TagsForm(tags)
-    
+
     context = {'object': object,
                'tags': tags,
                'form': form,
-               'editlink': request.path+'?tags-edit'}    
-        
+               'editlink': request.path + '?tags-edit'}
+
     if 'ajax' in response_format_tags:
         context = converter.preprocess_context(context)
-    
+
     return Markup(render_to_string('core/tags/tags_box', context,
                                    context_instance=RequestContext(request),
                                    response_format=response_format))
@@ -360,19 +378,19 @@ def help_link(context, link=''):
     response_format = 'html'
     if 'response_format' in context:
         response_format = context['response_format']
-    
+
     if not link:
         url = request.path
         match = re.match('/(?P<url>\w+)(/)?.*', url)
         if match:
             link = match.group('url') + "/"
-    
+
     link = getattr(settings, 'HARDTREE_HELP_LINK_PREFIX', '/help/') + link
-    
+
     return Markup(render_to_string('core/tags/help_link_block',
                                    {'link': link},
                                    context_instance=RequestContext(request),
-                                   response_format=response_format)) 
+                                   response_format=response_format))
 
 register.object(help_link)
 
@@ -380,57 +398,58 @@ register.object(help_link)
 @contextfunction
 def core_generic_list(context, objects, skip_group=False, tag=None):
     "Print a list of objects"
-    
+
     if tag:
         return tag(context, objects)
-    
+
     request = context['request']
-    
+
     response_format = 'html'
     if 'response_format' in context:
         response_format = context['response_format']
-    
+
     return Markup(render_to_string('core/tags/generic_list',
-                               {'objects': objects, 'skip_group': skip_group},
-                               context_instance=RequestContext(request),
-                               response_format=response_format))
-    
+                                   {'objects': objects,
+                                       'skip_group': skip_group},
+                                   context_instance=RequestContext(request),
+                                   response_format=response_format))
+
 register.object(core_generic_list)
 
 
 @contextfunction
 def core_watchlist(context, objects=None, skip_group=False, paginate=False):
     "Print a list of objects a user is subscribed to"
-    
+
     request = context['request']
     profile = request.user.get_profile()
-        
+
     if not objects:
         objects = profile.subscriptions.all()
-    
+
     if 'unsubscribe' in request.GET:
         for object in objects.filter(pk=request.GET.get('unsubscribe')):
             object.subscribers.remove(profile)
         objects = profile.subscriptions.all()
-    
+
     pathurl = request.path + '?'
     if request.GET:
         params = request.GET.copy()
         if 'unsubscribe' in params:
             del params['unsubscribe']
         pathurl += urllib.urlencode(params) + '&'
-    
+
     response_format = 'html'
     if 'response_format' in context:
         response_format = context['response_format']
-    
+
     return Markup(render_to_string('core/tags/watchlist',
-                               {'objects': objects,
-                                'skip_group': skip_group,
-                                'dopaginate': paginate,
-                                'pathurl': pathurl},
-                               context_instance=RequestContext(request),
-                               response_format=response_format))
+                                   {'objects': objects,
+                                    'skip_group': skip_group,
+                                    'dopaginate': paginate,
+                                    'pathurl': pathurl},
+                                   context_instance=RequestContext(request),
+                                   response_format=response_format))
 
 register.object(core_watchlist)
 
@@ -447,7 +466,7 @@ def attachments(context, object=None):
     if 'response_format' in context:
         response_format = context['response_format']
 
-    update = isinstance(object,UpdateRecord)
+    update = isinstance(object, UpdateRecord)
 
     if not update:
         attachments = Attachment.objects.filter(attached_object=object)
@@ -472,6 +491,7 @@ def attachments(context, object=None):
 
 register.object(attachments)
 
+
 @contextfunction
 def attachments_block(context, object=None):
     "Attachments for an object or update record"
@@ -482,7 +502,7 @@ def attachments_block(context, object=None):
     if 'response_format' in context:
         response_format = context['response_format']
 
-    update = isinstance(object,UpdateRecord)
+    update = isinstance(object, UpdateRecord)
 
     if not update:
         attachments = Attachment.objects.filter(attached_object=object)
@@ -500,6 +520,7 @@ def attachments_block(context, object=None):
 
 register.object(attachments_block)
 
+
 @contextfunction
 def attachments_count(context, object=None):
     "Number of Attachments associated with an object"
@@ -510,7 +531,7 @@ def attachments_count(context, object=None):
     if 'response_format' in context:
         response_format = context['response_format']
 
-    update = isinstance(object,UpdateRecord)
+    update = isinstance(object, UpdateRecord)
 
     if not update:
         count = Attachment.objects.filter(attached_object=object).count()
@@ -520,12 +541,14 @@ def attachments_count(context, object=None):
     if count:
         return Markup(render_to_string('core/tags/attachments_count',
                                        {'count': count},
-                                       context_instance=RequestContext(request),
+                                       context_instance=RequestContext(
+                                           request),
                                        response_format=response_format))
     else:
         return('')
 
 register.object(attachments_count)
+
 
 @contextfunction
 def last_updated(context, object=None, verbose=False):
@@ -547,6 +570,7 @@ def last_updated(context, object=None, verbose=False):
 
 register.object(last_updated)
 
+
 @contextfunction
 def easy_invite_block(context, emails=[]):
     "The humanized datetime of the last update to an object"
@@ -558,7 +582,7 @@ def easy_invite_block(context, emails=[]):
         response_format = context['response_format']
 
     return Markup(render_to_string('core/tags/easy_invite',
-                                   {'emails': emails,},
+                                   {'emails': emails, },
                                    context_instance=RequestContext(request),
                                    response_format=response_format))
 

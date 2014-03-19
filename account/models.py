@@ -17,16 +17,19 @@ notification_types = (('d', _('Daily')),
                       ('w', _('Weekly')),
                       ('m', _('Monthly')))
 
+
 class Notification(models.Model):
     recipient = models.ForeignKey(User)
     body = models.TextField(default='', blank=True, null=True)
     ntype = models.CharField(max_length=1, choices=notification_types)
     date_created = models.DateTimeField(default=datetime.now)
 
+
 class NotificationSetting(models.Model):
     owner = models.ForeignKey(User, unique=True)
     modules = models.ManyToManyField(Module)
-    ntype = models.CharField(max_length=1, choices=notification_types, verbose_name='Type')
+    ntype = models.CharField(
+        max_length=1, choices=notification_types, verbose_name='Type')
     next_date = models.DateField(null=True, blank=True)
     last_datetime = models.DateTimeField(default=datetime.now)
     enabled = models.BooleanField(default=True)
@@ -54,7 +57,8 @@ class NotificationSetting(models.Model):
         elif self.ntype == 'w':
             self.next_date = today + timedelta(days=7 - today.weekday())
         elif self.ntype == 'm':
-            self.next_date = today + timedelta(days=calendar.mdays[today.month] - today.day + 1)
+            self.next_date = today + \
+                timedelta(days=calendar.mdays[today.month] - today.day + 1)
         self.save()
 
     def title(self):

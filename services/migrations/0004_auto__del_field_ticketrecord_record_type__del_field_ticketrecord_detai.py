@@ -9,10 +9,11 @@ from south.db import db
 from south.v2 import SchemaMigration
 from django.db import models
 
+
 class Migration(SchemaMigration):
 
     def forwards(self, orm):
-        
+
         # Deleting field 'TicketRecord.record_type'
         db.delete_column('services_ticketrecord', 'record_type')
 
@@ -26,26 +27,34 @@ class Migration(SchemaMigration):
         db.delete_column('services_ticketrecord', 'ticket_id')
 
         # Changing field 'TicketRecord.updaterecord_ptr'
-        db.alter_column('services_ticketrecord', 'updaterecord_ptr_id', self.gf('django.db.models.fields.related.OneToOneField')(default=1, to=orm['core.UpdateRecord'], unique=True, primary_key=True))
-
+        db.alter_column('services_ticketrecord', 'updaterecord_ptr_id', self.gf(
+            'django.db.models.fields.related.OneToOneField')(default=1, to=orm['core.UpdateRecord'], unique=True, primary_key=True))
 
     def backwards(self, orm):
-        
-        # User chose to not deal with backwards NULL issues for 'TicketRecord.record_type'
-        raise RuntimeError("Cannot reverse this migration. 'TicketRecord.record_type' and its values cannot be restored.")
 
-        # User chose to not deal with backwards NULL issues for 'TicketRecord.details'
-        raise RuntimeError("Cannot reverse this migration. 'TicketRecord.details' and its values cannot be restored.")
+        # User chose to not deal with backwards NULL issues for
+        # 'TicketRecord.record_type'
+        raise RuntimeError(
+            "Cannot reverse this migration. 'TicketRecord.record_type' and its values cannot be restored.")
 
-        # User chose to not deal with backwards NULL issues for 'TicketRecord.object_ptr'
-        raise RuntimeError("Cannot reverse this migration. 'TicketRecord.object_ptr' and its values cannot be restored.")
+        # User chose to not deal with backwards NULL issues for
+        # 'TicketRecord.details'
+        raise RuntimeError(
+            "Cannot reverse this migration. 'TicketRecord.details' and its values cannot be restored.")
 
-        # User chose to not deal with backwards NULL issues for 'TicketRecord.ticket'
-        raise RuntimeError("Cannot reverse this migration. 'TicketRecord.ticket' and its values cannot be restored.")
+        # User chose to not deal with backwards NULL issues for
+        # 'TicketRecord.object_ptr'
+        raise RuntimeError(
+            "Cannot reverse this migration. 'TicketRecord.object_ptr' and its values cannot be restored.")
+
+        # User chose to not deal with backwards NULL issues for
+        # 'TicketRecord.ticket'
+        raise RuntimeError(
+            "Cannot reverse this migration. 'TicketRecord.ticket' and its values cannot be restored.")
 
         # Changing field 'TicketRecord.updaterecord_ptr'
-        db.alter_column('services_ticketrecord', 'updaterecord_ptr_id', self.gf('django.db.models.fields.related.OneToOneField')(to=orm['core.UpdateRecord'], unique=True, null=True))
-
+        db.alter_column('services_ticketrecord', 'updaterecord_ptr_id', self.gf(
+            'django.db.models.fields.related.OneToOneField')(to=orm['core.UpdateRecord'], unique=True, null=True))
 
     models = {
         'auth.group': {

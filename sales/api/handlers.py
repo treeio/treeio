@@ -23,7 +23,8 @@ from treeio.core.api.handlers import ObjectHandler, getOrNone
 from treeio.finance.helpers import convert
 from treeio.sales.models import SaleStatus, Product, SaleSource, Lead, Opportunity, SaleOrder, Subscription, OrderedProduct
 from treeio.sales.forms import OrderForm, ProductForm, SaleStatusForm, LeadForm, OpportunityForm, \
-                                 OrderedProductForm, SubscriptionForm, SaleSourceForm
+    OrderedProductForm, SubscriptionForm, SaleSourceForm
+
 
 class SaleCommonHandler(ObjectHandler):
 
@@ -32,9 +33,11 @@ class SaleCommonHandler(ObjectHandler):
 
     def check_instance_permission(self, request, inst, mode):
         return request.user.get_profile().has_permission(inst, mode=mode) \
-                or request.user.get_profile().is_admin('treeio.sales')
+            or request.user.get_profile().is_admin('treeio.sales')
+
 
 class SaleStatusHandler(SaleCommonHandler):
+
     "Entrypoint for SaleStatus model."
 
     model = SaleStatus
@@ -44,7 +47,9 @@ class SaleStatusHandler(SaleCommonHandler):
     def resource_uri():
         return ('api_sales_status', ['id'])
 
+
 class ProductHandler(SaleCommonHandler):
+
     "Entrypoint for Product model."
 
     model = Product
@@ -59,7 +64,9 @@ class ProductHandler(SaleCommonHandler):
         dct['parent'] = None
         return dct
 
+
 class SaleSourceHandler(SaleCommonHandler):
+
     "Entrypoint for SaleSource model."
 
     model = SaleSource
@@ -69,23 +76,27 @@ class SaleSourceHandler(SaleCommonHandler):
     def resource_uri():
         return ('api_sales_sources', ['id'])
 
+
 class LeadHandler(SaleCommonHandler):
+
     "Entrypoint for Lead model."
 
     model = Lead
     form = LeadForm
-    fields = ('id',) +  LeadForm._meta.fields
+    fields = ('id',) + LeadForm._meta.fields
 
     @staticmethod
     def resource_uri():
         return ('api_sales_leads', ['id'])
 
+
 class OpportunityHandler(SaleCommonHandler):
+
     "Entrypoint for Opportunity model."
 
     model = Opportunity
     form = OpportunityForm
-    fields = ('id',) +  OpportunityForm._meta.fields
+    fields = ('id',) + OpportunityForm._meta.fields
 
     @staticmethod
     def resource_uri():
@@ -111,7 +122,7 @@ class OpportunityHandler(SaleCommonHandler):
         form = self.form(**attrs)
         if form.is_valid():
             opportunity = form.save(commit=False)
-            convert(opportunity,'amount')
+            convert(opportunity, 'amount')
             opportunity.set_user_from_request(request)
             return opportunity
         else:
@@ -119,7 +130,8 @@ class OpportunityHandler(SaleCommonHandler):
             return form.errors
 
     def update(self, request, *args, **kwargs):
-        pkfield = kwargs.get(self.model._meta.pk.name) or request.data.get(self.model._meta.pk.name)
+        pkfield = kwargs.get(self.model._meta.pk.name) or request.data.get(
+            self.model._meta.pk.name)
 
         if not pkfield or request.data is None:
             return rc.BAD_REQUEST
@@ -137,18 +149,21 @@ class OpportunityHandler(SaleCommonHandler):
         form = self.form(instance=obj, **attrs)
         if form.is_valid():
             opportunity = form.save(commit=False)
-            convert(opportunity,'amount')
+            convert(opportunity, 'amount')
             return opportunity
         else:
             self.status = 400
             return form.errors
 
+
 class SaleOrderHandler(SaleCommonHandler):
+
     "Entrypoint for SaleOrder model."
 
     model = SaleOrder
     form = OrderForm
-    fields = ('id', 'payment', 'total', 'total_display') +  OrderForm._meta.fields
+    fields = ('id', 'payment', 'total', 'total_display') + \
+        OrderForm._meta.fields
 
     @staticmethod
     def resource_uri():
@@ -160,13 +175,16 @@ class SaleOrderHandler(SaleCommonHandler):
             if request.data.has_key('lead'):
                 dct['lead'] = getOrNone(Lead, request.data['lead'])
             if request.data.has_key('opportunity'):
-                dct['opportunity'] = getOrNone(Opportunity, request.data['opportunity'])
+                dct['opportunity'] = getOrNone(
+                    Opportunity, request.data['opportunity'])
         else:
             dct['lead'] = None
             dct['opportunity'] = None
         return dct
 
+
 class SubscriptionHandler(SaleCommonHandler):
+
     "Entrypoint for Subscription model."
 
     model = Subscription
@@ -183,9 +201,12 @@ class SubscriptionHandler(SaleCommonHandler):
         if not self.check_create_permission(request, "x"):
             return rc.FORBIDDEN
 
-        order = getOrNone(SaleOrder, pk=request.data['order']) if 'order' in request.data else None
-        product = getOrNone(OrderedProduct, pk=request.data['product']) if 'product' in request.data else None
-        productset = getOrNone(Product, pk=request.data['productset']) if 'productset' in request.data else None
+        order = getOrNone(
+            SaleOrder, pk=request.data['order']) if 'order' in request.data else None
+        product = getOrNone(
+            OrderedProduct, pk=request.data['product']) if 'product' in request.data else None
+        productset = getOrNone(
+            Product, pk=request.data['productset']) if 'productset' in request.data else None
         subscription = Subscription()
         if order:
             subscription.client = order.client
@@ -193,7 +214,8 @@ class SubscriptionHandler(SaleCommonHandler):
             subscription.product = product.product
         if productset:
             subscription.product = productset
-        form = SubscriptionForm(request.user.get_profile(), request.data, instance=subscription)
+        form = SubscriptionForm(
+            request.user.get_profile(), request.data, instance=subscription)
         if form.is_valid():
             subscription = form.save(commit=False)
             subscription.renew()
@@ -207,9 +229,11 @@ class SubscriptionHandler(SaleCommonHandler):
             self.status = 400
             return form.errors
 
+
 class OrderedProductHandler(SaleCommonHandler):
+
     "Entrypoint for OrderedProduct model."
-    
+
     model = OrderedProduct
     form = OrderedProductForm
 
@@ -230,10 +254,12 @@ class OrderedProductHandler(SaleCommonHandler):
 
         ordered_product = OrderedProduct()
         ordered_product.order = order
-        form = OrderedProductForm(request.user.get_profile(), order, request.data, instance=ordered_product)
+        form = OrderedProductForm(
+            request.user.get_profile(), order, request.data, instance=ordered_product)
         if form.is_valid():
             ordered_product = form.save(commit=False)
-            convert(ordered_product,'rate', currency = ordered_product.order.currency)
+            convert(
+                ordered_product, 'rate', currency=ordered_product.order.currency)
             ordered_product.set_user_from_request(request)
             ordered_product.order.update_total()
             return ordered_product
@@ -250,10 +276,12 @@ class OrderedProductHandler(SaleCommonHandler):
             return rc.FORBIDDEN
 
         order = ordered_product.order
-        form = OrderedProductForm(request.user.get_profile(), order, request.data, instance=ordered_product)
+        form = OrderedProductForm(
+            request.user.get_profile(), order, request.data, instance=ordered_product)
         if form.is_valid():
             ordered_product = form.save(commit=False)
-            convert(ordered_product, 'rate', currency=ordered_product.order.currency)
+            convert(
+                ordered_product, 'rate', currency=ordered_product.order.currency)
             ordered_product.order.update_total()
             return ordered_product
         else:

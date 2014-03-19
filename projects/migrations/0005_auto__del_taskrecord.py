@@ -9,25 +9,27 @@ from south.db import db
 from south.v2 import SchemaMigration
 from django.db import models
 
+
 class Migration(SchemaMigration):
 
     def forwards(self, orm):
-        
+
         # Deleting model 'TaskRecord'
         db.delete_table('projects_taskrecord')
 
-
     def backwards(self, orm):
-        
+
         # Adding model 'TaskRecord'
         db.create_table('projects_taskrecord', (
-            ('record_type', self.gf('django.db.models.fields.CharField')(max_length=256)),
-            ('object_ptr', self.gf('django.db.models.fields.related.OneToOneField')(to=orm['core.Object'], unique=True, primary_key=True)),
+            ('record_type', self.gf(
+                'django.db.models.fields.CharField')(max_length=256)),
+            ('object_ptr', self.gf('django.db.models.fields.related.OneToOneField')(
+                to=orm['core.Object'], unique=True, primary_key=True)),
             ('details', self.gf('django.db.models.fields.TextField')()),
-            ('task', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['projects.Task'])),
+            ('task', self.gf('django.db.models.fields.related.ForeignKey')
+             (to=orm['projects.Task'])),
         ))
         db.send_create_signal('projects', ['TaskRecord'])
-
 
     models = {
         'auth.group': {

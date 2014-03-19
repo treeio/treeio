@@ -9,42 +9,56 @@ from south.db import db
 from south.v2 import SchemaMigration
 from django.db import models
 
+
 class Migration(SchemaMigration):
 
     def forwards(self, orm):
-        
+
         # Adding model 'Notification'
         db.create_table('account_notification', (
-            ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('recipient', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['core.User'])),
-            ('body', self.gf('django.db.models.fields.TextField')(default='', null=True, blank=True)),
-            ('ntype', self.gf('django.db.models.fields.CharField')(max_length=1)),
-            ('date_created', self.gf('django.db.models.fields.DateTimeField')(default=datetime.datetime.now)),
+            ('id', self.gf('django.db.models.fields.AutoField')
+             (primary_key=True)),
+            ('recipient', self.gf('django.db.models.fields.related.ForeignKey')(
+                to=orm['core.User'])),
+            ('body', self.gf('django.db.models.fields.TextField')
+             (default='', null=True, blank=True)),
+            ('ntype', self.gf('django.db.models.fields.CharField')
+             (max_length=1)),
+            ('date_created', self.gf('django.db.models.fields.DateTimeField')
+             (default=datetime.datetime.now)),
         ))
         db.send_create_signal('account', ['Notification'])
 
         # Adding model 'NotificationSetting'
         db.create_table('account_notificationsetting', (
-            ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('owner', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['core.User'], unique=True)),
-            ('ntype', self.gf('django.db.models.fields.CharField')(max_length=1)),
-            ('next_date', self.gf('django.db.models.fields.DateField')(null=True, blank=True)),
-            ('last_datetime', self.gf('django.db.models.fields.DateTimeField')(default=datetime.datetime.now)),
-            ('enabled', self.gf('django.db.models.fields.BooleanField')(default=True)),
+            ('id', self.gf('django.db.models.fields.AutoField')
+             (primary_key=True)),
+            ('owner', self.gf('django.db.models.fields.related.ForeignKey')
+             (to=orm['core.User'], unique=True)),
+            ('ntype', self.gf('django.db.models.fields.CharField')
+             (max_length=1)),
+            ('next_date', self.gf('django.db.models.fields.DateField')
+             (null=True, blank=True)),
+            ('last_datetime', self.gf('django.db.models.fields.DateTimeField')
+             (default=datetime.datetime.now)),
+            ('enabled', self.gf(
+                'django.db.models.fields.BooleanField')(default=True)),
         ))
         db.send_create_signal('account', ['NotificationSetting'])
 
         # Adding M2M table for field modules on 'NotificationSetting'
         db.create_table('account_notificationsetting_modules', (
-            ('id', models.AutoField(verbose_name='ID', primary_key=True, auto_created=True)),
-            ('notificationsetting', models.ForeignKey(orm['account.notificationsetting'], null=False)),
+            ('id', models.AutoField(
+                verbose_name='ID', primary_key=True, auto_created=True)),
+            ('notificationsetting', models.ForeignKey(
+                orm['account.notificationsetting'], null=False)),
             ('module', models.ForeignKey(orm['core.module'], null=False))
         ))
-        db.create_unique('account_notificationsetting_modules', ['notificationsetting_id', 'module_id'])
-
+        db.create_unique(
+            'account_notificationsetting_modules', ['notificationsetting_id', 'module_id'])
 
     def backwards(self, orm):
-        
+
         # Deleting model 'Notification'
         db.delete_table('account_notification')
 
@@ -53,7 +67,6 @@ class Migration(SchemaMigration):
 
         # Removing M2M table for field modules on 'NotificationSetting'
         db.delete_table('account_notificationsetting_modules')
-
 
     models = {
         'account.notification': {

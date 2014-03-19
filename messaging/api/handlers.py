@@ -21,7 +21,9 @@ from treeio.core.api.handlers import ObjectHandler, getOrNone
 from treeio.messaging.models import Message, MessageStream, MailingList
 from treeio.messaging.forms import MessageForm, MessageStreamForm, MessageReplyForm, MailingListForm
 
+
 class MailingListHandler(ObjectHandler):
+
     "Entrypoint for MailingList model."
 
     model = MailingList
@@ -36,7 +38,9 @@ class MailingListHandler(ObjectHandler):
     def check_create_permission(self, request, mode):
         return True
 
+
 class MessageStreamHandler(ObjectHandler):
+
     "Entrypoint for MessageStream model."
 
     model = MessageStream
@@ -49,7 +53,9 @@ class MessageStreamHandler(ObjectHandler):
     def check_create_permission(self, request, mode):
         return True
 
+
 class MessageHandler(ObjectHandler):
+
     "Entrypoint for Message model."
 
     model = Message
@@ -62,7 +68,7 @@ class MessageHandler(ObjectHandler):
         "Send email to some recipients"
 
         user = request.user.get_profile()
-        
+
         if request.data is None:
             return rc.BAD_REQUEST
 
@@ -86,15 +92,19 @@ class MessageHandler(ObjectHandler):
                 # if email entered create contact and add to recipients
                 if 'multicomplete_recipients' in request.POST and request.POST['multicomplete_recipients']:
                     try:
-                        conf = ModuleSetting.get_for_module('treeio.messaging', 'default_contact_type')[0]
-                        default_contact_type = ContactType.objects.get(pk=long(conf.value))
+                        conf = ModuleSetting.get_for_module(
+                            'treeio.messaging', 'default_contact_type')[0]
+                        default_contact_type = ContactType.objects.get(
+                            pk=long(conf.value))
                     except Exception:
                         default_contact_type = None
-                    emails = request.POST['multicomplete_recipients'].split(',')
+                    emails = request.POST[
+                        'multicomplete_recipients'].split(',')
                     for email in emails:
                         emailstr = unicode(email).strip()
                         if re.match('[a-zA-Z0-9+_\-\.]+@[0-9a-zA-Z][.-0-9a-zA-Z]*.[a-zA-Z]+', emailstr):
-                            contact, created = Contact.get_or_create_by_email(emailstr, contact_type=default_contact_type)
+                            contact, created = Contact.get_or_create_by_email(
+                                emailstr, contact_type=default_contact_type)
                             message.recipients.add(contact)
                             if created:
                                 contact.set_user_from_request(request)
@@ -113,7 +123,8 @@ class MessageHandler(ObjectHandler):
         if request.data is None:
             return rc.BAD_REQUEST
 
-        pkfield = kwargs.get(self.model._meta.pk.name) or request.data.get(self.model._meta.pk.name)
+        pkfield = kwargs.get(self.model._meta.pk.name) or request.data.get(
+            self.model._meta.pk.name)
 
         if not pkfield:
             return rc.BAD_REQUEST
@@ -134,7 +145,8 @@ class MessageHandler(ObjectHandler):
             return rc.FORBIDDEN
 
         reply.reply_to = message
-        form = MessageReplyForm(user, message.stream_id, message, request.data, instance=reply)
+        form = MessageReplyForm(
+            user, message.stream_id, message, request.data, instance=reply)
         if form.is_valid():
             reply = form.save()
             reply.set_user_from_request(request)
@@ -146,15 +158,19 @@ class MessageHandler(ObjectHandler):
                 # if email entered create contact and add to recipients
                 if 'multicomplete_recipients' in request.POST and request.POST['multicomplete_recipients']:
                     try:
-                        conf = ModuleSetting.get_for_module('treeio.messaging', 'default_contact_type')[0]
-                        default_contact_type = ContactType.objects.get(pk=long(conf.value))
+                        conf = ModuleSetting.get_for_module(
+                            'treeio.messaging', 'default_contact_type')[0]
+                        default_contact_type = ContactType.objects.get(
+                            pk=long(conf.value))
                     except Exception:
                         default_contact_type = None
-                    emails = request.POST['multicomplete_recipients'].split(',')
+                    emails = request.POST[
+                        'multicomplete_recipients'].split(',')
                     for email in emails:
                         emailstr = unicode(email).strip()
                         if re.match('[a-zA-Z0-9+_\-\.]+@[0-9a-zA-Z][.-0-9a-zA-Z]*.[a-zA-Z]+', emailstr):
-                            contact, created = Contact.get_or_create_by_email(emailstr, contact_type=default_contact_type)
+                            contact, created = Contact.get_or_create_by_email(
+                                emailstr, contact_type=default_contact_type)
                             reply.recipients.add(contact)
                             if created:
                                 contact.set_user_from_request(request)

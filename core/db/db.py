@@ -19,12 +19,15 @@ FILE_ROOT = path.abspath(path.dirname(__file__))
 HARDTREE_DB_SETTINGS_FILE = path.join(FILE_ROOT, 'dbsettings.json')
 NO_DEFAULT = False
 
+
 class DatabaseNotFound(Exception):
     pass
 
+
 class DatabaseDict(UserDict.DictMixin, dict):
+
     """A dictionary which applies an arbitrary key-altering function before accessing the keys"""
-    
+
     def _ensure_defaults(self):
         for db in self.values():
             db.setdefault('ENGINE', 'django.db.backends.dummy')
@@ -45,7 +48,7 @@ class DatabaseDict(UserDict.DictMixin, dict):
     def _load_databases(self, *args, **kwargs):
         dbfile = open(HARDTREE_DB_SETTINGS_FILE, 'r')
         self.store = json.load(dbfile)
-        self.update(dict(*args, **kwargs)) # use the free update to set keys
+        self.update(dict(*args, **kwargs))  # use the free update to set keys
         self._ensure_defaults()
 
     def _save_databases(self):
@@ -63,10 +66,12 @@ class DatabaseDict(UserDict.DictMixin, dict):
             except KeyError:
                 try:
                     if NO_DEFAULT:
-                        raise DatabaseNotFound('No database found for %s' % key)
+                        raise DatabaseNotFound(
+                            'No database found for %s' % key)
                     return self.store['default']
                 except KeyError:
-                    raise RuntimeError('Default database is not specified in the config file and the current database is unavailable')
+                    raise RuntimeError(
+                        'Default database is not specified in the config file and the current database is unavailable')
 
     def __setitem__(self, key, value):
         self.store[key] = value
@@ -84,8 +89,9 @@ class DatabaseDict(UserDict.DictMixin, dict):
 
 
 class DBRouter(object):
+
     """A router to control all database operations and dynamically select the correct database"""
-    
+
     def _get_current_database(self):
         "Returns the database that should be used for the current request"
         if 'request' in box and not 'CURRENT_DATABASE_NAME' in box:

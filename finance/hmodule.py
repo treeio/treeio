@@ -8,17 +8,17 @@ Finance: Hardtree module definition
 """
 
 PROPERTIES = {
-              'title': 'Finance',
-              'details': 'Manage finance',
-              'url': '/finance/',
-              'system': False,
-              'type': 'minor',
-              }
+    'title': 'Finance',
+    'details': 'Manage finance',
+    'url': '/finance/',
+    'system': False,
+    'type': 'minor',
+}
 
 
 URL_PATTERNS = [
-                '^/finance/',
-                ]
+    '^/finance/',
+]
 
 
 from treeio.finance.cron import assets_depreciate

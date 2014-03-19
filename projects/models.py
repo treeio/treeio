@@ -14,21 +14,27 @@ from treeio.identities.models import Contact
 from datetime import datetime, timedelta
 
 # Project Model
+
+
 class Project(Object):
+
     """ Project model """
     name = models.CharField(max_length=255)
-    parent = models.ForeignKey('self', blank=True, null=True, related_name='child_set')
-    manager = models.ForeignKey(Contact, related_name='manager', null=True, blank=True, on_delete=models.SET_NULL)
-    client = models.ForeignKey(Contact, related_name='client', null=True, blank=True, on_delete=models.SET_NULL)
+    parent = models.ForeignKey(
+        'self', blank=True, null=True, related_name='child_set')
+    manager = models.ForeignKey(
+        Contact, related_name='manager', null=True, blank=True, on_delete=models.SET_NULL)
+    client = models.ForeignKey(
+        Contact, related_name='client', null=True, blank=True, on_delete=models.SET_NULL)
     details = models.TextField(max_length=255, null=True, blank=True)
 
     class Meta:
+
         "Project"
         ordering = ['name']
 
     def __unicode__(self):
         return self.name
-
 
     def get_absolute_url(self):
         "Returns absolute URL for the Project"
@@ -38,17 +44,17 @@ class Project(Object):
             pass
 
 
-
 # TaskStatus model
 class TaskStatus(Object):
+
     """ Tasks and milestones have task statuses """
     name = models.CharField(max_length=255)
     details = models.TextField(max_length=255, null=True, blank=True)
     active = models.BooleanField()
     hidden = models.BooleanField()
 
-
     class Meta:
+
         "TaskStatus"
         ordering = ('hidden', '-active', 'name')
 
@@ -65,6 +71,7 @@ class TaskStatus(Object):
 
 # Milestone model
 class Milestone(Object):
+
     """ Tasks may have milestones """
     project = models.ForeignKey(Project)
     name = models.CharField(max_length=255)
@@ -75,8 +82,8 @@ class Milestone(Object):
 
     access_inherit = ('project', '*module', '*user')
 
-
     class Meta:
+
         "Milestone"
         ordering = ['start_date', 'name']
 
@@ -96,7 +103,6 @@ class Milestone(Object):
         else:
             super(Milestone, self).save(*args, **kwargs)
 
-
     def get_absolute_url(self):
         "Returns absolute URL for the Milestone"
         try:
@@ -107,8 +113,10 @@ class Milestone(Object):
 
 # Task model
 class Task(Object):
+
     """ Single task """
-    parent = models.ForeignKey('self', blank=True, null=True, related_name='child_set')
+    parent = models.ForeignKey(
+        'self', blank=True, null=True, related_name='child_set')
     project = models.ForeignKey(Project)
     milestone = models.ForeignKey(Milestone, null=True, blank=True)
     status = models.ForeignKey(TaskStatus, default=26)
@@ -117,7 +125,8 @@ class Task(Object):
     assigned = models.ManyToManyField(User, blank=True, null=True)
     depends = models.ForeignKey('Task', blank=True, null=True, related_name='blocked_set',
                                 limit_choices_to={'status__hidden': False})
-    caller = models.ForeignKey(Contact, blank=True, null=True, on_delete=models.SET_NULL)
+    caller = models.ForeignKey(
+        Contact, blank=True, null=True, on_delete=models.SET_NULL)
     start_date = models.DateTimeField(null=True, blank=True)
     end_date = models.DateTimeField(null=True, blank=True)
     priority = models.IntegerField(default=3,
@@ -125,11 +134,10 @@ class Task(Object):
                                             (2, _('Low')), (1, _('Lowest'))))
     estimated_time = models.IntegerField(null=True, blank=True)
 
-
     access_inherit = ('parent', 'milestone', 'project', '*module', '*user')
 
-
     class Meta:
+
         "Task"
         ordering = ('-priority', 'name')
 
@@ -138,7 +146,8 @@ class Task(Object):
 
     def priority_human(self):
         "Returns a Human-friendly priority name"
-        choices = ((5, _('Highest')), (4, _('High')), (3, _('Normal')), (2, _('Low')), (1, _('Lowest')))
+        choices = ((5, _('Highest')), (4, _('High')), (
+            3, _('Normal')), (2, _('Low')), (1, _('Lowest')))
         for choice in choices:
             if choice[0] == self.priority:
                 return choice[1]
@@ -148,8 +157,8 @@ class Task(Object):
         time = timedelta(minutes=self.estimated_time)
         days = time.days
         seconds = time.seconds
-        hours = days * 24 + (seconds // (60*60))
-        seconds %= (60*60)
+        hours = days * 24 + (seconds // (60 * 60))
+        seconds %= (60 * 60)
         minutes = seconds // 60
         seconds %= 60
 
@@ -175,7 +184,8 @@ class Task(Object):
                 if self.milestone_id and self.milestone.project_id != self.project_id:
                     self.milestone = None
             elif self.milestone_id and self.milestone_id != original.milestone_id:
-                # Milestone changed, check if it belongs to the selected Project
+                # Milestone changed, check if it belongs to the selected
+                # Project
                 if self.milestone.project_id != self.project_id:
                     self.project_id = self.milestone.project_id
 
@@ -191,7 +201,6 @@ class Task(Object):
                         slot.time_to = datetime.now()
                         slot.save()
 
-
         else:
             # New task
             if self.milestone_id and self.milestone.project_id != self.project_id:
@@ -205,8 +214,6 @@ class Task(Object):
                 self.milestone_id = self.parent.milestone_id
 
         super(Task, self).save(*args, **kwargs)
-
-
 
     def get_absolute_url(self):
         "Returns absolute URL"
@@ -229,12 +236,11 @@ class Task(Object):
             return None
         days = time.days
         seconds = time.seconds
-        hours = days * 24 + (seconds // (60*60))
-        seconds %= (60*60)
+        hours = days * 24 + (seconds // (60 * 60))
+        seconds %= (60 * 60)
         minutes = seconds // 60
         seconds %= 60
         return (hours, minutes, seconds)
-
 
     def get_total_time_string(self):
         "Returns total time as a string with number of full hours and minutes"
@@ -263,6 +269,7 @@ class Task(Object):
 
 # TaskTimeSlot model
 class TaskTimeSlot(Object):
+
     """ Task time slot """
     task = models.ForeignKey(Task)
     user = models.ForeignKey(User)
@@ -277,6 +284,7 @@ class TaskTimeSlot(Object):
     attached = True
 
     class Meta:
+
         "TaskTimeSlot"
         ordering = ['-date_created']
 
@@ -311,8 +319,8 @@ class TaskTimeSlot(Object):
             return None
         days = time.days
         seconds = time.seconds
-        hours = days * 24 + (seconds // (60*60))
-        seconds %= (60*60)
+        hours = days * 24 + (seconds // (60 * 60))
+        seconds %= (60 * 60)
         minutes = seconds // 60
         seconds %= 60
         return (hours, minutes, seconds)

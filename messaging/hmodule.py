@@ -8,16 +8,16 @@ Messaging: Hardtree module definition
 """
 
 PROPERTIES = {
-              'title': 'Messaging',
-              'details': 'Sending messages',
-              'url': '/messaging/',
-              'system': False,
-              'type': 'minor',
-              }
+    'title': 'Messaging',
+    'details': 'Sending messages',
+    'url': '/messaging/',
+    'system': False,
+    'type': 'minor',
+}
 
 URL_PATTERNS = [
-                '^/messaging/',
-                ]
+    '^/messaging/',
+]
 
 
 #

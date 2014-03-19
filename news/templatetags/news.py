@@ -13,18 +13,19 @@ from django.template import RequestContext
 
 register = template.Library()
 
+
 @contextfunction
 def news_update_list(context, updates, skip_group=False):
     "Print a list of orders"
     request = context['request']
-    
+
     response_format = 'html'
     if 'response_format' in context:
         response_format = context['response_format']
-    
+
     return Markup(render_to_string('news/tags/update_list',
-                               {'updates': updates},
-                               context_instance=RequestContext(request),
-                               response_format=response_format))
+                                   {'updates': updates},
+                                   context_instance=RequestContext(request),
+                                   response_format=response_format))
 
 register.object(news_update_list)

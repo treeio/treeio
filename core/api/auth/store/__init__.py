@@ -9,18 +9,22 @@ from django.utils import importlib
 
 
 class Error(Exception):
+
     """Base class for Store exceptions."""
 
 
 class InvalidConsumerError(Error):
+
     """Invalid consumer."""
 
 
 class InvalidTokenError(Error):
+
     """Invalid token."""
 
 
 class Store(object):
+
     """
     The Store class is the backbone of piston's OAuth implementation. It is used
     by the views and the authentication backend to get consumers and tokens, and
@@ -45,6 +49,7 @@ class Store(object):
     Token itself, `get_consumer_for_request_token` can simply return
     `request_token.consumer`.
     """
+
     def get_consumer(self, request, oauth_request, consumer_key):
         """
         Return the Consumer for `consumer_key` or raise `InvalidConsumerError`.
@@ -142,7 +147,7 @@ class Store(object):
     def get_user_for_consumer(self, request, oauth_request, consumer):
         """
         Return the associated User for `consumer`.
-        
+
         `request`: The Django request object.
         `oauth_request`: The `oauth2.Request` object.
         `consumer`: The Consumer that made the request.
@@ -170,11 +175,14 @@ def get_store(path='treeio.core.api.auth.store.db.ModelStore'):
         module, attr = path.rsplit('.', 1)
         store_class = getattr(importlib.import_module(module), attr)
     except ValueError:
-        raise ImproperlyConfigured('Invalid piston oauth store string: "%s"' % path)
+        raise ImproperlyConfigured(
+            'Invalid piston oauth store string: "%s"' % path)
     except ImportError, e:
-        raise ImproperlyConfigured('Error loading piston oauth store module "%s": "%s"' % (module, e))
+        raise ImproperlyConfigured(
+            'Error loading piston oauth store module "%s": "%s"' % (module, e))
     except AttributeError:
-        raise ImproperlyConfigured('Module "%s" does not define a piston oauth store named "%s"' % (module, attr))
+        raise ImproperlyConfigured(
+            'Module "%s" does not define a piston oauth store named "%s"' % (module, attr))
 
     return store_class()
 

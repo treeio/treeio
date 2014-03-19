@@ -11,17 +11,17 @@ from treeio.services.models import Ticket
 from treeio.services.templatetags.services import services_ticket_list
 
 CONTACT_OBJECTS = {}
-CONTACT_OBJECTS['ticket_set']    = {'label': 'Tickets',
-                                    'objects': [],
-                                    'templatetag': services_ticket_list}
+CONTACT_OBJECTS['ticket_set'] = {'label': 'Tickets',
+                                 'objects': [],
+                                 'templatetag': services_ticket_list}
 
-CONTACT_OBJECTS['client_sla']    = {'label': 'Service Level Agreements',
-                                    'objects': [],
-                                    'templatetag': None}
+CONTACT_OBJECTS['client_sla'] = {'label': 'Service Level Agreements',
+                                 'objects': [],
+                                 'templatetag': None}
 
-CONTACT_OBJECTS['provider_sla']  = {'label': 'Provided SLAs',
-                                    'objects': [],
-                                    'templatetag': None}
+CONTACT_OBJECTS['provider_sla'] = {'label': 'Provided SLAs',
+                                   'objects': [],
+                                   'templatetag': None}
 
 USER_OBJECTS = {}
 USER_OBJECTS['serviceagent_set'] = {'label': 'Assigned Tickets',
@@ -34,9 +34,9 @@ def get_contact_objects(current_user, contact):
     Returns a dictionary with keys specified as contact attributes
     and values as dictionaries with labels and set of relevant objects.
     """
-    
+
     objects = dict(CONTACT_OBJECTS)
-    
+
     for key in objects:
         if hasattr(contact, key):
             manager = getattr(contact, key)
@@ -44,8 +44,9 @@ def get_contact_objects(current_user, contact):
                 manager = manager.filter(status__hidden=False)
             except:
                 pass
-            objects[key]['objects'] = Object.filter_permitted(current_user, manager)
-    
+            objects[key]['objects'] = Object.filter_permitted(
+                current_user, manager)
+
     return objects
 
 
@@ -54,9 +55,9 @@ def get_user_objects(current_user, user):
     Returns a dictionary with keys specified as contact attributes
     and values as dictionaries with labels and set of relevant objects.
     """
-    
+
     objects = dict(USER_OBJECTS)
-    
+
     for key in objects:
         if hasattr(user, key):
             if key == 'serviceagent_set':
@@ -65,8 +66,7 @@ def get_user_objects(current_user, user):
                 manager = getattr(user, key)
             if hasattr(manager, 'status'):
                 manager = manager.filter(status__hidden=False)
-            objects[key]['objects'] = Object.filter_permitted(current_user, manager)
-            
-    return objects
+            objects[key]['objects'] = Object.filter_permitted(
+                current_user, manager)
 
-    
+    return objects

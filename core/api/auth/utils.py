@@ -31,9 +31,11 @@ def verify_oauth_request(request, oauth_request, consumer, token=None):
         oauth_server.add_signature_method(oauth.SignatureMethod_PLAINTEXT())
 
         # Ensure the passed keys and secrets are ascii, or HMAC will complain.
-        consumer = oauth.Consumer(consumer.key.encode('ascii', 'ignore'), consumer.secret.encode('ascii', 'ignore'))
+        consumer = oauth.Consumer(consumer.key.encode(
+            'ascii', 'ignore'), consumer.secret.encode('ascii', 'ignore'))
         if token is not None:
-            token = oauth.Token(token.key.encode('ascii', 'ignore'), token.secret.encode('ascii', 'ignore'))
+            token = oauth.Token(
+                token.key.encode('ascii', 'ignore'), token.secret.encode('ascii', 'ignore'))
 
         oauth_server.verify_request(oauth_request, consumer, token)
     except oauth.Error:
@@ -53,9 +55,11 @@ def require_params(oauth_request, parameters=[]):
     ]
     params.extend(parameters)
 
-    missing = list(param for param in params if not oauth_request or param not in oauth_request)
+    missing = list(
+        param for param in params if not oauth_request or param not in oauth_request)
     if missing:
-        response = HttpResponse('Missing OAuth parameters: %s' % (', '.join(missing)))
+        response = HttpResponse(
+            'Missing OAuth parameters: %s' % (', '.join(missing)))
         response.status_code = 401
         return response
 

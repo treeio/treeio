@@ -9,10 +9,11 @@ from south.db import db
 from south.v2 import SchemaMigration
 from django.db import models
 
+
 class Migration(SchemaMigration):
 
     def forwards(self, orm):
-        
+
         # Deleting model 'EmailBox'
         db.delete_table('messaging_emailbox')
 
@@ -22,28 +23,36 @@ class Migration(SchemaMigration):
         # Deleting field 'MessageStream.email_incoming'
         db.delete_column('messaging_messagestream', 'email_incoming_id')
 
-
     def backwards(self, orm):
-        
+
         # Adding model 'EmailBox'
         db.create_table('messaging_emailbox', (
-            ('server_password', self.gf('django.db.models.fields.CharField')(max_length=255)),
-            ('email_type', self.gf('django.db.models.fields.CharField')(max_length=255)),
-            ('last_checked', self.gf('django.db.models.fields.DateTimeField')(null=True, blank=True)),
-            ('server_type', self.gf('django.db.models.fields.CharField')(max_length=255)),
-            ('email_name', self.gf('django.db.models.fields.CharField')(max_length=255)),
-            ('server_name', self.gf('django.db.models.fields.CharField')(max_length=255)),
-            ('object_ptr', self.gf('django.db.models.fields.related.OneToOneField')(to=orm['core.Object'], unique=True, primary_key=True)),
-            ('server_username', self.gf('django.db.models.fields.CharField')(max_length=255)),
+            ('server_password', self.gf(
+                'django.db.models.fields.CharField')(max_length=255)),
+            ('email_type', self.gf(
+                'django.db.models.fields.CharField')(max_length=255)),
+            ('last_checked', self.gf('django.db.models.fields.DateTimeField')
+             (null=True, blank=True)),
+            ('server_type', self.gf(
+                'django.db.models.fields.CharField')(max_length=255)),
+            ('email_name', self.gf(
+                'django.db.models.fields.CharField')(max_length=255)),
+            ('server_name', self.gf(
+                'django.db.models.fields.CharField')(max_length=255)),
+            ('object_ptr', self.gf('django.db.models.fields.related.OneToOneField')(
+                to=orm['core.Object'], unique=True, primary_key=True)),
+            ('server_username', self.gf(
+                'django.db.models.fields.CharField')(max_length=255)),
         ))
         db.send_create_signal('messaging', ['EmailBox'])
 
         # Adding field 'MessageStream.email_outgoing'
-        db.add_column('messaging_messagestream', 'email_outgoing', self.gf('django.db.models.fields.related.ForeignKey')(related_name='outgoing', null=True, to=orm['messaging.EmailBox'], blank=True), keep_default=False)
+        db.add_column('messaging_messagestream', 'email_outgoing', self.gf('django.db.models.fields.related.ForeignKey')(
+            related_name='outgoing', null=True, to=orm['messaging.EmailBox'], blank=True), keep_default=False)
 
         # Adding field 'MessageStream.email_incoming'
-        db.add_column('messaging_messagestream', 'email_incoming', self.gf('django.db.models.fields.related.ForeignKey')(related_name='incoming', null=True, to=orm['messaging.EmailBox'], blank=True), keep_default=False)
-
+        db.add_column('messaging_messagestream', 'email_incoming', self.gf('django.db.models.fields.related.ForeignKey')(
+            related_name='incoming', null=True, to=orm['messaging.EmailBox'], blank=True), keep_default=False)
 
     models = {
         'auth.group': {

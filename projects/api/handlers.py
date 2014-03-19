@@ -23,6 +23,7 @@ from treeio.core.api.handlers import ObjectHandler
 from treeio.projects.models import Task, Project, Milestone, TaskStatus, TaskTimeSlot
 from treeio.projects.forms import ProjectForm, TaskForm, MilestoneForm, TaskStatusForm, TaskTimeSlotForm
 
+
 def check_parent_perm(request, model, pk, mode):
     try:
         parent_obj = model.objects.get(pk=pk)
@@ -31,11 +32,13 @@ def check_parent_perm(request, model, pk, mode):
         pass
     return True
 
+
 class ProjectHandler(ObjectHandler):
+
     "Entrypoint for Project model."
-    
+
     model = Project
-    form  = ProjectForm
+    form = ProjectForm
 
     def flatten_dict(self, dct):
         dct = super(ProjectHandler, self).flatten_dict(dct)
@@ -51,11 +54,13 @@ class ProjectHandler(ObjectHandler):
     def resource_uri():
         return ('api_projects', ['id'])
 
+
 class TaskStatusHandler(ObjectHandler):
+
     "Entrypoint for TaskStatus model."
-    
+
     model = TaskStatus
-    form  = TaskStatusForm
+    form = TaskStatusForm
 
     def check_create_permission(self, request, mode):
         return request.user.get_profile().is_admin('treeio.projects')
@@ -64,11 +69,13 @@ class TaskStatusHandler(ObjectHandler):
     def resource_uri():
         return ('api_projects_status', ['id'])
 
+
 class MilestoneHandler(ObjectHandler):
+
     "Entrypoint for Milestone model."
-    
+
     model = Milestone
-    form  = MilestoneForm
+    form = MilestoneForm
 
     def flatten_dict(self, dct):
         dct = super(MilestoneHandler, self).flatten_dict(dct)
@@ -84,11 +91,13 @@ class MilestoneHandler(ObjectHandler):
     def resource_uri():
         return ('api_projects_milestones', ['id'])
 
+
 class TaskHandler(ObjectHandler):
+
     "Entrypoint for Task model."
-    
+
     model = Task
-    form  = TaskForm
+    form = TaskForm
 
     def flatten_dict(self, dct):
         dct = super(TaskHandler, self).flatten_dict(dct)
@@ -112,7 +121,9 @@ class TaskHandler(ObjectHandler):
     def resource_uri():
         return ('api_projects_tasks', ['id'])
 
+
 class StartTaskTimeHandler(BaseHandler):
+
     "Start TaskTimeSlot for preselected Task"
 
     model = True  # for auto documentation
@@ -128,7 +139,8 @@ class StartTaskTimeHandler(BaseHandler):
             return rc.FORBIDDEN
 
         if not task.is_being_done_by(request.user.get_profile()):
-            task_time_slot = TaskTimeSlot(task=task, time_from=datetime.now(), user=request.user.get_profile())
+            task_time_slot = TaskTimeSlot(
+                task=task, time_from=datetime.now(), user=request.user.get_profile())
             task_time_slot.save()
             task_time_slot.set_user_from_request(request)
             return task_time_slot
@@ -138,10 +150,12 @@ class StartTaskTimeHandler(BaseHandler):
     def resource_uri():
         return ('api_projects_tasktime_start', ['task_id'])
 
+
 class StopTaskTimeHandler(BaseHandler):
+
     "Stop TaskTimeSlot for preselected Task"
 
-    model = True # for auto documentation
+    model = True  # for auto documentation
     allowed_methods = ('POST',)
 
     def create(self, request, slot_id, *args, **kwargs):
@@ -163,11 +177,13 @@ class StopTaskTimeHandler(BaseHandler):
     def resource_uri():
         return ('api_projects_tasktime_stop', ['slot_id'])
 
+
 class TaskTimeHandler(ObjectHandler):
+
     "Entrypoint for TaskTime model."
 
     model = TaskTimeSlot
-    form  = TaskTimeSlotForm
+    form = TaskTimeSlotForm
 
     def flatten_dict(self, dct):
         dct = super(TaskTimeHandler, self).flatten_dict(dct)
@@ -189,7 +205,7 @@ class TaskTimeHandler(ObjectHandler):
 
     def check_instance_permission(self, request, task_time_slot, mode):
         if not request.user.get_profile().has_permission(task_time_slot, mode=mode) \
-            and not request.user.get_profile().has_permission(task_time_slot.task, mode=mode):
+                and not request.user.get_profile().has_permission(task_time_slot.task, mode=mode):
             return False
         return True
 

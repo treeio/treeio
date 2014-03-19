@@ -14,9 +14,11 @@ from treeio.identities.models import Contact, ContactType, ContactField, Contact
 import re
 import urlparse
 
+
 class ProcessContacts():
+
     "Import/Export Contacts"
-    
+
     """
     def export_contacts(self, contacts):
         "Export contacts into CSV file"
@@ -47,24 +49,25 @@ class ProcessContacts():
             writer.writerow(row)
         return response
     """
-    
+
     def import_contacts(self, content):
         "Import contacts from CSV file"
 
         f = StringIO.StringIO(content)
         contacts = csv.DictReader(f, delimiter=',')
-        
+
         self.parse_contacts(contacts)
 
     def verify_email(self, email):
         "Verify email format"
-        try:                        
-            email_matched = re.findall('[a-zA-Z0-9+_\-\.]+@[0-9a-zA-Z][.-0-9a-zA-Z]*.[a-zA-Z]+', email)
+        try:
+            email_matched = re.findall(
+                '[a-zA-Z0-9+_\-\.]+@[0-9a-zA-Z][.-0-9a-zA-Z]*.[a-zA-Z]+', email)
             if email_matched:
-                return email # Contact Email Address
+                return email  # Contact Email Address
         except Exception:
             return None
-        
+
     def verify_url(self, url):
         "Verify url"
         if url:
@@ -78,19 +81,17 @@ class ProcessContacts():
                 url = urlparse.urlunsplit(url_fields)
         return url
 
-            
-
     def parse_contacts(self, contacts):
         "Break down CSV file into fields"
-        
+
         for row in contacts:
-            
-            #Tidy up keys (iterkeys strip())
-            
+
+            # Tidy up keys (iterkeys strip())
+
             try:
                 type = row['type']
             except Exception:
-                pass #Set type to default type
+                pass  # Set type to default type
 
             try:
                 name = row['name']
@@ -100,27 +101,28 @@ class ProcessContacts():
                     surname = row['surname']
                     name = firstname + " " + surname
                 except Exception:
-                    continue    
-                
+                    continue
+
             contact_type = ContactType.objects.filter(name=type)
             if contact_type:
                 contact_type = contact_type[0]
-                
+
             # Create a new contact if it doesn't exist
-            contact_exists = Contact.objects.filter(name=name, contact_type__name=type, trash=False)
-            
-            #TODO: If one does exist then append the data on that contact
-            
+            contact_exists = Contact.objects.filter(
+                name=name, contact_type__name=type, trash=False)
+
+            # TODO: If one does exist then append the data on that contact
+
             if not contact_exists:
-                                
+
                 contact = Contact()
                 contact.name = name
                 contact.contact_type = contact_type
                 contact.auto_notify = False
                 contact.save()
-            
+
                 fields = contact_type.fields.filter(trash=False)
-                           
+
                 for field in fields:
                     if field.name in row:
                         x = row[field.name]
@@ -133,5 +135,4 @@ class ProcessContacts():
                             contact_value.field = field
                             contact_value.contact = contact
                             contact_value.value = x
-                            contact_value.save()                       
-    
+                            contact_value.save()
