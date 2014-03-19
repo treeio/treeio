@@ -10,8 +10,8 @@ import subprocess
 from os import path
 import sys
 
-PROJECT_ROOT = getattr(settings, 'PROJECT_ROOT')
-HARDTREE_DB_SETTINGS_FILE = path.join(PROJECT_ROOT, 'core/db/dbsettings.json')
+BASE_DIR = getattr(settings, 'BASE_DIR')
+HARDTREE_DB_SETTINGS_FILE = path.join(BASE_DIR, 'treeio/core/db/dbsettings.json')
 
 
 class Command(BaseCommand):

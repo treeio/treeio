@@ -19,14 +19,13 @@ from decimal import *
 
 
 class SaleStatus(Object):
-
     "Status of the Sale"
     name = models.CharField(max_length=512)
-    use_leads = models.BooleanField()
-    use_opportunities = models.BooleanField()
-    use_sales = models.BooleanField()
-    active = models.BooleanField()
-    hidden = models.BooleanField()
+    use_leads = models.BooleanField(default=False)
+    use_opportunities = models.BooleanField(default=False)
+    use_sales = models.BooleanField(default=False)
+    active = models.BooleanField(default=False)
+    hidden = models.BooleanField(default=False)
     details = models.TextField(blank=True, null=True)
 
     searchable = False
@@ -48,7 +47,6 @@ class SaleStatus(Object):
 
 
 class Product(Object):
-
     "Single Product"
     name = models.CharField(max_length=512)
     product_type = models.CharField(max_length=32,
@@ -66,7 +64,7 @@ class Product(Object):
     sell_price = models.DecimalField(
         max_digits=20, decimal_places=2, default=0)
     stock_quantity = models.IntegerField(blank=True, null=True)
-    active = models.BooleanField()
+    active = models.BooleanField(default=False)
     runout_action = models.CharField(max_length=32, blank=True, null=True, choices=(('inactive',
                                                                                      'Mark Inactive'),
                                                                                     ('notify',
@@ -93,7 +91,6 @@ class Product(Object):
 
 
 class SaleSource(Object):
-
     "Source of Sale e.g. Search Engine"
     name = models.CharField(max_length=512)
     active = models.BooleanField(default=False)
@@ -112,8 +109,6 @@ class SaleSource(Object):
             return ""
 
     class Meta:
-
-        "SaleSource"
         ordering = ('-active', 'name')
 
 

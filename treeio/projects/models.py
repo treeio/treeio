@@ -50,8 +50,8 @@ class TaskStatus(Object):
     """ Tasks and milestones have task statuses """
     name = models.CharField(max_length=255)
     details = models.TextField(max_length=255, null=True, blank=True)
-    active = models.BooleanField()
-    hidden = models.BooleanField()
+    active = models.BooleanField(default=False)
+    hidden = models.BooleanField(default=False)
 
     class Meta:
 
