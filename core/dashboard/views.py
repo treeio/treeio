@@ -15,7 +15,6 @@ from django.core.urlresolvers import reverse
 from treeio.core.decorators import treeio_login_required, handle_response_format
 from treeio.core.models import Object, Widget
 from treeio.core.dashboard.forms import WidgetForm
-from django.utils.translation import ugettext as _
 from treeio.core.conf import settings
 from jinja2 import Markup
 import json

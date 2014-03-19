@@ -124,7 +124,7 @@ def perspective_edit(request, perspective_id, response_format='html'):
         form = PerspectiveForm(
             request.user.get_profile(), instance=perspective)
 
-    message = request.session.pop('message', '')
+    request.session.pop('message', '')
 
     return render_to_response('core/administration/perspective_edit',
                               {'perspective': perspective,
@@ -438,7 +438,7 @@ def user_invite(request, emails=None, response_format='html'):
 
         for email in emails:
             email = email.strip()
-            if len(email) > 7 and re.match("^.+\\@(\\[?)[a-zA-Z0-9\\-\\.]+\\.([a-zA-Z]{2,3}|[0-9]{1,3})(\\]?)$", email) != None:
+            if len(email) > 7 and re.match("^.+\\@(\\[?)[a-zA-Z0-9\\-\\.]+\\.([a-zA-Z]{2,3}|[0-9]{1,3})(\\]?)$", email) is not None:
                 if user_limit > 0 and user_number >= user_limit:
                     break
                 invitation = Invitation(

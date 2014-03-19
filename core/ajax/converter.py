@@ -8,8 +8,6 @@ Converter for AJAX response
 
 Takes HTML rendered response from Django and return JSON-serializable dict
 """
-from django.middleware.csrf import CsrfViewMiddleware as csrf
-from django.http import HttpResponse
 from django.forms import BaseForm, TextInput, CharField, HiddenInput, MultiValueField, MultiWidget
 from django.utils.safestring import mark_safe
 
@@ -145,7 +143,7 @@ def preprocess_context(context):
                             order.insert(order.index(fname),
                                          order.pop(order.index("autocomplete_" + fname)))
 
-                    except Exception, e:
+                    except:
                         pass
 
     # Process autocomplete fields

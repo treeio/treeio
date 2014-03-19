@@ -120,7 +120,7 @@ class MessagingApiTest(TestCase):
         updates = {"name": "API mailing list", "description": "API description update", "from_contact": self.contact.id,
                    "members": [self.contact.id, ]}
         response = self.client.put(path=reverse('api_messaging_mlist', kwargs={'object_ptr': self.mlist.id}),
-                                   content_type=self.content_type,  data=json.dumps(updates), **self.authentication_headers)
+                                   content_type=self.content_type, data=json.dumps(updates), **self.authentication_headers)
         self.assertEquals(response.status_code, 200)
 
         data = json.loads(response.content)
@@ -144,7 +144,7 @@ class MessagingApiTest(TestCase):
     def test_update_stream(self):
         updates = {"name": "API stream", }
         response = self.client.put(path=reverse('api_messaging_streams', kwargs={'object_ptr': self.stream.id}),
-                                   content_type=self.content_type,  data=json.dumps(updates), **self.authentication_headers)
+                                   content_type=self.content_type, data=json.dumps(updates), **self.authentication_headers)
         self.assertEquals(response.status_code, 200)
 
         data = json.loads(response.content)
@@ -177,7 +177,7 @@ class MessagingApiTest(TestCase):
         updates = {"title": "API test", "body": "Test body", "stream": self.stream.id,
                    "multicomplete_recipients": u'test@test.com'}
         response = self.client.put(path=reverse('api_messaging_messages', kwargs={'object_ptr': self.message.id}),
-                                   content_type=self.content_type,  data=json.dumps(updates), **self.authentication_headers)
+                                   content_type=self.content_type, data=json.dumps(updates), **self.authentication_headers)
         self.assertEquals(response.status_code, 200)
 
         data = json.loads(response.content)

@@ -17,7 +17,7 @@ from django.utils.html import strip_tags
 from treeio.core.conf import settings
 from treeio.identities.models import Contact
 from treeio.core.models import User, Object, ModuleSetting, UpdateRecord
-from treeio.core.mail import BaseEmail, SystemEmail
+from treeio.core.mail import BaseEmail
 from treeio.core.rendering import render_to_string, render_string_template
 from treeio.messaging.models import Message, MessageStream
 
@@ -285,7 +285,7 @@ def email_caller_on_new_ticket(sender, instance, created, **kwargs):
                         'treeio.services', 'send_email_template')[0]
                     send_email_template = conf.value
                     html = render_string_template(send_email_template, context)
-                except Exception, e:
+                except:
                     html = render_to_string(
                         'services/emails/notify_caller', context, response_format='html')
                 body = strip_tags(html)

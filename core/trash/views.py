@@ -30,7 +30,7 @@ def _process_mass_form(f):
                     form = MassActionForm(request.POST, instance=object)
                     if form.is_valid() and request.user.get_profile().has_permission(object, mode='w'):
                         form.save()
-                except Exception, e:
+                except:
                     pass
             else:
                 for key in request.POST:
@@ -41,7 +41,7 @@ def _process_mass_form(f):
                                 request.POST, instance=object)
                             if form.is_valid() and request.user.get_profile().has_permission(object, mode='w'):
                                 form.save()
-                        except Exception, e:
+                        except:
                             pass
 
         return f(request, *args, **kwargs)

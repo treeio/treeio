@@ -8,9 +8,8 @@ Import/Export Contacts API
 """
 
 import csv
-from django.http import HttpResponse
 import StringIO
-from treeio.identities.models import Contact, ContactType, ContactField, ContactValue
+from treeio.identities.models import Contact, ContactType, ContactValue
 import re
 import urlparse
 
@@ -22,10 +21,10 @@ class ProcessContacts():
     """
     def export_contacts(self, contacts):
         "Export contacts into CSV file"
-        
+
         response = HttpResponse(mimetype='text/csv')
         response['Content-Disposition'] = 'attachment; filename=Contacts.csv'
-        
+
         writer = csv.writer(response)
         headers = ['name', 'type']
 
@@ -45,7 +44,7 @@ class ProcessContacts():
                         row.append(val.value)
                         inserted = True
                 if not inserted:
-                    row.append('')    
+                    row.append('')
             writer.writerow(row)
         return response
     """

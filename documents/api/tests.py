@@ -108,7 +108,7 @@ class DocumentsViewsTest(TestCase):
     def test_update_folder(self):
         updates = {"name": "Api_folder_name"}
         response = self.client.put(path=reverse('api_documents_folders', kwargs={'object_ptr': self.folder.id}),
-                                   content_type=self.content_type,  data=json.dumps(updates), **self.authentication_headers)
+                                   content_type=self.content_type, data=json.dumps(updates), **self.authentication_headers)
         self.assertEquals(response.status_code, 200)
 
         data = json.loads(response.content)
@@ -149,7 +149,7 @@ class DocumentsViewsTest(TestCase):
         updates = {"title": "Api_title",
                    "folder": self.folder.id, "body": "Api test body"}
         response = self.client.put(path=reverse('api_documents_documents', kwargs={'object_ptr': self.document.id}),
-                                   content_type=self.content_type,  data=json.dumps(updates), **self.authentication_headers)
+                                   content_type=self.content_type, data=json.dumps(updates), **self.authentication_headers)
         self.assertEquals(response.status_code, 200)
 
         data = json.loads(response.content)
@@ -172,7 +172,7 @@ class DocumentsViewsTest(TestCase):
         updates = {"title": "Api_title", "folder": self.folder.id,
                    "url": "http://Api-test-body"}
         response = self.client.put(path=reverse('api_documents_weblinks', kwargs={'object_ptr': self.link.id}),
-                                   content_type=self.content_type,  data=json.dumps(updates), **self.authentication_headers)
+                                   content_type=self.content_type, data=json.dumps(updates), **self.authentication_headers)
         self.assertEquals(response.status_code, 200)
 
         data = json.loads(response.content)

@@ -12,12 +12,10 @@ from django.template import RequestContext
 from django.http import HttpResponse, HttpResponseRedirect
 from django.core.urlresolvers import reverse
 from django.views.decorators.cache import cache_control
-from django.utils.translation import ugettext as _
-from django.contrib import messages
 from django.db.models import Q
 from treeio.core.rendering import render_to_response
 from treeio.core.forms import LocationForm
-from treeio.core.models import User, Group, Object, Location, ModuleSetting, AccessEntity
+from treeio.core.models import User, Group, Object, Location, AccessEntity
 from treeio.core.views import user_denied
 from treeio.core.decorators import treeio_login_required, handle_response_format
 from treeio.identities.csvapi import ProcessContacts
@@ -64,8 +62,8 @@ def _process_mass_form(f):
                     try:
                         contact = Contact.objects.get(pk=request.POST[key])
                         form = MassActionForm(
-                            request.user.get_profile(), request.POST, instance=contact)
-                        if form.is_valid() and request.user.get_profile().has_permission(contact, mode='w'):
+                            user, request.POST, instance=contact)
+                        if form.is_valid() and user.has_permission(contact, mode='w'):
                             form.save()
                     except Exception:
                         pass
@@ -92,8 +90,6 @@ def index(request, response_format='html'):
         contacts = Object.filter_by_request(
             request, Contact.objects.order_by('name'))
 
-    types = Object.filter_by_request(
-        request, ContactType.objects.order_by('name'))
     filters = FilterForm(request.user.get_profile(), 'name', request.GET)
 
     context = _get_default_context(request)

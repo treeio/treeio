@@ -19,6 +19,6 @@ URL_PATTERNS = [
     '^/admin/',
 ]
 
-from treeio.core.cron import email_reply
+#from treeio.core.cron import email_reply
 #CRON = [email_reply, ]
 CRON = []

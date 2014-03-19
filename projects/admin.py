@@ -4,7 +4,7 @@
 # License www.tree.io/license
 
 """
-Project management: admin page 
+Project management: admin page
 """
 from treeio.projects.models import Project, Milestone, Task, TaskTimeSlot, TaskStatus
 from django.contrib import admin

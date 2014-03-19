@@ -6,14 +6,13 @@
 """
 Core templatetags
 """
-from coffin import template, shortcuts as coffinshortcuts
+from coffin import template
 from jinja2 import contextfunction, contextfilter, Markup
-import itertools
 from treeio.core.conf import settings
 from django.utils.translation import ugettext as _
 from django.utils.encoding import smart_unicode
 from django.utils import translation
-from django.template.defaultfilters import date as djangodate, time as djangotime, removetags
+from django.template.defaultfilters import date as djangodate, time as djangotime
 from django.db import models
 from treeio.core.rendering import render_to_string
 from treeio.core.models import Module, ModuleSetting
@@ -758,7 +757,7 @@ register.object(currency_print)
 @contextfilter
 def number_format(context, value):
     """
-    Enforces 2 decimal places after a number if only one is given (adds a zero) 
+    Enforces 2 decimal places after a number if only one is given (adds a zero)
     also formats comma separators every 3rd digit before decimal place.
     """
     value = str(value)

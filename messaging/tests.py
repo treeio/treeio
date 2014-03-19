@@ -11,7 +11,7 @@ from django.test import TestCase
 from django.test.client import Client
 from django.core.urlresolvers import reverse
 from django.contrib.auth.models import User as DjangoUser
-from treeio.core.models import User, Group, Perspective, ModuleSetting, Object
+from treeio.core.models import User, Group, Perspective, ModuleSetting
 from treeio.messaging.models import Message, MessageStream
 from treeio.identities.models import Contact, ContactType
 

@@ -7,19 +7,20 @@
 Sales module objects.
 
 """
+from django.core.urlresolvers import reverse
 from django.db import models
+
 from treeio.core.models import Object, User, ModuleSetting
 from treeio.identities.models import Contact
 from treeio.finance.models import Transaction, Currency, Tax
-from django.core.urlresolvers import reverse
+
 from datetime import datetime, timedelta, time
 from dateutil.relativedelta import relativedelta
+from decimal import Decimal, ROUND_UP
 from time import time as ttime
-from decimal import *
 
 
 class SaleStatus(Object):
-
     "Status of the Sale"
     name = models.CharField(max_length=512)
     use_leads = models.BooleanField()
@@ -48,30 +49,36 @@ class SaleStatus(Object):
 
 
 class Product(Object):
-
     "Single Product"
+    PRODUCT_TYPES = (
+        ('service', 'Service'),
+        ('good', 'Good'),
+        ('subscription', 'Subscription'),
+        ('compound', 'Compound'),
+    )
+
+    ACTION_CHOICES = (
+        ('inactive', 'Mark Inactive'),
+        ('notify', 'Notify'),
+        ('ignore', 'Ignore'),
+    )
+
     name = models.CharField(max_length=512)
-    product_type = models.CharField(max_length=32,
-                                    default='good',
-                                    choices=(('service', 'Service'), ('good', 'Good'),
-                                             ('subscription', 'Subscription'),
-                                             ('compound', 'Compound'), ))
-    parent = models.ForeignKey(
-        'self', blank=True, null=True, related_name='child_set')
+    product_type = models.CharField(max_length=32, default='good',
+        choices=PRODUCT_TYPES)
+    parent = models.ForeignKey('self', blank=True, null=True,
+        related_name='child_set')
     code = models.CharField(max_length=512, blank=True, null=True)
-    supplier = models.ForeignKey(
-        Contact, blank=True, null=True, on_delete=models.SET_NULL)
+    supplier = models.ForeignKey(Contact, blank=True, null=True,
+        on_delete=models.SET_NULL)
     supplier_code = models.IntegerField(blank=True, null=True)
     buy_price = models.DecimalField(max_digits=20, decimal_places=2, default=0)
     sell_price = models.DecimalField(
         max_digits=20, decimal_places=2, default=0)
     stock_quantity = models.IntegerField(blank=True, null=True)
     active = models.BooleanField()
-    runout_action = models.CharField(max_length=32, blank=True, null=True, choices=(('inactive',
-                                                                                     'Mark Inactive'),
-                                                                                    ('notify',
-                                                                                     'Notify'),
-                                                                                    ('ignore', 'Ignore'), ))
+    runout_action = models.CharField(max_length=32, blank=True, null=True,
+        choices=ACTION_CHOICES)
     details = models.TextField(blank=True, null=True)
 
     access_inherit = ('parent', '*module', '*user')
@@ -93,7 +100,6 @@ class Product(Object):
 
 
 class SaleSource(Object):
-
     "Source of Sale e.g. Search Engine"
     name = models.CharField(max_length=512)
     active = models.BooleanField(default=False)
@@ -118,17 +124,22 @@ class SaleSource(Object):
 
 
 class Lead(Object):
-
     "Lead"
+    CONTACT_METHODS = (
+        ('email', 'E-Mail'),
+        ('phone', 'Phone'),
+        ('post', 'Post'),
+        ('face', 'Face to Face')
+    )
+
     contact = models.ForeignKey(Contact)
     source = models.ForeignKey(
         SaleSource, blank=True, null=True, on_delete=models.SET_NULL)
     products_interested = models.ManyToManyField(
         Product, blank=True, null=True)
-    contact_method = models.CharField(max_length=32, choices=(('email', 'E-Mail'), ('phone', 'Phone'),
-                                                              ('post', 'Post'), ('face', 'Face to Face')))
-    assigned = models.ManyToManyField(
-        User, related_name='sales_lead_assigned', blank=True, null=True)
+    contact_method = models.CharField(max_length=32, choices=CONTACT_METHODS)
+    assigned = models.ManyToManyField(User, related_name='sales_lead_assigned',
+        blank=True, null=True)
     status = models.ForeignKey(SaleStatus)
     details = models.TextField(blank=True, null=True)
 
@@ -151,7 +162,6 @@ class Lead(Object):
 
 
 class Opportunity(Object):
-
     "Opportunity"
     lead = models.ForeignKey(
         Lead, blank=True, null=True, on_delete=models.SET_NULL)
@@ -191,7 +201,6 @@ class Opportunity(Object):
 
 
 class SaleOrder(Object):
-
     "Sale Order"
     reference = models.CharField(max_length=512, blank=True, null=True)
     datetime = models.DateTimeField(default=datetime.now)
@@ -268,8 +277,7 @@ class SaleOrder(Object):
             else:
                 item_total = p.get_total_display()
             if p.tax.id in taxes:
-                taxes[p.tax.id][
-                    'amount'] += (item_total * (p.tax.rate / 100)).quantize(Decimal('.01'), rounding=ROUND_UP)
+                taxes[p.tax.id]['amount'] += (item_total * (p.tax.rate / 100)).quantize(Decimal('.01'), rounding=ROUND_UP)
             else:
                 taxes[p.tax.id] = {'name': p.tax.name, 'rate': p.tax.rate,
                                    'amount': (item_total * (p.tax.rate / 100))
@@ -331,20 +339,22 @@ class SaleOrder(Object):
 
 
 class Subscription(Object):
-
     "Subscription"
+    CYCLE_PERIODS = (
+        ('daily', 'Daily'),
+        ('weekly', 'Weekly'),
+        ('monthly', 'Monthly'),
+        ('quarterly', 'Quarterly'),
+        ('yearly', 'Yearly')
+    )
+
     client = models.ForeignKey(
         Contact, blank=True, null=True, on_delete=models.SET_NULL)
     product = models.ForeignKey(Product, blank=True, null=True)
     start = models.DateField(default=datetime.now)
     expiry = models.DateField(blank=True, null=True)
-    cycle_period = models.CharField(max_length=32,
-                                    choices=(('daily', 'Daily'),
-                                             ('weekly', 'Weekly'),
-                                             ('monthly', 'Monthly'),
-                                             ('quarterly', 'Quarterly'),
-                                             ('yearly', 'Yearly')),
-                                    default='month')
+    cycle_period = models.CharField(max_length=32, choices=CYCLE_PERIODS,
+        default='month')
     cycle_end = models.DateField(blank=True, null=True)
     active = models.BooleanField(default=False)
     details = models.CharField(max_length=512, blank=True, null=True)
@@ -497,13 +507,11 @@ class Subscription(Object):
             return ""
 
     class Meta:
-
         "Subscription"
         ordering = ['expiry']
 
 
 class OrderedProduct(Object):
-
     "Ordered Product"
     subscription = models.ForeignKey(Subscription, blank=True, null=True)
     product = models.ForeignKey(Product)
@@ -549,6 +557,4 @@ class OrderedProduct(Object):
         return total.quantize(Decimal('.01'), rounding=ROUND_UP)
 
     class Meta:
-
-        "OrderedProduct"
         ordering = ['product']

@@ -18,13 +18,11 @@ from django.template import RequestContext
 from django.http import HttpResponseRedirect, Http404, HttpResponse, HttpResponseBadRequest
 from django.core.urlresolvers import resolve, reverse
 from django.shortcuts import get_object_or_404
-from treeio.core.rendering import render_to_string
 from treeio.core.conf import settings
 from treeio.core.decorators import treeio_login_required, handle_response_format
 from treeio.core.forms import LoginForm, PasswordResetForm, InvitationForm, SqlSettingsForm
 from treeio.core.models import Object, Module, ModuleSetting, Perspective, User, Attachment, Invitation, Tag, UpdateRecord
 from treeio.core.rendering import render_to_response
-from treeio.identities.models import ContactValue
 from jinja2 import Markup
 from os.path import join
 import re
@@ -586,7 +584,7 @@ def ajax_upload_record(request, record_id=None):
 
 
 @treeio_login_required
-def attachment_download(request,  attachment_id):
+def attachment_download(request, attachment_id):
     try:
         attachment = Attachment.objects.get(pk=attachment_id)
     except Attachment.DoesNotExist:

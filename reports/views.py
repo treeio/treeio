@@ -48,8 +48,8 @@ def _process_mass_form(f):
                     try:
                         report = Report.objects.get(pk=request.POST[key])
                         form = MassActionForm(
-                            request.user.get_profile(), request.POST, instance=report)
-                        if form.is_valid() and request.user.get_profile().has_permission(report, mode='w'):
+                            user, request.POST, instance=report)
+                        if form.is_valid() and user.has_permission(report, mode='w'):
                             form.save()
                     except Exception:
                         pass
@@ -154,26 +154,19 @@ def _get_report_content(report, request=None):
     for field in model.fields:
         for filter in field.filters:
             if filter['operand'] == 'is':
-                filters.setdefault(
-                    field.name + '__in', []).append(filter['choice'])
+                filters.setdefault(field.name + '__in', []).append(filter['choice'])
             elif filter['operand'] == 'not':
-                excludes.setdefault(
-                    field.name + '__in', []).append(filter['choice'])
+                excludes.setdefault(field.name + '__in', []).append(filter['choice'])
             elif filter['operand'] == 'beforedate':
-                filters[
-                    field.name + '__gte'] = datetime.date(datetime.strptime(filter['choice'], '%m/%d/%Y'))
+                filters[field.name + '__gte'] = datetime.date(datetime.strptime(filter['choice'], '%m/%d/%Y'))
             elif filter['operand'] == 'afterdate':
-                filters[
-                    field.name + '__lte'] = datetime.date(datetime.strptime(filter['choice'], '%m/%d/%Y'))
+                filters[field.name + '__lte'] = datetime.date(datetime.strptime(filter['choice'], '%m/%d/%Y'))
             elif filter['operand'] == 'beforedatetime':
-                filters[
-                    field.name + '__gte'] = datetime.strptime(filter['choice'], '%m/%d/%Y %H:%M')
+                filters[field.name + '__gte'] = datetime.strptime(filter['choice'], '%m/%d/%Y %H:%M')
             elif filter['operand'] == 'afterdatetime':
-                filters[
-                    field.name + '__lte'] = datetime.strptime(filter['choice'], '%m/%d/%Y %H:%M')
+                filters[field.name + '__lte'] = datetime.strptime(filter['choice'], '%m/%d/%Y %H:%M')
             elif filter['operand'] == 'on':
-                filters.setdefault(
-                    field.name + '__in', []).append(datetime.strptime(filter['choice'], '%m/%d/%Y'))
+                filters.setdefault(field.name + '__in', []).append(datetime.strptime(filter['choice'], '%m/%d/%Y'))
 
     set = unfiltered_set.filter(**filters).exclude(**excludes)
 
@@ -454,9 +447,8 @@ def report_add(request, response_format='html'):
         return HttpResponseRedirect(reverse('reports_report_edit', args=[report.id]))
 
     # Initial Object Type Choice
-    user_modules = [
-        module.name for module in request.user.get_profile().get_perspective().get_modules()]
-    modules = [module.name for module in Module.objects.all()]
+    user_modules = [mod.name for mod in request.user.get_profile().get_perspective().get_modules()]
+    modules = [mod.name for mod in Module.objects.all()]
     query = Q(object_type__contains="core")
     for module in modules:
         if module not in user_modules:

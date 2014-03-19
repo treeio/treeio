@@ -78,8 +78,8 @@ class CronNotifier:
                 for module in note.modules.all():
                     query = query | Q(
                         about__object_type__icontains=module.name)
-                query =  query & Q(date_created__gte=note.last_datetime) \
-                               & (Q(author=note.owner_id) | Q(recipients=note.owner_id))
+                query = query & Q(date_created__gte=note.last_datetime) \
+                              & (Q(author=note.owner_id) | Q(recipients=note.owner_id))
                 self.send_notification(note, UpdateRecord.objects.filter(
                     query).distinct().order_by('url', '-date_created'))
                 note.update_date(now)

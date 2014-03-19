@@ -10,11 +10,9 @@ from django import forms
 from django.db.models import Q
 from django.core.urlresolvers import reverse
 from django.utils.translation import ugettext as _
-from django.utils.html import strip_tags
 from treeio.core.conf import settings
 from treeio.identities.models import Contact
 from treeio.core.decorators import preprocess_form
-from treeio.core.mail import SystemEmail
 from treeio.core.models import Object, ModuleSetting
 from treeio.core.rendering import get_template_source
 from treeio.messaging.models import Message

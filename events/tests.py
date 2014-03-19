@@ -119,14 +119,14 @@ class EventsViewsTest(TestCase):
         response = self.client.get(reverse('events_event_add'))
         self.assertEquals(response.status_code, 200)
         # form
-        num_objects = Event.objects.count()
         self.assertEquals(Event.objects.count(), 1)
-        post_data = {'name': 'TestStatus',
-                     'end': datetime.now()
-                     }
+        post_data = {
+            'name': 'TestStatus',
+            'end': datetime.now()
+        }
         response = self.client.post(reverse('events_event_add'), post_data)
-        # self.assertEquals(response.status_code, 302) # redirect somewhere
-        #self.assertEquals(Event.objects.count(), num_objects + 1)
+        self.assertEquals(response.status_code, 302)  # redirect somewhere
+        self.assertEquals(Event.objects.count(), 2)
 
     def test_event_view(self):
         "Test index page with login at /calendar/event/view/<event_id>"

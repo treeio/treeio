@@ -347,7 +347,7 @@ class ProjectsAPITest(TestCase):
         sleep(60)
 
         # stop task time
-        response = self.client.post(reverse('api_projects_tasktime_stop', kwargs={'slot_id':  slot_id}), data=json.dumps({'details': '<p>test details</p>'}),
+        response = self.client.post(reverse('api_projects_tasktime_stop', kwargs={'slot_id': slot_id}), data=json.dumps({'details': '<p>test details</p>'}),
                                     content_type=self.content_type, **self.authentication_headers)
         self.assertEquals(response.status_code, 200)
 

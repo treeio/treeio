@@ -60,7 +60,7 @@ def _process_mass_form(f):
                         changeset = ChangeSet.objects.get(pk=request.POST[key])
                         form = MassActionForm(
                             request.user.get_profile(), request.POST, instance=changeset)
-                        if form.is_valid() and request.user.get_profile().has_permission(changeset, mode='w'):
+                        if form.is_valid() and user.has_permission(changeset, mode='w'):
                             form.save()
                     except Exception:
                         pass

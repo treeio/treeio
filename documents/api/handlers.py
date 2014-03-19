@@ -14,7 +14,7 @@ __all__ = ['FolderHandler',
 
 from treeio.core.api.handlers import ObjectHandler, getOrNone
 from treeio.documents.models import Document, Folder, File, WebLink
-from treeio.documents.forms import FolderForm, DocumentForm, FileForm, FilterForm, WebLinkForm
+from treeio.documents.forms import FolderForm, DocumentForm, FileForm, WebLinkForm
 
 
 class FolderHandler(ObjectHandler):

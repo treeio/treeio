@@ -14,7 +14,7 @@ from datetime import datetime
 from django.core.urlresolvers import reverse
 from django.utils.translation import ugettext as _
 import math
-from decimal import *
+from decimal import Decimal, ROUND_UP
 
 
 class Currency(Object):
@@ -115,7 +115,7 @@ class Asset(Object):
 
     def check_depreciate(self):
         "Check Depreciate"
-        if (self.purchase_date and self.endlife_value != None and self.initial_value and self.lifetime):
+        if (self.purchase_date and self.endlife_value is not None and self.initial_value and self.lifetime):
             return True
         else:
             return False

@@ -2,16 +2,15 @@
 # Copyright 2011 Tree.io Limited
 # This file is part of Treeio.
 # License www.tree.io/license
+from django.core.exceptions import ObjectDoesNotExist, MultipleObjectsReturned
+from django.core.files.uploadedfile import InMemoryUploadedFile
+from django.db.models import Q
 
+from piston.handler import BaseHandler, HandlerMetaClass, typemapper
 import base64
 from utils import rc
 from decorators import module_admin_required
-
-from django.db.models import Q
-from django.core.files import File
-
-from piston.handler import BaseHandler, HandlerMetaClass, typemapper
-from django.core.exceptions import ObjectDoesNotExist, MultipleObjectsReturned
+from cStringIO import StringIO
 
 
 class ObjectHandlerMetaClass(HandlerMetaClass):
@@ -32,10 +31,6 @@ class ObjectHandlerMetaClass(HandlerMetaClass):
         new_cls.__class__.__dir__ = lambda x: x.__dir
 
         return new_cls
-
-import base64
-from cStringIO import StringIO
-from django.core.files.uploadedfile import InMemoryUploadedFile
 
 
 class ObjectHandler(BaseHandler):

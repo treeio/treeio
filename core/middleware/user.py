@@ -13,7 +13,6 @@ from django.db.models import signals
 from django.utils.functional import curry
 from django.core.urlresolvers import resolve
 from django.contrib.auth import logout, login, authenticate
-from django.contrib.auth.models import User as DjangoUser
 from django.http import HttpResponse, HttpResponseRedirect
 from django.utils import translation
 from treeio.core.models import Object, ModuleSetting, UpdateRecord

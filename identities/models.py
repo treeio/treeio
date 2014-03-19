@@ -14,26 +14,24 @@ from django.db.models.signals import post_save
 from treeio.core.conf import settings
 from django.template import defaultfilters
 from unidecode import unidecode
-from django.core.exceptions import ObjectDoesNotExist
 
 
 class ContactField(Object):
-
     "Represents a field within a ContentType"
+    FIELD_TYPES = (
+        ('text', 'Text'),
+        ('textarea', 'Multiline Text'),
+        ('details', 'Details'),
+        ('url', 'URL'),
+        ('email', 'E-mail'),
+        ('phone', 'Phone'),
+        ('picture', 'Picture'),
+        ('date', 'Date')
+    )
+
     name = models.CharField(max_length=256)
     label = models.CharField(max_length=256)
-    field_type = models.CharField(max_length=64, choices=(('text', 'Text'),
-                                                          ('textarea',
-                                                           'Multiline Text'),
-                                                          ('details',
-                                                           'Details'),
-                                                          ('url', 'URL'),
-                                                          ('email', 'E-mail'),
-                                                          ('phone', 'Phone'),
-                                                          ('picture',
-                                                           'Picture'),
-                                                          ('date', 'Date')
-                                                          ))
+    field_type = models.CharField(max_length=64, choices=FIELD_TYPES)
     required = models.BooleanField(default=False)
     allowed_values = models.TextField(blank=True, null=True)
     details = models.TextField(blank=True, null=True)
@@ -41,7 +39,6 @@ class ContactField(Object):
     searchable = False
 
     class Meta:
-
         "ContactField"
         ordering = ['name']
 
@@ -50,7 +47,6 @@ class ContactField(Object):
 
 
 class ContactType(Object):
-
     "Defines a type of Contact entities"
     name = models.CharField(max_length=256)
     slug = models.CharField(max_length=256)
@@ -58,7 +54,6 @@ class ContactType(Object):
     fields = models.ManyToManyField(ContactField, blank=True, null=True)
 
     class Meta:
-
         "ContactType"
         ordering = ['name']
 
@@ -80,7 +75,6 @@ class ContactType(Object):
 
 
 class Contact(Object):
-
     "Information about a company, group or user. By design allows custom fields defined in ContactField"
     contact_type = models.ForeignKey(ContactType)
     name = models.CharField(max_length=256)
@@ -92,7 +86,6 @@ class Contact(Object):
     access_inherit = ('parent', '*module', '*user')
 
     class Meta:
-
         "Contact"
         ordering = ['name']
 
@@ -162,7 +155,6 @@ class Contact(Object):
 
 
 class ContactValue(models.Model):
-
     "A value selected for a Contact"
     field = models.ForeignKey(ContactField)
     contact = models.ForeignKey(Contact)
@@ -173,8 +165,6 @@ class ContactValue(models.Model):
 
     def name(self):
         return self.field.name
-
-# User signals
 
 
 def contact_autocreate_handler(sender, instance, created, **kwargs):

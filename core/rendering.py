@@ -33,9 +33,8 @@ def _preprocess_context_html(context):
                 try:
                     # find popuplink fields
                     if field.widget.attrs and 'popuplink' in field.widget.attrs:
-                        field.help_text +=  '<a href="%s" field="id_%s" id="link-%s" class="inline-link add-link popup-link">%s</a>' % \
-                                            (field.widget.attrs[
-                                             'popuplink'], fname, fname, _("New"))
+                        field.help_text += '<a href="%s" field="id_%s" id="link-%s" class="inline-link add-link popup-link">%s</a>' % \
+                            (field.widget.attrs['popuplink'], fname, fname, _("New"))
                 except Exception:
                     pass
 
@@ -130,8 +129,6 @@ def render_to_response(template_name, context={}, context_instance=None, respons
     mimetype = settings.HARDTREE_RESPONSE_FORMATS[response_format]
 
     if 'pdf' in response_format:
-        pdf_name = "report.pdf"
-
         while True:
             hasher = hashlib.md5()
             hasher.update(str(random.random()))

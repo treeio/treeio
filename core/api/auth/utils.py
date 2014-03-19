@@ -4,7 +4,6 @@
 # License www.tree.io/license
 
 import oauth2 as oauth
-from django.contrib.auth.models import User
 from django.http import HttpResponse
 
 

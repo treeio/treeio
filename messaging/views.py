@@ -38,8 +38,6 @@ def _get_filter_query(args):
 
 def _get_default_context(request):
     "Returns default context as a dict()"
-    query = Q(reply_to__isnull=True) & ~Q(author=request.user.get_profile())
-
     streams = Object.filter_by_request(request, MessageStream.objects)
     mlists = MailingList.objects.all()
     massform = MassActionForm(request.user.get_profile())
@@ -63,8 +61,8 @@ def _process_mass_form(f):
                     try:
                         message = Message.objects.get(pk=request.POST[key])
                         form = MassActionForm(
-                            request.user.get_profile(), request.POST, instance=message)
-                        if form.is_valid() and request.user.get_profile().has_permission(message, mode='w'):
+                            user, request.POST, instance=message)
+                        if form.is_valid() and user.has_permission(message, mode='w'):
                             form.save()
                     except Exception:
                         pass
@@ -92,17 +90,17 @@ def index(request, response_format='html'):
     query = Q(reply_to__isnull=True)
     if request.GET:
         query = query & _get_filter_query(request.GET)
-        messages = Object.filter_by_request(
+        objects = Object.filter_by_request(
             request, Message.objects.filter(query))
     else:
-        messages = Object.filter_by_request(
+        objects = Object.filter_by_request(
             request, Message.objects.filter(query))
 
     filters = FilterForm(request.user.get_profile(), 'title', request.GET)
 
     context = _get_default_context(request)
     context.update({'filters': filters,
-                    'messages': messages})
+                    'messages': objects})
 
     return render_to_response('messaging/index', context,
                               context_instance=RequestContext(request),
@@ -119,17 +117,17 @@ def index_sent(request, response_format='html'):
         author=request.user.get_profile().get_contact())
     if request.GET:
         query = query & _get_filter_query(request.GET)
-        messages = Object.filter_by_request(
+        objects = Object.filter_by_request(
             request, Message.objects.filter(query))
     else:
-        messages = Object.filter_by_request(
+        objects = Object.filter_by_request(
             request, Message.objects.filter(query))
 
     filters = FilterForm(request.user.get_profile(), 'title', request.GET)
 
     context = _get_default_context(request)
     context.update({'filters': filters,
-                    'messages': messages})
+                    'messages': objects})
 
     return render_to_response('messaging/index_sent', context,
                               context_instance=RequestContext(request),
@@ -146,16 +144,16 @@ def index_inbox(request, response_format='html'):
         author=request.user.get_profile().get_contact())
     if request.GET:
         query = query & _get_filter_query(request.GET)
-        messages = Object.filter_by_request(
+        objects = Object.filter_by_request(
             request, Message.objects.filter(query))
     else:
-        messages = Object.filter_by_request(
+        objects = Object.filter_by_request(
             request, Message.objects.filter(query))
 
     filters = FilterForm(request.user.get_profile(), 'title', request.GET)
     context = _get_default_context(request)
     context.update({'filters': filters,
-                    'messages': messages})
+                    'messages': objects})
 
     return render_to_response('messaging/index_inbox', context,
                               context_instance=RequestContext(request),
@@ -173,17 +171,17 @@ def index_unread(request, response_format='html'):
     query = Q(reply_to__isnull=True) & ~Q(read_by=user)
     if request.GET:
         query = query & _get_filter_query(request.GET)
-        messages = Object.filter_by_request(
+        objects = Object.filter_by_request(
             request, Message.objects.filter(query))
     else:
-        messages = Object.filter_by_request(
+        objects = Object.filter_by_request(
             request, Message.objects.filter(query))
 
     filters = FilterForm(request.user.get_profile(), 'title', request.GET)
 
     context = _get_default_context(request)
     context.update({'filters': filters,
-                    'messages': messages})
+                    'messages': objects})
 
     return render_to_response('messaging/unread', context,
                               context_instance=RequestContext(request),
@@ -278,11 +276,10 @@ def stream_view(request, stream_id, response_format='html'):
     else:
         form = None
 
-    messages = Object.filter_by_request(request,
-                                        Message.objects.filter(reply_to__isnull=True,
-                                                               stream=stream).order_by('-date_created'))
+    objects = Object.filter_by_request(request, Message.objects.filter(
+        reply_to__isnull=True, stream=stream).order_by('-date_created'))
     context = _get_default_context(request)
-    context.update({'messages': messages,
+    context.update({'messages': objects,
                     'form': form,
                     'stream': stream})
 
@@ -635,7 +632,7 @@ def mlist_edit(request, mlist_id, response_format='html'):
     user = request.user.get_profile()
 
     mlist = get_object_or_404(MailingList, pk=mlist_id)
-    if not request.user.get_profile().has_permission(mlist, mode="w"):
+    if not user.has_permission(mlist, mode="w"):
         return user_denied(request, message="You don't have access to this Mailing List",
                            response_format=response_format)
 

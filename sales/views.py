@@ -217,7 +217,7 @@ def index_status(request, response_format='html'):
         status.count = 0
         for order in orders:
             if order.status == status:
-                if order.status.hidden == False:
+                if order.status.hidden is False:
                     total += 1
                     status.count += order.quantity
 

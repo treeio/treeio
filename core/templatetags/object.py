@@ -14,7 +14,6 @@ from treeio.core.forms import PermissionForm, ObjectLinksForm, SubscribeForm, Ta
 from treeio.core.rendering import render_to_string
 from treeio.core.ajax import converter
 from treeio.core.conf import settings
-from os.path import join
 import re
 import urllib
 

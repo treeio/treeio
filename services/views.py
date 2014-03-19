@@ -10,7 +10,6 @@ from django.shortcuts import get_object_or_404
 from django.template import RequestContext
 from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
-from django.contrib import messages
 from django.db.models import Q
 from treeio.core.conf import settings
 from treeio.core.rendering import render_to_response, render_string_template, render_to_string
@@ -506,9 +505,6 @@ def ticket_edit(request, ticket_id, response_format='html'):
 @treeio_login_required
 def ticket_set_status(request, ticket_id, status_id, response_format='html'):
     "Ticket quick set: Status"
-
-    context = _get_default_context(request)
-
     ticket = get_object_or_404(Ticket, pk=ticket_id)
     if not request.user.get_profile().has_permission(ticket, mode='w'):
         return user_denied(request, message="You don't have access to this Ticket")

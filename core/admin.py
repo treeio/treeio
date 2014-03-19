@@ -91,5 +91,3 @@ admin.site.register(Page, PageAdmin)
 
 admin.site.register(UpdateRecord, UpdateRecordAdmin)
 admin.site.register(Widget, WidgetAdmin)
-
-from treeio.core.api.admin import *

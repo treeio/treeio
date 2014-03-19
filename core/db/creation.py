@@ -69,7 +69,7 @@ def DatabaseCreation(domain):
 
             # Get a cursor (even though we don't need one yet). This has
             # the side effect of initializing the test database.
-            cursor = self.connection.cursor()
+            cursor = self.connection.cursor()  # NOQA
             return self.database_name
 
     return DBCreation(connection)

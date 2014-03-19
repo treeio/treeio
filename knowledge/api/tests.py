@@ -109,7 +109,7 @@ class KnowledgeViewsTest(TestCase):
         updates = {'name': 'Api folder update',
                    'parent': self.parent.id, 'details': '<p>api details</p>'}
         response = self.client.put(path=reverse('api_knowledge_folders', kwargs={'object_ptr': self.folder.id}),
-                                   content_type=self.content_type,  data=json.dumps(updates), **self.authentication_headers)
+                                   content_type=self.content_type, data=json.dumps(updates), **self.authentication_headers)
         self.assertEquals(response.status_code, 200)
 
         data = json.loads(response.content)
@@ -132,7 +132,7 @@ class KnowledgeViewsTest(TestCase):
         updates = {
             'name': 'Api catagory update', 'details': '<p>api details</p>'}
         response = self.client.put(path=reverse('api_knowledge_categories', kwargs={'object_ptr': self.category.id}),
-                                   content_type=self.content_type,  data=json.dumps(updates), **self.authentication_headers)
+                                   content_type=self.content_type, data=json.dumps(updates), **self.authentication_headers)
         self.assertEquals(response.status_code, 200)
 
         data = json.loads(response.content)
@@ -154,7 +154,7 @@ class KnowledgeViewsTest(TestCase):
         updates = {'name': 'Api item update', 'folder': self.folder.id, 'category': self.category.id,
                    'body': '<p>api body</p>'}
         response = self.client.put(path=reverse('api_knowledge_items', kwargs={'object_ptr': self.item.id}),
-                                   content_type=self.content_type,  data=json.dumps(updates), **self.authentication_headers)
+                                   content_type=self.content_type, data=json.dumps(updates), **self.authentication_headers)
         self.assertEquals(response.status_code, 400)
 
         #data = json.loads(response.content)

@@ -12,7 +12,6 @@ from django import forms
 from django.db.models import Q
 from treeio.sales.models import Product, SaleOrder, SaleSource, Lead, Opportunity, \
     SaleStatus, OrderedProduct, Subscription, Currency
-from treeio.finance.models import Transaction
 from treeio.identities.models import Contact
 from treeio.core.models import Object, ModuleSetting, User, UpdateRecord
 from django.core.urlresolvers import reverse

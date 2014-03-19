@@ -6,7 +6,6 @@
 """
 Finance Management module: views
 """
-from treeio.core.conf import settings
 from django.shortcuts import get_object_or_404
 from django.template import RequestContext
 from django.http import HttpResponseRedirect
