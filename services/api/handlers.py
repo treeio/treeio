@@ -22,12 +22,14 @@ from treeio.core.models import ModuleSetting
 from treeio.core.api.handlers import ObjectHandler
 from treeio.services.models import TicketStatus, Service, ServiceLevelAgreement, ServiceAgent, TicketQueue, Ticket, TicketRecord
 from treeio.services.forms import TicketForm, TicketStatusForm, TicketRecordForm, QueueForm, \
-                                    ServiceForm, ServiceLevelAgreementForm, AgentForm 
+    ServiceForm, ServiceLevelAgreementForm, AgentForm
 from treeio.services.views import _get_default_context
 
+
 class TicketStatusHandler(ObjectHandler):
+
     "Entrypoint for TicketStatus model."
-    
+
     model = TicketStatus
     form = TicketStatusForm
 
@@ -38,7 +40,9 @@ class TicketStatusHandler(ObjectHandler):
     def check_create_permission(self, request, mode):
         return request.user.get_profile().is_admin('treeio.services')
 
+
 class ServiceHandler(ObjectHandler):
+
     "Entrypoint for Service model."
 
     model = Service
@@ -53,9 +57,11 @@ class ServiceHandler(ObjectHandler):
 
     def check_instance_permission(self, request, inst, mode):
         return request.user.get_profile().has_permission(inst, mode=mode) \
-                or request.user.get_profile().is_admin('treeio_services')
+            or request.user.get_profile().is_admin('treeio_services')
+
 
 class ServiceLevelAgreementHandler(ObjectHandler):
+
     "Entrypoint for ServiceLevelAgreement model."
 
     model = ServiceLevelAgreement
@@ -68,7 +74,9 @@ class ServiceLevelAgreementHandler(ObjectHandler):
     def check_create_permission(self, request, mode):
         return request.user.get_profile().is_admin('treeio.services')
 
+
 class ServiceAgentHandler(ObjectHandler):
+
     "Entrypoint for ServiceAgent model."
 
     model = ServiceAgent
@@ -81,7 +89,9 @@ class ServiceAgentHandler(ObjectHandler):
     def check_create_permission(self, request, mode):
         return request.user.get_profile().is_admin('treeio.services')
 
+
 class TicketQueueHandler(ObjectHandler):
+
     "Entrypoint for TicketQueue model."
 
     model = TicketQueue
@@ -94,7 +104,9 @@ class TicketQueueHandler(ObjectHandler):
     def check_create_permission(self, request, mode):
         return request.user.get_profile().is_admin('treeio.services')
 
+
 class TicketRecordHandler(BaseHandler):
+
     "Entrypoint for TicketRecord model."
 
     model = TicketRecord
@@ -134,11 +146,12 @@ class TicketRecordHandler(BaseHandler):
                 context = _get_default_context(request)
                 agent = context['agent']
 
-                record = TicketRecord(sender = profile.get_contact())
+                record = TicketRecord(sender=profile.get_contact())
                 record.record_type = 'manual'
                 if ticket.message:
                     record.message = ticket.message
-                form = TicketRecordForm(agent, ticket, request.data, instance=record)
+                form = TicketRecordForm(
+                    agent, ticket, request.data, instance=record)
                 if form.is_valid():
                     record = form.save()
                     record.save()
@@ -154,7 +167,9 @@ class TicketRecordHandler(BaseHandler):
         else:
             return ticket
 
+
 class TicketHandler(ObjectHandler):
+
     "Entrypoint for Ticket model."
 
     model = Ticket
@@ -172,7 +187,8 @@ class TicketHandler(ObjectHandler):
         request.queue = None
         if 'queue_id' in request.GET:
             try:
-                request.queue = TicketQueue.objects.get(pk=request.GET['queue_id'])
+                request.queue = TicketQueue.objects.get(
+                    pk=request.GET['queue_id'])
             except self.model.DoesNotExist:
                 return False
             if not request.user.get_profile().has_permission(request.queue, mode='x'):
@@ -200,8 +216,10 @@ class TicketHandler(ObjectHandler):
                     ticket.status = request.queue.default_ticket_status
                 else:
                     try:
-                        conf = ModuleSetting.get_for_module('treeio.services', 'default_ticket_status')[0]
-                        ticket.status = TicketStatus.objects.get(pk=long(conf.value))
+                        conf = ModuleSetting.get_for_module(
+                            'treeio.services', 'default_ticket_status')[0]
+                        ticket.status = TicketStatus.objects.get(
+                            pk=long(conf.value))
                     except:
                         if 'statuses' in request.context:
                             try:
@@ -212,8 +230,10 @@ class TicketHandler(ObjectHandler):
                 ticket.service = request.queue.default_service
             else:
                 try:
-                    conf = ModuleSetting.get_for_module('treeio.services', 'default_ticket_status')[0]
-                    ticket.status = TicketStatus.objects.get(pk=long(conf.value))
+                    conf = ModuleSetting.get_for_module(
+                        'treeio.services', 'default_ticket_status')[0]
+                    ticket.status = TicketStatus.objects.get(
+                        pk=long(conf.value))
                 except:
                     if 'statuses' in request.context:
                         try:
@@ -221,7 +241,8 @@ class TicketHandler(ObjectHandler):
                         except:
                             pass
                 try:
-                    conf = ModuleSetting.get_for_module('treeio.services', 'default_ticket_queue')[0]
+                    conf = ModuleSetting.get_for_module(
+                        'treeio.services', 'default_ticket_queue')[0]
                     ticket.queue = TicketQueue.objects.get(pk=long(conf.value))
                 except:
                     if 'queues' in request.context:
@@ -234,4 +255,3 @@ class TicketHandler(ObjectHandler):
             except:
                 pass
         return ticket
-    

@@ -9,72 +9,107 @@ from south.db import db
 from south.v2 import SchemaMigration
 from django.db import models
 
+
 class Migration(SchemaMigration):
 
     def forwards(self, orm):
-        
+
         # Adding model 'SaleStatus'
         db.create_table('sales_salestatus', (
-            ('object_ptr', self.gf('django.db.models.fields.related.OneToOneField')(to=orm['core.Object'], unique=True, primary_key=True)),
-            ('name', self.gf('django.db.models.fields.CharField')(max_length=512)),
-            ('use_leads', self.gf('django.db.models.fields.BooleanField')(default=False)),
-            ('use_opportunities', self.gf('django.db.models.fields.BooleanField')(default=False)),
-            ('use_sales', self.gf('django.db.models.fields.BooleanField')(default=False)),
-            ('active', self.gf('django.db.models.fields.BooleanField')(default=False)),
-            ('hidden', self.gf('django.db.models.fields.BooleanField')(default=False)),
-            ('details', self.gf('django.db.models.fields.TextField')(null=True, blank=True)),
+            ('object_ptr', self.gf('django.db.models.fields.related.OneToOneField')(
+                to=orm['core.Object'], unique=True, primary_key=True)),
+            ('name', self.gf('django.db.models.fields.CharField')
+             (max_length=512)),
+            ('use_leads', self.gf(
+                'django.db.models.fields.BooleanField')(default=False)),
+            ('use_opportunities', self.gf(
+                'django.db.models.fields.BooleanField')(default=False)),
+            ('use_sales', self.gf(
+                'django.db.models.fields.BooleanField')(default=False)),
+            ('active', self.gf('django.db.models.fields.BooleanField')
+             (default=False)),
+            ('hidden', self.gf('django.db.models.fields.BooleanField')
+             (default=False)),
+            ('details', self.gf('django.db.models.fields.TextField')
+             (null=True, blank=True)),
         ))
         db.send_create_signal('sales', ['SaleStatus'])
 
         # Adding model 'Product'
         db.create_table('sales_product', (
-            ('object_ptr', self.gf('django.db.models.fields.related.OneToOneField')(to=orm['core.Object'], unique=True, primary_key=True)),
-            ('name', self.gf('django.db.models.fields.CharField')(max_length=512)),
-            ('product_type', self.gf('django.db.models.fields.CharField')(max_length=32)),
-            ('parent', self.gf('django.db.models.fields.related.ForeignKey')(blank=True, related_name='child_set', null=True, to=orm['sales.Product'])),
-            ('code', self.gf('django.db.models.fields.CharField')(max_length=512, null=True, blank=True)),
-            ('supplier', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['identities.Contact'], null=True, blank=True)),
-            ('supplier_code', self.gf('django.db.models.fields.IntegerField')(null=True, blank=True)),
-            ('buy_price', self.gf('django.db.models.fields.FloatField')(null=True, blank=True)),
-            ('sell_price', self.gf('django.db.models.fields.FloatField')(null=True, blank=True)),
-            ('stock_quantity', self.gf('django.db.models.fields.IntegerField')(null=True, blank=True)),
-            ('active', self.gf('django.db.models.fields.BooleanField')(default=False)),
-            ('runout_action', self.gf('django.db.models.fields.CharField')(max_length=32, null=True, blank=True)),
-            ('details', self.gf('django.db.models.fields.TextField')(null=True, blank=True)),
+            ('object_ptr', self.gf('django.db.models.fields.related.OneToOneField')(
+                to=orm['core.Object'], unique=True, primary_key=True)),
+            ('name', self.gf('django.db.models.fields.CharField')
+             (max_length=512)),
+            ('product_type', self.gf(
+                'django.db.models.fields.CharField')(max_length=32)),
+            ('parent', self.gf('django.db.models.fields.related.ForeignKey')(
+                blank=True, related_name='child_set', null=True, to=orm['sales.Product'])),
+            ('code', self.gf('django.db.models.fields.CharField')
+             (max_length=512, null=True, blank=True)),
+            ('supplier', self.gf('django.db.models.fields.related.ForeignKey')
+             (to=orm['identities.Contact'], null=True, blank=True)),
+            ('supplier_code', self.gf('django.db.models.fields.IntegerField')
+             (null=True, blank=True)),
+            ('buy_price', self.gf('django.db.models.fields.FloatField')
+             (null=True, blank=True)),
+            ('sell_price', self.gf('django.db.models.fields.FloatField')
+             (null=True, blank=True)),
+            ('stock_quantity', self.gf('django.db.models.fields.IntegerField')
+             (null=True, blank=True)),
+            ('active', self.gf('django.db.models.fields.BooleanField')
+             (default=False)),
+            ('runout_action', self.gf('django.db.models.fields.CharField')
+             (max_length=32, null=True, blank=True)),
+            ('details', self.gf('django.db.models.fields.TextField')
+             (null=True, blank=True)),
         ))
         db.send_create_signal('sales', ['Product'])
 
         # Adding model 'SaleSource'
         db.create_table('sales_salesource', (
-            ('object_ptr', self.gf('django.db.models.fields.related.OneToOneField')(to=orm['core.Object'], unique=True, primary_key=True)),
-            ('name', self.gf('django.db.models.fields.CharField')(max_length=512)),
-            ('active', self.gf('django.db.models.fields.BooleanField')(default=False)),
-            ('details', self.gf('django.db.models.fields.TextField')(null=True, blank=True)),
+            ('object_ptr', self.gf('django.db.models.fields.related.OneToOneField')(
+                to=orm['core.Object'], unique=True, primary_key=True)),
+            ('name', self.gf('django.db.models.fields.CharField')
+             (max_length=512)),
+            ('active', self.gf('django.db.models.fields.BooleanField')
+             (default=False)),
+            ('details', self.gf('django.db.models.fields.TextField')
+             (null=True, blank=True)),
         ))
         db.send_create_signal('sales', ['SaleSource'])
 
         # Adding model 'Lead'
         db.create_table('sales_lead', (
-            ('object_ptr', self.gf('django.db.models.fields.related.OneToOneField')(to=orm['core.Object'], unique=True, primary_key=True)),
-            ('contact', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['identities.Contact'])),
-            ('source', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['sales.SaleSource'], null=True, blank=True)),
-            ('contact_method', self.gf('django.db.models.fields.CharField')(max_length=32)),
-            ('status', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['sales.SaleStatus'])),
-            ('details', self.gf('django.db.models.fields.TextField')(null=True, blank=True)),
+            ('object_ptr', self.gf('django.db.models.fields.related.OneToOneField')(
+                to=orm['core.Object'], unique=True, primary_key=True)),
+            ('contact', self.gf('django.db.models.fields.related.ForeignKey')
+             (to=orm['identities.Contact'])),
+            ('source', self.gf('django.db.models.fields.related.ForeignKey')
+             (to=orm['sales.SaleSource'], null=True, blank=True)),
+            ('contact_method', self.gf(
+                'django.db.models.fields.CharField')(max_length=32)),
+            ('status', self.gf('django.db.models.fields.related.ForeignKey')
+             (to=orm['sales.SaleStatus'])),
+            ('details', self.gf('django.db.models.fields.TextField')
+             (null=True, blank=True)),
         ))
         db.send_create_signal('sales', ['Lead'])
 
         # Adding M2M table for field products_interested on 'Lead'
         db.create_table('sales_lead_products_interested', (
-            ('id', models.AutoField(verbose_name='ID', primary_key=True, auto_created=True)),
+            ('id', models.AutoField(
+                verbose_name='ID', primary_key=True, auto_created=True)),
             ('lead', models.ForeignKey(orm['sales.lead'], null=False)),
             ('product', models.ForeignKey(orm['sales.product'], null=False))
         ))
-        db.create_unique('sales_lead_products_interested', ['lead_id', 'product_id'])
+        db.create_unique(
+            'sales_lead_products_interested', ['lead_id', 'product_id'])
 
         # Adding M2M table for field assigned on 'Lead'
         db.create_table('sales_lead_assigned', (
-            ('id', models.AutoField(verbose_name='ID', primary_key=True, auto_created=True)),
+            ('id', models.AutoField(
+                verbose_name='ID', primary_key=True, auto_created=True)),
             ('lead', models.ForeignKey(orm['sales.lead'], null=False)),
             ('user', models.ForeignKey(orm['core.user'], null=False))
         ))
@@ -82,97 +117,146 @@ class Migration(SchemaMigration):
 
         # Adding model 'Opportunity'
         db.create_table('sales_opportunity', (
-            ('object_ptr', self.gf('django.db.models.fields.related.OneToOneField')(to=orm['core.Object'], unique=True, primary_key=True)),
-            ('lead', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['sales.Lead'], null=True, blank=True)),
-            ('contact', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['identities.Contact'])),
-            ('source', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['sales.SaleSource'], null=True, blank=True)),
-            ('expected_date', self.gf('django.db.models.fields.DateField')(null=True, blank=True)),
-            ('closed_date', self.gf('django.db.models.fields.DateField')(null=True, blank=True)),
-            ('status', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['sales.SaleStatus'])),
-            ('probability', self.gf('django.db.models.fields.FloatField')(null=True, blank=True)),
-            ('amount', self.gf('django.db.models.fields.FloatField')(default=0)),
-            ('details', self.gf('django.db.models.fields.TextField')(null=True, blank=True)),
+            ('object_ptr', self.gf('django.db.models.fields.related.OneToOneField')(
+                to=orm['core.Object'], unique=True, primary_key=True)),
+            ('lead', self.gf('django.db.models.fields.related.ForeignKey')
+             (to=orm['sales.Lead'], null=True, blank=True)),
+            ('contact', self.gf('django.db.models.fields.related.ForeignKey')
+             (to=orm['identities.Contact'])),
+            ('source', self.gf('django.db.models.fields.related.ForeignKey')
+             (to=orm['sales.SaleSource'], null=True, blank=True)),
+            ('expected_date', self.gf('django.db.models.fields.DateField')
+             (null=True, blank=True)),
+            ('closed_date', self.gf('django.db.models.fields.DateField')
+             (null=True, blank=True)),
+            ('status', self.gf('django.db.models.fields.related.ForeignKey')
+             (to=orm['sales.SaleStatus'])),
+            ('probability', self.gf('django.db.models.fields.FloatField')
+             (null=True, blank=True)),
+            ('amount', self.gf(
+                'django.db.models.fields.FloatField')(default=0)),
+            ('details', self.gf('django.db.models.fields.TextField')
+             (null=True, blank=True)),
         ))
         db.send_create_signal('sales', ['Opportunity'])
 
         # Adding M2M table for field products_interested on 'Opportunity'
         db.create_table('sales_opportunity_products_interested', (
-            ('id', models.AutoField(verbose_name='ID', primary_key=True, auto_created=True)),
-            ('opportunity', models.ForeignKey(orm['sales.opportunity'], null=False)),
+            ('id', models.AutoField(
+                verbose_name='ID', primary_key=True, auto_created=True)),
+            ('opportunity', models.ForeignKey(
+                orm['sales.opportunity'], null=False)),
             ('product', models.ForeignKey(orm['sales.product'], null=False))
         ))
-        db.create_unique('sales_opportunity_products_interested', ['opportunity_id', 'product_id'])
+        db.create_unique(
+            'sales_opportunity_products_interested', ['opportunity_id', 'product_id'])
 
         # Adding M2M table for field assigned on 'Opportunity'
         db.create_table('sales_opportunity_assigned', (
-            ('id', models.AutoField(verbose_name='ID', primary_key=True, auto_created=True)),
-            ('opportunity', models.ForeignKey(orm['sales.opportunity'], null=False)),
+            ('id', models.AutoField(
+                verbose_name='ID', primary_key=True, auto_created=True)),
+            ('opportunity', models.ForeignKey(
+                orm['sales.opportunity'], null=False)),
             ('user', models.ForeignKey(orm['core.user'], null=False))
         ))
-        db.create_unique('sales_opportunity_assigned', ['opportunity_id', 'user_id'])
+        db.create_unique(
+            'sales_opportunity_assigned', ['opportunity_id', 'user_id'])
 
         # Adding model 'SaleOrder'
         db.create_table('sales_saleorder', (
-            ('object_ptr', self.gf('django.db.models.fields.related.OneToOneField')(to=orm['core.Object'], unique=True, primary_key=True)),
-            ('reference', self.gf('django.db.models.fields.CharField')(max_length=512, null=True, blank=True)),
-            ('datetime', self.gf('django.db.models.fields.DateTimeField')(default=datetime.datetime.now)),
-            ('client', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['identities.Contact'], null=True, blank=True)),
-            ('opportunity', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['sales.Opportunity'], null=True, blank=True)),
-            ('payment', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['finance.Transaction'], null=True, blank=True)),
-            ('source', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['sales.SaleSource'])),
-            ('status', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['sales.SaleStatus'])),
-            ('details', self.gf('django.db.models.fields.TextField')(null=True, blank=True)),
+            ('object_ptr', self.gf('django.db.models.fields.related.OneToOneField')(
+                to=orm['core.Object'], unique=True, primary_key=True)),
+            ('reference', self.gf('django.db.models.fields.CharField')
+             (max_length=512, null=True, blank=True)),
+            ('datetime', self.gf('django.db.models.fields.DateTimeField')
+             (default=datetime.datetime.now)),
+            ('client', self.gf('django.db.models.fields.related.ForeignKey')
+             (to=orm['identities.Contact'], null=True, blank=True)),
+            ('opportunity', self.gf('django.db.models.fields.related.ForeignKey')(
+                to=orm['sales.Opportunity'], null=True, blank=True)),
+            ('payment', self.gf('django.db.models.fields.related.ForeignKey')
+             (to=orm['finance.Transaction'], null=True, blank=True)),
+            ('source', self.gf('django.db.models.fields.related.ForeignKey')
+             (to=orm['sales.SaleSource'])),
+            ('status', self.gf('django.db.models.fields.related.ForeignKey')
+             (to=orm['sales.SaleStatus'])),
+            ('details', self.gf('django.db.models.fields.TextField')
+             (null=True, blank=True)),
         ))
         db.send_create_signal('sales', ['SaleOrder'])
 
         # Adding M2M table for field assigned on 'SaleOrder'
         db.create_table('sales_saleorder_assigned', (
-            ('id', models.AutoField(verbose_name='ID', primary_key=True, auto_created=True)),
-            ('saleorder', models.ForeignKey(orm['sales.saleorder'], null=False)),
+            ('id', models.AutoField(
+                verbose_name='ID', primary_key=True, auto_created=True)),
+            ('saleorder', models.ForeignKey(
+                orm['sales.saleorder'], null=False)),
             ('user', models.ForeignKey(orm['core.user'], null=False))
         ))
-        db.create_unique('sales_saleorder_assigned', ['saleorder_id', 'user_id'])
+        db.create_unique(
+            'sales_saleorder_assigned', ['saleorder_id', 'user_id'])
 
         # Adding model 'Subscription'
         db.create_table('sales_subscription', (
-            ('object_ptr', self.gf('django.db.models.fields.related.OneToOneField')(to=orm['core.Object'], unique=True, primary_key=True)),
-            ('client', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['identities.Contact'], null=True, blank=True)),
-            ('product', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['sales.Product'], null=True, blank=True)),
-            ('start', self.gf('django.db.models.fields.DateField')(default=datetime.datetime.now)),
-            ('expiry', self.gf('django.db.models.fields.DateField')(null=True, blank=True)),
-            ('cycle_period', self.gf('django.db.models.fields.CharField')(default='month', max_length=32)),
-            ('cycle_end', self.gf('django.db.models.fields.DateField')(null=True, blank=True)),
-            ('active', self.gf('django.db.models.fields.BooleanField')(default=False)),
-            ('details', self.gf('django.db.models.fields.CharField')(max_length=512, null=True, blank=True)),
+            ('object_ptr', self.gf('django.db.models.fields.related.OneToOneField')(
+                to=orm['core.Object'], unique=True, primary_key=True)),
+            ('client', self.gf('django.db.models.fields.related.ForeignKey')
+             (to=orm['identities.Contact'], null=True, blank=True)),
+            ('product', self.gf('django.db.models.fields.related.ForeignKey')
+             (to=orm['sales.Product'], null=True, blank=True)),
+            ('start', self.gf('django.db.models.fields.DateField')
+             (default=datetime.datetime.now)),
+            ('expiry', self.gf('django.db.models.fields.DateField')
+             (null=True, blank=True)),
+            ('cycle_period', self.gf('django.db.models.fields.CharField')
+             (default='month', max_length=32)),
+            ('cycle_end', self.gf('django.db.models.fields.DateField')
+             (null=True, blank=True)),
+            ('active', self.gf('django.db.models.fields.BooleanField')
+             (default=False)),
+            ('details', self.gf('django.db.models.fields.CharField')
+             (max_length=512, null=True, blank=True)),
         ))
         db.send_create_signal('sales', ['Subscription'])
 
         # Adding model 'OrderedProduct'
         db.create_table('sales_orderedproduct', (
-            ('object_ptr', self.gf('django.db.models.fields.related.OneToOneField')(to=orm['core.Object'], unique=True, primary_key=True)),
-            ('subscription', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['sales.Subscription'], null=True, blank=True)),
-            ('product', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['sales.Product'])),
-            ('quantity', self.gf('django.db.models.fields.PositiveIntegerField')(default=1)),
-            ('discount', self.gf('django.db.models.fields.FloatField')(null=True, blank=True)),
-            ('order', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['sales.SaleOrder'])),
-            ('fulfilled', self.gf('django.db.models.fields.BooleanField')(default=False)),
+            ('object_ptr', self.gf('django.db.models.fields.related.OneToOneField')(
+                to=orm['core.Object'], unique=True, primary_key=True)),
+            ('subscription', self.gf('django.db.models.fields.related.ForeignKey')(
+                to=orm['sales.Subscription'], null=True, blank=True)),
+            ('product', self.gf('django.db.models.fields.related.ForeignKey')
+             (to=orm['sales.Product'])),
+            ('quantity', self.gf(
+                'django.db.models.fields.PositiveIntegerField')(default=1)),
+            ('discount', self.gf('django.db.models.fields.FloatField')
+             (null=True, blank=True)),
+            ('order', self.gf('django.db.models.fields.related.ForeignKey')
+             (to=orm['sales.SaleOrder'])),
+            ('fulfilled', self.gf(
+                'django.db.models.fields.BooleanField')(default=False)),
         ))
         db.send_create_signal('sales', ['OrderedProduct'])
 
         # Adding model 'UpdateRecord'
         db.create_table('sales_updaterecord', (
-            ('object_ptr', self.gf('django.db.models.fields.related.OneToOneField')(to=orm['core.Object'], unique=True, primary_key=True)),
-            ('order', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['sales.SaleOrder'], null=True, blank=True)),
-            ('opportunity', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['sales.Opportunity'], null=True, blank=True)),
-            ('lead', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['sales.Lead'], null=True, blank=True)),
-            ('record_type', self.gf('django.db.models.fields.CharField')(max_length=32)),
-            ('details', self.gf('django.db.models.fields.TextField')(null=True, blank=True)),
+            ('object_ptr', self.gf('django.db.models.fields.related.OneToOneField')(
+                to=orm['core.Object'], unique=True, primary_key=True)),
+            ('order', self.gf('django.db.models.fields.related.ForeignKey')
+             (to=orm['sales.SaleOrder'], null=True, blank=True)),
+            ('opportunity', self.gf('django.db.models.fields.related.ForeignKey')(
+                to=orm['sales.Opportunity'], null=True, blank=True)),
+            ('lead', self.gf('django.db.models.fields.related.ForeignKey')
+             (to=orm['sales.Lead'], null=True, blank=True)),
+            ('record_type', self.gf(
+                'django.db.models.fields.CharField')(max_length=32)),
+            ('details', self.gf('django.db.models.fields.TextField')
+             (null=True, blank=True)),
         ))
         db.send_create_signal('sales', ['UpdateRecord'])
 
-
     def backwards(self, orm):
-        
+
         # Deleting model 'SaleStatus'
         db.delete_table('sales_salestatus')
 
@@ -214,7 +298,6 @@ class Migration(SchemaMigration):
 
         # Deleting model 'UpdateRecord'
         db.delete_table('sales_updaterecord')
-
 
     models = {
         'auth.group': {

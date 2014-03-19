@@ -18,6 +18,5 @@ PROPERTIES = {
 """
 
 URL_PATTERNS = [
-                '^/changes/',
-                ]
-
+    '^/changes/',
+]

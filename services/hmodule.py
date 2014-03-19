@@ -8,16 +8,16 @@ Service Support: Hardtree module definition
 """
 
 PROPERTIES = {
-              'title': 'Service Support',
-              'details': 'Service delivery and support management',
-              'url': '/services/',
-              'system': False,
-              'type': 'major'
-              }
+    'title': 'Service Support',
+    'details': 'Service delivery and support management',
+    'url': '/services/',
+    'system': False,
+    'type': 'major'
+}
 
 URL_PATTERNS = [
-                '^/services/',
-                ]
+    '^/services/',
+]
 
 #
 # Cron

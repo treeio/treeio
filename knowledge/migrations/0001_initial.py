@@ -9,43 +9,58 @@ from south.db import db
 from south.v2 import SchemaMigration
 from django.db import models
 
+
 class Migration(SchemaMigration):
 
     def forwards(self, orm):
-        
+
         # Adding model 'KnowledgeFolder'
         db.create_table('knowledge_knowledgefolder', (
-            ('object_ptr', self.gf('django.db.models.fields.related.OneToOneField')(to=orm['core.Object'], unique=True, primary_key=True)),
-            ('name', self.gf('django.db.models.fields.CharField')(max_length=255)),
-            ('details', self.gf('django.db.models.fields.TextField')(max_length=255, null=True, blank=True)),
-            ('parent', self.gf('django.db.models.fields.related.ForeignKey')(blank=True, related_name='child_set', null=True, to=orm['knowledge.KnowledgeFolder'])),
-            ('treepath', self.gf('django.db.models.fields.CharField')(max_length=800)),
+            ('object_ptr', self.gf('django.db.models.fields.related.OneToOneField')(
+                to=orm['core.Object'], unique=True, primary_key=True)),
+            ('name', self.gf('django.db.models.fields.CharField')
+             (max_length=255)),
+            ('details', self.gf('django.db.models.fields.TextField')
+             (max_length=255, null=True, blank=True)),
+            ('parent', self.gf('django.db.models.fields.related.ForeignKey')(
+                blank=True, related_name='child_set', null=True, to=orm['knowledge.KnowledgeFolder'])),
+            ('treepath', self.gf('django.db.models.fields.CharField')
+             (max_length=800)),
         ))
         db.send_create_signal('knowledge', ['KnowledgeFolder'])
 
         # Adding model 'KnowledgeCategory'
         db.create_table('knowledge_knowledgecategory', (
-            ('object_ptr', self.gf('django.db.models.fields.related.OneToOneField')(to=orm['core.Object'], unique=True, primary_key=True)),
-            ('name', self.gf('django.db.models.fields.CharField')(max_length=255)),
-            ('details', self.gf('django.db.models.fields.TextField')(max_length=255, null=True, blank=True)),
-            ('treepath', self.gf('django.db.models.fields.CharField')(max_length=800)),
+            ('object_ptr', self.gf('django.db.models.fields.related.OneToOneField')(
+                to=orm['core.Object'], unique=True, primary_key=True)),
+            ('name', self.gf('django.db.models.fields.CharField')
+             (max_length=255)),
+            ('details', self.gf('django.db.models.fields.TextField')
+             (max_length=255, null=True, blank=True)),
+            ('treepath', self.gf('django.db.models.fields.CharField')
+             (max_length=800)),
         ))
         db.send_create_signal('knowledge', ['KnowledgeCategory'])
 
         # Adding model 'KnowledgeItem'
         db.create_table('knowledge_knowledgeitem', (
-            ('object_ptr', self.gf('django.db.models.fields.related.OneToOneField')(to=orm['core.Object'], unique=True, primary_key=True)),
-            ('name', self.gf('django.db.models.fields.CharField')(max_length=255)),
-            ('folder', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['knowledge.KnowledgeFolder'])),
-            ('category', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['knowledge.KnowledgeCategory'], null=True, blank=True)),
-            ('body', self.gf('django.db.models.fields.TextField')(null=True, blank=True)),
-            ('treepath', self.gf('django.db.models.fields.CharField')(max_length=800)),
+            ('object_ptr', self.gf('django.db.models.fields.related.OneToOneField')(
+                to=orm['core.Object'], unique=True, primary_key=True)),
+            ('name', self.gf('django.db.models.fields.CharField')
+             (max_length=255)),
+            ('folder', self.gf('django.db.models.fields.related.ForeignKey')
+             (to=orm['knowledge.KnowledgeFolder'])),
+            ('category', self.gf('django.db.models.fields.related.ForeignKey')
+             (to=orm['knowledge.KnowledgeCategory'], null=True, blank=True)),
+            ('body', self.gf('django.db.models.fields.TextField')
+             (null=True, blank=True)),
+            ('treepath', self.gf('django.db.models.fields.CharField')
+             (max_length=800)),
         ))
         db.send_create_signal('knowledge', ['KnowledgeItem'])
 
-
     def backwards(self, orm):
-        
+
         # Deleting model 'KnowledgeFolder'
         db.delete_table('knowledge_knowledgefolder')
 
@@ -54,7 +69,6 @@ class Migration(SchemaMigration):
 
         # Deleting model 'KnowledgeItem'
         db.delete_table('knowledge_knowledgeitem')
-
 
     models = {
         'auth.group': {

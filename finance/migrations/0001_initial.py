@@ -9,91 +9,135 @@ from south.db import db
 from south.v2 import SchemaMigration
 from django.db import models
 
+
 class Migration(SchemaMigration):
 
     def forwards(self, orm):
-        
+
         # Adding model 'Category'
         db.create_table('finance_category', (
-            ('object_ptr', self.gf('django.db.models.fields.related.OneToOneField')(to=orm['core.Object'], unique=True, primary_key=True)),
-            ('name', self.gf('django.db.models.fields.CharField')(max_length=512)),
-            ('details', self.gf('django.db.models.fields.TextField')(null=True, blank=True)),
+            ('object_ptr', self.gf('django.db.models.fields.related.OneToOneField')(
+                to=orm['core.Object'], unique=True, primary_key=True)),
+            ('name', self.gf('django.db.models.fields.CharField')
+             (max_length=512)),
+            ('details', self.gf('django.db.models.fields.TextField')
+             (null=True, blank=True)),
         ))
         db.send_create_signal('finance', ['Category'])
 
         # Adding model 'Asset'
         db.create_table('finance_asset', (
-            ('object_ptr', self.gf('django.db.models.fields.related.OneToOneField')(to=orm['core.Object'], unique=True, primary_key=True)),
-            ('name', self.gf('django.db.models.fields.CharField')(max_length=512)),
-            ('asset_type', self.gf('django.db.models.fields.CharField')(default='fixed', max_length=32)),
-            ('initial_value', self.gf('django.db.models.fields.FloatField')(default=0)),
-            ('lifetime', self.gf('django.db.models.fields.FloatField')(null=True, blank=True)),
-            ('endlife_value', self.gf('django.db.models.fields.FloatField')(null=True, blank=True)),
-            ('depreciation_rate', self.gf('django.db.models.fields.FloatField')(null=True, blank=True)),
-            ('depreciation_type', self.gf('django.db.models.fields.CharField')(default='straight', max_length=32, null=True, blank=True)),
-            ('purchase_date', self.gf('django.db.models.fields.DateField')(default=datetime.datetime.now, null=True, blank=True)),
-            ('current_value', self.gf('django.db.models.fields.FloatField')(default=0)),
-            ('owner', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['identities.Contact'])),
-            ('details', self.gf('django.db.models.fields.TextField')(null=True, blank=True)),
+            ('object_ptr', self.gf('django.db.models.fields.related.OneToOneField')(
+                to=orm['core.Object'], unique=True, primary_key=True)),
+            ('name', self.gf('django.db.models.fields.CharField')
+             (max_length=512)),
+            ('asset_type', self.gf('django.db.models.fields.CharField')
+             (default='fixed', max_length=32)),
+            ('initial_value', self.gf(
+                'django.db.models.fields.FloatField')(default=0)),
+            ('lifetime', self.gf('django.db.models.fields.FloatField')
+             (null=True, blank=True)),
+            ('endlife_value', self.gf('django.db.models.fields.FloatField')
+             (null=True, blank=True)),
+            ('depreciation_rate', self.gf(
+                'django.db.models.fields.FloatField')(null=True, blank=True)),
+            ('depreciation_type', self.gf('django.db.models.fields.CharField')
+             (default='straight', max_length=32, null=True, blank=True)),
+            ('purchase_date', self.gf('django.db.models.fields.DateField')
+             (default=datetime.datetime.now, null=True, blank=True)),
+            ('current_value', self.gf(
+                'django.db.models.fields.FloatField')(default=0)),
+            ('owner', self.gf('django.db.models.fields.related.ForeignKey')
+             (to=orm['identities.Contact'])),
+            ('details', self.gf('django.db.models.fields.TextField')
+             (null=True, blank=True)),
         ))
         db.send_create_signal('finance', ['Asset'])
 
         # Adding model 'Account'
         db.create_table('finance_account', (
-            ('object_ptr', self.gf('django.db.models.fields.related.OneToOneField')(to=orm['core.Object'], unique=True, primary_key=True)),
-            ('name', self.gf('django.db.models.fields.CharField')(max_length=512)),
-            ('owner', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['identities.Contact'])),
-            ('balance', self.gf('django.db.models.fields.FloatField')(default=0)),
-            ('details', self.gf('django.db.models.fields.TextField')(null=True, blank=True)),
+            ('object_ptr', self.gf('django.db.models.fields.related.OneToOneField')(
+                to=orm['core.Object'], unique=True, primary_key=True)),
+            ('name', self.gf('django.db.models.fields.CharField')
+             (max_length=512)),
+            ('owner', self.gf('django.db.models.fields.related.ForeignKey')
+             (to=orm['identities.Contact'])),
+            ('balance', self.gf(
+                'django.db.models.fields.FloatField')(default=0)),
+            ('details', self.gf('django.db.models.fields.TextField')
+             (null=True, blank=True)),
         ))
         db.send_create_signal('finance', ['Account'])
 
         # Adding model 'Equity'
         db.create_table('finance_equity', (
-            ('object_ptr', self.gf('django.db.models.fields.related.OneToOneField')(to=orm['core.Object'], unique=True, primary_key=True)),
-            ('equity_type', self.gf('django.db.models.fields.CharField')(default='share', max_length=32)),
+            ('object_ptr', self.gf('django.db.models.fields.related.OneToOneField')(
+                to=orm['core.Object'], unique=True, primary_key=True)),
+            ('equity_type', self.gf('django.db.models.fields.CharField')
+             (default='share', max_length=32)),
             ('issue_price', self.gf('django.db.models.fields.FloatField')()),
             ('sell_price', self.gf('django.db.models.fields.FloatField')()),
-            ('issuer', self.gf('django.db.models.fields.related.ForeignKey')(related_name='finance_equity_issued', to=orm['identities.Contact'])),
-            ('owner', self.gf('django.db.models.fields.related.ForeignKey')(related_name='finance_equity_owned', to=orm['identities.Contact'])),
-            ('amount', self.gf('django.db.models.fields.PositiveIntegerField')(default=1)),
-            ('purchase_date', self.gf('django.db.models.fields.DateField')(default=datetime.datetime.now)),
-            ('details', self.gf('django.db.models.fields.TextField')(null=True, blank=True)),
+            ('issuer', self.gf('django.db.models.fields.related.ForeignKey')(
+                related_name='finance_equity_issued', to=orm['identities.Contact'])),
+            ('owner', self.gf('django.db.models.fields.related.ForeignKey')(
+                related_name='finance_equity_owned', to=orm['identities.Contact'])),
+            ('amount', self.gf(
+                'django.db.models.fields.PositiveIntegerField')(default=1)),
+            ('purchase_date', self.gf('django.db.models.fields.DateField')
+             (default=datetime.datetime.now)),
+            ('details', self.gf('django.db.models.fields.TextField')
+             (null=True, blank=True)),
         ))
         db.send_create_signal('finance', ['Equity'])
 
         # Adding model 'Liability'
         db.create_table('finance_liability', (
-            ('object_ptr', self.gf('django.db.models.fields.related.OneToOneField')(to=orm['core.Object'], unique=True, primary_key=True)),
-            ('name', self.gf('django.db.models.fields.CharField')(max_length=512)),
-            ('source', self.gf('django.db.models.fields.related.ForeignKey')(related_name='finance_liability_source', to=orm['identities.Contact'])),
-            ('target', self.gf('django.db.models.fields.related.ForeignKey')(related_name='finance_liability_target', to=orm['identities.Contact'])),
-            ('category', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['finance.Category'], null=True, blank=True)),
-            ('account', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['finance.Account'])),
-            ('due_date', self.gf('django.db.models.fields.DateField')(null=True, blank=True)),
+            ('object_ptr', self.gf('django.db.models.fields.related.OneToOneField')(
+                to=orm['core.Object'], unique=True, primary_key=True)),
+            ('name', self.gf('django.db.models.fields.CharField')
+             (max_length=512)),
+            ('source', self.gf('django.db.models.fields.related.ForeignKey')(
+                related_name='finance_liability_source', to=orm['identities.Contact'])),
+            ('target', self.gf('django.db.models.fields.related.ForeignKey')(
+                related_name='finance_liability_target', to=orm['identities.Contact'])),
+            ('category', self.gf('django.db.models.fields.related.ForeignKey')
+             (to=orm['finance.Category'], null=True, blank=True)),
+            ('account', self.gf('django.db.models.fields.related.ForeignKey')
+             (to=orm['finance.Account'])),
+            ('due_date', self.gf('django.db.models.fields.DateField')
+             (null=True, blank=True)),
             ('value', self.gf('django.db.models.fields.FloatField')()),
-            ('details', self.gf('django.db.models.fields.TextField')(blank=True)),
+            ('details', self.gf(
+                'django.db.models.fields.TextField')(blank=True)),
         ))
         db.send_create_signal('finance', ['Liability'])
 
         # Adding model 'Transaction'
         db.create_table('finance_transaction', (
-            ('object_ptr', self.gf('django.db.models.fields.related.OneToOneField')(to=orm['core.Object'], unique=True, primary_key=True)),
-            ('name', self.gf('django.db.models.fields.CharField')(max_length=512)),
-            ('source', self.gf('django.db.models.fields.related.ForeignKey')(related_name='finance_transaction_source', to=orm['identities.Contact'])),
-            ('target', self.gf('django.db.models.fields.related.ForeignKey')(related_name='finance_transaction_target', to=orm['identities.Contact'])),
-            ('liability', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['finance.Liability'], null=True, blank=True)),
-            ('category', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['finance.Category'], null=True, blank=True)),
-            ('account', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['finance.Account'])),
-            ('datetime', self.gf('django.db.models.fields.DateTimeField')(default=datetime.datetime.now)),
+            ('object_ptr', self.gf('django.db.models.fields.related.OneToOneField')(
+                to=orm['core.Object'], unique=True, primary_key=True)),
+            ('name', self.gf('django.db.models.fields.CharField')
+             (max_length=512)),
+            ('source', self.gf('django.db.models.fields.related.ForeignKey')(
+                related_name='finance_transaction_source', to=orm['identities.Contact'])),
+            ('target', self.gf('django.db.models.fields.related.ForeignKey')(
+                related_name='finance_transaction_target', to=orm['identities.Contact'])),
+            ('liability', self.gf('django.db.models.fields.related.ForeignKey')(
+                to=orm['finance.Liability'], null=True, blank=True)),
+            ('category', self.gf('django.db.models.fields.related.ForeignKey')
+             (to=orm['finance.Category'], null=True, blank=True)),
+            ('account', self.gf('django.db.models.fields.related.ForeignKey')
+             (to=orm['finance.Account'])),
+            ('datetime', self.gf('django.db.models.fields.DateTimeField')
+             (default=datetime.datetime.now)),
             ('value', self.gf('django.db.models.fields.FloatField')()),
-            ('details', self.gf('django.db.models.fields.TextField')(blank=True)),
+            ('details', self.gf(
+                'django.db.models.fields.TextField')(blank=True)),
         ))
         db.send_create_signal('finance', ['Transaction'])
 
-
     def backwards(self, orm):
-        
+
         # Deleting model 'Category'
         db.delete_table('finance_category')
 
@@ -111,7 +155,6 @@ class Migration(SchemaMigration):
 
         # Deleting model 'Transaction'
         db.delete_table('finance_transaction')
-
 
     models = {
         'auth.group': {

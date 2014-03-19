@@ -9,103 +9,150 @@ from south.db import db
 from south.v2 import SchemaMigration
 from django.db import models
 
+
 class Migration(SchemaMigration):
 
     def forwards(self, orm):
-        
+
         # Adding model 'ItemField'
         db.create_table('infrastructure_itemfield', (
-            ('object_ptr', self.gf('django.db.models.fields.related.OneToOneField')(to=orm['core.Object'], unique=True, primary_key=True)),
-            ('name', self.gf('django.db.models.fields.CharField')(max_length=256)),
-            ('label', self.gf('django.db.models.fields.CharField')(max_length=256)),
-            ('field_type', self.gf('django.db.models.fields.CharField')(max_length=64)),
-            ('required', self.gf('django.db.models.fields.BooleanField')(default=False)),
-            ('allowed_values', self.gf('django.db.models.fields.TextField')(null=True, blank=True)),
-            ('details', self.gf('django.db.models.fields.TextField')(null=True, blank=True)),
+            ('object_ptr', self.gf('django.db.models.fields.related.OneToOneField')(
+                to=orm['core.Object'], unique=True, primary_key=True)),
+            ('name', self.gf('django.db.models.fields.CharField')
+             (max_length=256)),
+            ('label', self.gf('django.db.models.fields.CharField')
+             (max_length=256)),
+            ('field_type', self.gf(
+                'django.db.models.fields.CharField')(max_length=64)),
+            ('required', self.gf(
+                'django.db.models.fields.BooleanField')(default=False)),
+            ('allowed_values', self.gf('django.db.models.fields.TextField')
+             (null=True, blank=True)),
+            ('details', self.gf('django.db.models.fields.TextField')
+             (null=True, blank=True)),
         ))
         db.send_create_signal('infrastructure', ['ItemField'])
 
         # Adding model 'ItemType'
         db.create_table('infrastructure_itemtype', (
-            ('object_ptr', self.gf('django.db.models.fields.related.OneToOneField')(to=orm['core.Object'], unique=True, primary_key=True)),
-            ('name', self.gf('django.db.models.fields.CharField')(max_length=512)),
-            ('parent', self.gf('django.db.models.fields.related.ForeignKey')(blank=True, related_name='child_set', null=True, to=orm['infrastructure.ItemType'])),
-            ('details', self.gf('django.db.models.fields.TextField')(null=True, blank=True)),
+            ('object_ptr', self.gf('django.db.models.fields.related.OneToOneField')(
+                to=orm['core.Object'], unique=True, primary_key=True)),
+            ('name', self.gf('django.db.models.fields.CharField')
+             (max_length=512)),
+            ('parent', self.gf('django.db.models.fields.related.ForeignKey')(
+                blank=True, related_name='child_set', null=True, to=orm['infrastructure.ItemType'])),
+            ('details', self.gf('django.db.models.fields.TextField')
+             (null=True, blank=True)),
         ))
         db.send_create_signal('infrastructure', ['ItemType'])
 
         # Adding M2M table for field fields on 'ItemType'
         db.create_table('infrastructure_itemtype_fields', (
-            ('id', models.AutoField(verbose_name='ID', primary_key=True, auto_created=True)),
-            ('itemtype', models.ForeignKey(orm['infrastructure.itemtype'], null=False)),
-            ('itemfield', models.ForeignKey(orm['infrastructure.itemfield'], null=False))
+            ('id', models.AutoField(
+                verbose_name='ID', primary_key=True, auto_created=True)),
+            ('itemtype', models.ForeignKey(
+                orm['infrastructure.itemtype'], null=False)),
+            ('itemfield', models.ForeignKey(
+                orm['infrastructure.itemfield'], null=False))
         ))
-        db.create_unique('infrastructure_itemtype_fields', ['itemtype_id', 'itemfield_id'])
+        db.create_unique(
+            'infrastructure_itemtype_fields', ['itemtype_id', 'itemfield_id'])
 
         # Adding model 'ItemStatus'
         db.create_table('infrastructure_itemstatus', (
-            ('object_ptr', self.gf('django.db.models.fields.related.OneToOneField')(to=orm['core.Object'], unique=True, primary_key=True)),
-            ('name', self.gf('django.db.models.fields.CharField')(max_length=256)),
-            ('details', self.gf('django.db.models.fields.TextField')(null=True, blank=True)),
-            ('active', self.gf('django.db.models.fields.BooleanField')(default=True)),
-            ('hidden', self.gf('django.db.models.fields.BooleanField')(default=False)),
+            ('object_ptr', self.gf('django.db.models.fields.related.OneToOneField')(
+                to=orm['core.Object'], unique=True, primary_key=True)),
+            ('name', self.gf('django.db.models.fields.CharField')
+             (max_length=256)),
+            ('details', self.gf('django.db.models.fields.TextField')
+             (null=True, blank=True)),
+            ('active', self.gf('django.db.models.fields.BooleanField')
+             (default=True)),
+            ('hidden', self.gf('django.db.models.fields.BooleanField')
+             (default=False)),
         ))
         db.send_create_signal('infrastructure', ['ItemStatus'])
 
         # Adding model 'Item'
         db.create_table('infrastructure_item', (
-            ('object_ptr', self.gf('django.db.models.fields.related.OneToOneField')(to=orm['core.Object'], unique=True, primary_key=True)),
-            ('name', self.gf('django.db.models.fields.CharField')(max_length=512)),
-            ('item_type', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['infrastructure.ItemType'])),
-            ('status', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['infrastructure.ItemStatus'])),
-            ('parent', self.gf('django.db.models.fields.related.ForeignKey')(blank=True, related_name='child_set', null=True, to=orm['infrastructure.Item'])),
-            ('manufacturer', self.gf('django.db.models.fields.related.ForeignKey')(blank=True, related_name='items_manufactured', null=True, to=orm['identities.Contact'])),
-            ('supplier', self.gf('django.db.models.fields.related.ForeignKey')(blank=True, related_name='items_supplied', null=True, to=orm['identities.Contact'])),
-            ('location', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['core.Location'], null=True, blank=True)),
-            ('owner', self.gf('django.db.models.fields.related.ForeignKey')(blank=True, related_name='items_owned', null=True, to=orm['identities.Contact'])),
-            ('asset', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['finance.Asset'], null=True, blank=True)),
+            ('object_ptr', self.gf('django.db.models.fields.related.OneToOneField')(
+                to=orm['core.Object'], unique=True, primary_key=True)),
+            ('name', self.gf('django.db.models.fields.CharField')
+             (max_length=512)),
+            ('item_type', self.gf('django.db.models.fields.related.ForeignKey')(
+                to=orm['infrastructure.ItemType'])),
+            ('status', self.gf('django.db.models.fields.related.ForeignKey')
+             (to=orm['infrastructure.ItemStatus'])),
+            ('parent', self.gf('django.db.models.fields.related.ForeignKey')(
+                blank=True, related_name='child_set', null=True, to=orm['infrastructure.Item'])),
+            ('manufacturer', self.gf('django.db.models.fields.related.ForeignKey')(
+                blank=True, related_name='items_manufactured', null=True, to=orm['identities.Contact'])),
+            ('supplier', self.gf('django.db.models.fields.related.ForeignKey')(
+                blank=True, related_name='items_supplied', null=True, to=orm['identities.Contact'])),
+            ('location', self.gf('django.db.models.fields.related.ForeignKey')
+             (to=orm['core.Location'], null=True, blank=True)),
+            ('owner', self.gf('django.db.models.fields.related.ForeignKey')(
+                blank=True, related_name='items_owned', null=True, to=orm['identities.Contact'])),
+            ('asset', self.gf('django.db.models.fields.related.ForeignKey')
+             (to=orm['finance.Asset'], null=True, blank=True)),
         ))
         db.send_create_signal('infrastructure', ['Item'])
 
         # Adding model 'ItemValue'
         db.create_table('infrastructure_itemvalue', (
-            ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('field', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['infrastructure.ItemField'])),
-            ('item', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['infrastructure.Item'])),
-            ('value', self.gf('django.db.models.fields.TextField')(blank=True)),
+            ('id', self.gf('django.db.models.fields.AutoField')
+             (primary_key=True)),
+            ('field', self.gf('django.db.models.fields.related.ForeignKey')
+             (to=orm['infrastructure.ItemField'])),
+            ('item', self.gf('django.db.models.fields.related.ForeignKey')
+             (to=orm['infrastructure.Item'])),
+            ('value', self.gf(
+                'django.db.models.fields.TextField')(blank=True)),
         ))
         db.send_create_signal('infrastructure', ['ItemValue'])
 
         # Adding model 'ItemServicing'
         db.create_table('infrastructure_itemservicing', (
-            ('object_ptr', self.gf('django.db.models.fields.related.OneToOneField')(to=orm['core.Object'], unique=True, primary_key=True)),
-            ('name', self.gf('django.db.models.fields.CharField')(max_length=256)),
-            ('supplier', self.gf('django.db.models.fields.related.ForeignKey')(blank=True, related_name='itemservice_supplied', null=True, to=orm['identities.Contact'])),
-            ('start_date', self.gf('django.db.models.fields.DateField')(null=True, blank=True)),
-            ('expiry_date', self.gf('django.db.models.fields.DateField')(null=True, blank=True)),
-            ('details', self.gf('django.db.models.fields.TextField')(blank=True)),
+            ('object_ptr', self.gf('django.db.models.fields.related.OneToOneField')(
+                to=orm['core.Object'], unique=True, primary_key=True)),
+            ('name', self.gf('django.db.models.fields.CharField')
+             (max_length=256)),
+            ('supplier', self.gf('django.db.models.fields.related.ForeignKey')(
+                blank=True, related_name='itemservice_supplied', null=True, to=orm['identities.Contact'])),
+            ('start_date', self.gf('django.db.models.fields.DateField')
+             (null=True, blank=True)),
+            ('expiry_date', self.gf('django.db.models.fields.DateField')
+             (null=True, blank=True)),
+            ('details', self.gf(
+                'django.db.models.fields.TextField')(blank=True)),
         ))
         db.send_create_signal('infrastructure', ['ItemServicing'])
 
         # Adding M2M table for field items on 'ItemServicing'
         db.create_table('infrastructure_itemservicing_items', (
-            ('id', models.AutoField(verbose_name='ID', primary_key=True, auto_created=True)),
-            ('itemservicing', models.ForeignKey(orm['infrastructure.itemservicing'], null=False)),
+            ('id', models.AutoField(
+                verbose_name='ID', primary_key=True, auto_created=True)),
+            ('itemservicing', models.ForeignKey(
+                orm['infrastructure.itemservicing'], null=False)),
             ('item', models.ForeignKey(orm['infrastructure.item'], null=False))
         ))
-        db.create_unique('infrastructure_itemservicing_items', ['itemservicing_id', 'item_id'])
+        db.create_unique(
+            'infrastructure_itemservicing_items', ['itemservicing_id', 'item_id'])
 
         # Adding M2M table for field billing on 'ItemServicing'
         db.create_table('infrastructure_itemservicing_payments', (
-            ('id', models.AutoField(verbose_name='ID', primary_key=True, auto_created=True)),
-            ('itemservicing', models.ForeignKey(orm['infrastructure.itemservicing'], null=False)),
-            ('transaction', models.ForeignKey(orm['finance.transaction'], null=False))
+            ('id', models.AutoField(
+                verbose_name='ID', primary_key=True, auto_created=True)),
+            ('itemservicing', models.ForeignKey(
+                orm['infrastructure.itemservicing'], null=False)),
+            ('transaction', models.ForeignKey(
+                orm['finance.transaction'], null=False))
         ))
-        db.create_unique('infrastructure_itemservicing_payments', ['itemservicing_id', 'transaction_id'])
-
+        db.create_unique(
+            'infrastructure_itemservicing_payments', ['itemservicing_id', 'transaction_id'])
 
     def backwards(self, orm):
-        
+
         # Deleting model 'ItemField'
         db.delete_table('infrastructure_itemfield')
 
@@ -132,7 +179,6 @@ class Migration(SchemaMigration):
 
         # Removing M2M table for field billing on 'ItemServicing'
         db.delete_table('infrastructure_itemservicing_payments')
-
 
     models = {
         'auth.group': {

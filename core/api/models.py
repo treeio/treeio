@@ -3,7 +3,9 @@
 # This file is part of Treeio.
 # License www.tree.io/license
 
-import urllib, time, urlparse
+import urllib
+import time
+import urlparse
 
 # Django imports
 from django.db.models.signals import post_save, post_delete
@@ -25,16 +27,19 @@ CONSUMER_STATES = (
     ('rejected', 'Rejected')
 )
 
+
 def generate_random(length=SECRET_SIZE):
     return User.objects.make_random_password(length=length)
+
 
 class Nonce(models.Model):
     token_key = models.CharField(max_length=KEY_SIZE)
     consumer_key = models.CharField(max_length=KEY_SIZE)
     key = models.CharField(max_length=255)
-    
+
     def __unicode__(self):
         return u"Nonce %s for %s" % (self.key, self.consumer_key)
+
 
 class Consumer(models.Model):
     name = models.CharField(max_length=255)
@@ -43,11 +48,12 @@ class Consumer(models.Model):
     key = models.CharField(max_length=KEY_SIZE, unique=True)
     secret = models.CharField(max_length=SECRET_SIZE)
 
-    status = models.CharField(max_length=16, choices=CONSUMER_STATES, default='accepted')
+    status = models.CharField(
+        max_length=16, choices=CONSUMER_STATES, default='accepted')
     owner = models.ForeignKey(User, null=True, blank=True)
 
     objects = ConsumerManager()
-        
+
     def __unicode__(self):
         return u"Consumer %s with key %s" % (self.name, self.key)
 
@@ -71,39 +77,41 @@ class Consumer(models.Model):
         self.key = key
         self.secret = secret
         self.save()
-    
+
+
 class Token(models.Model):
     REQUEST = 1
     ACCESS = 2
     TOKEN_TYPES = ((REQUEST, u'Request'), (ACCESS, u'Access'))
-    
+
     key = models.CharField(max_length=KEY_SIZE)
     secret = models.CharField(max_length=SECRET_SIZE)
     verifier = models.CharField(max_length=VERIFIER_SIZE)
     token_type = models.IntegerField(choices=TOKEN_TYPES)
     timestamp = models.IntegerField(default=long(time.time()))
     is_approved = models.BooleanField(default=False)
-    
-    user = models.ForeignKey(User, null=True, blank=True, related_name='tokens')
+
+    user = models.ForeignKey(
+        User, null=True, blank=True, related_name='tokens')
     consumer_id = models.IntegerField(blank=True, null=True)
-    
+
     callback = models.CharField(max_length=255, null=True, blank=True)
     callback_confirmed = models.BooleanField(default=False)
-    
+
     objects = TokenManager()
-    
+
     def __unicode__(self):
         return u"%s Token %s for %s" % (self.get_token_type_display(), self.key, self.consumer_id)
 
     def to_string(self, only_key=False):
         token_dict = {
-            'oauth_token': self.key, 
+            'oauth_token': self.key,
             'oauth_token_secret': self.secret,
             'oauth_callback_confirmed': 'true',
         }
 
         if self.verifier:
-            token_dict.update({ 'oauth_verifier': self.verifier })
+            token_dict.update({'oauth_verifier': self.verifier})
 
         if only_key:
             del token_dict['oauth_token_secret']
@@ -120,7 +128,7 @@ class Token(models.Model):
         self.key = key
         self.secret = secret
         self.save()
-        
+
     # -- OAuth 1.0a stuff
 
     def get_callback_url(self):
@@ -133,11 +141,11 @@ class Token(models.Model):
             else:
                 query = 'oauth_verifier=%s' % self.verifier
             return urlparse.urlunparse((scheme, netloc, path, params,
-                query, fragment))
+                                        query, fragment))
         return self.callback
-    
+
     def set_callback(self, callback):
-        if callback != "oob": # out of band, says "we can't do this!"
+        if callback != "oob":  # out of band, says "we can't do this!"
             self.callback = callback
             self.callback_confirmed = True
             self.save()

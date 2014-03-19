@@ -9,28 +9,34 @@ from south.db import db
 from south.v2 import SchemaMigration
 from django.db import models
 
+
 class Migration(SchemaMigration):
 
     def forwards(self, orm):
-        
+
         # Adding model 'Attachment'
         db.create_table('core_attachment', (
-            ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('attached_object', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['core.Object'], null=True, blank=True)),
-            ('attached_record', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['core.UpdateRecord'], null=True, blank=True)),
-            ('attached_file', self.gf('django.db.models.fields.files.FileField')(max_length=100)),
-            ('mimetype', self.gf('django.db.models.fields.CharField')(max_length=64)),
-            ('created', self.gf('django.db.models.fields.DateTimeField')(auto_now_add=True, blank=True)),
-            ('uploaded_by', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['core.User'])),
+            ('id', self.gf('django.db.models.fields.AutoField')
+             (primary_key=True)),
+            ('attached_object', self.gf('django.db.models.fields.related.ForeignKey')(
+                to=orm['core.Object'], null=True, blank=True)),
+            ('attached_record', self.gf('django.db.models.fields.related.ForeignKey')(
+                to=orm['core.UpdateRecord'], null=True, blank=True)),
+            ('attached_file', self.gf(
+                'django.db.models.fields.files.FileField')(max_length=100)),
+            ('mimetype', self.gf(
+                'django.db.models.fields.CharField')(max_length=64)),
+            ('created', self.gf('django.db.models.fields.DateTimeField')
+             (auto_now_add=True, blank=True)),
+            ('uploaded_by', self.gf('django.db.models.fields.related.ForeignKey')(
+                to=orm['core.User'])),
         ))
         db.send_create_signal('core', ['Attachment'])
 
-
     def backwards(self, orm):
-        
+
         # Deleting model 'Attachment'
         db.delete_table('core_attachment')
-
 
     models = {
         'auth.group': {

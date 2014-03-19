@@ -10,8 +10,11 @@ from treeio.core.conf import settings
 from django.contrib.auth.models import User
 from treeio.identities.models import ContactValue
 
+
 class EmailBackend:
+
     "Log a user in using email instead of their username"
+
     def authenticate(self, username, password):
         # The user entered an email, so try to log them in by e-mail
         emails = ContactValue.objects.filter(value=username,
@@ -35,7 +38,9 @@ class EmailBackend:
 
 
 class HashBackend:
+
     "Log a user in using their password as a hash"
+
     def authenticate(self, authkey):
         try:
             return User.objects.get(password=authkey)

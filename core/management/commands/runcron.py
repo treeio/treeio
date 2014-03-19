@@ -19,16 +19,18 @@ import signal
 import time
 import sys
 
-LOG_LEVELS = { 'debug': logging.DEBUG,
-               'info': logging.INFO,
-               'warning': logging.WARNING,
-               'error': logging.ERROR,
-               'critical': logging.CRITICAL }
+LOG_LEVELS = {'debug': logging.DEBUG,
+              'info': logging.INFO,
+              'warning': logging.WARNING,
+              'error': logging.ERROR,
+              'critical': logging.CRITICAL}
 
 cronlogger = logging.getLogger('CronLogger')
 cronlogger.setLevel(logging.DEBUG)
 
+
 class CronJob(multiprocessing.Process):
+
     "Single Cron job"
 
     job = None
@@ -68,7 +70,9 @@ class CronJob(multiprocessing.Process):
             from hardtree import core
             from django.core.mail import mail_admins
             exc_type, exc_value, exc_traceback = sys.exc_info()
-            subject = "CRON Exception for " + unicode(self) + ": " + unicode(exc_type) + " " + unicode(exc_value)
+            subject = "CRON Exception for " + \
+                unicode(self) + ": " + unicode(exc_type) + \
+                " " + unicode(exc_value)
             body = subject + "\n\n"
             body += unicode(core.__file__) + "\n\n"
             for s in traceback.format_tb(exc_traceback):
@@ -85,6 +89,7 @@ class CronJob(multiprocessing.Process):
 
 
 class CronRunner():
+
     "Cron runner"
 
     pool = []
@@ -99,21 +104,24 @@ class CronRunner():
 
         signal.signal(signal.SIGTERM, self.stop)
 
-        self.databases     = databases or []
-        self.jobs          = []
-        self.sleeptime     = getattr(settings, 'HARDTREE_CRON_PERIOD', 60)
-        self.priority_high = getattr(settings, 'HARDTREE_CRON_HIGH_PRIORITY', 10)
-        self.priority_low  = getattr(settings, 'HARDTREE_CRON_LOW_PRIORITY', 3)
-        self.qualify_high  = getattr(settings, 'HARDTREE_CRON_QUALIFY_HIGH', 10)
-        self.qualify_run   = getattr(settings, 'HARDTREE_CRON_QUALIFY_RUN', 86400)
-        self.poolsize      = getattr(settings, 'HARDTREE_CRON_POOL_SIZE', 10)
-        self.softkill      = getattr(settings, 'HARDTREE_CRON_SOFT_KILL', 0)
-        self.hardkill      = getattr(settings, 'HARDTREE_CRON_HARD_KILL', -1)
-        self.gracewait     = getattr(settings, 'HARDTREE_CRON_GRACE_WAIT', 5)
-        self.noloop        = noloop
+        self.databases = databases or []
+        self.jobs = []
+        self.sleeptime = getattr(settings, 'HARDTREE_CRON_PERIOD', 60)
+        self.priority_high = getattr(
+            settings, 'HARDTREE_CRON_HIGH_PRIORITY', 10)
+        self.priority_low = getattr(settings, 'HARDTREE_CRON_LOW_PRIORITY', 3)
+        self.qualify_high = getattr(settings, 'HARDTREE_CRON_QUALIFY_HIGH', 10)
+        self.qualify_run = getattr(
+            settings, 'HARDTREE_CRON_QUALIFY_RUN', 86400)
+        self.poolsize = getattr(settings, 'HARDTREE_CRON_POOL_SIZE', 10)
+        self.softkill = getattr(settings, 'HARDTREE_CRON_SOFT_KILL', 0)
+        self.hardkill = getattr(settings, 'HARDTREE_CRON_HARD_KILL', -1)
+        self.gracewait = getattr(settings, 'HARDTREE_CRON_GRACE_WAIT', 5)
+        self.noloop = noloop
 
         for module in settings.INSTALLED_APPS:
-            import_name = str(module) + "." + settings.HARDTREE_MODULE_IDENTIFIER
+            import_name = str(
+                module) + "." + settings.HARDTREE_MODULE_IDENTIFIER
             try:
                 hmodule = __import__(import_name, fromlist=[str(module)])
                 self.jobs.extend(hmodule.CRON)
@@ -139,7 +147,8 @@ class CronRunner():
 
     def add_jobs(self):
         "Adds all jobs to the queue"
-        cronlogger.info('Adding ' + unicode(len(self.jobs)) + ' jobs to the queue.')
+        cronlogger.info(
+            'Adding ' + unicode(len(self.jobs)) + ' jobs to the queue.')
         for db in self.databases:
             cronlogger.debug('ADDING JOBS FOR ' + unicode(db))
             cache_key = 'hardtree_' + db + '_last'
@@ -151,9 +160,11 @@ class CronRunner():
                         self.queue.append(cron)
                         cronlogger.debug('JOB ADDED ' + unicode(cron))
                 else:
-                    cronlogger.debug('JOB DOES NOT QUALIFY ' + unicode(db) + ': NOT USED in last ' + unicode(self.qualify_run))
+                    cronlogger.debug(
+                        'JOB DOES NOT QUALIFY ' + unicode(db) + ': NOT USED in last ' + unicode(self.qualify_run))
             else:
-                cronlogger.debug('JOB DOES NOT QUALIFY ' + unicode(db) + ': NO KEY IN cache')
+                cronlogger.debug(
+                    'JOB DOES NOT QUALIFY ' + unicode(db) + ': NO KEY IN cache')
         cronlogger.debug('Queue: ' + unicode(self.jobs))
 
     def start(self):
@@ -165,14 +176,17 @@ class CronRunner():
                     while len(self.queue) > 0 and len(self.pool) < self.poolsize:
                         cron = self.queue.pop()
                         self.pool.append(cron)
-                        if cache.has_key('hardtree_%s_last'%(cron.database)):
-                            last_accessed = cache.get('hardtree_%s_last'%(cron.database))
+                        if cache.has_key('hardtree_%s_last' % (cron.database)):
+                            last_accessed = cache.get(
+                                'hardtree_%s_last' % (cron.database))
                             if last_accessed > (time.time() - int(self.qualify_high)):
                                 cron.priority = self.priority_high
-                                cronlogger.debug('HIGH PRIORITY set to ' + unicode(cron))
+                                cronlogger.debug(
+                                    'HIGH PRIORITY set to ' + unicode(cron))
                         cron.start()
                 if len(self.queue) == 0:
-                    cronlogger.info('Cron cycle ' + unicode(self.cycle) + ' completed.')
+                    cronlogger.info(
+                        'Cron cycle ' + unicode(self.cycle) + ' completed.')
                     self.cycle += 1
                     if self.noloop:
                         self._stopped = True
@@ -181,7 +195,8 @@ class CronRunner():
                         time.sleep(self.sleeptime)
                 cronlogger.debug("POOL SIZE: " + unicode(len(self.pool)))
                 for cron in self.pool:
-                    cronlogger.debug("POOL JOB: " + unicode(cron) + ', PRIORITY ' + unicode(cron.priority) + ', ACTIVE: ' + unicode(cron.is_alive()))
+                    cronlogger.debug("POOL JOB: " + unicode(cron) + ', PRIORITY ' +
+                                     unicode(cron.priority) + ', ACTIVE: ' + unicode(cron.is_alive()))
                     if not cron.is_alive():
                         self.pool.remove(cron)
                         continue
@@ -205,37 +220,38 @@ class CronRunner():
         sys.exit(0)
 
 
-
 class Command(BaseCommand):
     args = '[database database ...]'
     help = 'Starts cron runner'
     option_list = BaseCommand.option_list + (
-         make_option('-l', '--logfile',
-             action='store',
-             dest='logfile',
-             default='/tmp/hardtree-cron.log',
-             help='Cron log file'
-         ),
-         make_option('-d', '--loglevel',
-             type='choice',
-             action='store',
-             dest='loglevel',
-             default='info',
-             choices=[i for i in LOG_LEVELS],
-             help='Logging level'
-         ),
-         make_option('-n', '--noloop',
-             action='store_true',
-             dest='noloop',
-             default=False,
-             help='Exit after all jobs are finished'
-         )
+        make_option('-l', '--logfile',
+                    action='store',
+                    dest='logfile',
+                    default='/tmp/hardtree-cron.log',
+                    help='Cron log file'
+                    ),
+        make_option('-d', '--loglevel',
+                    type='choice',
+                    action='store',
+                    dest='loglevel',
+                    default='info',
+                    choices=[i for i in LOG_LEVELS],
+                    help='Logging level'
+                    ),
+        make_option('-n', '--noloop',
+                    action='store_true',
+                    dest='noloop',
+                    default=False,
+                    help='Exit after all jobs are finished'
+                    )
 
     )
 
     def handle(self, *args, **options):
-        loghandler = logging.handlers.RotatingFileHandler(options.get('logfile'), maxBytes=100*1024*1024, backupCount=5)
-        formatter = logging.Formatter("%(asctime)s - %(name)s - %(levelname)s - %(message)s")
+        loghandler = logging.handlers.RotatingFileHandler(
+            options.get('logfile'), maxBytes=100 * 1024 * 1024, backupCount=5)
+        formatter = logging.Formatter(
+            "%(asctime)s - %(name)s - %(levelname)s - %(message)s")
         loghandler.setFormatter(formatter)
         loghandler.setLevel(LOG_LEVELS[options.get('loglevel')])
         cronlogger.setLevel(LOG_LEVELS[options.get('loglevel')])

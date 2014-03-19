@@ -12,7 +12,9 @@ import re
 import time
 import base64
 import smtplib
-import imaplib, email, poplib
+import imaplib
+import email
+import poplib
 from datetime import datetime
 
 from email.MIMEText import MIMEText
@@ -31,11 +33,12 @@ EMAIL_PASSWORD = getattr(settings, 'EMAIL_PASSWORD', None)
 EMAIL_FROM = getattr(settings, 'EMAIL_FROM', 'noreply@tree.io')
 DEFAULT_SIGNATURE = getattr(settings, 'DEFAULT_SIGNATURE', '')
 
-            
+
 class BaseEmail(Thread):
+
     "Generic e-mail class to send any emails"
-    
-    def __init__(self, server, username, password, fromaddr, 
+
+    def __init__(self, server, username, password, fromaddr,
                  toaddr, subject, body, signature=None, html=None,
                  port=None, ssl=False):
         Thread.__init__(self)
@@ -51,22 +54,22 @@ class BaseEmail(Thread):
         self.signature = signature
         self.html = html
         self.multipart = self.body and self.html
-        
+
     def run(self):
         "Run"
         self.process_email()
-        
+
     def send_email(self):
         "Send email"
         self.start()
-        
+
     def get_smtp_port(self, server):
         "Returns appropriate SMTP port number depending on incoming server name and boolean ssl"
         # http://www.emailaddressmanager.com/tips/mail-settings.html
-        
-        port = 25 # default
+
+        port = 25  # default
         ssl = False
-        
+
         if "gmail.com" in server or "googlemail.com" in server:
             port = 587
             ssl = False
@@ -76,36 +79,36 @@ class BaseEmail(Thread):
             ssl = True
         if server == "smtp.live.com" or server == "smtp.isp.netscape.com":
             ssl = True
- 
+
         return port, ssl
-        
-    def process_email(self):  
+
+    def process_email(self):
         "Create a message and send it"
         try:
             msg = MIMEMultipart('alternative')
-            
+
             msg['From'] = self.fromaddr
             msg['To'] = self.toaddr
             msg['Subject'] = self.subject
-    
+
             text = self.body
             html = self.html
-            
-            # adding signature           
+
+            # adding signature
             if self.signature:
                 text += self.signature
-                            
+
             # Record the MIME types of both parts - text/plain and text/html.
             part1 = MIMEText(text.encode('utf-8'), 'plain', 'utf-8')
             msg.attach(part1)
-            
+
             if html:
                 part2 = MIMEText(html.encode('utf-8'), 'html', 'utf-8')
                 msg.attach(part2)
-            
+
             if not self.port:
                 self.port, self.ssl = self.get_smtp_port(self.server)
-            
+
             if self.ssl and hasattr(smtplib, 'SMTP_SSL'):
                 s = smtplib.SMTP_SSL(self.server, self.port)
             else:
@@ -132,7 +135,8 @@ class BaseEmail(Thread):
                 from django.core.mail import mail_admins
                 exc_type, exc_value, exc_traceback = sys.exc_info()
                 domain = getattr(settings, 'CURRENT_DOMAIN', 'default')
-                subject = "Exception for %s: %s %s" % (domain, unicode(exc_type), unicode(exc_value))
+                subject = "Exception for %s: %s %s" % (
+                    domain, unicode(exc_type), unicode(exc_value))
                 body = subject + "\n\n"
                 body += unicode(core.__file__) + "\n\n"
                 body += u"Server: %s\n\n" % self.server
@@ -143,39 +147,41 @@ class BaseEmail(Thread):
                 for s in traceback.format_tb(exc_traceback):
                     body += s + '\n'
                 mail_admins(subject, body)
-        
-    
+
 
 class SystemEmail(BaseEmail):
+
     "E-mail class to send messages on behalf of Tree.io team"
-    
+
     def __init__(self, toaddr, subject, body, signature=None, html=None):
-        
+
         if not signature:
             signature = _(DEFAULT_SIGNATURE)
 
         BaseEmail.__init__(self, EMAIL_SERVER, EMAIL_USERNAME, EMAIL_PASSWORD, EMAIL_FROM,
-                          toaddr, subject, body, signature, html)
+                           toaddr, subject, body, signature, html)
 
 #
 # Specific email classes
 #
 
+
 class EmailInvitation(SystemEmail):
+
     "Email Invitation"
-    
+
     invitation = None
     sender = None
-    
+
     def __init__(self, invitation, sender, domain):
         self.invitation = invitation
         self.sender = sender
         self.domain = domain
-        
+
         subject = '%s has invited you to Tree.io' % (self.sender)
-        
+
         toaddr = self.invitation.email
-        
+
         signature = """
 \r\n
 - %s""" % unicode(self.sender)
@@ -193,17 +199,18 @@ http://%s/accounts/invitation/?email=%s&key=%s
         """ % (unicode(self.domain),
                unicode(self.invitation.email),
                unicode(self.invitation.key))
-        
+
         super(EmailInvitation, self).__init__(toaddr, subject, body, signature)
-        
+
 
 class EmailPassword(SystemEmail):
+
     "Email Message"
-    
+
     def __init__(self, toaddr, username, password):
-        
+
         subject = "Password reset on Tree.io"
-         
+
         body = """
 Hello!
 \r\n
@@ -211,7 +218,7 @@ You have requested a password reset for your Tree.io account.
 \r\n
 New password for: %s\r\n\r\n Password: %s\r\n\r\n
 """ % (username, password)
-        
+
         super(EmailPassword, self).__init__(toaddr, subject, body)
 
 
@@ -219,32 +226,36 @@ New password for: %s\r\n\r\n Password: %s\r\n\r\n
 # Abstract email receiver
 #
 
-def intcmp(a,b):
+def intcmp(a, b):
     try:
         return cmp(int(a), int(b))
     except:
-        return cmp(a,b)
+        return cmp(a, b)
+
 
 class EmailReceiver(Thread):
+
     """EmailReceiver fetches email from imap and pop email servers.
        This class can be used only as parent. You should redefine
        the process_msg method.
     """
 
-    def __init__(self, server_type, server_name, username, password, folder_name = None):
+    def __init__(self, server_type, server_name, username, password, folder_name=None):
         Thread.__init__(self)
         self.incoming_server_type = server_type
         self.incoming_server_name = server_name
         self.incoming_server_username = username
         self.incoming_password = password
-        self.folder_name = folder_name or getattr(settings, 'HARDTREE_MESSAGING_IMAP_DEFAULT_FOLDER_NAME', 'UNSEEN')
+        self.folder_name = folder_name or getattr(
+            settings, 'HARDTREE_MESSAGING_IMAP_DEFAULT_FOLDER_NAME', 'UNSEEN')
 
         default_timezone = settings.HARDTREE_SERVER_DEFAULT_TIMEZONE
-        all_timezones = getattr(settings, 'HARDTREE_SERVER_TIMEZONE', [(1, '(GMT-11:00) International Date Line West')])
+        all_timezones = getattr(settings, 'HARDTREE_SERVER_TIMEZONE', [
+                                (1, '(GMT-11:00) International Date Line West')])
         title = all_timezones[int(default_timezone)][1]
-        GMT = title[4:10] # with sign e.g. +06:00
-        sign = GMT[0:1] # + or -
-        hours = int(GMT[1:3]) # e.g. 06
+        GMT = title[4:10]  # with sign e.g. +06:00
+        sign = GMT[0:1]  # + or -
+        hours = int(GMT[1:3])  # e.g. 06
         mins = int(GMT[4:6])
         self.tzoffset = hours * 3600 + mins * 60
         if sign == "-":
@@ -257,7 +268,7 @@ class EmailReceiver(Thread):
     def get_pop_port(self):
         "Returns appropriate POP port number depending on incoming server name"
 
-        port = 110 # default
+        port = 110  # default
         ssl = False
 
         if self.incoming_server_type == 'POP3-SSL':
@@ -269,7 +280,7 @@ class EmailReceiver(Thread):
     def get_imap_port(self):
         "Returns appropriate IMAP port number depending on incoming server name"
 
-        port = 143 # default
+        port = 143  # default
         ssl = False
 
         if self.incoming_server_type == 'IMAP-SSL':
@@ -283,7 +294,8 @@ class EmailReceiver(Thread):
 
         if self.incoming_server_type == 'IMAP' or self.incoming_server_type == 'IMAP-SSL':
 
-            HARDTREE_MESSAGING_IMAP_LIMIT = getattr(settings, 'HARDTREE_MESSAGING_IMAP_LIMIT', 100)
+            HARDTREE_MESSAGING_IMAP_LIMIT = getattr(
+                settings, 'HARDTREE_MESSAGING_IMAP_LIMIT', 100)
             # connect to the server
             port, ssl = self.get_imap_port()
 
@@ -296,10 +308,12 @@ class EmailReceiver(Thread):
 
             msgnums = []
             try:
-                typ, data = M.sort('REVERSE DATE', 'UTF-8', self.folder_name) # fetch mail from ALL or UNSEEN]
+                # fetch mail from ALL or UNSEEN]
+                typ, data = M.sort('REVERSE DATE', 'UTF-8', self.folder_name)
                 msgnums = data[0].split() if data[0] else []
             except:
-                typ, data = M.search(None, self.folder_name) # fetch mail from ALL or UNSEEN]
+                # fetch mail from ALL or UNSEEN]
+                typ, data = M.search(None, self.folder_name)
                 msgnums = data[0].split() if data[0] else []
                 msgnums = sorted(msgnums, cmp=intcmp, reverse=True)
 
@@ -307,15 +321,16 @@ class EmailReceiver(Thread):
                 resp, msg = M.fetch(num, '(RFC822)')
                 mail = email.message_from_string(msg[0][1])
                 self.process_mail(mail)
-                if self.folder_name == 'UNSEEN': 
+                if self.folder_name == 'UNSEEN':
                     M.store(num, '+FLAGS', '\\Seen')
-        
+
             M.close()
             M.logout()
 
         if self.incoming_server_type == 'POP3' or self.incoming_server_type == 'POP3-SSL':
 
-            HARDTREE_MESSAGING_POP3_LIMIT = getattr(settings, 'HARDTREE_MESSAGING_POP3_LIMIT', 100)
+            HARDTREE_MESSAGING_POP3_LIMIT = getattr(
+                settings, 'HARDTREE_MESSAGING_POP3_LIMIT', 100)
             # connect to the server
             port, ssl = self.get_pop_port()
 
@@ -368,20 +383,23 @@ class EmailReceiver(Thread):
         else:
             body = mail.get_payload(decode=True)
 
-        class MailAttrs : pass
+        class MailAttrs:
+            pass
         attrs = MailAttrs()
         attrs.subject, encoding = self.decode_subject(mail['subject'])
         # replace annoying characters
         attrs.body = self.decode(body, encoding)
         if not mail.is_multipart() and not mail.get_content_type().endswith('html'):
-            attrs.body = attrs.body.replace('&', '&amp;').replace('<', '&lt;').replace('>', '&gt;').replace('"', '&quot;').replace("'", '&#39;')
-        attrs.body = self.parse_email_body( attrs.body )
+            attrs.body = attrs.body.replace('&', '&amp;').replace('<', '&lt;').replace(
+                '>', '&gt;').replace('"', '&quot;').replace("'", '&#39;')
+        attrs.body = self.parse_email_body(attrs.body)
         attrs.author_name, attrs.author_email = self.get_email_author(mail)
 
         attrs.email_date = None
         try:
             date_tuple = email.utils.parsedate_tz(mail['Date'])
-            email_ts = time.mktime(date_tuple[:9]) - int(date_tuple[9]) + self.tzoffset
+            email_ts = time.mktime(
+                date_tuple[:9]) - int(date_tuple[9]) + self.tzoffset
             attrs.email_date = datetime.fromtimestamp(email_ts)
         except:
             pass
@@ -463,7 +481,7 @@ class EmailReceiver(Thread):
 
         # Remove multiple <br /> tags
         rules = [
-          { r'\s*<br\s*/?>\s*' : u'\n'}
+            {r'\s*<br\s*/?>\s*': u'\n'}
         ]
 
         for rule in rules:
@@ -473,9 +491,10 @@ class EmailReceiver(Thread):
 
         # displaying messages correctly
         if body.startswith('<!DOCTYPE') or body.startswith('<html') or body.startswith('<meta'):
-            body = body.replace('\n\n\n', '\n').replace('\n\n', '\n').replace('>\n<', '><')
+            body = body.replace('\n\n\n', '\n').replace(
+                '\n\n', '\n').replace('>\n<', '><')
         elif not '<html' in body:
-            body = body.replace('\n','<br />\n')
+            body = body.replace('\n', '<br />\n')
 
         return body
 

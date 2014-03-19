@@ -9,43 +9,50 @@ from south.db import db
 from south.v2 import SchemaMigration
 from django.db import models
 
+
 class Migration(SchemaMigration):
 
     def forwards(self, orm):
-        
+
         # Deleting field 'Group.id'
         db.delete_column('core_group', 'id')
 
         # Changing field 'Group.accessentity_ptr'
-        db.alter_column('core_group', 'accessentity_ptr_id', self.gf('django.db.models.fields.related.OneToOneField')(default=1, to=orm['core.AccessEntity'], unique=True, primary_key=True))
+        db.alter_column('core_group', 'accessentity_ptr_id', self.gf('django.db.models.fields.related.OneToOneField')(
+            default=1, to=orm['core.AccessEntity'], unique=True, primary_key=True))
 
         # Deleting field 'User.id'
         db.delete_column('core_user', 'id')
 
         # Changing field 'User.default_group'
-        db.alter_column('core_user', 'default_group_id', self.gf('django.db.models.fields.related.ForeignKey')(null=True, to=orm['core.Group']))
+        db.alter_column('core_user', 'default_group_id', self.gf(
+            'django.db.models.fields.related.ForeignKey')(null=True, to=orm['core.Group']))
 
         # Changing field 'User.accessentity_ptr'
-        db.alter_column('core_user', 'accessentity_ptr_id', self.gf('django.db.models.fields.related.OneToOneField')(default=1, to=orm['core.AccessEntity'], unique=True, primary_key=True))
-
+        db.alter_column('core_user', 'accessentity_ptr_id', self.gf('django.db.models.fields.related.OneToOneField')(
+            default=1, to=orm['core.AccessEntity'], unique=True, primary_key=True))
 
     def backwards(self, orm):
-        
+
         # User chose to not deal with backwards NULL issues for 'Group.id'
-        raise RuntimeError("Cannot reverse this migration. 'Group.id' and its values cannot be restored.")
+        raise RuntimeError(
+            "Cannot reverse this migration. 'Group.id' and its values cannot be restored.")
 
         # Changing field 'Group.accessentity_ptr'
-        db.alter_column('core_group', 'accessentity_ptr_id', self.gf('django.db.models.fields.related.OneToOneField')(to=orm['core.AccessEntity'], unique=True, null=True))
+        db.alter_column('core_group', 'accessentity_ptr_id', self.gf(
+            'django.db.models.fields.related.OneToOneField')(to=orm['core.AccessEntity'], unique=True, null=True))
 
         # User chose to not deal with backwards NULL issues for 'User.id'
-        raise RuntimeError("Cannot reverse this migration. 'User.id' and its values cannot be restored.")
+        raise RuntimeError(
+            "Cannot reverse this migration. 'User.id' and its values cannot be restored.")
 
         # Changing field 'User.default_group'
-        db.alter_column('core_user', 'default_group_id', self.gf('django.db.models.fields.related.ForeignKey')(null=True, to=orm['core.AccessEntity']))
+        db.alter_column('core_user', 'default_group_id', self.gf(
+            'django.db.models.fields.related.ForeignKey')(null=True, to=orm['core.AccessEntity']))
 
         # Changing field 'User.accessentity_ptr'
-        db.alter_column('core_user', 'accessentity_ptr_id', self.gf('django.db.models.fields.related.OneToOneField')(to=orm['core.AccessEntity'], unique=True, null=True))
-
+        db.alter_column('core_user', 'accessentity_ptr_id', self.gf(
+            'django.db.models.fields.related.OneToOneField')(to=orm['core.AccessEntity'], unique=True, null=True))
 
     models = {
         'auth.group': {

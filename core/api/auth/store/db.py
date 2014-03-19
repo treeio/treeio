@@ -9,13 +9,17 @@ from treeio.core.api.auth.store import InvalidConsumerError, InvalidTokenError, 
 from treeio.core.api.models import Nonce, Token, Consumer, VERIFIER_SIZE
 from treeio.core.conf import settings
 
+
 class ModelStore(Store):
+
     """
     Store implementation using the Django models defined in `piston.models`.
     """
+
     def get_consumer(self, request, oauth_request, consumer_key):
         try:
-            consumer_db = getattr(settings, 'HARDTREE_API_CONSUMER_DB', 'default')
+            consumer_db = getattr(
+                settings, 'HARDTREE_API_CONSUMER_DB', 'default')
             return Consumer.objects.using(consumer_db).get(key=consumer_key)
         except Consumer.DoesNotExist:
             raise InvalidConsumerError()
@@ -32,7 +36,8 @@ class ModelStore(Store):
         consumer_db = getattr(settings, 'HARDTREE_API_CONSUMER_DB', 'default')
         token = Token.objects.create_token(
             token_type=Token.REQUEST,
-            consumer_id=Consumer.objects.using(consumer_db).get(key=oauth_request['oauth_consumer_key']).id,
+            consumer_id=Consumer.objects.using(consumer_db).get(
+                key=oauth_request['oauth_consumer_key']).id,
             timestamp=oauth_request['oauth_timestamp'],
             using=consumer_db
         )
@@ -43,16 +48,20 @@ class ModelStore(Store):
 
     def fetch_request_token(self, request, oauth_request, request_token_key):
         try:
-            consumer_db = getattr(settings, 'HARDTREE_API_CONSUMER_DB', 'default')
-            token = Token.objects.using(consumer_db).get(key=request_token_key, token_type=Token.REQUEST)
-            token.save(using = getattr(settings, 'CURRENT_DATABASE_NAME', 'default'))
+            consumer_db = getattr(
+                settings, 'HARDTREE_API_CONSUMER_DB', 'default')
+            token = Token.objects.using(consumer_db).get(
+                key=request_token_key, token_type=Token.REQUEST)
+            token.save(
+                using=getattr(settings, 'CURRENT_DATABASE_NAME', 'default'))
             return token
         except Token.DoesNotExist:
             raise InvalidTokenError()
 
     def get_request_token(self, request, oauth_request, request_token_key):
         try:
-            consumer_db = getattr(settings, 'HARDTREE_API_CONSUMER_DB', 'default')
+            consumer_db = getattr(
+                settings, 'HARDTREE_API_CONSUMER_DB', 'default')
             return Token.objects.using(consumer_db).get(key=request_token_key, token_type=Token.REQUEST)
         except Token.DoesNotExist:
             raise InvalidTokenError()
@@ -69,7 +78,8 @@ class ModelStore(Store):
         access_token = Token.objects.create_token(
             token_type=Token.ACCESS,
             timestamp=oauth_request['oauth_timestamp'],
-            consumer_id=Consumer.objects.using(consumer_db).get(key=consumer.key).id,
+            consumer_id=Consumer.objects.using(
+                consumer_db).get(key=consumer.key).id,
             user=request_token.user,
         )
         request_token.delete()

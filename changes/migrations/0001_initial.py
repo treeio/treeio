@@ -9,49 +9,70 @@ from south.db import db
 from south.v2 import SchemaMigration
 from django.db import models
 
+
 class Migration(SchemaMigration):
 
     def forwards(self, orm):
-        
+
         # Adding model 'ChangeSetStatus'
         db.create_table('changes_changesetstatus', (
-            ('object_ptr', self.gf('django.db.models.fields.related.OneToOneField')(to=orm['core.Object'], unique=True, primary_key=True)),
-            ('name', self.gf('django.db.models.fields.CharField')(max_length=256)),
-            ('details', self.gf('django.db.models.fields.TextField')(null=True, blank=True)),
-            ('active', self.gf('django.db.models.fields.BooleanField')(default=True)),
-            ('hidden', self.gf('django.db.models.fields.BooleanField')(default=False)),
+            ('object_ptr', self.gf('django.db.models.fields.related.OneToOneField')(
+                to=orm['core.Object'], unique=True, primary_key=True)),
+            ('name', self.gf('django.db.models.fields.CharField')
+             (max_length=256)),
+            ('details', self.gf('django.db.models.fields.TextField')
+             (null=True, blank=True)),
+            ('active', self.gf('django.db.models.fields.BooleanField')
+             (default=True)),
+            ('hidden', self.gf('django.db.models.fields.BooleanField')
+             (default=False)),
         ))
         db.send_create_signal('changes', ['ChangeSetStatus'])
 
         # Adding model 'ChangeSet'
         db.create_table('changes_changeset', (
-            ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('name', self.gf('django.db.models.fields.CharField')(max_length=255)),
-            ('object', self.gf('django.db.models.fields.related.ForeignKey')(related_name='changeset_object_set', to=orm['core.Object'])),
-            ('author', self.gf('django.db.models.fields.related.ForeignKey')(blank=True, related_name='author', null=True, to=orm['core.User'])),
-            ('resolved_by', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['core.User'], null=True, blank=True)),
-            ('resolved_on', self.gf('django.db.models.fields.DateTimeField')(null=True, blank=True)),
-            ('status', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['changes.ChangeSetStatus'])),
-            ('details', self.gf('django.db.models.fields.TextField')(null=True, blank=True)),
-            ('date_created', self.gf('django.db.models.fields.DateTimeField')(default=datetime.datetime.now)),
+            ('id', self.gf('django.db.models.fields.AutoField')
+             (primary_key=True)),
+            ('name', self.gf('django.db.models.fields.CharField')
+             (max_length=255)),
+            ('object', self.gf('django.db.models.fields.related.ForeignKey')
+             (related_name='changeset_object_set', to=orm['core.Object'])),
+            ('author', self.gf('django.db.models.fields.related.ForeignKey')(
+                blank=True, related_name='author', null=True, to=orm['core.User'])),
+            ('resolved_by', self.gf('django.db.models.fields.related.ForeignKey')(
+                to=orm['core.User'], null=True, blank=True)),
+            ('resolved_on', self.gf('django.db.models.fields.DateTimeField')
+             (null=True, blank=True)),
+            ('status', self.gf('django.db.models.fields.related.ForeignKey')
+             (to=orm['changes.ChangeSetStatus'])),
+            ('details', self.gf('django.db.models.fields.TextField')
+             (null=True, blank=True)),
+            ('date_created', self.gf('django.db.models.fields.DateTimeField')
+             (default=datetime.datetime.now)),
         ))
         db.send_create_signal('changes', ['ChangeSet'])
 
         # Adding model 'Change'
         db.create_table('changes_change', (
-            ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('change_set', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['changes.ChangeSet'])),
-            ('change_type', self.gf('django.db.models.fields.CharField')(max_length=255, null=True, blank=True)),
-            ('field', self.gf('django.db.models.fields.CharField')(max_length=255, null=True, blank=True)),
-            ('change_from', self.gf('django.db.models.fields.TextField')(null=True, blank=True)),
-            ('change_to', self.gf('django.db.models.fields.TextField')(null=True, blank=True)),
-            ('date_created', self.gf('django.db.models.fields.DateTimeField')(default=datetime.datetime.now)),
+            ('id', self.gf('django.db.models.fields.AutoField')
+             (primary_key=True)),
+            ('change_set', self.gf('django.db.models.fields.related.ForeignKey')(
+                to=orm['changes.ChangeSet'])),
+            ('change_type', self.gf('django.db.models.fields.CharField')
+             (max_length=255, null=True, blank=True)),
+            ('field', self.gf('django.db.models.fields.CharField')
+             (max_length=255, null=True, blank=True)),
+            ('change_from', self.gf('django.db.models.fields.TextField')
+             (null=True, blank=True)),
+            ('change_to', self.gf('django.db.models.fields.TextField')
+             (null=True, blank=True)),
+            ('date_created', self.gf('django.db.models.fields.DateTimeField')
+             (default=datetime.datetime.now)),
         ))
         db.send_create_signal('changes', ['Change'])
 
-
     def backwards(self, orm):
-        
+
         # Deleting model 'ChangeSetStatus'
         db.delete_table('changes_changesetstatus')
 
@@ -60,7 +81,6 @@ class Migration(SchemaMigration):
 
         # Deleting model 'Change'
         db.delete_table('changes_change')
-
 
     models = {
         'auth.group': {

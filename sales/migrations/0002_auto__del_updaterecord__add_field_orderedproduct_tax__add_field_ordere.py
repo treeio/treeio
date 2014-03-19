@@ -11,28 +11,33 @@ from django.db import models
 from decimal import Decimal
 from treeio.sales.models import OrderedProduct, Product
 
+
 class Migration(SchemaMigration):
 
     def forwards(self, orm):
-        
+
         if not db.dry_run:
             ops = OrderedProduct.objects.all()
             ps = Product.objects.all()
-        
+
         # Deleting model 'UpdateRecord'
         db.delete_table('sales_updaterecord')
 
         # Adding field 'OrderedProduct.tax'
-        db.add_column('sales_orderedproduct', 'tax', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['finance.Tax'], null=True, blank=True), keep_default=False)
+        db.add_column('sales_orderedproduct', 'tax', self.gf('django.db.models.fields.related.ForeignKey')(
+            to=orm['finance.Tax'], null=True, blank=True), keep_default=False)
 
         # Adding field 'OrderedProduct.rate'
-        db.add_column('sales_orderedproduct', 'rate', self.gf('django.db.models.fields.DecimalField')(default=1, max_digits=20, decimal_places=2), keep_default=False)
+        db.add_column('sales_orderedproduct', 'rate', self.gf('django.db.models.fields.DecimalField')(
+            default=1, max_digits=20, decimal_places=2), keep_default=False)
 
         # Adding field 'OrderedProduct.rate_display'
-        db.add_column('sales_orderedproduct', 'rate_display', self.gf('django.db.models.fields.DecimalField')(default=0, max_digits=20, decimal_places=2), keep_default=False)
+        db.add_column('sales_orderedproduct', 'rate_display', self.gf('django.db.models.fields.DecimalField')(
+            default=0, max_digits=20, decimal_places=2), keep_default=False)
 
         # Adding field 'OrderedProduct.description'
-        db.add_column('sales_orderedproduct', 'description', self.gf('django.db.models.fields.TextField')(null=True, blank=True), keep_default=False)
+        db.add_column('sales_orderedproduct', 'description', self.gf(
+            'django.db.models.fields.TextField')(null=True, blank=True), keep_default=False)
 
         if not db.dry_run:
             # convert old Float fields to temporary fields
@@ -42,12 +47,14 @@ class Migration(SchemaMigration):
                 op.quantity_f = op.quantity
                 op.quantity = 0
                 op.save()
-        
+
         # Changing field 'OrderedProduct.discount'
-        db.alter_column('sales_orderedproduct', 'discount', self.gf('django.db.models.fields.DecimalField')(max_digits=4, decimal_places=2))
+        db.alter_column('sales_orderedproduct', 'discount', self.gf(
+            'django.db.models.fields.DecimalField')(max_digits=4, decimal_places=2))
 
         # Changing field 'OrderedProduct.quantity'
-        db.alter_column('sales_orderedproduct', 'quantity', self.gf('django.db.models.fields.DecimalField')(max_digits=30, decimal_places=2))
+        db.alter_column('sales_orderedproduct', 'quantity', self.gf(
+            'django.db.models.fields.DecimalField')(max_digits=30, decimal_places=2))
 
         if not db.dry_run:
             for p in ps:
@@ -58,52 +65,66 @@ class Migration(SchemaMigration):
                 p.save()
 
         # Changing field 'Product.buy_price'
-        db.alter_column('sales_product', 'buy_price', self.gf('django.db.models.fields.DecimalField')(max_digits=20, decimal_places=2))
+        db.alter_column('sales_product', 'buy_price', self.gf(
+            'django.db.models.fields.DecimalField')(max_digits=20, decimal_places=2))
 
         # Changing field 'Product.sell_price'
-        db.alter_column('sales_product', 'sell_price', self.gf('django.db.models.fields.DecimalField')(max_digits=20, decimal_places=2))
+        db.alter_column('sales_product', 'sell_price', self.gf(
+            'django.db.models.fields.DecimalField')(max_digits=20, decimal_places=2))
 
         # Adding field 'Opportunity.amount_currency'
-        db.add_column('sales_opportunity', 'amount_currency', self.gf('django.db.models.fields.related.ForeignKey')(default=1, to=orm['finance.Currency']), keep_default=False)
+        db.add_column('sales_opportunity', 'amount_currency', self.gf(
+            'django.db.models.fields.related.ForeignKey')(default=1, to=orm['finance.Currency']), keep_default=False)
 
         # Adding field 'Opportunity.amount_display'
-        db.add_column('sales_opportunity', 'amount_display', self.gf('django.db.models.fields.DecimalField')(default=1, max_digits=20, decimal_places=2), keep_default=False)
+        db.add_column('sales_opportunity', 'amount_display', self.gf('django.db.models.fields.DecimalField')(
+            default=1, max_digits=20, decimal_places=2), keep_default=False)
 
         # Changing field 'Opportunity.probability'
-        db.alter_column('sales_opportunity', 'probability', self.gf('django.db.models.fields.DecimalField')(null=True, max_digits=3, decimal_places=0))
+        db.alter_column('sales_opportunity', 'probability', self.gf(
+            'django.db.models.fields.DecimalField')(null=True, max_digits=3, decimal_places=0))
 
         # Changing field 'Opportunity.amount'
-        db.alter_column('sales_opportunity', 'amount', self.gf('django.db.models.fields.DecimalField')(max_digits=20, decimal_places=2))
+        db.alter_column('sales_opportunity', 'amount', self.gf(
+            'django.db.models.fields.DecimalField')(max_digits=20, decimal_places=2))
 
         # Deleting field 'SaleOrder.payment'
         db.delete_column('sales_saleorder', 'payment_id')
 
         # Adding field 'SaleOrder.currency'
-        db.add_column('sales_saleorder', 'currency', self.gf('django.db.models.fields.related.ForeignKey')(default=1, to=orm['finance.Currency']), keep_default=False)
+        db.add_column('sales_saleorder', 'currency', self.gf('django.db.models.fields.related.ForeignKey')(
+            default=1, to=orm['finance.Currency']), keep_default=False)
 
         # Adding field 'SaleOrder.total'
-        db.add_column('sales_saleorder', 'total', self.gf('django.db.models.fields.DecimalField')(default=0, max_digits=20, decimal_places=2), keep_default=False)
+        db.add_column('sales_saleorder', 'total', self.gf('django.db.models.fields.DecimalField')(
+            default=0, max_digits=20, decimal_places=2), keep_default=False)
 
         # Adding field 'SaleOrder.total_display'
-        db.add_column('sales_saleorder', 'total_display', self.gf('django.db.models.fields.DecimalField')(default=0, max_digits=20, decimal_places=2), keep_default=False)
+        db.add_column('sales_saleorder', 'total_display', self.gf('django.db.models.fields.DecimalField')(
+            default=0, max_digits=20, decimal_places=2), keep_default=False)
 
         # Adding M2M table for field payment on 'SaleOrder'
         db.create_table('sales_saleorder_payment', (
-            ('id', models.AutoField(verbose_name='ID', primary_key=True, auto_created=True)),
-            ('saleorder', models.ForeignKey(orm['sales.saleorder'], null=False)),
-            ('transaction', models.ForeignKey(orm['finance.transaction'], null=False))
+            ('id', models.AutoField(
+                verbose_name='ID', primary_key=True, auto_created=True)),
+            ('saleorder', models.ForeignKey(
+                orm['sales.saleorder'], null=False)),
+            ('transaction', models.ForeignKey(
+                orm['finance.transaction'], null=False))
         ))
-        db.create_unique('sales_saleorder_payment', ['saleorder_id', 'transaction_id'])
+        db.create_unique(
+            'sales_saleorder_payment', ['saleorder_id', 'transaction_id'])
 
         if not db.dry_run:
             # convert temporary fields back into decimal
             for op in ops:
                 if op.discount_f:
-                    op.discount = Decimal(unicode(op.discount_f)).quantize(Decimal('.01'), 'ROUND_DOWN')
+                    op.discount = Decimal(unicode(op.discount_f)).quantize(
+                        Decimal('.01'), 'ROUND_DOWN')
                 if op.quantity_f:
                     op.quantity = int(op.quantity_f)
                 op.save()
-            
+
             for p in ps:
                 if p.buy_price_f:
                     p.buy_price = Decimal(unicode(p.buy_price_f))
@@ -111,17 +132,22 @@ class Migration(SchemaMigration):
                     p.sell_price = Decimal(unicode(p.sell_price_f))
                 p.save()
 
-
     def backwards(self, orm):
-        
+
         # Adding model 'UpdateRecord'
         db.create_table('sales_updaterecord', (
-            ('lead', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['sales.Lead'], null=True, blank=True)),
-            ('object_ptr', self.gf('django.db.models.fields.related.OneToOneField')(to=orm['core.Object'], unique=True, primary_key=True)),
-            ('record_type', self.gf('django.db.models.fields.CharField')(max_length=32)),
-            ('details', self.gf('django.db.models.fields.TextField')(null=True, blank=True)),
-            ('opportunity', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['sales.Opportunity'], null=True, blank=True)),
-            ('order', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['sales.SaleOrder'], null=True, blank=True)),
+            ('lead', self.gf('django.db.models.fields.related.ForeignKey')
+             (to=orm['sales.Lead'], null=True, blank=True)),
+            ('object_ptr', self.gf('django.db.models.fields.related.OneToOneField')(
+                to=orm['core.Object'], unique=True, primary_key=True)),
+            ('record_type', self.gf(
+                'django.db.models.fields.CharField')(max_length=32)),
+            ('details', self.gf('django.db.models.fields.TextField')
+             (null=True, blank=True)),
+            ('opportunity', self.gf('django.db.models.fields.related.ForeignKey')(
+                to=orm['sales.Opportunity'], null=True, blank=True)),
+            ('order', self.gf('django.db.models.fields.related.ForeignKey')
+             (to=orm['sales.SaleOrder'], null=True, blank=True)),
         ))
         db.send_create_signal('sales', ['UpdateRecord'])
 
@@ -138,16 +164,20 @@ class Migration(SchemaMigration):
         db.delete_column('sales_orderedproduct', 'description')
 
         # Changing field 'OrderedProduct.discount'
-        db.alter_column('sales_orderedproduct', 'discount', self.gf('django.db.models.fields.FloatField')(null=True))
+        db.alter_column('sales_orderedproduct', 'discount', self.gf(
+            'django.db.models.fields.FloatField')(null=True))
 
         # Changing field 'OrderedProduct.quantity'
-        db.alter_column('sales_orderedproduct', 'quantity', self.gf('django.db.models.fields.PositiveIntegerField')())
+        db.alter_column('sales_orderedproduct', 'quantity', self.gf(
+            'django.db.models.fields.PositiveIntegerField')())
 
         # Changing field 'Product.buy_price'
-        db.alter_column('sales_product', 'buy_price', self.gf('django.db.models.fields.FloatField')(null=True))
+        db.alter_column('sales_product', 'buy_price', self.gf(
+            'django.db.models.fields.FloatField')(null=True))
 
         # Changing field 'Product.sell_price'
-        db.alter_column('sales_product', 'sell_price', self.gf('django.db.models.fields.FloatField')(null=True))
+        db.alter_column('sales_product', 'sell_price', self.gf(
+            'django.db.models.fields.FloatField')(null=True))
 
         # Deleting field 'Opportunity.amount_currency'
         db.delete_column('sales_opportunity', 'amount_currency_id')
@@ -156,13 +186,16 @@ class Migration(SchemaMigration):
         db.delete_column('sales_opportunity', 'amount_display')
 
         # Changing field 'Opportunity.probability'
-        db.alter_column('sales_opportunity', 'probability', self.gf('django.db.models.fields.FloatField')(null=True))
+        db.alter_column('sales_opportunity', 'probability', self.gf(
+            'django.db.models.fields.FloatField')(null=True))
 
         # Changing field 'Opportunity.amount'
-        db.alter_column('sales_opportunity', 'amount', self.gf('django.db.models.fields.FloatField')())
+        db.alter_column('sales_opportunity', 'amount', self.gf(
+            'django.db.models.fields.FloatField')())
 
         # Adding field 'SaleOrder.payment'
-        db.add_column('sales_saleorder', 'payment', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['finance.Transaction'], null=True, blank=True), keep_default=False)
+        db.add_column('sales_saleorder', 'payment', self.gf('django.db.models.fields.related.ForeignKey')(
+            to=orm['finance.Transaction'], null=True, blank=True), keep_default=False)
 
         # Deleting field 'SaleOrder.currency'
         db.delete_column('sales_saleorder', 'currency_id')
@@ -175,7 +208,6 @@ class Migration(SchemaMigration):
 
         # Removing M2M table for field payment on 'SaleOrder'
         db.delete_table('sales_saleorder_payment')
-
 
     models = {
         'auth.group': {

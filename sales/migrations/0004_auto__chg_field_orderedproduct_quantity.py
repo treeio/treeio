@@ -9,19 +9,20 @@ from south.db import db
 from south.v2 import SchemaMigration
 from django.db import models
 
+
 class Migration(SchemaMigration):
 
     def forwards(self, orm):
-        
-        # Changing field 'OrderedProduct.quantity'
-        db.alter_column('sales_orderedproduct', 'quantity', self.gf('django.db.models.fields.DecimalField')(max_digits=30, decimal_places=2))
 
+        # Changing field 'OrderedProduct.quantity'
+        db.alter_column('sales_orderedproduct', 'quantity', self.gf(
+            'django.db.models.fields.DecimalField')(max_digits=30, decimal_places=2))
 
     def backwards(self, orm):
-        
-        # Changing field 'OrderedProduct.quantity'
-        db.alter_column('sales_orderedproduct', 'quantity', self.gf('django.db.models.fields.DecimalField')(max_digits=4, decimal_places=2))
 
+        # Changing field 'OrderedProduct.quantity'
+        db.alter_column('sales_orderedproduct', 'quantity', self.gf(
+            'django.db.models.fields.DecimalField')(max_digits=4, decimal_places=2))
 
     models = {
         'auth.group': {

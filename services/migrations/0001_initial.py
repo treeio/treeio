@@ -9,112 +9,170 @@ from south.db import db
 from south.v2 import SchemaMigration
 from django.db import models
 
+
 class Migration(SchemaMigration):
 
     def forwards(self, orm):
-        
+
         # Adding model 'TicketStatus'
         db.create_table('services_ticketstatus', (
-            ('object_ptr', self.gf('django.db.models.fields.related.OneToOneField')(to=orm['core.Object'], unique=True, primary_key=True)),
-            ('name', self.gf('django.db.models.fields.CharField')(max_length=256)),
-            ('details', self.gf('django.db.models.fields.TextField')(null=True, blank=True)),
-            ('active', self.gf('django.db.models.fields.BooleanField')(default=True)),
-            ('hidden', self.gf('django.db.models.fields.BooleanField')(default=False)),
+            ('object_ptr', self.gf('django.db.models.fields.related.OneToOneField')(
+                to=orm['core.Object'], unique=True, primary_key=True)),
+            ('name', self.gf('django.db.models.fields.CharField')
+             (max_length=256)),
+            ('details', self.gf('django.db.models.fields.TextField')
+             (null=True, blank=True)),
+            ('active', self.gf('django.db.models.fields.BooleanField')
+             (default=True)),
+            ('hidden', self.gf('django.db.models.fields.BooleanField')
+             (default=False)),
         ))
         db.send_create_signal('services', ['TicketStatus'])
 
         # Adding model 'Service'
         db.create_table('services_service', (
-            ('object_ptr', self.gf('django.db.models.fields.related.OneToOneField')(to=orm['core.Object'], unique=True, primary_key=True)),
-            ('name', self.gf('django.db.models.fields.CharField')(max_length=256)),
-            ('parent', self.gf('django.db.models.fields.related.ForeignKey')(blank=True, related_name='child_set', null=True, to=orm['services.Service'])),
-            ('details', self.gf('django.db.models.fields.TextField')(null=True, blank=True)),
+            ('object_ptr', self.gf('django.db.models.fields.related.OneToOneField')(
+                to=orm['core.Object'], unique=True, primary_key=True)),
+            ('name', self.gf('django.db.models.fields.CharField')
+             (max_length=256)),
+            ('parent', self.gf('django.db.models.fields.related.ForeignKey')(
+                blank=True, related_name='child_set', null=True, to=orm['services.Service'])),
+            ('details', self.gf('django.db.models.fields.TextField')
+             (null=True, blank=True)),
         ))
         db.send_create_signal('services', ['Service'])
 
         # Adding model 'ServiceLevelAgreement'
         db.create_table('services_servicelevelagreement', (
-            ('object_ptr', self.gf('django.db.models.fields.related.OneToOneField')(to=orm['core.Object'], unique=True, primary_key=True)),
-            ('name', self.gf('django.db.models.fields.CharField')(max_length=256)),
-            ('service', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['services.Service'])),
-            ('default', self.gf('django.db.models.fields.BooleanField')(default=False)),
-            ('response_time', self.gf('django.db.models.fields.PositiveIntegerField')(null=True, blank=True)),
-            ('uptime_rate', self.gf('django.db.models.fields.FloatField')(null=True, blank=True)),
-            ('available_from', self.gf('django.db.models.fields.TimeField')(null=True, blank=True)),
-            ('available_to', self.gf('django.db.models.fields.TimeField')(null=True, blank=True)),
-            ('client', self.gf('django.db.models.fields.related.ForeignKey')(blank=True, related_name='client_sla', null=True, to=orm['identities.Contact'])),
-            ('provider', self.gf('django.db.models.fields.related.ForeignKey')(related_name='provider_sla', to=orm['identities.Contact'])),
+            ('object_ptr', self.gf('django.db.models.fields.related.OneToOneField')(
+                to=orm['core.Object'], unique=True, primary_key=True)),
+            ('name', self.gf('django.db.models.fields.CharField')
+             (max_length=256)),
+            ('service', self.gf('django.db.models.fields.related.ForeignKey')
+             (to=orm['services.Service'])),
+            ('default', self.gf('django.db.models.fields.BooleanField')
+             (default=False)),
+            ('response_time', self.gf('django.db.models.fields.PositiveIntegerField')(
+                null=True, blank=True)),
+            ('uptime_rate', self.gf('django.db.models.fields.FloatField')
+             (null=True, blank=True)),
+            ('available_from', self.gf('django.db.models.fields.TimeField')
+             (null=True, blank=True)),
+            ('available_to', self.gf('django.db.models.fields.TimeField')
+             (null=True, blank=True)),
+            ('client', self.gf('django.db.models.fields.related.ForeignKey')(
+                blank=True, related_name='client_sla', null=True, to=orm['identities.Contact'])),
+            ('provider', self.gf('django.db.models.fields.related.ForeignKey')
+             (related_name='provider_sla', to=orm['identities.Contact'])),
         ))
         db.send_create_signal('services', ['ServiceLevelAgreement'])
 
         # Adding model 'ServiceAgent'
         db.create_table('services_serviceagent', (
-            ('object_ptr', self.gf('django.db.models.fields.related.OneToOneField')(to=orm['core.Object'], unique=True, primary_key=True)),
-            ('related_user', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['core.User'])),
-            ('active', self.gf('django.db.models.fields.BooleanField')(default=True)),
-            ('occupied', self.gf('django.db.models.fields.BooleanField')(default=False)),
-            ('available_from', self.gf('django.db.models.fields.TimeField')(null=True, blank=True)),
-            ('available_to', self.gf('django.db.models.fields.TimeField')(null=True, blank=True)),
+            ('object_ptr', self.gf('django.db.models.fields.related.OneToOneField')(
+                to=orm['core.Object'], unique=True, primary_key=True)),
+            ('related_user', self.gf('django.db.models.fields.related.ForeignKey')(
+                to=orm['core.User'])),
+            ('active', self.gf('django.db.models.fields.BooleanField')
+             (default=True)),
+            ('occupied', self.gf(
+                'django.db.models.fields.BooleanField')(default=False)),
+            ('available_from', self.gf('django.db.models.fields.TimeField')
+             (null=True, blank=True)),
+            ('available_to', self.gf('django.db.models.fields.TimeField')
+             (null=True, blank=True)),
         ))
         db.send_create_signal('services', ['ServiceAgent'])
 
         # Adding model 'TicketQueue'
         db.create_table('services_ticketqueue', (
-            ('object_ptr', self.gf('django.db.models.fields.related.OneToOneField')(to=orm['core.Object'], unique=True, primary_key=True)),
-            ('name', self.gf('django.db.models.fields.CharField')(max_length=256)),
-            ('active', self.gf('django.db.models.fields.BooleanField')(default=True)),
-            ('parent', self.gf('django.db.models.fields.related.ForeignKey')(blank=True, related_name='child_set', null=True, to=orm['services.TicketQueue'])),
-            ('default_ticket_status', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['services.TicketStatus'], null=True, blank=True)),
-            ('default_ticket_priority', self.gf('django.db.models.fields.IntegerField')(default=3)),
-            ('default_service', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['services.Service'], null=True, blank=True)),
-            ('waiting_time', self.gf('django.db.models.fields.PositiveIntegerField')(null=True, blank=True)),
-            ('next_queue', self.gf('django.db.models.fields.related.ForeignKey')(blank=True, related_name='previous_set', null=True, to=orm['services.TicketQueue'])),
-            ('ticket_code', self.gf('django.db.models.fields.CharField')(default='', max_length=8, null=True, blank=True)),
-            ('message_stream', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['messaging.MessageStream'], null=True, blank=True)),
-            ('details', self.gf('django.db.models.fields.TextField')(null=True, blank=True)),
+            ('object_ptr', self.gf('django.db.models.fields.related.OneToOneField')(
+                to=orm['core.Object'], unique=True, primary_key=True)),
+            ('name', self.gf('django.db.models.fields.CharField')
+             (max_length=256)),
+            ('active', self.gf('django.db.models.fields.BooleanField')
+             (default=True)),
+            ('parent', self.gf('django.db.models.fields.related.ForeignKey')(
+                blank=True, related_name='child_set', null=True, to=orm['services.TicketQueue'])),
+            ('default_ticket_status', self.gf('django.db.models.fields.related.ForeignKey')(
+                to=orm['services.TicketStatus'], null=True, blank=True)),
+            ('default_ticket_priority', self.gf(
+                'django.db.models.fields.IntegerField')(default=3)),
+            ('default_service', self.gf('django.db.models.fields.related.ForeignKey')(
+                to=orm['services.Service'], null=True, blank=True)),
+            ('waiting_time', self.gf('django.db.models.fields.PositiveIntegerField')(
+                null=True, blank=True)),
+            ('next_queue', self.gf('django.db.models.fields.related.ForeignKey')(
+                blank=True, related_name='previous_set', null=True, to=orm['services.TicketQueue'])),
+            ('ticket_code', self.gf('django.db.models.fields.CharField')
+             (default='', max_length=8, null=True, blank=True)),
+            ('message_stream', self.gf('django.db.models.fields.related.ForeignKey')(
+                to=orm['messaging.MessageStream'], null=True, blank=True)),
+            ('details', self.gf('django.db.models.fields.TextField')
+             (null=True, blank=True)),
         ))
         db.send_create_signal('services', ['TicketQueue'])
 
         # Adding model 'Ticket'
         db.create_table('services_ticket', (
-            ('object_ptr', self.gf('django.db.models.fields.related.OneToOneField')(to=orm['core.Object'], unique=True, primary_key=True)),
-            ('reference', self.gf('django.db.models.fields.CharField')(max_length=256)),
-            ('name', self.gf('django.db.models.fields.CharField')(max_length=256)),
-            ('caller', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['identities.Contact'], null=True, blank=True)),
-            ('urgency', self.gf('django.db.models.fields.IntegerField')(default=3)),
-            ('priority', self.gf('django.db.models.fields.IntegerField')(default=3)),
-            ('status', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['services.TicketStatus'])),
-            ('service', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['services.Service'], null=True, blank=True)),
-            ('sla', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['services.ServiceLevelAgreement'], null=True, blank=True)),
-            ('queue', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['services.TicketQueue'], null=True, blank=True)),
-            ('message', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['messaging.Message'], null=True, blank=True)),
-            ('details', self.gf('django.db.models.fields.TextField')(null=True, blank=True)),
-            ('resolution', self.gf('django.db.models.fields.TextField')(null=True, blank=True)),
+            ('object_ptr', self.gf('django.db.models.fields.related.OneToOneField')(
+                to=orm['core.Object'], unique=True, primary_key=True)),
+            ('reference', self.gf(
+                'django.db.models.fields.CharField')(max_length=256)),
+            ('name', self.gf('django.db.models.fields.CharField')
+             (max_length=256)),
+            ('caller', self.gf('django.db.models.fields.related.ForeignKey')
+             (to=orm['identities.Contact'], null=True, blank=True)),
+            ('urgency', self.gf(
+                'django.db.models.fields.IntegerField')(default=3)),
+            ('priority', self.gf(
+                'django.db.models.fields.IntegerField')(default=3)),
+            ('status', self.gf('django.db.models.fields.related.ForeignKey')
+             (to=orm['services.TicketStatus'])),
+            ('service', self.gf('django.db.models.fields.related.ForeignKey')
+             (to=orm['services.Service'], null=True, blank=True)),
+            ('sla', self.gf('django.db.models.fields.related.ForeignKey')(
+                to=orm['services.ServiceLevelAgreement'], null=True, blank=True)),
+            ('queue', self.gf('django.db.models.fields.related.ForeignKey')
+             (to=orm['services.TicketQueue'], null=True, blank=True)),
+            ('message', self.gf('django.db.models.fields.related.ForeignKey')
+             (to=orm['messaging.Message'], null=True, blank=True)),
+            ('details', self.gf('django.db.models.fields.TextField')
+             (null=True, blank=True)),
+            ('resolution', self.gf('django.db.models.fields.TextField')
+             (null=True, blank=True)),
         ))
         db.send_create_signal('services', ['Ticket'])
 
         # Adding M2M table for field assigned on 'Ticket'
         db.create_table('services_ticket_assigned', (
-            ('id', models.AutoField(verbose_name='ID', primary_key=True, auto_created=True)),
+            ('id', models.AutoField(
+                verbose_name='ID', primary_key=True, auto_created=True)),
             ('ticket', models.ForeignKey(orm['services.ticket'], null=False)),
-            ('serviceagent', models.ForeignKey(orm['services.serviceagent'], null=False))
+            ('serviceagent', models.ForeignKey(
+                orm['services.serviceagent'], null=False))
         ))
-        db.create_unique('services_ticket_assigned', ['ticket_id', 'serviceagent_id'])
+        db.create_unique(
+            'services_ticket_assigned', ['ticket_id', 'serviceagent_id'])
 
         # Adding model 'TicketRecord'
         db.create_table('services_ticketrecord', (
-            ('object_ptr', self.gf('django.db.models.fields.related.OneToOneField')(to=orm['core.Object'], unique=True, primary_key=True)),
-            ('ticket', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['services.Ticket'])),
-            ('record_type', self.gf('django.db.models.fields.CharField')(max_length=256)),
-            ('message', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['messaging.Message'], null=True, blank=True)),
+            ('object_ptr', self.gf('django.db.models.fields.related.OneToOneField')(
+                to=orm['core.Object'], unique=True, primary_key=True)),
+            ('ticket', self.gf('django.db.models.fields.related.ForeignKey')
+             (to=orm['services.Ticket'])),
+            ('record_type', self.gf(
+                'django.db.models.fields.CharField')(max_length=256)),
+            ('message', self.gf('django.db.models.fields.related.ForeignKey')
+             (to=orm['messaging.Message'], null=True, blank=True)),
             ('details', self.gf('django.db.models.fields.TextField')()),
-            ('notify', self.gf('django.db.models.fields.BooleanField')(default=False)),
+            ('notify', self.gf('django.db.models.fields.BooleanField')
+             (default=False)),
         ))
         db.send_create_signal('services', ['TicketRecord'])
 
-
     def backwards(self, orm):
-        
+
         # Deleting model 'TicketStatus'
         db.delete_table('services_ticketstatus')
 
@@ -138,7 +196,6 @@ class Migration(SchemaMigration):
 
         # Deleting model 'TicketRecord'
         db.delete_table('services_ticketrecord')
-
 
     models = {
         'auth.group': {

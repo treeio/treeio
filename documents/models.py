@@ -16,10 +16,14 @@ import time
 import re
 
 # Folder model
+
+
 class Folder(Object):
+
     """ Every folder may have a parent folder """
     name = models.CharField(max_length=255)
-    parent = models.ForeignKey('self', blank=True, null=True, related_name='child_set')
+    parent = models.ForeignKey(
+        'self', blank=True, null=True, related_name='child_set')
 
     access_inherit = ('parent', '*module', '*user')
 
@@ -33,6 +37,7 @@ class Folder(Object):
         except Exception:
             return ""
 
+
 def generate_filename(instance, old_filename):
     """ Generate filename """
     extension = os.path.splitext(old_filename)[1]
@@ -42,10 +47,12 @@ def generate_filename(instance, old_filename):
 
 # File model
 class File(Object):
+
     """ A binary or other non-renderable file (i.e. an image) """
     name = models.CharField(max_length=255)
     folder = models.ForeignKey(Folder)
-    content = models.FileField(upload_to=generate_filename, storage=FileStorage())
+    content = models.FileField(
+        upload_to=generate_filename, storage=FileStorage())
 
     access_inherit = ('folder', '*module', '*user')
 
@@ -70,6 +77,7 @@ class File(Object):
         return getattr(settings, 'MEDIA_URL', '/static/media/') + unicode(self.content)
 
     class Meta:
+
         " File "
         ordering = ['-last_updated']
 
@@ -83,6 +91,7 @@ class File(Object):
 
 # Document model
 class Document(Object):
+
     """ A readable document, i.e. HTML, which may be rendered directly """
     title = models.CharField(max_length=255)
     folder = models.ForeignKey(Folder)
@@ -94,6 +103,7 @@ class Document(Object):
         return self.title
 
     class Meta:
+
         " File "
         ordering = ['-last_updated']
 
@@ -105,7 +115,10 @@ class Document(Object):
             return ""
 
 # WebLink model
+
+
 class WebLink(Object):
+
     """ A web link """
     title = models.CharField(max_length=255)
     folder = models.ForeignKey(Folder)
@@ -113,11 +126,11 @@ class WebLink(Object):
 
     access_inherit = ('folder', '*module', '*user')
 
-
     def __unicode__(self):
         return self.title
 
     class Meta:
+
         " File "
         ordering = ['-last_updated']
 

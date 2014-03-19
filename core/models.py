@@ -36,6 +36,7 @@ import string
 
 
 class AccessEntity(models.Model):
+
     "Generic model for both User and Group"
     last_updated = models.DateTimeField(auto_now=True)
 
@@ -69,9 +70,11 @@ class AccessEntity(models.Model):
 
 
 class Group(AccessEntity):
+
     "Group record"
     name = models.CharField(max_length=256)
-    parent = models.ForeignKey('self', blank=True, null=True, related_name='child_set')
+    parent = models.ForeignKey(
+        'self', blank=True, null=True, related_name='child_set')
     details = models.TextField(blank=True, null=True)
 
     def __unicode__(self):
@@ -94,14 +97,14 @@ class Group(AccessEntity):
         "Get the root Group"
 
         root = self
-        stack = [self] # keep track of items we've looked at to avoid infinite looping
+        # keep track of items we've looked at to avoid infinite looping
+        stack = [self]
         while getattr(root, 'parent', None):
             root = getattr(root, 'parent')
             if root in stack:
                 break
             stack.append(root)
         return root
-
 
     def get_tree_path(self, skipself=False):
         "Get tree path as a list() starting with root Group"
@@ -115,7 +118,8 @@ class Group(AccessEntity):
         while getattr(current, 'parent', None):
             parent = getattr(current, 'parent')
             if parent in path:
-                # To avoid infinite looping, check that we don't add existing parent on the path again
+                # To avoid infinite looping, check that we don't add existing
+                # parent on the path again
                 break
             else:
                 path.insert(0, parent)
@@ -141,7 +145,6 @@ class Group(AccessEntity):
         except Exception:
             return False
 
-
     def get_fullname(self, save=True):
         "Returns the full name with parent(s) separated by slashes"
         current = self
@@ -161,50 +164,57 @@ class Group(AccessEntity):
             perspective = get_object_or_404(Perspective, pk=id)
         except:
             try:
-                conf = ModuleSetting.get_for_module('treeio.core', 'default_perspective')[0]
+                conf = ModuleSetting.get_for_module(
+                    'treeio.core', 'default_perspective')[0]
                 perspective = Perspective.objects.get(pk=long(conf.value))
             except:
                 try:
                     perspective = Perspective.objects.all()[0]
-                    ModuleSetting.set_for_module('default_perspective', perspective.id, 'treeio.core', group=self)
+                    ModuleSetting.set_for_module(
+                        'default_perspective', perspective.id, 'treeio.core', group=self)
                 except:
                     raise Perspective.DoesNotExist('No Perspective exists')
         return perspective
 
     def set_perspective(self, perspective):
         "Sets the Perspective for the Group"
-        ModuleSetting.set_for_module('default_perspective', perspective.id, 'treeio.core', group=self)
+        ModuleSetting.set_for_module(
+            'default_perspective', perspective.id, 'treeio.core', group=self)
 
         # Ensure the Group has access to the modules in the Perspective
         modules = perspective.modules.all() or Module.objects.all()
         try:
             for module in modules:
-                full_access = not module.full_access.exists() or module.full_access.filter(pk=self.id).exists()
-                read_access = not module.read_access.exists() or module.read_access.filter(pk=self.id).exists()
+                full_access = not module.full_access.exists() or module.full_access.filter(
+                    pk=self.id).exists()
+                read_access = not module.read_access.exists() or module.read_access.filter(
+                    pk=self.id).exists()
                 if not (read_access or full_access):
                     module.read_access.add(self)
         except:
             pass
 
     class Meta:
+
         "Group"
         ordering = ['name']
 
 
-
 class User(AccessEntity):
+
     "A record about a user registered within the system"
     name = models.CharField(max_length=256)
     user = models.ForeignKey(django_auth.User)
-    default_group = models.ForeignKey(Group, related_name='default_user_set', blank=True, null=True)
+    default_group = models.ForeignKey(
+        Group, related_name='default_user_set', blank=True, null=True)
     other_groups = models.ManyToManyField(Group, blank=True, null=True)
     disabled = models.BooleanField(default=False)
     last_access = models.DateTimeField(default=datetime.now)
 
     class Meta:
+
         "User"
         ordering = ['name']
-
 
     def __unicode__(self):
         "Returns Contact name if available, username otherwise"
@@ -227,7 +237,8 @@ class User(AccessEntity):
         super(User, self).save(*args, **kwargs)
         # Check Hardtree Subscription user limit
         if not self.id:
-            user_limit = getattr(settings, 'HARDTREE_SUBSCRIPTION_USER_LIMIT', 0)
+            user_limit = getattr(
+                settings, 'HARDTREE_SUBSCRIPTION_USER_LIMIT', 0)
             if user_limit > 0:
                 user_number = User.objects.all().count()
                 if user_number >= user_limit:
@@ -254,10 +265,11 @@ class User(AccessEntity):
             except Exception:
                 return ""
 
-    def generate_new_password(self, size = 8):
+    def generate_new_password(self, size=8):
         "Generates a new password and sets it to the user"
 
-        password = ''.join([random.choice(string.letters + string.digits) for i in range(size)])
+        password = ''.join(
+            [random.choice(string.letters + string.digits) for i in range(size)])
 
         self.user.set_password(password)
         self.user.save()
@@ -291,8 +303,6 @@ class User(AccessEntity):
             return True
 
         return False
-
-
 
     def has_permission(self, object, mode="r"):
         "Checks permissions on a given object for a given mode"
@@ -342,7 +352,8 @@ class User(AccessEntity):
                 perspective = self.default_group.get_perspective()
             except:
                 try:
-                    conf = ModuleSetting.get_for_module('treeio.core', 'default_perspective')[0]
+                    conf = ModuleSetting.get_for_module(
+                        'treeio.core', 'default_perspective')[0]
                     perspective = Perspective.objects.get(pk=long(conf.value))
                 except Exception:
                     try:
@@ -350,12 +361,14 @@ class User(AccessEntity):
                     except:
                         perspective = Perspective(name='Default')
                         perspective.save()
-                    ModuleSetting.set_for_module('default_perspective', perspective.id, 'treeio.core', user=self)
+                    ModuleSetting.set_for_module(
+                        'default_perspective', perspective.id, 'treeio.core', user=self)
         return perspective
 
     def set_perspective(self, perspective):
         "Sets the Perspective for the User"
-        ModuleSetting.set_for_module('default_perspective', perspective.id, 'treeio.core', user=self)
+        ModuleSetting.set_for_module(
+            'default_perspective', perspective.id, 'treeio.core', user=self)
 
         # Ensure the User has access to the modules in the Perspective
         modules = perspective.modules.all() or Module.objects.all()
@@ -383,6 +396,7 @@ class User(AccessEntity):
 
 # User signals
 
+
 def user_autocreate_handler(sender, instance, created, **kwargs):
     "When a Django User is created, automatically create a Hardtree User"
     if created:
@@ -394,9 +408,12 @@ def user_autocreate_handler(sender, instance, created, **kwargs):
 
 # Autocreate a Hardtree user when Django user is created
 if getattr(settings, 'HARDTREE_SIGNALS_AUTOCREATE_USER', False):
-    models.signals.post_save.connect(user_autocreate_handler, sender=django_auth.User)
+    models.signals.post_save.connect(
+        user_autocreate_handler, sender=django_auth.User)
+
 
 class Invitation(models.Model):
+
     "Invitation to register on Hardtree"
     email = models.EmailField()
     key = models.CharField(max_length=256)
@@ -414,6 +431,7 @@ class Invitation(models.Model):
 
 
 class Tag(models.Model):
+
     "Model for Global Tagging"
     name = models.CharField(max_length=512)
     date_created = models.DateTimeField(default=datetime.now)
@@ -426,34 +444,46 @@ class Tag(models.Model):
 
 
 class Comment(models.Model):
+
     "Comment on any Object"
     author = models.ForeignKey(User, blank=True, null=True)
     body = models.TextField(blank=True, null=True)
-    likes = models.ManyToManyField(User, blank=True, null=True, related_name='comments_liked')
-    dislikes = models.ManyToManyField(User, blank=True, null=True, related_name='comments_disliked')
+    likes = models.ManyToManyField(
+        User, blank=True, null=True, related_name='comments_liked')
+    dislikes = models.ManyToManyField(
+        User, blank=True, null=True, related_name='comments_disliked')
     date_created = models.DateTimeField(default=datetime.now)
 
     def __unicode__(self):
         return self.body
 
+
 class Object(models.Model):
+
     "Generic Hardtree object"
-    creator = models.ForeignKey(User, blank=True, null=True, related_name='objects_created', on_delete=models.SET_NULL)
-    read_access = models.ManyToManyField(AccessEntity, blank=True, null=True, related_name='objects_read_access')
-    full_access = models.ManyToManyField(AccessEntity, blank=True, null=True, related_name='objects_full_access')
+    creator = models.ForeignKey(
+        User, blank=True, null=True, related_name='objects_created', on_delete=models.SET_NULL)
+    read_access = models.ManyToManyField(
+        AccessEntity, blank=True, null=True, related_name='objects_read_access')
+    full_access = models.ManyToManyField(
+        AccessEntity, blank=True, null=True, related_name='objects_full_access')
 
     object_name = models.CharField(max_length=512, blank=True, null=True)
     object_type = models.CharField(max_length=512, blank=True, null=True)
     trash = models.BooleanField(default=False)
 
     links = models.ManyToManyField('self', blank=True, null=True)
-    subscribers = models.ManyToManyField(User, blank=True, null=True, related_name='subscriptions')
+    subscribers = models.ManyToManyField(
+        User, blank=True, null=True, related_name='subscriptions')
     #subscribers_outside = models.ManyToManyField(Contact, blank=True, null=True, related_name='subscriptions_outside')
     tags = models.ManyToManyField(Tag, blank=True, null=True)
 
-    comments = models.ManyToManyField(Comment, blank=True, null=True, related_name='comments')
-    likes = models.ManyToManyField(User, blank=True, null=True, related_name='objects_liked')
-    dislikes = models.ManyToManyField(User, blank=True, null=True, related_name='objects_disliked')
+    comments = models.ManyToManyField(
+        Comment, blank=True, null=True, related_name='comments')
+    likes = models.ManyToManyField(
+        User, blank=True, null=True, related_name='objects_liked')
+    dislikes = models.ManyToManyField(
+        User, blank=True, null=True, related_name='objects_disliked')
 
     last_updated = models.DateTimeField(auto_now=True)
     date_created = models.DateTimeField(default=datetime.now)
@@ -469,19 +499,21 @@ class Object(models.Model):
 
         query = models.Q()
         if not user.is_admin():
-            query = models.Q(full_access=user) | models.Q(full_access__isnull=True)
-            query = query | models.Q(full_access=user.default_group) | models.Q(full_access__in=user.other_groups.all())
+            query = models.Q(full_access=user) | models.Q(
+                full_access__isnull=True)
+            query = query | models.Q(full_access=user.default_group) | models.Q(
+                full_access__in=user.other_groups.all())
 
             if mode == 'r' or mode == 'x':
                 query = query | models.Q(read_access=user)
-                query = query | models.Q(read_access=user.default_group) | models.Q(read_access__in=user.other_groups.all())
+                query = query | models.Q(read_access=user.default_group) | models.Q(
+                    read_access__in=user.other_groups.all())
 
         if filter_trash:
             query = query & models.Q(trash=False)
 
         return query
     _get_query_filter_permitted = staticmethod(_get_query_filter_permitted)
-
 
     def filter_permitted(user, manager, mode="r", filter_trash=True):
         "Returns Objects the given user is allowed to access, depending on mode - read(r), write(w) or execute(x)"
@@ -490,12 +522,12 @@ class Object(models.Model):
 
         query = models.Q()
         for imode in mode:
-            query = query & Object._get_query_filter_permitted(user, imode, filter_trash)
+            query = query & Object._get_query_filter_permitted(
+                user, imode, filter_trash)
 
         objects = manager.filter(query).distinct()
         return objects
     filter_permitted = staticmethod(filter_permitted)
-
 
     def filter_by_request(request, manager, mode="r", filter_trash=True):
         "Returns Objects the current user is allowed to access, depending on mode - read(r), write(w) or execute(x)"
@@ -509,7 +541,6 @@ class Object(models.Model):
             return Object.filter_permitted(user, manager, mode, filter_trash)
         return []
     filter_by_request = staticmethod(filter_by_request)
-
 
     def __unicode__(self):
         "String representation"
@@ -575,7 +606,8 @@ class Object(models.Model):
         "Get the root element, for objects implementing a tree-like structure via .parent"
 
         root = self
-        stack = [self] # keep track of items we've looked at to avoid infinite looping
+        # keep track of items we've looked at to avoid infinite looping
+        stack = [self]
         while getattr(root, 'parent', None):
             root = getattr(root, 'parent')
             if root in stack:
@@ -596,7 +628,8 @@ class Object(models.Model):
         while getattr(current, 'parent', None):
             parent = getattr(current, 'parent')
             if parent in path:
-                # To avoid infinite looping, check that we don't add existing parent on the path again
+                # To avoid infinite looping, check that we don't add existing
+                # parent on the path again
                 break
             else:
                 path.insert(0, parent)
@@ -607,7 +640,8 @@ class Object(models.Model):
     def get_related_object(self):
         "Returns a child object which inherits from self, if exists"
         try:
-            obj_name = re.match(".*\.(?P<name>\w+)$", self.object_type).group('name')
+            obj_name = re.match(
+                ".*\.(?P<name>\w+)$", self.object_type).group('name')
             return getattr(self, obj_name.lower())
         except Exception:
             return None
@@ -615,9 +649,11 @@ class Object(models.Model):
     def get_human_type(self, translate=True):
         "Returns prettified name of the object type"
         try:
-            obj_name = re.match(".*\.(?P<name>\w+)$", self.object_type).group('name')
+            obj_name = re.match(
+                ".*\.(?P<name>\w+)$", self.object_type).group('name')
             pattern = re.compile('([A-Z][A-Z][a-z])|([a-z][A-Z])')
-            human_type = pattern.sub(lambda m: m.group()[:1] + " " + m.group()[1:], obj_name)
+            human_type = pattern.sub(
+                lambda m: m.group()[:1] + " " + m.group()[1:], obj_name)
             if translate:
                 human_type = _(human_type)
             return human_type
@@ -647,11 +683,11 @@ class Object(models.Model):
             object = self
 
         item = {
-                'id': u'',
-                'name': u'',
-                'type': unicode(object.get_human_type()),
-                'content': u'',
-                'url': unicode(object.get_absolute_url())
+            'id': u'',
+            'name': u'',
+            'type': unicode(object.get_human_type()),
+            'content': u'',
+            'url': unicode(object.get_absolute_url())
         }
 
         if object.id:
@@ -663,7 +699,6 @@ class Object(models.Model):
             item['name'] = unicode(object.name)
         else:
             item['name'] = unicode(object)
-
 
         if hasattr(self, 'body'):
             item['content'] = unicode(self.body)
@@ -686,14 +721,16 @@ class Object(models.Model):
     def create_notification(self, action='update', author=None, *args, **kwargs):
         "Creates an UpdateRecord to be submitted to all subscribers of an Object"
 
-        if not (self.subscribers.all().count() or author): return None
+        if not (self.subscribers.all().count() or author):
+            return None
 
         notification = UpdateRecord()
         updated = False
 
         if action == 'delete':
             notification.format_message = "%s \"%s\" deleted."
-            notification.set_format_strings([unicode(self.get_human_type(translate=False)), unicode(self)])
+            notification.set_format_strings(
+                [unicode(self.get_human_type(translate=False)), unicode(self)])
             notification.record_type = 'delete'
             updated = True
 
@@ -703,8 +740,9 @@ class Object(models.Model):
                 if kwargs['updated']:
                     updated_text = ""
                     for obj in kwargs['updated']:
-                        updated_text += '<a href="%s" class="popup-link">%s</a>' % (obj.get_absolute_url(), unicode(obj))
-                        if kwargs['updated'].index(obj) < len(kwargs['updated'])-1:
+                        updated_text += '<a href="%s" class="popup-link">%s</a>' % (
+                            obj.get_absolute_url(), unicode(obj))
+                        if kwargs['updated'].index(obj) < len(kwargs['updated']) - 1:
                             updated_text += ', '
                 else:
                     updated_text = "None"
@@ -713,7 +751,8 @@ class Object(models.Model):
 
                 if field == 'assigned':
                     notification.format_message = "%s assigned to %s.<br />"
-                    notification.set_format_strings([self.get_human_type(translate=False), updated_text])
+                    notification.set_format_strings(
+                        [self.get_human_type(translate=False), updated_text])
                     notification.save()
                     for obj in kwargs['updated']:
                         if isinstance(obj, AccessEntity) or isinstance(obj, User):
@@ -737,13 +776,15 @@ class Object(models.Model):
                                 pass
                 else:
                     notification.format_message = "%s changed to \"%s\".<br />"
-                    notification.set_format_strings([field.replace('_', ' ').capitalize(), updated_text])
+                    notification.set_format_strings(
+                        [field.replace('_', ' ').capitalize(), updated_text])
 
                 updated = True
 
         elif action == 'create':
             notification.format_message = "%s created."
-            notification.set_format_strings([unicode(self.get_human_type(translate=False))])
+            notification.set_format_strings(
+                [unicode(self.get_human_type(translate=False))])
             notification.record_type = 'create'
             updated = True
 
@@ -766,7 +807,8 @@ class Object(models.Model):
                     continue
 
                 if 'password' in field:
-                    # Skip password fields - it's not nice to give them away in plain-text
+                    # Skip password fields - it's not nice to give them away in
+                    # plain-text
                     continue
 
                 current = self.get_field_value(field)
@@ -777,12 +819,16 @@ class Object(models.Model):
                         field = field.replace('_display', '')
                     if isinstance(self._meta.get_field(field), models.TextField):
                         notification.format_message += "%s changed.<br />"
-                        strings.extend([unicode(field).replace('_', ' ').capitalize()])
+                        strings.extend(
+                            [unicode(field).replace('_', ' ').capitalize()])
                     elif isinstance(self._meta.get_field(field), models.DateTimeField):
                         notification.format_message += "%s changed from \"%s\" to \"%s\".<br />"
-                        localeformat = "j F Y, H:i" # this needs to be done properly, via getting current locale's format
+                        # this needs to be done properly, via getting current
+                        # locale's format
+                        localeformat = "j F Y, H:i"
                         strings.extend([unicode(field).replace('_', ' ').capitalize(),
-                                        unicode(djangodate(before, localeformat)),
+                                        unicode(
+                                            djangodate(before, localeformat)),
                                         unicode(djangodate(current, localeformat))])
                     else:
                         notification.format_message += "%s changed from \"%s\" to \"%s\".<br />"
@@ -828,7 +874,8 @@ class Object(models.Model):
 
         # get default permissions from settings
         try:
-            conf = ModuleSetting.get_for_module('treeio.core', 'default_permissions')[0]
+            conf = ModuleSetting.get_for_module(
+                'treeio.core', 'default_permissions')[0]
             default_permissions = conf.value
         except:
             default_permissions = settings.HARDTREE_DEFAULT_PERMISSIONS
@@ -848,7 +895,8 @@ class Object(models.Model):
             do_user = True
 
         else:
-            # try to inherit permissions first from any parent objects as specified in models.py
+            # try to inherit permissions first from any parent objects as
+            # specified in models.py
             cascade = getattr(self, 'access_inherit', [])
             do_user = False
             if cascade:
@@ -858,7 +906,8 @@ class Object(models.Model):
                         break
                     elif attr == '*module':
                         if not 'nomodule' in default_permissions:
-                            modules = Module.objects.filter(name__contains=self.get_object_module())
+                            modules = Module.objects.filter(
+                                name__contains=self.get_object_module())
                             if modules:
                                 for module in modules:
                                     self.copy_permissions(module)
@@ -879,13 +928,14 @@ class Object(models.Model):
                         except:
                             pass
         if do_user:
-        # if we can't inherit set permissions to the user as specified in the settings
-        
+        # if we can't inherit set permissions to the user as specified in the
+        # settings
+
             if 'readonly' in default_permissions:
                 access_container = self.read_access
             else:
                 access_container = self.full_access
-        
+
             if 'user' in default_permissions:
                 access_container.add(user)
 
@@ -977,7 +1027,7 @@ class Object(models.Model):
 
     def set_field_value(self, field_name, value):
         "Sets the value of a given field"
-        return setattr(self,field_name)
+        return setattr(self, field_name)
 
     def set_last_updated(self, last_updated=datetime.now()):
         self.last_updated = last_updated
@@ -985,7 +1035,8 @@ class Object(models.Model):
 
 
 class Revision(models.Model):
-    previous = models.OneToOneField('self', blank=True, null=True, related_name='next')
+    previous = models.OneToOneField(
+        'self', blank=True, null=True, related_name='next')
     object = models.ForeignKey(Object)
     change_type = models.CharField(max_length=512, null=True, blank=True)
     date_created = models.DateTimeField(default=datetime.now)
@@ -996,22 +1047,32 @@ class RevisionField(models.Model):
     field_type = models.CharField(max_length=512, null=True, blank=True)
     field = models.CharField(max_length=512, null=True, blank=True)
     value = models.TextField(null=True, blank=True)
-    value_key = models.ForeignKey(Object, null=True, blank=True, related_name='revisionfield_key', on_delete=models.SET_NULL)
-    value_m2m = models.ManyToManyField(Object, related_name='revisionfield_m2m')
-    value_key_acc = models.ForeignKey(AccessEntity, null=True, blank=True, related_name='revisionfield_key_acc', on_delete=models.SET_NULL)
-    value_m2m_acc = models.ManyToManyField(AccessEntity, related_name='revisionfield_m2m_acc')
+    value_key = models.ForeignKey(
+        Object, null=True, blank=True, related_name='revisionfield_key', on_delete=models.SET_NULL)
+    value_m2m = models.ManyToManyField(
+        Object, related_name='revisionfield_m2m')
+    value_key_acc = models.ForeignKey(
+        AccessEntity, null=True, blank=True, related_name='revisionfield_key_acc', on_delete=models.SET_NULL)
+    value_m2m_acc = models.ManyToManyField(
+        AccessEntity, related_name='revisionfield_m2m_acc')
 
 
 class UpdateRecord(models.Model):
+
     "Update of an Object"
-    author = models.ForeignKey(User, blank=True, null=True, related_name="sent_updates")
-    sender = models.ForeignKey(Object, blank=True, null=True, related_name="sent_updates", on_delete=models.SET_NULL)
-    about = models.ManyToManyField(Object, blank=True, null=True, related_name="updates")
-    recipients = models.ManyToManyField(AccessEntity, blank=True, null=True, related_name="received_updates")
+    author = models.ForeignKey(
+        User, blank=True, null=True, related_name="sent_updates")
+    sender = models.ForeignKey(
+        Object, blank=True, null=True, related_name="sent_updates", on_delete=models.SET_NULL)
+    about = models.ManyToManyField(
+        Object, blank=True, null=True, related_name="updates")
+    recipients = models.ManyToManyField(
+        AccessEntity, blank=True, null=True, related_name="received_updates")
     #recipients_outside = models.ManyToManyField(Contact, blank=True, null=True, related_name="outside_received_updates")
     record_type = models.CharField(max_length=32,
                                    choices=(('create', 'create'), ('update', 'update'),
-                                            ('delete', 'delete'), ('trash', 'trash'),
+                                            ('delete', 'delete'), (
+                                                'trash', 'trash'),
                                             ('message', 'message'),
                                             ('manual', 'manual'), ('share', 'share')))
     url = models.CharField(max_length=512, blank=True, null=True)
@@ -1019,12 +1080,16 @@ class UpdateRecord(models.Model):
     score = models.IntegerField(default=0)
     format_message = models.TextField(blank=True, null=True)
     format_strings = models.TextField(blank=True, null=True)
-    comments = models.ManyToManyField(Comment, blank=True, null=True, related_name='comments_on_updates')
-    likes = models.ManyToManyField(User, blank=True, null=True, related_name='updates_liked')
-    dislikes = models.ManyToManyField(User, blank=True, null=True, related_name='updates_disliked')
+    comments = models.ManyToManyField(
+        Comment, blank=True, null=True, related_name='comments_on_updates')
+    likes = models.ManyToManyField(
+        User, blank=True, null=True, related_name='updates_liked')
+    dislikes = models.ManyToManyField(
+        User, blank=True, null=True, related_name='updates_disliked')
     date_created = models.DateTimeField(default=datetime.now)
 
     class Meta:
+
         "UpdateRecord"
         ordering = ['-date_created']
 
@@ -1043,7 +1108,8 @@ class UpdateRecord(models.Model):
 
     def set_format_strings(self, strings):
         "Sets format_strings to the list of strings"
-        self.format_strings = base64.b64encode(pickle.dumps(strings, pickle.HIGHEST_PROTOCOL))
+        self.format_strings = base64.b64encode(
+            pickle.dumps(strings, pickle.HIGHEST_PROTOCOL))
         return self
 
     def extend_format_strings(self, strings):
@@ -1100,7 +1166,7 @@ class UpdateRecord(models.Model):
         if self.body:
             result += '<p>' + self.body + '</p>'
         if result.endswith('<br />'):
-            result = result[:len(result)-6]
+            result = result[:len(result) - 6]
         return result
     full_message = property(get_full_message)
 
@@ -1112,46 +1178,56 @@ class UpdateRecord(models.Model):
             # E-mail contents for e-mail notifications
             full_message = self.get_full_message()
             html = '%s:<br /><br />\n\n<a href="%s">%s</a> (%s):<br /><br />\n\n%s<br /><br />\n\n' % \
-                    (unicode(author), obj.get_absolute_url(), unicode(obj), unicode(obj.get_human_type()), full_message)
+                (unicode(author), obj.get_absolute_url(), unicode(obj),
+                 unicode(obj.get_human_type()), full_message)
             grittertext = '%s:<br />\n\n<a href="#%s">%s</a> (%s):<br />\n\n%s<br />\n\n' % \
-                    (unicode(author), obj.get_absolute_url(), unicode(obj), unicode(obj.get_human_type()), full_message)
+                (unicode(author), obj.get_absolute_url(), unicode(obj),
+                 unicode(obj.get_human_type()), full_message)
             if 'request' in kwargs:
                 domain = RequestSite(kwargs['request']).domain
-                html = html.replace('href="', 'href="http://'+domain)
+                html = html.replace('href="', 'href="http://' + domain)
             body = strip_tags(html)
             signature = "This is an automated message from Tree.io service (http://tree.io). Please do not reply to this e-mail."
             subject = "[Tree.io%s] %s: %s - %s" % (' #%d' % obj.id if self.record_type != 'delete' else '', unicode(author),
-                                                        unicode(obj.get_human_type()), unicode(strip_tags(full_message)[:100]))
+                                                   unicode(obj.get_human_type()), unicode(strip_tags(full_message)[:100]))
 
             for recipient in self.recipients.all():
                 if author and author.id == recipient.id:
                     continue
-                email_notifications = getattr(settings, 'HARDTREE_ALLOW_EMAIL_NOTIFICATIONS', False)
-                gritter_notifications = getattr(settings, 'HARDTREE_ALLOW_GRITTER_NOTIFICATIONS', False)
+                email_notifications = getattr(
+                    settings, 'HARDTREE_ALLOW_EMAIL_NOTIFICATIONS', False)
+                gritter_notifications = getattr(
+                    settings, 'HARDTREE_ALLOW_GRITTER_NOTIFICATIONS', False)
                 try:
-                    conf = ModuleSetting.get('email_notifications', user=recipient)[0]
+                    conf = ModuleSetting.get(
+                        'email_notifications', user=recipient)[0]
                     email_notifications = conf.value
                 except:
                     pass
 
                 if email_notifications == 'True':
                     try:
-                        toaddr = recipient.get_entity().get_contact().get_email()
+                        toaddr = recipient.get_entity(
+                        ).get_contact().get_email()
                     except:
                         toaddr = None
                     if toaddr:
-                        SystemEmail(toaddr, subject, body, signature, html+signature).send_email()
+                        SystemEmail(
+                            toaddr, subject, body, signature, html + signature).send_email()
 
                 if gritter_notifications:
                     try:
                         request = HttpRequest()
                         request.user = recipient.user.user
                         storage = default_storage(request)
-                        storage._add(Message(messages.constants.INFO, "%s" % grittertext))
+                        storage._add(
+                            Message(messages.constants.INFO, "%s" % grittertext))
                     except:
                         pass
 
+
 class Module(Object):
+
     "Record of a module (application) existing within the system"
     name = models.CharField(max_length=256)
     title = models.CharField(max_length=256)
@@ -1163,6 +1239,7 @@ class Module(Object):
     searcheable = False
 
     class Meta:
+
         "Module"
         ordering = ['name']
 
@@ -1178,6 +1255,7 @@ class Module(Object):
 
 
 class Perspective(Object):
+
     "Defines a set of modules enabled for a given user"
     name = models.CharField(max_length=256)
     details = models.TextField(blank=True)
@@ -1202,6 +1280,7 @@ class Perspective(Object):
 
 
 class ModuleSetting(models.Model):
+
     "Free-type Module setting"
     name = models.CharField(max_length=512)
     label = models.CharField(max_length=512)
@@ -1223,7 +1302,8 @@ class ModuleSetting(models.Model):
 
     def dumps(self, value):
         "Pickle a ModuleSetting value"
-        self.value = base64.b64encode(pickle.dumps(value, pickle.HIGHEST_PROTOCOL))
+        self.value = base64.b64encode(
+            pickle.dumps(value, pickle.HIGHEST_PROTOCOL))
         return self
 
     def get(name='', strict=False, **kwargs):
@@ -1304,6 +1384,7 @@ class ModuleSetting(models.Model):
 
 
 class ConfigSetting(models.Model):
+
     "Config setting to be activated dynamically from the database on request"
     name = models.CharField(max_length=255, unique=True)
     value = models.TextField(blank=True, null=True)
@@ -1323,7 +1404,8 @@ class ConfigSetting(models.Model):
 
     def dumps(self, value):
         "Pickle a ModuleSetting value"
-        self.value = base64.b64encode(pickle.dumps(value, pickle.HIGHEST_PROTOCOL))
+        self.value = base64.b64encode(
+            pickle.dumps(value, pickle.HIGHEST_PROTOCOL))
         return self
 
     def save(self, *args, **kwargs):
@@ -1332,6 +1414,7 @@ class ConfigSetting(models.Model):
 
 
 class IntegrationResource:
+
     """ Resource set for integration via Nuvius
 
     nuvius_id     = <ID of the user on Nuvius (may be obtained via JSONP call>
@@ -1361,9 +1444,11 @@ class IntegrationResource:
 
 
 class Location(Object):
+
     "Location for users, assets, etc."
     name = models.CharField(max_length=512)
-    parent = models.ForeignKey('self', blank=True, null=True, related_name='child_set')
+    parent = models.ForeignKey(
+        'self', blank=True, null=True, related_name='child_set')
 
     def __unicode__(self):
         return self.name
@@ -1375,7 +1460,9 @@ class Location(Object):
         except Exception:
             pass
 
+
 class PageFolder(Object):
+
     "Folder for static Pages"
     name = models.CharField(max_length=256)
     details = models.TextField(blank=True)
@@ -1392,7 +1479,9 @@ class PageFolder(Object):
         except Exception:
             pass
 
+
 class Page(Object):
+
     "Static page"
     name = models.CharField(max_length=256)
     title = models.CharField(max_length=256)
@@ -1403,6 +1492,7 @@ class Page(Object):
     searchable = False
 
     class Meta:
+
         "Page"
         ordering = ['name']
 
@@ -1418,6 +1508,7 @@ class Page(Object):
 
 
 class Widget(models.Model):
+
     "Widget object to remember the set and order of Widget for a user"
     user = models.ForeignKey(User)
     perspective = models.ForeignKey(Perspective)
@@ -1429,18 +1520,21 @@ class Widget(models.Model):
         return self.widget_name
 
     class Meta:
+
         "Widget"
         ordering = ['weight']
 
+
 class Attachment(models.Model):
+
     "Attachment object to upload and reference a file"
     filename = models.CharField(max_length=64)
-    attached_object = models.ForeignKey(Object,blank=True,null=True)
-    attached_record = models.ForeignKey(UpdateRecord,blank=True,null=True)
+    attached_object = models.ForeignKey(Object, blank=True, null=True)
+    attached_record = models.ForeignKey(UpdateRecord, blank=True, null=True)
     attached_file = models.FileField(upload_to='attachments')
     mimetype = models.CharField(max_length=64, editable=False)
     created = models.DateTimeField(auto_now_add=True, editable=False)
-    uploaded_by= models.ForeignKey(User)
+    uploaded_by = models.ForeignKey(User)
 
     class Meta:
         ordering = ['-id']
@@ -1449,7 +1543,8 @@ class Attachment(models.Model):
         return unicode(self.filename)
 
     def get_file_type(self):
-        match = re.match('.*\.(?P<extension>[a-zA-Z0-9]+)$', unicode(self.filename))
+        match = re.match(
+            '.*\.(?P<extension>[a-zA-Z0-9]+)$', unicode(self.filename))
         if match:
             return unicode(match.group('extension')).upper()
         else:
@@ -1463,24 +1558,25 @@ class Attachment(models.Model):
         return False
 
     def get_icon(self):
-        if self.get_file_type()=='PDF':
-            #PDF
+        if self.get_file_type() == 'PDF':
+            # PDF
             return 'pdf'
-        elif self.get_file_type() in ['DOCX','DOC','TXT']:
-            #Documents
+        elif self.get_file_type() in ['DOCX', 'DOC', 'TXT']:
+            # Documents
             return 'blue-document-word'
-        elif self.get_file_type() in ['JPG','JPEG','GIF','PNG','TIFF','PSD','BMP']:
-            #Images
+        elif self.get_file_type() in ['JPG', 'JPEG', 'GIF', 'PNG', 'TIFF', 'PSD', 'BMP']:
+            # Images
             return 'image'
         else:
-            #Other
+            # Other
             return 'blue-document'
 
     def delete(self, *args, **kwargs):
-        filepath = os.path.join(getattr(settings, 'MEDIA_ROOT'), 'attachments', self.attached_file.name)
+        filepath = os.path.join(
+            getattr(settings, 'MEDIA_ROOT'), 'attachments', self.attached_file.name)
         try:
             self.attached_file.delete()
             os.remove(filepath)
         except:
             pass
-        super(Attachment,self).delete(*args, **kwargs)
+        super(Attachment, self).delete(*args, **kwargs)

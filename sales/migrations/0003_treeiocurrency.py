@@ -11,6 +11,7 @@ from django.db import models
 from treeio.finance.models import Currency
 from treeio.sales.models import SaleOrder, Opportunity, OrderedProduct
 
+
 class Migration(DataMigration):
 
     def forwards(self, orm):
@@ -24,29 +25,26 @@ class Migration(DataMigration):
             currency.symbol = u"$"
             currency.is_default = True
             currency.save()
-            
+
         for obj in SaleOrder.objects.all():
             obj.currency = currency
             obj.save()
-            
+
         for obj in Opportunity.objects.all():
             obj.amount_currency = currency
             obj.amount_display = obj.amount
             obj.save()
-            
+
         for obj in OrderedProduct.objects.all():
             obj.rate = obj.product.sell_price
             obj.rate_display = obj.rate
             obj.save()
-            
+
         for obj in SaleOrder.objects.all():
             obj.update_total()
-            
-
 
     def backwards(self, orm):
         raise RuntimeError("Cannot reverse this migration.")
-
 
     models = {
         'auth.group': {

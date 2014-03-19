@@ -9,48 +9,63 @@ from south.db import db
 from south.v2 import SchemaMigration
 from django.db import models
 
+
 class Migration(SchemaMigration):
 
     def forwards(self, orm):
-        
+
         # Adding model 'Folder'
         db.create_table('documents_folder', (
-            ('object_ptr', self.gf('django.db.models.fields.related.OneToOneField')(to=orm['core.Object'], unique=True, primary_key=True)),
-            ('name', self.gf('django.db.models.fields.CharField')(max_length=255)),
-            ('parent', self.gf('django.db.models.fields.related.ForeignKey')(blank=True, related_name='child_set', null=True, to=orm['documents.Folder'])),
+            ('object_ptr', self.gf('django.db.models.fields.related.OneToOneField')(
+                to=orm['core.Object'], unique=True, primary_key=True)),
+            ('name', self.gf('django.db.models.fields.CharField')
+             (max_length=255)),
+            ('parent', self.gf('django.db.models.fields.related.ForeignKey')(
+                blank=True, related_name='child_set', null=True, to=orm['documents.Folder'])),
         ))
         db.send_create_signal('documents', ['Folder'])
 
         # Adding model 'File'
         db.create_table('documents_file', (
-            ('object_ptr', self.gf('django.db.models.fields.related.OneToOneField')(to=orm['core.Object'], unique=True, primary_key=True)),
-            ('name', self.gf('django.db.models.fields.CharField')(max_length=255)),
-            ('folder', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['documents.Folder'])),
-            ('content', self.gf('django.db.models.fields.files.FileField')(max_length=100)),
+            ('object_ptr', self.gf('django.db.models.fields.related.OneToOneField')(
+                to=orm['core.Object'], unique=True, primary_key=True)),
+            ('name', self.gf('django.db.models.fields.CharField')
+             (max_length=255)),
+            ('folder', self.gf('django.db.models.fields.related.ForeignKey')
+             (to=orm['documents.Folder'])),
+            ('content', self.gf('django.db.models.fields.files.FileField')
+             (max_length=100)),
         ))
         db.send_create_signal('documents', ['File'])
 
         # Adding model 'Document'
         db.create_table('documents_document', (
-            ('object_ptr', self.gf('django.db.models.fields.related.OneToOneField')(to=orm['core.Object'], unique=True, primary_key=True)),
-            ('title', self.gf('django.db.models.fields.CharField')(max_length=255)),
-            ('folder', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['documents.Folder'])),
-            ('body', self.gf('django.db.models.fields.TextField')(null=True, blank=True)),
+            ('object_ptr', self.gf('django.db.models.fields.related.OneToOneField')(
+                to=orm['core.Object'], unique=True, primary_key=True)),
+            ('title', self.gf('django.db.models.fields.CharField')
+             (max_length=255)),
+            ('folder', self.gf('django.db.models.fields.related.ForeignKey')
+             (to=orm['documents.Folder'])),
+            ('body', self.gf('django.db.models.fields.TextField')
+             (null=True, blank=True)),
         ))
         db.send_create_signal('documents', ['Document'])
 
         # Adding model 'WebLink'
         db.create_table('documents_weblink', (
-            ('object_ptr', self.gf('django.db.models.fields.related.OneToOneField')(to=orm['core.Object'], unique=True, primary_key=True)),
-            ('title', self.gf('django.db.models.fields.CharField')(max_length=255)),
-            ('folder', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['documents.Folder'])),
-            ('url', self.gf('django.db.models.fields.CharField')(max_length=255)),
+            ('object_ptr', self.gf('django.db.models.fields.related.OneToOneField')(
+                to=orm['core.Object'], unique=True, primary_key=True)),
+            ('title', self.gf('django.db.models.fields.CharField')
+             (max_length=255)),
+            ('folder', self.gf('django.db.models.fields.related.ForeignKey')
+             (to=orm['documents.Folder'])),
+            ('url', self.gf('django.db.models.fields.CharField')
+             (max_length=255)),
         ))
         db.send_create_signal('documents', ['WebLink'])
 
-
     def backwards(self, orm):
-        
+
         # Deleting model 'Folder'
         db.delete_table('documents_folder')
 
@@ -62,7 +77,6 @@ class Migration(SchemaMigration):
 
         # Deleting model 'WebLink'
         db.delete_table('documents_weblink')
-
 
     models = {
         'auth.group': {

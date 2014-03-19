@@ -10,6 +10,7 @@ from south.v2 import DataMigration
 from django.db import models
 from treeio.core.models import Object
 
+
 class Migration(DataMigration):
 
     def forwards(self, orm):
@@ -35,11 +36,8 @@ class Migration(DataMigration):
             obj.creator = obj.user
             obj.save()
 
-
     def backwards(self, orm):
         raise RuntimeError("Cannot reverse this migration.")
-
-
 
     models = {
         'auth.group': {

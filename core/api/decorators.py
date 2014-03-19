@@ -9,6 +9,7 @@ Hardtree Core decorators for api
 
 from utils import rc
 
+
 def module_admin_required(module_name=None):
     """ Check that the user has write access to the treeio.core module """
 
@@ -31,5 +32,3 @@ def module_admin_required(module_name=None):
         return wrapped_f
 
     return wrap
-
-        

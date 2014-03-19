@@ -9,82 +9,109 @@ from south.db import db
 from south.v2 import SchemaMigration
 from django.db import models
 
+
 class Migration(SchemaMigration):
 
     def forwards(self, orm):
-        
+
         # Adding model 'Currency'
         db.create_table('finance_currency', (
-            ('object_ptr', self.gf('django.db.models.fields.related.OneToOneField')(to=orm['core.Object'], unique=True, primary_key=True)),
-            ('code', self.gf('django.db.models.fields.CharField')(max_length=3)),
-            ('name', self.gf('django.db.models.fields.CharField')(max_length=255)),
-            ('symbol', self.gf('django.db.models.fields.CharField')(max_length=1, null=True, blank=True)),
-            ('factor', self.gf('django.db.models.fields.DecimalField')(default=1, max_digits=10, decimal_places=4)),
-            ('is_active', self.gf('django.db.models.fields.BooleanField')(default=True)),
-            ('is_default', self.gf('django.db.models.fields.BooleanField')(default=False)),
+            ('object_ptr', self.gf('django.db.models.fields.related.OneToOneField')(
+                to=orm['core.Object'], unique=True, primary_key=True)),
+            ('code', self.gf('django.db.models.fields.CharField')
+             (max_length=3)),
+            ('name', self.gf('django.db.models.fields.CharField')
+             (max_length=255)),
+            ('symbol', self.gf('django.db.models.fields.CharField')
+             (max_length=1, null=True, blank=True)),
+            ('factor', self.gf('django.db.models.fields.DecimalField')
+             (default=1, max_digits=10, decimal_places=4)),
+            ('is_active', self.gf(
+                'django.db.models.fields.BooleanField')(default=True)),
+            ('is_default', self.gf(
+                'django.db.models.fields.BooleanField')(default=False)),
         ))
         db.send_create_signal('finance', ['Currency'])
 
         # Adding model 'Tax'
         db.create_table('finance_tax', (
-            ('object_ptr', self.gf('django.db.models.fields.related.OneToOneField')(to=orm['core.Object'], unique=True, primary_key=True)),
-            ('name', self.gf('django.db.models.fields.CharField')(max_length=512)),
-            ('rate', self.gf('django.db.models.fields.DecimalField')(max_digits=4, decimal_places=2)),
-            ('compound', self.gf('django.db.models.fields.BooleanField')(default=False)),
+            ('object_ptr', self.gf('django.db.models.fields.related.OneToOneField')(
+                to=orm['core.Object'], unique=True, primary_key=True)),
+            ('name', self.gf('django.db.models.fields.CharField')
+             (max_length=512)),
+            ('rate', self.gf('django.db.models.fields.DecimalField')
+             (max_digits=4, decimal_places=2)),
+            ('compound', self.gf(
+                'django.db.models.fields.BooleanField')(default=False)),
         ))
         db.send_create_signal('finance', ['Tax'])
 
         # Adding field 'Liability.value_currency'
-        db.add_column('finance_liability', 'value_currency', self.gf('django.db.models.fields.related.ForeignKey')(default=1, to=orm['finance.Currency']), keep_default=False)
+        db.add_column('finance_liability', 'value_currency', self.gf(
+            'django.db.models.fields.related.ForeignKey')(default=1, to=orm['finance.Currency']), keep_default=False)
 
         # Adding field 'Liability.value_display'
-        db.add_column('finance_liability', 'value_display', self.gf('django.db.models.fields.DecimalField')(default=0, max_digits=20, decimal_places=2), keep_default=False)
+        db.add_column('finance_liability', 'value_display', self.gf('django.db.models.fields.DecimalField')(
+            default=0, max_digits=20, decimal_places=2), keep_default=False)
 
         # Changing field 'Liability.value'
-        db.alter_column('finance_liability', 'value', self.gf('django.db.models.fields.DecimalField')(max_digits=20, decimal_places=2))
+        db.alter_column('finance_liability', 'value', self.gf(
+            'django.db.models.fields.DecimalField')(max_digits=20, decimal_places=2))
 
         # Changing field 'Asset.initial_value'
-        db.alter_column('finance_asset', 'initial_value', self.gf('django.db.models.fields.DecimalField')(max_digits=20, decimal_places=2))
+        db.alter_column('finance_asset', 'initial_value', self.gf(
+            'django.db.models.fields.DecimalField')(max_digits=20, decimal_places=2))
 
         # Changing field 'Asset.current_value'
-        db.alter_column('finance_asset', 'current_value', self.gf('django.db.models.fields.DecimalField')(max_digits=20, decimal_places=2))
+        db.alter_column('finance_asset', 'current_value', self.gf(
+            'django.db.models.fields.DecimalField')(max_digits=20, decimal_places=2))
 
         # Changing field 'Asset.endlife_value'
-        db.alter_column('finance_asset', 'endlife_value', self.gf('django.db.models.fields.DecimalField')(null=True, max_digits=20, decimal_places=2))
+        db.alter_column('finance_asset', 'endlife_value', self.gf(
+            'django.db.models.fields.DecimalField')(null=True, max_digits=20, decimal_places=2))
 
         # Changing field 'Asset.lifetime'
-        db.alter_column('finance_asset', 'lifetime', self.gf('django.db.models.fields.DecimalField')(null=True, max_digits=20, decimal_places=0))
+        db.alter_column('finance_asset', 'lifetime', self.gf(
+            'django.db.models.fields.DecimalField')(null=True, max_digits=20, decimal_places=0))
 
         # Changing field 'Asset.depreciation_rate'
-        db.alter_column('finance_asset', 'depreciation_rate', self.gf('django.db.models.fields.DecimalField')(null=True, max_digits=4, decimal_places=2))
+        db.alter_column('finance_asset', 'depreciation_rate', self.gf(
+            'django.db.models.fields.DecimalField')(null=True, max_digits=4, decimal_places=2))
 
         # Adding field 'Account.balance_currency'
-        db.add_column('finance_account', 'balance_currency', self.gf('django.db.models.fields.related.ForeignKey')(default=1, to=orm['finance.Currency']), keep_default=False)
+        db.add_column('finance_account', 'balance_currency', self.gf(
+            'django.db.models.fields.related.ForeignKey')(default=1, to=orm['finance.Currency']), keep_default=False)
 
         # Adding field 'Account.balance_display'
-        db.add_column('finance_account', 'balance_display', self.gf('django.db.models.fields.DecimalField')(default=0, max_digits=20, decimal_places=2), keep_default=False)
+        db.add_column('finance_account', 'balance_display', self.gf('django.db.models.fields.DecimalField')(
+            default=0, max_digits=20, decimal_places=2), keep_default=False)
 
         # Changing field 'Account.balance'
-        db.alter_column('finance_account', 'balance', self.gf('django.db.models.fields.DecimalField')(max_digits=20, decimal_places=2))
+        db.alter_column('finance_account', 'balance', self.gf(
+            'django.db.models.fields.DecimalField')(max_digits=20, decimal_places=2))
 
         # Adding field 'Transaction.value_currency'
-        db.add_column('finance_transaction', 'value_currency', self.gf('django.db.models.fields.related.ForeignKey')(default=1, to=orm['finance.Currency']), keep_default=False)
+        db.add_column('finance_transaction', 'value_currency', self.gf(
+            'django.db.models.fields.related.ForeignKey')(default=1, to=orm['finance.Currency']), keep_default=False)
 
         # Adding field 'Transaction.value_display'
-        db.add_column('finance_transaction', 'value_display', self.gf('django.db.models.fields.DecimalField')(default=0, max_digits=20, decimal_places=2), keep_default=False)
+        db.add_column('finance_transaction', 'value_display', self.gf('django.db.models.fields.DecimalField')(
+            default=0, max_digits=20, decimal_places=2), keep_default=False)
 
         # Changing field 'Transaction.value'
-        db.alter_column('finance_transaction', 'value', self.gf('django.db.models.fields.DecimalField')(max_digits=20, decimal_places=2))
+        db.alter_column('finance_transaction', 'value', self.gf(
+            'django.db.models.fields.DecimalField')(max_digits=20, decimal_places=2))
 
         # Changing field 'Equity.issue_price'
-        db.alter_column('finance_equity', 'issue_price', self.gf('django.db.models.fields.DecimalField')(max_digits=20, decimal_places=2))
+        db.alter_column('finance_equity', 'issue_price', self.gf(
+            'django.db.models.fields.DecimalField')(max_digits=20, decimal_places=2))
 
         # Changing field 'Equity.sell_price'
-        db.alter_column('finance_equity', 'sell_price', self.gf('django.db.models.fields.DecimalField')(max_digits=20, decimal_places=2))
-
+        db.alter_column('finance_equity', 'sell_price', self.gf(
+            'django.db.models.fields.DecimalField')(max_digits=20, decimal_places=2))
 
     def backwards(self, orm):
-        
+
         # Deleting model 'Currency'
         db.delete_table('finance_currency')
 
@@ -98,22 +125,28 @@ class Migration(SchemaMigration):
         db.delete_column('finance_liability', 'value_display')
 
         # Changing field 'Liability.value'
-        db.alter_column('finance_liability', 'value', self.gf('django.db.models.fields.FloatField')())
+        db.alter_column('finance_liability', 'value', self.gf(
+            'django.db.models.fields.FloatField')())
 
         # Changing field 'Asset.initial_value'
-        db.alter_column('finance_asset', 'initial_value', self.gf('django.db.models.fields.FloatField')())
+        db.alter_column('finance_asset', 'initial_value', self.gf(
+            'django.db.models.fields.FloatField')())
 
         # Changing field 'Asset.current_value'
-        db.alter_column('finance_asset', 'current_value', self.gf('django.db.models.fields.FloatField')())
+        db.alter_column('finance_asset', 'current_value', self.gf(
+            'django.db.models.fields.FloatField')())
 
         # Changing field 'Asset.endlife_value'
-        db.alter_column('finance_asset', 'endlife_value', self.gf('django.db.models.fields.FloatField')(null=True))
+        db.alter_column('finance_asset', 'endlife_value', self.gf(
+            'django.db.models.fields.FloatField')(null=True))
 
         # Changing field 'Asset.lifetime'
-        db.alter_column('finance_asset', 'lifetime', self.gf('django.db.models.fields.FloatField')(null=True))
+        db.alter_column('finance_asset', 'lifetime', self.gf(
+            'django.db.models.fields.FloatField')(null=True))
 
         # Changing field 'Asset.depreciation_rate'
-        db.alter_column('finance_asset', 'depreciation_rate', self.gf('django.db.models.fields.FloatField')(null=True))
+        db.alter_column('finance_asset', 'depreciation_rate', self.gf(
+            'django.db.models.fields.FloatField')(null=True))
 
         # Deleting field 'Account.balance_currency'
         db.delete_column('finance_account', 'balance_currency_id')
@@ -122,7 +155,8 @@ class Migration(SchemaMigration):
         db.delete_column('finance_account', 'balance_display')
 
         # Changing field 'Account.balance'
-        db.alter_column('finance_account', 'balance', self.gf('django.db.models.fields.FloatField')())
+        db.alter_column('finance_account', 'balance', self.gf(
+            'django.db.models.fields.FloatField')())
 
         # Deleting field 'Transaction.value_currency'
         db.delete_column('finance_transaction', 'value_currency_id')
@@ -131,14 +165,16 @@ class Migration(SchemaMigration):
         db.delete_column('finance_transaction', 'value_display')
 
         # Changing field 'Transaction.value'
-        db.alter_column('finance_transaction', 'value', self.gf('django.db.models.fields.FloatField')())
+        db.alter_column('finance_transaction', 'value', self.gf(
+            'django.db.models.fields.FloatField')())
 
         # Changing field 'Equity.issue_price'
-        db.alter_column('finance_equity', 'issue_price', self.gf('django.db.models.fields.FloatField')())
+        db.alter_column('finance_equity', 'issue_price', self.gf(
+            'django.db.models.fields.FloatField')())
 
         # Changing field 'Equity.sell_price'
-        db.alter_column('finance_equity', 'sell_price', self.gf('django.db.models.fields.FloatField')())
-
+        db.alter_column('finance_equity', 'sell_price', self.gf(
+            'django.db.models.fields.FloatField')())
 
     models = {
         'auth.group': {

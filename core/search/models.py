@@ -13,6 +13,7 @@ from treeio.core.conf import settings
 from treeio.core.models import Object
 from whoosh import index
 
+
 def create_index(sender=None, **kwargs):
     "Create initial (empty) search index"
     if not os.path.exists(settings.WHOOSH_INDEX):
@@ -25,7 +26,7 @@ if not settings.SEARCH_DISABLED and getattr(settings, 'SEARCH_ENGINE', 'whoosh')
 
 def update_index(sender, instance, created, **kwargs):
     "Add Object to search index"
-    if isinstance(instance, Object) and  instance.is_searchable():
+    if isinstance(instance, Object) and instance.is_searchable():
         search_item = instance.get_search_item()
         ix = index.open_dir(settings.WHOOSH_INDEX)
         try:
@@ -56,7 +57,7 @@ if not settings.SEARCH_DISABLED and getattr(settings, 'SEARCH_ENGINE', 'whoosh')
 
 def delete_index(sender, instance, **kwargs):
     "Delete Object from search index"
-    
+
     if isinstance(instance, Object) and instance.is_searchable():
         ix = index.open_dir(settings.WHOOSH_INDEX)
         try:

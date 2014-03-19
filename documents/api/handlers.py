@@ -10,13 +10,15 @@ from __future__ import absolute_import, with_statement
 __all__ = ['FolderHandler',
            'FileHandler',
            'DocumentHandler',
-           'WebLinkHandler',]
+           'WebLinkHandler', ]
 
 from treeio.core.api.handlers import ObjectHandler, getOrNone
 from treeio.documents.models import Document, Folder, File, WebLink
 from treeio.documents.forms import FolderForm, DocumentForm, FileForm, FilterForm, WebLinkForm
 
+
 class FolderHandler(ObjectHandler):
+
     "Entrypoint for Folder model."
 
     model = Folder
@@ -31,7 +33,9 @@ class FolderHandler(ObjectHandler):
         dct["folder_id"] = None
         return dct
 
+
 class CommonHandler(ObjectHandler):
+
     def check_create_permission(self, request, mode):
         if request.data.has_key('folder'):
             folder = getOrNone(Folder, pk=request.data['folder'])
@@ -44,7 +48,9 @@ class CommonHandler(ObjectHandler):
         dct["folder_id"] = None
         return dct
 
+
 class FileHandler(CommonHandler):
+
     "Entrypoint for File model."
 
     model = File
@@ -54,7 +60,9 @@ class FileHandler(CommonHandler):
     def resource_uri():
         return ('api_documents_files', ['id'])
 
+
 class DocumentHandler(CommonHandler):
+
     "Entrypoint for Document model."
 
     model = Document
@@ -64,7 +72,9 @@ class DocumentHandler(CommonHandler):
     def resource_uri():
         return ('api_documents_documents', ['id'])
 
+
 class WebLinkHandler(CommonHandler):
+
     "Entrypoint for WebLink model."
 
     model = WebLink

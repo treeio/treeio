@@ -16,15 +16,17 @@ from treeio.core.models import User, Group, Perspective, ModuleSetting, Object
 from treeio.messaging.models import Message, MessageStream, MailingList
 from treeio.identities.models import Contact, ContactType
 
+
 class MessagingApiTest(TestCase):
+
     "Messaging functional tests for api"
 
     username = "api_test"
     password = "api_password"
     prepared = False
-    authentication_headers ={"CONTENT_TYPE": "application/json",
-                             "HTTP_AUTHORIZATION" : "Basic YXBpX3Rlc3Q6YXBpX3Bhc3N3b3Jk" }
-    content_type ='application/json'
+    authentication_headers = {"CONTENT_TYPE": "application/json",
+                              "HTTP_AUTHORIZATION": "Basic YXBpX3Rlc3Q6YXBpX3Bhc3N3b3Jk"}
+    content_type = 'application/json'
 
     def setUp(self):
         "Initial Setup"
@@ -75,7 +77,8 @@ class MessagingApiTest(TestCase):
             self.contact.set_default_user()
             self.contact.save()
 
-            self.user_contact = Contact(name='test', related_user=self.user.get_profile(), contact_type=self.contact_type)
+            self.user_contact = Contact(
+                name='test', related_user=self.user.get_profile(), contact_type=self.contact_type)
             self.user_contact.set_user(self.user)
             self.user_contact.save()
 
@@ -87,7 +90,8 @@ class MessagingApiTest(TestCase):
             self.mlist.set_default_user()
             self.mlist.save()
 
-            self.message = Message(title='test', body='test', author=self.contact, stream=self.stream)
+            self.message = Message(
+                title='test', body='test', author=self.contact, stream=self.stream)
             self.message.set_default_user()
             self.message.save()
 
@@ -103,16 +107,18 @@ class MessagingApiTest(TestCase):
 
     def test_get_mlist(self):
         """ Test index page api/messaging/mlist """
-        response = self.client.get(path=reverse('api_messaging_mlist'), **self.authentication_headers)
+        response = self.client.get(
+            path=reverse('api_messaging_mlist'), **self.authentication_headers)
         self.assertEquals(response.status_code, 200)
 
     def test_get_one_mlist(self):
-        response = self.client.get(path=reverse('api_messaging_mlist', kwargs={'object_ptr': self.mlist.id}), **self.authentication_headers)
+        response = self.client.get(path=reverse('api_messaging_mlist', kwargs={
+                                   'object_ptr': self.mlist.id}), **self.authentication_headers)
         self.assertEquals(response.status_code, 200)
 
     def test_update_mlist(self):
         updates = {"name": "API mailing list", "description": "API description update", "from_contact": self.contact.id,
-                   "members": [self.contact.id,]}
+                   "members": [self.contact.id, ]}
         response = self.client.put(path=reverse('api_messaging_mlist', kwargs={'object_ptr': self.mlist.id}),
                                    content_type=self.content_type,  data=json.dumps(updates), **self.authentication_headers)
         self.assertEquals(response.status_code, 200)
@@ -126,11 +132,13 @@ class MessagingApiTest(TestCase):
 
     def test_get_streams(self):
         """ Test index page api/messaging/streams """
-        response = self.client.get(path=reverse('api_messaging_streams'), **self.authentication_headers)
+        response = self.client.get(
+            path=reverse('api_messaging_streams'), **self.authentication_headers)
         self.assertEquals(response.status_code, 200)
 
     def test_get_stream(self):
-        response = self.client.get(path=reverse('api_messaging_streams', kwargs={'object_ptr': self.stream.id}), **self.authentication_headers)
+        response = self.client.get(path=reverse('api_messaging_streams', kwargs={
+                                   'object_ptr': self.stream.id}), **self.authentication_headers)
         self.assertEquals(response.status_code, 200)
 
     def test_update_stream(self):
@@ -144,11 +152,13 @@ class MessagingApiTest(TestCase):
 
     def test_get_messages(self):
         """ Test index page api/messaging/messages """
-        response = self.client.get(path=reverse('api_messaging_messages'), **self.authentication_headers)
+        response = self.client.get(
+            path=reverse('api_messaging_messages'), **self.authentication_headers)
         self.assertEquals(response.status_code, 200)
 
     def test_get_message(self):
-        response = self.client.get(path=reverse('api_messaging_messages', kwargs={'object_ptr': self.message.id}), **self.authentication_headers)
+        response = self.client.get(path=reverse('api_messaging_messages', kwargs={
+                                   'object_ptr': self.message.id}), **self.authentication_headers)
         self.assertEquals(response.status_code, 200)
 
     def test_send_message(self):

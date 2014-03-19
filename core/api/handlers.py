@@ -13,6 +13,7 @@ from django.core.files import File
 from piston.handler import BaseHandler, HandlerMetaClass, typemapper
 from django.core.exceptions import ObjectDoesNotExist, MultipleObjectsReturned
 
+
 class ObjectHandlerMetaClass(HandlerMetaClass):
 
     def __new__(cls, name, bases, attrs):
@@ -23,7 +24,7 @@ class ObjectHandlerMetaClass(HandlerMetaClass):
 
         new_cls.__dir = dir(new_cls)
         for field in ('fields', 'model', 'exclude', 'allowed_methods', 'anonymous', 'is_anonymous',
-                             'read', 'create', 'update', 'delete'):
+                      'read', 'create', 'update', 'delete'):
             try:
                 new_cls.__dir.remove(field)
             except ValueError:
@@ -35,9 +36,13 @@ class ObjectHandlerMetaClass(HandlerMetaClass):
 import base64
 from cStringIO import StringIO
 from django.core.files.uploadedfile import InMemoryUploadedFile
+
+
 class ObjectHandler(BaseHandler):
 
-    __metaclass__ = ObjectHandlerMetaClass # I use metaclass to give a chance to show model's fields with names in tuple
+    # I use metaclass to give a chance to show model's fields with names in
+    # tuple
+    __metaclass__ = ObjectHandlerMetaClass
 
     form = None
     exclude = ('object_type', 'object_ptr', 'object_name')
@@ -70,12 +75,14 @@ class ObjectHandler(BaseHandler):
         for key, value in request.data.items():
             if isinstance(value, dict) and value.get('type') == 'base64':
                 content = base64.decodestring(value.get('content', ''))
-                files[str(key)] = InMemoryUploadedFile(file = StringIO(content),
-                                                       field_name = str(key),
-                                                       name = value.get('name', ''),
-                                                       content_type = value.get('content_type'),
-                                                       size = len(content),
-                                                       charset = None)
+                files[str(key)] = InMemoryUploadedFile(file=StringIO(content),
+                                                       field_name=str(key),
+                                                       name=value.get(
+                                                           'name', ''),
+                                                       content_type=value.get(
+                                                           'content_type'),
+                                                       size=len(content),
+                                                       charset=None)
             else:
                 data[str(key)] = value
         return {'data': data,
@@ -87,10 +94,10 @@ class ObjectHandler(BaseHandler):
         fields = self.model._meta.get_all_field_names()
         for arg in args:
             if hasattr(self.model, arg) and args[arg]:
-                kwargs = { str(arg + '__id'): long(args[arg]) }
+                kwargs = {str(arg + '__id'): long(args[arg])}
                 query = query & Q(**kwargs)
             elif arg in fields:
-                kwargs = { arg: args[arg] }
+                kwargs = {arg: args[arg]}
                 query = query & Q(**kwargs)
         return query
 
@@ -109,7 +116,8 @@ class ObjectHandler(BaseHandler):
                     return obj
             except ObjectDoesNotExist:
                 return rc.NOT_FOUND
-            except MultipleObjectsReturned: # should never happen, since we're using a PK
+            # should never happen, since we're using a PK
+            except MultipleObjectsReturned:
                 return rc.BAD_REQUEST
         else:
             query = self.get_filter_query(request.GET)
@@ -141,7 +149,8 @@ class ObjectHandler(BaseHandler):
         if not self.has_model() or not self.has_form():
             return rc.NOT_IMPLEMENTED
 
-        pkfield = kwargs.get(self.model._meta.pk.name) or request.data.get(self.model._meta.pk.name)
+        pkfield = kwargs.get(self.model._meta.pk.name) or request.data.get(
+            self.model._meta.pk.name)
 
         if not pkfield or request.data is None:
             return rc.BAD_REQUEST
@@ -184,6 +193,7 @@ class ObjectHandler(BaseHandler):
         except self.model.DoesNotExist:
             return rc.NOT_HERE
 
+
 class AccessHandler(BaseHandler):
     form = None
 
@@ -202,7 +212,7 @@ class AccessHandler(BaseHandler):
         if request.data is None:
             return rc.BAD_REQUEST
 
-        form = self.form( self.flatten_dict(request.data) )
+        form = self.form(self.flatten_dict(request.data))
         if form.is_valid():
             obj = form.save()
             return obj
@@ -215,7 +225,8 @@ class AccessHandler(BaseHandler):
         if not self.has_model() or not self.has_form():
             return rc.NOT_IMPLEMENTED
 
-        pkfield = kwargs.get(self.model._meta.pk.name) or request.data.get(self.model._meta.pk.name)
+        pkfield = kwargs.get(self.model._meta.pk.name) or request.data.get(
+            self.model._meta.pk.name)
 
         if not pkfield or request.data is None:
             return rc.BAD_REQUEST
@@ -233,6 +244,7 @@ class AccessHandler(BaseHandler):
         else:
             self.status = 400
             return form.errors
+
 
 def getOrNone(model, pk):
     try:

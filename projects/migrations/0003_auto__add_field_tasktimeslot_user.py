@@ -9,19 +9,19 @@ from south.db import db
 from south.v2 import SchemaMigration
 from django.db import models
 
+
 class Migration(SchemaMigration):
 
     def forwards(self, orm):
-        
-        # Adding field 'TaskTimeSlot.user'
-        db.add_column('projects_tasktimeslot', 'user', self.gf('django.db.models.fields.related.ForeignKey')(default=1, to=orm['core.User']), keep_default=False)
 
+        # Adding field 'TaskTimeSlot.user'
+        db.add_column('projects_tasktimeslot', 'user', self.gf(
+            'django.db.models.fields.related.ForeignKey')(default=1, to=orm['core.User']), keep_default=False)
 
     def backwards(self, orm):
-        
+
         # Deleting field 'TaskTimeSlot.user'
         db.delete_column('projects_tasktimeslot', 'user_id')
-
 
     models = {
         'auth.group': {

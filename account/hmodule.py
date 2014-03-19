@@ -8,16 +8,16 @@ Account: Hardtree module definition
 """
 
 PROPERTIES = {
-              'title': 'Account',
-              'details': 'User Account',
-              'url': '/account/',
-              'system': True,
-              'type': 'user',
-              }
+    'title': 'Account',
+    'details': 'User Account',
+    'url': '/account/',
+    'system': True,
+    'type': 'user',
+}
 
 URL_PATTERNS = [
-                '^/account/',
-                ]
+    '^/account/',
+]
 
 #
 # Cron

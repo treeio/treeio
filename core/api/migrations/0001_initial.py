@@ -9,49 +9,68 @@ from south.db import db
 from south.v2 import SchemaMigration
 from django.db import models
 
+
 class Migration(SchemaMigration):
 
     def forwards(self, orm):
-        
+
         # Adding model 'Nonce'
         db.create_table('api_nonce', (
-            ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('token_key', self.gf('django.db.models.fields.CharField')(max_length=18)),
-            ('consumer_key', self.gf('django.db.models.fields.CharField')(max_length=18)),
-            ('key', self.gf('django.db.models.fields.CharField')(max_length=255)),
+            ('id', self.gf('django.db.models.fields.AutoField')
+             (primary_key=True)),
+            ('token_key', self.gf(
+                'django.db.models.fields.CharField')(max_length=18)),
+            ('consumer_key', self.gf(
+                'django.db.models.fields.CharField')(max_length=18)),
+            ('key', self.gf('django.db.models.fields.CharField')
+             (max_length=255)),
         ))
         db.send_create_signal('api', ['Nonce'])
 
         # Adding model 'Consumer'
         db.create_table('api_consumer', (
-            ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('name', self.gf('django.db.models.fields.CharField')(max_length=255)),
+            ('id', self.gf('django.db.models.fields.AutoField')
+             (primary_key=True)),
+            ('name', self.gf('django.db.models.fields.CharField')
+             (max_length=255)),
             ('description', self.gf('django.db.models.fields.TextField')()),
-            ('key', self.gf('django.db.models.fields.CharField')(unique=True, max_length=18)),
-            ('secret', self.gf('django.db.models.fields.CharField')(max_length=32)),
-            ('status', self.gf('django.db.models.fields.CharField')(default='pending', max_length=16)),
+            ('key', self.gf('django.db.models.fields.CharField')
+             (unique=True, max_length=18)),
+            ('secret', self.gf('django.db.models.fields.CharField')
+             (max_length=32)),
+            ('status', self.gf('django.db.models.fields.CharField')
+             (default='pending', max_length=16)),
         ))
         db.send_create_signal('api', ['Consumer'])
 
         # Adding model 'Token'
         db.create_table('api_token', (
-            ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('key', self.gf('django.db.models.fields.CharField')(max_length=18)),
-            ('secret', self.gf('django.db.models.fields.CharField')(max_length=32)),
-            ('verifier', self.gf('django.db.models.fields.CharField')(max_length=10)),
+            ('id', self.gf('django.db.models.fields.AutoField')
+             (primary_key=True)),
+            ('key', self.gf('django.db.models.fields.CharField')
+             (max_length=18)),
+            ('secret', self.gf('django.db.models.fields.CharField')
+             (max_length=32)),
+            ('verifier', self.gf(
+                'django.db.models.fields.CharField')(max_length=10)),
             ('token_type', self.gf('django.db.models.fields.IntegerField')()),
-            ('timestamp', self.gf('django.db.models.fields.IntegerField')(default=1303299544L)),
-            ('is_approved', self.gf('django.db.models.fields.BooleanField')(default=False)),
-            ('user', self.gf('django.db.models.fields.related.ForeignKey')(blank=True, related_name='tokens', null=True, to=orm['auth.User'])),
-            ('consumer_id', self.gf('django.db.models.fields.IntegerField')(null=True, blank=True)),
-            ('callback', self.gf('django.db.models.fields.CharField')(max_length=255, null=True, blank=True)),
-            ('callback_confirmed', self.gf('django.db.models.fields.BooleanField')(default=False)),
+            ('timestamp', self.gf('django.db.models.fields.IntegerField')
+             (default=1303299544L)),
+            ('is_approved', self.gf(
+                'django.db.models.fields.BooleanField')(default=False)),
+            ('user', self.gf('django.db.models.fields.related.ForeignKey')(
+                blank=True, related_name='tokens', null=True, to=orm['auth.User'])),
+            ('consumer_id', self.gf('django.db.models.fields.IntegerField')
+             (null=True, blank=True)),
+            ('callback', self.gf('django.db.models.fields.CharField')
+             (max_length=255, null=True, blank=True)),
+            ('callback_confirmed', self.gf(
+                'django.db.models.fields.BooleanField')(default=False)),
         ))
         db.send_create_signal('api', ['Token'])
 
-
     def backwards(self, orm):
-        
+
         # Deleting model 'Nonce'
         db.delete_table('api_nonce')
 
@@ -60,7 +79,6 @@ class Migration(SchemaMigration):
 
         # Deleting model 'Token'
         db.delete_table('api_token')
-
 
     models = {
         'api.consumer': {

@@ -9,87 +9,116 @@ from south.db import db
 from south.v2 import SchemaMigration
 from django.db import models
 
+
 class Migration(SchemaMigration):
 
     def forwards(self, orm):
-        
+
         # Adding model 'MailingList'
         db.create_table('messaging_mailinglist', (
-            ('object_ptr', self.gf('django.db.models.fields.related.OneToOneField')(to=orm['core.Object'], unique=True, primary_key=True)),
-            ('name', self.gf('django.db.models.fields.CharField')(max_length=255)),
-            ('description', self.gf('django.db.models.fields.TextField')(null=True, blank=True)),
-            ('from_contact', self.gf('django.db.models.fields.related.ForeignKey')(related_name='from_contact_set', to=orm['identities.Contact'])),
-            ('opt_in', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['messaging.Template'], null=True, blank=True)),
+            ('object_ptr', self.gf('django.db.models.fields.related.OneToOneField')(
+                to=orm['core.Object'], unique=True, primary_key=True)),
+            ('name', self.gf('django.db.models.fields.CharField')
+             (max_length=255)),
+            ('description', self.gf('django.db.models.fields.TextField')
+             (null=True, blank=True)),
+            ('from_contact', self.gf('django.db.models.fields.related.ForeignKey')(
+                related_name='from_contact_set', to=orm['identities.Contact'])),
+            ('opt_in', self.gf('django.db.models.fields.related.ForeignKey')
+             (to=orm['messaging.Template'], null=True, blank=True)),
         ))
         db.send_create_signal('messaging', ['MailingList'])
 
         # Adding M2M table for field members on 'MailingList'
         db.create_table('messaging_mailinglist_members', (
-            ('id', models.AutoField(verbose_name='ID', primary_key=True, auto_created=True)),
-            ('mailinglist', models.ForeignKey(orm['messaging.mailinglist'], null=False)),
-            ('contact', models.ForeignKey(orm['identities.contact'], null=False))
+            ('id', models.AutoField(
+                verbose_name='ID', primary_key=True, auto_created=True)),
+            ('mailinglist', models.ForeignKey(
+                orm['messaging.mailinglist'], null=False)),
+            ('contact', models.ForeignKey(
+                orm['identities.contact'], null=False))
         ))
-        db.create_unique('messaging_mailinglist_members', ['mailinglist_id', 'contact_id'])
+        db.create_unique(
+            'messaging_mailinglist_members', ['mailinglist_id', 'contact_id'])
 
         # Adding model 'Template'
         db.create_table('messaging_template', (
-            ('object_ptr', self.gf('django.db.models.fields.related.OneToOneField')(to=orm['core.Object'], unique=True, primary_key=True)),
-            ('name', self.gf('django.db.models.fields.CharField')(max_length=255)),
+            ('object_ptr', self.gf('django.db.models.fields.related.OneToOneField')(
+                to=orm['core.Object'], unique=True, primary_key=True)),
+            ('name', self.gf('django.db.models.fields.CharField')
+             (max_length=255)),
             ('body', self.gf('django.db.models.fields.TextField')()),
-            ('subject', self.gf('django.db.models.fields.CharField')(max_length=255)),
+            ('subject', self.gf('django.db.models.fields.CharField')
+             (max_length=255)),
         ))
         db.send_create_signal('messaging', ['Template'])
 
         # Adding field 'Message.mlist'
-        db.add_column('messaging_message', 'mlist', self.gf('django.db.models.fields.related.ForeignKey')(blank=True, related_name='mlist', null=True, to=orm['messaging.MailingList']), keep_default=False)
+        db.add_column('messaging_message', 'mlist', self.gf('django.db.models.fields.related.ForeignKey')(
+            blank=True, related_name='mlist', null=True, to=orm['messaging.MailingList']), keep_default=False)
 
         # Adding M2M table for field recipients on 'Message'
         db.create_table('messaging_message_recipients', (
-            ('id', models.AutoField(verbose_name='ID', primary_key=True, auto_created=True)),
-            ('message', models.ForeignKey(orm['messaging.message'], null=False)),
-            ('contact', models.ForeignKey(orm['identities.contact'], null=False))
+            ('id', models.AutoField(
+                verbose_name='ID', primary_key=True, auto_created=True)),
+            ('message', models.ForeignKey(
+                orm['messaging.message'], null=False)),
+            ('contact', models.ForeignKey(
+                orm['identities.contact'], null=False))
         ))
-        db.create_unique('messaging_message_recipients', ['message_id', 'contact_id'])
+        db.create_unique(
+            'messaging_message_recipients', ['message_id', 'contact_id'])
 
         # Changing field 'Message.stream'
-        db.alter_column('messaging_message', 'stream_id', self.gf('django.db.models.fields.related.ForeignKey')(null=True, to=orm['messaging.MessageStream']))
+        db.alter_column('messaging_message', 'stream_id', self.gf(
+            'django.db.models.fields.related.ForeignKey')(null=True, to=orm['messaging.MessageStream']))
 
         # Adding field 'MessageStream.incoming_server_name'
-        db.add_column('messaging_messagestream', 'incoming_server_name', self.gf('django.db.models.fields.CharField')(max_length=255, null=True, blank=True), keep_default=False)
+        db.add_column('messaging_messagestream', 'incoming_server_name', self.gf(
+            'django.db.models.fields.CharField')(max_length=255, null=True, blank=True), keep_default=False)
 
         # Adding field 'MessageStream.incoming_server_type'
-        db.add_column('messaging_messagestream', 'incoming_server_type', self.gf('django.db.models.fields.CharField')(max_length=255, null=True, blank=True), keep_default=False)
+        db.add_column('messaging_messagestream', 'incoming_server_type', self.gf(
+            'django.db.models.fields.CharField')(max_length=255, null=True, blank=True), keep_default=False)
 
         # Adding field 'MessageStream.incoming_server_username'
-        db.add_column('messaging_messagestream', 'incoming_server_username', self.gf('django.db.models.fields.CharField')(max_length=255, null=True, blank=True), keep_default=False)
+        db.add_column('messaging_messagestream', 'incoming_server_username', self.gf(
+            'django.db.models.fields.CharField')(max_length=255, null=True, blank=True), keep_default=False)
 
         # Adding field 'MessageStream.incoming_password'
-        db.add_column('messaging_messagestream', 'incoming_password', self.gf('django.db.models.fields.CharField')(max_length=255, null=True, blank=True), keep_default=False)
+        db.add_column('messaging_messagestream', 'incoming_password', self.gf(
+            'django.db.models.fields.CharField')(max_length=255, null=True, blank=True), keep_default=False)
 
         # Adding field 'MessageStream.outgoing_email'
-        db.add_column('messaging_messagestream', 'outgoing_email', self.gf('django.db.models.fields.EmailField')(max_length=255, null=True, blank=True), keep_default=False)
+        db.add_column('messaging_messagestream', 'outgoing_email', self.gf(
+            'django.db.models.fields.EmailField')(max_length=255, null=True, blank=True), keep_default=False)
 
         # Adding field 'MessageStream.outgoing_server_name'
-        db.add_column('messaging_messagestream', 'outgoing_server_name', self.gf('django.db.models.fields.CharField')(max_length=255, null=True, blank=True), keep_default=False)
+        db.add_column('messaging_messagestream', 'outgoing_server_name', self.gf(
+            'django.db.models.fields.CharField')(max_length=255, null=True, blank=True), keep_default=False)
 
         # Adding field 'MessageStream.outgoing_server_type'
-        db.add_column('messaging_messagestream', 'outgoing_server_type', self.gf('django.db.models.fields.CharField')(max_length=255, null=True, blank=True), keep_default=False)
+        db.add_column('messaging_messagestream', 'outgoing_server_type', self.gf(
+            'django.db.models.fields.CharField')(max_length=255, null=True, blank=True), keep_default=False)
 
         # Adding field 'MessageStream.outgoing_server_username'
-        db.add_column('messaging_messagestream', 'outgoing_server_username', self.gf('django.db.models.fields.CharField')(max_length=255, null=True, blank=True), keep_default=False)
+        db.add_column('messaging_messagestream', 'outgoing_server_username', self.gf(
+            'django.db.models.fields.CharField')(max_length=255, null=True, blank=True), keep_default=False)
 
         # Adding field 'MessageStream.outgoing_password'
-        db.add_column('messaging_messagestream', 'outgoing_password', self.gf('django.db.models.fields.CharField')(max_length=255, null=True, blank=True), keep_default=False)
+        db.add_column('messaging_messagestream', 'outgoing_password', self.gf(
+            'django.db.models.fields.CharField')(max_length=255, null=True, blank=True), keep_default=False)
 
         # Adding field 'MessageStream.faulty'
-        db.add_column('messaging_messagestream', 'faulty', self.gf('django.db.models.fields.BooleanField')(default=False), keep_default=False)
+        db.add_column('messaging_messagestream', 'faulty', self.gf(
+            'django.db.models.fields.BooleanField')(default=False), keep_default=False)
 
         # Adding field 'MessageStream.last_checked'
-        db.add_column('messaging_messagestream', 'last_checked', self.gf('django.db.models.fields.DateTimeField')(null=True, blank=True), keep_default=False)
-
+        db.add_column('messaging_messagestream', 'last_checked', self.gf(
+            'django.db.models.fields.DateTimeField')(null=True, blank=True), keep_default=False)
 
     def backwards(self, orm):
-        
+
         # Deleting model 'MailingList'
         db.delete_table('messaging_mailinglist')
 
@@ -105,8 +134,10 @@ class Migration(SchemaMigration):
         # Removing M2M table for field recipients on 'Message'
         db.delete_table('messaging_message_recipients')
 
-        # User chose to not deal with backwards NULL issues for 'Message.stream'
-        raise RuntimeError("Cannot reverse this migration. 'Message.stream' and its values cannot be restored.")
+        # User chose to not deal with backwards NULL issues for
+        # 'Message.stream'
+        raise RuntimeError(
+            "Cannot reverse this migration. 'Message.stream' and its values cannot be restored.")
 
         # Deleting field 'MessageStream.incoming_server_name'
         db.delete_column('messaging_messagestream', 'incoming_server_name')
@@ -140,7 +171,6 @@ class Migration(SchemaMigration):
 
         # Deleting field 'MessageStream.last_checked'
         db.delete_column('messaging_messagestream', 'last_checked')
-
 
     models = {
         'auth.group': {

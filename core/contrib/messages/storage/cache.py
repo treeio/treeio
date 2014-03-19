@@ -10,18 +10,23 @@ from django.contrib.messages.storage.base import BaseStorage
 from django.core.cache import cache
 import cPickle
 
+
 def lock(key):
     while True:
-        if cache.add(key+'_lock', '1', 10): # lifetime lock 10 seconds
+        if cache.add(key + '_lock', '1', 10):  # lifetime lock 10 seconds
             break
 
+
 def unlock(key):
-    cache.delete(key+'_lock')
+    cache.delete(key + '_lock')
+
 
 class CacheStorage(BaseStorage):
+
     """
     Stores messages in a cache.
     """
+
     def __init__(self, request, *args, **kwargs):
         super(CacheStorage, self).__init__(request, *args, **kwargs)
         self.user = request.user.id
@@ -46,7 +51,7 @@ class CacheStorage(BaseStorage):
             pass
         unlock(self.key)
         return messages, True
-    
+
     def update(self, response, *args, **kwargs):
         "Update flew by - don't pass response to avoid Exceptions being thrown by Django middleware"
         result = super(CacheStorage, self).update(response, *args, **kwargs)
@@ -63,7 +68,7 @@ class CacheStorage(BaseStorage):
         try:
             if messages:
                 data = cache.get(self.key)
-                if not data: # if not data in cache
+                if not data:  # if not data in cache
                     data = cPickle.dumps(([], True))
                 data = cPickle.loads(data)
                 data.append(messages)

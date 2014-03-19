@@ -14,15 +14,17 @@ from django.contrib.auth.models import User as DjangoUser
 from treeio.core.models import User, Group, Perspective, ModuleSetting, Object
 from treeio.knowledge.models import KnowledgeFolder, KnowledgeItem, KnowledgeCategory
 
+
 class KnowledgeViewsTest(TestCase):
+
     "Knowledge functional tests for views"
 
     username = "api_test"
     password = "api_password"
     prepared = False
-    authentication_headers ={"CONTENT_TYPE": "application/json",
-                             "HTTP_AUTHORIZATION" : "Basic YXBpX3Rlc3Q6YXBpX3Bhc3N3b3Jk" }
-    content_type ='application/json'
+    authentication_headers = {"CONTENT_TYPE": "application/json",
+                              "HTTP_AUTHORIZATION": "Basic YXBpX3Rlc3Q6YXBpX3Bhc3N3b3Jk"}
+    content_type = 'application/json'
     prepared = False
 
     def setUp(self):
@@ -94,15 +96,18 @@ class KnowledgeViewsTest(TestCase):
 
     def test_get_folders_list(self):
         """ Test index page api/knowledge/folders """
-        response = self.client.get(path=reverse('api_knowledge_folders'), **self.authentication_headers)
+        response = self.client.get(
+            path=reverse('api_knowledge_folders'), **self.authentication_headers)
         self.assertEquals(response.status_code, 200)
 
     def test_get_folder(self):
-        response = self.client.get(path=reverse('api_knowledge_folders', kwargs={'object_ptr': self.folder.id}), **self.authentication_headers)
+        response = self.client.get(path=reverse('api_knowledge_folders', kwargs={
+                                   'object_ptr': self.folder.id}), **self.authentication_headers)
         self.assertEquals(response.status_code, 200)
 
     def test_update_folder(self):
-        updates = {'name': 'Api folder update', 'parent': self.parent.id, 'details': '<p>api details</p>'}
+        updates = {'name': 'Api folder update',
+                   'parent': self.parent.id, 'details': '<p>api details</p>'}
         response = self.client.put(path=reverse('api_knowledge_folders', kwargs={'object_ptr': self.folder.id}),
                                    content_type=self.content_type,  data=json.dumps(updates), **self.authentication_headers)
         self.assertEquals(response.status_code, 200)
@@ -114,15 +119,18 @@ class KnowledgeViewsTest(TestCase):
 
     def test_get_categories_list(self):
         """ Test index page api/knowledge/categories """
-        response = self.client.get(path=reverse('api_knowledge_categories'), **self.authentication_headers)
+        response = self.client.get(
+            path=reverse('api_knowledge_categories'), **self.authentication_headers)
         self.assertEquals(response.status_code, 200)
 
     def test_get_category(self):
-        response = self.client.get(path=reverse('api_knowledge_categories', kwargs={'object_ptr': self.category.id}), **self.authentication_headers)
+        response = self.client.get(path=reverse('api_knowledge_categories', kwargs={
+                                   'object_ptr': self.category.id}), **self.authentication_headers)
         self.assertEquals(response.status_code, 200)
 
     def test_update_category(self):
-        updates = {'name': 'Api catagory update', 'details': '<p>api details</p>'}
+        updates = {
+            'name': 'Api catagory update', 'details': '<p>api details</p>'}
         response = self.client.put(path=reverse('api_knowledge_categories', kwargs={'object_ptr': self.category.id}),
                                    content_type=self.content_type,  data=json.dumps(updates), **self.authentication_headers)
         self.assertEquals(response.status_code, 200)
@@ -133,11 +141,13 @@ class KnowledgeViewsTest(TestCase):
 
     def test_get_items_list(self):
         """ Test index page api/knowledge/items """
-        response = self.client.get(path=reverse('api_knowledge_items'), **self.authentication_headers)
+        response = self.client.get(
+            path=reverse('api_knowledge_items'), **self.authentication_headers)
         self.assertEquals(response.status_code, 200)
 
     def test_get_item(self):
-        response = self.client.get(path=reverse('api_knowledge_items', kwargs={'object_ptr': self.item.id}), **self.authentication_headers)
+        response = self.client.get(path=reverse('api_knowledge_items', kwargs={
+                                   'object_ptr': self.item.id}), **self.authentication_headers)
         self.assertEquals(response.status_code, 200)
 
     def test_update_item(self):

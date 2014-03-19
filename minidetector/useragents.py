@@ -1,5 +1,6 @@
 import os.path
 
+
 def load_from_search_strings_file():
     f = None
     try:

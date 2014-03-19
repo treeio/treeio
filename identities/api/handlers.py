@@ -18,7 +18,9 @@ from treeio.identities.models import ContactField, ContactType, Contact, Contact
 from treeio.identities.forms import ContactForm, FilterForm, ContactTypeForm, ContactFieldForm, MassActionForm
 from treeio.core.api.handlers import ObjectHandler, getOrNone
 
+
 class ContactFieldHandler(ObjectHandler):
+
     "Entrypoint for ContactField model."
 
     model = ContactField
@@ -34,7 +36,9 @@ class ContactFieldHandler(ObjectHandler):
     def check_create_permission(self, request, mode):
         return request.user.get_profile().is_admin('treeio.identities')
 
+
 class ContactTypeHandler(ObjectHandler):
+
     "Entrypoint for ContactType model."
 
     model = ContactType
@@ -48,11 +52,14 @@ class ContactTypeHandler(ObjectHandler):
     def check_create_permission(self, request, mode):
         return request.user.get_profile().is_admin('treeio.identities')
 
+
 class ContactHandler(ObjectHandler):
+
     "Entrypoint for Contact model."
     model = Contact
     form = ContactForm
-    fields = ['id', ('contactvalue_set', ('name', 'value'))] + [i.name for i in model._meta.local_fields if i.name != 'object_ptr']
+    fields = ['id', ('contactvalue_set', ('name', 'value'))] + \
+        [i.name for i in model._meta.local_fields if i.name != 'object_ptr']
 
     @staticmethod
     def resource_uri():
@@ -79,7 +86,7 @@ class ContactHandler(ObjectHandler):
 
         attrs = self.flatten_dict(request)
 
-        form = ContactForm(contact_type = contact_type, **attrs)
+        form = ContactForm(contact_type=contact_type, **attrs)
         if form.is_valid():
             contact = form.save(request, contact_type)
             contact.set_user_from_request(request)
@@ -92,7 +99,8 @@ class ContactHandler(ObjectHandler):
         if request.data is None:
             return rc.BAD_REQUEST
 
-        pkfield = kwargs.get(self.model._meta.pk.name) or request.data.get(self.model._meta.pk.name)
+        pkfield = kwargs.get(self.model._meta.pk.name) or request.data.get(
+            self.model._meta.pk.name)
 
         if not pkfield:
             return rc.BAD_REQUEST
@@ -106,7 +114,8 @@ class ContactHandler(ObjectHandler):
 
         attrs = self.flatten_dict(request)
 
-        form = ContactForm(contact_type=item.contact_type, instance=item, **attrs)
+        form = ContactForm(
+            contact_type=item.contact_type, instance=item, **attrs)
         if form.is_valid():
             item = form.save(request)
             return item

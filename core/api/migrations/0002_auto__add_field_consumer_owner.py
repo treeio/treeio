@@ -9,19 +9,19 @@ from south.db import db
 from south.v2 import SchemaMigration
 from django.db import models
 
+
 class Migration(SchemaMigration):
 
     def forwards(self, orm):
-        
-        # Adding field 'Consumer.owner'
-        db.add_column('api_consumer', 'owner', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['auth.User'], null=True, blank=True), keep_default=False)
 
+        # Adding field 'Consumer.owner'
+        db.add_column('api_consumer', 'owner', self.gf('django.db.models.fields.related.ForeignKey')(
+            to=orm['auth.User'], null=True, blank=True), keep_default=False)
 
     def backwards(self, orm):
-        
+
         # Deleting field 'Consumer.owner'
         db.delete_column('api_consumer', 'owner_id')
-
 
     models = {
         'api.consumer': {

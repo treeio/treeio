@@ -15,6 +15,7 @@ from treeio.core.models import Object, Tag
 from treeio.core.search import dbsearch
 from whoosh import index, qparser
 
+
 @treeio_login_required
 @handle_response_format
 def search_query(request, response_format='html'):
@@ -33,8 +34,10 @@ def search_query(request, response_format='html'):
                 ix = index.open_dir(settings.WHOOSH_INDEX)
                 # Whoosh doesn't understand '+' or '-' but we can replace
                 # them with 'AND' and 'NOT'.
-                squery = query.replace('+', ' AND ').replace('|', ' OR ').replace(' ', ' OR ')
-                parser = qparser.MultifieldParser(["name", "url", "type", "content"], schema=ix.schema)
+                squery = query.replace(
+                    '+', ' AND ').replace('|', ' OR ').replace(' ', ' OR ')
+                parser = qparser.MultifieldParser(
+                    ["name", "url", "type", "content"], schema=ix.schema)
                 qry = parser.parse(squery)
                 try:
                     qry = parser.parse(squery)
@@ -58,8 +61,7 @@ def search_query(request, response_format='html'):
             else:
                 raise RuntimeError('Unknown Search engine: %s' % search_engine)
 
-
     return render_to_response('core/search/query_view',
                               {'query': query, 'objects': objects},
-                               context_instance=RequestContext(request),
-                               response_format=response_format)
+                              context_instance=RequestContext(request),
+                              response_format=response_format)

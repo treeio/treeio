@@ -9,6 +9,7 @@ from south.db import db
 from south.v2 import DataMigration
 from django.db import models
 
+
 class Migration(DataMigration):
 
     def forwards(self, orm):
@@ -27,14 +28,9 @@ class Migration(DataMigration):
                 stream.outgoing_server_username = stream.email_outgoing.server_username
                 stream.outgoing_password = stream.email_outgoing.server_password
                 stream.save()
-                
-
 
     def backwards(self, orm):
         raise RuntimeError("Cannot reverse this migration.")
-
-
-
 
     models = {
         'auth.group': {
