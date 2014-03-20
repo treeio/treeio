@@ -1,7 +1,8 @@
 .ve
 *.pyc
-core/db/dbsettings.json
+treeio/core/db/dbsettings.json
 .*.swp
 treeio.db
 doc/_build
 build/*
+static/media/*
