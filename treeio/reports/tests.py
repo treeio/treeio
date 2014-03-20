@@ -16,9 +16,7 @@ from treeio.reports.models import Report, Chart
 
 
 class ReportsModelsTest(TestCase):
-
     "Reports Models Tests"
-
     def test_model_report(self):
         "Test Report Model"
         obj = Report(name='test')
@@ -39,9 +37,7 @@ class ReportsModelsTest(TestCase):
 
 
 class ReportsViewsTest(TestCase):
-
     "Reports functional tests for views"
-
     username = "test"
     password = "password"
     prepared = False
@@ -50,6 +46,10 @@ class ReportsViewsTest(TestCase):
         "Initial Setup"
 
         if not self.prepared:
+            # clean up first
+            Object.objects.all().delete()
+            User.objects.all().delete()
+
             self.group, created = Group.objects.get_or_create(name='test')
             duser, created = DjangoUser.objects.get_or_create(
                 username=self.username)

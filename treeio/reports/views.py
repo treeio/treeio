@@ -76,11 +76,13 @@ def _get_objects():
 
 
 def _get_module_name(path):
-    "Returns real and translated module name for the given path, e.g. Service Support for treeio.services.models.Ticket"
+    """"
+    Returns real and translated module name for the given path, e.g. Service
+    Support for treeio.services.models.Ticket
+    """
     modulename = path
     try:
-        modulepath = re.match(
-            "(?P<modulepath>.*)\.models.(?P<name>\w+)$", path).group('modulepath')
+        modulepath = re.match("(?P<modulepath>.*)\.models.(?P<name>\w+)$", path).group('modulepath')
         module = Module.objects.get(name=modulepath)
         modulename = _(module.title)
     except Module.DoesNotExist:
@@ -454,9 +456,9 @@ def report_add(request, response_format='html'):
         return HttpResponseRedirect(reverse('reports_report_edit', args=[report.id]))
 
     # Initial Object Type Choice
-    user_modules = [
-        module.name for module in request.user.get_profile().get_perspective().get_modules()]
-    modules = [module.name for module in Module.objects.all()]
+    user_modules = [mod.name for mod in request.user.get_profile().get_perspective().get_modules()]
+    modules = [mod.name for mod in Module.objects.all()]
+
     query = Q(object_type__contains="core")
     for module in modules:
         if module not in user_modules:
@@ -466,21 +468,19 @@ def report_add(request, response_format='html'):
         'object_type').distinct().order_by('object_type'))
 
     object_names = []
-    if object_types:
-        object_names = ["%s: %s" %
-                        (_get_module_name(object_types[i]['object_type']),
-                         (Object.objects.filter(object_type=object_types[i]['object_type']).order_by()[0].get_human_type()))
-                        for i in range(0, len(object_types))]
+    for object_type in object_types:
+        module_name = _get_module_name(object_type['object_type'])
+        human_type = Object.objects.filter(
+            object_type=object_type['object_type'])[0].get_human_type()
 
-    form = ObjChoiceForm(request.user,
-                         object_types=object_types,
-                         object_names=object_names,
-                         )
+        object_names.append("%s: %s" % (module_name, human_type))
 
-    return render_to_response('reports/report_add',
-                              {'form': form},
-                              context_instance=RequestContext(request),
-                              response_format=response_format)
+    form = ObjChoiceForm(request.user, object_types=object_types,
+        object_names=object_names)
+
+    return render_to_response('reports/report_add', {'form': form},
+        context_instance=RequestContext(request),
+        response_format=response_format)
 
 
 @treeio_login_required

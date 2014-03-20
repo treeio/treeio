@@ -94,14 +94,22 @@ class EventsViewsTest(TestCase):
         self.assertEquals(response.status_code, 200)
 
     def test_update_field(self):
-        updates = {"name": "Api_name", "details": "Api details",
-                   "start": "2011-03-01 01:12:09", "end": "2011-03-09 13:05:09"}
-        response = self.client.put(path=reverse('api_events', kwargs={'object_ptr': self.event.id}),
-                                   content_type=self.content_type,  data=json.dumps(updates), **self.authentication_headers)
-        self.assertEquals(response.status_code, 200)
+        # TODO: update this to parse the dates properly.
+        updates = {
+            "name": "Api_name",
+            "details": "Api details",
+            "start": "2011-03-01 01:12:09",
+            "end": "2011-03-09 13:05:09"
+        }
+        response = self.client.put(path=reverse('api_events',
+            kwargs={'object_ptr': self.event.id}),
+            content_type=self.content_type,  data=json.dumps(updates),
+            **self.authentication_headers)
 
         data = json.loads(response.content)
+
+        self.assertEquals(response.status_code, 200)
         self.assertEquals(data['name'], updates['name'])
         self.assertEquals(data['details'], updates['details'])
-        self.assertEquals(data['start'], updates['start'])
-        self.assertEquals(data['end'], updates['end'])
+        self.assertEquals(data['start'].replace("T", " "), updates['start'])
+        self.assertEquals(data['end'].replace("T", " "), updates['end'])

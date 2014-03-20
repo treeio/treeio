@@ -311,8 +311,16 @@ class FinanceAPITest(TestCase):
         self.assertEquals(response.status_code, 200)
 
     def test_update_transaction(self):
-        updates = {"value_display": "1000.0",   "account": self.account.id,  "name": "api test name",  "value_currency": self.currency.id,
-                   "datetime": "2011-03-21 11:04:42", "target": self.contact.id, "account": self.account.id, "source": self.contact.id}
+        updates = {
+            "value_display": "1000.0",
+            "account": self.account.id,
+            "name": "api test name",
+            "value_currency": self.currency.id,
+            "datetime": "2011-03-21 11:04:42",
+            "target": self.contact.id,
+            "account": self.account.id,
+            "source": self.contact.id
+        }
         response = self.client.put(path=reverse('api_finance_transactions', kwargs={'object_ptr': self.transaction.id}),
                                    content_type=self.content_type,  data=json.dumps(updates), **self.authentication_headers)
         self.assertEquals(response.status_code, 200)
@@ -321,9 +329,8 @@ class FinanceAPITest(TestCase):
         self.assertEquals(data['name'], updates['name'])
         self.assertEquals(data['value_display'], updates['value_display'])
         self.assertEquals(data['account']['id'], updates['account'])
-        self.assertEquals(
-            data['value_currency']['id'], updates['value_currency'])
-        self.assertEquals(data['datetime'], updates['datetime'])
+        self.assertEquals(data['value_currency']['id'], updates['value_currency'])
+        self.assertEquals(data['datetime'].replace("T", " "), updates['datetime'])
         self.assertEquals(data['target']['id'], updates['target'])
         self.assertEquals(data['account']['id'], updates['account'])
         self.assertEquals(data['source']['id'], updates['source'])
