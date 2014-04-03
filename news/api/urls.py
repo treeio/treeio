@@ -6,7 +6,7 @@
 #-*- coding: utf-8 -*-
 
 import handlers
-from django.conf.urls.defaults import *
+from django.conf.urls import patterns, url
 from treeio.core.api.auth import auth_engine
 from treeio.core.api.doc import documentation_view
 from treeio.core.api.resource import CsrfExemptResource
@@ -19,11 +19,11 @@ updateRecordsResource = CsrfExemptResource(
 
 
 urlpatterns = patterns('',
-                       # News
-                       url(r'^doc$', documentation_view, kwargs={
-                           'module': handlers}, name="api_news_doc"),
-                       url(r'^records$', updateRecordsResource,
-                           name="api_news_update_records"),
-                       url(r'^record/(?P<record_id>\d+)', updateRecordsResource,
-                           name="api_news_update_records"),
-                       )
+    # News
+    url(r'^doc$', documentation_view, kwargs={
+        'module': handlers}, name="api_news_doc"),
+    url(r'^records$', updateRecordsResource,
+        name="api_news_update_records"),
+    url(r'^record/(?P<record_id>\d+)', updateRecordsResource,
+        name="api_news_update_records"),
+)

@@ -7,20 +7,15 @@
 
 from __future__ import absolute_import, with_statement
 
-__all__ = ['ContactFieldHandler',
-           'ContactTypeHandler',
-           'CategoryHandler',
-           'ContactHandler',
-           ]
+__all__ = ['ContactFieldHandler', 'ContactTypeHandler', 'ContactHandler']
 
 from treeio.core.api.utils import rc
-from treeio.identities.models import ContactField, ContactType, Contact, ContactValue
-from treeio.identities.forms import ContactForm, FilterForm, ContactTypeForm, ContactFieldForm, MassActionForm
+from treeio.identities.models import ContactField, ContactType, Contact
+from treeio.identities.forms import ContactForm, ContactTypeForm, ContactFieldForm
 from treeio.core.api.handlers import ObjectHandler, getOrNone
 
 
 class ContactFieldHandler(ObjectHandler):
-
     "Entrypoint for ContactField model."
 
     model = ContactField
@@ -38,7 +33,6 @@ class ContactFieldHandler(ObjectHandler):
 
 
 class ContactTypeHandler(ObjectHandler):
-
     "Entrypoint for ContactType model."
 
     model = ContactType
@@ -54,7 +48,6 @@ class ContactTypeHandler(ObjectHandler):
 
 
 class ContactHandler(ObjectHandler):
-
     "Entrypoint for Contact model."
     model = Contact
     form = ContactForm

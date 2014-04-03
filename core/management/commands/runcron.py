@@ -6,11 +6,10 @@
 """
 Cron commands
 """
-from django.core.management.base import BaseCommand, CommandError
+from django.core.management.base import BaseCommand
 from django.conf import settings
 from django.core.cache import cache
 from core.domains import setup_domain
-from pandora import box
 from optparse import make_option
 import multiprocessing
 import logging

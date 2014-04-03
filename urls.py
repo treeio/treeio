@@ -6,7 +6,7 @@
 """
 Hardtree URLs
 """
-from django.conf.urls.defaults import *
+from django.conf.urls import patterns, url, include
 from django.conf import settings
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 from django.contrib import admin
@@ -28,67 +28,56 @@ def if_installed(appname, *args, **kwargs):
 admin.autodiscover()
 
 urlpatterns = patterns('',
-                       url(r'^(\.(?P<response_format>\w+))?$',
-                           'treeio.core.dashboard.views.index', name='home'),
+    url(r'^(\.(?P<response_format>\w+))?$',
+        'treeio.core.dashboard.views.index', name='home'),
+    (r'^user/', include('treeio.core.urls')),
+    (r'^accounts/', include('treeio.core.urls')),
+    (r'^account/', include('treeio.account.urls')),
+    (r'^search/', include('treeio.core.search.urls')),
+    (r'^dashboard/', include('treeio.core.dashboard.urls')),
+    (r'^admin/', include('treeio.core.administration.urls')),
+    (r'^trash/', include('treeio.core.trash.urls')),
+    (r'^documents/', include('treeio.documents.urls')),
+    (r'^calendar/', include('treeio.events.urls')),
+    (r'^finance/', include('treeio.finance.urls')),
+    (r'^contacts/', include('treeio.identities.urls')),
+    (r'^infrastructure/', include('treeio.infrastructure.urls')),
+    (r'^knowledge/', include('treeio.knowledge.urls')),
+    (r'^messaging/', include('treeio.messaging.urls')),
+    (r'^news/', include('treeio.news.urls')),
+    (r'^projects/', include('treeio.projects.urls')),
+    (r'^sales/', include('treeio.sales.urls')),
+    (r'^services/', include('treeio.services.urls')),
+    (r'^reports/', include('treeio.reports.urls')),
 
-                       (r'^user/', include('treeio.core.urls')),
-                       (r'^accounts/', include('treeio.core.urls')),
+    # API handlers
+    (r'^api/', include('treeio.core.api.urls')),
 
-                       (r'^account/', include('treeio.account.urls')),
+    # Forest
+    # if_installed('treeio.forest', r'^forest/', include('treeio.forest.urls')),
 
-                       (r'^search/', include('treeio.core.search.urls')),
-                       (r'^dashboard/', include('treeio.core.dashboard.urls')),
-                       (r'^admin/',
-                        include('treeio.core.administration.urls')),
+    # Mobile handler
+    url(r'^m(?P<url>.+)?$', 'treeio.core.views.mobile_view',
+        name='core_mobile_view'),
 
-                       (r'^trash/', include('treeio.core.trash.urls')),
+    # Help handler
+    url(r'^help(?P<url>[a-zA-Z0-9-_/]+)?(\.(?P<response_format>\w+))?$',
+        'treeio.core.views.help_page', name='core_help_page_view'),
 
-                       (r'^documents/', include('treeio.documents.urls')),
-                       (r'^calendar/', include('treeio.events.urls')),
-                       (r'^finance/', include('treeio.finance.urls')),
-                       (r'^contacts/', include('treeio.identities.urls')),
-                       (r'^infrastructure/',
-                        include('treeio.infrastructure.urls')),
-                       (r'^knowledge/', include('treeio.knowledge.urls')),
-                       (r'^messaging/', include('treeio.messaging.urls')),
-                       (r'^news/', include('treeio.news.urls')),
-                       (r'^projects/', include('treeio.projects.urls')),
-                       (r'^sales/', include('treeio.sales.urls')),
-                       (r'^services/', include('treeio.services.urls')),
-                       (r'^reports/', include('treeio.reports.urls')),
+    # Close iframe
+    url(r'^iframe/?$', 'treeio.core.views.iframe_close',
+        name='core_iframe_close'),
 
-                       # API handlers
-                       (r'^api/', include('treeio.core.api.urls')),
+    # Captcha Config
+    url(r'^captcha/', include('captcha.urls')),
 
-                       # Forest
-                       # if_installed('treeio.forest', r'^forest/', include('treeio.forest.urls')),
+    url(dajaxice_config.dajaxice_url, include('dajaxice.urls')),
 
-                       # Mobile handler
-                       url(r'^m(?P<url>.+)?$', 'treeio.core.views.mobile_view',
-                           name='core_mobile_view'),
-
-                       # Help handler
-                       url(r'^help(?P<url>[a-zA-Z0-9-_/]+)?(\.(?P<response_format>\w+))?$',
-                           'treeio.core.views.help_page', name='core_help_page_view'),
-
-                       # Close iframe
-                       url(r'^iframe/?$', 'treeio.core.views.iframe_close',
-                           name='core_iframe_close'),
-
-                       # Captcha Config
-                       url(r'^captcha/', include('captcha.urls')),
-
-                       url(dajaxice_config.dajaxice_url,
-                           include('dajaxice.urls')),
-                       # Uncomment the admin/doc line below and add 'django.contrib.admindocs'
-                       # to INSTALLED_APPS to enable admin documentation:
-                       # (r'^admin/doc/', include('django.contrib.admindocs.urls')),
-
-                       # Changed to backend (because it's backend!)
-                       (r'^backend/', include(admin.site.urls)),
-                       (r'^static/(?P<path>.*)$', 'django.views.static.serve',
-                        {'document_root': settings.STATIC_DOC_ROOT}),
-                       )
+    # Changed to backend (because it's backend!)
+    (r'^backend/', include(admin.site.urls)),
+    (r'^static/(?P<path>.*)$', 'django.views.static.serve',
+     {'document_root': settings.STATIC_DOC_ROOT}),
+)
 
 
 if 'rosetta' in settings.INSTALLED_APPS:

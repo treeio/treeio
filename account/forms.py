@@ -6,8 +6,6 @@
 """
 Core forms
 """
-import json
-
 from django import forms
 from treeio.account.models import NotificationSetting, notification_types
 from treeio.core.models import User, Object, ModuleSetting, Perspective, Module
@@ -17,6 +15,37 @@ from treeio.core.conf import settings
 from datetime import date
 
 preprocess_form()
+
+
+class MassActionForm(forms.Form):
+    """ Mass action form for Accounts """
+
+    delete = forms.ChoiceField(label=_("With selected"),
+        choices=(('', '-----'), ('delete', _('Delete Completely')),
+                 ('trash', _('Move to Trash'))), required=False)
+
+    instance = None
+
+    def __init__(self, user, *args, **kwargs):
+        if 'instance' in kwargs:
+            self.instance = kwargs['instance']
+            del kwargs['instance']
+
+        super(MassActionForm, self).__init__(*args, **kwargs)
+        self.fields['delete'] = forms.ChoiceField(label=_("With selected"),
+            choices=(('', '-----'), ('delete', _('Delete Completely')),
+                     ('trash', _('Move to Trash'))), required=False)
+
+    def save(self, *args, **kwargs):
+        "Process form"
+        if self.instance:
+            if self.is_valid():
+                if self.cleaned_data['delete']:
+                    if self.cleaned_data['delete'] == 'delete':
+                        self.instance.delete()
+                    if self.cleaned_data['delete'] == 'trash':
+                        self.instance.trash = True
+                        self.instance.save()
 
 
 class AccountForm(forms.ModelForm):
@@ -207,5 +236,5 @@ class SettingsForm(forms.Form):
                                          'treeio.core', user=self.user)
             return True
 
-        except Exception as exc:
+        except:
             return False

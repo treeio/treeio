@@ -13,7 +13,6 @@ import piston.handler as handler
 from types import ModuleType
 from resource import CsrfExemptResource
 from handlers import ObjectHandlerMetaClass
-from piston.doc import HandlerDocumentation
 
 from django.core.urlresolvers import get_resolver, get_callable, get_script_prefix
 from django.utils.translation import ugettext_lazy as _
@@ -60,7 +59,7 @@ class HandlerMethod(object):
         self.stale = stale
 
     def iter_args(self):
-        args, _, _, defaults = inspect.getargspec(self.method)
+        args, _, _, defaults = inspect.getargspec(self.method)  # NOQA
 
         for idx, arg in enumerate(args):
             if arg in ('self', 'request', 'form'):
@@ -129,10 +128,6 @@ class HandlerMethod(object):
                 doc = _(
                     'Function gets info about object and returns following fields:')
             elif hasattr(self.method.im_class, 'form'):
-                if not hasattr(self.method.im_class.form, '_meta'):
-                    fields = self.method.im_class.fields
-                else:
-                    fields = self.method.im_class.form._meta.fields
                 if self.method.__name__ == 'create':
                     doc = _('Function creates entry with following fields:')
                 elif self.method.__name__ == 'update':

@@ -3,7 +3,7 @@
 # This file is part of Treeio.
 # License www.tree.io/license
 
-from datetime import datetime, time
+from datetime import datetime
 from dajaxice.core import dajaxice_functions
 from dajax.core import Dajax
 from treeio.projects.models import Task, Milestone

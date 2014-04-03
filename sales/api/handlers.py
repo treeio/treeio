@@ -172,9 +172,9 @@ class SaleOrderHandler(SaleCommonHandler):
     def flatten_dict(self, request):
         dct = super(SaleOrderHandler, self).flatten_dict(request)
         if request.method.lower() == 'post':
-            if request.data.has_key('lead'):
+            if 'lead' in request.data:
                 dct['lead'] = getOrNone(Lead, request.data['lead'])
-            if request.data.has_key('opportunity'):
+            if 'opportunity' in request.data:
                 dct['opportunity'] = getOrNone(
                     Opportunity, request.data['opportunity'])
         else:

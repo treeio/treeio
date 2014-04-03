@@ -6,7 +6,6 @@
 """
 Hardtree support authentication backend
 """
-from treeio.core.conf import settings
 from django.contrib.auth.models import User
 from treeio.identities.models import ContactValue
 

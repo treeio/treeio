@@ -8,12 +8,10 @@ Core Ajax views
 """
 
 from django.template import RequestContext
-from django.db.models import Q
 import re
-from core.conf import settings
 from core.mail import EmailInvitation
 from django.contrib.sites.models import RequestSite
-from core.models import Attachment, User, Invitation
+from core.models import Attachment, Invitation
 from core.views import user_denied
 from treeio.core.rendering import render_to_string
 from treeio.core.models import Comment, Object, UpdateRecord, Tag
@@ -245,7 +243,7 @@ def easy_invite(request, emails=None):
 
         for email in emails:
             email = email.strip()
-            if len(email) > 7 and re.match("^.+\\@(\\[?)[a-zA-Z0-9\\-\\.]+\\.([a-zA-Z]{2,3}|[0-9]{1,3})(\\]?)$", email) != None:
+            if len(email) > 7 and re.match("^.+\\@(\\[?)[a-zA-Z0-9\\-\\.]+\\.([a-zA-Z]{2,3}|[0-9]{1,3})(\\]?)$", email) is not None:
                 invitation = Invitation(
                     sender=request.user.get_profile(), email=email, default_group=default_group)
                 invitation.save()

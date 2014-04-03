@@ -8,7 +8,6 @@ Global RSS Framework
 """
 from django.contrib.syndication.views import Feed
 from django.contrib.sites.models import RequestSite
-from django.utils import feedgenerator
 from treeio.core.models import Object, UpdateRecord, User
 import hashlib
 import random

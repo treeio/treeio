@@ -54,7 +54,7 @@ class CacheStorage(BaseStorage):
 
     def update(self, response, *args, **kwargs):
         "Update flew by - don't pass response to avoid Exceptions being thrown by Django middleware"
-        result = super(CacheStorage, self).update(response, *args, **kwargs)
+        super(CacheStorage, self).update(response, *args, **kwargs)
         return []
 
     def _store(self, messages, *args, **kwargs):

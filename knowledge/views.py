@@ -57,9 +57,8 @@ def _process_mass_form(f):
                 if 'mass-item' in key:
                     try:
                         item = KnowledgeItem.objects.get(pk=request.POST[key])
-                        form = MassActionForm(
-                            request.user.get_profile(), request.POST, instance=item)
-                        if form.is_valid() and request.user.get_profile().has_permission(item, mode='w'):
+                        form = MassActionForm(user, request.POST, instance=item)
+                        if form.is_valid() and user.has_permission(item, mode='w'):
                             form.save()
                     except Exception:
                         pass

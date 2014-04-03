@@ -19,7 +19,6 @@ URL_PATTERNS = [
     '^/sales/',
 ]
 
-from treeio.sales.cron import subscription_check
-
 # Temporarily disabled cron due to failing .currency setting
+#from treeio.sales.cron import subscription_check
 #CRON = [subscription_check]

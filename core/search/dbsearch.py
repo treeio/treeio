@@ -5,7 +5,6 @@
 
 from django.db.models import Q, get_models, CharField, TextField
 from treeio.core.models import Object
-from treeio.core.conf import settings
 
 params = []
 

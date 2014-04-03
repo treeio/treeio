@@ -11,11 +11,9 @@ from django.template import RequestContext
 from django.http import HttpResponseRedirect, HttpResponse
 from django.core.urlresolvers import reverse
 from django.utils.html import strip_tags
-from django.contrib import messages
-from django.utils.translation import ugettext as _
 from django.db.models import Q
 from treeio.core.rendering import render_to_response
-from treeio.core.models import Object, ModuleSetting
+from treeio.core.models import Object
 from treeio.core.views import user_denied
 from treeio.core.decorators import treeio_login_required, handle_response_format
 from treeio.events.models import Event
@@ -67,8 +65,8 @@ def _process_mass_form(f):
                     try:
                         event = Event.objects.get(pk=request.POST[key])
                         form = MassActionForm(
-                            request.user.get_profile(), request.POST, instance=event)
-                        if form.is_valid() and request.user.get_profile().has_permission(event, mode='w'):
+                            user, request.POST, instance=event)
+                        if form.is_valid() and user.has_permission(event, mode='w'):
                             form.save()
                     except Exception:
                         pass

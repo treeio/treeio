@@ -7,13 +7,11 @@
 Core module views
 """
 
-from treeio.core.views import user_denied
-from django.shortcuts import get_object_or_404
 from treeio.core.rendering import render_to_response
 from django.template import RequestContext
 from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
-from treeio.account.forms import AccountForm, AccountPasswordForm, SettingsForm
+from treeio.account.forms import AccountForm, AccountPasswordForm, SettingsForm, MassActionForm
 from treeio.core.decorators import treeio_login_required, handle_response_format
 from treeio.core.models import ModuleSetting, Perspective
 from treeio.account.models import NotificationSetting
@@ -208,17 +206,17 @@ def _process_mass_form(f):
             for key in request.POST:
                 if 'mass-setting' in key:
                     try:
-                        setting = NotificationSetting.objects.get(
-                            pk=request.POST[key])
-                        form = NotificationSettingMassActionForm(
-                            request.POST, instance=setting)
-                        if form.is_valid() and setting.owner == request.user.get_profile():
+                        report = NotificationSetting.objects.get(pk=request.POST[key])
+                        form = MassActionForm(
+                            user, request.POST, instance=report)
+                        if form.is_valid() and user.has_permission(report, mode='w'):
                             form.save()
-                    except Exception:
+                    except:
                         pass
 
         return f(request, *args, **kwargs)
 
+    # can use functools.update_wrapper instead
     wrap.__doc__ = f.__doc__
     wrap.__name__ = f.__name__
 

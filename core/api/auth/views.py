@@ -5,7 +5,6 @@
 
 from urllib import urlencode
 
-import oauth2 as oauth
 from django.contrib.auth.decorators import login_required
 from django.contrib.sites.models import RequestSite
 from django.http import HttpResponse, HttpResponseBadRequest, HttpResponseRedirect

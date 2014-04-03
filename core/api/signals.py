@@ -3,12 +3,6 @@
 # This file is part of Treeio.
 # License www.tree.io/license
 
-# Django imports
-import django.dispatch
-
-# Piston imports
-from utils import send_consumer_mail
-
 
 def consumer_post_save(sender, instance, created, **kwargs):
     pass

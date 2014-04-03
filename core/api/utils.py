@@ -4,8 +4,7 @@
 # License www.tree.io/license
 
 import time
-from django.http import HttpResponseNotAllowed, HttpResponseForbidden, HttpResponse, HttpResponseBadRequest
-from django.core.urlresolvers import reverse
+from django.http import HttpResponse
 from django.core.cache import cache
 from django import get_version as django_version
 from django.core.mail import send_mail, mail_admins
@@ -14,8 +13,6 @@ from django.utils.translation import ugettext as _
 from django.template import loader, TemplateDoesNotExist
 from django.contrib.sites.models import Site
 from piston.decorator import decorator
-
-from datetime import datetime, timedelta
 
 __version__ = '0.3dev'
 
@@ -48,7 +45,7 @@ class rc_factory(object):
 
     def __getattr__(self, attr):
         """
-        Returns a fresh `HttpResponse` when getting 
+        Returns a fresh `HttpResponse` when getting
         an "attribute". This is backwards compatible
         with 0.2, which is important.
         """
@@ -60,18 +57,18 @@ class rc_factory(object):
         class HttpResponseWrapper(HttpResponse):
 
             """
-            Wrap HttpResponse and make sure that the internal _is_string 
-            flag is updated when the _set_content method (via the content 
+            Wrap HttpResponse and make sure that the internal _is_string
+            flag is updated when the _set_content method (via the content
             property) is called
             """
 
             def _set_content(self, content):
                 """
-                Set the _container and _is_string properties based on the 
+                Set the _container and _is_string properties based on the
                 type of the value parameter. This logic is in the construtor
-                for HttpResponse, but doesn't get repeated when setting 
+                for HttpResponse, but doesn't get repeated when setting
                 HttpResponse.content although this bug report (feature request)
-                suggests that it should: http://code.djangoproject.com/ticket/9403 
+                suggests that it should: http://code.djangoproject.com/ticket/9403
                 """
                 if not isinstance(content, basestring) and hasattr(content, '__iter__'):
                     self._container = content
@@ -310,9 +307,9 @@ def require_mime(*mimes):
         m = Mimer(request)
         realmimes = set()
 
-        rewrite = {'json':   'application/json',
-                   'yaml':   'application/x-yaml',
-                   'xml':    'text/xml',
+        rewrite = {'json': 'application/json',
+                   'yaml': 'application/x-yaml',
+                   'xml': 'text/xml',
                    'pickle': 'application/python-pickle'}
 
         for idx, mime in enumerate(mimes):
@@ -350,7 +347,7 @@ def send_consumer_mail(consumer):
         body = loader.render_to_string(template,
                                        {'consumer': consumer, 'user': consumer.user})
     except TemplateDoesNotExist:
-        """ 
+        """
         They haven't set up the templates, which means they might not want
         these emails sent.
         """

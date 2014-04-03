@@ -103,7 +103,7 @@ class IdentitiesHandlersTest(TestCase):
         updates = {'name': 'Api_update', 'required': True,
                    'label': "api label", 'field_type': 'text'}
         response = self.client.put(path=reverse('api_identities_fields', kwargs={'object_ptr': self.field.id}),
-                                   content_type=self.content_type,  data=json.dumps(updates), **self.authentication_headers)
+                                   content_type=self.content_type, data=json.dumps(updates), **self.authentication_headers)
         self.assertEquals(response.status_code, 200)
 
         data = json.loads(response.content)
@@ -127,7 +127,7 @@ class IdentitiesHandlersTest(TestCase):
         updates = {'name': 'Api update',
                    'details': 'Api test details', 'fields': [self.field.id]}
         response = self.client.put(path=reverse('api_identities_types', kwargs={'object_ptr': self.contact_type.id}),
-                                   content_type=self.content_type,  data=json.dumps(updates), **self.authentication_headers)
+                                   content_type=self.content_type, data=json.dumps(updates), **self.authentication_headers)
         self.assertEquals(response.status_code, 200)
 
         data = json.loads(response.content)
@@ -152,7 +152,7 @@ class IdentitiesHandlersTest(TestCase):
         updates = {'name': 'Api name test', 'contact_type':
                    self.contact_type.id, 'Test___0': 'Api test details'}
         response = self.client.put(path=reverse('api_identities_contacts', kwargs={'object_ptr': self.contact.id}),
-                                   content_type=self.content_type,  data=json.dumps(updates), **self.authentication_headers)
+                                   content_type=self.content_type, data=json.dumps(updates), **self.authentication_headers)
         self.assertEquals(response.status_code, 200)
 
         data = json.loads(response.content)
@@ -180,7 +180,7 @@ class IdentitiesHandlersTest(TestCase):
         updates = {'name': 'Api type', 'details': 'Api test details',
                    'fields': [field_id, self.field.id]}
         response = self.client.put(path=reverse('api_identities_types', kwargs={'object_ptr': self.contact_type.id}),
-                                   content_type=self.content_type,  data=json.dumps(updates), **self.authentication_headers)
+                                   content_type=self.content_type, data=json.dumps(updates), **self.authentication_headers)
         self.assertEquals(response.status_code, 200)
 
         data = json.loads(response.content)
@@ -709,7 +709,7 @@ class IdentitiesHandlersTest(TestCase):
                                    "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAB\n"
                                    "/9k="}}
         response = self.client.put(path=reverse('api_identities_contacts', kwargs={'object_ptr': self.contact.id}),
-                                   content_type=self.content_type,  data=json.dumps(updates), **self.authentication_headers)
+                                   content_type=self.content_type, data=json.dumps(updates), **self.authentication_headers)
         self.assertEquals(response.status_code, 200)
 
         data = json.loads(response.content)

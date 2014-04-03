@@ -120,7 +120,7 @@ class BaseEmail(Thread):
             except smtplib.SMTPException:
                 pass
             s.ehlo()
-            if self.username != None:
+            if self.username is not None:
                 s.login(self.username, self.password)
             s.sendmail(self.fromaddr, self.toaddr, msg.as_string())
             s.close()
@@ -456,7 +456,7 @@ class EmailReceiver(Thread):
 
     def decode_body(self, body):
         "Decodes Base64-encoded string"
-        if body == None:
+        if body is None:
             body = 'No message'
         else:
             body = str(body)

@@ -141,7 +141,7 @@ class FinanceAPITest(TestCase):
         updates = {"code": "RUB", "name": "api RUB",
                    "factor": "10.00", "is_active": True}
         response = self.client.put(path=reverse('api_finance_currencies', kwargs={'object_ptr': self.currency.id}),
-                                   content_type=self.content_type,  data=json.dumps(updates), **self.authentication_headers)
+                                   content_type=self.content_type, data=json.dumps(updates), **self.authentication_headers)
         self.assertEquals(response.status_code, 200)
 
         data = json.loads(response.content)
@@ -164,7 +164,7 @@ class FinanceAPITest(TestCase):
     def test_update_tax(self):
         updates = {"name": "API TEST TAX", "rate": "20.00", "compound": False}
         response = self.client.put(path=reverse('api_finance_taxes', kwargs={'object_ptr': self.tax.id}),
-                                   content_type=self.content_type,  data=json.dumps(updates), **self.authentication_headers)
+                                   content_type=self.content_type, data=json.dumps(updates), **self.authentication_headers)
         self.assertEquals(response.status_code, 200)
 
         data = json.loads(response.content)
@@ -186,7 +186,7 @@ class FinanceAPITest(TestCase):
     def test_update_category(self):
         updates = {"name": "Api category", "details": "api details"}
         response = self.client.put(path=reverse('api_finance_categories', kwargs={'object_ptr': self.category.id}),
-                                   content_type=self.content_type,  data=json.dumps(updates), **self.authentication_headers)
+                                   content_type=self.content_type, data=json.dumps(updates), **self.authentication_headers)
         self.assertEquals(response.status_code, 200)
 
         data = json.loads(response.content)
@@ -205,10 +205,10 @@ class FinanceAPITest(TestCase):
         self.assertEquals(response.status_code, 200)
 
     def test_update_asset(self):
-        updates = {"current_value": "20.0", "owner": self.contact.id, "asset_type":  "fixed", "name": "Api name",
+        updates = {"current_value": "20.0", "owner": self.contact.id, "asset_type": "fixed", "name": "Api name",
                    "initial_value": '40.0'}
         response = self.client.put(path=reverse('api_finance_assets', kwargs={'object_ptr': self.asset.id}),
-                                   content_type=self.content_type,  data=json.dumps(updates), **self.authentication_headers)
+                                   content_type=self.content_type, data=json.dumps(updates), **self.authentication_headers)
         print response.content
         self.assertEquals(response.status_code, 200)
 
@@ -234,7 +234,7 @@ class FinanceAPITest(TestCase):
         updates = {"owner": self.user.id, "balance_display": 40.0,
                    "name": "api test name", "balance_currency": self.currency.id}
         response = self.client.put(path=reverse('api_finance_accounts', kwargs={'object_ptr': self.account.id}),
-                                   content_type=self.content_type,  data=json.dumps(updates), **self.authentication_headers)
+                                   content_type=self.content_type, data=json.dumps(updates), **self.authentication_headers)
         self.assertEquals(response.status_code, 200)
 
         data = json.loads(response.content)
@@ -255,11 +255,11 @@ class FinanceAPITest(TestCase):
                                    'object_ptr': self.equity.id}), **self.authentication_headers)
         self.assertEquals(response.status_code, 200)
 
-    def test_update_account(self):
-        updates = {"issue_price": "100.0",  "equity_type": "warrant", "sell_price": "50.0", "amount": 100,
+    def test_update_account_2(self):
+        updates = {"issue_price": "100.0", "equity_type": "warrant", "sell_price": "50.0", "amount": 100,
                    "purchase_date": "2011-06-06", "owner": self.contact.id, "issuer": self.contact.id}
         response = self.client.put(path=reverse('api_finance_equities', kwargs={'object_ptr': self.equity.id}),
-                                   content_type=self.content_type,  data=json.dumps(updates), **self.authentication_headers)
+                                   content_type=self.content_type, data=json.dumps(updates), **self.authentication_headers)
         self.assertEquals(response.status_code, 200)
 
         data = json.loads(response.content)
@@ -287,7 +287,7 @@ class FinanceAPITest(TestCase):
         updates = {"account": self.account.id, "target": self.contact.id, "value_display": "20.0",
                    "name": "api test name", "value_currency": self.currency.id}
         response = self.client.put(path=reverse('api_finance_liabilities', kwargs={'object_ptr': self.liability.id}),
-                                   content_type=self.content_type,  data=json.dumps(updates), **self.authentication_headers)
+                                   content_type=self.content_type, data=json.dumps(updates), **self.authentication_headers)
         self.assertEquals(response.status_code, 200)
 
         data = json.loads(response.content)
@@ -310,10 +310,10 @@ class FinanceAPITest(TestCase):
         self.assertEquals(response.status_code, 200)
 
     def test_update_transaction(self):
-        updates = {"value_display": "1000.0",   "account": self.account.id,  "name": "api test name",  "value_currency": self.currency.id,
+        updates = {"value_display": "1000.0", "account": self.account.id, "name": "api test name", "value_currency": self.currency.id,
                    "datetime": "2011-03-21 11:04:42", "target": self.contact.id, "account": self.account.id, "source": self.contact.id}
         response = self.client.put(path=reverse('api_finance_transactions', kwargs={'object_ptr': self.transaction.id}),
-                                   content_type=self.content_type,  data=json.dumps(updates), **self.authentication_headers)
+                                   content_type=self.content_type, data=json.dumps(updates), **self.authentication_headers)
         print response.content
         self.assertEquals(response.status_code, 200)
 

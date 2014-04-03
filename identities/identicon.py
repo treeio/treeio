@@ -129,8 +129,8 @@ class IdenticonRendererBase(object):
         kwds = {
             'draw': draw,
             'size': size,
-            'foreColor':    foreColor,
-            'backColor':    backColor
+            'foreColor': foreColor,
+            'backColor': backColor
         }
         # middle patch
         self.drawPatch((1, 1), middle[2], middle[1], middle[0], **kwds)

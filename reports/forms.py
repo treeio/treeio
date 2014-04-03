@@ -7,22 +7,18 @@
 Hardtree Reporting forms
 """
 
-import re
 from django import forms
-from treeio.core.conf import settings
 from django.shortcuts import get_object_or_404
 from treeio.core.models import Object
 from treeio.reports.models import Report, Chart
 from django.utils.translation import ugettext as _
 from treeio.core.decorators import preprocess_form
 from treeio.reports.helpers import loads, dumps
-from itertools import groupby
 
 preprocess_form()
 
 
 class MassActionForm(forms.Form):
-
     """ Mass action form for Reports """
 
     delete = forms.ChoiceField(label=_("With selected"), choices=(('', '-----'), ('delete', _('Delete Completely')),
@@ -55,7 +51,6 @@ class MassActionForm(forms.Form):
 
 
 class ObjChoiceForm(forms.Form):
-
     """ Choose an Object to Report On """
 
     def __init__(self, user, *args, **kwargs):
@@ -72,7 +67,6 @@ class ObjChoiceForm(forms.Form):
 
 
 class ReportForm(forms.ModelForm):
-
     "New report Form"
 
     def __init__(self, user, *args, **kwargs):
@@ -86,7 +80,6 @@ class ReportForm(forms.ModelForm):
 
 
 class SetForm(forms.Form):
-
     """ Report Set Form """
 
     def __init__(self, user, *args, **kwargs):
@@ -102,19 +95,20 @@ class SetForm(forms.Form):
 
 
 class ChartForm(forms.Form):
-
     "Google Chart Form"
+    CHART_TYPES = (
+        ('line', 'line'),
+        ('spline', 'spline'),
+        ('area', 'area'),
+        ('areaspline', 'areaspline'),
+        ('column', 'column'),
+        ('bar', 'bar'),
+        ('pie', 'pie'),
+        ('scatter', 'scatter')
+    )
+
     title = forms.CharField(required=False)
-
-    type = forms.ChoiceField(choices=(('line', 'line'),
-                                      ('spline', 'spline'),
-                                      ('area', 'area'),
-                                      ('areaspline', 'areaspline'),
-                                      ('column', 'column'),
-                                      ('bar', 'bar'),
-                                      ('pie', 'pie'),
-                                      ('scatter', 'scatter')))
-
+    type = forms.ChoiceField(choices=CHART_TYPES)
     grouping = forms.ChoiceField(required=True, label="Grouping")
 
     def clean_grouping(self):
@@ -199,12 +193,11 @@ class ChartForm(forms.Form):
 class QueryForm(forms.Form):
 
     def __init__(self, user, *args, **kwargs):
-        names = kwargs.pop('names')
+        kwargs.pop('names')
         super(QueryForm, self).__init__(*args, **kwargs)
 
 
 class FilterForm(forms.Form):
-
     "Filter Form"
 
     fields = {}

@@ -33,11 +33,9 @@ class CronRunner(Thread):
                 self.jobs.extend(hmodule.CRON)
             except ImportError:
                 pass
-            except AttributeError, e:
+            except AttributeError:
                 if settings.DEBUG:
                     pass
-                    # print "ERROR: Unable to process Cron Jobs for module " +
-                    # str(module) + ": " + str(e)
 
     def run(self):
         "Run cron"
@@ -46,7 +44,7 @@ class CronRunner(Thread):
             for job in self.jobs:
                 try:
                     job()
-                except Exception as exc:
+                except:
                     if settings.DEBUG:
                         raise
                     else:

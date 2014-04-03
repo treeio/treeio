@@ -12,7 +12,7 @@ from treeio.identities.models import Contact, ContactValue
 from treeio.messaging.emails import EmailStream, EmailMessage
 from django.core.urlresolvers import reverse
 from django.utils.translation import ugettext as _
-from jinja2.filters import do_striptags, do_truncate
+from jinja2.filters import do_striptags
 from treeio.core.templatetags.modules import htsafe
 import re
 
@@ -53,8 +53,7 @@ class MailingList(Object):
 
 # MessageStream Model
 class MessageStream(Object):
-
-    """ 
+    """
     A Stream that contains a list of messages
     """
     name = models.CharField(max_length=255)
@@ -106,10 +105,8 @@ class MessageStream(Object):
             return ""
 
 
-# Message Model
 class Message(Object):
-
-    """ 
+    """
     A Single Message
     """
     title = models.CharField(max_length=255, null=True, blank=True)
@@ -129,7 +126,6 @@ class Message(Object):
     access_inherit = ('stream', '*module', '*user')
 
     class Meta:
-
         "Message"
         ordering = ['-date_created']
 

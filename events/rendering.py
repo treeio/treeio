@@ -182,7 +182,7 @@ class EventCollection:
                     if hasattr(imodule, 'get_events'):
                         collected = imodule.get_events(request)
                         self.events.extend(collected)
-                except ImportError, e:
+                except:
                     pass
 
     def renderable_events(self, date, hour):

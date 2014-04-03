@@ -60,10 +60,10 @@ class Consumer(models.Model):
     def generate_random_codes(self):
         """
         Used to generate random key/secret pairings. Use this after you've
-        added the other data in place of save(). 
+        added the other data in place of save().
 
         c = Consumer()
-        c.name = "My consumer" 
+        c.name = "My consumer"
         c.description = "An app that makes ponies from the API."
         c.user = some_user_object
         c.generate_random_codes()

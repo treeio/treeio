@@ -3,7 +3,7 @@
 # This file is part of Treeio.
 # License www.tree.io/license
 
-from decimal import *
+from decimal import Decimal, ROUND_UP
 
 
 def convert(obj, name, currency=None):

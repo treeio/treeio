@@ -7,20 +7,15 @@
 
 from __future__ import absolute_import, with_statement
 
-__all__ = ['KnowledgeFolderHandler',
-           'KnowledgeCategoryHandler',
-           'KnowledgeItemHandler',
-           ]
+__all__ = ['KnowledgeFolderHandler', 'KnowledgeCategoryHandler',
+           'KnowledgeItemHandler']
 
-from treeio.core.api.utils import rc
 from treeio.core.api.handlers import ObjectHandler, getOrNone
 from treeio.knowledge.models import KnowledgeFolder, KnowledgeCategory, KnowledgeItem
-from treeio.knowledge.forms import KnowledgeFolderForm, KnowledgeItemForm, KnowledgeCategoryForm, \
-    FilterForm, MassActionForm
+from treeio.knowledge.forms import KnowledgeFolderForm, KnowledgeItemForm, KnowledgeCategoryForm
 
 
 class KnowledgeFolderHandler(ObjectHandler):
-
     "Entrypoint for KnowledgeFolder model."
     model = KnowledgeFolder
     form = KnowledgeFolderForm
@@ -44,7 +39,6 @@ class KnowledgeFolderHandler(ObjectHandler):
 
 
 class KnowledgeCategoryHandler(ObjectHandler):
-
     "Entrypoint for KnowledgeCategory model."
     model = KnowledgeCategory
     form = KnowledgeCategoryForm
@@ -61,7 +55,6 @@ class KnowledgeCategoryHandler(ObjectHandler):
 
 
 class KnowledgeItemHandler(ObjectHandler):
-
     "Entrypoint for KnowledgeItem model."
     model = KnowledgeItem
     form = KnowledgeItemForm
@@ -69,9 +62,6 @@ class KnowledgeItemHandler(ObjectHandler):
     @staticmethod
     def resource_uri():
         return ('api_knowledge_items', ['id'])
-
-    def flatten_dict(self, request):
-        return {'data': request.data}
 
     def check_create_permission(self, request, mode):
         return True

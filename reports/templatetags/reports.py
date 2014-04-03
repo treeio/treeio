@@ -14,7 +14,7 @@ from jinja2 import contextfunction, Markup
 from jinja2.utils import internalcode
 from django.template import RequestContext
 from random import random
-from datetime import datetime, timedelta
+from datetime import datetime
 import hashlib
 from treeio.reports.helpers import loads, aggregate_functions, number_field_regex
 from treeio.reports.views import _get_report_content
@@ -169,7 +169,7 @@ def display_chart(context, chart, skip_group=False):
         datedata.push([date, count]);
         });
       options.series[0].data = datedata;
-      
+
       function merge_options(obj1,obj2){
         var obj3 = {};
         for (attrname in obj1) { obj3[attrname] = obj1[attrname]; }
@@ -177,19 +177,19 @@ def display_chart(context, chart, skip_group=False):
         return obj3;
       }
       var dateoptions =  {
-        
-      
+
+
       tooltip: {
          shared: true,
          crosshairs: true
-         
+
       },
-      
+
       };
 
-      
+
     options = merge_options(options, dateoptions);
-    
+
               """
 
     return Markup(render_to_string('reports/tags/chart',
