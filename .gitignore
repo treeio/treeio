@@ -6,3 +6,4 @@ treeio.db
 doc/_build
 build/*
 .idea/*
+static/media/*
