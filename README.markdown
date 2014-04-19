@@ -10,6 +10,15 @@ Click here to watch a [video](http://klewel.com/conferences/djangocon-2012/index
 
 For FAQ see the Tree.io community site http://www.tree.io/community/
 
+Apache
+======
+
+For those installing with Apache check out this tutorial:
+http://www.makeyouadmin.com/2014/04/install-treeio-on-ubuntu-with-apache-mysql.html#.U1KlJKaINQI
+
+Amazon AMI
+==========
+
 There is also a pre-built micro [Amazon AMI Image](https://console.aws.amazon.com/ec2/home?region=us-east-1#launchAmi=ami-6af22f03&source=tree.io) available which will run on [Amazon's Free Usage Tier](http://aws.amazon.com/free/) for 1 year.
 
 There is also now a Docker Container and bootstrap script to run treeio and a micro PostgreSQL instance inside Docker:
