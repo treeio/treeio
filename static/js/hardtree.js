@@ -162,7 +162,7 @@ var treeio = {
         document.title = data.response.content.title;
         var content = data.response.content.module_content;
         var module = data.response.modules.active;
-          var sidebardisplay = 'none';
+          var sidebardisplay = 'block';
         if ($("#module-" + module).length == 0) {
             $("#content").append("<div class=\"module-block\" id=\"module-" + module + "\"></div>");
         } else {
