@@ -4,11 +4,8 @@
 Tree.io Business Management Platform
 ==========================
 
-Tree.io is a powerful business management platform with tons of great features including integrated Project Management, Help Desk (support ticketing) and CRM modules. For a full list of features please see http://www.tree.io 
+*Due to lack of time I can no longer maintain Tree. If you are interested in working on it get in touch*
 
-Click here to watch a [video](http://klewel.com/conferences/djangocon-2012/index.php?talkID=15) of our lightning talk presentation at Djangocon Europe 2012.
-
-For FAQ see the Tree.io community site http://www.tree.io/community/
 
 Apache
 ======
