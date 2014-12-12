@@ -134,6 +134,7 @@ class ProjectForm(ModelForm):
             {'popuplink': reverse('identities_contact_add')})
 
         self.fields['details'].label = _("Details")
+        self.fields['details'].widget.attrs.update({'class': 'full-editor'})
 
     class Meta:
 
@@ -186,6 +187,7 @@ class MilestoneForm(ModelForm):
                     {'initial': instance.end_date.strftime('%s')})
 
         self.fields['details'].label = _("Details")
+        self.fields['details'].widget.attrs.update({'class': 'full-editor'})
 
     class Meta:
 
