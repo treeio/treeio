@@ -296,6 +296,7 @@ class TaskForm(ModelForm):
                     {'initial': instance.end_date.strftime('%s')})
 
         self.fields['details'].label = _("Details")
+        self.fields['details'].widget.attrs.update({'class': 'full-editor'})
         self.fields['estimated_time'].label = _("Estimated time")
         self.fields['estimated_time'].help_text = _("minutes")
 
