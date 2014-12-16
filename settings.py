@@ -59,8 +59,14 @@ OAUTH_DATA_STORE = 'treeio.core.api.auth.store.store'
 
 
 # Static files location for Tree.io
-STATIC_ROOT = path.join(PROJECT_ROOT, 'static')
-STATIC_URL = path.join(PROJECT_ROOT, 'static/')
+if not DEBUG:
+    STATIC_ROOT = path.join(PROJECT_ROOT, 'static')
+else:
+    STATICFILES_DIRS = (
+        path.join(PROJECT_ROOT, 'static'),
+    )
+    
+STATIC_URL = '/static/'
 STATIC_DOC_ROOT = path.join(PROJECT_ROOT, 'static')
 STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.FileSystemFinder',
@@ -568,3 +574,8 @@ MESSAGE_STORAGE = 'treeio.core.contrib.messages.storage.cache.CacheStorage'
 
 # Dajaxice settings
 DAJAXICE_MEDIA_PREFIX = "dajaxice"
+
+# Add django.contrib.staticfiles to make Dajaxice work if DEBUG = False.
+if not DEBUG:
+    INSTALLED_APPS += ('django.contrib.staticfiles',)
+    

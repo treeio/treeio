@@ -75,8 +75,6 @@ urlpatterns = patterns('',
 
     # Changed to backend (because it's backend!)
     (r'^backend/', include(admin.site.urls)),
-    (r'^static/(?P<path>.*)$', 'django.views.static.serve',
-     {'document_root': settings.STATIC_DOC_ROOT}),
 )
 
 
