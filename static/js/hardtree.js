@@ -540,9 +540,6 @@ var treeio = {
             treeio.prepare_popups(popup);
             $("form", popup).each(function() {
                 url = $(this).attr('action');
-                // Use tinyMCE on form will cause url be an form object not str.
-                if (typeof url != 'string') 
-                    return;
                 url = treeio.utils.strip_host(url);
                 if (url) {
                   if (url.indexOf('/user/popup/') == -1) {

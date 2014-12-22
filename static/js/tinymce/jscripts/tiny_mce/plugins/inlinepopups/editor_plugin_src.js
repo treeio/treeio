@@ -55,12 +55,12 @@
 			if (parentWindow && DOM.get(parentWindow.id + '_ifr')) {
 				parentWindow.focussedElement = DOM.get(parentWindow.id + '_ifr').contentWindow.document.activeElement;
 			}
-			
+
 			// Only store selection if the type is a normal window
 			if (!f.type)
 				t.bookmark = ed.selection.getBookmark(1);
 
-			id = DOM.uniqueId();
+			id = DOM.uniqueId("mce_inlinepopups_"); // Use a prefix so this can't conflict with other ids
 			vp = DOM.getViewPort();
 			f.width = parseInt(f.width || 320);
 			f.height = parseInt(f.height || 240) + (tinymce.isIE ? 8 : 0);
@@ -111,17 +111,17 @@
 				opt += ' mceMovable';
 
 			// Create DOM objects
-			t._addAll(DOM.doc.body, 
-				['div', {id : id, role : 'dialog', 'aria-labelledby': f.type ? id + '_content' : id + '_title', 'class' : (ed.settings.inlinepopups_skin || 'clearlooks2') + (tinymce.isIE && window.getSelection ? ' ie9' : ''), style : 'width:100px;height:100px'}, 
+			t._addAll(DOM.doc.body,
+				['div', {id : id, role : 'dialog', 'aria-labelledby': f.type ? id + '_content' : id + '_title', 'class' : (ed.settings.inlinepopups_skin || 'clearlooks2') + (tinymce.isIE && window.getSelection ? ' ie9' : ''), style : 'width:100px;height:100px'},
 					['div', {id : id + '_wrapper', 'class' : 'mceWrapper' + opt},
-						['div', {id : id + '_top', 'class' : 'mceTop'}, 
+						['div', {id : id + '_top', 'class' : 'mceTop'},
 							['div', {'class' : 'mceLeft'}],
 							['div', {'class' : 'mceCenter'}],
 							['div', {'class' : 'mceRight'}],
 							['span', {id : id + '_title'}, f.title || '']
 						],
 
-						['div', {id : id + '_middle', 'class' : 'mceMiddle'}, 
+						['div', {id : id + '_middle', 'class' : 'mceMiddle'},
 							['div', {id : id + '_left', 'class' : 'mceLeft', tabindex : '0'}],
 							['span', {id : id + '_content'}],
 							['div', {id : id + '_right', 'class' : 'mceRight', tabindex : '0'}]
@@ -188,7 +188,7 @@
 
 				DOM.add(id + '_middle', 'div', {'class' : 'mceIcon'});
 				DOM.setHTML(id + '_content', f.content.replace('\n', '<br />'));
-				
+
 				Event.add(id, 'keyup', function(evt) {
 					var VK_ESCAPE = 27;
 					if (evt.keyCode === VK_ESCAPE) {
@@ -219,7 +219,10 @@
 				t.focus(id);
 
 				if (n.nodeName == 'A' || n.nodeName == 'a') {
-					if (n.className == 'mceMax') {
+					if (n.className == 'mceClose') {
+						t.close(null, id);
+						return Event.cancel(e);
+					} else if (n.className == 'mceMax') {
 						w.oldPos = w.element.getXY();
 						w.oldSize = w.element.getSize();
 
@@ -265,7 +268,7 @@
 					}
 				}
 			});
-			
+
 			// Make sure the tab order loops within the dialog.
 			Event.add([id + '_left', id + '_right'], 'focus', function(evt) {
 				var iframe = DOM.get(id + '_ifr');
@@ -281,7 +284,7 @@
 					DOM.get(id + '_ok').focus();
 				}
 			});
-			
+
 			// Add window
 			w = t.windows[id] = {
 				id : id,
@@ -338,7 +341,7 @@
 				DOM.removeClass(t.lastId, 'mceFocus');
 				DOM.addClass(id, 'mceFocus');
 				t.lastId = id;
-				
+
 				if (w.focussedElement) {
 					w.focussedElement.focus();
 				} else if (DOM.get(id + '_ok')) {
@@ -483,7 +486,7 @@
 
 					dw = v;
 				}
-	
+
 				if (dh < (v = w.features.min_height - sz.h)) {
 					if (dy !== 0)
 						dy += dh - v;
@@ -502,7 +505,7 @@
 				if (dx + dy !== 0) {
 					if (sx + dx < 0)
 						dx = 0;
-	
+
 					if (sy + dy < 0)
 						dy = 0;
 
@@ -564,7 +567,7 @@
 					t.focus(fw.id);
 			}
 		},
-		
+
 		// Find front most window
 		_frontWindow : function() {
 			var fw, ix = 0;

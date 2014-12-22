@@ -25,6 +25,10 @@
 		return elm.innerHTML.replace(/<(br|img|object|embed|input|textarea)[^>]*>/gi, '-').replace(/<[^>]+>/g, '').length == 0;
 	};
 
+	function getSpanVal(td, name) {
+		return parseInt(td.getAttribute(name) || 1);
+	}
+
 	/**
 	 * Table Grid class.
 	 */
@@ -100,10 +104,6 @@
 				return row[x];
 		};
 
-		function getSpanVal(td, name) {
-			return parseInt(td.getAttribute(name) || 1);
-		};
-
 		function setSpanVal(td, name, val) {
 			if (td) {
 				val = parseInt(val);
@@ -166,20 +166,20 @@
 
 					// Add something to the inner node
 					if (curNode)
-						curNode.innerHTML = tinymce.isIE ? '&nbsp;' : '<br data-mce-bogus="1" />';
+						curNode.innerHTML = tinymce.isIE && !tinymce.isIE11 ? '&nbsp;' : '<br data-mce-bogus="1" />';
 
 					return false;
 				}
 			}, 'childNodes');
 
 			cell = cloneNode(cell, false);
-			setSpanVal(cell, 'rowspan', 1);
-			setSpanVal(cell, 'colspan', 1);
+			setSpanVal(cell, 'rowSpan', 1);
+			setSpanVal(cell, 'colSpan', 1);
 
 			if (formatNode) {
 				cell.appendChild(formatNode);
 			} else {
-				if (!tinymce.isIE)
+				if (!tinymce.isIE || tinymce.isIE11)
 					cell.innerHTML = '<br data-mce-bogus="1" />';
 			}
 
@@ -262,8 +262,8 @@
 						rowSpan = getSpanVal(cell, 'rowspan');
 
 						if (colSpan > 1 || rowSpan > 1) {
-							setSpanVal(cell, 'rowspan', 1);
-							setSpanVal(cell, 'colspan', 1);
+							setSpanVal(cell, 'rowSpan', 1);
+							setSpanVal(cell, 'colSpan', 1);
 
 							// Insert cells right
 							for (i = 0; i < colSpan - 1; i++)
@@ -287,6 +287,21 @@
 				endX = startX + (cols - 1);
 				endY = startY + (rows - 1);
 			} else {
+				startPos = endPos = null;
+
+				// Calculate start/end pos by checking for selected cells in grid works better with context menu
+				each(grid, function(row, y) {
+					each(row, function(cell, x) {
+						if (isCellSelected(cell)) {
+							if (!startPos) {
+								startPos = {x: x, y: y};
+							}
+
+							endPos = {x: x, y: y};
+						}
+					});
+				});
+
 				// Use selection
 				startX = startPos.x;
 				startY = startPos.y;
@@ -306,8 +321,8 @@
 
 				// Set row/col span to start cell
 				startCell = getCell(startX, startY).elm;
-				setSpanVal(startCell, 'colspan', (endX - startX) + 1);
-				setSpanVal(startCell, 'rowspan', (endY - startY) + 1);
+				setSpanVal(startCell, 'colSpan', (endX - startX) + 1);
+				setSpanVal(startCell, 'rowSpan', (endY - startY) + 1);
 
 				// Remove other cells and add it's contents to the start cell
 				for (y = startY; y <= endY; y++) {
@@ -377,16 +392,16 @@
 					if (!before) {
 						rowSpan = getSpanVal(cell, 'rowspan');
 						if (rowSpan > 1) {
-							setSpanVal(cell, 'rowspan', rowSpan + 1);
+							setSpanVal(cell, 'rowSpan', rowSpan + 1);
 							continue;
 						}
 					} else {
 						// Check if cell above can be expanded
 						if (posY > 0 && grid[posY - 1][x]) {
 							otherCell = grid[posY - 1][x].elm;
-							rowSpan = getSpanVal(otherCell, 'rowspan');
+							rowSpan = getSpanVal(otherCell, 'rowSpan');
 							if (rowSpan > 1) {
-								setSpanVal(otherCell, 'rowspan', rowSpan + 1);
+								setSpanVal(otherCell, 'rowSpan', rowSpan + 1);
 								continue;
 							}
 						}
@@ -394,7 +409,7 @@
 
 					// Insert new cell into new row
 					newCell = cloneCell(cell);
-					setSpanVal(newCell, 'colspan', cell.colSpan);
+					setSpanVal(newCell, 'colSpan', cell.colSpan);
 
 					newRow.appendChild(newCell);
 
@@ -448,7 +463,7 @@
 							fillLeftDown(posX, y, rowSpan - 1, colSpan);
 						}
 					} else
-						setSpanVal(cell, 'colspan', cell.colSpan + 1);
+						setSpanVal(cell, 'colSpan', cell.colSpan + 1);
 
 					lastCell = cell;
 				}
@@ -465,10 +480,10 @@
 						each(grid, function(row) {
 							var cell = row[x].elm, colSpan;
 
-							colSpan = getSpanVal(cell, 'colspan');
+							colSpan = getSpanVal(cell, 'colSpan');
 
 							if (colSpan > 1)
-								setSpanVal(cell, 'colspan', colSpan - 1);
+								setSpanVal(cell, 'colSpan', colSpan - 1);
 							else
 								dom.remove(cell);
 						});
@@ -491,10 +506,10 @@
 
 				// Move down row spanned cells
 				each(tr.cells, function(cell) {
-					var rowSpan = getSpanVal(cell, 'rowspan');
+					var rowSpan = getSpanVal(cell, 'rowSpan');
 
 					if (rowSpan > 1) {
-						setSpanVal(cell, 'rowspan', rowSpan - 1);
+						setSpanVal(cell, 'rowSpan', rowSpan - 1);
 						pos = getPos(cell);
 						fillLeftDown(pos.x, pos.y, 1, 1);
 					}
@@ -508,12 +523,12 @@
 					cell = cell.elm;
 
 					if (cell != lastCell) {
-						rowSpan = getSpanVal(cell, 'rowspan');
+						rowSpan = getSpanVal(cell, 'rowSpan');
 
 						if (rowSpan <= 1)
 							dom.remove(cell);
 						else
-							setSpanVal(cell, 'rowspan', rowSpan - 1);
+							setSpanVal(cell, 'rowSpan', rowSpan - 1);
 
 						lastCell = cell;
 					}
@@ -551,6 +566,10 @@
 		};
 
 		function pasteRows(rows, before) {
+			// If we don't have any rows in the clipboard, return immediately
+			if(!rows)
+				return;
+
 			var selectedRows = getSelectedRows(),
 				targetRow = selectedRows[before ? 0 : selectedRows.length - 1],
 				targetCellCount = targetRow.cells.length;
@@ -581,8 +600,8 @@
 				// Remove col/rowspans
 				for (i = 0; i < cellCount; i++) {
 					cell = row.cells[i];
-					setSpanVal(cell, 'colspan', 1);
-					setSpanVal(cell, 'rowspan', 1);
+					setSpanVal(cell, 'colSpan', 1);
+					setSpanVal(cell, 'rowSpan', 1);
 				}
 
 				// Needs more cells
@@ -599,6 +618,9 @@
 				else
 					dom.insertAfter(row, targetRow);
 			});
+
+			// Remove current selection
+			dom.removeClass(dom.select('td.mceSelected,th.mceSelected'), 'mceSelected');
 		};
 
 		function getPos(target) {
@@ -752,7 +774,7 @@
 
 	tinymce.create('tinymce.plugins.TablePlugin', {
 		init : function(ed, url) {
-			var winMan, clipboardRows;
+			var winMan, clipboardRows, hasCellSelection = true; // Might be selected cells on reload
 
 			function createTableGrid(node) {
 				var selection = ed.selection, tblElm = ed.dom.getParent(node || selection.getNode(), 'table');
@@ -764,7 +786,11 @@
 			function cleanup() {
 				// Restore selection possibilities
 				ed.getBody().style.webkitUserSelect = '';
-				ed.dom.removeClass(ed.dom.select('td.mceSelected,th.mceSelected'), 'mceSelected');
+
+				if (hasCellSelection) {
+					ed.dom.removeClass(ed.dom.select('td.mceSelected,th.mceSelected'), 'mceSelected');
+					hasCellSelection = false;
+				}
 			};
 
 			// Register buttons
@@ -873,15 +899,20 @@
 							}
 
 							tableGrid.setEndCell(target);
+							hasCellSelection = true;
 						}
 
 						// Remove current selection
 						sel = ed.selection.getSel();
 
-						if (sel.removeAllRanges)
-							sel.removeAllRanges();
-						else
-							sel.empty();
+						try {
+							if (sel.removeAllRanges)
+								sel.removeAllRanges();
+							else
+								sel.empty();
+						} catch (ex) {
+							// IE9 might throw errors here
+						}
 
 						e.preventDefault();
 					}
@@ -919,7 +950,7 @@
 									return;
 								}
 							} while (node = (start ? walker.next() : walker.prev()));
-						};
+						}
 
 						// Try to expand text selection as much as we can only Gecko supports cell selection
 						selectedCells = dom.select('td.mceSelected,th.mceSelected');
@@ -927,6 +958,8 @@
 							rng = dom.createRng();
 							node = selectedCells[0];
 							endNode = selectedCells[selectedCells.length - 1];
+							rng.setStartBefore(node);
+							rng.setEndAfter(node);
 
 							setPoint(node, 1);
 							walker = new tinymce.dom.TreeWalker(node, dom.getParent(selectedCells[0], 'table'));
@@ -953,6 +986,60 @@
 				ed.onKeyUp.add(function(ed, e) {
 					cleanup();
 				});
+
+				ed.onKeyDown.add(function (ed, e) {
+					fixTableCellSelection(ed);
+				});
+
+				ed.onMouseDown.add(function (ed, e) {
+					if (e.button != 2) {
+						fixTableCellSelection(ed);
+					}
+				});
+				function tableCellSelected(ed, rng, n, currentCell) {
+					// The decision of when a table cell is selected is somewhat involved.  The fact that this code is
+					// required is actually a pointer to the root cause of this bug. A cell is selected when the start 
+					// and end offsets are 0, the start container is a text, and the selection node is either a TR (most cases)
+					// or the parent of the table (in the case of the selection containing the last cell of a table).
+					var TEXT_NODE = 3, table = ed.dom.getParent(rng.startContainer, 'TABLE'), 
+					tableParent, allOfCellSelected, tableCellSelection;
+					if (table) 
+					tableParent = table.parentNode;
+					allOfCellSelected =rng.startContainer.nodeType == TEXT_NODE && 
+						rng.startOffset == 0 && 
+						rng.endOffset == 0 && 
+						currentCell && 
+						(n.nodeName=="TR" || n==tableParent);
+					tableCellSelection = (n.nodeName=="TD"||n.nodeName=="TH")&& !currentCell;	   
+					return  allOfCellSelected || tableCellSelection;
+					// return false;
+				}
+				
+				// this nasty hack is here to work around some WebKit selection bugs.
+				function fixTableCellSelection(ed) {
+					if (!tinymce.isWebKit)
+						return;
+
+					var rng = ed.selection.getRng();
+					var n = ed.selection.getNode();
+					var currentCell = ed.dom.getParent(rng.startContainer, 'TD,TH');
+				
+					if (!tableCellSelected(ed, rng, n, currentCell))
+						return;
+						if (!currentCell) {
+							currentCell=n;
+						}
+					
+					// Get the very last node inside the table cell
+					var end = currentCell.lastChild;
+					while (end.lastChild)
+						end = end.lastChild;
+					
+					// Select the entire table cell. Nothing outside of the table cell should be selected.
+					rng.setEnd(end, end.nodeValue.length);
+					ed.selection.setRng(rng);
+				}
+				ed.plugins.table.fixTableCellSelection=fixTableCellSelection;
 
 				// Add context menu
 				if (ed && ed.plugins.contextmenu) {
@@ -1006,60 +1093,231 @@
 					});
 				}
 
-				// Fixes an issue on Gecko where it's impossible to place the caret behind a table
-				// This fix will force a paragraph element after the table but only when the forced_root_block setting is enabled
-				if (!tinymce.isIE) {
-					function fixTableCaretPos() {
-						var last;
+				// Fix to allow navigating up and down in a table in WebKit browsers.
+				if (tinymce.isWebKit) {
+					function moveSelection(ed, e) {
+						var VK = tinymce.VK;
+						var key = e.keyCode;
 
-						// Skip empty text nodes form the end
-						for (last = ed.getBody().lastChild; last && last.nodeType == 3 && !last.nodeValue.length; last = last.previousSibling) ;
+						function handle(upBool, sourceNode, event) {
+							var siblingDirection = upBool ? 'previousSibling' : 'nextSibling';
+							var currentRow = ed.dom.getParent(sourceNode, 'tr');
+							var siblingRow = currentRow[siblingDirection];
 
-						if (last && last.nodeName == 'TABLE')
-							ed.dom.add(ed.getBody(), 'p', null, '<br mce_bogus="1" />');
-					};
-
-					// Fixes an bug where it's impossible to place the caret before a table in Gecko
-					// this fix solves it by detecting when the caret is at the beginning of such a table
-					// and then manually moves the caret infront of the table
-					if (tinymce.isGecko) {
-						ed.onKeyDown.add(function(ed, e) {
-							var rng, table, dom = ed.dom;
-
-							// On gecko it's not possible to place the caret before a table
-							if (e.keyCode == 37 || e.keyCode == 38) {
-								rng = ed.selection.getRng();
-								table = dom.getParent(rng.startContainer, 'table');
-
-								if (table && ed.getBody().firstChild == table) {
-									if (isAtStart(rng, table)) {
-										rng = dom.createRng();
-
-										rng.setStartBefore(table);
-										rng.setEndBefore(table);
-
-										ed.selection.setRng(rng);
-
-										e.preventDefault();
+							if (siblingRow) {
+								moveCursorToRow(ed, sourceNode, siblingRow, upBool);
+								tinymce.dom.Event.cancel(event);
+								return true;
+							} else {
+								var tableNode = ed.dom.getParent(currentRow, 'table');
+								var middleNode = currentRow.parentNode;
+								var parentNodeName = middleNode.nodeName.toLowerCase();
+								if (parentNodeName === 'tbody' || parentNodeName === (upBool ? 'tfoot' : 'thead')) {
+									var targetParent = getTargetParent(upBool, tableNode, middleNode, 'tbody');
+									if (targetParent !== null) {
+										return moveToRowInTarget(upBool, targetParent, sourceNode, event);
 									}
 								}
+								return escapeTable(upBool, currentRow, siblingDirection, tableNode, event);
 							}
-						});
+						}
+
+						function getTargetParent(upBool, topNode, secondNode, nodeName) {
+							var tbodies = ed.dom.select('>' + nodeName, topNode);
+							var position = tbodies.indexOf(secondNode);
+							if (upBool && position === 0 || !upBool && position === tbodies.length - 1) {
+								return getFirstHeadOrFoot(upBool, topNode);
+							} else if (position === -1) {
+								var topOrBottom = secondNode.tagName.toLowerCase() === 'thead' ? 0 : tbodies.length - 1;
+								return tbodies[topOrBottom];
+							} else {
+								return tbodies[position + (upBool ? -1 : 1)];
+							}
+						}
+
+						function getFirstHeadOrFoot(upBool, parent) {
+							var tagName = upBool ? 'thead' : 'tfoot';
+							var headOrFoot = ed.dom.select('>' + tagName, parent);
+							return headOrFoot.length !== 0 ? headOrFoot[0] : null;
+						}
+
+						function moveToRowInTarget(upBool, targetParent, sourceNode, event) {
+							var targetRow = getChildForDirection(targetParent, upBool);
+							targetRow && moveCursorToRow(ed, sourceNode, targetRow, upBool);
+							tinymce.dom.Event.cancel(event);
+							return true;
+						}
+
+						function escapeTable(upBool, currentRow, siblingDirection, table, event) {
+							var tableSibling = table[siblingDirection];
+							if (tableSibling) {
+								moveCursorToStartOfElement(tableSibling);
+								return true;
+							} else {
+								var parentCell = ed.dom.getParent(table, 'td,th');
+								if (parentCell) {
+									return handle(upBool, parentCell, event);
+								} else {
+									var backUpSibling = getChildForDirection(currentRow, !upBool);
+									moveCursorToStartOfElement(backUpSibling);
+									return tinymce.dom.Event.cancel(event);
+								}
+							}
+						}
+
+						function getChildForDirection(parent, up) {
+							var child =  parent && parent[up ? 'lastChild' : 'firstChild'];
+							// BR is not a valid table child to return in this case we return the table cell
+							return child && child.nodeName === 'BR' ? ed.dom.getParent(child, 'td,th') : child;
+						}
+
+						function moveCursorToStartOfElement(n) {
+							ed.selection.setCursorLocation(n, 0);
+						}
+
+						function isVerticalMovement() {
+							return key == VK.UP || key == VK.DOWN;
+						}
+
+						function isInTable(ed) {
+							var node = ed.selection.getNode();
+							var currentRow = ed.dom.getParent(node, 'tr');
+							return currentRow !== null;
+						}
+
+						function columnIndex(column) {
+							var colIndex = 0;
+							var c = column;
+							while (c.previousSibling) {
+								c = c.previousSibling;
+								colIndex = colIndex + getSpanVal(c, "colspan");
+							}
+							return colIndex;
+						}
+
+						function findColumn(rowElement, columnIndex) {
+							var c = 0;
+							var r = 0;
+							each(rowElement.children, function(cell, i) {
+								c = c + getSpanVal(cell, "colspan");
+								r = i;
+								if (c > columnIndex)
+									return false;
+							});
+							return r;
+						}
+
+						function moveCursorToRow(ed, node, row, upBool) {
+							var srcColumnIndex = columnIndex(ed.dom.getParent(node, 'td,th'));
+							var tgtColumnIndex = findColumn(row, srcColumnIndex);
+							var tgtNode = row.childNodes[tgtColumnIndex];
+							var rowCellTarget = getChildForDirection(tgtNode, upBool);
+							moveCursorToStartOfElement(rowCellTarget || tgtNode);
+						}
+
+						function shouldFixCaret(preBrowserNode) {
+							var newNode = ed.selection.getNode();
+							var newParent = ed.dom.getParent(newNode, 'td,th');
+							var oldParent = ed.dom.getParent(preBrowserNode, 'td,th');
+							return newParent && newParent !== oldParent && checkSameParentTable(newParent, oldParent)
+						}
+
+						function checkSameParentTable(nodeOne, NodeTwo) {
+							return ed.dom.getParent(nodeOne, 'TABLE') === ed.dom.getParent(NodeTwo, 'TABLE');
+						}
+
+						if (isVerticalMovement() && isInTable(ed)) {
+							var preBrowserNode = ed.selection.getNode();
+							setTimeout(function() {
+								if (shouldFixCaret(preBrowserNode)) {
+									handle(!e.shiftKey && key === VK.UP, preBrowserNode, e);
+								}
+							}, 0);
+						}
 					}
 
-					ed.onKeyUp.add(fixTableCaretPos);
-					ed.onSetContent.add(fixTableCaretPos);
-					ed.onVisualAid.add(fixTableCaretPos);
-
-					ed.onPreProcess.add(function(ed, o) {
-						var last = o.node.lastChild;
-
-						if (last && last.childNodes.length == 1 && last.firstChild.nodeName == 'BR')
-							ed.dom.remove(last);
-					});
-
-					fixTableCaretPos();
+					ed.onKeyDown.add(moveSelection);
 				}
+
+				// Fixes an issue on Gecko where it's impossible to place the caret behind a table
+				// This fix will force a paragraph element after the table but only when the forced_root_block setting is enabled
+				function fixTableCaretPos() {
+					var last;
+
+					// Skip empty text nodes form the end
+					for (last = ed.getBody().lastChild; last && last.nodeType == 3 && !last.nodeValue.length; last = last.previousSibling) ;
+
+					if (last && last.nodeName == 'TABLE') {
+						if (ed.settings.forced_root_block)
+							ed.dom.add(ed.getBody(), ed.settings.forced_root_block, null, tinymce.isIE && !tinymce.isIE11 ? '&nbsp;' : '<br data-mce-bogus="1" />');
+						else
+							ed.dom.add(ed.getBody(), 'br', {'data-mce-bogus': '1'});
+					}
+				};
+
+				// Fixes an bug where it's impossible to place the caret before a table in Gecko
+				// this fix solves it by detecting when the caret is at the beginning of such a table
+				// and then manually moves the caret infront of the table
+				if (tinymce.isGecko) {
+					ed.onKeyDown.add(function(ed, e) {
+						var rng, table, dom = ed.dom;
+
+						// On gecko it's not possible to place the caret before a table
+						if (e.keyCode == 37 || e.keyCode == 38) {
+							rng = ed.selection.getRng();
+							table = dom.getParent(rng.startContainer, 'table');
+
+							if (table && ed.getBody().firstChild == table) {
+								if (isAtStart(rng, table)) {
+									rng = dom.createRng();
+
+									rng.setStartBefore(table);
+									rng.setEndBefore(table);
+
+									ed.selection.setRng(rng);
+
+									e.preventDefault();
+								}
+							}
+						}
+					});
+				}
+
+				ed.onKeyUp.add(fixTableCaretPos);
+				ed.onSetContent.add(fixTableCaretPos);
+				ed.onVisualAid.add(fixTableCaretPos);
+
+				ed.onPreProcess.add(function(ed, o) {
+					var last = o.node.lastChild;
+
+					if (last && (last.nodeName == "BR" || (last.childNodes.length == 1 && (last.firstChild.nodeName == 'BR' || last.firstChild.nodeValue == '\u00a0'))) && last.previousSibling && last.previousSibling.nodeName == "TABLE") {
+						ed.dom.remove(last);
+					}
+				});
+
+
+				/**
+				 * Fixes bug in Gecko where shift-enter in table cell does not place caret on new line
+				 *
+				 * Removed: Since the new enter logic seems to fix this one.
+				 */
+				/*
+				if (tinymce.isGecko) {
+					ed.onKeyDown.add(function(ed, e) {
+						if (e.keyCode === tinymce.VK.ENTER && e.shiftKey) {
+							var node = ed.selection.getRng().startContainer;
+							var tableCell = dom.getParent(node, 'td,th');
+							if (tableCell) {
+								var zeroSizedNbsp = ed.getDoc().createTextNode("\uFEFF");
+								dom.insertAfter(zeroSizedNbsp, node);
+							}
+						}
+					});
+				}
+				*/
+
+				fixTableCaretPos();
+				ed.startContent = ed.getContent({format : 'raw'});
 			});
 
 			// Register action commands
