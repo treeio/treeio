@@ -18,5 +18,5 @@ docutils
 sphinx
 johnny-cache
 django-pandora
+dj_database_url
 gunicorn
-
