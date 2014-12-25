@@ -1,0 +1,4 @@
+/* https://github.com/treeio/treeio/issues/129 */
+.ui-autocomplete {
+  z-index: 99999;
+}
