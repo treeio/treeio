@@ -47,9 +47,8 @@ DATABASES = {
     }
 }
 
-DATABASES['default'].update({
-    'default': dj_database_url.config(default='sqlite:///treeio.db')
-})
+DATABASES['default'].update(
+    dj_database_url.config(default='sqlite:///treeio.db'))
 
 import sys
 # Covers regular testing and django-coverage
