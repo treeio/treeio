@@ -584,7 +584,10 @@ def ajax_upload_record(request, record_id=None):
     record = UpdateRecord.objects.get(id=record_id)
     return ajax_upload(request, None, record)
 
+import urllib
 
+from treeio.core import utf8
+    
 @treeio_login_required
 def attachment_download(request, attachment_id):
     try:
@@ -595,11 +598,16 @@ def attachment_download(request, attachment_id):
     filepath = join(
         getattr(settings, 'MEDIA_ROOT'), 'attachments', attachment.attached_file.name)
     try:
-        data = open(filepath).read()
+        with open(filepath, 'rb') as f:
+            data = f.read()
     except IOError:
         raise Http404()
 
     response = HttpResponse(data, content_type=attachment.mimetype)
-    response[
-        'Content-Disposition'] = 'filename="%s"' % smart_unicode(attachment.filename)
+    # http://stackoverflow.com/questions/93551/
+    # how-to-encode-the-filename-parameter-of-content-disposition-header-in-http
+    fn = utf8(smart_unicode(attachment.filename))
+    response['Content-Disposition'] = (u"attachment; filename*=UTF-8''%s" % 
+                                       urllib.quote(fn))        
+        
     return response
