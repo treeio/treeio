@@ -511,6 +511,7 @@ def ajax_upload(request, object_id=None, record=None):
                 # is the "advanced" ajax upload
                 try:
                     filename = request.GET['qqfile']
+                    content_type = "application/octet-stream"
                 except KeyError:
                     return HttpResponseBadRequest("AJAX request not valid")
             # not an ajax upload, so it was the "basic" iframe version with
@@ -526,6 +527,7 @@ def ajax_upload(request, object_id=None, record=None):
                     # Thus, we can just grab the first (and only) value in the
                     # dict.
                     upload = request.FILES.values()[0]
+                    content_type = upload.content_type
                 else:
                     raise Http404("Bad Upload")
                 filename = upload.name
@@ -540,7 +542,7 @@ def ajax_upload(request, object_id=None, record=None):
             success = save_upload(upload, savefile, is_raw)
 
             attachment = Attachment(filename=filename,
-                                    mimetype=upload.content_type,
+                                    mimetype=content_type,
                                     uploaded_by=request.user.get_profile(),
                                     attached_file=filehash)
 
@@ -582,7 +584,10 @@ def ajax_upload_record(request, record_id=None):
     record = UpdateRecord.objects.get(id=record_id)
     return ajax_upload(request, None, record)
 
+import urllib
 
+from treeio.core import utf8
+    
 @treeio_login_required
 def attachment_download(request, attachment_id):
     try:
@@ -593,11 +598,16 @@ def attachment_download(request, attachment_id):
     filepath = join(
         getattr(settings, 'MEDIA_ROOT'), 'attachments', attachment.attached_file.name)
     try:
-        data = open(filepath).read()
+        with open(filepath, 'rb') as f:
+            data = f.read()
     except IOError:
         raise Http404()
 
     response = HttpResponse(data, content_type=attachment.mimetype)
-    response[
-        'Content-Disposition'] = 'filename="%s"' % smart_unicode(attachment.filename)
+    # http://stackoverflow.com/questions/93551/
+    # how-to-encode-the-filename-parameter-of-content-disposition-header-in-http
+    fn = utf8(smart_unicode(attachment.filename))
+    response['Content-Disposition'] = (u"attachment; filename*=UTF-8''%s" % 
+                                       urllib.quote(fn))        
+        
     return response
