@@ -68,6 +68,7 @@ class EventForm(forms.ModelForm):
         self.fields['start'].label = _("Start")
         self.fields['end'].label = _("End")
         self.fields['details'].label = _("Details")
+        self.fields['details'].widget.attrs.update({'class': 'full-editor'})
 
         if date:
             rdate = None
