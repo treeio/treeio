@@ -236,7 +236,8 @@ class PopupMiddleware():
 
         return response
 
-
+from django.utils.translation.trans_real import to_language
+        
 class LanguageMiddleware():
 
     "Automatically set chosen language"
@@ -262,7 +263,7 @@ class LanguageMiddleware():
                 lang = conf.value
             except IndexError:
                 pass
-        translation.activate(lang)
+        lang = to_language(lang)
         request.session['django_language'] = lang
 
 
