@@ -568,12 +568,3 @@ MESSAGE_STORAGE = 'treeio.core.contrib.messages.storage.cache.CacheStorage'
 
 # Dajaxice settings
 DAJAXICE_MEDIA_PREFIX = "dajaxice"
-
-if not DEBUG:
-    
-    # Please add your domain name here, detail see: 
-    # https://docs.djangoproject.com/en/dev/releases/1.5/#allowed-hosts-required-in-production
-    ALLOWED_HOSTS = [
-        'localhost', 
-        '127.0.0.1',
-    ] # and FQDN here...
