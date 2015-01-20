@@ -3,6 +3,7 @@
 # This file is part of Treeio.
 # License www.tree.io/license
 
+from distutils.util import strtobool
 from django.core.management.base import BaseCommand, CommandError
 from treeio.core.conf import settings
 import json
@@ -32,9 +33,9 @@ class Command(BaseCommand):
 
         db = {}
         db['ENGINE'] = raw_input(
-            'Enter database engine <mysql,postgresql,postgresql_psycopg2,oracle,sqlite3> (defaults to sqlite3): ')
+            'Enter database engine <mysql,postgresql,postgresql_psycopg2,oracle,sqlite3> (defaults to postgres): ')
         if not db['ENGINE']:
-            db['ENGINE'] = 'sqlite3'
+            db['ENGINE'] = 'postgresql_psycopg2'
 
         if db['ENGINE'] in ('mysql', 'postgresql', 'postgresql_psycopg2', 'oracle', 'sqlite3'):
             db['ENGINE'] = 'django.db.backends.' + db['ENGINE']
@@ -46,8 +47,7 @@ class Command(BaseCommand):
                 'Enter database name (defaults to treeio.db): ')
             if not db['NAME']:
                 db['NAME'] = 'treeio.db'
-
-        if not db['ENGINE'].endswith('sqlite3'):
+        else:
             db['NAME'] = raw_input(
                 'Enter database name (defaults to treeio): ')
             if not db['NAME']:
@@ -62,12 +62,19 @@ class Command(BaseCommand):
             db['HOST'] = raw_input('Hostname (empty for default): ')
             db['PORT'] = raw_input('Port (empty for default): ')
 
-        self.stdout.write('\n-- Installing database...\n')
+        self.stdout.write('\n-- Saving database configuration...\n')
         self.stdout.flush()
 
         f = open(HARDTREE_DB_SETTINGS_FILE, 'w')
         json.dump({'default': db}, f)
         f.close()
+
+        answer = raw_input(
+            'Would you like to create the tables (say no to use an existing database) [y/n] (defaults to yes): ')
+        if not len(answer):
+            answer = True
+        else:
+            answer = strtobool(answer)
 
         exit_code = subprocess.call(
             [sys.executable, 'manage.py', 'syncdb', '--all', '--noinput'])
