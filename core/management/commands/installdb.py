@@ -76,17 +76,18 @@ class Command(BaseCommand):
         else:
             answer = strtobool(answer)
 
-        exit_code = subprocess.call(
-            [sys.executable, 'manage.py', 'syncdb', '--all', '--noinput'])
-        if not exit_code == 0:
-            self.stdout.flush()
-            f = open(HARDTREE_DB_SETTINGS_FILE, 'w')
-            json.dump({'default': initial_db}, f)
-            f.close()
-            raise CommandError('Failed to install database.')
+        if answer:
+            exit_code = subprocess.call(
+                [sys.executable, 'manage.py', 'syncdb', '--all', '--noinput'])
+            if not exit_code == 0:
+                self.stdout.flush()
+                f = open(HARDTREE_DB_SETTINGS_FILE, 'w')
+                json.dump({'default': initial_db}, f)
+                f.close()
+                raise CommandError('Failed to install database.')
 
-        exit_code = subprocess.call(
-            [sys.executable, 'manage.py', 'migrate', '--all', '--fake', '--noinput', '--no-initial-data'])
+            exit_code = subprocess.call(
+                [sys.executable, 'manage.py', 'migrate', '--all', '--fake', '--noinput', '--no-initial-data'])
 
-        self.stdout.write(
-            '\n-- Successfully installed database. \n-- You\'re ready to go!\n\n')
+            self.stdout.write(
+                '\n-- Successfully installed database. \n-- You\'re ready to go!\n\n')
