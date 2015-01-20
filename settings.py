@@ -9,13 +9,15 @@
 Django settings for treeio project.
 """
 
+import sys
+import os
+import dj_database_url
 from os import path
+from whoosh import fields
 # assuming settings are in the same dir as source
 PROJECT_ROOT = path.abspath(path.dirname(__file__))
 
-import os
-DEBUG = (True if 'DEBUG' not in os.environ 
-              else {'true': True, 'false': False}[os.environ['DEBUG'].lower()])
+DEBUG = (True if 'DEBUG' not in os.environ else {'true': True, 'false': False}[os.environ['DEBUG'].lower()])
 TEMPLATE_DEBUG = DEBUG
 
 QUERY_DEBUG = False
@@ -26,8 +28,6 @@ ADMINS = (
 )
 
 MANAGERS = ADMINS
-
-import dj_database_url
 
 # Backward compatible with treeio.core.db.
 DATABASES = {
@@ -50,7 +50,6 @@ DATABASES = {
 DATABASES['default'].update(
     dj_database_url.config(default='sqlite:///treeio.db'))
 
-import sys
 # Covers regular testing and django-coverage
 TESTING = 'test' in sys.argv or 'test_coverage' in sys.argv
 if TESTING:
@@ -545,7 +544,6 @@ http://www.tree.io
 SEARCH_DISABLED = False
 SEARCH_ENGINE = 'db'
 
-from whoosh import fields
 WHOOSH_SCHEMA = fields.Schema(id=fields.ID(stored=True, unique=True),
                               name=fields.TEXT(stored=True),
                               type=fields.TEXT(stored=True),
