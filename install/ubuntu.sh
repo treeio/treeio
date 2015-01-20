@@ -1,9 +1,5 @@
 #!/bin/sh
 
-#apt-get install build-essential python-dev
-#apt-get build-dep python-lxml python-imaging
-#apt-get install git python-flup python-pip python-virtualenv
-
 sudo mkdir /usr/local/treeio
 sudo chown $USER /usr/local/treeio
 cd /usr/local/treeio
