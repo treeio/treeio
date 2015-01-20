@@ -17,7 +17,7 @@ source env/bin/activate
 pip install -U setuptools pip
 pip install uwsgi
 
-wget https://github.com/tovmeod/treeio/archive/master.zip
+wget https://github.com/treeio/treeio/archive/2.0.zip
 unzip master.zip
 mv treeio-master/ treeio
 # to update:
