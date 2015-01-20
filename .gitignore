@@ -5,3 +5,5 @@ core/db/dbsettings.json
 treeio.db
 doc/_build
 build/*
+.idea/*
+static/media/*
