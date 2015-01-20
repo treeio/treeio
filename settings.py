@@ -161,7 +161,7 @@ MIDDLEWARE_CLASSES = (
     'treeio.core.middleware.chat.ChatAjaxMiddleware',
     "django.contrib.messages.middleware.MessageMiddleware",
     "treeio.core.middleware.modules.ModuleDetect",
-    "minidetector.Middleware",
+    "treeio.minidetector.Middleware",
     "treeio.core.middleware.user.CommonMiddleware",
     "treeio.core.middleware.user.PopupMiddleware",
 )
