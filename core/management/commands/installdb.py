@@ -7,11 +7,13 @@ from django.core.management.base import BaseCommand, CommandError
 from treeio.core.conf import settings
 import json
 import subprocess
-from os import path
+from os import path, makedirs
 import sys
 
 PROJECT_ROOT = getattr(settings, 'PROJECT_ROOT')
 HARDTREE_DB_SETTINGS_FILE = path.join(PROJECT_ROOT, 'core/db/dbsettings.json')
+if not path.exists(path.dirname(HARDTREE_DB_SETTINGS_FILE)):
+    makedirs(path.dirname(HARDTREE_DB_SETTINGS_FILE))
 
 
 class Command(BaseCommand):
