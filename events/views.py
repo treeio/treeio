@@ -310,7 +310,7 @@ def event_edit(request, event_id, response_format='html'):
         return user_denied(request, message="You don't have access to this Event")
 
     if request.POST:
-        if not 'cancel' in request.POST:
+        if 'cancel' not in request.POST:
             form = EventForm(
                 request.user.get_profile(), None, None, request.POST, instance=event)
             if form.is_valid():
