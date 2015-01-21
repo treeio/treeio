@@ -105,7 +105,7 @@ class EventForm(forms.ModelForm):
                     {'initial': instance.start.strftime('%s')})
             if instance.end:
                 self.fields['end'].widget.attrs.update(
-                    {'initial': instance.end.strftime('%s')})
+                    {'initial': (instance.end - datetime.datetime(1970, 1, 1)).total_seconds()})
 
     def clean_end(self):
         "Make sure end date is greater than start date, when specified"
