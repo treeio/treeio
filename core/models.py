@@ -36,8 +36,7 @@ import string
 
 
 class AccessEntity(models.Model):
-
-    "Generic model for both User and Group"
+    """Generic model for both User and Group"""
     last_updated = models.DateTimeField(auto_now=True)
 
     def get_entity(self):
@@ -70,8 +69,7 @@ class AccessEntity(models.Model):
 
 
 class Group(AccessEntity):
-
-    "Group record"
+    """Group record"""
     name = models.CharField(max_length=256)
     parent = models.ForeignKey(
         'self', blank=True, null=True, related_name='child_set')
@@ -81,7 +79,7 @@ class Group(AccessEntity):
         return self.name
 
     def get_absolute_url(self, module='identities'):
-        "Returns absolute URL of the Group"
+        """Returns absolute URL of the Group"""
         if not module or module == 'identities':
             try:
                 return reverse('identities_group_view', args=[self.id])
@@ -94,7 +92,7 @@ class Group(AccessEntity):
                 return ""
 
     def get_root(self):
-        "Get the root Group"
+        """Get the root Group"""
 
         root = self
         # keep track of items we've looked at to avoid infinite looping
@@ -107,7 +105,7 @@ class Group(AccessEntity):
         return root
 
     def get_tree_path(self, skipself=False):
-        "Get tree path as a list() starting with root Group"
+        """Get tree path as a list() starting with root Group"""
 
         if skipself:
             path = []
@@ -128,7 +126,7 @@ class Group(AccessEntity):
         return path
 
     def get_contact(self):
-        "Returns first available Contact"
+        """Returns first available Contact"""
         try:
             contact = self.contact_set.all()[:1][0]
             return contact
@@ -136,7 +134,7 @@ class Group(AccessEntity):
             return None
 
     def has_contact(self):
-        "Returns true if any Contacts exist for this Group"
+        """Returns true if any Contacts exist for this Group"""
         try:
             if self.contact_set.count() > 0:
                 return True
@@ -146,7 +144,7 @@ class Group(AccessEntity):
             return False
 
     def get_fullname(self, save=True):
-        "Returns the full name with parent(s) separated by slashes"
+        """Returns the full name with parent(s) separated by slashes"""
         current = self
         fullname = self.name
         while current.parent:
@@ -155,7 +153,7 @@ class Group(AccessEntity):
         return fullname
 
     def get_perspective(self):
-        "Returns currently set Perspective for the Group"
+        """Returns currently set Perspective for the Group"""
         ids = []
         try:
             for setting in ModuleSetting.get_for_module('treeio.core', name='default_perspective', group=self):
@@ -177,7 +175,7 @@ class Group(AccessEntity):
         return perspective
 
     def set_perspective(self, perspective):
-        "Sets the Perspective for the Group"
+        """Sets the Perspective for the Group"""
         ModuleSetting.set_for_module(
             'default_perspective', perspective.id, 'treeio.core', group=self)
 
@@ -195,14 +193,12 @@ class Group(AccessEntity):
             pass
 
     class Meta:
-
-        "Group"
+        """Group"""
         ordering = ['name']
 
 
 class User(AccessEntity):
-
-    "A record about a user registered within the system"
+    """A record about a user registered within the system"""
     name = models.CharField(max_length=256)
     user = models.ForeignKey(django_auth.User)
     default_group = models.ForeignKey(
@@ -212,20 +208,19 @@ class User(AccessEntity):
     last_access = models.DateTimeField(default=datetime.now)
 
     class Meta:
-
-        "User"
+        """User"""
         ordering = ['name']
 
     def __unicode__(self):
-        "Returns Contact name if available, username otherwise"
+        """Returns Contact name if available, username otherwise"""
         contact = self.get_contact()
         if contact:
             return unicode(contact)
-        else:
+        else:  # todo remove useless else
             return unicode(self.name)
 
     def save(self, *args, **kwargs):
-        "Override to automatically set User.name from attached Django User"
+        """Override to automatically set User.name from attached Django User"""
         if not self.name and self.user:
             self.name = self.user.username
         if not self.default_group:
@@ -253,7 +248,7 @@ class User(AccessEntity):
             pass
 
     def get_absolute_url(self, module='identities'):
-        "Returns absolute URL of the User"
+        """Returns absolute URL of the User"""
         if not module or module == 'identities':
             try:
                 return reverse('identities_user_view', args=[self.id])
@@ -266,7 +261,7 @@ class User(AccessEntity):
                 return ""
 
     def generate_new_password(self, size=8):
-        "Generates a new password and sets it to the user"
+        """Generates a new password and sets it to the user"""
 
         password = ''.join(
             [random.choice(string.letters + string.digits) for i in range(size)])
@@ -277,14 +272,14 @@ class User(AccessEntity):
         return password
 
     def get_groups(self):
-        "Returns the list of all groups the user belongs to"
+        """Returns the list of all groups the user belongs to"""
         groups = list(self.other_groups.all())
         groups.append(self.default_group)
 
         return groups
 
-    def _check_permission(self, object, mode='r'):
-        "Helper for User.has_permissions(), accepts only one character for mode"
+    def _check_permission(self, object, mode='r'):  # todo: rename variable shadowing
+        """Helper for User.has_permissions(), accepts only one character for mode"""
 
         query = models.Q(pk=self.id)
         for group in self.get_groups():
@@ -304,8 +299,8 @@ class User(AccessEntity):
 
         return False
 
-    def has_permission(self, object, mode="r"):
-        "Checks permissions on a given object for a given mode"
+    def has_permission(self, object, mode="r"):  # todo: rename variable shadowing
+        """Checks permissions on a given object for a given mode"""
         if self.is_admin() or not object:
             return True
 
@@ -316,7 +311,7 @@ class User(AccessEntity):
         return True
 
     def is_admin(self, module_name=''):
-        "True if the user has write permissions on the given module"
+        """True if the user has write permissions on the given module"""
         access = False
         if not module_name:
             module_name = 'treeio.core'
@@ -328,24 +323,24 @@ class User(AccessEntity):
             pass
         if access or module_name == 'treeio.core':
             return access
-        else:
+        else:  # todo: remove useless else
             return self.is_admin(module_name='treeio.core')
 
     def get_username(self):
-        "String username, picked up from attached Django User or self.name string otherwise"
+        """String username, picked up from attached Django User or self.name string otherwise"""
         if self.user:
             return self.user.username
-        else:
+        else:  # todo: remove useless else
             return self.name
 
     def get_perspective(self):
-        "Returns currently set Perspective for the User"
+        """Returns currently set Perspective for the User"""
 
         ids = []
         try:
             for setting in ModuleSetting.get_for_module('treeio.core', name='default_perspective', user=self):
                 ids.append(long(setting.value))
-            id = ids[0]
+            id = ids[0]  # todo: rename variable shadowing
             perspective = get_object_or_404(Perspective, pk=id)
         except:
             try:
@@ -366,7 +361,7 @@ class User(AccessEntity):
         return perspective
 
     def set_perspective(self, perspective):
-        "Sets the Perspective for the User"
+        """Sets the Perspective for the User"""
         ModuleSetting.set_for_module(
             'default_perspective', perspective.id, 'treeio.core', user=self)
 
@@ -377,7 +372,7 @@ class User(AccessEntity):
                 module.read_access.add(self)
 
     def get_contact(self):
-        "Returns first available Contact"
+        """Returns first available Contact"""
         try:
             contact = self.contact_set.all()[:1][0]
             return contact
@@ -385,11 +380,11 @@ class User(AccessEntity):
             return None
 
     def has_contact(self):
-        "Returns true if any Contacts exist for this User"
+        """Returns true if any Contacts exist for this User"""
         try:
             if self.contact_set.count() > 0:
                 return True
-            else:
+            else:  # todo: remove useless else
                 return False
         except Exception:
             return False
@@ -398,7 +393,7 @@ class User(AccessEntity):
 
 
 def user_autocreate_handler(sender, instance, created, **kwargs):
-    "When a Django User is created, automatically create a Hardtree User"
+    """When a Django User is created, automatically create a Hardtree User"""
     if created:
         try:
             profile = instance.get_profile()
@@ -413,8 +408,7 @@ if getattr(settings, 'HARDTREE_SIGNALS_AUTOCREATE_USER', False):
 
 
 class Invitation(models.Model):
-
-    "Invitation to register on Hardtree"
+    """Invitation to register on Hardtree"""
     email = models.EmailField()
     key = models.CharField(max_length=256)
     sender = models.ForeignKey(User, blank=True, null=True)
@@ -422,7 +416,7 @@ class Invitation(models.Model):
     date_created = models.DateTimeField(default=datetime.now)
 
     def __init__(self, *args, **kwargs):
-        "Create a hash automatically"
+        """Create a hash automatically"""
         super(Invitation, self).__init__(*args, **kwargs)
         if self.email and not self.key:
             hasher = hashlib.sha256()
@@ -431,8 +425,7 @@ class Invitation(models.Model):
 
 
 class Tag(models.Model):
-
-    "Model for Global Tagging"
+    """Model for Global Tagging"""
     name = models.CharField(max_length=512)
     date_created = models.DateTimeField(default=datetime.now)
 
@@ -444,8 +437,7 @@ class Tag(models.Model):
 
 
 class Comment(models.Model):
-
-    "Comment on any Object"
+    """Comment on any Object"""
     author = models.ForeignKey(User, blank=True, null=True)
     body = models.TextField(blank=True, null=True)
     likes = models.ManyToManyField(
@@ -459,8 +451,7 @@ class Comment(models.Model):
 
 
 class Object(models.Model):
-
-    "Generic Hardtree object"
+    """Generic Hardtree object"""
     creator = models.ForeignKey(
         User, blank=True, null=True, related_name='objects_created', on_delete=models.SET_NULL)
     read_access = models.ManyToManyField(
@@ -495,7 +486,7 @@ class Object(models.Model):
     access_inherit = ('*module', '*user')
 
     def _get_query_filter_permitted(user, mode='r', filter_trash=True):
-        "Helper for filter_permitted(), accepts one character per mode"
+        """Helper for filter_permitted(), accepts one character per mode"""
 
         query = models.Q()
         if not user.is_admin():
@@ -516,7 +507,7 @@ class Object(models.Model):
     _get_query_filter_permitted = staticmethod(_get_query_filter_permitted)
 
     def filter_permitted(user, manager, mode="r", filter_trash=True):
-        "Returns Objects the given user is allowed to access, depending on mode - read(r), write(w) or execute(x)"
+        """Returns Objects the given user is allowed to access, depending on mode - read(r), write(w) or execute(x)"""
         if not user:
             return []
 
@@ -530,7 +521,7 @@ class Object(models.Model):
     filter_permitted = staticmethod(filter_permitted)
 
     def filter_by_request(request, manager, mode="r", filter_trash=True):
-        "Returns Objects the current user is allowed to access, depending on mode - read(r), write(w) or execute(x)"
+        """Returns Objects the current user is allowed to access, depending on mode - read(r), write(w) or execute(x)"""
         user = None
         if request.user.username:
             try:
@@ -543,14 +534,14 @@ class Object(models.Model):
     filter_by_request = staticmethod(filter_by_request)
 
     def __unicode__(self):
-        "String representation"
+        """String representation"""
         try:
             return unicode(self.get_related_object())
         except Exception:
             return unicode(self.object_type) + " [" + unicode(self.id) + "]"
 
     def save(self, *args, **kwargs):
-        "Override to auto-detect object type and set default user if unset"
+        """Override to auto-detect object type and set default user if unset"""
 
         try:
             name = self.__unicode__()
@@ -563,12 +554,12 @@ class Object(models.Model):
         if types:
             self.object_type = types[0]
 
-        object = super(Object, self).save(*args, **kwargs)
+        object = super(Object, self).save(*args, **kwargs)  # todo: rename variable shadowing
 
         return object
 
     def get_object_module(self):
-        "Returns the module for this object, e.g. 'projects'"
+        """Returns the module for this object, e.g. 'projects'"""
 
         return getattr(self._meta, 'app_label', None)
 
@@ -589,7 +580,7 @@ class Object(models.Model):
         return resources
 
     def add_nuvius_resource(self, resource_id, key=None):
-        "Add a Nuvius resource to self.nuvius_resource"
+        """Add a Nuvius resource to self.nuvius_resource"""
         existing = [res[0] for res in self.get_nuvius_resources()]
         if not unicode(resource_id) in existing:
             new = "#" + unicode(resource_id)
@@ -603,7 +594,7 @@ class Object(models.Model):
         return self
 
     def get_root(self):
-        "Get the root element, for objects implementing a tree-like structure via .parent"
+        """Get the root element, for objects implementing a tree-like structure via .parent"""
 
         root = self
         # keep track of items we've looked at to avoid infinite looping
@@ -638,7 +629,7 @@ class Object(models.Model):
         return path
 
     def get_related_object(self):
-        "Returns a child object which inherits from self, if exists"
+        """Returns a child object which inherits from self, if exists"""
         try:
             obj_name = re.match(
                 ".*\.(?P<name>\w+)$", self.object_type).group('name')
@@ -647,7 +638,7 @@ class Object(models.Model):
             return None
 
     def get_human_type(self, translate=True):
-        "Returns prettified name of the object type"
+        """Returns prettified name of the object type"""
         try:
             obj_name = re.match(
                 ".*\.(?P<name>\w+)$", self.object_type).group('name')
@@ -661,24 +652,24 @@ class Object(models.Model):
             return self.object_type
 
     def get_absolute_url(self):
-        "Returns a URL to the child object, if available"
+        """Returns a URL to the child object, if available"""
         try:
             return self.get_related_object().get_absolute_url()
         except Exception:
             return ""
 
     def is_searchable(self):
-        "Returns True if the item should be included in Search index"
+        """Returns True if the item should be included in Search index"""
         return getattr(self, 'searchable', True)
 
     def is_attached(self):
-        "Returns True if item is attached to some other Object and serves as a part of it"
+        """Returns True if item is attached to some other Object and serves as a part of it"""
         return getattr(self, 'attached', False)
 
     def get_search_item(self):
-        "Constucts a search item as a dictionary with title, content and URL"
+        """Constructs a search item as a dictionary with title, content and URL"""
 
-        object = self.get_related_object()
+        object = self.get_related_object()  # todo: rename variable shadowing
         if not object:
             object = self
 
@@ -719,7 +710,7 @@ class Object(models.Model):
         return item
 
     def create_notification(self, action='update', author=None, *args, **kwargs):
-        "Creates an UpdateRecord to be submitted to all subscribers of an Object"
+        """Creates an UpdateRecord to be submitted to all subscribers of an Object"""
 
         if not (self.subscribers.all().count() or author):
             return None
@@ -870,7 +861,7 @@ class Object(models.Model):
         return notification
 
     def set_user(self, user):
-        "Sets owner of the Object to the given user"
+        """Sets owner of the Object to the given user"""
 
         # get default permissions from settings
         try:
@@ -967,7 +958,7 @@ class Object(models.Model):
         return self
 
     def set_default_user(self):
-        "Sets the user defined in settings.HARDTREE_DEFAULT_USER_ID and default mode"
+        """Sets the user defined in settings.HARDTREE_DEFAULT_USER_ID and default mode"""
         try:
             user = User.objects.get(pk=settings.HARDTREE_DEFAULT_USER_ID)
         except:
@@ -979,13 +970,13 @@ class Object(models.Model):
         return self
 
     def set_user_from_request(self, request, mode=None):
-        "Sets the user to the current in request and default mode for the user"
+        """Sets the user to the current in request and default mode for the user"""
         user = request.user.get_profile()
         self.set_user(user)
         return self
 
     def copy_permissions(self, object):
-        "Copies all permissions from object. Existing permissions will NOT be removed or dropped"
+        """Copies all permissions from object. Existing permissions will NOT be removed or dropped"""
         read_access = object.read_access.all()
         for entity in read_access:
             self.read_access.add(entity)
@@ -997,11 +988,11 @@ class Object(models.Model):
         return self
 
     def get_fields(self):
-        "Returns list of fields for given object"
+        """Returns list of fields for given object"""
         return filter(lambda f: f.name not in settings.HARDTREE_OBJECT_BLACKLIST, self._meta.fields)
 
     def get_field_names(self):
-        "Returns list of field names for given object"
+        """Returns list of field names for given object"""
         x = []
         for f in self._meta.fields:
             if f.name not in settings.HARDTREE_OBJECT_BLACKLIST:
@@ -1012,7 +1003,7 @@ class Object(models.Model):
         return x
 
     def get_field_value(self, field_name, default=None):
-        "Returns the value of a given field"
+        """Returns the value of a given field"""
         value = getattr(self, field_name, default)
         if hasattr(value, 'all'):
             # Returns value for ManyToMany fields
@@ -1026,7 +1017,7 @@ class Object(models.Model):
         return value
 
     def set_field_value(self, field_name, value):
-        "Sets the value of a given field"
+        """Sets the value of a given field"""
         return setattr(self, field_name)
 
     def set_last_updated(self, last_updated=datetime.now()):
@@ -1058,8 +1049,7 @@ class RevisionField(models.Model):
 
 
 class UpdateRecord(models.Model):
-
-    "Update of an Object"
+    """Update of an Object"""
     author = models.ForeignKey(
         User, blank=True, null=True, related_name="sent_updates")
     sender = models.ForeignKey(
@@ -1089,15 +1079,14 @@ class UpdateRecord(models.Model):
     date_created = models.DateTimeField(default=datetime.now)
 
     class Meta:
-
-        "UpdateRecord"
+        """UpdateRecord"""
         ordering = ['-date_created']
 
     def __unicode__(self):
         return self.body
 
     def set_user_from_request(self, request):
-        "Sets .author to current user and .sender to user's Contact (if available)"
+        """Sets .author to current user and .sender to user's Contact (if available)"""
         user = request.user.get_profile()
         self.author = user
         self.recipients.add(user)
@@ -1107,13 +1096,13 @@ class UpdateRecord(models.Model):
         self.save()
 
     def set_format_strings(self, strings):
-        "Sets format_strings to the list of strings"
+        """Sets format_strings to the list of strings"""
         self.format_strings = base64.b64encode(
             pickle.dumps(strings, pickle.HIGHEST_PROTOCOL))
         return self
 
     def extend_format_strings(self, strings):
-        "Extends existing format strings"
+        """Extends existing format strings"""
         existing = self.get_format_strings()
         if existing:
             existing.extend(strings)
@@ -1123,7 +1112,7 @@ class UpdateRecord(models.Model):
         return self
 
     def get_format_strings(self):
-        "Gets format_strings as a list of strings"
+        """Gets format_strings as a list of strings"""
         result = None
         if self.format_strings:
             try:
@@ -1133,7 +1122,7 @@ class UpdateRecord(models.Model):
         return result
 
     def get_format_message(self):
-        "Returns translatable message in the current language with all attributes applied"
+        """Returns translatable message in the current language with all attributes applied"""
         strings = self.get_format_strings()
         result = ''
         if self.format_message:
@@ -1158,7 +1147,7 @@ class UpdateRecord(models.Model):
         return result
 
     def get_full_message(self):
-        "Return full message"
+        """Return full message"""
         result = ''
         format_message = self.get_format_message()
         if format_message:
@@ -1227,8 +1216,7 @@ class UpdateRecord(models.Model):
 
 
 class Module(Object):
-
-    "Record of a module (application) existing within the system"
+    """Record of a module (application) existing within the system"""
     name = models.CharField(max_length=256)
     title = models.CharField(max_length=256)
     details = models.TextField(blank=True)
@@ -1239,12 +1227,11 @@ class Module(Object):
     searcheable = False
 
     class Meta:
-
-        "Module"
+        """Module"""
         ordering = ['name']
 
     def get_absolute_url(self):
-        "Returns absolute URL"
+        """Returns absolute URL"""
         try:
             return reverse('core_admin_module_view', args=[self.id])
         except Exception:
@@ -1255,8 +1242,7 @@ class Module(Object):
 
 
 class Perspective(Object):
-
-    "Defines a set of modules enabled for a given user"
+    """Defines a set of modules enabled for a given user"""
     name = models.CharField(max_length=256)
     details = models.TextField(blank=True)
     modules = models.ManyToManyField(Module, blank=True, null=True)
@@ -1265,14 +1251,14 @@ class Perspective(Object):
         return self.name
 
     def get_absolute_url(self):
-        "Returns absolute URL"
+        """Returns absolute URL"""
         try:
             return reverse('core_admin_perspective_view', args=[self.id])
         except Exception:
             pass
 
     def get_modules(self):
-        "Get Modules"
+        """Get Modules"""
         modules = self.modules.all()
         if not modules:
             modules = Module.objects.all()
@@ -1280,8 +1266,7 @@ class Perspective(Object):
 
 
 class ModuleSetting(models.Model):
-
-    "Free-type Module setting"
+    """Free-type Module setting"""
     name = models.CharField(max_length=512)
     label = models.CharField(max_length=512)
     perspective = models.ForeignKey(Perspective, blank=True, null=True)
@@ -1291,7 +1276,7 @@ class ModuleSetting(models.Model):
     value = models.TextField()
 
     def loads(self):
-        "Unpickle a ModuleSetting value"
+        """Unpickle a ModuleSetting value"""
         result = None
         if self.value:
             try:
@@ -1301,15 +1286,15 @@ class ModuleSetting(models.Model):
         return result
 
     def dumps(self, value):
-        "Pickle a ModuleSetting value"
+        """Pickle a ModuleSetting value"""
         self.value = base64.b64encode(
             pickle.dumps(value, pickle.HIGHEST_PROTOCOL))
         return self
 
     def get(name='', strict=False, **kwargs):
-        "Setting getter"
+        """Setting getter"""
         if name:
-            settings = ModuleSetting.objects.filter(name=name)
+            settings = ModuleSetting.objects.filter(name=name)   # todo: rename shadowing
         else:
             settings = ModuleSetting.objects.all()
         if strict:
@@ -1327,7 +1312,7 @@ class ModuleSetting(models.Model):
     get = staticmethod(get)
 
     def get_for_module(module_name, name='', strict=False, **kwargs):
-        "Get a setting per module"
+        """Get a setting per module"""
         try:
             module = Module.objects.get(name=module_name)
             return ModuleSetting.get(name=name, module=module, strict=strict, **kwargs)
@@ -1336,7 +1321,7 @@ class ModuleSetting(models.Model):
     get_for_module = staticmethod(get_for_module)
 
     def set(name, value, **kwargs):
-        "Define a ModuleSetting"
+        """Define a ModuleSetting"""
         existing = ModuleSetting.objects.filter(name=name, **kwargs)
         if existing:
             for setting in existing:
@@ -1349,14 +1334,14 @@ class ModuleSetting(models.Model):
     set = staticmethod(set)
 
     def add(name, value, **kwargs):
-        "Add a ModuleSetting"
+        """Add a ModuleSetting"""
         setting = ModuleSetting(name=name, value=value, **kwargs)
         setting.save()
         return setting
     add = staticmethod(add)
 
     def set_for_module(name, value, module_name, **kwargs):
-        "Define a ModuleSetting per module"
+        """Define a ModuleSetting per module"""
         try:
             module = Module.objects.get(name=module_name)
             return ModuleSetting.set(name=name, value=value, module=module, **kwargs)
@@ -1365,7 +1350,7 @@ class ModuleSetting(models.Model):
     set_for_module = staticmethod(set_for_module)
 
     def add_for_module(name, value, module_name, **kwargs):
-        "Add a ModuleSetting per module"
+        """Add a ModuleSetting per module"""
         try:
             module = Module.objects.get(name=module_name)
             return ModuleSetting.add(name=name, value=value, module=module, **kwargs)
@@ -1377,15 +1362,14 @@ class ModuleSetting(models.Model):
         return unicode(self.name) + ": " + unicode(self.value)
 
     def save(self, *args, **kwargs):
-        "Override to set label from name if undefined"
+        """Override to set label from name if undefined"""
         if not self.label:
             self.label = self.name
         super(ModuleSetting, self).save(*args, **kwargs)
 
 
 class ConfigSetting(models.Model):
-
-    "Config setting to be activated dynamically from the database on request"
+    """Config setting to be activated dynamically from the database on request"""
     name = models.CharField(max_length=255, unique=True)
     value = models.TextField(blank=True, null=True)
     last_updated = models.DateTimeField(auto_now=True)
@@ -1394,7 +1378,7 @@ class ConfigSetting(models.Model):
         return unicode(self.loads())
 
     def loads(self):
-        "Unpickle a ModuleSetting value"
+        """Unpickle a ModuleSetting value"""
         result = None
         try:
             result = pickle.loads(base64.b64decode((self.value)))
@@ -1403,7 +1387,7 @@ class ConfigSetting(models.Model):
         return result
 
     def dumps(self, value):
-        "Pickle a ModuleSetting value"
+        """Pickle a ModuleSetting value"""
         self.value = base64.b64encode(
             pickle.dumps(value, pickle.HIGHEST_PROTOCOL))
         return self
@@ -1432,7 +1416,7 @@ class IntegrationResource:
     role = 'slave'
 
     def __init__(self, nuvius_id, resource_id, resource_name, services='', role='slave'):
-        "Initialize an Integration Resource"
+        """Initialize an Integration Resource"""
 
         self.nuvius_id = nuvius_id
         self.resource_id = resource_id
@@ -1444,8 +1428,7 @@ class IntegrationResource:
 
 
 class Location(Object):
-
-    "Location for users, assets, etc."
+    """Location for users, assets, etc."""
     name = models.CharField(max_length=512)
     parent = models.ForeignKey(
         'self', blank=True, null=True, related_name='child_set')
@@ -1462,8 +1445,7 @@ class Location(Object):
 
 
 class PageFolder(Object):
-
-    "Folder for static Pages"
+    """Folder for static Pages"""
     name = models.CharField(max_length=256)
     details = models.TextField(blank=True)
 
@@ -1473,7 +1455,7 @@ class PageFolder(Object):
         return self.name
 
     def get_absolute_url(self):
-        "Returns absolute URL"
+        """Returns absolute URL"""
         try:
             return reverse('core_admin_pagefolder_view', args=[self.id])
         except Exception:
@@ -1481,8 +1463,7 @@ class PageFolder(Object):
 
 
 class Page(Object):
-
-    "Static page"
+    """Static page"""
     name = models.CharField(max_length=256)
     title = models.CharField(max_length=256)
     folder = models.ForeignKey(PageFolder)
@@ -1492,15 +1473,14 @@ class Page(Object):
     searchable = False
 
     class Meta:
-
-        "Page"
+        """Page"""
         ordering = ['name']
 
     def __unicode__(self):
         return self.title
 
     def get_absolute_url(self):
-        "Returns absolute URL"
+        """Returns absolute URL"""
         try:
             return reverse('core_admin_page_view', args=[self.id])
         except Exception:
@@ -1508,8 +1488,7 @@ class Page(Object):
 
 
 class Widget(models.Model):
-
-    "Widget object to remember the set and order of Widget for a user"
+    """Widget object to remember the set and order of Widget for a user"""
     user = models.ForeignKey(User)
     perspective = models.ForeignKey(Perspective)
     module_name = models.CharField(max_length=256)
@@ -1520,14 +1499,12 @@ class Widget(models.Model):
         return self.widget_name
 
     class Meta:
-
-        "Widget"
+        """Widget"""
         ordering = ['weight']
 
 
 class Attachment(models.Model):
-
-    "Attachment object to upload and reference a file"
+    """Attachment object to upload and reference a file"""
     filename = models.CharField(max_length=64)
     attached_object = models.ForeignKey(Object, blank=True, null=True)
     attached_record = models.ForeignKey(UpdateRecord, blank=True, null=True)
