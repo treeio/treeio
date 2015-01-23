@@ -14,8 +14,12 @@ import os
 import dj_database_url
 from os import path
 from whoosh import fields
+import ConfigParser
 # assuming settings are in the same dir as source
-PROJECT_ROOT = path.abspath(path.dirname(__file__))
+PROJECT_ROOT = path.dirname(path.abspath(__file__))
+CONFIG_FILE = 'treeio.ini'
+USER_CONFIG_FILE = path.join(path.dirname(PROJECT_ROOT), CONFIG_FILE)
+DEFAULT_CONFIG_FILE = path.join(PROJECT_ROOT, CONFIG_FILE)
 
 DEBUG = (True if 'DEBUG' not in os.environ else {'true': True, 'false': False}[os.environ['DEBUG'].lower()])
 TEMPLATE_DEBUG = DEBUG
@@ -29,32 +33,20 @@ ADMINS = (
 
 MANAGERS = ADMINS
 
-# Backward compatible with treeio.core.db.
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3', 
-        'TEST_MIRROR': None, 
-        'NAME': 'treeio.db', 
-        'TEST_CHARSET': None, 
-        'TIME_ZONE': 'UTC0', 
-        'TEST_COLLATION': None, 
-        'PORT': '', 
-        'HOST': '', 
-        'USER': '', 
-        'TEST_NAME': None, 
-        'PASSWORD': '', 
-        'OPTIONS': {},
-    }
-}
-
-DATABASES['default'].update(
-    dj_database_url.config(default='sqlite:///treeio.db'))
-
+DATABASES = {}
 # Covers regular testing and django-coverage
 TESTING = 'test' in sys.argv or 'test_coverage' in sys.argv
 if TESTING:
-    DATABASES = {'default': {}}
-    DATABASES['default']['ENGINE'] = 'django.db.backends.sqlite3'
+    DATABASES = {'default': {
+        'ENGINE': 'django.db.backends.sqlite3'
+    }}
+else:
+    conf = ConfigParser.ConfigParser()
+    conf.optionxform = str  # to preserve case for the options names
+    conf.read((DEFAULT_CONFIG_FILE, USER_CONFIG_FILE))
+    DATABASES = {
+        'default': dict(conf.items('db'))
+    }
 
 # Local time zone for this installation. Choices can be found here:
 # http://en.wikipedia.org/wiki/List_of_tz_zones_by_name

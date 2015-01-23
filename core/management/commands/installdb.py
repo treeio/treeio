@@ -32,26 +32,26 @@ class Command(BaseCommand):
         }
 
         db = {}
-        db['ENGINE'] = raw_input(
+
+        dbengine = raw_input(
             'Enter database engine <mysql,postgresql,postgresql_psycopg2,oracle,sqlite3> (defaults to postgres): ')
-        if not db['ENGINE']:
-            db['ENGINE'] = 'postgresql_psycopg2'
-
-        if db['ENGINE'] in ('mysql', 'postgresql', 'postgresql_psycopg2', 'oracle', 'sqlite3'):
-            db['ENGINE'] = 'django.db.backends.' + db['ENGINE']
+        if not dbengine:
+            dbengine = 'postgresql_psycopg2'
+        if dbengine in ('mysql', 'postgresql', 'postgresql_psycopg2', 'oracle', 'sqlite3'):
+            dbengine = 'django.db.backends.' + dbengine
         else:
-            raise CommandError('Unknown database engine: %s' % db['ENGINE'])
+            raise CommandError('Unknown database engine: %s' % dbengine)
 
-        if db['ENGINE'].endswith('sqlite3'):
-            db['NAME'] = raw_input(
+        if dbengine.endswith('sqlite3'):
+            dbname = raw_input(
                 'Enter database name (defaults to treeio.db): ')
-            if not db['NAME']:
-                db['NAME'] = 'treeio.db'
+            if not dbname:
+                dbname = 'treeio.db'
         else:
-            db['NAME'] = raw_input(
+            dbname = raw_input(
                 'Enter database name (defaults to treeio): ')
-            if not db['NAME']:
-                db['NAME'] = 'treeio'
+            if not dbname:
+                dbname = 'treeio'
 
             db['USER'] = raw_input('Database user (defaults to treeio): ')
             if not db['USER']:
@@ -64,10 +64,15 @@ class Command(BaseCommand):
 
         self.stdout.write('\n-- Saving database configuration...\n')
         self.stdout.flush()
+        settings.conf.set('db', 'ENGINE', dbengine)
+        settings.conf.set('db', 'NAME', dbname)
+        settings.conf.set('db', 'USER', dbname)
+        settings.conf.set('db', 'PASSWORD', dbname)
+        settings.conf.set('db', 'HOST', dbname)
+        settings.conf.set('db', 'PORT', dbname)
 
-        f = open(HARDTREE_DB_SETTINGS_FILE, 'w')
-        json.dump({'default': db}, f)
-        f.close()
+        with open(settings.USER_CONFIG_FILE, 'w') as f:
+            settings.conf.write(f)
 
         answer = raw_input(
             'Would you like to create the tables (say no to use an existing database) [y/n] (defaults to yes): ')
