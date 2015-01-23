@@ -53,26 +53,27 @@ class Command(BaseCommand):
             if not dbname:
                 dbname = 'treeio'
 
-            db['USER'] = raw_input('Database user (defaults to treeio): ')
-            if not db['USER']:
-                db['USER'] = 'treeio'
+            dbuser = raw_input('Database user (defaults to treeio): ')
+            if not dbuser:
+                dbuser = 'treeio'
 
-            db['PASSWORD'] = raw_input('Database password: ')
+            dbpassword = raw_input('Database password: ')
 
-            db['HOST'] = raw_input('Hostname (empty for default): ')
-            db['PORT'] = raw_input('Port (empty for default): ')
+            dbhost = raw_input('Hostname (empty for default): ')
+            dbport = raw_input('Port (empty for default): ')
 
         self.stdout.write('\n-- Saving database configuration...\n')
         self.stdout.flush()
-        settings.conf.set('db', 'ENGINE', dbengine)
-        settings.conf.set('db', 'NAME', dbname)
-        settings.conf.set('db', 'USER', dbname)
-        settings.conf.set('db', 'PASSWORD', dbname)
-        settings.conf.set('db', 'HOST', dbname)
-        settings.conf.set('db', 'PORT', dbname)
+        settings.CONF.set('db', 'ENGINE', dbengine)
+        settings.CONF.set('db', 'NAME', dbname)
+        if not dbengine.endswith('sqlite3'):
+            settings.CONF.set('db', 'USER', dbuser)
+            settings.CONF.set('db', 'PASSWORD', dbpassword)
+            settings.CONF.set('db', 'HOST', dbhost)
+            settings.CONF.set('db', 'PORT', dbport)
 
         with open(settings.USER_CONFIG_FILE, 'w') as f:
-            settings.conf.write(f)
+            settings.CONF.write(f)
 
         answer = raw_input(
             'Would you like to create the tables (say no to use an existing database) [y/n] (defaults to yes): ')

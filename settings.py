@@ -41,11 +41,11 @@ if TESTING:
         'ENGINE': 'django.db.backends.sqlite3'
     }}
 else:
-    conf = ConfigParser.ConfigParser()
-    conf.optionxform = str  # to preserve case for the options names
-    conf.read((DEFAULT_CONFIG_FILE, USER_CONFIG_FILE))
+    CONF = ConfigParser.ConfigParser()
+    CONF.optionxform = str  # to preserve case for the options names
+    CONF.read((DEFAULT_CONFIG_FILE, USER_CONFIG_FILE))
     DATABASES = {
-        'default': dict(conf.items('db'))
+        'default': dict(CONF.items('db'))
     }
 
 # Local time zone for this installation. Choices can be found here:
