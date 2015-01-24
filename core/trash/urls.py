@@ -7,7 +7,7 @@
 Core module Administration panel URLs
 """
 
-from django.conf.urls.defaults import patterns, url
+from django.conf.urls import patterns, url
 
 urlpatterns = patterns('treeio.core.trash.views',
                        url(r'^(\.(?P<response_format>\w+))?/?$',

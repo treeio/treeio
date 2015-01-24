@@ -6,7 +6,7 @@
 #-*- coding: utf-8 -*-
 
 import handlers
-from django.conf.urls.defaults import patterns, url
+from django.conf.urls import patterns, url
 from treeio.core.api.auth import auth_engine
 from treeio.core.api.doc import documentation_view
 from treeio.core.api.resource import CsrfExemptResource
