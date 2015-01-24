@@ -28,10 +28,10 @@ pip install -r treeio/requirements.pip
 echo "deb http://apt.postgresql.org/pub/repos/apt/ "$(lsb_release -a | grep Codename | awk -F' ' '{print $2}')"-pgdg main" | sudo tee /etc/apt/sources.list.d/pgdg.list
 wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | sudo apt-key add -
 sudo apt-get update
-sudo apt-get install postgresql-9.4 -y
+sudo apt-get install postgresql-9.4 libpq-dev -y
 sudo -u postgres createuser --pwprompt treeio
 sudo -u postgres createdb treeio --owner=treeio
-
+pip install psycopg2
 cd treeio
 python manage.py installdb
 
