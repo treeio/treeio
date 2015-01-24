@@ -59,7 +59,9 @@ class Command(BaseCommand):
 
             dbpassword = raw_input('Database password: ')
 
-            dbhost = raw_input('Hostname (empty for default): ')
+            dbhost = raw_input('Hostname (defaults to 127.0.0.1): ')
+            if not dbhost:
+                dbhost = '127.0.0.1'
             dbport = raw_input('Port (empty for default): ')
 
         self.stdout.write('\n-- Saving database configuration...\n')
