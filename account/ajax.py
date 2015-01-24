@@ -9,10 +9,10 @@ Core Ajax views
 
 from django.template import RequestContext
 import re
-from core.mail import EmailInvitation
+from treeio.core.mail import EmailInvitation
 from django.contrib.sites.models import RequestSite
-from core.models import Attachment, Invitation
-from core.views import user_denied
+from treeio.core.models import Attachment, Invitation
+from treeio.core.views import user_denied
 from treeio.core.rendering import render_to_string
 from treeio.core.models import Comment, Object, UpdateRecord, Tag
 from treeio.core.forms import TagsForm
