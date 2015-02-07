@@ -33,7 +33,7 @@ ADMINS = (
 MANAGERS = ADMINS
 DATABASES = {}
 TESTING = 'test' in sys.argv or 'test_coverage' in sys.argv  #Covers regular testing and django-coverage
-print(sys.argv)
+SOUTH_TESTS_MIGRATE = False
 if TESTING:
     test_db = os.environ.get('DB', 'sqlite')
     if test_db == 'mysql':
