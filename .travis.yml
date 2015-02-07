@@ -1,8 +1,27 @@
 language: python
 python:
   - "2.7"
+cache:
+  directories:
+    - .pip_download_cache
+    - "$HOME/virtualenv/python2.7.9"
+env:
+  matrix:
+    - DB=sqlite
+    - DB=mysql
+    - DB=postgres
+  global:
+    - PIP_DOWNLOAD_CACHE=".pip_download_cache"
 # command to install dependencies
 install:
   - pip install -r requirements.txt
+  - pip install psycopg2
+  - if [ $DB == 'postgres' ]; then pip install -q psycopg2 ; fi
+  - if [ $DB == 'mysql' ]; then pip install -q mysql-python ; fi
+before_script:
+  - if [ $DB == 'postgres' ]; then pip install -q psycopg2 ; fi
+  - if [ $DB == 'mysql' ]; then pip install -q mysql-python ; fi
+  - mysql -e 'create database treeio;'
+  - psql -c 'create database treeio;' -U postgres
 # command to run tests
 script: python manage.py test
