@@ -511,6 +511,7 @@ def ajax_upload(request, object_id=None, record=None):
                 # is the "advanced" ajax upload
                 try:
                     filename = request.GET['qqfile']
+                    content_type = "application/octet-stream"
                 except KeyError:
                     return HttpResponseBadRequest("AJAX request not valid")
             # not an ajax upload, so it was the "basic" iframe version with
@@ -526,6 +527,7 @@ def ajax_upload(request, object_id=None, record=None):
                     # Thus, we can just grab the first (and only) value in the
                     # dict.
                     upload = request.FILES.values()[0]
+                    content_type = upload.content_type
                 else:
                     raise Http404("Bad Upload")
                 filename = upload.name
@@ -540,7 +542,7 @@ def ajax_upload(request, object_id=None, record=None):
             success = save_upload(upload, savefile, is_raw)
 
             attachment = Attachment(filename=filename,
-                                    mimetype=upload.content_type,
+                                    mimetype=content_type,
                                     uploaded_by=request.user.get_profile(),
                                     attached_file=filehash)
 

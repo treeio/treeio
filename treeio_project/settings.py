@@ -84,8 +84,13 @@ HARDTREE_API_CONSUMER_DB = 'default'
 OAUTH_DATA_STORE = 'treeio.core.api.auth.store.store'
 
 # Static files location for Tree.io
-STATIC_ROOT = os.path.join(BASE_DIR, 'static')
-STATIC_URL = os.path.join(BASE_DIR, 'static/')
+if not DEBUG:
+    STATIC_URL = path.join(BASE_DIR, 'static/')
+else:
+    STATICFILES_DIRS = (
+        path.join(BASE_DIR, 'static'),
+    )
+STATIC_URL = '/static/'
 STATIC_DOC_ROOT = os.path.join(BASE_DIR, 'static')
 STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.FileSystemFinder',
@@ -208,7 +213,8 @@ INSTALLED_APPS = (
     'south',
     'markup_deprecated',
 )
-
+if not DEBUG:
+    INSTALLED_APPS += ('django.contrib.staticfiles',)
 
 AUTH_PROFILE_MODULE = 'core.User'
 
