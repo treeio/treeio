@@ -6,15 +6,6 @@
 """
 Core Ajax views
 """
-<<<<<<< HEAD:account/ajax.py
-
-from django.template import RequestContext
-import re
-from core.mail import EmailInvitation
-from django.contrib.sites.models import RequestSite
-from core.models import Attachment, Invitation
-from core.views import user_denied
-=======
 from django.contrib.sites.models import RequestSite
 from django.db.models import Q
 from django.template import RequestContext
@@ -23,7 +14,6 @@ from treeio.core.conf import settings
 from treeio.core.mail import EmailInvitation
 from treeio.core.models import Attachment, User, Invitation
 from treeio.core.views import user_denied
->>>>>>> 7eb75ad5a5164e5b47a5bca3851a1b508a1ecf26:treeio/account/ajax.py
 from treeio.core.rendering import render_to_string
 from treeio.core.models import Comment, Object, UpdateRecord, Tag
 from treeio.core.forms import TagsForm

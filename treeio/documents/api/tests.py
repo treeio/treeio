@@ -122,15 +122,9 @@ class DocumentsViewsTest(TestCase):
     def test_update_document(self):
         updates = {"title": "Api_title",
                    "folder": self.folder.id, "body": "Api test body"}
-<<<<<<< HEAD:documents/api/tests.py
         response = self.client.put(path=reverse('api_documents_documents', kwargs={'object_ptr': self.document.id}),
-                                   content_type=self.content_type, data=json.dumps(updates), **self.authentication_headers)
-=======
-        response = self.client.put(path=reverse('api_documents_documents',
-            kwargs={'object_ptr': self.document.id}),
-            content_type=self.content_type, data=json.dumps(updates),
-            **self.authentication_headers)
->>>>>>> 7eb75ad5a5164e5b47a5bca3851a1b508a1ecf26:treeio/documents/api/tests.py
+                                   content_type=self.content_type, data=json.dumps(updates),
+                                   **self.authentication_headers)
         self.assertEquals(response.status_code, 200)
 
         data = json.loads(response.content)

@@ -507,3 +507,10 @@ MESSAGE_STORAGE = 'treeio.core.contrib.messages.storage.cache.CacheStorage'
 
 # Dajaxice settings
 DAJAXICE_MEDIA_PREFIX = "dajaxice"
+
+ALLOWED_HOSTS = [
+        'localhost', 
+        '127.0.0.1',
+        '.example.com', # Allow domain and subdomains
+    '.example.com.', # Also allow FQDN and subdomains
+    ]

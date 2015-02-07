@@ -10,11 +10,7 @@ from treeio.core.api.auth import auth_engine
 from treeio.core.api.doc import documentation_view
 from treeio.core.api.resource import CsrfExemptResource
 
-<<<<<<< HEAD:finance/api/urls.py
-from django.conf.urls import patterns, url
-=======
 from django.conf.urls import *
->>>>>>> 7eb75ad5a5164e5b47a5bca3851a1b508a1ecf26:treeio/finance/api/urls.py
 
 ad = {'authentication': auth_engine}
 

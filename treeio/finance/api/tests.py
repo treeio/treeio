@@ -210,12 +210,7 @@ class FinanceAPITest(TestCase):
         updates = {"current_value": "20.0", "owner": self.contact.id, "asset_type": "fixed", "name": "Api name",
                    "initial_value": '40.0'}
         response = self.client.put(path=reverse('api_finance_assets', kwargs={'object_ptr': self.asset.id}),
-<<<<<<< HEAD:finance/api/tests.py
-                                   content_type=self.content_type, data=json.dumps(updates), **self.authentication_headers)
-        print response.content
-=======
                                    content_type=self.content_type,  data=json.dumps(updates), **self.authentication_headers)
->>>>>>> 7eb75ad5a5164e5b47a5bca3851a1b508a1ecf26:treeio/finance/api/tests.py
         self.assertEquals(response.status_code, 200)
 
         data = json.loads(response.content)
@@ -237,7 +232,7 @@ class FinanceAPITest(TestCase):
         self.assertEquals(response.status_code, 200)
 
     def test_update_account(self):
-        updates = {"owner": self.user.id, "balance_display": 40.0,
+        updates = {"owner": self.contact.id, "balance_display": '40.0',
                    "name": "api test name", "balance_currency": self.currency.id}
         response = self.client.put(path=reverse('api_finance_accounts', kwargs={'object_ptr': self.account.id}),
                                    content_type=self.content_type, data=json.dumps(updates), **self.authentication_headers)
@@ -316,26 +311,12 @@ class FinanceAPITest(TestCase):
         self.assertEquals(response.status_code, 200)
 
     def test_update_transaction(self):
-<<<<<<< HEAD:finance/api/tests.py
-        updates = {"value_display": "1000.0", "account": self.account.id, "name": "api test name", "value_currency": self.currency.id,
-                   "datetime": "2011-03-21 11:04:42", "target": self.contact.id, "account": self.account.id, "source": self.contact.id}
+        updates = {"value_display": "1000.0", "account": self.account.id, "name": "api test name",
+                   "value_currency": self.currency.id, "datetime": "2011-03-21 11:04:42", "target": self.contact.id,
+                   "source": self.contact.id}
         response = self.client.put(path=reverse('api_finance_transactions', kwargs={'object_ptr': self.transaction.id}),
                                    content_type=self.content_type, data=json.dumps(updates), **self.authentication_headers)
-        print response.content
-=======
-        updates = {
-            "value_display": "1000.0",
-            "account": self.account.id,
-            "name": "api test name",
-            "value_currency": self.currency.id,
-            "datetime": "2011-03-21 11:04:42",
-            "target": self.contact.id,
-            "account": self.account.id,
-            "source": self.contact.id
-        }
-        response = self.client.put(path=reverse('api_finance_transactions', kwargs={'object_ptr': self.transaction.id}),
-                                   content_type=self.content_type,  data=json.dumps(updates), **self.authentication_headers)
->>>>>>> 7eb75ad5a5164e5b47a5bca3851a1b508a1ecf26:treeio/finance/api/tests.py
+
         self.assertEquals(response.status_code, 200)
 
         data = json.loads(response.content)

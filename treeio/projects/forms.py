@@ -10,7 +10,7 @@ from django.forms import ModelForm, CharField, TextInput, Form, ModelChoiceField
 from treeio.projects.models import Project, Milestone, Task, TaskTimeSlot, TaskStatus
 from treeio.core.models import Object, ModuleSetting, UpdateRecord
 from treeio.identities.models import Contact
-from datetime import timedelta
+from datetime import timedelta, datetime
 from django.core.urlresolvers import reverse
 from django.utils.translation import ugettext as _
 from treeio.core.decorators import preprocess_form
@@ -351,10 +351,10 @@ class TaskTimeSlotForm(ModelForm):
             instance = kwargs['instance']
             if instance.time_from:
                 self.fields['time_from'].widget.attrs.update(
-                    {'initial': instance.time_from.strftime('%s')})
+                    {'initial': (instance.time_from - datetime(1970, 1, 1)).total_seconds()})
             if instance.time_to:
                 self.fields['time_to'].widget.attrs.update(
-                    {'initial': instance.time_to.strftime('%s')})
+                    {'initial': (instance.time_to - datetime(1970, 1, 1)).total_seconds()})
 
         self.fields['minutes'].label = _("Minutes")
         self.fields['details'].label = _("Details")

@@ -92,20 +92,20 @@ class EventForm(forms.ModelForm):
 
         if self.fields['start'].initial:
             self.fields['start'].widget.attrs.update(
-                {'initial': self.fields['start'].initial.strftime('%s')})
+                {'initial': (self.fields['start'].initial - datetime.datetime(1970, 1, 1)).total_seconds()})
 
         if self.fields['end'].initial:
             self.fields['end'].widget.attrs.update(
-                {'initial': self.fields['end'].initial.strftime('%s')})
+                {'initial': (self.fields['end'].initial - datetime.datetime(1970, 1, 1)).total_seconds()})
 
         if 'instance' in kwargs:
             instance = kwargs['instance']
             if instance.start:
                 self.fields['start'].widget.attrs.update(
-                    {'initial': instance.start.strftime('%s')})
+                    {'initial': (instance.start - datetime.datetime(1970, 1, 1)).total_seconds()})
             if instance.end:
                 self.fields['end'].widget.attrs.update(
-                    {'initial': instance.end.strftime('%s')})
+                     {'initial': (instance.end - datetime.datetime(1970, 1, 1)).total_seconds()})
 
     def clean_end(self):
         "Make sure end date is greater than start date, when specified"

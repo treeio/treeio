@@ -6,11 +6,7 @@
 """
 Change Control module URLs
 """
-<<<<<<< HEAD:changes/urls.py
-from django.conf.urls import patterns, url
-=======
 from django.conf.urls import *
->>>>>>> 7eb75ad5a5164e5b47a5bca3851a1b508a1ecf26:treeio/changes/urls.py
 
 urlpatterns = patterns('treeio.changes.views',
     url(r'^(\.(?P<response_format>\w+))?$',

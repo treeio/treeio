@@ -218,12 +218,7 @@ class InfrastructureApiTest(TestCase):
         updates = {"name": "Close_API", "item_type": self.type.id,
                    "status": self.status.id, "test___1": "api test"}
         response = self.client.put(path=reverse('api_infrastructure_items', kwargs={'object_ptr': self.item.id}),
-<<<<<<< HEAD:infrastructure/api/tests.py
-                                   content_type=self.content_type, data=json.dumps(updates), **self.authentication_headers)
-        print response.content
-=======
                                    content_type=self.content_type,  data=json.dumps(updates), **self.authentication_headers)
->>>>>>> 7eb75ad5a5164e5b47a5bca3851a1b508a1ecf26:treeio/infrastructure/api/tests.py
         self.assertEquals(response.status_code, 200)
 
         data = json.loads(response.content)

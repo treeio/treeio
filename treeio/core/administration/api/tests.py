@@ -78,12 +78,7 @@ class CoreAPITest(TestCase):
         updates = {'name': 'Api group name', 'details':
                    '<p>api details</p>', 'perspective': self.perspective.id}
         response = self.client.put(path=reverse('api_admin_groups', kwargs={'accessentity_ptr': self.group.id}),
-<<<<<<< HEAD:core/administration/api/tests.py
-                                   content_type=self.content_type, data=json.dumps(updates), **self.authentication_headers)
-        print response.content
-=======
                                    content_type=self.content_type,  data=json.dumps(updates), **self.authentication_headers)
->>>>>>> 7eb75ad5a5164e5b47a5bca3851a1b508a1ecf26:treeio/core/administration/api/tests.py
         self.assertEquals(response.status_code, 200)
 
         data = json.loads(response.content)

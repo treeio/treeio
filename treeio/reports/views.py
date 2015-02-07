@@ -451,10 +451,7 @@ def report_add(request, response_format='html'):
     # Initial Object Type Choice
     user_modules = [mod.name for mod in request.user.get_profile().get_perspective().get_modules()]
     modules = [mod.name for mod in Module.objects.all()]
-<<<<<<< HEAD:reports/views.py
-=======
 
->>>>>>> 7eb75ad5a5164e5b47a5bca3851a1b508a1ecf26:treeio/reports/views.py
     query = Q(object_type__contains="core")
     for module in modules:
         if module not in user_modules:

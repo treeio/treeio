@@ -16,11 +16,7 @@ unidecode
 django-websocket
 docutils
 sphinx
-git+https://github.com/jmoiron/johnny-cache#egg=johnny-cache
+johnny-cache==1.6.1.a
 django-pandora
 dj_database_url
-gunicorn
-<<<<<<< HEAD:requirements.pip
-=======
 django-markup-deprecated
->>>>>>> 7eb75ad5a5164e5b47a5bca3851a1b508a1ecf26:requirements.txt

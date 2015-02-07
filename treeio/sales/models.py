@@ -76,18 +76,9 @@ class Product(Object):
     sell_price = models.DecimalField(
         max_digits=20, decimal_places=2, default=0)
     stock_quantity = models.IntegerField(blank=True, null=True)
-<<<<<<< HEAD:sales/models.py
-    active = models.BooleanField()
-    runout_action = models.CharField(max_length=32, blank=True, null=True,
-        choices=ACTION_CHOICES)
-=======
     active = models.BooleanField(default=False)
-    runout_action = models.CharField(max_length=32, blank=True, null=True, choices=(('inactive',
-                                                                                     'Mark Inactive'),
-                                                                                    ('notify',
-                                                                                     'Notify'),
-                                                                                    ('ignore', 'Ignore'), ))
->>>>>>> 7eb75ad5a5164e5b47a5bca3851a1b508a1ecf26:treeio/sales/models.py
+    runout_action = models.CharField(max_length=32, blank=True, null=True,
+                                     choices=ACTION_CHOICES)
     details = models.TextField(blank=True, null=True)
 
     access_inherit = ('parent', '*module', '*user')

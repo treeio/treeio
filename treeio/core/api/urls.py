@@ -3,12 +3,7 @@
 # This file is part of Treeio.
 # License www.tree.io/license
 
-<<<<<<< HEAD:core/api/urls.py
-from django.conf.urls import patterns, include
-=======
-#from piston.resource import Resource
 from django.conf.urls import *
->>>>>>> 7eb75ad5a5164e5b47a5bca3851a1b508a1ecf26:treeio/core/api/urls.py
 
 urlpatterns = patterns('',
     (r'^auth/', include('treeio.core.api.auth.urls')),

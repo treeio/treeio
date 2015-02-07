@@ -7,11 +7,7 @@
 Core module Administration panel URLs
 """
 
-<<<<<<< HEAD:core/administration/urls.py
-from django.conf.urls import patterns, url
-=======
 from django.conf.urls import *
->>>>>>> 7eb75ad5a5164e5b47a5bca3851a1b508a1ecf26:treeio/core/administration/urls.py
 
 urlpatterns = patterns('treeio.core.administration.views',
     url(r'^(\.(?P<response_format>\w+))?$',

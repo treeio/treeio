@@ -6,15 +6,8 @@
 """
 Hardtree URLs
 """
-<<<<<<< HEAD:urls.py
-# Properly handle 404 and 500 using coffin:
-# https://github.com/coffin/coffin/#404-and-500-handlers
-from coffin.conf.urls import *
 
-from django.conf.urls import patterns, url, include
-=======
 from django.conf.urls import *
->>>>>>> 7eb75ad5a5164e5b47a5bca3851a1b508a1ecf26:treeio_project/urls.py
 from django.conf import settings
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 from django.contrib import admin
