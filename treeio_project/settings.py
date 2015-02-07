@@ -31,12 +31,12 @@ ADMINS = (
 )
 
 MANAGERS = ADMINS
-
 DATABASES = {}
 TESTING = 'test' in sys.argv or 'test_coverage' in sys.argv  #Covers regular testing and django-coverage
+print(sys.argv)
 if TESTING:
-    DATABASES = {'default': {}}
-    DATABASES['default']['ENGINE'] = 'django.db.backends.sqlite3'
+    DATABASES = {'default': {'ENGINE': 'django.db.backends.sqlite3'}}
+    PASSWORD_HASHERS = ('django.contrib.auth.hashers.MD5PasswordHasher',)
     HARDTREE_API_AUTH_ENGINE = 'basic'
 else:
     CONF = ConfigParser.ConfigParser()
@@ -143,7 +143,7 @@ MIDDLEWARE_CLASSES = (
     'johnny.middleware.LocalStoreClearMiddleware',
     'johnny.middleware.QueryCacheMiddleware',
     'django.middleware.gzip.GZipMiddleware',
-    #'treeio.core.middleware.domain.DomainMiddleware',
+    # 'treeio.core.middleware.domain.DomainMiddleware',
     'treeio.core.middleware.user.SSLMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'treeio.core.middleware.chat.ChatAjaxMiddleware',
@@ -195,8 +195,6 @@ INSTALLED_APPS = (
 )
 
 
-#TEST_RUNNER = 'treeio.core.test_runner.CustomTestRunner'
-
 AUTH_PROFILE_MODULE = 'core.User'
 
 AUTHENTICATION_BACKENDS = (
@@ -206,12 +204,12 @@ AUTHENTICATION_BACKENDS = (
 )
 
 # LDAP Configuration
-#AUTH_LDAP_SERVER_URI = 'ldap://'
-#AUTH_LDAP_BIND_DN = ""
-#AUTH_LDAP_BIND_PASSWORD = ""
-#AUTH_LDAP_USER_SEARCH = LDAPSearch("ou=users,dc=example,dc=com",
+# AUTH_LDAP_SERVER_URI = 'ldap://'
+# AUTH_LDAP_BIND_DN = ""
+# AUTH_LDAP_BIND_PASSWORD = ""
+# AUTH_LDAP_USER_SEARCH = LDAPSearch("ou=users,dc=example,dc=com",
 #        ldap.SCOPE_SUBTREE, "(uid=%(user)s)")
-#AUTH_LDAP_START_TLS = True
+# AUTH_LDAP_START_TLS = True
 
 #
 # Hardtree configuration
@@ -233,9 +231,9 @@ HARDTREE_RESPONSE_FORMATS = {
     'html': 'text/html',
     'mobile': 'text/html',
     'json': 'text/plain',
-    #'json': 'application/json',
+    # 'json': 'application/json',
     'ajax': 'text/plain',
-    #'ajax': 'application/json',
+    # 'ajax': 'application/json',
     'csv': 'text/csv',
     'xls': 'text/xls',
     'pdf': 'application/pdf',
@@ -258,33 +256,33 @@ HARDTREE_PAGINATOR_PAGES = 15
 HARDTREE_CRON_PERIOD = 10  # seconds, default 60
 
 # Number of cycles to keep HIGH priority jobs before forcefully terminating
-#HARDTREE_CRON_HIGH_PRIORITY = 10 # default 10 cycles
+# HARDTREE_CRON_HIGH_PRIORITY = 10 # default 10 cycles
 
 # Number of cycles to keep LOW priority jobs before forcefully terminating
-#HARDTREE_CRON_LOW_PRIORITY = 3 # default 3 cycles
+# HARDTREE_CRON_LOW_PRIORITY = 3 # default 3 cycles
 
 # Number of seconds since last access to domain to give the job HIGH priority
-#HARDTREE_CRON_QUALIFY_HIGH = 10 # default 10 cycles
+# HARDTREE_CRON_QUALIFY_HIGH = 10 # default 10 cycles
 
 # Number of seconds since last access to domain to run cron jobs for the domain
-#HARDTREE_CRON_QUALIFY_RUN = 86400 # seconds, default 86400, i.e. 1 day
+# HARDTREE_CRON_QUALIFY_RUN = 86400 # seconds, default 86400, i.e. 1 day
 
 # Number of jobs to keep in the pool at the same time
-#HARDTREE_CRON_POOL_SIZE = 10 # default 10
+# HARDTREE_CRON_POOL_SIZE = 10 # default 10
 
 # Priority value at which we should try to gracefully end a job
-#HARDTREE_CRON_SOFT_KILL = 0 # default 0
+# HARDTREE_CRON_SOFT_KILL = 0 # default 0
 
 # Priority value at which we must kill a job using any possible means (kill -9 job)
-#HARDTREE_CRON_HARD_KILL = -1 # defualt -1
+# HARDTREE_CRON_HARD_KILL = -1 # defualt -1
 
 # Seconds to wait between SIGKILL signals to a dead job
-#HARDTREE_CRON_GRACE_WAIT = 5 # default 5
+# HARDTREE_CRON_GRACE_WAIT = 5 # default 5
 
 # CHAT CRON!
 HARDTREE_CRON_DISABLED = True  # Run chat?
 
-### CRON config ends here
+# ## CRON config ends here
 
 HARDTREE_MULTIPLE_LOGINS_DISABLED = False
 
@@ -484,11 +482,11 @@ WHOOSH_INDEX = os.path.join(BASE_DIR, 'storage/search')
 #
 # CACHING
 #
-#CACHE_BACKEND = 'dummy://'
+# CACHE_BACKEND = 'dummy://'
 CACHE_BACKEND = 'locmem://?timeout=30'
-#CACHE_BACKEND = 'memcached://127.0.0.1:11211/?timeout=30'
+# CACHE_BACKEND = 'memcached://127.0.0.1:11211/?timeout=30'
 
-#CACHE_BACKEND="johnny.backends.locmem://"
+# CACHE_BACKEND="johnny.backends.locmem://"
 
 JOHNNY_MIDDLEWARE_KEY_PREFIX = 'jc_treeio'
 
