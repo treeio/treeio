@@ -10,8 +10,16 @@ Django settings for treeio project.
 """
 
 import os
-BASE_DIR = os.path.dirname(os.path.dirname(__file__))
+from os import path
+from whoosh import fields
+import ConfigParser
+import sys
 
+BASE_DIR = os.path.dirname(os.path.dirname(__file__))
+CONFIG_FILE = 'treeio.ini'
+USER_CONFIG_FILE = path.join(path.dirname(BASE_DIR), CONFIG_FILE)
+DEFAULT_CONFIG_FILE = path.join(BASE_DIR, CONFIG_FILE)
+DEBUG = (True if 'DEBUG' not in os.environ else {'true': True, 'false': False}[os.environ['DEBUG'].lower()])
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 
@@ -24,15 +32,19 @@ ADMINS = (
 
 MANAGERS = ADMINS
 
-from treeio.core.db import DatabaseDict
-DATABASES = DatabaseDict()
-
-import sys
+DATABASES = {}
 TESTING = 'test' in sys.argv or 'test_coverage' in sys.argv  #Covers regular testing and django-coverage
 if TESTING:
     DATABASES = {'default': {}}
     DATABASES['default']['ENGINE'] = 'django.db.backends.sqlite3'
     HARDTREE_API_AUTH_ENGINE = 'basic'
+else:
+    CONF = ConfigParser.ConfigParser()
+    CONF.optionxform = str  # to preserve case for the options names
+    CONF.read((DEFAULT_CONFIG_FILE, USER_CONFIG_FILE))
+    DATABASES = {
+        'default': dict(CONF.items('db'))
+    }
 
 # Local time zone for this installation. Choices can be found here:
 # http://en.wikipedia.org/wiki/List_of_tz_zones_by_name
@@ -246,7 +258,7 @@ HARDTREE_PAGINATOR_PAGES = 15
 HARDTREE_CRON_PERIOD = 10  # seconds, default 60
 
 # Number of cycles to keep HIGH priority jobs before forcefully terminating
-#HARDTREE_CRON_HIGH_PRIORITY = 10 # defualt 10 cycles
+#HARDTREE_CRON_HIGH_PRIORITY = 10 # default 10 cycles
 
 # Number of cycles to keep LOW priority jobs before forcefully terminating
 #HARDTREE_CRON_LOW_PRIORITY = 3 # default 3 cycles
@@ -261,7 +273,7 @@ HARDTREE_CRON_PERIOD = 10  # seconds, default 60
 #HARDTREE_CRON_POOL_SIZE = 10 # default 10
 
 # Priority value at which we should try to gracefully end a job
-#HARDTREE_CRON_SOFT_KILL = 0 # defualt 0
+#HARDTREE_CRON_SOFT_KILL = 0 # default 0
 
 # Priority value at which we must kill a job using any possible means (kill -9 job)
 #HARDTREE_CRON_HARD_KILL = -1 # defualt -1
@@ -461,7 +473,6 @@ http://www.tree.io
 SEARCH_DISABLED = False
 SEARCH_ENGINE = 'db'
 
-from whoosh import fields
 WHOOSH_SCHEMA = fields.Schema(id=fields.ID(stored=True, unique=True),
                               name=fields.TEXT(stored=True),
                               type=fields.TEXT(stored=True),
