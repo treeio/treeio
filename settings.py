@@ -9,19 +9,13 @@
 Django settings for treeio project.
 """
 
-import sys
-import os
-import dj_database_url
 from os import path
-from whoosh import fields
-import ConfigParser
 # assuming settings are in the same dir as source
-PROJECT_ROOT = path.dirname(path.abspath(__file__))
-CONFIG_FILE = 'treeio.ini'
-USER_CONFIG_FILE = path.join(path.dirname(PROJECT_ROOT), CONFIG_FILE)
-DEFAULT_CONFIG_FILE = path.join(PROJECT_ROOT, CONFIG_FILE)
+PROJECT_ROOT = path.abspath(path.dirname(__file__))
 
-DEBUG = (True if 'DEBUG' not in os.environ else {'true': True, 'false': False}[os.environ['DEBUG'].lower()])
+import os
+DEBUG = (True if 'DEBUG' not in os.environ 
+              else {'true': True, 'false': False}[os.environ['DEBUG'].lower()])
 TEMPLATE_DEBUG = DEBUG
 
 QUERY_DEBUG = False
@@ -33,20 +27,35 @@ ADMINS = (
 
 MANAGERS = ADMINS
 
-DATABASES = {}
+import dj_database_url
+
+# Backward compatible with treeio.core.db.
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3', 
+        'TEST_MIRROR': None, 
+        'NAME': 'treeio.db', 
+        'TEST_CHARSET': None, 
+        'TIME_ZONE': 'UTC0', 
+        'TEST_COLLATION': None, 
+        'PORT': '', 
+        'HOST': '', 
+        'USER': '', 
+        'TEST_NAME': None, 
+        'PASSWORD': '', 
+        'OPTIONS': {},
+    }
+}
+
+DATABASES['default'].update(
+    dj_database_url.config(default='sqlite:///treeio.db'))
+
+import sys
 # Covers regular testing and django-coverage
 TESTING = 'test' in sys.argv or 'test_coverage' in sys.argv
 if TESTING:
-    DATABASES = {'default': {
-        'ENGINE': 'django.db.backends.sqlite3'
-    }}
-else:
-    CONF = ConfigParser.ConfigParser()
-    CONF.optionxform = str  # to preserve case for the options names
-    CONF.read((DEFAULT_CONFIG_FILE, USER_CONFIG_FILE))
-    DATABASES = {
-        'default': dict(CONF.items('db'))
-    }
+    DATABASES = {'default': {}}
+    DATABASES['default']['ENGINE'] = 'django.db.backends.sqlite3'
 
 # Local time zone for this installation. Choices can be found here:
 # http://en.wikipedia.org/wiki/List_of_tz_zones_by_name
@@ -152,7 +161,7 @@ MIDDLEWARE_CLASSES = (
     'treeio.core.middleware.chat.ChatAjaxMiddleware',
     "django.contrib.messages.middleware.MessageMiddleware",
     "treeio.core.middleware.modules.ModuleDetect",
-    "treeio.minidetector.Middleware",
+    "minidetector.Middleware",
     "treeio.core.middleware.user.CommonMiddleware",
     "treeio.core.middleware.user.PopupMiddleware",
 )
@@ -536,6 +545,7 @@ http://www.tree.io
 SEARCH_DISABLED = False
 SEARCH_ENGINE = 'db'
 
+from whoosh import fields
 WHOOSH_SCHEMA = fields.Schema(id=fields.ID(stored=True, unique=True),
                               name=fields.TEXT(stored=True),
                               type=fields.TEXT(stored=True),

@@ -44,7 +44,6 @@
                 <th scope="col">{% trans %}Filter{% endtrans %}</th>
                 <th scope="col">{% trans %}Group{% endtrans %}</th>
                 {#<th scope="col">{% trans %}Join{% endtrans %}</th>#}
-                
             </tr>
         </thead>
         {% for field in model.fields %}
@@ -52,20 +51,16 @@
             <td>
             <input type="checkbox" name="field-{{field.name}}" value="{{field.name}}" {% if field.display %}checked="yes"{% endif %}></td>
             <td>{{ field.get_human_name() }}</td>
-        
             <td>{% if is_field_number(report, field.name) %}
                 {{ select_for_aggregation(field.name, field.aggregation) }}{% endif %}
             </td>
 
             <td><a class="popup-link" href="{% url reports_report_filter report.id, field.name %}">
             <img src="/static/modules/filter.png" alt="filter" /></a></td>
-            
             <td><a href="{% url reports_report_group report.id, field.name %}">
             <img src="/static/modules/{% if field.groupby == 0 %}group{% else %}grouped{% endif %}.png" alt="group" /></a></td>
-            
             {#<td><a href="{% url reports_report_join report.id, field.name%}">
             <img src="/static/modules/join.png" alt="join" /></a></td>#}
-            
         </tr>
         {% set cycle = loop.cycle %}
         {% for f in field.filters %}

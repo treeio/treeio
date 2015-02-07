@@ -1,0 +1,1 @@
+{"default": {"ENGINE": "django.db.backends.sqlite3", "HOST": "", "PASSWORD": "", "NAME": "./initial.db", "USER": ""}}
