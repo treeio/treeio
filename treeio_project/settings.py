@@ -15,7 +15,7 @@ from whoosh import fields
 import ConfigParser
 import sys
 
-BASE_DIR = os.path.dirname(os.path.dirname(__file__))
+BASE_DIR = path.dirname(path.dirname(path.abspath(__file__)))
 CONFIG_FILE = 'treeio.ini'
 USER_CONFIG_FILE = path.join(path.dirname(BASE_DIR), CONFIG_FILE)
 DEFAULT_CONFIG_FILE = path.join(BASE_DIR, CONFIG_FILE)
