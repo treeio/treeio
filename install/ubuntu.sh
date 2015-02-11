@@ -1,8 +1,8 @@
 #!/bin/sh
 
-sudo mkdir /usr/local/treeio
-sudo chown $USER /usr/local/treeio
-cd /usr/local/treeio
+sudo mkdir /opt/treeio
+sudo chown $USER /opt/treeio
+cd /opt/treeio
 
 sudo apt-get install python-virtualenv python-pip python-dev unzip nginx -y
 # libs for pillow
@@ -14,14 +14,12 @@ pip install -U setuptools pip
 pip install uwsgi
 
 wget https://github.com/treeio/treeio/archive/2.0.zip
-unzip master.zip
-mv treeio-master/ treeio
-# to update:
-# rsync -a treeio-master/ treeio
-# rm -rf treeio-master/
-rm master.zip
+unzip 2.0.zip
+rsync -a treeio-2.0/ treeio
+rm -rf treeio-2.0
+rm 2.0.zip
 
-pip install -r treeio/requirements.pip
+pip install -r treeio/requirements.txt
 
 # see http://www.postgresql.org/download/linux/ubuntu/
 # this should work for lucid (10.04), precise (12.04), trusty (14.04) and utopic (14.10)
@@ -35,10 +33,10 @@ pip install psycopg2
 cd treeio
 python manage.py installdb
 
-add uwsgi to upstart
-sudo ln -s /usr/local/treeio/treeio/install/upstart.conf  /etc/init/treeio.conf
+#add uwsgi to upstart
+sudo ln -s /opt/treeio/treeio/install/upstart.conf  /etc/init/treeio.conf
 sudo initctl reload-configuration
 sudo start treeio
-sudo ln -s /usr/local/treeio/treeio/install/nginx.conf  /etc/nginx/sites-enabled/treeio
+sudo ln -s /opt/treeio/treeio/install/nginx.conf  /etc/nginx/sites-enabled/treeio
 sudo rm  /etc/nginx/sites-enabled/default
 sudo nginx -s reload
