@@ -8,13 +8,7 @@ from django.core.management.base import BaseCommand, CommandError
 from treeio.core.conf import settings
 import json
 import subprocess
-from os import path, makedirs
 import sys
-
-BASE_DIR = getattr(settings, 'BASE_DIR')
-HARDTREE_DB_SETTINGS_FILE = path.join(PROJECT_ROOT, 'treeio/core/db/dbsettings.json')
-if not path.exists(path.dirname(HARDTREE_DB_SETTINGS_FILE)):
-    makedirs(path.dirname(HARDTREE_DB_SETTINGS_FILE))
 
 
 class Command(BaseCommand):
@@ -89,9 +83,6 @@ class Command(BaseCommand):
                 [sys.executable, 'manage.py', 'syncdb', '--all', '--noinput'])
             if not exit_code == 0:
                 self.stdout.flush()
-                f = open(HARDTREE_DB_SETTINGS_FILE, 'w')
-                json.dump({'default': initial_db}, f)
-                f.close()
                 raise CommandError('Failed to install database.')
 
             exit_code = subprocess.call(
