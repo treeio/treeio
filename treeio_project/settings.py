@@ -32,7 +32,7 @@ ADMINS = (
 
 MANAGERS = ADMINS
 DATABASES = {}
-TESTING = 'test' in sys.argv or 'test_coverage' in sys.argv  #Covers regular testing and django-coverage
+TESTING = 'test' in sys.argv or 'test_coverage' in sys.argv  # Covers regular testing and django-coverage
 SOUTH_TESTS_MIGRATE = False
 if TESTING:
     test_db = os.environ.get('DB', 'sqlite')
@@ -539,8 +539,8 @@ MESSAGE_STORAGE = 'treeio.core.contrib.messages.storage.cache.CacheStorage'
 DAJAXICE_MEDIA_PREFIX = "dajaxice"
 
 ALLOWED_HOSTS = [
-        'localhost', 
-        '127.0.0.1',
-        '.example.com', # Allow domain and subdomains
-    '.example.com.', # Also allow FQDN and subdomains
+    'localhost',
+    '127.0.0.1',
+    # '.example.com', # Allow domain and subdomains
+    # '.example.com.', # Also allow FQDN and subdomains
     ]

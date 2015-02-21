@@ -386,7 +386,7 @@ def user_add(request, response_format='html'):
             return HttpResponseRedirect(reverse('core_billing_upgrade'))
 
     if request.POST:
-        if not 'cancel' in request.POST:
+        if 'cancel' not in request.POST:
             form = UserForm(request.POST)
             if form.is_valid():
                 profile = form.save()
