@@ -6,6 +6,7 @@
 """
 Administration module forms
 """
+from django.db import models
 from django import forms
 from django.forms import ModelChoiceField
 from treeio.core.conf import settings
@@ -14,7 +15,7 @@ from django.core.files.storage import default_storage
 import django.contrib.auth.models as django_auth
 from django.utils.translation import ugettext as _
 from treeio.core.decorators import preprocess_form
-from treeio.core.models import User, Group, Perspective, ModuleSetting, Page, PageFolder
+from treeio.core.models import User, Group, Perspective, ModuleSetting, Page, PageFolder, user_autocreate_handler
 import hashlib
 import random
 import re
@@ -294,7 +295,10 @@ class UserForm(forms.ModelForm):
             new_user = django_auth.User(
                 username=self.cleaned_data['name'], password='')
             new_user.set_password(self.cleaned_data['password'])
+            models.signals.post_save.disconnect(user_autocreate_handler, sender=django_auth.User)
             new_user.save()
+            if getattr(settings, 'HARDTREE_SIGNALS_AUTOCREATE_USER', False):
+                models.signals.post_save.connect(user_autocreate_handler, sender=django_auth.User)
             self.instance.user = new_user
             super(UserForm, self).save(*args, **kwargs)
 

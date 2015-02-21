@@ -168,13 +168,41 @@ class CoreViewsTest(TestCase):
         response = self.client.get(reverse('core_admin_index_users'))
         self.assertEquals(response.status_code, 200)
 
+    def login(self):
+        self.assertEquals(self.client.login(username=self.username, password=self.password), True)
+
     def test_core_user_add(self):
         "Test page with login at /admin/user/add"
-        response = self.client.post('/accounts/login', {'username': self.username,
-                                                        'password': self.password})
+        name = 'newuser'
+        password = 'newuserpsw'
+        data = {'name': name, 'password': password, 'password_again': password}
+        self.login()
+        response = self.client.post(path=reverse('core_admin_user_add'), data=data)
+        self.assertEquals(response.status_code, 302)
+        user = User.objects.get(name=name)
+        self.assertEquals(user.name, name)
+        self.assertRedirects(response, reverse('core_admin_user_view', args=[user.id]))
+        self.assertEquals(self.client.login(username=name, password=password), True)
+        self.client.logout()
+        response = self.client.post('/accounts/login', {'username': name, 'password': password})
         self.assertRedirects(response, '/')
-        response = self.client.get(reverse('core_admin_user_add'))
-        self.assertEquals(response.status_code, 200)
+
+    def test_core_user_delete(self):
+        "Test page with login at /admin/user/delete"
+        name = 'newuser'
+        password = 'newuserpsw'
+        user, created = DjangoUser.objects.get_or_create(username=name)
+        if created:
+            user.set_password(password)
+            user.save()
+        self.login()
+        response = self.client.post(path=reverse('core_admin_user_delete', args=[user.get_profile().id]),
+                                    data={'delete': ''})
+        self.assertRedirects(response, reverse('core_admin_index_users'))
+        with self.assertRaises(User.DoesNotExist):
+            User.objects.get(name=name)
+        with self.assertRaises(DjangoUser.DoesNotExist):
+            DjangoUser.objects.get(username=name)
 
     def test_core_user_invite(self):
         "Test page with login at /admin/user/invite"
