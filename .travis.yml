@@ -9,6 +9,7 @@ env:
 # command to install dependencies
 install:
   - pip install -r requirements.txt
+  - pip install coveralls
   - if [ $DB == 'postgres' ]; then pip install -q psycopg2 ; fi
   - if [ $DB == 'mysql' ]; then pip install -q mysql-python ; fi
 before_script:
@@ -17,4 +18,6 @@ before_script:
   -
   -
 # command to run tests
-script: python manage.py test
+script: coverage run manage.py test
+after_success:
+  coveralls
