@@ -7,6 +7,8 @@ cd /opt/treeio
 sudo apt-get install python-virtualenv python-pip python-dev unzip nginx -y
 # libs for pillow
 sudo apt-get install libtiff5-dev libjpeg8-dev zlib1g-dev libfreetype6-dev liblcms2-dev libwebp-dev tcl8.6-dev tk8.6-dev python-tk -y
+# ubuntu 12.04 see https://github.com/python-pillow/Pillow/blob/master/docs/installation.rst
+# sudo apt-get install libtiff4-dev libjpeg8-dev zlib1g-dev libfreetype6-dev liblcms2-dev libwebp-dev tcl8.5-dev tk8.5-dev python-tk -y
 
 virtualenv env
 source env/bin/activate
@@ -31,6 +33,7 @@ sudo -u postgres createuser --pwprompt treeio
 sudo -u postgres createdb treeio --owner=treeio
 pip install psycopg2
 cd treeio
+python manage.py collectstatic --noinput
 python manage.py installdb
 
 #add uwsgi to upstart
