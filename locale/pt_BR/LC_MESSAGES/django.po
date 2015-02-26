@@ -685,7 +685,7 @@ msgstr "Senha"
 msgid ""
 "Sorry, but your subscription does not allow more than %d users. You're "
 "currently at your limit."
-msgstr "Desculpe, mas sua assinatura nao permite mais que %d usuarios no sistema. Voce esta no limite maximo de usuarios
+msgstr "Desculpe, mas sua assinatura nao permite mais que %d usuarios no sistema. Voce esta no limite maximo de usuarios"
 
 #: core/forms.py:281 documents/forms.py:49 infrastructure/forms.py:132
 #: infrastructure/forms.py:269 knowledge/forms.py:49 projects/forms.py:99
