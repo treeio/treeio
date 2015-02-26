@@ -685,7 +685,7 @@ msgstr "Senha"
 msgid ""
 "Sorry, but your subscription does not allow more than %d users. You're "
 "currently at your limit."
-msgstr """Desculpe, mas sua assinatura nao permite mais que %d usuarios no sistema.""Voce esta no limite maximo de usuarios"""
+msgstr "Desculpe, mas sua assinatura nao permite mais que %d usuarios no sistema. Voce esta no limite maximo de usuarios
 
 #: core/forms.py:281 documents/forms.py:49 infrastructure/forms.py:132
 #: infrastructure/forms.py:269 knowledge/forms.py:49 projects/forms.py:99
@@ -767,7 +767,7 @@ msgstr "Perspectiva"
 msgid ""
 "This is your only Perspective with Administration module. You would be "
 "locked out!"
-msgstr """Ha apenas uma Perspectiva no modulo de Administracao. Voce podera ser bloqueado!"
+msgstr "Ha apenas uma Perspectiva no modulo de Administracao. Voce podera ser bloqueado!"
 
 #: core/administration/views.py:126
 msgid "This is your only Perspective."
@@ -1853,7 +1853,7 @@ msgstr "Probabilidade"
 #, python-format
 msgid ""
 "Your message is received and a ticket is created, ticket reference is [%s]"
-msgstr """Sua mensagem foi recebida e o ticket foi criado, a referencia para o ticket e [%s]"
+msgstr "Sua mensagem foi recebida e o ticket foi criado, a referencia para o ticket e [%s]"
 
 #: services/forms.py:36 templates/html/services/settings_view.html:19
 msgid "Default Ticket Status"
@@ -3706,7 +3706,7 @@ msgid ""
 "We've sent you a message.\n"
 "                <br />Please check your e-mail box for instructions on how "
 "to restore your password"
-msgstr """Nos enviamos uma mensagem\n""        <br />Favor verificar seu e-mail para insstrucoes de como""recuperar sua senha"
+msgstr "Nos enviamos uma mensagem\n        <br />Favor verificar seu e-mail para insstrucoes de como recuperar sua senha"
 
 #: templates/html/core/password_reset_done.html:18
 msgid "Thank you!"
@@ -3720,7 +3720,7 @@ msgstr "Resetar senha"
 msgid ""
 "Forgotten your password? Enter your username or e-mail below, and we'll send "
 "you a new one"
-msgstr """Esqueceu sua senha? Insira seu nome de usuario ou e-mail abaixo e nos mandaremos uma nova senha"
+msgstr "Esqueceu sua senha? Insira seu nome de usuario ou e-mail abaixo e nos mandaremos uma nova senha"
 
 #: templates/html/core/user_login.html:27
 msgid "Forgotten your password?"
@@ -3758,7 +3758,7 @@ msgid ""
 "will be deleted.\n"
 "                    <br />\n"
 "                    All Objects owned by those Users will be deleted"
-msgstr """Aviso: isto nao podera ser desfeito. Todos os usuarios direcionados para este grupo como padrao serao deletados\n""   <br />\n""Todos os objetos pertencentes a este usuario serao deletados"
+msgstr "Aviso: isto nao podera ser desfeito. Todos os usuarios direcionados para este grupo como padrao serao deletados\n   <br />\n Todos os objetos pertencentes a este usuario serao deletados"
 
 #: templates/html/core/administration/group_delete.html:40
 #: templates/html/core/administration/group_view.html:26
@@ -3992,7 +3992,7 @@ msgstr "Global iCalendar"
 msgid ""
 "Export events from your calendar with a popular extension of <strong>.ics</"
 "strong>"
-msgstr """Exporte eventos de seu calendario com o formato de arquivo <strong>.ics</strong>"
+msgstr "Exporte eventos de seu calendario com o formato de arquivo <strong>.ics</strong>"
 
 #: templates/html/core/dashboard/widget_edit.html:6
 msgid "Widget"
@@ -4207,7 +4207,7 @@ msgstr "Crie uma tarefa"
 msgid ""
 "you can even link it to a Message Stream to get tickets automatically "
 "created from messaging!"
-msgstr """voce pode linkar ele ao Stream de Mensagens para ter os tickets autoomaticamente ""criado das mensagens!"
+msgstr "voce pode linkar ele ao Stream de Mensagens para ter os tickets autoomaticamente criado das mensagens!"
 
 #: templates/html/core/hints/user_denied.html:6
 msgid "Access Denied"
@@ -5630,7 +5630,7 @@ msgstr "Por favor escolha o tipo de contato que voce deseja criar"
 msgid ""
 "Sorry, you can not create new Contacts. You don't have access to any of the "
 "available Contact Types"
-msgstr """Desculpe, voce nao pode criar novoas contatos. Voce nao tem acesso aos tipos disponiveis dos Contatos"
+msgstr "Desculpe, voce nao pode criar novoas contatos. Voce nao tem acesso aos tipos disponiveis dos Contatos"
 
 #: templates/html/identities/contact_add_typed.html:6
 #: templates/html/identities/contact_type_delete.html:6
@@ -5873,7 +5873,7 @@ msgstr "Por favor esolha o tipo de Item de Infrsaestrutura que voce gostaria de 
 msgid ""
 "Sorry, you can not create new Items. You don't have access to any of the "
 "available Infrastructure Item Types"
-msgstr """Desculpe, voce nao pode criar novos itens. Voce nao tem acesso aos Tipos de Itens de Infraestrutura"
+msgstr "Desculpe, voce nao pode criar novos itens. Voce nao tem acesso aos Tipos de Itens de Infraestrutura"
 
 #: templates/html/infrastructure/item_add_typed.html:6
 #: templates/html/infrastructure/item_type_delete.html:6
