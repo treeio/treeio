@@ -213,6 +213,11 @@ INSTALLED_APPS = (
     'south',
     'markup_deprecated',
 )
+try:
+    import rosetta
+    INSTALLED_APPS += ('rosetta',)
+except ImportError:
+    pass
 if not DEBUG:
     INSTALLED_APPS += ('django.contrib.staticfiles',)
 
