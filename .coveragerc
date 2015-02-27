@@ -1,0 +1,9 @@
+[run]
+branch = True
+source =
+    treeio
+    minidetector
+
+[report]
+exclude_lines =
+    if __name__ == .__main__.:
