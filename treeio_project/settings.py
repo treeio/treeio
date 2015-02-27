@@ -520,23 +520,24 @@ WHOOSH_INDEX = os.path.join(BASE_DIR, 'storage/search')
 #
 # CACHING
 #
-try:
-    import pylibmc
-    CACHES = {
-        'default': {
-            'BACKEND': 'django.core.cache.backends.memcached.PyLibMCCache',
-            'LOCATION': CONF.get('memcached', 'location'),
-            }
-    }
-except ImportError:
-    if 'rosetta' in INSTALLED_APPS:
-        import tempfile
+if not TESTING:
+    try:
+        import pylibmc
         CACHES = {
             'default': {
-                'BACKEND': 'django.core.cache.backends.filebased.FileBasedCache',
-                'LOCATION': tempfile.mkdtemp('django_cache'),
+                'BACKEND': 'django.core.cache.backends.memcached.PyLibMCCache',
+                'LOCATION': CONF.get('memcached', 'location'),
                 }
         }
+    except ImportError:
+        if 'rosetta' in INSTALLED_APPS:
+            import tempfile
+            CACHES = {
+                'default': {
+                    'BACKEND': 'django.core.cache.backends.filebased.FileBasedCache',
+                    'LOCATION': tempfile.mkdtemp('django_cache'),
+                    }
+            }
 
 # CACHE_BACKEND="johnny.backends.locmem://"
 
