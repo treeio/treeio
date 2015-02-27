@@ -51,6 +51,14 @@ if TESTING:
     elif test_db == 'sqlite':
         DATABASES = {'default': {'ENGINE': 'django.db.backends.sqlite3'}}
 
+    if os.environ.get('MC') == '1':
+        CACHES = {
+            'default': {
+                'BACKEND': 'django.core.cache.backends.memcached.PyLibMCCache',
+                'LOCATION': '127.0.0.1:11211',
+                }
+        }
+
     PASSWORD_HASHERS = ('django.contrib.auth.hashers.MD5PasswordHasher',)
     HARDTREE_API_AUTH_ENGINE = 'basic'
 else:
@@ -512,9 +520,23 @@ WHOOSH_INDEX = os.path.join(BASE_DIR, 'storage/search')
 #
 # CACHING
 #
-# CACHE_BACKEND = 'dummy://'
-CACHE_BACKEND = 'locmem://?timeout=30'
-# CACHE_BACKEND = 'memcached://127.0.0.1:11211/?timeout=30'
+try:
+    import pylibmc
+    CACHES = {
+        'default': {
+            'BACKEND': 'django.core.cache.backends.memcached.PyLibMCCache',
+            'LOCATION': CONF.get('memcached', 'location'),
+            }
+    }
+except ImportError:
+    if 'rosetta' in INSTALLED_APPS:
+        import tempfile
+        CACHES = {
+            'default': {
+                'BACKEND': 'django.core.cache.backends.filebased.FileBasedCache',
+                'LOCATION': tempfile.mkdtemp('django_cache'),
+                }
+        }
 
 # CACHE_BACKEND="johnny.backends.locmem://"
 
