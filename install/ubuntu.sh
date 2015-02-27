@@ -4,7 +4,7 @@ sudo mkdir /opt/treeio
 sudo chown $USER /opt/treeio
 cd /opt/treeio
 
-sudo apt-get install python-virtualenv python-pip python-dev unzip nginx -y
+sudo apt-get install python-virtualenv python-pip python-dev unzip nginx libmemcached-dev memcached -y
 # libs for pillow
 sudo apt-get install libtiff5-dev libjpeg8-dev zlib1g-dev libfreetype6-dev liblcms2-dev libwebp-dev tcl8.6-dev tk8.6-dev python-tk -y
 # ubuntu 12.04 see https://github.com/python-pillow/Pillow/blob/master/docs/installation.rst
@@ -13,7 +13,7 @@ sudo apt-get install libtiff5-dev libjpeg8-dev zlib1g-dev libfreetype6-dev liblc
 virtualenv env
 source env/bin/activate
 pip install -U setuptools pip
-pip install uwsgi
+pip install uwsgi pylibmc
 
 wget https://github.com/treeio/treeio/archive/2.0.zip
 unzip 2.0.zip
