@@ -22,6 +22,6 @@ before_script:
   -
   -
 # command to run tests
-script: coverage run --rcfile=.coveragerc manage.py test
+script: coverage run manage.py test
 after_success:
-  coveralls --config_file=.coveragerc
+  coveralls

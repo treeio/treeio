@@ -3,6 +3,8 @@ branch = True
 source =
     treeio
     minidetector
+omit =
+    */migrations/*
 
 [report]
 exclude_lines =

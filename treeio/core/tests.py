@@ -7,61 +7,136 @@
 Core: test suites
 Middleware: test chat
 """
+import datetime
 
 from django.test import TestCase
 from django.test.client import Client
 from django.core.urlresolvers import reverse
 from django.contrib.auth.models import User as DjangoUser
-from treeio.core.models import User, Group, ModuleSetting, Module, Object, Perspective
+from treeio import identities
+from treeio.core.models import User, Group, ModuleSetting, Module, Object, Perspective, AccessEntity
 
 
 class CoreModelsTest(TestCase):
 
-    "Core Model Tests"
+    """Core Model Tests"""
 
-    def test_model_perspective(self):
-        "Test Perspective model"
-        obj = Perspective(name='test')
+    def test_model_AccessEntity(self):
+        obj = AccessEntity()
         obj.save()
-        self.assertEquals('test', obj.name)
-        self.assertNotEquals(obj.id, None)
-        obj.delete()
+        self.assertIsNotNone(obj.id)
+        obj = AccessEntity.objects.get(id=obj.id)
+        self.assertTrue(obj.last_updated - datetime.datetime.now() < datetime.timedelta(seconds=1))
+        self.assertIsNone(obj.get_entity())
+        self.assertFalse(obj.is_user())
+        self.assertEqual(obj.__unicode__(), str(obj.id))
+        self.assertEqual(obj.get_absolute_url(), '')
 
-    def test_model_module(self):
-        "Test Module model"
-        obj = Module(name='test', title='Test', url='/test/')
+    def test_model_Group_basic(self):
+        """Test Group model"""
+        name = 'testgroup'
+        obj = Group(name=name)
         obj.save()
-        self.assertEquals('test', obj.name)
-        self.assertNotEquals(obj.id, None)
-        obj.delete()
+        self.assertIsNotNone(obj.id)
+        obj = Group.objects.get(id=obj.id)
+        self.assertEqual(obj.name, name)
+        self.assertIsNone(obj.parent)
+        self.assertIsNone(obj.details)
+        self.assertQuerysetEqual(obj.child_set.all(), [])
+        self.assertEqual(obj.get_absolute_url(), '/contacts/group/view/{}'.format(obj.id))
+        self.assertEqual(obj.get_root(), obj)
+        self.assertEqual(obj.get_tree_path(), [obj])
+        self.assertIsNone(obj.get_contact())
+        self.assertFalse(obj.has_contact())
+        self.assertEqual(obj.get_fullname(), name)
+        self.assertEqual(obj.get_perspective(), Perspective.objects.all()[0])
+        # todo obj.set_perspective()
 
-    def test_model_group(self):
-        "Test Group model"
-        obj = Group(name='test')
-        obj.save()
-        self.assertEquals('test', obj.name)
-        self.assertNotEquals(obj.id, None)
-        obj.delete()
-
-    def test_model_user(self):
-        "Test User model"
-        username = "test"
+    def test_model_User_profile(self):
+        """Test User model"""
+        username = "testusername"
         password = "password"
-        user = DjangoUser(username=username, password=password)
+        user = DjangoUser(username=username)
         user.set_password(password)
         user.save()
-        self.assertEquals('test', user.username)
-        self.assertNotEquals(user.id, None)
-        group = Group(name='test')
+        self.assertEquals(user.username, username)
+        self.assertIsNotNone(user.id)
+        profile = user.get_profile()
+        self.assertEquals(profile.name, username)
+        self.assertEquals(profile.default_group, Group.objects.all()[0])
+        self.assertQuerysetEqual(profile.other_groups.all(), [])
+        self.assertFalse(profile.disabled)
+        self.assertTrue(profile.last_access - datetime.datetime.now() < datetime.timedelta(seconds=1))
+        self.assertEqual(profile.get_absolute_url(), '/contacts/user/view/{}'.format(profile.id))
+        oldpsw = profile.user.password
+        self.assertNotEqual(profile.generate_new_password(), oldpsw)
+        self.assertQuerysetEqual(profile.get_groups(), map(repr, [profile.default_group]))
+        self.assertTrue(profile.is_admin())
+        self.assertEqual(profile.get_username(), username)
+        self.assertEqual(profile.get_perspective(), Perspective.objects.get(name='Default'))
+        self.assertEqual(profile.get_contact(), identities.models.Contact.objects.get(related_user=profile))
+        self.assertTrue(profile.has_contact())
+
+    def test_model_User_profile_change_default_group(self):
+        username = "testusername"
+        user = DjangoUser(username=username)
+        user.save()
+        profile = user.get_profile()
+        group = Group(name='testgroupname')
         group.save()
-        self.assertEquals('test', group.name)
-        self.assertNotEquals(group.id, None)
-        profile = User(user=user, default_group=group)
+        profile.default_group = group
         profile.save()
-        self.assertEquals(user, profile.user)
-        self.assertNotEquals(profile.id, None)
-        profile.delete()
-        group.delete()
+        profile = User.objects.get(user=user)
+        self.assertEquals(profile.default_group, group)
+
+    def test_model_Module_basic(self):
+        """Test Module model with minimum parameters"""
+        name = 'test module'
+        title = 'Test title'
+        url = '/test_url/'
+        obj = Module(name=name, title=title, url=url)
+        obj.save()
+        self.assertIsNotNone(obj.id)
+        obj = Module.objects.get(id=obj.id)
+        self.assertEquals(obj.name, name)
+        self.assertEquals(obj.title, title)
+        self.assertEquals(obj.url, url)
+        self.assertEquals(obj.details, '')
+        self.assertTrue(obj.display)
+        self.assertTrue(obj.system)
+        self.assertEqual(obj.get_absolute_url(), '/admin/module/view/{}'.format(obj.id))
+
+    def test_model_Perspective_basic(self):
+        """Test Perspective model with minimum parameters"""
+        name = 'test'
+        obj = Perspective(name=name)
+        obj.save()
+        self.assertIsNotNone(obj.id)
+        obj = Perspective.objects.get(id=obj.id)
+        self.assertEqual(obj.name, name)
+        self.assertEqual(obj.details, '')
+        self.assertQuerysetEqual(obj.modules.all(), [])
+        # default is to have all modules available
+        self.assertQuerysetEqual(obj.get_modules(), map(repr, Module.objects.all()))
+        self.assertEqual(obj.get_absolute_url(), '/admin/perspective/view/{}'.format(obj.id))
+
+    def test_model_Perspective_full(self):
+        """Test Perspective model with all parameters"""
+        name = 'test'
+        details = 'perspective details'
+        obj = Perspective(name='test', details=details)
+        obj.save()
+        self.assertIsNotNone(obj.id)
+        obj = Perspective.objects.get(id=obj.id)
+        self.assertEqual(obj.name, name)
+        self.assertEqual(obj.details, details)
+        module = Module.objects.all()[0]
+        obj.modules.add(module)
+        self.assertQuerysetEqual(obj.modules.all(), map(repr, [module]))
+        self.assertQuerysetEqual(obj.get_modules(), map(repr, [module]))
+        self.assertEqual(obj.get_absolute_url(), '/admin/perspective/view/{}'.format(obj.id))
+
+
 
 
 class CoreViewsTest(TestCase):

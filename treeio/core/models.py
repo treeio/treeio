@@ -4,7 +4,7 @@
 # License www.tree.io/license
 
 """
-Hardtree Core system objects
+Treeio Core system objects
 """
 
 from django.contrib import messages
@@ -42,29 +42,28 @@ class AccessEntity(models.Model):
     def get_entity(self):
         try:
             return self.group
-        except:
+        except Group.DoesNotExist:
             try:
                 return self.user
-            except:
+            except User.DoesNotExist:
                 return None
 
     def is_user(self):
         try:
-            user = self.user
-            return user is not None
-        except:
+            return self.user is not None
+        except User.DoesNotExist:
             return False
 
     def __unicode__(self):
         try:
             return self.get_entity().__unicode__()
-        except:
+        except AttributeError:
             return unicode(self.id)
 
     def get_absolute_url(self):
         try:
             return self.get_entity().get_absolute_url()
-        except:
+        except AttributeError:
             return ''
 
 
@@ -128,20 +127,13 @@ class Group(AccessEntity):
     def get_contact(self):
         """Returns first available Contact"""
         try:
-            contact = self.contact_set.all()[:1][0]
-            return contact
-        except Exception:
+            return self.contact_set.all()[0]
+        except IndexError as e:
             return None
 
     def has_contact(self):
         """Returns true if any Contacts exist for this Group"""
-        try:
-            if self.contact_set.count() > 0:
-                return True
-            else:
-                return False
-        except Exception:
-            return False
+        return self.contact_set.exists()
 
     def get_fullname(self, save=True):
         """Returns the full name with parent(s) separated by slashes"""
@@ -225,7 +217,7 @@ class User(AccessEntity):
             self.name = self.user.username
         if not self.default_group:
             try:
-                self.default_group = Group.objects.all()[:1][0]
+                self.default_group = Group.objects.all()[0]
             except Exception:
                 pass
 
@@ -262,7 +254,7 @@ class User(AccessEntity):
 
     def generate_new_password(self, size=8):
         """Generates a new password and sets it to the user"""
-
+        # todo: use XKCD technique
         password = ''.join(
             [random.choice(string.letters + string.digits) for i in range(size)])
 
@@ -278,7 +270,7 @@ class User(AccessEntity):
 
         return groups
 
-    def _check_permission(self, object, mode='r'):  # todo: rename variable shadowing
+    def _check_permission(self, obj, mode='r'):
         """Helper for User.has_permissions(), accepts only one character for mode"""
 
         query = models.Q(pk=self.id)
@@ -286,26 +278,26 @@ class User(AccessEntity):
             if group:
                 query = query | models.Q(pk=group.id)
 
-        if object.full_access.filter(query).exists():
+        if obj.full_access.filter(query).exists():
             return True
 
         if mode == 'r' or mode == 'x':
-            if object.read_access.filter(query).exists():
+            if obj.read_access.filter(query).exists():
                 return True
 
-        if not object.full_access.exists():
+        if not obj.full_access.exists():
             # if no one can have full access, then allow everyone
             return True
 
         return False
 
-    def has_permission(self, object, mode="r"):  # todo: rename variable shadowing
+    def has_permission(self, obj, mode="r"):
         """Checks permissions on a given object for a given mode"""
-        if self.is_admin() or not object:
+        if self.is_admin() or not obj:
             return True
 
         for imode in mode:
-            if not self._check_permission(object, imode):
+            if not self._check_permission(obj, imode):
                 return False
 
         return True
@@ -323,8 +315,7 @@ class User(AccessEntity):
             pass
         if access or module_name == 'treeio.core':
             return access
-        else:  # todo: remove useless else
-            return self.is_admin(module_name='treeio.core')
+        return self.is_admin(module_name='treeio.core')
 
     def get_username(self):
         """String username, picked up from attached Django User or self.name string otherwise"""
@@ -374,18 +365,14 @@ class User(AccessEntity):
     def get_contact(self):
         """Returns first available Contact"""
         try:
-            contact = self.contact_set.all()[:1][0]
-            return contact
+            return self.contact_set.all()[0]
         except Exception:
             return None
 
     def has_contact(self):
         """Returns true if any Contacts exist for this User"""
         try:
-            if self.contact_set.count() > 0:
-                return True
-            else:  # todo: remove useless else
-                return False
+            return self.contact_set.exists()
         except Exception:
             return False
 
@@ -393,7 +380,7 @@ class User(AccessEntity):
 
 
 def user_autocreate_handler(sender, instance, created, **kwargs):
-    """When a Django User is created, automatically create a Hardtree User"""
+    """When a Django User is created, automatically create a treeio User"""
     if created:
         try:
             profile = instance.get_profile()
@@ -401,7 +388,7 @@ def user_autocreate_handler(sender, instance, created, **kwargs):
             profile = User(user=instance)
             profile.save()
 
-# Autocreate a Hardtree user when Django user is created
+# Autocreate a treeio user when Django user is created
 if getattr(settings, 'HARDTREE_SIGNALS_AUTOCREATE_USER', False):
     models.signals.post_save.connect(
         user_autocreate_handler, sender=django_auth.User)
