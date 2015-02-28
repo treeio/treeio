@@ -22,7 +22,7 @@ before_install:
   - chmod +x ci/before_install_${DB}.sh
   - ci/before_install.sh
   - ci/before_install_${DB}.sh
-before_script: ./ci/before_script_${DB}.sh
+before_script: ci/before_script_${DB}.sh
 # command to run tests
 script: coverage run manage.py test
 after_success:
