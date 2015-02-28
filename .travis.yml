@@ -18,8 +18,8 @@ install:
   - pip install coveralls
   - if [ $MC == '1' ]; then pip install -q pylibmc ; fi
 before_install:
-  - ./ci/before_install.sh
-  - ./ci/before_install_${DB}.sh
+  - ci/before_install.sh
+  - ci/before_install_${DB}.sh
 before_script: ./ci/before_script_${DB}.sh
 # command to run tests
 script: coverage run manage.py test
