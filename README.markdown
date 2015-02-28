@@ -1,5 +1,6 @@
 [![Build Status](https://secure.travis-ci.org/treeio/treeio.png?branch=master)](http://travis-ci.org/treeio/treeio)
 
+[![Coverage Status](https://coveralls.io/repos/treeio/treeio/badge.svg?branch=2.0)](https://coveralls.io/r/treeio/treeio?branch=2.0)
 ==========================
 Tree.io Business Management Platform
 ==========================
