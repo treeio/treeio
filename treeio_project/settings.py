@@ -50,6 +50,14 @@ if TESTING:
         }}
     elif test_db == 'sqlite':
         DATABASES = {'default': {'ENGINE': 'django.db.backends.sqlite3'}}
+    elif test_db == 'oracle':
+        DATABASES = {'default': {
+            'ENGINE': 'django.db.backends.oracle',
+            'NAME': 'treeio',
+            'USER': 'treeio',
+            'PASSWORD': 'treeio',
+    }
+}
 
     if os.environ.get('MC') == '1':
         CACHES = {

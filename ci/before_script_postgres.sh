@@ -1,0 +1,1 @@
+psql -c 'create database treeio;' -U postgres

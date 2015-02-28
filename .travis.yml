@@ -7,20 +7,20 @@ env:
     - DB=mysql
     - DB=postgres
     - DB=postgres MC=1
+    #- DB=db2
+    #- DB=firebird
+    - DB=oracle
 services:
   - memcached
 # command to install dependencies
 install:
   - pip install -r requirements.txt
   - pip install coveralls
-  - if [ $DB == 'postgres' ]; then pip install -q psycopg2 ; fi
-  - if [ $DB == 'mysql' ]; then pip install -q mysql-python ; fi
   - if [ $MC == '1' ]; then pip install -q pylibmc ; fi
-before_script:
-  - if [ $DB == 'postgres' ]; then psql -c 'create database treeio;' -U postgres ; fi
-  - if [ $DB == 'mysql' ]; then mysql -e 'create database treeio;' ; fi
-  -
-  -
+before_install:
+  - ./ci/before_install.sh
+  - ./ci/before_install_${DB}.sh
+before_script: ./ci/before_script_${DB}.sh
 # command to run tests
 script: coverage run manage.py test
 after_success:

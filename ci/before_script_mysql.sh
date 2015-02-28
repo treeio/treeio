@@ -1,0 +1,1 @@
+mysql -e 'create database treeio;'
