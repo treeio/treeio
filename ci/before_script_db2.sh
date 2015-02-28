@@ -1,0 +1,2 @@
+sudo -u db2inst1 -i db2 "CREATE DATABASE SOCITEST"
+sudo -u db2inst1 -i db2 "ACTIVATE DATABASE SOCITEST"

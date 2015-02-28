@@ -20,6 +20,7 @@ install:
 before_install:
   - chmod +x ci/before_install.sh
   - chmod +x ci/before_install_${DB}.sh
+  - chmod +x ci/before_script_${DB}.sh
   - ci/before_install.sh
   - ci/before_install_${DB}.sh
 before_script: ci/before_script_${DB}.sh
