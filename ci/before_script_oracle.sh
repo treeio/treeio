@@ -1,21 +1,27 @@
+#!/bin/bash
+# set variables oracle
 . /usr/lib/oracle/xe/app/oracle/product/10.2.0/server/bin/oracle_env.sh
 
-# create user for testing
-echo "CREATE USER treeio IDENTIFIED BY treeio;" | \
-sqlplus -S -L sys/admin AS SYSDBA
+# Conect oracle with sysdba
 
-echo "grant connect, resource to treeio;" | \
-sqlplus -S -L sys/admin AS SYSDBA
+sqlplus / as sysdba <<EOF
 
-echo "grant create session, alter any procedure to treeio;" | \
-sqlplus -S -L sys/admin AS SYSDBA
+# create user Treeio
+CREATE USER treeio IDENTIFIED BY treeio;
 
-# to enable xa recovery, see: https://community.oracle.com/thread/378954
-echo "grant select on sys.dba_pending_transactions to treeio;" | \
-sqlplus -S -L sys/admin AS SYSDBA
-echo "grant select on sys.pending_trans$ to treeio;" | \
-sqlplus -S -L sys/admin AS SYSDBA
-echo "grant select on sys.dba_2pc_pending to treeio;" | \
-sqlplus -S -L sys/admin AS SYSDBA
-echo "grant execute on sys.dbms_system to treeio;" | \
-sqlplus -S -L sys/admin AS SYSDBA
+# add privileges to treeio
+
+GRANT  connect, resource to treeio;
+GRANT  create session TO treeio;
+GRANT  create table TO treeio;
+GRANT  create view TO treeio;
+GRANT  create any trigger TO treeio;
+GRANT  create any procedure TO treeio;
+GRANT  create sequence TO treeio;
+GRANT  create synonym TO treeio;
+GRANT  select on sys.dba_pending_transactions to treeio;
+GRANT  select on sys.pending_trans$ to treeio;
+GRANT  select on sys.dba_2pc_pending to treeio;
+GRANT  execute on sys.dbms_system to treeio;
+exit
+EOF
