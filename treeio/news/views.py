@@ -32,8 +32,9 @@ def _get_default_context(request):
     return context
 
 
-def _get_filter_query(user, do_permissions=True, do_recipients=True, filters={}):
-
+def _get_filter_query(user, do_permissions=True, do_recipients=True, filters=None):
+    if filters is None:
+            filters = {}
     is_admin = user.is_admin()
     query = Q()
 

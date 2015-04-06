@@ -158,8 +158,10 @@ class EventCollection:
     "Set of EventWrappers available for rendering"
     events = []
 
-    def __init__(self, raw_events=[], start_hour=8, end_hour=22):
+    def __init__(self, raw_events=None, start_hour=8, end_hour=22):
         "Initialize with raw_events as a list or QuerySet of Events"
+        if raw_events is None:
+            raw_events = []
         self.events = []
         for event in raw_events:
             wrapper = EventRenderer(event.name, event.start, event.end,

@@ -36,9 +36,10 @@ RULESET = [title,
            ]
 
 
-def apply_rules(page, response={}):
+def apply_rules(page, response=None):
     "Applies all rules"
-
+    if response is None:
+        response = {}
     for rule in RULESET:
         response = rule(page, response)
 

@@ -98,8 +98,10 @@ class CronRunner():
     cycle = 1
     _stopped = False
 
-    def __init__(self, databases=[], noloop=False, *args, **kwargs):
+    def __init__(self, databases=None, noloop=False, *args, **kwargs):
         "Capture all cron jobs"
+        if databases is None:
+            databases = []
 
         signal.signal(signal.SIGTERM, self.stop)
 

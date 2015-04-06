@@ -18,7 +18,13 @@ class MultiHiddenWidget(MultiWidget):
 
     "Renders multiple hidden widgets for initial values to use in autocomplete"
 
-    def __init__(self, initial=[], choices=[], attrs={}):
+    def __init__(self, initial=None, choices=None, attrs=None):
+        if initial is None:
+            initial = []
+        if choices is None:
+            choices = []
+        if attrs is None:
+            attrs = {}
         widgets = []
         if initial:
             for i in initial:
@@ -67,7 +73,11 @@ class MultiHiddenField(MultiValueField):
     "Multiple choice hidden field"
     widget = MultiHiddenWidget
 
-    def __init__(self, required=False, widget=None, initial=None, choices=[], fields=[]):
+    def __init__(self, required=False, widget=None, initial=None, choices=None, fields=None):
+        if choices is None:
+            choices = []
+        if fields is None:
+            fields = []
         widget = MultiHiddenWidget(initial=initial, choices=choices)
         super(MultiHiddenField, self).__init__(fields=fields, widget=widget, initial=initial,
                                                required=required, label='', help_text='')

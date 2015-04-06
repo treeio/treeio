@@ -385,7 +385,9 @@ class FilterForm(forms.ModelForm):
 
     """ Item Filters definition """
 
-    def __init__(self, user, skip=[], *args, **kwargs):
+    def __init__(self, user, skip=None, *args, **kwargs):
+        if skip is None:
+            skip = []
         super(FilterForm, self).__init__(*args, **kwargs)
 
         if 'item_type' in skip:

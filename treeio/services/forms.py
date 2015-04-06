@@ -518,8 +518,10 @@ class FilterForm(forms.ModelForm):
 
     """ Ticket Filters definition """
 
-    def __init__(self, user, skip=[], *args, **kwargs):
+    def __init__(self, user, skip=None, *args, **kwargs):
         "Sets allowed values"
+        if skip is None:
+            skip = []
         super(FilterForm, self).__init__(*args, **kwargs)
 
         if 'caller' in skip:
@@ -574,8 +576,10 @@ class SLAFilterForm(forms.ModelForm):
 
     """ SLA Filters definition """
 
-    def __init__(self, user, skip=[], *args, **kwargs):
+    def __init__(self, user, skip=None, *args, **kwargs):
         "Sets allowed values"
+        if skip is None:
+            skip = []
         super(SLAFilterForm, self).__init__(*args, **kwargs)
 
         self.fields['client'].queryset = Object.filter_permitted(
@@ -608,8 +612,10 @@ class AgentFilterForm(forms.ModelForm):
 
     """ Agent Filters definition """
 
-    def __init__(self, user, skip=[], *args, **kwargs):
+    def __init__(self, user, skip=None, *args, **kwargs):
         "Sets allowed values"
+        if skip is None:
+            skip = []
         super(AgentFilterForm, self).__init__(*args, **kwargs)
 
         self.fields['related_user'].required = True

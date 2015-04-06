@@ -571,9 +571,10 @@ register.object(last_updated)
 
 
 @contextfunction
-def easy_invite_block(context, emails=[]):
+def easy_invite_block(context, emails=None):
     "The humanized datetime of the last update to an object"
-
+    if emails is None:
+        emails = []
     request = context['request']
 
     response_format = 'html'

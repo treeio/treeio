@@ -581,7 +581,9 @@ class ProductFilterForm(forms.ModelForm):
 
     """ Ticket Filters definition """
 
-    def __init__(self, user, skip=[], *args, **kwargs):
+    def __init__(self, user, skip=None, *args, **kwargs):
+        if skip is None:
+            skip = []
         super(ProductFilterForm, self).__init__(*args, **kwargs)
 
         self.fields['product_type'].queryset = Object.filter_permitted(user,
@@ -828,7 +830,9 @@ class OrderFilterForm(forms.ModelForm):
     paid = forms.ChoiceField(choices=(
         (None, '-----'), ('paid', _("Paid in full")), ('unpaid', _("Pending Payments"))), required=False)
 
-    def __init__(self, user, skip=[], *args, **kwargs):
+    def __init__(self, user, skip=None, *args, **kwargs):
+        if skip is None:
+            skip = []
         super(OrderFilterForm, self).__init__(*args, **kwargs)
 
         if 'status' in skip:
@@ -931,7 +935,9 @@ class LeadFilterForm(forms.ModelForm):
 
     """ Ticket Filters definition """
 
-    def __init__(self, user, skip=[], *args, **kwargs):
+    def __init__(self, user, skip=None, *args, **kwargs):
+        if skip is None:
+            skip = []
         super(LeadFilterForm, self).__init__(*args, **kwargs)
 
         self.fields['contact'].queryset = Object.filter_permitted(
@@ -1054,7 +1060,9 @@ class OpportunityFilterForm(forms.ModelForm):
 
     """ Opportunity Filters """
 
-    def __init__(self, user, skip=[], *args, **kwargs):
+    def __init__(self, user, skip=None, *args, **kwargs):
+        if skip is None:
+            skip = []
         super(OpportunityFilterForm, self).__init__(*args, **kwargs)
 
         self.fields['contact'].queryset = Object.filter_permitted(

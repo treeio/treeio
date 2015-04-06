@@ -64,10 +64,10 @@ class Model:
 
 class Field:
 
-    def __init__(self, name='', display=False, filters=[], aggregation=None, groupby=0, join=None):
+    def __init__(self, name='', display=False, filters=None, aggregation=None, groupby=0, join=None):
         self.name = name
         self.display = display
-        self.filters = filters
+        self.filters = [] if filters is None else filters
         self.aggregation = aggregation
         self.groupby = groupby
         self.join = join

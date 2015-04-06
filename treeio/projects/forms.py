@@ -419,7 +419,9 @@ class FilterForm(ModelForm):
 
     """ Filter form definition """
 
-    def __init__(self, user, skip=[], *args, **kwargs):
+    def __init__(self, user, skip=None, *args, **kwargs):
+        if skip is None:
+            skip = []
         super(FilterForm, self).__init__(*args, **kwargs)
 
         self.fields['caller'].label = _("Caller")

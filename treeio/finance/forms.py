@@ -120,7 +120,9 @@ class AccountFilterForm(forms.ModelForm):
 
     """ Filters definition """
 
-    def __init__(self, user, skip=[], *args, **kwargs):
+    def __init__(self, user, skip=None, *args, **kwargs):
+        if skip is None:
+            skip = []
         super(AccountFilterForm, self).__init__(*args, **kwargs)
 
         if 'owner' in skip:
@@ -177,7 +179,9 @@ class AssetFilterForm(forms.ModelForm):
 
     """ Filters definition """
 
-    def __init__(self, user, skip=[], *args, **kwargs):
+    def __init__(self, user, skip=None, *args, **kwargs):
+        if skip is None:
+            skip = []
         super(AssetFilterForm, self).__init__(*args, **kwargs)
 
         if 'purchase_date_from' in skip:
@@ -273,7 +277,9 @@ class EquityFilterForm(forms.ModelForm):
 
     """ Filters definition """
 
-    def __init__(self, user, skip=[], *args, **kwargs):
+    def __init__(self, user, skip=None, *args, **kwargs):
+        if skip is None:
+            skip = []
         super(EquityFilterForm, self).__init__(*args, **kwargs)
 
         if 'purchase_date_from' in skip:
@@ -476,7 +482,9 @@ class TransactionFilterForm(forms.ModelForm):
 
     """ Filters definition """
 
-    def __init__(self, user, skip=[], *args, **kwargs):
+    def __init__(self, user, skip=None, *args, **kwargs):
+        if skip is None:
+            skip = []
         super(TransactionFilterForm, self).__init__(*args, **kwargs)
 
         if 'datefrom' in skip:
@@ -588,7 +596,9 @@ class LiabilityFilterForm(forms.ModelForm):
 
     """ Filters definition """
 
-    def __init__(self, user, skip=[], *args, **kwargs):
+    def __init__(self, user, skip=None, *args, **kwargs):
+        if skip is None:
+            skip = []
         super(LiabilityFilterForm, self).__init__(*args, **kwargs)
 
         if 'due_date_from' in skip:

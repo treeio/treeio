@@ -41,9 +41,10 @@ def _preprocess_context_html(context):
     return context
 
 
-def render_to_string(template_name, context={}, context_instance=None, response_format='html'):
+def render_to_string(template_name, context=None, context_instance=None, response_format='html'):
     "Picks up the appropriate template to render to string"
-
+    if context is None:
+        context = {}
     if not response_format or 'pdf' in response_format or not response_format in settings.HARDTREE_RESPONSE_FORMATS:
         response_format = 'html'
 
@@ -64,9 +65,10 @@ def render_to_string(template_name, context={}, context_instance=None, response_
     return rendered_string
 
 
-def render_to_ajax(template_name, context={}, context_instance=None):
+def render_to_ajax(template_name, context=None, context_instance=None):
     "Render request into JSON object to be handled by AJAX on the server-side"
-
+    if context is None:
+        context = {}
     response_format = 'html'
     if not 'response_format_tags' in context:
         context['response_format_tags'] = 'ajax'
@@ -117,13 +119,14 @@ def render_to_ajax(template_name, context={}, context_instance=None):
     return rendered_string
 
 
-def render_to_response(template_name, context={}, context_instance=None, response_format='html'):
+def render_to_response(template_name, context=None, context_instance=None, response_format='html'):
     "Extended render_to_response to support different formats"
-
+    if context is None:
+        context = {}
     if not response_format:
         response_format = 'html'
 
-    if not response_format in settings.HARDTREE_RESPONSE_FORMATS:
+    if response_format not in settings.HARDTREE_RESPONSE_FORMATS:
         response_format = 'html'
 
     mimetype = settings.HARDTREE_RESPONSE_FORMATS[response_format]
@@ -209,14 +212,15 @@ def render_to_response(template_name, context={}, context_instance=None, respons
     return response
 
 
-def render_string_template(template_string, context={}, context_instance=None):
+def render_string_template(template_string, context=None, context_instance=None):
     """
     Performs rendering using template_string instead of a file, and context.
     context_instance is only used to feed user into context (unless already defined)
 
     Returns string.
     """
-
+    if context is None:
+        context = {}
     template = Template(template_string)
     if not 'user' in context and context_instance:
         if 'request' in context_instance:

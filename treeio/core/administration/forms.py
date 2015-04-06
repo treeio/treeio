@@ -411,14 +411,16 @@ class FilterForm(forms.ModelForm):
 
     """ Filter form for Modules definition """
 
-    def __init__(self, user, type=[], *args, **kwargs):
+    def __init__(self, user, _type=None, *args, **kwargs):
+        if _type is None:
+            _type = []
         super(FilterForm, self).__init__(*args, **kwargs)
 
-        if 'perspective' in type:
+        if 'perspective' in _type:
             del self.fields['name']
             self.fields['modules'].help_text = ""
 
-        if 'module' in type:
+        if 'module' in _type:
             del self.fields['name']
             self.fields['modules'].help_text = ""
 
@@ -428,7 +430,7 @@ class FilterForm(forms.ModelForm):
         model = Perspective
         fields = ('name', 'modules')
 
-from treeio.identities.forms import ContactForm
+from treeio.identities.forms import ContactForm  # todo: move import to top of file
 
 
 class ContactSetupForm(ContactForm):

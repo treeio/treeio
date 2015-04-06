@@ -145,8 +145,10 @@ class HandlerMethod(object):
         return "<Method: %s>" % self.name
 
 
-def _convert(template, params=[]):
+def _convert(template, params=None):
     """URI template converter"""
+    if params is None:
+        params = []
     paths = template % dict([p, "{%s}" % p] for p in params)
     return u'/api%s%s' % (get_script_prefix(), paths)
 

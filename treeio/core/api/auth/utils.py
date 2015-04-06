@@ -43,8 +43,10 @@ def verify_oauth_request(request, oauth_request, consumer, token=None):
     return True
 
 
-def require_params(oauth_request, parameters=[]):
+def require_params(oauth_request, parameters=None):
     """ Ensures that the request contains all required parameters. """
+    if parameters is None:
+        parameters = []
     params = [
         'oauth_consumer_key',
         'oauth_nonce',

@@ -15,10 +15,12 @@ register = template.Library()
 
 
 @contextfunction
-def projects_task_list(context, tasks, time_slots=[], nomass=False,
+def projects_task_list(context, tasks, time_slots=None, nomass=False,
                        in_progress=False, by_project=False, by_milestone=False,
                        by_assigned=False, noheader=False):
     "Print a list of tasks"
+    if time_slots is None:
+            time_slots = []
     request = context['request']
 
     response_format = 'html'
