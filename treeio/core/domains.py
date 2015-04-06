@@ -4,7 +4,7 @@
 # License www.tree.io/license
 
 """
-Utilities to deal with multitenancy within a single Hardtree
+Utilities to deal with multitenancy within a single Tree.io process
 """
 from django.conf import settings
 from treeio.core.models import ConfigSetting
