@@ -15,7 +15,7 @@ from django.core.urlresolvers import reverse
 from pandora import box
 
 
-class DomainMiddleware():
+class DomainMiddleware(object):
 
     "Handles multiple domains within the same Django process"
 
