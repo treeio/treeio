@@ -9,7 +9,7 @@ env:
     - DB=postgres MC=1
     #- DB=db2
     #- DB=firebird
-    - DB=oracle
+    #- DB=oracle using snap-ci for oracle
 services:
   - memcached
 # command to install dependencies
