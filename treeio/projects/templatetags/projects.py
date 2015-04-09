@@ -20,7 +20,7 @@ def projects_task_list(context, tasks, time_slots=None, nomass=False,
                        by_assigned=False, noheader=False):
     "Print a list of tasks"
     if time_slots is None:
-            time_slots = []
+        time_slots = []
     request = context['request']
 
     response_format = 'html'
