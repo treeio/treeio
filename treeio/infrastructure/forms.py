@@ -69,7 +69,7 @@ class ItemForm(forms.Form):
         num = 0
         field_name = unicode(field.name) + u"___" + unicode(num)
         while field_name in self.fields:
-            num = num + 1
+            num += 1
             field_name = unicode(field.name) + u"___" + unicode(num)
         return field_name
 

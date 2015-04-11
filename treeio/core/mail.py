@@ -259,7 +259,7 @@ class EmailReceiver(Thread):
         mins = int(GMT[4:6])
         self.tzoffset = hours * 3600 + mins * 60
         if sign == "-":
-            self.tzoffset = self.tzoffset * -1
+            self.tzoffset *= -1
 
     def run(self):
         "Run"

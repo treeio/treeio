@@ -364,8 +364,7 @@ def create_ticket_from_message(sender, instance, created, **kwargs):
                     pass
 
                 # Rename original message title
-                instance.title = "[#" + ticket.reference + "] " + \
-                    instance.title
+                instance.title = "[#" + ticket.reference + "] " + instance.title
                 instance.save()
 
 signals.post_save.connect(create_ticket_from_message, sender=Message)

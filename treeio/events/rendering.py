@@ -97,7 +97,7 @@ class EventRenderer:
                 return True
             elif self.end and self.end.date() == date:
                 return True
-            elif self.start and self.end and self.start.date() < date and self.end.date() > date:
+            elif self.start and self.end and self.start.date() < date < self.end.date():
                 return True
         return False
 
