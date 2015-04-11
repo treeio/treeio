@@ -2,12 +2,32 @@
 [![Coverage Status](https://coveralls.io/repos/treeio/treeio/badge.svg?branch=2.0)](https://coveralls.io/r/treeio/treeio?branch=2.0)
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/treeio/treeio/badges/quality-score.png?b=2.0)](https://scrutinizer-ci.com/g/treeio/treeio/?branch=2.0)
 [![Code Health](https://landscape.io/github/treeio/treeio/master/landscape.svg?style=flat)](https://landscape.io/github/treeio/treeio/master)
+
 ==========================
 Tree.io Business Management Platform
 ==========================
 
-*Due to lack of time I can no longer maintain Tree. If you are interested in working on it get in touch*
+*Version 2.0 is under development, help appreciated, create issues and pull requests*
 
+join our mailing list:
+
+Already done:
+=============
+- Django 1.6 support
+- Install script for ubuntu
+
+Wishlist:
+=========
+- Django 1.7 support
+- Django 1.8 support
+- Get to 100% test coverage
+- Resolve scrutinizer and landscape issues
+- Documentation
+- Help putting the site back online
+- Exapanding travis test scenarios
+- Selenium tests
+- setup.py
+- Leave django-piston to tastypie or DRF
 
 Apache
 ======
