@@ -83,7 +83,7 @@ class UserHandler(AccessHandler):
             except self.model.DoesNotExist:
                 return rc.NOT_HERE
         else:
-            rc.BAD_REQUEST
+            return rc.BAD_REQUEST
 
 
 class ModuleHandler(BaseHandler):
