@@ -13,7 +13,7 @@ import StringIO
 import datetime
 
 
-class ProcessTransactions():
+class ProcessTransactions(object):
 
     "Import/Export Contacts"
 
@@ -29,16 +29,8 @@ class ProcessTransactions():
                    'category', 'account', 'datetime', 'value', 'details']
         writer.writerow(headers)
         for transaction in transactions:
-            row = []
-            row.append(transaction)
-            row.append(transaction.source)
-            row.append(transaction.target)
-            row.append(transaction.liability)
-            row.append(transaction.category)
-            row.append(transaction.account)
-            row.append(transaction.datetime)
-            row.append(transaction.get_relative_value())
-            row.append(transaction.details)
+            row = [transaction, transaction.source, transaction.target, transaction.liability, transaction.category,
+                   transaction.account, transaction.datetime, transaction.get_relative_value(), transaction.details]
             writer.writerow(row)
         return response
 

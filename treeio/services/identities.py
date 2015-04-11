@@ -10,23 +10,18 @@ from treeio.core.models import Object
 from treeio.services.models import Ticket
 from treeio.services.templatetags.services import services_ticket_list
 
-CONTACT_OBJECTS = {}
-CONTACT_OBJECTS['ticket_set'] = {'label': 'Tickets',
-                                 'objects': [],
-                                 'templatetag': services_ticket_list}
+CONTACT_OBJECTS = {'ticket_set': {'label': 'Tickets',
+                                  'objects': [],
+                                  'templatetag': services_ticket_list},
+                   'client_sla': {'label': 'Service Level Agreements',
+                                  'objects': [],
+                                  'templatetag': None}, 'provider_sla': {'label': 'Provided SLAs',
+                                                                         'objects': [],
+                                                                         'templatetag': None}}
 
-CONTACT_OBJECTS['client_sla'] = {'label': 'Service Level Agreements',
-                                 'objects': [],
-                                 'templatetag': None}
-
-CONTACT_OBJECTS['provider_sla'] = {'label': 'Provided SLAs',
-                                   'objects': [],
-                                   'templatetag': None}
-
-USER_OBJECTS = {}
-USER_OBJECTS['serviceagent_set'] = {'label': 'Assigned Tickets',
-                                    'objects': [],
-                                    'templatetag': services_ticket_list}
+USER_OBJECTS = {'serviceagent_set': {'label': 'Assigned Tickets',
+                                     'objects': [],
+                                     'templatetag': services_ticket_list}}
 
 
 def get_contact_objects(current_user, contact):

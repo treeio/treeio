@@ -9,21 +9,18 @@ Handle objects from this module relevant to a Contact or a User
 from treeio.core.models import Object
 from treeio.projects.templatetags.projects import projects_task_list
 
-CONTACT_OBJECTS = {}
-CONTACT_OBJECTS['manager'] = {'label': 'Managed Projects',
-                              'objects': [],
-                              'templatetag': None}
-CONTACT_OBJECTS['client'] = {'label': 'Ordered Projects',
-                             'objects': [],
-                             'templatetag': None}
-CONTACT_OBJECTS['task_set'] = {'label': 'Managed Tasks',
+CONTACT_OBJECTS = {'manager': {'label': 'Managed Projects',
                                'objects': [],
-                               'templatetag': projects_task_list}
+                               'templatetag': None}, 'client': {'label': 'Ordered Projects',
+                                                                'objects': [],
+                                                                'templatetag': None},
+                   'task_set': {'label': 'Managed Tasks',
+                                'objects': [],
+                                'templatetag': projects_task_list}}
 
-USER_OBJECTS = {}
-USER_OBJECTS['task_set'] = {'label': 'Assigned Tasks',
-                            'objects': [],
-                            'templatetag': projects_task_list}
+USER_OBJECTS = {'task_set': {'label': 'Assigned Tasks',
+                             'objects': [],
+                             'templatetag': projects_task_list}}
 
 
 def get_contact_objects(current_user, contact):

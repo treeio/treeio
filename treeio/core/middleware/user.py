@@ -24,7 +24,7 @@ import json
 import time
 
 
-class CommonMiddleware():
+class CommonMiddleware(object):
 
     "Set up Object notifications"
 
@@ -238,7 +238,7 @@ class PopupMiddleware():
 
 from django.utils.translation.trans_real import to_language
         
-class LanguageMiddleware():
+class LanguageMiddleware(object):
 
     "Automatically set chosen language"
 

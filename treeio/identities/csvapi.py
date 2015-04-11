@@ -14,7 +14,7 @@ import re
 import urlparse
 
 
-class ProcessContacts():
+class ProcessContacts(object):
 
     "Import/Export Contacts"
 

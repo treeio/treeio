@@ -10,7 +10,7 @@ from django.contrib.auth.models import User
 from treeio.identities.models import ContactValue
 
 
-class EmailBackend:
+class EmailBackend(object):
 
     "Log a user in using email instead of their username"
 
@@ -36,7 +36,7 @@ class EmailBackend:
             return None
 
 
-class HashBackend:
+class HashBackend(object):
 
     "Log a user in using their password as a hash"
 

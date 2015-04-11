@@ -9,29 +9,23 @@ Handle objects from this module relevant to a Contact or a User
 from treeio.core.models import Object
 from treeio.sales.templatetags.sales import sales_order_list, sales_lead_list, sales_opportunity_list
 
-CONTACT_OBJECTS = {}
-CONTACT_OBJECTS['saleorder_set'] = {
+CONTACT_OBJECTS = {'saleorder_set': {
     'label': 'Sale Orders',
     'objects': [],
     'templatetag': sales_order_list
-}
-
-CONTACT_OBJECTS['lead_set'] = {
+}, 'lead_set': {
     'label': 'Leads',
     'objects': [],
     'templatetag': sales_lead_list
-}
-
-CONTACT_OBJECTS['opportunity_set'] = {
+}, 'opportunity_set': {
     'label': 'Opportunities',
     'objects': [],
     'templatetag': sales_opportunity_list
-}
+}}
 
-USER_OBJECTS = {}
-USER_OBJECTS['sales_saleorder_assigned'] = {'label': 'Assigned Orders',
-                                            'objects': [],
-                                            'templatetag': sales_order_list}
+USER_OBJECTS = {'sales_saleorder_assigned': {'label': 'Assigned Orders',
+                                             'objects': [],
+                                             'templatetag': sales_order_list}}
 
 
 def get_contact_objects(current_user, contact):

@@ -247,12 +247,7 @@ def ajax_popup(request, popup_id='', url='/'):
     for block in blocks:
         subtitle += block.group('subtitle').replace('\\n', '').strip()
 
-    context = {'content': module_inner,
-               'title': title,
-               'subtitle': subtitle}
-
-    context['popup_id'] = popup_id
-    context['url'] = request.path
+    context = {'content': module_inner, 'title': title, 'subtitle': subtitle, 'popup_id': popup_id, 'url': request.path}
 
     if settings.HARDTREE_RESPONSE_FORMATS['json'] in response.get('Content-Type', 'text/html'):
         new_response = render_to_response('core/ajax_popup', context,

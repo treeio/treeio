@@ -14,7 +14,7 @@ from treeio.core.models import Module
 # i.e. after Django's own middleware has been fired
 
 
-class ModuleDetect():
+class ModuleDetect(object):
 
     "Handles Hardtree automatic modules detection"
 
