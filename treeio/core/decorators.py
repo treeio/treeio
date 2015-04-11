@@ -31,7 +31,7 @@ def treeio_login_required(f):
             for module in all_modules:
                 try:
                     import_name = module.name + "." + \
-                        settings.HARDTREE_MODULE_IDENTIFIER
+                                  settings.HARDTREE_MODULE_IDENTIFIER
                     hmodule = __import__(
                         import_name, fromlist=[str(module.name)])
                     urls = hmodule.URL_PATTERNS
@@ -78,6 +78,7 @@ def module_admin_required(module_name=None):
 
     def wrap(f):
         "Wrap"
+
         def wrapped_f(request, *args, **kwargs):
             "Wrapped"
 
@@ -137,7 +138,8 @@ def handle_response_format(f):
                         location = request.redirect
                         response = HttpResponse(json.dumps({'redirect': location}),
                                                 mimetype=settings.HARDTREE_RESPONSE_FORMATS['ajax'])
-                    elif 'Content-Disposition' in response and not response['Content-Type'] in settings.HARDTREE_RESPONSE_FORMATS.values():
+                    elif 'Content-Disposition' in response and \
+                            response['Content-Type'] not in settings.HARDTREE_RESPONSE_FORMATS.values():
                         location = request.get_full_path()
                         if '.ajax' in location:
                             location = str(location).replace('.ajax', '')
@@ -182,6 +184,7 @@ def add_required_label_tag(original_function):
                 contents += " *"
             attrs = {'class': 'required'}
         return original_function(self, contents, attrs)
+
     return required_label_tag
 
 

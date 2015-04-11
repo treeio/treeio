@@ -3,7 +3,7 @@
 # This file is part of Treeio.
 # License www.tree.io/license
 
-#-*- coding:utf-8 -*-
+# -*- coding:utf-8 -*-
 
 from __future__ import absolute_import, with_statement
 
@@ -56,7 +56,7 @@ class ContactHandler(ObjectHandler):
     model = Contact
     form = ContactForm
     fields = ['id', ('contactvalue_set', ('name', 'value'))] + \
-        [i.name for i in model._meta.local_fields if i.name != 'object_ptr']
+             [i.name for i in model._meta.local_fields if i.name != 'object_ptr']
 
     @classmethod
     def resource_uri(cls, obj=None):

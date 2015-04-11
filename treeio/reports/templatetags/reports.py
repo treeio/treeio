@@ -4,6 +4,7 @@
 # License www.tree.io/license
 
 from __future__ import division
+
 """
 Reports templatetags
 """
@@ -46,7 +47,9 @@ def display_chart(context, chart, skip_group=False):
     model = loads(chart.report.model)
 
     chart_dict['yAxis'] = {'allowDecimals': False,
-                           'title': {'text': model.name.split('.')[-1] + " Count vs. " + field_name.replace('_', ' ').title()}}
+                           'title': {
+                               'text': model.name.split('.')[-1] + " Count vs. " + field_name.replace('_', ' ').title()}
+                           }
     chart_dict['xAxis'] = {}
     try:
         xfield = objs[0]._meta.get_field_by_name(field_name)[0]
@@ -67,9 +70,9 @@ def display_chart(context, chart, skip_group=False):
                 l.append(unicode(mi))
     elif xfield.get_internal_type() == 'DateTimeField' or xfield.get_internal_type() == 'DateField':
         chart_dict['xAxis']['labels'] = {  # 'rotation':90,
-            'align': 'left',
-            'x': 3,
-            'y': 15}
+                                           'align': 'left',
+                                           'x': 3,
+                                           'y': 15}
         l, m, datelist = [], [], []
         maxdate = None
         mindate = None
@@ -97,29 +100,30 @@ def display_chart(context, chart, skip_group=False):
 
         chart_dict['xAxis']['type'] = 'datetime'
         td = maxdate - mindate
-        #print (td.microseconds + (td.seconds + td.days * 24 * 3600) * 10**6) / 10**6
+        # print (td.microseconds + (td.seconds + td.days * 24 * 3600) * 10**6) / 10**6
         chart_dict['zoomType'] = 'x'
         chart_dict['xAxis']['tickInterval'] = (
-            td.microseconds + (td.seconds + td.days * 24 * 3600) * 10 ** 6) / 10 ** 4
-        #chart_dict['xAxis']['tickWidth']= 0,
+                                                  td.microseconds + (
+                                                      td.seconds + td.days * 24 * 3600) * 10 ** 6) / 10 ** 4
+        # chart_dict['xAxis']['tickWidth']= 0,
         chart_dict['maxZoom'] = 14 * 24 * 3600000  # 2wks
-        #chart_dict['xAxis']['gridLineWidth']= 1,
-        chart_dict['series'] = [{'name': model.name.split('.')[-1], 'data':[]}]
+        # chart_dict['xAxis']['gridLineWidth']= 1,
+        chart_dict['series'] = [{'name': model.name.split('.')[-1], 'data': []}]
         for x in set(l):
             chart_dict['series'][0]['data'].append(('%s UTC' % x, l.count(x)))
 
     else:
         l = [unicode(obj.get_field_value(field_name)) for obj in objs]
 
-    if not 'series' in chart_dict:
+    if 'series' not in chart_dict:
         chart_dict['series'] = []
-        #chart_dict['series'].append({'name':field_name, 'data': [{'name': x, 'y':l.count(x)} for x in set(l)]})
+        # chart_dict['series'].append({'name':field_name, 'data': [{'name': x, 'y':l.count(x)} for x in set(l)]})
         chart_dict['series'].append({'name': field_name.replace(
             '_', ' ').title(), 'data': [[x, l.count(x)] for x in set(l)]})
-    # for x in set(l):
-    #    chart_dict['series'].append({'name':x, 'data': l.count(x)})
-    #chart_dict['series'].append({'data':[{'name':x, 'y': [l.count(x)]} for x in set(l)]})
-        if not 'xAxis' in chart_dict:
+        # for x in set(l):
+        # chart_dict['series'].append({'name':x, 'data': l.count(x)})
+        # chart_dict['series'].append({'data':[{'name':x, 'y': [l.count(x)]} for x in set(l)]})
+        if 'xAxis' not in chart_dict:
             chart_dict['xAxis']['categories'] = [x for x in set(l)]
         # Chart type specific options
 
@@ -142,7 +146,7 @@ def display_chart(context, chart, skip_group=False):
     # Disable animation for when saving as PDF
     chart_dict['chart'] = {'renderTo': id,
                            'defaultSeriesType': options['type']}
-    #chart_dict['plotOptions'] = {'series': {'animation': False}}
+    # chart_dict['plotOptions'] = {'series': {'animation': False}}
 
     chart_dict['plotOptions'] = {'pie': {
         'allowPointSelect': True,
@@ -158,7 +162,7 @@ def display_chart(context, chart, skip_group=False):
     rendered_options = json.dumps(chart_dict)
 
     rendered_options = rendered_options[
-        :-1] + ", tooltip: {formatter: function() {return '<b>'+ this.point.name +'</b>: '+ this.y;}}}"
+                       :-1] + ", tooltip: {formatter: function() {return '<b>'+ this.point.name +'</b>: '+ this.y;}}}"
 
     if 'type' in chart_dict['xAxis'] and chart_dict['xAxis']['type'] == 'datetime':
         rendered_options += """
@@ -201,6 +205,7 @@ def display_chart(context, chart, skip_group=False):
                                    context_instance=RequestContext(request),
                                    response_format=response_format))
 
+
 register.object(display_chart)
 
 
@@ -215,6 +220,7 @@ def is_field_number(report, field_name):
         return True
     return False
 
+
 register.object(is_field_number)
 
 
@@ -222,8 +228,10 @@ register.object(is_field_number)
 def select_for_aggregation(context, field_name, value):
     select_str = '<select type="select" name="aggregation-%(field_name)s"><option></option>%(options)s</select>'
     options = ''.join(['<option value="%s"%s>%s</option>' % (name, ' selected' if value == name else '',
-                                                             _(func['description'])) for name, func in aggregate_functions.items()])
+                                                             _(func['description'])) for name, func in
+                       aggregate_functions.items()])
     return Markup(select_str % {'field_name': field_name,
                                 'options': options})
+
 
 register.object(select_for_aggregation)

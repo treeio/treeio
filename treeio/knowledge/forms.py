@@ -12,11 +12,11 @@ from treeio.core.models import Object
 from treeio.core.decorators import preprocess_form
 from django.utils.translation import ugettext as _
 from django.core.urlresolvers import reverse
+
 preprocess_form()
 
 
 class MassActionForm(Form):
-
     """ Mass action form for Reports """
 
     delete = ChoiceField(label=_("Delete"), choices=(('', '-----'), ('delete', _('Delete Completely')),
@@ -49,7 +49,6 @@ class MassActionForm(Form):
 
 
 class KnowledgeFolderForm(ModelForm):
-
     """ Knowledge folder form """
 
     def __init__(self, user, knowledgeType_id, *args, **kwargs):
@@ -68,14 +67,12 @@ class KnowledgeFolderForm(ModelForm):
         self.fields['details'].label = _("Details")
 
     class Meta:
-
         "KnowledgeFolder"
         model = KnowledgeFolder
         fields = ('name', 'parent', 'details')
 
 
 class KnowledgeItemForm(ModelForm):
-
     """ Knowledge item form """
 
     def __init__(self, user, knowledgeType_id, *args, **kwargs):
@@ -101,14 +98,12 @@ class KnowledgeItemForm(ModelForm):
         self.fields['body'].widget.attrs.update({'class': 'full-editor'})
 
     class Meta:
-
         "KnowledgeItem"
         model = KnowledgeItem
         fields = ('name', 'folder', 'category', 'body')
 
 
 class KnowledgeCategoryForm(ModelForm):
-
     """ Knowledge category form """
 
     def __init__(self, *args, **kwargs):
@@ -118,14 +113,12 @@ class KnowledgeCategoryForm(ModelForm):
         self.fields['details'].label = _("Details")
 
     class Meta:
-
         "KnowledgeCategory"
         model = KnowledgeCategory
         fields = ('name', 'details')
 
 
 class FilterForm(ModelForm):
-
     """ Filter form definition """
 
     def __init__(self, user, skip=None, *args, **kwargs):
@@ -138,7 +131,7 @@ class FilterForm(ModelForm):
         else:
             self.fields['folder'].queryset = Object.filter_permitted(
                 user, KnowledgeFolder.objects, mode='x')
-            #self.fields['folder'].required = False
+            # self.fields['folder'].required = False
             self.fields['folder'].label = _("Folder")
 
         if 'category' in skip:

@@ -3,7 +3,7 @@
 # This file is part of Treeio.
 # License www.tree.io/license
 
-#-*- coding: utf-8 -*-
+# -*- coding: utf-8 -*-
 
 from __future__ import absolute_import, with_statement
 
@@ -17,7 +17,6 @@ from treeio.news.views import _get_filter_query
 
 
 class UpdateRecordHandler(BaseHandler):
-
     "Entrypoint for UpdateRecord model."
 
     model = UpdateRecord

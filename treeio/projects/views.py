@@ -247,7 +247,7 @@ def project_add(request, response_format='html'):
     "New project form"
 
     if request.POST:
-        if not 'cancel' in request.POST:
+        if 'cancel' not in request.POST:
             project = Project()
             form = ProjectForm(
                 request.user.get_profile(), None, request.POST, instance=project)
@@ -279,7 +279,7 @@ def project_add_typed(request, project_id=None, response_format='html'):
             parent_project = None
 
     if request.POST:
-        if not 'cancel' in request.POST:
+        if 'cancel' not in request.POST:
             project = Project()
             form = ProjectForm(
                 request.user.get_profile(), project_id, request.POST, instance=project)
@@ -378,7 +378,7 @@ def project_edit(request, project_id, response_format='html'):
         return user_denied(request, message="You don't have access to this Project")
 
     if request.POST:
-        if not 'cancel' in request.POST:
+        if 'cancel' not in request.POST:
             form = ProjectForm(
                 request.user.get_profile(), None, request.POST, instance=project)
             if form.is_valid():
@@ -433,7 +433,7 @@ def milestone_add(request, response_format='html'):
     "New milestone form"
 
     if request.POST:
-        if not 'cancel' in request.POST:
+        if 'cancel' not in request.POST:
             milestone = Milestone()
             form = MilestoneForm(
                 request.user.get_profile(), None, request.POST, instance=milestone)
@@ -465,7 +465,7 @@ def milestone_add_typed(request, project_id=None, response_format='html'):
             project = None
 
     if request.POST:
-        if not 'cancel' in request.POST:
+        if 'cancel' not in request.POST:
             milestone = Milestone()
             form = MilestoneForm(
                 request.user.get_profile(), project_id, request.POST, instance=milestone)
@@ -542,7 +542,7 @@ def milestone_edit(request, milestone_id, response_format='html'):
         return user_denied(request, message="You don't have access to this Milestone")
 
     if request.POST:
-        if not 'cancel' in request.POST:
+        if 'cancel' not in request.POST:
             form = MilestoneForm(
                 request.user.get_profile(), None, request.POST, instance=milestone)
             if form.is_valid():
@@ -628,7 +628,7 @@ def task_add(request, response_format='html'):
     "New task form"
 
     if request.POST:
-        if not 'cancel' in request.POST:
+        if 'cancel' not in request.POST:
             task = Task()
             form = TaskForm(
                 request.user.get_profile(), None, None, None, request.POST, instance=task)
@@ -660,7 +660,7 @@ def task_add_typed(request, project_id=None, response_format='html'):
             project = None
 
     if request.POST:
-        if not 'cancel' in request.POST:
+        if 'cancel' not in request.POST:
             task = Task()
             form = TaskForm(
                 request.user.get_profile(), None, project_id, None, request.POST, instance=task)
@@ -696,7 +696,7 @@ def task_add_to_milestone(request, milestone_id=None, response_format='html'):
     project_id = milestone.project.id
 
     if request.POST:
-        if not 'cancel' in request.POST:
+        if 'cancel' not in request.POST:
             task = Task()
             form = TaskForm(request.user.get_profile(), None,
                             project_id, milestone_id, request.POST, instance=task)
@@ -731,7 +731,7 @@ def task_add_subtask(request, task_id=None, response_format='html'):
             parent = None
 
     if request.POST:
-        if not 'cancel' in request.POST:
+        if 'cancel' not in request.POST:
             task = Task()
             form = TaskForm(
                 request.user.get_profile(), parent, None, None, request.POST, instance=task)
@@ -812,7 +812,7 @@ def task_edit(request, task_id, response_format='html'):
         return user_denied(request, message="You don't have access to this Task")
 
     if request.POST:
-        if not 'cancel' in request.POST:
+        if 'cancel' not in request.POST:
             form = TaskForm(
                 request.user.get_profile(), None, None, None, request.POST, instance=task)
             if form.is_valid():
@@ -1060,7 +1060,7 @@ def task_status_add(request, response_format='html'):
         return user_denied(request, message="You don't have administrator access to the Projects module")
 
     if request.POST:
-        if not 'cancel' in request.POST:
+        if 'cancel' not in request.POST:
             status = TaskStatus()
             form = TaskStatusForm(
                 request.user.get_profile(), request.POST, instance=status)
@@ -1090,7 +1090,7 @@ def task_status_edit(request, status_id, response_format='html'):
         return user_denied(request, message="You don't have access to this Task Status")
 
     if request.POST:
-        if not 'cancel' in request.POST:
+        if 'cancel' not in request.POST:
             form = TaskStatusForm(
                 request.user.get_profile(), request.POST, instance=status)
             if form.is_valid():
@@ -1179,7 +1179,7 @@ def settings_edit(request, response_format='html'):
 
     form = None
     if request.POST:
-        if not 'cancel' in request.POST:
+        if 'cancel' not in request.POST:
             form = SettingsForm(request.user.get_profile(), request.POST)
             if form.is_valid():
                 form.save()

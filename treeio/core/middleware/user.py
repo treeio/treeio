@@ -25,7 +25,6 @@ import time
 
 
 class CommonMiddleware(object):
-
     "Set up Object notifications"
 
     objects = {}
@@ -36,19 +35,19 @@ class CommonMiddleware(object):
         # check mobile:
         if getattr(request, 'mobile', False) and \
                 not request.POST and \
-                not '/m' in request.path[:2] and \
-                not '/static' in request.path[:7]:
+                        '/m' not in request.path[:2] and \
+                        '/static' not in request.path[:7]:
 
             if request.GET.get('nomobile', False):
                 request.session['nomobile'] = True
-            elif not 'nomobile' in request.session:
+            elif 'nomobile' not in request.session:
                 return HttpResponseRedirect('/m' + request.path)
 
         if hasattr(request, 'user') and request.user.is_authenticated():
 
             domain = getattr(settings, 'CURRENT_DOMAIN', 'default')
             cache.set('treeio_%s_last' % (domain), time.time())
-            if getattr(settings, 'HARDTREE_SUBSCRIPTION_BLOCKED', False) and not '/accounts' in request.path:
+            if getattr(settings, 'HARDTREE_SUBSCRIPTION_BLOCKED', False) and '/accounts' not in request.path:
                 return HttpResponseRedirect('/accounts/logout')
 
             user = None
@@ -172,7 +171,6 @@ class CommonMiddleware(object):
 
 
 class PopupMiddleware():
-
     "Tracks Object creation for popups"
 
     objects = {}
@@ -236,10 +234,11 @@ class PopupMiddleware():
 
         return response
 
-from django.utils.translation.trans_real import to_language
-        
-class LanguageMiddleware(object):
 
+from django.utils.translation.trans_real import to_language
+
+
+class LanguageMiddleware(object):
     "Automatically set chosen language"
 
     def process_request(self, request):
@@ -286,7 +285,7 @@ def process_timezone_field(user, instance):
             settings, 'HARDTREE_SERVER_TIMEZONE')[default_timezone][0]
 
     all_timezones = getattr(settings, 'HARDTREE_SERVER_TIMEZONE', [
-                            (1, '(GMT-11:00) International Date Line West')])
+        (1, '(GMT-11:00) International Date Line West')])
     title = all_timezones[int(default_timezone)][1]
     GMT = title[4:10]  # with sign e.g. +06:00
     sign = GMT[0:1]  # + or -
@@ -301,10 +300,10 @@ def process_timezone_field(user, instance):
                     cur_date = getattr(instance, field.name)
                     if sign == "-":
                         new_date = cur_date + \
-                            timedelta(hours=hours, minutes=mins)
+                                   timedelta(hours=hours, minutes=mins)
                     else:
                         new_date = cur_date - \
-                            timedelta(hours=hours, minutes=mins)
+                                   timedelta(hours=hours, minutes=mins)
                     setattr(instance, field.name, new_date)
             elif isinstance(field, models.TimeField):
                 if getattr(instance, field.name):
@@ -313,7 +312,6 @@ def process_timezone_field(user, instance):
 
 
 class SSLMiddleware(object):
-
     """ Keep protocol the same on redirects """
 
     def process_request(self, request):
@@ -339,7 +337,6 @@ class SSLMiddleware(object):
 
 
 class AuthMiddleware(object):
-
     """ Log in by hash """
 
     def process_request(self, request):

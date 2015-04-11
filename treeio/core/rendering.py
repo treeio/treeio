@@ -34,7 +34,7 @@ def _preprocess_context_html(context):
                     # find popuplink fields
                     if field.widget.attrs and 'popuplink' in field.widget.attrs:
                         field.help_text += '<a href="%s" field="id_%s" id="link-%s" class="inline-link add-link popup-link">%s</a>' % \
-                            (field.widget.attrs['popuplink'], fname, fname, _("New"))
+                                           (field.widget.attrs['popuplink'], fname, fname, _("New"))
                 except Exception:
                     pass
 
@@ -45,7 +45,7 @@ def render_to_string(template_name, context=None, context_instance=None, respons
     "Picks up the appropriate template to render to string"
     if context is None:
         context = {}
-    if not response_format or 'pdf' in response_format or not response_format in settings.HARDTREE_RESPONSE_FORMATS:
+    if not response_format or 'pdf' in response_format or response_format not in settings.HARDTREE_RESPONSE_FORMATS:
         response_format = 'html'
 
     if not ("." + response_format) in template_name:
@@ -70,7 +70,7 @@ def render_to_ajax(template_name, context=None, context_instance=None):
     if context is None:
         context = {}
     response_format = 'html'
-    if not 'response_format_tags' in context:
+    if 'response_format_tags' not in context:
         context['response_format_tags'] = 'ajax'
 
     context = preprocess_context_ajax(context)
@@ -101,8 +101,8 @@ def render_to_ajax(template_name, context=None, context_instance=None):
                                     pass
                             message['title'] = unicode(update.author)
                         for obj in update.about.all():
-                            message[
-                                'message'] = "(%s) %s:<br />%s" % (obj.get_human_type(), unicode(obj), message['message'])
+                            message['message'] = "(%s) %s:<br />%s" % (
+                                obj.get_human_type(), unicode(obj), message['message'])
                         notifications.append(message)
                     except:
                         pass
@@ -188,7 +188,7 @@ def render_to_response(template_name, context=None, context_instance=None, respo
         os.remove(output)
         os.remove(source)
 
-        #response['Content-Disposition'] = 'attachment; filename=%s'%(pdf_name)
+        # response['Content-Disposition'] = 'attachment; filename=%s'%(pdf_name)
 
         return response
 
@@ -222,7 +222,7 @@ def render_string_template(template_string, context=None, context_instance=None)
     if context is None:
         context = {}
     template = Template(template_string)
-    if not 'user' in context and context_instance:
+    if 'user' not in context and context_instance:
         if 'request' in context_instance:
             context.update({'user': context_instance['request']})
 
@@ -232,7 +232,7 @@ def render_string_template(template_string, context=None, context_instance=None)
 def get_template_source(template_name, response_format='html'):
     "Returns source of the template file"
 
-    if not response_format or 'pdf' in response_format or not response_format in settings.HARDTREE_RESPONSE_FORMATS:
+    if not response_format or 'pdf' in response_format or response_format not in settings.HARDTREE_RESPONSE_FORMATS:
         response_format = 'html'
 
     if not ("." + response_format) in template_name:

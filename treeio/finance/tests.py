@@ -492,7 +492,7 @@ class FinanceViewsTest(TestCase):
             reverse('finance_liability_delete', args=[self.liability.id]))
         self.assertEquals(response.status_code, 200)
 
-     # Receivables
+    # Receivables
     def test_finance_receivables_index(self):
         "Test index page with login at /finance/receivables/"
         response = self.client.post('/accounts/login',
@@ -536,7 +536,7 @@ class FinanceViewsTest(TestCase):
             reverse('finance_receivable_delete', args=[self.liability.id]))
         self.assertEquals(response.status_code, 200)
 
-     # Category
+    # Category
     def test_finance_category_add(self):
         "Test index page with login at /finance/category/add/"
         response = self.client.post('/accounts/login',
@@ -572,7 +572,7 @@ class FinanceViewsTest(TestCase):
             reverse('finance_category_delete', args=[self.category.id]))
         self.assertEquals(response.status_code, 200)
 
-     # Currency
+    # Currency
     def test_finance_currency_add(self):
         "Test index page with login at /finance/currency/add/"
         response = self.client.post('/accounts/login',
@@ -608,7 +608,7 @@ class FinanceViewsTest(TestCase):
             reverse('finance_currency_delete', args=[self.currency.id]))
         self.assertEquals(response.status_code, 200)
 
-     # Taxes
+    # Taxes
     def test_finance_tax_add(self):
         "Test index page with login at /finance/tax/add/"
         response = self.client.post('/accounts/login',
@@ -836,7 +836,7 @@ class FinanceViewsTest(TestCase):
             reverse('finance_liability_delete', args=[self.liability.id]))
         self.assertRedirects(response, reverse('user_login'))
 
-     # Receivables
+    # Receivables
     def test_finance_receivables_index_out(self):
         "Testing /finance/receivables/"
         response = self.client.get(reverse('finance_index_receivables'))
@@ -865,7 +865,7 @@ class FinanceViewsTest(TestCase):
             reverse('finance_receivable_delete', args=[self.liability.id]))
         self.assertRedirects(response, reverse('user_login'))
 
-     # Category
+    # Category
     def test_finance_category_add_out(self):
         "Testing /finance/category/add/"
         response = self.client.get(reverse('finance_category_add'))
@@ -889,7 +889,7 @@ class FinanceViewsTest(TestCase):
             reverse('finance_category_delete', args=[self.category.id]))
         self.assertRedirects(response, reverse('user_login'))
 
-     # Currency
+    # Currency
     def test_finance_currency_add_out(self):
         "Testing /finance/currency/add/"
         response = self.client.get(reverse('finance_currency_add'))
@@ -913,7 +913,7 @@ class FinanceViewsTest(TestCase):
             reverse('finance_currency_delete', args=[self.currency.id]))
         self.assertRedirects(response, reverse('user_login'))
 
-     # Taxes
+    # Taxes
     def test_finance_tax_add_out(self):
         "Testing /finance/tax/add/"
         response = self.client.get(reverse('finance_tax_add'))

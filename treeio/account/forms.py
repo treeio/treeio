@@ -21,8 +21,8 @@ class MassActionForm(forms.Form):
     """ Mass action form for Accounts """
 
     delete = forms.ChoiceField(label=_("With selected"),
-        choices=(('', '-----'), ('delete', _('Delete Completely')),
-                 ('trash', _('Move to Trash'))), required=False)
+                               choices=(('', '-----'), ('delete', _('Delete Completely')),
+                                        ('trash', _('Move to Trash'))), required=False)
 
     instance = None
 
@@ -33,8 +33,8 @@ class MassActionForm(forms.Form):
 
         super(MassActionForm, self).__init__(*args, **kwargs)
         self.fields['delete'] = forms.ChoiceField(label=_("With selected"),
-            choices=(('', '-----'), ('delete', _('Delete Completely')),
-                     ('trash', _('Move to Trash'))), required=False)
+                                                  choices=(('', '-----'), ('delete', _('Delete Completely')),
+                                                           ('trash', _('Move to Trash'))), required=False)
 
     def save(self, *args, **kwargs):
         "Process form"
@@ -49,7 +49,6 @@ class MassActionForm(forms.Form):
 
 
 class AccountForm(forms.ModelForm):
-
     """ Account form """
 
     def __init__(self, *args, **kwargs):
@@ -75,14 +74,12 @@ class AccountForm(forms.ModelForm):
         return data
 
     class Meta:
-
         "Account Form"
         model = User
         fields = ('name', 'default_group', 'other_groups')
 
 
 class AccountPasswordForm(forms.Form):
-
     """ Password form """
 
     old_password = forms.CharField(max_length=255,
@@ -125,7 +122,6 @@ class AccountPasswordForm(forms.Form):
 
 
 class SettingsForm(forms.Form):
-
     """ User Account settings form """
 
     default_perspective = forms.ModelChoiceField(
@@ -134,7 +130,8 @@ class SettingsForm(forms.Form):
     default_timezone = forms.ChoiceField(label='Time Zone', choices=[])
     user = None
     email_notifications = forms.ChoiceField(
-        label="E-mail Notifications", choices=(('never', _('Never (disabled)')), ('True', _('As-it-happens'))) + notification_types, required=False)
+        label="E-mail Notifications",
+        choices=(('never', _('Never (disabled)')), ('True', _('As-it-happens'))) + notification_types, required=False)
     notifications_for_modules = forms.MultipleChoiceField(
         label="Receive notifications for modules", required=False)
 

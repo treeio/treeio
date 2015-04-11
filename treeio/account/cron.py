@@ -8,6 +8,7 @@ Account cron jobs
 """
 
 import codecs
+
 try:
     from cStringIO import StringIO
 except ImportError:
@@ -24,7 +25,6 @@ from treeio.account.models import NotificationSetting, Notification
 
 
 class CronNotifier:
-
     def __init__(self):
         self.next_daily = datetime.now()
 
@@ -46,7 +46,8 @@ class CronNotifier:
                 message_html.write('-' * 30)
                 message_html.write('<br /><br />\n\n')
             message_html.write(u'%s:<br />\n%s - %s<br /><br />\n\n' %
-                               (unicode(record.author), unicode(record.date_created.isoformat()), record.get_full_message()))
+                               (unicode(record.author), unicode(record.date_created.isoformat()),
+                                record.get_full_message()))
         signature = "This is an automated message from Tree.io service (http://tree.io). Please do not reply to this e-mail."
         subject = "%s summary of [Tree.io] %s" % (
             note.get_ntype_display(), unicode(note.owner),)
@@ -79,7 +80,7 @@ class CronNotifier:
                     query = query | Q(
                         about__object_type__icontains=module.name)
                 query = query & Q(date_created__gte=note.last_datetime) \
-                              & (Q(author=note.owner_id) | Q(recipients=note.owner_id))
+                        & (Q(author=note.owner_id) | Q(recipients=note.owner_id))
                 self.send_notification(note, UpdateRecord.objects.filter(
                     query).distinct().order_by('url', '-date_created'))
                 note.update_date(now)

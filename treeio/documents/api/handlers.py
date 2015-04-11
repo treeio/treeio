@@ -3,7 +3,7 @@
 # This file is part of Treeio.
 # License www.tree.io/license
 
-#-*- coding: utf-8 -*-
+# -*- coding: utf-8 -*-
 
 from __future__ import absolute_import, with_statement
 
@@ -35,7 +35,7 @@ class FolderHandler(ObjectHandler):
 
 class CommonHandler(ObjectHandler):
     def check_create_permission(self, request, mode):
-        if request.data.has_key('folder'):
+        if 'folder' in request.data:
             folder = getOrNone(Folder, pk=request.data['folder'])
             if not request.user.get_profile().has_permission(folder, mode='x'):
                 request.data['folder'] = None

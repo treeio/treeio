@@ -29,7 +29,7 @@ def _get_filter_query(args):
             kwargs = {str(arg + '__id'): long(args[arg])}
             query = query & Q(**kwargs)
 
-    if not 'status' in args:
+    if 'status' not in args:
         query = query & Q(status__hidden=False)
 
     return query
@@ -144,6 +144,7 @@ def index_resolved(request, response_format='html'):
 
     return render_to_response('changes/index_resolved', context,
                               context_instance=RequestContext(request), response_format=response_format)
+
 
 #
 # ChangeSetStatus

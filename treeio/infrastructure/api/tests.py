@@ -110,14 +110,15 @@ class InfrastructureApiTest(TestCase):
 
     def test_get_field(self):
         response = self.client.get(path=reverse('api_infrastructure_fields', kwargs={
-                                   'object_ptr': self.field.id}), **self.authentication_headers)
+            'object_ptr': self.field.id}), **self.authentication_headers)
         self.assertEquals(response.status_code, 200)
 
     def test_update_field(self):
         updates = {"name": "Api_name", "label": "Api label", "field_type": "text",
                    "required": True, "details": "Api details"}
         response = self.client.put(path=reverse('api_infrastructure_fields', kwargs={'object_ptr': self.field.id}),
-                                   content_type=self.content_type, data=json.dumps(updates), **self.authentication_headers)
+                                   content_type=self.content_type, data=json.dumps(updates),
+                                   **self.authentication_headers)
         self.assertEquals(response.status_code, 200)
 
         data = json.loads(response.content)
@@ -135,14 +136,15 @@ class InfrastructureApiTest(TestCase):
 
     def test_get_type(self):
         response = self.client.get(path=reverse('api_infrastructure_types', kwargs={
-                                   'object_ptr': self.type.id}), **self.authentication_headers)
+            'object_ptr': self.type.id}), **self.authentication_headers)
         self.assertEquals(response.status_code, 200)
 
     def test_update_type(self):
         updates = {"name": "Api type", "parent": None,
                    "details": "api test details", "fields": [self.field.id]}
         response = self.client.put(path=reverse('api_infrastructure_types', kwargs={'object_ptr': self.type.id}),
-                                   content_type=self.content_type, data=json.dumps(updates), **self.authentication_headers)
+                                   content_type=self.content_type, data=json.dumps(updates),
+                                   **self.authentication_headers)
         self.assertEquals(response.status_code, 200)
 
         data = json.loads(response.content)
@@ -160,14 +162,15 @@ class InfrastructureApiTest(TestCase):
 
     def test_get_status(self):
         response = self.client.get(path=reverse('api_infrastructure_statuses', kwargs={
-                                   'object_ptr': self.status.id}), **self.authentication_headers)
+            'object_ptr': self.status.id}), **self.authentication_headers)
         self.assertEquals(response.status_code, 200)
 
     def test_update_status(self):
         updates = {"name": "Api type", "active": True,
                    "hidden": False, "details": "Api details"}
         response = self.client.put(path=reverse('api_infrastructure_statuses', kwargs={'object_ptr': self.status.id}),
-                                   content_type=self.content_type, data=json.dumps(updates), **self.authentication_headers)
+                                   content_type=self.content_type, data=json.dumps(updates),
+                                   **self.authentication_headers)
         self.assertEquals(response.status_code, 200)
 
         data = json.loads(response.content)
@@ -184,14 +187,15 @@ class InfrastructureApiTest(TestCase):
 
     def test_get_service(self):
         response = self.client.get(path=reverse('api_infrastructure_service_records', kwargs={
-                                   'object_ptr': self.servicing.id}), **self.authentication_headers)
+            'object_ptr': self.servicing.id}), **self.authentication_headers)
         self.assertEquals(response.status_code, 200)
 
     def test_update_service(self):
         updates = {"name": "Api servicing", "items": [self.item.id], "start_date": "2011-06-01",
                    "expiry_date": "2011-10-01", "details": "Api details"}
-        response = self.client.put(path=reverse('api_infrastructure_service_records', kwargs={'object_ptr': self.servicing.id}),
-                                   content_type=self.content_type, data=json.dumps(updates), **self.authentication_headers)
+        response = self.client.put(
+            path=reverse('api_infrastructure_service_records', kwargs={'object_ptr': self.servicing.id}),
+            content_type=self.content_type, data=json.dumps(updates), **self.authentication_headers)
         self.assertEquals(response.status_code, 200)
 
         data = json.loads(response.content)
@@ -210,7 +214,7 @@ class InfrastructureApiTest(TestCase):
 
     def test_get_item(self):
         response = self.client.get(path=reverse('api_infrastructure_items', kwargs={
-                                   'object_ptr': self.item.id}), **self.authentication_headers)
+            'object_ptr': self.item.id}), **self.authentication_headers)
         self.assertEquals(response.status_code, 200)
 
     def test_update_item(self):
@@ -218,7 +222,8 @@ class InfrastructureApiTest(TestCase):
         updates = {"name": "Close_API", "item_type": self.type.id,
                    "status": self.status.id, "test___1": "api test"}
         response = self.client.put(path=reverse('api_infrastructure_items', kwargs={'object_ptr': self.item.id}),
-                                   content_type=self.content_type,  data=json.dumps(updates), **self.authentication_headers)
+                                   content_type=self.content_type, data=json.dumps(updates),
+                                   **self.authentication_headers)
         self.assertEquals(response.status_code, 200)
 
         data = json.loads(response.content)

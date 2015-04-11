@@ -3,17 +3,17 @@
 # This file is part of Treeio.
 # License www.tree.io/license
 
-#-*- coding: utf-8 -*-
+# -*- coding: utf-8 -*-
 
 import sys
 import utils
+
 sys.modules['piston.utils'] = utils
 
 from piston.resource import Resource
 
 
 class CsrfExemptResource(Resource):
-
     """A Custom Resource that is csrf exempt"""
 
     def __init__(self, handler, authentication=None):

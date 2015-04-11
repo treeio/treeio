@@ -15,17 +15,18 @@ from treeio.core.decorators import preprocess_form
 from treeio.messaging.models import Message, MessageStream, MailingList
 from django.db.models import Q
 from treeio.identities.models import ContactType, Contact
+
 preprocess_form()
 
 
 class SettingsForm(forms.Form):
-
     """ Administration settings form """
 
     default_contact_type = forms.ModelChoiceField(
         label='Default Contact Type', queryset=[])
     default_imap_folder = forms.ChoiceField(label='Default IMAP Folder', choices=(('ALL', 'ALL'),
-                                                                                  ('UNSEEN', _('UNSEEN'))), required=False)
+                                                                                  ('UNSEEN', _('UNSEEN'))),
+                                            required=False)
     signature = forms.CharField(widget=forms.Textarea, required=False)
 
     def __init__(self, user, *args, **kwargs):
@@ -90,12 +91,11 @@ class SettingsForm(forms.Form):
 
 
 class MassActionForm(forms.Form):
-
     """ Mass action form for Messages """
 
     mark = forms.ChoiceField(label=_("With selected"), choices=(('', '-----'), ('read', _('Mark Read')),
                                                                 ('unread', _('Mark Unread')), (
-                                                                    'delete', _('Delete Completely')),
+        'delete', _('Delete Completely')),
                                                                 ('trash', _('Move to Trash'))), required=False)
     stream = forms.ModelChoiceField(queryset=[], required=False)
     user = None
@@ -116,11 +116,15 @@ class MassActionForm(forms.Form):
         self.fields['stream'].queryset = Object.filter_permitted(
             user, MessageStream.objects, mode='x')
         self.fields['stream'].label = _("Move to")
-        self.fields['mark'] = forms.ChoiceField(label=_("With selected"), choices=(('', '-----'), ('read', _('Mark Read')),
-                                                                                   ('unread', _('Mark Unread')), (
-                                                                                       'delete', _('Delete Completely')),
-                                                                                   ('trash', _('Move to Trash'))), required=False)
-        self.fields['markall'] = forms.ChoiceField(label=_("Mark all"), choices=(('', '-----'), ('markall', _('Mark all as Read'))),
+        self.fields['mark'] = forms.ChoiceField(label=_("With selected"),
+                                                choices=(('', '-----'),
+                                                         ('read', _('Mark Read')),
+                                                         ('unread', _('Mark Unread')),
+                                                         ('delete', _('Delete Completely')),
+                                                         ('trash', _('Move to Trash'))),
+                                                required=False)
+        self.fields['markall'] = forms.ChoiceField(label=_("Mark all"),
+                                                   choices=(('', '-----'), ('markall', _('Mark all as Read'))),
                                                    required=False)
 
     def save(self, *args, **kwargs):
@@ -158,7 +162,6 @@ class MassActionForm(forms.Form):
 
 
 class MessageForm(forms.ModelForm):
-
     """ Message form """
 
     def __init__(self, user, stream_id, message=None, *args, **kwargs):
@@ -200,7 +203,6 @@ class MessageForm(forms.ModelForm):
 
 
 class MessageReplyForm(forms.ModelForm):
-
     """ Message reply form """
 
     def __init__(self, user, stream_id, message=None, *args, **kwargs):
@@ -236,7 +238,6 @@ class MessageReplyForm(forms.ModelForm):
 
 
 class MessageStreamForm(forms.ModelForm):
-
     """ Message Stream form """
 
     def __init__(self, user, *args, **kwargs):
@@ -281,7 +282,6 @@ class MessageStreamForm(forms.ModelForm):
 
 
 class MailingListForm(forms.ModelForm):
-
     """ Message Stream form """
 
     def __init__(self, user, *args, **kwargs):
@@ -298,14 +298,12 @@ class MailingListForm(forms.ModelForm):
         self.fields['opt_in'].label = _("Opt-In Template")
 
     class Meta:
-
         "Message Stream"
         model = MailingList
         fields = ('name', 'description', 'from_contact', 'opt_in', 'members')
 
 
 class FilterForm(forms.ModelForm):
-
     """ Filter form definition """
 
     def __init__(self, user, skip=None, *args, **kwargs):
@@ -335,7 +333,7 @@ class FilterForm(forms.ModelForm):
             self.fields['author'].queryset = Object.filter_permitted(
                 user, Contact.objects, mode='x')
             self.fields['author'].widget.attrs.update({'class': 'autocomplete',
-                                                                'callback': reverse('identities_ajax_contact_lookup')})
+                                                       'callback': reverse('identities_ajax_contact_lookup')})
 
     class Meta:
 

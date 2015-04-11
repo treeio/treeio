@@ -453,7 +453,7 @@ class Object(models.Model):
     links = models.ManyToManyField('self', blank=True, null=True)
     subscribers = models.ManyToManyField(
         User, blank=True, null=True, related_name='subscriptions')
-    #subscribers_outside = models.ManyToManyField(Contact, blank=True, null=True, related_name='subscriptions_outside')
+    # subscribers_outside = models.ManyToManyField(Contact, blank=True, null=True, related_name='subscriptions_outside')
     tags = models.ManyToManyField(Tag, blank=True, null=True)
 
     comments = models.ManyToManyField(
@@ -883,7 +883,7 @@ class Object(models.Model):
                         do_user = True
                         break
                     elif attr == '*module':
-                        if not 'nomodule' in default_permissions:
+                        if 'nomodule' not in default_permissions:
                             modules = Module.objects.filter(
                                 name__contains=self.get_object_module())
                             if modules:
@@ -906,8 +906,7 @@ class Object(models.Model):
                         except:
                             pass
         if do_user:
-        # if we can't inherit set permissions to the user as specified in the
-        # settings
+            # if we can't inherit set permissions to the user as specified in the settings
 
             if 'readonly' in default_permissions:
                 access_container = self.read_access
@@ -1045,7 +1044,7 @@ class UpdateRecord(models.Model):
         Object, blank=True, null=True, related_name="updates")
     recipients = models.ManyToManyField(
         AccessEntity, blank=True, null=True, related_name="received_updates")
-    #recipients_outside = models.ManyToManyField(Contact, blank=True, null=True, related_name="outside_received_updates")
+    # recipients_outside = models.ManyToManyField(Contact, blank=True, null=True, related_name="outside_received_updates")
     record_type = models.CharField(max_length=32,
                                    choices=(('create', 'create'), ('update', 'update'),
                                             ('delete', 'delete'), (

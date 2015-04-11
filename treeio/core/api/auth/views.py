@@ -46,7 +46,8 @@ def get_request_token(request):
 
 
 @login_required
-def authorize_request_token(request, form_class=AuthorizeRequestTokenForm, template_name='core/api/auth/authorize', verification_template_name='core/api/auth/authorize_verification_code'):
+def authorize_request_token(request, form_class=AuthorizeRequestTokenForm, template_name='core/api/auth/authorize',
+                            verification_template_name='core/api/auth/authorize_verification_code'):
     if 'oauth_token' not in request.REQUEST:
         return HttpResponseBadRequest('No request token specified.')
 
@@ -68,11 +69,12 @@ def authorize_request_token(request, form_class=AuthorizeRequestTokenForm, templ
                 request, oauth_request, request_token)
             if request_token.callback is not None and request_token.callback != 'oob':
                 domain = RequestSite(request).domain
-                return HttpResponseRedirect('%s&%s' % (request_token.get_callback_url(), urlencode({'oauth_token': request_token.key, 'domain': domain})))
+                return HttpResponseRedirect('%s&%s' % (
+                    request_token.get_callback_url(), urlencode({'oauth_token': request_token.key, 'domain': domain})))
             else:
                 return render_to_response(verification_template_name,
                                           {'consumer': consumer,
-                                              'verification_code': request_token.verifier},
+                                           'verification_code': request_token.verifier},
                                           context_instance=RequestContext(request), response_format='html')
     else:
         form = form_class(initial={'oauth_token': request_token.key})

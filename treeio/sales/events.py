@@ -24,7 +24,7 @@ def get_events(request):
         request, manager=Opportunity.objects.filter(query))
 
     for sale in sales:
-#        event = EventRenderer(sale.contact.name, None, sale.expected_date, sale.get_absolute_url())
+        # event = EventRenderer(sale.contact.name, None, sale.expected_date, sale.get_absolute_url())
         event = EventRenderer(sale.contact.name, None, datetime.datetime.fromtimestamp(time.mktime(
             time.strptime(str(sale.expected_date), "%Y-%m-%d"))), sale.get_absolute_url())  # bad code
         event.css_class += " projects-calendar-task"

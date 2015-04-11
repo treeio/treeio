@@ -18,7 +18,6 @@ from treeio.knowledge.models import KnowledgeFolder, KnowledgeItem, KnowledgeCat
 
 @override_settings(HARDTREE_API_AUTH_ENGINE='basic')
 class KnowledgeViewsTest(TestCase):
-
     "Knowledge functional tests for views"
 
     username = "api_test"
@@ -104,14 +103,15 @@ class KnowledgeViewsTest(TestCase):
 
     def test_get_folder(self):
         response = self.client.get(path=reverse('api_knowledge_folders', kwargs={
-                                   'object_ptr': self.folder.id}), **self.authentication_headers)
+            'object_ptr': self.folder.id}), **self.authentication_headers)
         self.assertEquals(response.status_code, 200)
 
     def test_update_folder(self):
         updates = {'name': 'Api folder update',
                    'parent': self.parent.id, 'details': '<p>api details</p>'}
         response = self.client.put(path=reverse('api_knowledge_folders', kwargs={'object_ptr': self.folder.id}),
-                                   content_type=self.content_type, data=json.dumps(updates), **self.authentication_headers)
+                                   content_type=self.content_type, data=json.dumps(updates),
+                                   **self.authentication_headers)
         self.assertEquals(response.status_code, 200)
 
         data = json.loads(response.content)
@@ -127,14 +127,15 @@ class KnowledgeViewsTest(TestCase):
 
     def test_get_category(self):
         response = self.client.get(path=reverse('api_knowledge_categories', kwargs={
-                                   'object_ptr': self.category.id}), **self.authentication_headers)
+            'object_ptr': self.category.id}), **self.authentication_headers)
         self.assertEquals(response.status_code, 200)
 
     def test_update_category(self):
         updates = {
             'name': 'Api catagory update', 'details': '<p>api details</p>'}
         response = self.client.put(path=reverse('api_knowledge_categories', kwargs={'object_ptr': self.category.id}),
-                                   content_type=self.content_type, data=json.dumps(updates), **self.authentication_headers)
+                                   content_type=self.content_type, data=json.dumps(updates),
+                                   **self.authentication_headers)
         self.assertEquals(response.status_code, 200)
 
         data = json.loads(response.content)
@@ -149,17 +150,18 @@ class KnowledgeViewsTest(TestCase):
 
     def test_get_item(self):
         response = self.client.get(path=reverse('api_knowledge_items', kwargs={
-                                   'object_ptr': self.item.id}), **self.authentication_headers)
+            'object_ptr': self.item.id}), **self.authentication_headers)
         self.assertEquals(response.status_code, 200)
 
     def test_update_item(self):
         updates = {'name': 'Api item update', 'folder': self.folder.id, 'category': self.category.id,
                    'body': '<p>api body</p>'}
         response = self.client.put(path=reverse('api_knowledge_items', kwargs={'object_ptr': self.item.id}),
-                                   content_type=self.content_type, data=json.dumps(updates), **self.authentication_headers)
+                                   content_type=self.content_type, data=json.dumps(updates),
+                                   **self.authentication_headers)
         self.assertEquals(response.status_code, 400)
 
-        #data = json.loads(response.content)
+        # data = json.loads(response.content)
         #self.assertEquals(updates["name"], data["name"])
         #self.assertEquals(updates["body"], data["body"])
         #self.assertEquals(updates["folder"], data["folder"]["id"])

@@ -94,7 +94,7 @@ class DBRouter(object):
 
     def _get_current_database(self):
         "Returns the database that should be used for the current request"
-        if 'request' in box and not 'CURRENT_DATABASE_NAME' in box:
+        if 'request' in box and 'CURRENT_DATABASE_NAME' not in box:
             current_db = box['request'].get_host().split('.')[0]
         else:
             current_db = box.get('CURRENT_DATABASE_NAME', 'default')
@@ -102,7 +102,7 @@ class DBRouter(object):
 
     def db_for_read(self, model, **hints):
         "Point all operations to the current database"
-        if hints.has_key('instance'):
+        if 'instance' in hints:
             return hints['instance']._state.db
         return self._get_current_database()
 

@@ -126,7 +126,7 @@ def folder_add(request, response_format='html'):
     "New folder form"
 
     if request.POST:
-        if not 'cancel' in request.POST:
+        if 'cancel' not in request.POST:
             folder = KnowledgeFolder()
             form = KnowledgeFolderForm(
                 request.user.get_profile(), None, request.POST, instance=folder)
@@ -228,7 +228,7 @@ def folder_edit(request, knowledgeType_id, response_format='html'):
         return user_denied(request, message="You don't have access to this Knowledge Type")
 
     if request.POST:
-        if not 'cancel' in request.POST:
+        if 'cancel' not in request.POST:
             form = KnowledgeFolderForm(
                 request.user.get_profile(), None, request.POST, instance=folder)
             if form.is_valid():
@@ -290,7 +290,7 @@ def item_add(request, response_format='html'):
         manager=KnowledgeItem.objects, user=request.user.get_profile(), mode='r')
 
     if request.POST:
-        if not 'cancel' in request.POST:
+        if 'cancel' not in request.POST:
             item = KnowledgeItem()
             form = KnowledgeItemForm(
                 request.user.get_profile(), None, request.POST, instance=item)
@@ -327,7 +327,7 @@ def item_add_folder(request, folderPath, response_format='html'):
         raise Http404
 
     if request.POST:
-        if not 'cancel' in request.POST:
+        if 'cancel' not in request.POST:
             item = KnowledgeItem()
             form = KnowledgeItemForm(
                 request.user.get_profile(), knowledgeType_id, request.POST, instance=item)
@@ -390,7 +390,7 @@ def item_edit(request, knowledgeItem_id, response_format='html'):
         return user_denied(request, message="You don't have access to this Knowledge Item")
 
     if request.POST:
-        if not 'cancel' in request.POST:
+        if 'cancel' not in request.POST:
             form = KnowledgeItemForm(
                 request.user.get_profile(), None, request.POST, instance=item)
             if form.is_valid():
@@ -453,7 +453,7 @@ def category_add(request, response_format='html'):
     "Add new knowledge category"
 
     if request.POST:
-        if not 'cancel' in request.POST:
+        if 'cancel' not in request.POST:
             category = KnowledgeCategory()
             form = KnowledgeCategoryForm(request.POST, instance=category)
             if form.is_valid():
@@ -511,7 +511,7 @@ def category_edit(request, knowledgeCategory_id, response_format='html'):
         return user_denied(request, message="You don't have access to this Knowledge Category")
 
     if request.POST:
-        if not 'cancel' in request.POST:
+        if 'cancel' not in request.POST:
             form = KnowledgeCategoryForm(request.POST, instance=category)
             if form.is_valid():
                 category = form.save()

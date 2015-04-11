@@ -12,11 +12,11 @@ from treeio.core.models import Object
 from django.utils.translation import ugettext as _
 from treeio.core.decorators import preprocess_form
 from django.core.urlresolvers import reverse
+
 preprocess_form()
 
 
 class MassActionForm(Form):
-
     """ Mass action form for Reports """
 
     delete = ChoiceField(label=_("With selected"), choices=(('', '-----'), ('delete', 'Delete Completely'),
@@ -33,7 +33,8 @@ class MassActionForm(Form):
         self.fields['delete'] = ChoiceField(label=_("With selected"), choices=(('', '-----'),
                                                                                ('delete', _(
                                                                                    'Delete Completely')),
-                                                                               ('trash', _('Move to Trash'))), required=False)
+                                                                               ('trash', _('Move to Trash'))),
+                                            required=False)
 
     def save(self, *args, **kwargs):
         "Process form"
@@ -49,7 +50,6 @@ class MassActionForm(Form):
 
 
 class FolderForm(ModelForm):
-
     """ Folder form """
 
     def __init__(self, user, folder_id, *args, **kwargs):
@@ -64,14 +64,12 @@ class FolderForm(ModelForm):
             self.fields['parent'].initial = folder_id
 
     class Meta:
-
         "Folder"
         model = Folder
         fields = ('name', 'parent')
 
 
 class DocumentForm(ModelForm):
-
     """ Document form """
     title = CharField(widget=TextInput(attrs={'size': '50'}))
 
@@ -105,7 +103,6 @@ class DocumentForm(ModelForm):
 
 
 class FileForm(ModelForm):
-
     """ File form """
     name = CharField(widget=TextInput(attrs={'size': '25'}))
 
@@ -138,7 +135,6 @@ class FileForm(ModelForm):
 
 
 class WebLinkForm(ModelForm):
-
     """ WebLink form """
 
     def __init__(self, user, folder_id, *args, **kwargs):
@@ -174,7 +170,6 @@ class WebLinkForm(ModelForm):
 
 
 class FilterForm(ModelForm):
-
     """ Filter form definition """
 
     def __init__(self, user, skip=None, *args, **kwargs):
@@ -195,7 +190,7 @@ class FilterForm(ModelForm):
         else:
             self.fields['folder'].queryset = Object.filter_permitted(
                 user, Folder.objects, mode='x')
-            #self.fields['folder'].required = False
+            # self.fields['folder'].required = False
             self.fields['folder'].null = True
 
     class Meta:

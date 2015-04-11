@@ -7,7 +7,7 @@
 Core module widgets
 """
 
-#WIDGETS = {'widget_release': {'title': 'Time To Release', 'size': 300}}
+# WIDGETS = {'widget_release': {'title': 'Time To Release', 'size': 300}}
 WIDGETS = {'widget_welcome': {'title': 'Quick Start', 'size': "95%"}}
 
 

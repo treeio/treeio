@@ -48,7 +48,7 @@ def _get_filter_query(model, args):
         dateto = datetime.date(datetime.strptime(args['dateto'], '%m/%d/%Y'))
         query = query & Q(date_created__lte=dateto)
 
-## Assets, Equities
+    ## Assets, Equities
 
     if 'purchase_date_from' in args and args['purchase_date_from']:
         purchase_date_from = datetime.date(
@@ -60,7 +60,7 @@ def _get_filter_query(model, args):
             datetime.strptime(args['purchase_date_to'], '%m/%d/%Y'))
         query = query & Q(purchase_date__lte=purchase_date_to)
 
-## Liabilities, Receivables
+    ## Liabilities, Receivables
 
     # Assets
 
@@ -134,7 +134,7 @@ def category_add(request, response_format='html'):
     "new category form"
     categories = Object.filter_by_request(request, Category.objects, mode="r")
     if request.POST:
-        if not 'cancel' in request.POST:
+        if 'cancel' not in request.POST:
             category = Category()
             form = CategoryForm(
                 request.user.get_profile(), request.POST, instance=category)
@@ -235,7 +235,7 @@ def account_edit(request, account_id, response_format='html'):
     "account edit page"
     account = get_object_or_404(Account, pk=account_id)
     if request.POST:
-        if not 'cancel' in request.POST:
+        if 'cancel' not in request.POST:
             form = AccountForm(
                 request.user.get_profile(), request.POST, instance=account)
             if form.is_valid():
@@ -257,7 +257,7 @@ def account_edit(request, account_id, response_format='html'):
 def account_add(request, response_format='html'):
     "new account form"
     if request.POST:
-        if not 'cancel' in request.POST:
+        if 'cancel' not in request.POST:
             account = Account()
             form = AccountForm(
                 request.user.get_profile(), request.POST, instance=account)
@@ -308,6 +308,7 @@ def account_delete(request, account_id, response_format='html'):
                               {'account': account},
                               context_instance=RequestContext(request), response_format=response_format)
 
+
 #
 # Assets
 #
@@ -341,7 +342,7 @@ def asset_edit(request, asset_id, response_format='html'):
     "asset edit page"
     asset = get_object_or_404(Asset, pk=asset_id)
     if request.POST:
-        if not 'cancel' in request.POST:
+        if 'cancel' not in request.POST:
             form = AssetForm(
                 request.user.get_profile(), request.POST, instance=asset)
             if form.is_valid():
@@ -362,7 +363,7 @@ def asset_add(request, response_format='html'):
     "new asset form"
     assets = Object.filter_by_request(request, Asset.objects, mode="r")
     if request.POST:
-        if not 'cancel' in request.POST:
+        if 'cancel' not in request.POST:
             asset = Asset()
             form = AssetForm(
                 request.user.get_profile(), request.POST, instance=asset)
@@ -412,6 +413,7 @@ def asset_delete(request, asset_id, response_format='html'):
                               {'asset': asset},
                               context_instance=RequestContext(request), response_format=response_format)
 
+
 #
 # Equities
 #
@@ -445,7 +447,7 @@ def equity_edit(request, equity_id, response_format='html'):
     "equity edit page"
     equity = get_object_or_404(Equity, pk=equity_id)
     if request.POST:
-        if not 'cancel' in request.POST:
+        if 'cancel' not in request.POST:
             form = EquityForm(
                 request.user.get_profile(), request.POST, instance=equity)
             if form.is_valid():
@@ -466,7 +468,7 @@ def equity_add(request, response_format='html'):
     "new equity form"
     equities = Object.filter_by_request(request, Equity.objects, mode="r")
     if request.POST:
-        if not 'cancel' in request.POST:
+        if 'cancel' not in request.POST:
             equity = Equity()
             form = EquityForm(
                 request.user.get_profile(), request.POST, instance=equity)
@@ -515,6 +517,7 @@ def equity_delete(request, equity_id, response_format='html'):
     return render_to_response('finance/equity_delete',
                               {'equity': equity},
                               context_instance=RequestContext(request), response_format=response_format)
+
 
 #
 # Transactions
@@ -565,7 +568,7 @@ def transaction_add(request, liability_id=None, order_id=None, response_format='
     transactions = Object.filter_by_request(
         request, Transaction.objects, mode="r")
     if request.POST:
-        if not 'cancel' in request.POST:
+        if 'cancel' not in request.POST:
             transaction = Transaction()
             form = TransactionForm(
                 request.user.get_profile(), None, None, request.POST, instance=transaction)
@@ -596,7 +599,7 @@ def transaction_edit(request, transaction_id, response_format='html'):
     "Transaction edit page"
     transaction = get_object_or_404(Transaction, pk=transaction_id)
     if request.POST:
-        if not 'cancel' in request.POST:
+        if 'cancel' not in request.POST:
             form = TransactionForm(
                 request.user.get_profile(), None, None, request.POST, instance=transaction)
             if form.is_valid():
@@ -646,6 +649,8 @@ def transaction_delete(request, transaction_id, response_format='html'):
     return render_to_response('finance/transaction_delete',
                               {'transaction': transaction},
                               context_instance=RequestContext(request), response_format=response_format)
+
+
 #
 # Liabilities
 #
@@ -699,7 +704,7 @@ def liability_edit(request, liability_id, response_format='html'):
     "liability edit page"
     liability = get_object_or_404(Liability, pk=liability_id)
     if request.POST:
-        if not 'cancel' in request.POST:
+        if 'cancel' not in request.POST:
             form = LiabilityForm(
                 request.user.get_profile(), request.POST, instance=liability)
             if form.is_valid():
@@ -722,7 +727,7 @@ def liability_add(request, response_format='html'):
     liabilities = Object.filter_by_request(
         request, Liability.objects, mode="r")
     if request.POST:
-        if not 'cancel' in request.POST:
+        if 'cancel' not in request.POST:
             liability = Liability()
             form = LiabilityForm(
                 request.user.get_profile(), request.POST, instance=liability)
@@ -829,7 +834,7 @@ def index_receivables(request, response_format='html'):
 def receivable_add(request, response_format='html'):
     "new receivable form"
     if request.POST:
-        if not 'cancel' in request.POST:
+        if 'cancel' not in request.POST:
             receivable = Liability()
             form = ReceivableForm(
                 request.user.get_profile(), request.POST, instance=receivable)
@@ -853,7 +858,7 @@ def receivable_edit(request, receivable_id, response_format='html'):
     "Liability edit page"
     receivable = get_object_or_404(Liability, pk=receivable_id)
     if request.POST:
-        if not 'cancel' in request.POST:
+        if 'cancel' not in request.POST:
             form = ReceivableForm(
                 request.user.get_profile(), request.POST, instance=receivable)
             if form.is_valid():
@@ -905,6 +910,7 @@ def receivable_delete(request, receivable_id, response_format='html'):
     return render_to_response('finance/receivable_delete',
                               {'liability': receivable},
                               context_instance=RequestContext(request), response_format=response_format)
+
 
 #
 # Reports
@@ -1019,7 +1025,7 @@ def balance_sheet(request, response_format='html'):
         for product in Product.objects.filter(active=True, buy_price__isnull=False, stock_quantity__gt=0,
                                               trash=False):
             balance['assets_inventories'] += product.buy_price * \
-                product.stock_quantity
+                                             product.stock_quantity
 
         # Receivables
         for receivable in Liability.objects.filter(target=my_company, trash=False):
@@ -1083,7 +1089,7 @@ def balance_sheet(request, response_format='html'):
 
         # Total Equities + Liabilities
         balance['equity_liabilities_total'] = balance[
-            'equity_total'] + balance['liabilities_total']
+                                                  'equity_total'] + balance['liabilities_total']
 
     context = {'company': my_company, 'today': datetime.today(), 'red': False}
     if balance['equity_liabilities_total'] != balance['assets_total']:
@@ -1123,6 +1129,7 @@ def index_accounts(request, response_format='html'):
                                   'filters': filters
                               },
                               context_instance=RequestContext(request), response_format=response_format)
+
 
 #
 # Settings
@@ -1209,7 +1216,7 @@ def settings_edit(request, response_format='html'):
         return user_denied(request, message="You don't have administrator access to the Finance module")
 
     if request.POST:
-        if not 'cancel' in request.POST:
+        if 'cancel' not in request.POST:
             form = SettingsForm(request.user.get_profile(), request.POST)
             if form.is_valid():
                 form.save()
@@ -1239,7 +1246,7 @@ def currency_add(request, response_format='html'):
         return user_denied(request, message="You don't have administrator access to the Finance module")
 
     if request.POST:
-        if not 'cancel' in request.POST:
+        if 'cancel' not in request.POST:
             currency = Currency()
             form = CurrencyForm(
                 request.user.get_profile(), request.POST, instance=currency)
@@ -1273,7 +1280,7 @@ def currency_edit(request, currency_id, response_format='html'):
         return user_denied(request, "You don't have access to this Currency", response_format)
 
     if request.POST:
-        if not 'cancel' in request.POST:
+        if 'cancel' not in request.POST:
             form = CurrencyForm(
                 request.user.get_profile(), request.POST, instance=currency)
             if form.is_valid():
@@ -1332,6 +1339,7 @@ def currency_delete(request, currency_id, response_format='html'):
                               {'currency': currency},
                               context_instance=RequestContext(request), response_format=response_format)
 
+
 #
 # Tax
 #
@@ -1346,7 +1354,7 @@ def tax_add(request, response_format='html'):
         return user_denied(request, message="You don't have administrator access to the Finance module")
 
     if request.POST:
-        if not 'cancel' in request.POST:
+        if 'cancel' not in request.POST:
             tax = Tax()
             form = TaxForm(
                 request.user.get_profile(), request.POST, instance=tax)
@@ -1376,7 +1384,7 @@ def tax_edit(request, tax_id, response_format='html'):
         return user_denied(request, "You don't have access to this Tax", response_format)
 
     if request.POST:
-        if not 'cancel' in request.POST:
+        if 'cancel' not in request.POST:
             form = TaxForm(
                 request.user.get_profile(), request.POST, instance=tax)
             if form.is_valid():

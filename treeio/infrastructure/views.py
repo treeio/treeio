@@ -173,7 +173,7 @@ def type_edit(request, type_id, response_format='html'):
                                               Item.objects.filter(item_type=item_type).order_by('name'))
 
     if request.POST:
-        if not 'cancel' in request.POST:
+        if 'cancel' not in request.POST:
             form = ItemTypeForm(
                 request.user.get_profile(), request.POST, instance=item_type)
             if form.is_valid():
@@ -203,7 +203,7 @@ def type_add(request, response_format='html'):
                            response_format=response_format)
 
     if request.POST:
-        if not 'cancel' in request.POST:
+        if 'cancel' not in request.POST:
             item_type = ItemType()
             form = ItemTypeForm(
                 request.user.get_profile(), request.POST, instance=item_type)
@@ -282,7 +282,7 @@ def field_edit(request, field_id, response_format='html'):
                            response_format=response_format)
 
     if request.POST:
-        if not 'cancel' in request.POST:
+        if 'cancel' not in request.POST:
             form = ItemFieldForm(request.POST, instance=field)
             if form.is_valid():
                 item = form.save(request)
@@ -311,7 +311,7 @@ def field_add(request, response_format='html'):
                            response_format=response_format)
 
     if request.POST:
-        if not 'cancel' in request.POST:
+        if 'cancel' not in request.POST:
             field = ItemField()
             form = ItemFieldForm(request.POST, instance=field)
             if form.is_valid():
@@ -380,8 +380,8 @@ def status_view(request, status_id, response_format='html'):
 
     context = _get_default_context(request)
     context.update({'items': items,
-                   'filters': filters,
-                   'item_status': item_status
+                    'filters': filters,
+                    'item_status': item_status
                     })
 
     return render_to_response('infrastructure/item_status_view', context,
@@ -399,7 +399,7 @@ def status_edit(request, status_id, response_format='html'):
                            response_format=response_format)
 
     if request.POST:
-        if not 'cancel' in request.POST:
+        if 'cancel' not in request.POST:
             form = ItemStatusForm(request.POST, instance=item_status)
             if form.is_valid():
                 item_status = form.save(request)
@@ -455,7 +455,7 @@ def status_add(request, response_format='html'):
                            response_format=response_format)
 
     if request.POST:
-        if not 'cancel' in request.POST:
+        if 'cancel' not in request.POST:
             item_status = ItemStatus()
             form = ItemStatusForm(request.POST, instance=item_status)
             if form.is_valid():
@@ -499,7 +499,7 @@ def item_add_typed(request, type_id, response_format='html'):
                            response_format=response_format)
 
     if request.POST:
-        if not 'cancel' in request.POST:
+        if 'cancel' not in request.POST:
             form = ItemForm(
                 request.user.get_profile(), item_type, request.POST, files=request.FILES)
             if form.is_valid():
@@ -544,7 +544,7 @@ def item_edit(request, item_id, response_format='html'):
                            response_format=response_format)
 
     if request.POST:
-        if not 'cancel' in request.POST:
+        if 'cancel' not in request.POST:
             form = ItemForm(request.user.get_profile(), item.item_type, request.POST,
                             files=request.FILES, instance=item)
             if form.is_valid():
@@ -599,7 +599,7 @@ def location_add(request, response_format='html'):
     "New location form"
 
     if request.POST:
-        if not 'cancel' in request.POST:
+        if 'cancel' not in request.POST:
             location = Location()
             form = LocationForm(
                 request.user.get_profile(), None, request.POST, instance=location)
@@ -655,7 +655,7 @@ def location_edit(request, location_id, response_format='html'):
                            response_format=response_format)
 
     if request.POST:
-        if not 'cancel' in request.POST:
+        if 'cancel' not in request.POST:
             form = LocationForm(
                 request.user.get_profile(), None, request.POST, instance=location)
             if form.is_valid():
@@ -744,7 +744,7 @@ def settings_edit(request, response_format='html'):
     "Settings"
 
     if request.POST:
-        if not 'cancel' in request.POST:
+        if 'cancel' not in request.POST:
             form = SettingsForm(request.user.get_profile(), request.POST)
             if form.is_valid():
                 form.save()
@@ -798,7 +798,7 @@ def service_record_add(request, response_format='html'):
     service_record = ItemServicing()
 
     if request.POST:
-        if not 'cancel' in request.POST:
+        if 'cancel' not in request.POST:
             form = ServiceRecordForm(
                 request.user.get_profile(), service_record, request.POST)
             if form.is_valid():
@@ -844,7 +844,7 @@ def service_record_edit(request, service_record_id, response_format='html'):
                            response_format=response_format)
 
     if request.POST:
-        if not 'cancel' in request.POST:
+        if 'cancel' not in request.POST:
             form = ServiceRecordForm(
                 request.user.get_profile(), None, request.POST, instance=service_record)
             if form.is_valid():

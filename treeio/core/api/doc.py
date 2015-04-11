@@ -3,7 +3,7 @@
 # This file is part of Treeio.
 # License www.tree.io/license
 
-#-*- coding: utf-8 -*-
+# -*- coding: utf-8 -*-
 
 import re
 import sys
@@ -53,7 +53,6 @@ def get_field_data_type(field):
 
 
 class HandlerMethod(object):
-
     def __init__(self, method, stale=False):
         self.method = method
         self.stale = stale
@@ -103,7 +102,7 @@ class HandlerMethod(object):
             elif self.method.__name__ in ('create', 'update'):
                 to_update = True
                 if hasattr(self.method.im_class, 'form') and \
-                   hasattr(self.method.im_class.form, '_meta'):
+                        hasattr(self.method.im_class.form, '_meta'):
                     fields = self.method.im_class.form._meta.fields
                 else:
                     fields = self.method.im_class.fields
@@ -154,7 +153,6 @@ def _convert(template, params=None):
 
 
 class HandlerDocumentation(object):
-
     def __init__(self, handler):
         self.handler = handler
 
@@ -169,7 +167,6 @@ class HandlerDocumentation(object):
             else:
                 if not stale or met.__name__ == "read" \
                         and 'GET' in self.allowed_methods:
-
                     yield HandlerMethod(met, stale)
 
     def get_all_methods(self):

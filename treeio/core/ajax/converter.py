@@ -15,7 +15,6 @@ from treeio.core.ajax.rules import apply_rules
 
 
 class MultiHiddenWidget(MultiWidget):
-
     "Renders multiple hidden widgets for initial values to use in autocomplete"
 
     def __init__(self, initial=None, choices=None, attrs=None):
@@ -69,7 +68,6 @@ class MultiHiddenWidget(MultiWidget):
 
 
 class MultiHiddenField(MultiValueField):
-
     "Multiple choice hidden field"
     widget = MultiHiddenWidget
 
@@ -93,7 +91,7 @@ def convert_to_ajax(page, context_instance):
 
     # The following is Deprecated for Django 1.3
     # if 'module_content' in response:
-    #    module_content = HttpResponse(response['module_content'], mimetype='text/html')
+    # module_content = HttpResponse(response['module_content'], mimetype='text/html')
     #    response['module_content'] = csrf().process_response(context_instance['request'], module_content).content
 
     return response
@@ -108,11 +106,12 @@ def preprocess_context(context):
             form = context[key]
             for fname in form.fields:
                 # skip newly added fields to avoid looping infinitely
-                if not "autocomplete" in fname:
+                if "autocomplete" not in fname:
                     field = form.fields[fname]
                     try:
                         # find autocomplete fields
-                        if field.widget.attrs and 'callback' in field.widget.attrs and 'autocomplete' in field.widget.attrs['class']:
+                        if field.widget.attrs and 'callback' in field.widget.attrs and 'autocomplete' in \
+                                field.widget.attrs['class']:
 
                             # save existing attributes
                             old_attrs = field.widget.attrs
@@ -166,7 +165,8 @@ def preprocess_context(context):
                     field = form.fields[fname]
                     try:
                         # find autocomplete fields
-                        if field.widget.attrs and 'callback' in field.widget.attrs and 'multicomplete' in field.widget.attrs['class']:
+                        if field.widget.attrs and 'callback' in field.widget.attrs and 'multicomplete' in \
+                                field.widget.attrs['class']:
 
                             # save existing attributes
                             old_attrs = field.widget.attrs

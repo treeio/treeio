@@ -3,7 +3,7 @@
 # This file is part of Treeio.
 # License www.tree.io/license
 
-#-*- codeing: utf-8 -*-
+# -*- codeing: utf-8 -*-
 
 import json
 from django.test import TestCase
@@ -176,14 +176,15 @@ class SalesAPITest(TestCase):
 
     def test_get_status(self):
         response = self.client.get(path=reverse('api_sales_status', kwargs={
-                                   'object_ptr': self.status.id}), **self.authentication_headers)
+            'object_ptr': self.status.id}), **self.authentication_headers)
         self.assertEquals(response.status_code, 200)
 
     def test_update_status(self):
         updates = {"name": "Close_API", "active": True, "details": "api test details",
                    "use_leads": True, "use_opportunities": True, "hidden": False}
         response = self.client.put(path=reverse('api_sales_status', kwargs={'object_ptr': self.status.id}),
-                                   content_type=self.content_type, data=json.dumps(updates), **self.authentication_headers)
+                                   content_type=self.content_type, data=json.dumps(updates),
+                                   **self.authentication_headers)
         self.assertEquals(response.status_code, 200)
 
         data = json.loads(response.content)
@@ -203,14 +204,16 @@ class SalesAPITest(TestCase):
 
     def test_get_product(self):
         response = self.client.get(path=reverse('api_sales_products', kwargs={
-                                   'object_ptr': self.product.id}), **self.authentication_headers)
+            'object_ptr': self.product.id}), **self.authentication_headers)
         self.assertEquals(response.status_code, 200)
 
     def test_update_product(self):
         updates = {"name": "API product", "parent": None, "product_type": "service", "code": "api_test_code",
-                   "buy_price": '100.05', "sell_price": '10.5', "active": True, "runout_action": "ignore", "details": "api details"}
+                   "buy_price": '100.05', "sell_price": '10.5', "active": True, "runout_action": "ignore",
+                   "details": "api details"}
         response = self.client.put(path=reverse('api_sales_products', kwargs={'object_ptr': self.product.id}),
-                                   content_type=self.content_type, data=json.dumps(updates), **self.authentication_headers)
+                                   content_type=self.content_type, data=json.dumps(updates),
+                                   **self.authentication_headers)
         self.assertEquals(response.status_code, 200)
 
         data = json.loads(response.content)
@@ -231,21 +234,23 @@ class SalesAPITest(TestCase):
 
     def test_get_source(self):
         response = self.client.get(path=reverse('api_sales_sources', kwargs={
-                                   'object_ptr': self.source.id}), **self.authentication_headers)
+            'object_ptr': self.source.id}), **self.authentication_headers)
         self.assertEquals(response.status_code, 200)
 
     def test_update_source(self):
         updates = {
             "name": "Api source", "active": True, "details": "api details"}
         response = self.client.put(path=reverse('api_sales_sources', kwargs={'object_ptr': self.source.id}),
-                                   content_type=self.content_type, data=json.dumps(updates), **self.authentication_headers)
+                                   content_type=self.content_type, data=json.dumps(updates),
+                                   **self.authentication_headers)
         self.assertEquals(response.status_code, 200)
 
         data = json.loads(response.content)
         self.assertEquals(data['name'], updates['name'])
         self.assertEquals(data['active'], updates['active'])
         self.assertEquals(data['details'], updates['details'])
-#
+
+    #
 
     def test_get_leads_list(self):
         """ Test index page api/sales/leads """
@@ -262,7 +267,8 @@ class SalesAPITest(TestCase):
         updates = {"status": self.status.id, "contact_method": "email", "contact": self.contact.id,
                    "products_interested": [self.product.id], "source": self.source.id, 'details': 'Api details'}
         response = self.client.put(path=reverse('api_sales_leads', kwargs={'object_ptr': self.lead.id}),
-                                   content_type=self.content_type, data=json.dumps(updates), **self.authentication_headers)
+                                   content_type=self.content_type, data=json.dumps(updates),
+                                   **self.authentication_headers)
         self.assertEquals(response.status_code, 200)
 
         data = json.loads(response.content)
@@ -282,14 +288,15 @@ class SalesAPITest(TestCase):
 
     def test_get_opportunity(self):
         response = self.client.get(path=reverse('api_sales_opportunities', kwargs={
-                                   'object_ptr': self.opportunity.id}), **self.authentication_headers)
+            'object_ptr': self.opportunity.id}), **self.authentication_headers)
         self.assertEquals(response.status_code, 200)
 
     def test_update_opportunity(self):
         updates = {"status": self.status.id, "products_interested": [self.product.id], "contact": self.contact.id,
                    "amount_display": 3000.56, "amount_currency": self.currency.id, "details": "API DETAILS"}
         response = self.client.put(path=reverse('api_sales_opportunities', kwargs={'object_ptr': self.opportunity.id}),
-                                   content_type=self.content_type, data=json.dumps(updates), **self.authentication_headers)
+                                   content_type=self.content_type, data=json.dumps(updates),
+                                   **self.authentication_headers)
         self.assertEquals(response.status_code, 200)
 
         data = json.loads(response.content)
@@ -316,7 +323,8 @@ class SalesAPITest(TestCase):
         updates = {"datetime": "2011-04-11 12:01:15", "status": self.status.id,
                    "source": self.source.id, "details": "api details"}
         response = self.client.put(path=reverse('api_sales_orders', kwargs={'object_ptr': self.order.id}),
-                                   content_type=self.content_type, data=json.dumps(updates), **self.authentication_headers)
+                                   content_type=self.content_type, data=json.dumps(updates),
+                                   **self.authentication_headers)
 
         self.assertEquals(response.status_code, 200)
         data = json.loads(response.content)
@@ -332,14 +340,15 @@ class SalesAPITest(TestCase):
 
     def test_get_subscription(self):
         response = self.client.get(path=reverse('api_sales_subscriptions', kwargs={
-                                   'object_ptr': self.subscription.id}), **self.authentication_headers)
+            'object_ptr': self.subscription.id}), **self.authentication_headers)
         self.assertEquals(response.status_code, 200)
 
     def test_update_subscription(self):
         updates = {"product": self.product.id, "start": "2011-06-30",
                    "cycle_period": "daily", "active": True, "details": "api details"}
         response = self.client.put(path=reverse('api_sales_subscriptions', kwargs={'object_ptr': self.subscription.id}),
-                                   content_type=self.content_type, data=json.dumps(updates), **self.authentication_headers)
+                                   content_type=self.content_type, data=json.dumps(updates),
+                                   **self.authentication_headers)
         self.assertEquals(response.status_code, 200)
 
         data = json.loads(response.content)
@@ -350,14 +359,15 @@ class SalesAPITest(TestCase):
 
     def test_get_ordered_product(self):
         response = self.client.get(path=reverse('api_sales_ordered_products', kwargs={
-                                   'object_ptr': self.ordered_product.id}), **self.authentication_headers)
+            'object_ptr': self.ordered_product.id}), **self.authentication_headers)
         self.assertEquals(response.status_code, 200)
 
     def test_update_ordered_product(self):
         updates = {
             "discount": '10.0', "product": self.product.id, "quantity": '10'}
-        response = self.client.put(path=reverse('api_sales_ordered_products', kwargs={'object_ptr': self.ordered_product.id}),
-                                   content_type=self.content_type, data=json.dumps(updates), **self.authentication_headers)
+        response = self.client.put(
+            path=reverse('api_sales_ordered_products', kwargs={'object_ptr': self.ordered_product.id}),
+            content_type=self.content_type, data=json.dumps(updates), **self.authentication_headers)
         self.assertEquals(response.status_code, 200)
 
         data = json.loads(response.content)

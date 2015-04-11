@@ -136,7 +136,7 @@ def type_edit(request, type_id, response_format='html'):
                                           Contact.objects.filter(contact_type=contact_type).order_by('name'))
 
     if request.POST:
-        if not 'cancel' in request.POST:
+        if 'cancel' not in request.POST:
             form = ContactTypeForm(
                 request.user.get_profile(), request.POST, instance=contact_type)
             if form.is_valid():
@@ -168,7 +168,7 @@ def type_add(request, response_format='html'):
                            response_format=response_format)
 
     if request.POST:
-        if not 'cancel' in request.POST:
+        if 'cancel' not in request.POST:
             contact_type = ContactType()
             form = ContactTypeForm(
                 request.user.get_profile(), request.POST, instance=contact_type)
@@ -246,7 +246,7 @@ def field_edit(request, field_id, response_format='html'):
                            response_format=response_format)
 
     if request.POST:
-        if not 'cancel' in request.POST:
+        if 'cancel' not in request.POST:
             form = ContactFieldForm(request.POST, instance=field)
             if form.is_valid():
                 field = form.save(request)
@@ -275,7 +275,7 @@ def field_add(request, response_format='html'):
                            response_format=response_format)
 
     if request.POST:
-        if not 'cancel' in request.POST:
+        if 'cancel' not in request.POST:
             field = ContactField()
             form = ContactFieldForm(request.POST, instance=field)
             if form.is_valid():
@@ -343,7 +343,7 @@ def contact_add_typed(request, type_id, response_format='html'):
         return user_denied(request, message="You don't have access to create " + unicode(contact_type))
 
     if request.POST:
-        if not 'cancel' in request.POST:
+        if 'cancel' not in request.POST:
             form = ContactForm(
                 request.user.get_profile(), contact_type, request.POST, files=request.FILES)
             if form.is_valid():
@@ -385,7 +385,7 @@ def contact_view(request, contact_id, attribute='', response_format='html'):
     for key in objects:
         if not attribute:
             if objects[key]['count']:
-                #attribute = objects[key]['objects'].keys()[0]
+                # attribute = objects[key]['objects'].keys()[0]
                 module = objects[key]['module']
         else:
             if attribute in objects[key]['objects'].keys():
@@ -428,7 +428,7 @@ def contact_me(request, attribute='', response_format='html'):
     for key in objects:
         if not attribute:
             if objects[key]['count']:
-                #attribute = objects[key]['objects'].keys()[0]
+                # attribute = objects[key]['objects'].keys()[0]
                 module = objects[key]['module']
         else:
             if attribute in objects[key]['objects'].keys():
@@ -465,7 +465,7 @@ def contact_edit(request, contact_id, response_format='html'):
         return user_denied(request, message="You don't have write access to this Contact")
 
     if request.POST:
-        if not 'cancel' in request.POST:
+        if 'cancel' not in request.POST:
             form = ContactForm(request.user.get_profile(), contact.contact_type, request.POST,
                                files=request.FILES, instance=contact)
             if form.is_valid():
@@ -600,7 +600,7 @@ def location_add(request, response_format='html'):
     "New location form"
 
     if request.POST:
-        if not 'cancel' in request.POST:
+        if 'cancel' not in request.POST:
             location = Location()
             form = LocationForm(
                 request.user.get_profile(), None, request.POST, instance=location)
@@ -648,7 +648,7 @@ def location_edit(request, location_id, response_format='html'):
                            response_format=response_format)
 
     if request.POST:
-        if not 'cancel' in request.POST:
+        if 'cancel' not in request.POST:
             form = LocationForm(
                 request.user.get_profile(), None, request.POST, instance=location)
             if form.is_valid():

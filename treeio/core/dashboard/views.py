@@ -29,11 +29,11 @@ def _preprocess_widget(widget, name):
     import_name = module_name + ".views"
     module_views = __import__(import_name, fromlist=[str(module_name)])
     if hasattr(module_views, name):
-        if not 'title' in widget:
+        if 'title' not in widget:
             widget['title'] = getattr(module_views, name).__doc__
         widget = copy.deepcopy(widget)
 
-        if not 'view' in widget:
+        if 'view' not in widget:
             widget['view'] = getattr(module_views, name)
 
     return widget
@@ -58,9 +58,9 @@ def _get_all_widgets(request):
 
             # Preprocess widget, ensure it has all required fields
             for name in module_widgets:
-                if not 'module_name' in module_widgets[name]:
+                if 'module_name' not in module_widgets[name]:
                     module_widgets[name]['module_name'] = module.name
-                if not 'module_title' in module_widgets[name]:
+                if 'module_title' not in module_widgets[name]:
                     module_widgets[name]['module_title'] = module.title
                 module_widgets[name] = _preprocess_widget(
                     module_widgets[name], name)
@@ -87,9 +87,9 @@ def _get_widget(request, module, widget_name):
     for name in module_widgets:
         if name == widget_name:
             widget = module_widgets[name]
-            if not 'module_name' in widget:
+            if 'module_name' not in widget:
                 widget['module_name'] = module.name
-            if not 'module_title' in widget:
+            if 'module_title' not in widget:
                 widget['module_title'] = module.title
             widget = _preprocess_widget(widget, widget_name)
             break
@@ -118,7 +118,7 @@ def _create_widget_object(request, module_name, widget_name):
         obj.save()
 
     # except Exception:
-    #    pass
+    # pass
 
     return obj
 

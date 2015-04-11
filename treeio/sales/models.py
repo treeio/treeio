@@ -65,12 +65,12 @@ class Product(Object):
 
     name = models.CharField(max_length=512)
     product_type = models.CharField(max_length=32, default='good',
-        choices=PRODUCT_TYPES)
+                                    choices=PRODUCT_TYPES)
     parent = models.ForeignKey('self', blank=True, null=True,
-        related_name='child_set')
+                               related_name='child_set')
     code = models.CharField(max_length=512, blank=True, null=True)
     supplier = models.ForeignKey(Contact, blank=True, null=True,
-        on_delete=models.SET_NULL)
+                                 on_delete=models.SET_NULL)
     supplier_code = models.IntegerField(blank=True, null=True)
     buy_price = models.DecimalField(max_digits=20, decimal_places=2, default=0)
     sell_price = models.DecimalField(
@@ -137,7 +137,7 @@ class Lead(Object):
         Product, blank=True, null=True)
     contact_method = models.CharField(max_length=32, choices=CONTACT_METHODS)
     assigned = models.ManyToManyField(User, related_name='sales_lead_assigned',
-        blank=True, null=True)
+                                      blank=True, null=True)
     status = models.ForeignKey(SaleStatus)
     details = models.TextField(blank=True, null=True)
 
@@ -275,11 +275,12 @@ class SaleOrder(Object):
             else:
                 item_total = p.get_total_display()
             if p.tax.id in taxes:
-                taxes[p.tax.id]['amount'] += (item_total * (p.tax.rate / 100)).quantize(Decimal('.01'), rounding=ROUND_UP)
+                taxes[p.tax.id]['amount'] += (item_total * (p.tax.rate / 100)).quantize(Decimal('.01'),
+                                                                                        rounding=ROUND_UP)
             else:
                 taxes[p.tax.id] = {'name': p.tax.name, 'rate': p.tax.rate,
                                    'amount': (item_total * (p.tax.rate / 100))
-                                   .quantize(Decimal('.01'), rounding=ROUND_UP)}
+                                       .quantize(Decimal('.01'), rounding=ROUND_UP)}
         return taxes
 
     def get_taxes_total(self):
@@ -325,7 +326,8 @@ class SaleOrder(Object):
         self.save()
 
     def get_total_paid(self):
-        return Decimal(self.payment.filter(trash=False).aggregate(models.Sum('value_display'))['value_display__sum'] or '0')
+        return Decimal(
+            self.payment.filter(trash=False).aggregate(models.Sum('value_display'))['value_display__sum'] or '0')
 
     def balance_due(self):
         return self.get_total() - self.get_total_paid()
@@ -351,8 +353,7 @@ class Subscription(Object):
     product = models.ForeignKey(Product, blank=True, null=True)
     start = models.DateField(default=datetime.now)
     expiry = models.DateField(blank=True, null=True)
-    cycle_period = models.CharField(max_length=32, choices=CYCLE_PERIODS,
-        default='month')
+    cycle_period = models.CharField(max_length=32, choices=CYCLE_PERIODS, default='month')
     cycle_end = models.DateField(blank=True, null=True)
     active = models.BooleanField(default=False)
     details = models.CharField(max_length=512, blank=True, null=True)
@@ -430,7 +431,7 @@ class Subscription(Object):
         new_invoice.source = so
         new_invoice.client = self.client
         new_invoice.reference = "Subscription Invoice " + \
-            str(datetime.today().strftime('%Y-%m-%d'))
+                                str(datetime.today().strftime('%Y-%m-%d'))
         new_invoice.save()
         try:
             op = self.orderedproduct_set.filter(
@@ -484,7 +485,8 @@ class Subscription(Object):
             except Exception:
                 order_fulfil_status = None
 
-            if self.orderedproduct_set.filter(order__datetime__gte=cycle_start).filter(order__status=order_fulfil_status):
+            if self.orderedproduct_set.filter(order__datetime__gte=cycle_start).filter(
+                    order__status=order_fulfil_status):
                 return 'Paid'
             elif self.orderedproduct_set.filter(order__datetime__gte=cycle_start):
                 return 'Invoiced'

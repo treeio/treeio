@@ -3,7 +3,7 @@
 # This file is part of Treeio.
 # License www.tree.io/license
 
-#-*- coding: utf-8 -*-
+# -*- coding: utf-8 -*-
 
 from __future__ import absolute_import, with_statement
 
@@ -24,17 +24,15 @@ from treeio.finance.forms import TransactionForm, LiabilityForm, AccountForm, Eq
 
 
 class FinanceCommonHandler(ObjectHandler):
-
     def check_create_permission(self, request, mode):
         return True  # request.user.get_profile().is_admin('treeio.finance')
 
     def check_instance_permission(self, request, inst, mode):
         return request.user.get_profile().has_permission(inst, mode=mode) \
-            or request.user.get_profile().is_admin('treeio.finance')
+               or request.user.get_profile().is_admin('treeio.finance')
 
 
 class CurrencyHandler(ObjectHandler):
-
     """ Process Currency objects"""
 
     model = Currency
@@ -206,7 +204,7 @@ class TransactionHandler(FinanceCommonHandler):
             transaction = form.save(commit=False)
             convert(transaction, 'value')
             transaction.set_user_from_request(request)
-            if request.data.has_key("order"):
+            if "order" in request.data:
                 try:
                     order = SaleOrder.objects.get(pk=request.data['order'])
                     order.payment.add(transaction)

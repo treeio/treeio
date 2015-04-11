@@ -214,13 +214,13 @@ register.object(pager)
 @contextfunction
 def htsort(context, objects):
     "Sort objects based on request"
-    if not objects or not 'request' in context:
+    if not objects or 'request' not in context:
         # Don't bother trying sorting if we can't do it
         return objects
 
     request = context['request']
 
-    if not 'sorting' in request.GET or not hasattr(objects, 'order_by') or not hasattr(objects, 'model'):
+    if 'sorting' not in request.GET or not hasattr(objects, 'order_by') or not hasattr(objects, 'model'):
         # Dont bother if there's nothing to sort on
         return objects
 
@@ -248,7 +248,7 @@ register.object(htsort)
 def htsortlink(context, field_name):
     "Return URL of the sorting field"
 
-    if not 'request' in context:
+    if 'request' not in context:
         return ''
     request = context['request']
 
@@ -829,8 +829,8 @@ def group_by_letter(context, object_list):
         r = re.search('^[a-zA-Z]', x.name)
         if r:
             key = r.group().lower()
-            if not res.has_key(key):
-    #            print "reg", key
+            if key not in res:
+                # print "reg", key
                 res[key] = [x]
             else:
                 res[key].append(x)
@@ -838,14 +838,14 @@ def group_by_letter(context, object_list):
         # case 2
         n = re.search('^[0-9_]', x.name)
         if n:
-            if not res.has_key('#'):
+            if '#' not in res:
                 res['#'] = [x]
             else:
                 res['#'].append(x)
 
         # case 3
         if not n and not r:
-            if not res.has_key('#'):
+            if '#' not in res:
                 res['#'] = [x]
             else:
                 res['#'].append(x)
@@ -889,7 +889,7 @@ register.object(rss_link)
 def logo_block_container(context):
     "Returns logo_block_container"
 
-    #request = context['request']
+    # request = context['request']
     response_format = 'html'
 
     return Markup(render_to_string('core/tags/logo_block_container',

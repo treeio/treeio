@@ -358,7 +358,7 @@ def event_add(request, date=None, hour=12, response_format='html'):
     "Event add form"
 
     if request.POST:
-        if not 'cancel' in request.POST:
+        if 'cancel' not in request.POST:
             event = Event()
             form = EventForm(
                 request.user.get_profile(), date, hour, request.POST, instance=event)

@@ -3,7 +3,7 @@
 # This file is part of Treeio.
 # License www.tree.io/license
 
-#-*- coding: utf-8 -*-
+# -*- coding: utf-8 -*-
 
 from __future__ import absolute_import, with_statement
 
@@ -29,7 +29,6 @@ def check_parent_perm(request, model, pk, mode):
 
 
 class ProjectHandler(ObjectHandler):
-
     "Entrypoint for Project model."
 
     model = Project
@@ -54,7 +53,6 @@ class ProjectHandler(ObjectHandler):
 
 
 class TaskStatusHandler(ObjectHandler):
-
     "Entrypoint for TaskStatus model."
 
     model = TaskStatus
@@ -72,7 +70,6 @@ class TaskStatusHandler(ObjectHandler):
 
 
 class MilestoneHandler(ObjectHandler):
-
     "Entrypoint for Milestone model."
 
     model = Milestone
@@ -97,7 +94,6 @@ class MilestoneHandler(ObjectHandler):
 
 
 class TaskHandler(ObjectHandler):
-
     "Entrypoint for Task model."
 
     model = Task
@@ -130,7 +126,6 @@ class TaskHandler(ObjectHandler):
 
 
 class StartTaskTimeHandler(BaseHandler):
-
     "Start TaskTimeSlot for preselected Task"
 
     # model = True  # for auto documentation
@@ -162,7 +157,6 @@ class StartTaskTimeHandler(BaseHandler):
 
 
 class StopTaskTimeHandler(BaseHandler):
-
     "Stop TaskTimeSlot for preselected Task"
 
     # model = True  # for auto documentation
@@ -192,7 +186,6 @@ class StopTaskTimeHandler(BaseHandler):
 
 
 class TaskTimeHandler(ObjectHandler):
-
     "Entrypoint for TaskTime model."
 
     model = TaskTimeSlot

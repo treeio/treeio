@@ -25,7 +25,6 @@ __all__ = ['render_identicon', 'IdenticonRendererBase']
 
 
 class Matrix2D(list):
-
     """Matrix for Patch rotation"""
 
     def __init__(self, initial=None):
@@ -164,9 +163,9 @@ class IdenticonRendererBase(object):
         if invert:
             foreColor, backColor = backColor, foreColor
 
-        mat = Matrix2D.rotateSquare(turn, pivot=(0.5, 0.5)) *\
-            Matrix2D.translate(*pos) *\
-            Matrix2D.scale(size, size)
+        mat = Matrix2D.rotateSquare(turn, pivot=(0.5, 0.5)) * \
+              Matrix2D.translate(*pos) * \
+              Matrix2D.scale(size, size)
 
         patch.transform(mat.for_PIL())
         draw.rectangle(
@@ -179,29 +178,28 @@ class IdenticonRendererBase(object):
 
 
 class DonRenderer(IdenticonRendererBase):
-
     """
     Don Park's implementation of identicon
     see : http://www.docuverse.com/blog/donpark/2007/01/19/identicon-updated-and-source-released
     """
 
     PATH_SET = [
-        [(0, 0), (4, 0), (4, 4), (0, 4)],   # 0
+        [(0, 0), (4, 0), (4, 4), (0, 4)],  # 0
         [(0, 0), (4, 0), (0, 4)],
         [(2, 0), (4, 4), (0, 4)],
         [(0, 0), (2, 0), (2, 4), (0, 4)],
-        [(2, 0), (4, 2), (2, 4), (0, 2)],   # 4
+        [(2, 0), (4, 2), (2, 4), (0, 2)],  # 4
         [(0, 0), (4, 2), (4, 4), (2, 4)],
         [(2, 0), (4, 4), (2, 4), (3, 2), (1, 2), (2, 4), (0, 4)],
         [(0, 0), (4, 2), (2, 4)],
-        [(1, 1), (3, 1), (3, 3), (1, 3)],   # 8
+        [(1, 1), (3, 1), (3, 3), (1, 3)],  # 8
         [(2, 0), (4, 0), (0, 4), (0, 2), (2, 2)],
         [(0, 0), (2, 0), (2, 2), (0, 2)],
         [(0, 2), (4, 2), (2, 4)],
         [(2, 2), (4, 4), (0, 4)],
         [(2, 0), (2, 2), (0, 2)],
         [(0, 0), (2, 0), (0, 2)],
-        []                                  # 15
+        []  # 15
     ]
     MIDDLE_PATCH_SET = [0, 4, 8, 15]
 
@@ -225,19 +223,20 @@ class DonRenderer(IdenticonRendererBase):
         green = 160  # (code >> 21) & 0x1F
         red = 130  # (code >> 27) & 0x1F
 
-        #foreColor = (red << 3, green << 3, blue << 3)
+        # foreColor = (red << 3, green << 3, blue << 3)
         foreColor = (red, green, blue)
 
         return (middleType, middleInvert, 0), \
                (cornerType, cornerInvert, cornerTurn), \
                (sideType, sideInvert, sideTurn), \
-            foreColor, ImageColor.getrgb('#FFFFFF')
+               foreColor, ImageColor.getrgb('#FFFFFF')
 
 
 def render_identicon(code, size=24, renderer=None):
     if not renderer:
         renderer = DonRenderer
     return renderer(code).render(size)
+
 
 if __name__ == '__main__':
     import sys

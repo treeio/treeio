@@ -230,7 +230,7 @@ def folder_add(request, response_format='html'):
     "New folder form"
 
     if request.POST:
-        if not 'cancel' in request.POST:
+        if 'cancel' not in request.POST:
             folder = Folder()
             form = FolderForm(
                 request.user.get_profile(), None, request.POST, instance=folder)
@@ -263,7 +263,7 @@ def folder_add_typed(request, folder_id=None, response_format='html'):
             folder = None
 
     if request.POST:
-        if not 'cancel' in request.POST:
+        if 'cancel' not in request.POST:
             folder = Folder()
             form = FolderForm(
                 request.user.get_profile(), folder_id, request.POST, instance=folder)
@@ -338,7 +338,7 @@ def folder_edit(request, folder_id, response_format='html'):
         return user_denied(request, message="You don't have access to this Folder")
 
     if request.POST:
-        if not 'cancel' in request.POST:
+        if 'cancel' not in request.POST:
             form = FolderForm(
                 request.user.get_profile(), folder_id, request.POST, instance=folder)
             if form.is_valid():
@@ -391,11 +391,11 @@ def folder_delete(request, folder_id, response_format='html'):
         query = _get_filter_query(request.GET)
         objects = Object.filter_by_request(
             request, Object.objects.filter(query))
-   #     objects = objects.order_by('-last_updated')
+    #     objects = objects.order_by('-last_updated')
     else:
         objects = Object.filter_by_request(
             request, Object.objects.filter(query))
-   #     objects = objects.order_by('-last_updated')
+    #     objects = objects.order_by('-last_updated')
 
     context = _get_default_context(request)
     context.update({'folder': folder,
@@ -412,7 +412,7 @@ def document_add(request, response_format='html'):
     "new document form"
 
     if request.POST:
-        if not 'cancel' in request.POST:
+        if 'cancel' not in request.POST:
             document = Document()
             form = DocumentForm(
                 request.user.get_profile(), None, request.POST, instance=document)
@@ -447,7 +447,7 @@ def document_add_typed(request, folder_id=None, response_format='html'):
 
     document = Document()
     if request.POST:
-        if not 'cancel' in request.POST:
+        if 'cancel' not in request.POST:
             form = DocumentForm(
                 request.user.get_profile(), folder_id, request.POST, instance=document)
             if form.is_valid():
@@ -497,7 +497,7 @@ def document_edit(request, document_id, response_format='html'):
         return user_denied(request, message="You don't have access to this Document")
 
     if request.POST:
-        if not 'cancel' in request.POST:
+        if 'cancel' not in request.POST:
             form = DocumentForm(
                 request.user.get_profile(), None, request.POST, instance=document)
             if form.is_valid():
@@ -553,7 +553,7 @@ def file_upload(request, response_format='html'):
     "New file form"
 
     if request.POST:
-        if not 'cancel' in request.POST:
+        if 'cancel' not in request.POST:
             file = File()
             form = FileForm(
                 request.user.get_profile(), None, request.POST, request.FILES, instance=file)
@@ -586,7 +586,7 @@ def file_upload_typed(request, folder_id=None, response_format='html'):
             folder = None
 
     if request.POST:
-        if not 'cancel' in request.POST:
+        if 'cancel' not in request.POST:
             form = FileForm(
                 request.user.get_profile(), folder_id, request.POST, request.FILES)
             if form.is_valid():
@@ -679,7 +679,7 @@ def file_edit(request, file_id, response_format='html'):
         return user_denied(request, message="You don't have access to this File")
 
     if request.POST:
-        if not 'cancel' in request.POST:
+        if 'cancel' not in request.POST:
             form = FileForm(
                 request.user.get_profile(), None, request.POST, request.FILES, instance=file)
             if form.is_valid():
@@ -707,7 +707,7 @@ def weblink_add(request, response_format='html'):
     "New web link form"
 
     if request.POST:
-        if not 'cancel' in request.POST:
+        if 'cancel' not in request.POST:
             link = WebLink()
             form = WebLinkForm(
                 request.user.get_profile(), None, request.POST, instance=link)
@@ -742,7 +742,7 @@ def weblink_add_typed(request, folder_id=None, response_format='html'):
             folder = None
 
     if request.POST:
-        if not 'cancel' in request.POST:
+        if 'cancel' not in request.POST:
             link = WebLink()
             form = WebLinkForm(
                 request.user.get_profile(), folder_id, request.POST, instance=link)
@@ -793,7 +793,7 @@ def weblink_edit(request, weblink_id, response_format='html'):
         return user_denied(request, message="You don't have access to this Web Link")
 
     if request.POST:
-        if not 'cancel' in request.POST:
+        if 'cancel' not in request.POST:
             form = WebLinkForm(
                 request.user.get_profile(), None, request.POST, instance=link)
             if form.is_valid():

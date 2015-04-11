@@ -273,7 +273,7 @@ def ordered_product_add(request, order_id=None, response_format='html'):
         return user_denied("Sorry, you don't have access to this Sale Order")
 
     if request.POST:
-        if not 'cancel' in request.POST:
+        if 'cancel' not in request.POST:
             ordered_product = OrderedProduct()
             ordered_product.order = order
             form = OrderedProductForm(
@@ -324,7 +324,7 @@ def ordered_product_edit(request, ordered_product_id, response_format='html'):
 
     order = ordered_product.order
     if request.POST:
-        if not 'cancel' in request.POST:
+        if 'cancel' not in request.POST:
             form = OrderedProductForm(
                 request.user.get_profile(), order, request.POST, instance=ordered_product)
             if form.is_valid():
@@ -395,7 +395,7 @@ def subscription_index(request, response_format='html'):
     filters = OrderFilterForm(request.user.get_profile(), '', request.GET)
     ordered_products = subscriptions.orderedproduct_set.all()
     orders = ordered_products.order_set.all()
-    #orders = Object.filter_by_request(request, SaleOrder.objects, mode = "r")
+    # orders = Object.filter_by_request(request, SaleOrder.objects, mode = "r")
     statuses = Object.filter_by_request(request, SaleStatus.objects, mode="r")
 
     return render_to_response('sales/index',
@@ -427,7 +427,7 @@ def subscription_add(request, order_id=None, product_id=None, productset_id=None
         subscription.product = productset
 
     if request.POST:
-        if not 'cancel' in request.POST:
+        if 'cancel' not in request.POST:
             form = SubscriptionForm(
                 request.user.get_profile(), request.POST, instance=subscription)
             if form.is_valid():
@@ -591,7 +591,7 @@ def product_add(request, parent_id=None, response_format='html'):
         request, Product.objects.filter(parent__isnull=True))
 
     if request.POST:
-        if not 'cancel' in request.POST:
+        if 'cancel' not in request.POST:
             product = Product()
             form = ProductForm(
                 request.user.get_profile(), None, request.POST, instance=product)
@@ -621,7 +621,7 @@ def product_edit(request, product_id, response_format='html'):
         return user_denied(request, "You don't have access to this Product", response_format)
 
     if request.POST:
-        if not 'cancel' in request.POST:
+        if 'cancel' not in request.POST:
             form = ProductForm(
                 request.user.get_profile(), None, request.POST, instance=product)
             if form.is_valid():
@@ -776,7 +776,7 @@ def lead_add(request, lead_id=None, response_format='html'):
     all_leads = Object.filter_by_request(request, Lead.objects)
 
     if request.POST:
-        if not 'cancel' in request.POST:
+        if 'cancel' not in request.POST:
             lead = Lead()
             form = LeadForm(
                 request.user.get_profile(), request.POST, instance=lead)
@@ -946,7 +946,7 @@ def opportunity_add(request, lead_id=None, response_format='html'):
         lead = get_object_or_404(Lead, pk=lead_id)
 
     if request.POST:
-        if not 'cancel' in request.POST:
+        if 'cancel' not in request.POST:
             form = OpportunityForm(
                 request.user.get_profile(), lead, request.POST)
             if form.is_valid():
@@ -975,7 +975,7 @@ def opportunity_edit(request, opportunity_id, response_format='html'):
         return user_denied(request, "You don't have access to this Opportunity", response_format)
 
     if request.POST:
-        if not 'cancel' in request.POST:
+        if 'cancel' not in request.POST:
             form = OpportunityForm(
                 request.user.get_profile(), None, request.POST, instance=opportunity)
             if form.is_valid():
@@ -1060,7 +1060,7 @@ def order_add(request, lead_id=None, opportunity_id=None, response_format='html'
         opportunity = get_object_or_404(Opportunity, pk=opportunity_id)
 
     if request.POST:
-        if not 'cancel' in request.POST:
+        if 'cancel' not in request.POST:
             order = SaleOrder()
             form = OrderForm(
                 request.user.get_profile(), lead, opportunity, request.POST, instance=order)
@@ -1093,7 +1093,7 @@ def order_edit(request, order_id, response_format='html'):
         return user_denied(request, "You don't have access to this SaleOrder", response_format)
 
     if request.POST:
-        if not 'cancel' in request.POST:
+        if 'cancel' not in request.POST:
             form = OrderForm(
                 request.user.get_profile(), None, None, request.POST, instance=order)
             if form.is_valid():
@@ -1323,7 +1323,7 @@ def settings_edit(request, response_format='html'):
         request, Product.objects.filter(parent__isnull=True))
 
     if request.POST:
-        if not 'cancel' in request.POST:
+        if 'cancel' not in request.POST:
             form = SettingsForm(request.user.get_profile(), request.POST)
             if form.is_valid():
                 form.save()
@@ -1352,7 +1352,7 @@ def status_add(request, response_format='html'):
 
     status = None
     if request.POST:
-        if not 'cancel' in request.POST:
+        if 'cancel' not in request.POST:
             status = SaleStatus()
             form = SaleStatusForm(
                 request.user.get_profile(), request.POST, instance=status)
@@ -1408,7 +1408,7 @@ def status_edit(request, status_id, response_format='html'):
         return user_denied(request, "You don't have access to this Sale Status", response_format)
 
     if request.POST:
-        if not 'cancel' in request.POST:
+        if 'cancel' not in request.POST:
             form = SaleStatusForm(
                 request.user.get_profile(), request.POST, instance=status)
             if form.is_valid():
@@ -1464,7 +1464,7 @@ def source_add(request, response_format='html'):
         return user_denied(request, message="You don't have administrator access to the Sales module")
 
     if request.POST:
-        if not 'cancel' in request.POST:
+        if 'cancel' not in request.POST:
             source = SaleSource()
             form = SaleSourceForm(
                 request.user.get_profile(), request.POST, instance=source)
@@ -1527,7 +1527,7 @@ def source_edit(request, source_id, response_format='html'):
         return user_denied(request, "You don't have access to this Sale Status", response_format)
 
     if request.POST:
-        if not 'cancel' in request.POST:
+        if 'cancel' not in request.POST:
             form = SaleSourceForm(
                 request.user.get_profile(), request.POST, instance=source)
             if form.is_valid():

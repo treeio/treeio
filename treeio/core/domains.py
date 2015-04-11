@@ -25,9 +25,9 @@ def setup_domain(domain):
         box['MEDIA_ROOT'] = getattr(
             settings, 'MEDIA_ROOT', './static/media/').replace(word, domain)
 
-    #box['TEMPLATE_DIRS'] = (dir.replace(word, domain) for dir in settings.TEMPLATE_DIRS)
+    # box['TEMPLATE_DIRS'] = (dir.replace(word, domain) for dir in settings.TEMPLATE_DIRS)
 
-    #box['JOHNNY_MIDDLEWARE_KEY_PREFIX'] = getattr(settings, 'JOHNNY_MIDDLEWARE_KEY_PREFIX', 'jc_treeio_seed').replace(word, domain)
+    # box['JOHNNY_MIDDLEWARE_KEY_PREFIX'] = getattr(settings, 'JOHNNY_MIDDLEWARE_KEY_PREFIX', 'jc_treeio_seed').replace(word, domain)
 
     box['WHOOSH_INDEX'] = getattr(
         settings, 'WHOOSH_INDEX', '/srv/vhosts/treeio.com/subdomains/seed/treeio/storage/search').replace(word, domain)
@@ -43,8 +43,8 @@ def setup_domain(domain):
 
 
 def setup_domain_database(domain, load_initial=False):
-    #from treeio.core.db.creation import DatabaseCreation
+    # from treeio.core.db.creation import DatabaseCreation
     pass
-    #dc = DatabaseCreation(domain)
+    # dc = DatabaseCreation(domain)
     # dc.create_db(load_initial)
     # dc.connection.close()

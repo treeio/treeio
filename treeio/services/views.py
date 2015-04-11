@@ -215,7 +215,7 @@ def status_edit(request, status_id, response_format='html'):
         return user_denied(request, "You don't have access to this Ticket Status", response_format)
 
     if request.POST:
-        if not 'cancel' in request.POST:
+        if 'cancel' not in request.POST:
             form = TicketStatusForm(
                 request.user.get_profile(), request.POST, instance=status)
             if form.is_valid():
@@ -271,7 +271,7 @@ def status_add(request, response_format='html'):
                            message="You don't have administrator access to the Service Support module")
 
     if request.POST:
-        if not 'cancel' in request.POST:
+        if 'cancel' not in request.POST:
             status = TicketStatus()
             form = TicketStatusForm(
                 request.user.get_profile(), request.POST, instance=status)
@@ -340,7 +340,7 @@ def queue_edit(request, queue_id, response_format='html'):
         return user_denied(request, message="You don't have access to this Queue")
 
     if request.POST:
-        if not 'cancel' in request.POST:
+        if 'cancel' not in request.POST:
             form = QueueForm(
                 request.user.get_profile(), request.POST, instance=queue)
             if form.is_valid():
@@ -402,7 +402,7 @@ def queue_add(request, response_format='html'):
                            message="You don't have administrator access to the Service Support module")
 
     if request.POST:
-        if not 'cancel' in request.POST:
+        if 'cancel' not in request.POST:
             queue = TicketQueue()
             form = QueueForm(
                 request.user.get_profile(), request.POST, instance=queue)
@@ -482,7 +482,7 @@ def ticket_edit(request, ticket_id, response_format='html'):
         return user_denied(request, message="You don't have access to this Ticket")
 
     if request.POST:
-        if not 'cancel' in request.POST:
+        if 'cancel' not in request.POST:
             form = TicketForm(
                 request.user.get_profile(), None, agent, request.POST, instance=ticket)
             if form.is_valid():
@@ -563,7 +563,7 @@ def ticket_add(request, queue_id=None, response_format='html'):
             queue = None
 
     if request.POST:
-        if not 'cancel' in request.POST:
+        if 'cancel' not in request.POST:
             ticket = Ticket(creator=profile)
             if not agent:
                 if queue:
@@ -677,7 +677,7 @@ def service_edit(request, service_id, response_format='html'):
         return user_denied(request, message="You don't have access to this Service")
 
     if request.POST:
-        if not 'cancel' in request.POST:
+        if 'cancel' not in request.POST:
             form = ServiceForm(
                 request.user.get_profile(), request.POST, instance=service)
             if form.is_valid():
@@ -733,7 +733,7 @@ def service_add(request, response_format='html'):
                            message="You don't have administrator access to the Service Support module")
 
     if request.POST:
-        if not 'cancel' in request.POST:
+        if 'cancel' not in request.POST:
             service = Service()
             form = ServiceForm(
                 request.user.get_profile(), request.POST, instance=service)
@@ -805,7 +805,7 @@ def sla_edit(request, sla_id, response_format='html'):
         return user_denied(request, message="You don't have access to this Service Level Agreement")
 
     if request.POST:
-        if not 'cancel' in request.POST:
+        if 'cancel' not in request.POST:
             form = ServiceLevelAgreementForm(
                 request.user.get_profile(), request.POST, instance=sla)
             if form.is_valid():
@@ -861,7 +861,7 @@ def sla_add(request, response_format='html'):
                            message="You don't have administrator access to the Service Support module")
 
     if request.POST:
-        if not 'cancel' in request.POST:
+        if 'cancel' not in request.POST:
             sla = ServiceLevelAgreement()
             form = ServiceLevelAgreementForm(
                 request.user.get_profile(), request.POST, instance=sla)
@@ -982,7 +982,7 @@ def settings_edit(request, response_format='html'):
                            message="You don't have administrator access to the Service Support module")
 
     if request.POST:
-        if not 'cancel' in request.POST:
+        if 'cancel' not in request.POST:
             form = SettingsForm(request.user.get_profile(), request.POST)
             if form.is_valid():
                 form.save()
@@ -1055,7 +1055,7 @@ def agent_edit(request, agent_id, response_format='html'):
         return user_denied(request, message="You don't have access to this Service Agent")
 
     if request.POST:
-        if not 'cancel' in request.POST:
+        if 'cancel' not in request.POST:
             form = AgentForm(
                 request.user.get_profile(), request.POST, instance=view_agent)
             if form.is_valid():
@@ -1110,7 +1110,7 @@ def agent_add(request, response_format='html'):
                            message="You don't have administrator access to the Service Support module")
 
     if request.POST:
-        if not 'cancel' in request.POST:
+        if 'cancel' not in request.POST:
             new_agent = ServiceAgent()
             form = AgentForm(
                 request.user.get_profile(), request.POST, instance=new_agent)

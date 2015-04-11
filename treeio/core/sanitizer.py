@@ -178,7 +178,7 @@ class HTMLSanitizerMixin(object):
                           tokenTypes["EmptyTag"]):
             token["name"] = token["name"].lower()
             if token["name"] in self.allowed_elements:
-                if token.has_key("data"):
+                if "data" in token:
                     attrs = dict([(name, val) for name, val in
                                   token["data"][::-1]
                                   if name in self.allowed_attributes])
@@ -203,7 +203,7 @@ class HTMLSanitizerMixin(object):
                         'xlink:href' in attrs and re.search('^\s*[^#\s].*',
                                                             attrs['xlink:href'])):
                         del attrs['xlink:href']
-                    if attrs.has_key('style'):
+                    if 'style' in attrs:
                         attrs['style'] = self.sanitize_css(attrs['style'])
                     token["data"] = [[name, val]
                                      for name, val in attrs.items()]
@@ -256,7 +256,7 @@ class HTMLSanitizerMixin(object):
             elif prop.split('-')[0].lower() in ['background', 'border', 'margin',
                                                 'padding']:
                 for keyword in value.split():
-                    if not keyword in self.acceptable_css_keywords and \
+                    if keyword not in self.acceptable_css_keywords and \
                             not re.match("^(#[0-9a-f]+|rgb\(\d+%?,\d*%?,?\d*%?\)?|\d{0,2}\.?\d{0,2}(cm|em|ex|in|mm|pc|pt|px|%|,|\))?)$", keyword):
                         break
                 else:

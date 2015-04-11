@@ -76,7 +76,7 @@ class SubscribeForm(forms.Form):
         user = self.cleaned_data['subscriber']
         object = self.instance
 
-        if not user in self.subscriptions:
+        if user not in self.subscriptions:
             object.subscribers.add(user)
         self.subscriptions = object.subscribers.all()
 
@@ -96,7 +96,7 @@ class ObjectLinksForm(forms.Form):
         queryset = Object.filter_permitted(user, Object.objects)
         self.fields['links'].queryset = queryset
 
-        if not 'ajax' in response_format:
+        if 'ajax' not in response_format:
             if instance:
                 queryset = queryset.exclude(pk__in=instance.links.all())
 

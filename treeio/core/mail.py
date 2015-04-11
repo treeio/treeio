@@ -493,7 +493,7 @@ class EmailReceiver(Thread):
         if body.startswith('<!DOCTYPE') or body.startswith('<html') or body.startswith('<meta'):
             body = body.replace('\n\n\n', '\n').replace(
                 '\n\n', '\n').replace('>\n<', '><')
-        elif not '<html' in body:
+        elif '<html' not in body:
             body = body.replace('\n', '<br />\n')
 
         return body

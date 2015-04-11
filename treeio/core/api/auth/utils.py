@@ -12,7 +12,8 @@ def get_oauth_request(request):
     headers = {}
     if 'HTTP_AUTHORIZATION' in request.META:
         headers['Authorization'] = request.META['HTTP_AUTHORIZATION']
-    return oauth.Request.from_request(request.method, request.build_absolute_uri(request.path), headers, dict(request.REQUEST))
+    return oauth.Request.from_request(request.method, request.build_absolute_uri(request.path), headers,
+                                      dict(request.REQUEST))
 
 
 def verify_oauth_request(request, oauth_request, consumer, token=None):

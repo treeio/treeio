@@ -24,7 +24,6 @@ preprocess_form()
 
 
 class SettingsForm(forms.Form):
-
     """ Administration settings form """
 
     default_ticket_status = forms.ModelChoiceField(
@@ -32,7 +31,8 @@ class SettingsForm(forms.Form):
     default_ticket_queue = forms.ModelChoiceField(
         label='Default Queue', queryset=[])
     send_email_to_caller = forms.ChoiceField(label="Notify Caller By E-mail", choices=((True, _('Yes')),
-                                                                                       (False, _('No'))), required=False)
+                                                                                       (False, _('No'))),
+                                             required=False)
     send_email_template = forms.CharField(
         label="E-mail Template", widget=forms.Textarea, required=False)
 
@@ -114,7 +114,6 @@ class SettingsForm(forms.Form):
 
 
 class MassActionForm(forms.Form):
-
     """ Mass action form for Tickets """
 
     status = forms.ModelChoiceField(queryset=[], required=False)
@@ -144,7 +143,8 @@ class MassActionForm(forms.Form):
         self.fields['delete'] = forms.ChoiceField(label=_("Delete"), choices=(('', '-----'),
                                                                               ('delete', _(
                                                                                   'Delete Completely')),
-                                                                              ('trash', _('Move to Trash'))), required=False)
+                                                                              ('trash', _('Move to Trash'))),
+                                                  required=False)
 
     def save(self, *args, **kwargs):
         "Process form"
@@ -166,7 +166,6 @@ class MassActionForm(forms.Form):
 
 
 class TicketForm(forms.ModelForm):
-
     """ Ticket form """
     name = forms.CharField(
         label='Title', widget=forms.TextInput(attrs={'size': '50'}))
@@ -211,7 +210,7 @@ class TicketForm(forms.ModelForm):
         self.fields['resolution'].label = _("Resolution")
 
         # Set default values if not editing
-        if not 'instance' in kwargs:
+        if 'instance' not in kwargs:
             try:
                 self.fields['caller'].initial = user.get_contact().id
             except Exception:
@@ -286,7 +285,6 @@ class TicketForm(forms.ModelForm):
 
 
 class TicketStatusForm(forms.ModelForm):
-
     """ TicketStatus form """
     name = forms.CharField(widget=forms.TextInput(attrs={'size': '30'}))
 
@@ -295,14 +293,12 @@ class TicketStatusForm(forms.ModelForm):
         super(TicketStatusForm, self).__init__(*args, **kwargs)
 
     class Meta:
-
         "TicketStatus specified as model"
         model = TicketStatus
         fields = ('name', 'active', 'hidden', 'details')
 
 
 class TicketRecordForm(forms.ModelForm):
-
     """ TicketRecord form """
 
     def __init__(self, agent, ticket, *args, **kwargs):
@@ -359,7 +355,6 @@ class TicketRecordForm(forms.ModelForm):
 
 
 class QueueForm(forms.ModelForm):
-
     """ Queue form """
     name = forms.CharField(widget=forms.TextInput(attrs={'size': '50'}))
 
@@ -397,7 +392,6 @@ class QueueForm(forms.ModelForm):
         self.fields['details'].label = _("Details")
 
     class Meta:
-
         "TicketQueue specified as model"
         model = TicketQueue
         fields = ('name', 'active', 'parent', 'default_ticket_status',
@@ -406,7 +400,6 @@ class QueueForm(forms.ModelForm):
 
 
 class ServiceForm(forms.ModelForm):
-
     """ Service form """
     name = forms.CharField(widget=forms.TextInput(attrs={'size': '50'}))
 
@@ -426,14 +419,12 @@ class ServiceForm(forms.ModelForm):
         self.fields['details'].label = _("Details")
 
     class Meta:
-
         "Service specified as model"
         model = Service
         fields = ('name', 'parent', 'details')
 
 
 class ServiceLevelAgreementForm(forms.ModelForm):
-
     """ ServiceLevelAgreement form """
     name = forms.CharField(widget=forms.TextInput(attrs={'size': '50'}))
 
@@ -483,7 +474,6 @@ class ServiceLevelAgreementForm(forms.ModelForm):
             self.fields['provider'].initial = contact.id
 
     class Meta:
-
         "ServiceLevelAgreement specified as model"
         model = ServiceLevelAgreement
         fields = ('name', 'service', 'client', 'provider', 'response_time', 'uptime_rate', 'available_from',
@@ -491,7 +481,6 @@ class ServiceLevelAgreementForm(forms.ModelForm):
 
 
 class AgentForm(forms.ModelForm):
-
     """ Agent form """
 
     def __init__(self, user, *args, **kwargs):
@@ -507,7 +496,6 @@ class AgentForm(forms.ModelForm):
         self.fields['available_to'].label = _("Available to")
 
     class Meta:
-
         "Agent specified as model"
         model = ServiceAgent
         fields = ('related_user', 'active', 'occupied',
@@ -515,7 +503,6 @@ class AgentForm(forms.ModelForm):
 
 
 class FilterForm(forms.ModelForm):
-
     """ Ticket Filters definition """
 
     def __init__(self, user, skip=None, *args, **kwargs):
@@ -573,7 +560,6 @@ class FilterForm(forms.ModelForm):
 
 
 class SLAFilterForm(forms.ModelForm):
-
     """ SLA Filters definition """
 
     def __init__(self, user, skip=None, *args, **kwargs):
@@ -602,14 +588,12 @@ class SLAFilterForm(forms.ModelForm):
         self.fields['service'].label = _("Service")
 
     class Meta:
-
         "ServiceLevelAgreement specified as model"
         model = ServiceLevelAgreement
         fields = ('service', 'client', 'provider')
 
 
 class AgentFilterForm(forms.ModelForm):
-
     """ Agent Filters definition """
 
     def __init__(self, user, skip=None, *args, **kwargs):
@@ -622,7 +606,6 @@ class AgentFilterForm(forms.ModelForm):
         self.fields['related_user'].label = _("Related user")
 
     class Meta:
-
         "ServiceAgent specified as model"
         model = ServiceAgent
         fields = ['related_user']

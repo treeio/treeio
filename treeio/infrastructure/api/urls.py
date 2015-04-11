@@ -3,7 +3,7 @@
 # This file is part of Treeio.
 # License www.tree.io/license
 
-#-*- coding: utf-8 -*-
+# -*- coding: utf-8 -*-
 
 import handlers
 from django.conf.urls import *
@@ -23,31 +23,31 @@ serviceRecordResource = CsrfExemptResource(
 locationResource = CsrfExemptResource(handler=handlers.LocationHandler, **ad)
 
 urlpatterns = patterns('',
-    # Infrastructure
-    url(r'^doc$', documentation_view, kwargs={
-        'module': handlers}, name="api_infrastructure_doc"),
-    url(r'^fields$', fieldResource,
-        name="api_infrastructure_fields"),
-    url(r'^field/(?P<object_ptr>\d+)', fieldResource,
-        name="api_infrastructure_fields"),
-    url(r'^types$', typeResource,
-        name="api_infrastructure_types"),
-    url(r'^type/(?P<object_ptr>\d+)', typeResource,
-        name="api_infrastructure_types"),
-    url(r'^statuses$', statusResource,
-        name="api_infrastructure_statuses"),
-    url(r'^status/(?P<object_ptr>\d+)', statusResource,
-        name="api_infrastructure_statuses"),
-    url(r'^items$', itemResource,
-        name="api_infrastructure_items"),
-    url(r'^item/(?P<object_ptr>\d+)', itemResource,
-        name="api_infrastructure_items"),
-    url(r'^service_records$', serviceRecordResource,
-        name="api_infrastructure_service_records"),
-    url(r'^service_record/(?P<object_ptr>\d+)', serviceRecordResource,
-        name="api_infrastructure_service_records"),
-    url(r'^locations$', locationResource,
-        name="api_infrastructure_locations"),
-    url(r'^location/(?P<object_ptr>\d+)', locationResource,
-        name="api_infrastructure_locations"),
-)
+                       # Infrastructure
+                       url(r'^doc$', documentation_view, kwargs={
+                           'module': handlers}, name="api_infrastructure_doc"),
+                       url(r'^fields$', fieldResource,
+                           name="api_infrastructure_fields"),
+                       url(r'^field/(?P<object_ptr>\d+)', fieldResource,
+                           name="api_infrastructure_fields"),
+                       url(r'^types$', typeResource,
+                           name="api_infrastructure_types"),
+                       url(r'^type/(?P<object_ptr>\d+)', typeResource,
+                           name="api_infrastructure_types"),
+                       url(r'^statuses$', statusResource,
+                           name="api_infrastructure_statuses"),
+                       url(r'^status/(?P<object_ptr>\d+)', statusResource,
+                           name="api_infrastructure_statuses"),
+                       url(r'^items$', itemResource,
+                           name="api_infrastructure_items"),
+                       url(r'^item/(?P<object_ptr>\d+)', itemResource,
+                           name="api_infrastructure_items"),
+                       url(r'^service_records$', serviceRecordResource,
+                           name="api_infrastructure_service_records"),
+                       url(r'^service_record/(?P<object_ptr>\d+)', serviceRecordResource,
+                           name="api_infrastructure_service_records"),
+                       url(r'^locations$', locationResource,
+                           name="api_infrastructure_locations"),
+                       url(r'^location/(?P<object_ptr>\d+)', locationResource,
+                           name="api_infrastructure_locations"),
+                       )

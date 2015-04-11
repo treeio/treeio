@@ -3,7 +3,7 @@
 # This file is part of Treeio.
 # License www.tree.io/license
 
-#-*- coding: utf-8 -*-
+# -*- coding: utf-8 -*-
 
 from __future__ import absolute_import, with_statement
 
@@ -72,7 +72,7 @@ class MessageHandler(ObjectHandler):
         if request.data is None:
             return rc.BAD_REQUEST
 
-        if request.data.has_key('stream'):
+        if 'stream' in request.data:
             stream = getOrNone(MessageStream, request.data['stream'])
             if stream and not user.has_permission(stream, mode='x'):
                 return rc.FORBIDDEN

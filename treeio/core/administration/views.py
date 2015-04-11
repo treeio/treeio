@@ -106,13 +106,13 @@ def perspective_edit(request, perspective_id, response_format='html'):
     admin_module = Module.objects.filter(name='treeio.core')[0]
 
     if request.POST:
-        if not 'cancel' in request.POST:
+        if 'cancel' not in request.POST:
             form = PerspectiveForm(
                 request.user.get_profile(), request.POST, instance=perspective)
             if form.is_valid():
                 perspective = form.save()
                 modules = perspective.modules.all()
-                if modules and not admin_module in modules:
+                if modules and admin_module not in modules:
                     if not other_perspectives.filter(Q(modules=admin_module) | Q(modules__isnull=True)):
                         perspective.modules.add(admin_module)
                         request.session['message'] = _(
@@ -177,7 +177,7 @@ def perspective_add(request, response_format='html'):
     "Perspective add"
 
     if request.POST:
-        if not 'cancel' in request.POST:
+        if 'cancel' not in request.POST:
             perspective = Perspective()
             form = PerspectiveForm(
                 request.user.get_profile(), request.POST, instance=perspective)
@@ -256,7 +256,7 @@ def user_edit(request, user_id, response_format='html'):
 
     profile = get_object_or_404(User, pk=user_id)
     if request.POST:
-        if not 'cancel' in request.POST:
+        if 'cancel' not in request.POST:
             form = UserForm(request.POST, instance=profile)
             if form.is_valid():
                 profile = form.save()
@@ -332,7 +332,7 @@ def user_password(request, user_id, response_format='html'):
 
     profile = get_object_or_404(User, pk=user_id)
     if request.POST:
-        if not 'cancel' in request.POST:
+        if 'cancel' not in request.POST:
             form = PasswordForm(profile.user, request.POST)
             if form.is_valid():
                 form.save()
@@ -500,7 +500,7 @@ def group_edit(request, group_id, response_format='html'):
     group = get_object_or_404(Group, pk=group_id)
 
     if request.POST:
-        if not 'cancel' in request.POST:
+        if 'cancel' not in request.POST:
             form = GroupForm(request.POST, instance=group)
             if form.is_valid():
                 group = form.save()
@@ -548,7 +548,7 @@ def group_add(request, response_format='html'):
     "Group add"
 
     if request.POST:
-        if not 'cancel' in request.POST:
+        if 'cancel' not in request.POST:
             form = GroupForm(request.POST)
             if form.is_valid():
                 group = form.save()
@@ -829,7 +829,7 @@ def settings_edit(request, response_format='html'):
     "Settings edit"
 
     if request.POST:
-        if not 'cancel' in request.POST:
+        if 'cancel' not in request.POST:
             form = SettingsForm(
                 request.user.get_profile(), request.POST, request.FILES)
             if form.is_valid():

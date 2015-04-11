@@ -75,7 +75,7 @@ def account_password(request, response_format='html'):
 
     profile = request.user.get_profile()
     if request.POST:
-        if not 'cancel' in request.POST:
+        if 'cancel' not in request.POST:
             form = AccountPasswordForm(request.user, request.POST)
             if form.is_valid():
                 form.save()
@@ -177,7 +177,7 @@ def settings_edit(request, response_format='html'):
     "Settings edit"
 
     if request.POST:
-        if not 'cancel' in request.POST:
+        if 'cancel' not in request.POST:
             form = SettingsForm(request.user.get_profile(), request.POST)
             if form.is_valid():
                 form.save()

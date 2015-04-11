@@ -3,7 +3,7 @@
 # This file is part of Treeio.
 # License www.tree.io/license
 
-#-*- coding: utf-8 -*-
+# -*- coding: utf-8 -*-
 
 from __future__ import absolute_import, with_statement
 
@@ -15,7 +15,8 @@ from treeio.core.api.utils import rc
 from piston.handler import BaseHandler
 from treeio.core.models import ModuleSetting
 from treeio.core.api.handlers import ObjectHandler
-from treeio.services.models import TicketStatus, Service, ServiceLevelAgreement, ServiceAgent, TicketQueue, Ticket, TicketRecord
+from treeio.services.models import TicketStatus, Service, ServiceLevelAgreement, ServiceAgent, TicketQueue, Ticket, \
+    TicketRecord
 from treeio.services.forms import TicketForm, TicketStatusForm, TicketRecordForm, QueueForm, \
     ServiceForm, ServiceLevelAgreementForm, AgentForm
 from treeio.services.views import _get_default_context
@@ -54,7 +55,7 @@ class ServiceHandler(ObjectHandler):
 
     def check_instance_permission(self, request, inst, mode):
         return request.user.get_profile().has_permission(inst, mode=mode) \
-            or request.user.get_profile().is_admin('treeio_services')
+               or request.user.get_profile().is_admin('treeio_services')
 
 
 class ServiceLevelAgreementHandler(ObjectHandler):

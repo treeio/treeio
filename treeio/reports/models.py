@@ -80,7 +80,7 @@ class Field:
 
     def get_aggregate_name(self):
         "Returns translated name in Camel Case"
-        if self.aggregation and aggregate_functions.has_key(self.aggregation):
+        if self.aggregation and self.aggregation in aggregate_functions:
             return _(aggregate_functions[self.aggregation]['description'])
         return ''
 

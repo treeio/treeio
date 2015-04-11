@@ -24,8 +24,8 @@ class EmailReplier(EmailReceiver):
 
     def process_msg(self, msg, attrs, attachments):
         # get user profile by author email
-        contact = Contact.objects.filter(contactvalue__value=attrs.author_email, contactvalue__field__field_type='email',
-                                         related_user__isnull=False)[:1]
+        contact = Contact.objects.filter(contactvalue__value=attrs.author_email,
+                                         contactvalue__field__field_type='email', related_user__isnull=False)[:1]
         contact = contact[0] if contact else None
         author = contact.related_user if contact else None
 

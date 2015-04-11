@@ -399,8 +399,8 @@ class LeadMassActionForm(forms.Form):
 
         self.fields['assignedto'].queryset = User.objects
         self.fields['assignedto'].label = _("Assign To:")
-       # self.fields['assignedto'].widget.attrs.update({'class': 'autocomplete',
-       #                                                'callback': reverse('identities_ajax_user_lookup')})
+        # self.fields['assignedto'].widget.attrs.update({'class': 'autocomplete',
+        #                                                'callback': reverse('identities_ajax_user_lookup')})
 
     def save(self, *args, **kwargs):
         "Process form"
@@ -438,8 +438,8 @@ class OpportunityMassActionForm(forms.Form):
 
         self.fields['assignedto'].queryset = User.objects
         self.fields['assignedto'].label = _("Assign To:")
-     #   self.fields['assignedto'].widget.attrs.update({'class': 'autocomplete',
-     #                                                  'callback': reverse('identities_ajax_user_lookup')})
+    #   self.fields['assignedto'].widget.attrs.update({'class': 'autocomplete',
+    #                                                  'callback': reverse('identities_ajax_user_lookup')})
 
     def save(self, *args, **kwargs):
         "Process form"

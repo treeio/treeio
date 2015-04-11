@@ -20,7 +20,8 @@ from treeio.core.rendering import render_to_response
 from treeio.core.decorators import treeio_login_required, handle_response_format
 from treeio.identities.models import ContactType, Contact
 from treeio.messaging.models import Message, MessageStream, MailingList
-from treeio.messaging.forms import MessageForm, MessageStreamForm, FilterForm, MassActionForm, SettingsForm, MessageReplyForm, MailingListForm
+from treeio.messaging.forms import MessageForm, MessageStreamForm, FilterForm, MassActionForm, SettingsForm, \
+    MessageReplyForm, MailingListForm
 import re
 
 
@@ -195,7 +196,7 @@ def stream_add(request, response_format='html'):
     user = request.user.get_profile()
 
     if request.POST:
-        if not 'cancel' in request.POST:
+        if 'cancel' not in request.POST:
             stream = MessageStream()
             form = MessageStreamForm(user, request.POST, instance=stream)
             if form.is_valid():
@@ -300,7 +301,7 @@ def stream_edit(request, stream_id, response_format='html'):
                            response_format=response_format)
 
     if request.POST:
-        if not 'cancel' in request.POST:
+        if 'cancel' not in request.POST:
             form = MessageStreamForm(user, request.POST, instance=stream)
             if form.is_valid():
                 stream = form.save()
@@ -381,7 +382,7 @@ def messaging_compose(request, response_format='html'):
     user = request.user.get_profile()
 
     if request.POST:
-        if not 'cancel' in request.POST:
+        if 'cancel' not in request.POST:
             message = Message()
             message.author = user.get_contact()
             if not message.author:
@@ -727,7 +728,7 @@ def settings_edit(request, response_format='html'):
     "Settings admin view"
 
     if request.POST:
-        if not 'cancel' in request.POST:
+        if 'cancel' not in request.POST:
             form = SettingsForm(request.user.get_profile(), request.POST)
             if form.is_valid():
                 form.save()

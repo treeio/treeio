@@ -3,7 +3,7 @@
 # This file is part of Treeio.
 # License www.tree.io/license
 
-#-*- coding: utf-8 -*-
+# -*- coding: utf-8 -*-
 
 from __future__ import absolute_import, with_statement
 
@@ -168,7 +168,7 @@ class PerspectiveHandler(ObjectHandler):
             other_perspectives = Perspective.objects.filter(
                 trash=False).exclude(id=perspective.id)
             modules = perspective.modules.all()
-            if modules and not admin_module in modules:
+            if modules and admin_module not in modules:
                 if not other_perspectives.filter(Q(modules=admin_module) | Q(modules__isnull=True)):
                     perspective.modules.add(admin_module)
                     request.session['message'] = _(

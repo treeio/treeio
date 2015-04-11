@@ -177,7 +177,7 @@ class CronRunner():
                     while len(self.queue) > 0 and len(self.pool) < self.poolsize:
                         cron = self.queue.pop()
                         self.pool.append(cron)
-                        if cache.has_key('hardtree_%s_last' % (cron.database)):
+                        if 'hardtree_%s_last' % (cron.database) in cache:
                             last_accessed = cache.get(
                                 'hardtree_%s_last' % (cron.database))
                             if last_accessed > (time.time() - int(self.qualify_high)):

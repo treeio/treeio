@@ -296,7 +296,7 @@ class DocumentsViewsTest(TestCase):
                      }
         response = self.client.post(
             reverse('documents_weblink_add'), post_data)
-        #self.assertEqual(WebLink.objects.count(), 2)
+        # self.assertEqual(WebLink.objects.count(), 2)
 
     def test_weblink_view_login(self):
         "Test index page with login at /documents/view/<weblink_id>"

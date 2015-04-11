@@ -3,7 +3,7 @@
 # This file is part of Treeio.
 # License www.tree.io/license
 
-#-*- coding: utf-8 -*-
+# -*- coding: utf-8 -*-
 
 from __future__ import absolute_import, with_statement
 
@@ -14,23 +14,22 @@ __all__ = ['SaleCommonHandler', 'SaleStatusHandler', 'ProductHandler',
 from treeio.core.api.utils import rc
 from treeio.core.api.handlers import ObjectHandler, getOrNone
 from treeio.finance.helpers import convert
-from treeio.sales.models import SaleStatus, Product, SaleSource, Lead, Opportunity, SaleOrder, Subscription, OrderedProduct
+from treeio.sales.models import SaleStatus, Product, SaleSource, Lead, Opportunity, SaleOrder, Subscription, \
+    OrderedProduct
 from treeio.sales.forms import OrderForm, ProductForm, SaleStatusForm, LeadForm, OpportunityForm, \
     OrderedProductForm, SubscriptionForm, SaleSourceForm
 
 
 class SaleCommonHandler(ObjectHandler):
-
     def check_create_permission(self, request, mode):
         return request.user.get_profile().is_admin('treeio.sales')
 
     def check_instance_permission(self, request, inst, mode):
         return request.user.get_profile().has_permission(inst, mode=mode) \
-            or request.user.get_profile().is_admin('treeio.sales')
+               or request.user.get_profile().is_admin('treeio.sales')
 
 
 class SaleStatusHandler(SaleCommonHandler):
-
     "Entrypoint for SaleStatus model."
 
     model = SaleStatus
@@ -45,7 +44,6 @@ class SaleStatusHandler(SaleCommonHandler):
 
 
 class ProductHandler(SaleCommonHandler):
-
     "Entrypoint for Product model."
 
     model = Product
@@ -65,7 +63,6 @@ class ProductHandler(SaleCommonHandler):
 
 
 class SaleSourceHandler(SaleCommonHandler):
-
     "Entrypoint for SaleSource model."
 
     model = SaleSource
@@ -80,7 +77,6 @@ class SaleSourceHandler(SaleCommonHandler):
 
 
 class LeadHandler(SaleCommonHandler):
-
     "Entrypoint for Lead model."
 
     model = Lead
@@ -96,7 +92,6 @@ class LeadHandler(SaleCommonHandler):
 
 
 class OpportunityHandler(SaleCommonHandler):
-
     "Entrypoint for Opportunity model."
 
     model = Opportunity
@@ -165,13 +160,12 @@ class OpportunityHandler(SaleCommonHandler):
 
 
 class SaleOrderHandler(SaleCommonHandler):
-
     "Entrypoint for SaleOrder model."
 
     model = SaleOrder
     form = OrderForm
     fields = ('id', 'payment', 'total', 'total_display') + \
-        OrderForm._meta.fields
+             OrderForm._meta.fields
 
     @classmethod
     def resource_uri(cls, obj=None):
@@ -195,7 +189,6 @@ class SaleOrderHandler(SaleCommonHandler):
 
 
 class SubscriptionHandler(SaleCommonHandler):
-
     "Entrypoint for Subscription model."
 
     model = Subscription
@@ -245,7 +238,6 @@ class SubscriptionHandler(SaleCommonHandler):
 
 
 class OrderedProductHandler(SaleCommonHandler):
-
     "Entrypoint for OrderedProduct model."
 
     model = OrderedProduct

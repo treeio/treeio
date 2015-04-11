@@ -21,7 +21,8 @@ from django.shortcuts import get_object_or_404
 from treeio.core.conf import settings
 from treeio.core.decorators import treeio_login_required, handle_response_format
 from treeio.core.forms import LoginForm, PasswordResetForm, InvitationForm, SqlSettingsForm
-from treeio.core.models import Object, Module, ModuleSetting, Perspective, User, Attachment, Invitation, Tag, UpdateRecord
+from treeio.core.models import Object, Module, ModuleSetting, Perspective, User, Attachment, Invitation, Tag, \
+    UpdateRecord
 from treeio.core.rendering import render_to_response
 from jinja2 import Markup
 from os.path import join
@@ -64,22 +65,24 @@ def user_login(request, response_format='html'):
                 if not profile:
                     return render_to_response('core/user_login', {
                         'error_message': 'Username or password you entered is not valid', 'form': Markup(form)},
-                        context_instance=RequestContext(request), response_format=response_format)
+                                              context_instance=RequestContext(request), response_format=response_format)
 
                 if profile.disabled:
                     return render_to_response('core/user_login', {
                         'error_message': 'Your account is disabled.',
                         'form': Markup(form)},
-                        context_instance=RequestContext(request),
-                        response_format=response_format)
+                                              context_instance=RequestContext(request),
+                                              response_format=response_format)
 
                 if user.is_active and profile:
 
                     # Disable account with overdue payment
                     if getattr(settings, "HARDTREE_SUBSCRIPTION_BLOCKED", False):
                         return render_to_response('core/user_login', {
-                            'error_message': 'We are sorry to inform you but your account has been deactivated. Please login to your <a href="https://www.tree.io/login/">control panel</a> to see details.', 'form': Markup(form)},
-                            context_instance=RequestContext(request), response_format=response_format)
+                            'error_message': 'We are sorry to inform you but your account has been deactivated. Please login to your <a href="https://www.tree.io/login/">control panel</a> to see details.',
+                            'form': Markup(form)},
+                                                  context_instance=RequestContext(request),
+                                                  response_format=response_format)
 
                     login(request, user)
 
@@ -106,7 +109,7 @@ def user_login(request, response_format='html'):
             else:
                 return render_to_response('core/user_login', {
                     'error_message': 'Username or password you entered is not valid', 'form': Markup(form)},
-                    context_instance=RequestContext(request), response_format=response_format)
+                                          context_instance=RequestContext(request), response_format=response_format)
         elif not form.is_valid() and user is None:
             return render_to_response('core/user_login',
                                       {'error_message': 'Username or password you entered is not valid', 'form': Markup(
@@ -115,7 +118,7 @@ def user_login(request, response_format='html'):
         else:
             return render_to_response('core/user_login',
                                       {'error_message': 'Please re-enter the text from the image',
-                                          'form': Markup(form)},
+                                       'form': Markup(form)},
                                       context_instance=RequestContext(request), response_format=response_format)
     else:
         return render_to_response('core/user_login', {'form': Markup(form)},
@@ -128,7 +131,7 @@ def user_denied(request, message='', response_format='html'):
     response = render_to_response('core/user_denied',
                                   {'message': message},
                                   context_instance=RequestContext(request), response_format=response_format)
-    #response.status_code = 403
+    # response.status_code = 403
     return response
 
 
@@ -197,7 +200,7 @@ def ajax_popup(request, popup_id='', url='/'):
     for module in modules:
         try:
             import_name = module.name + "." + \
-                settings.HARDTREE_MODULE_IDENTIFIER
+                          settings.HARDTREE_MODULE_IDENTIFIER
             hmodule = __import__(import_name, fromlist=[str(module.name)])
             urls = hmodule.URL_PATTERNS
             for regexp in urls:
@@ -350,9 +353,9 @@ def ajax_object_lookup(request, response_format='html'):
     objects = []
     if request.GET and 'term' in request.GET:
         objects = Object.filter_permitted(request.user.get_profile(),
-                                          Object.objects.filter(
-                                              object_name__icontains=request.GET['term']),
-                                          mode='x')[:10]
+            Object.objects.filter(
+                object_name__icontains=request.GET['term']),
+            mode='x')[:10]
 
     return render_to_response('core/ajax_object_lookup',
                               {'objects': objects},
@@ -372,6 +375,7 @@ def ajax_tag_lookup(request, response_format='html'):
                               {'tags': tags},
                               context_instance=RequestContext(request),
                               response_format=response_format)
+
 
 #
 # Widgets
@@ -485,7 +489,7 @@ def save_upload(uploaded, filename, raw_data):
             else:
                 for c in uploaded.chunks():
                     dest.write(c)
-                # got through saving the upload, report success
+                    # got through saving the upload, report success
             return True
     except IOError:
         # could not open the file most likely

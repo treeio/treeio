@@ -63,11 +63,13 @@ def _get_filter_query(user, do_permissions=True, do_recipients=True, filters=Non
     if do_recipients:
         if not is_admin:
             query = query & ((~Q(author=user) | Q(record_type='share')) & (Q(recipients=user) |
-                                                                           Q(recipients__isnull=True) | Q(recipients=user.default_group) |
+                                                                           Q(recipients__isnull=True) | Q(
+                recipients=user.default_group) |
                                                                            Q(recipients__in=user.other_groups.all())))
         else:
             query = query & (Q(record_type='share') | (~Q(author=user) & (Q(recipients=user) |
-                                                                          Q(recipients__isnull=True) | Q(recipients=user.default_group) | Q(recipients__in=user.other_groups.all()))))
+                                                                          Q(recipients__isnull=True) | Q(
+                recipients=user.default_group) | Q(recipients__in=user.other_groups.all()))))
 
     return query
 
@@ -296,6 +298,7 @@ def index_by_module(request, module_name, response_format='html'):
 
     return render_to_response('news/index_by_module', context,
                               context_instance=RequestContext(request), response_format=response_format)
+
 
 #
 # Widgets

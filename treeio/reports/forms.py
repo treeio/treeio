@@ -35,7 +35,8 @@ class MassActionForm(forms.Form):
         self.fields['delete'] = forms.ChoiceField(label=_("With selected"), choices=(('', '-----'),
                                                                                      ('delete', _(
                                                                                          'Delete Completely')),
-                                                                                     ('trash', _('Move to Trash'))), required=False)
+                                                                                     ('trash', _('Move to Trash'))),
+                                                  required=False)
 
     def save(self, *args, **kwargs):
         "Process form"
@@ -54,7 +55,6 @@ class ObjChoiceForm(forms.Form):
     """ Choose an Object to Report On """
 
     def __init__(self, user, *args, **kwargs):
-
         object_types = kwargs.pop('object_types')
         object_names = kwargs.pop('object_names')
 
@@ -73,7 +73,6 @@ class ReportForm(forms.ModelForm):
         super(ReportForm, self).__init__(*args, **kwargs)
 
     class Meta:
-
         "Report"
         model = Report
         fields = ('model',)
@@ -191,7 +190,6 @@ class ChartForm(forms.Form):
 
 
 class QueryForm(forms.Form):
-
     def __init__(self, user, *args, **kwargs):
         kwargs.pop('names')
         super(QueryForm, self).__init__(*args, **kwargs)
@@ -203,7 +201,7 @@ class FilterForm(forms.Form):
     fields = {}
 
     def __init__(self, user, *args, **kwargs):
-        if not (kwargs.has_key('report') and kwargs.has_key('field_name')):
+        if not ('report' in kwargs and 'field_name' in kwargs):
             return
         report = kwargs.pop('report')
         field_name = kwargs.pop('field_name')
@@ -220,7 +218,8 @@ class FilterForm(forms.Form):
         self.fields['operand'] = forms.ChoiceField()
         if field.get_internal_type() == 'ForeignKey':
             self.fields['choice'] = forms.ModelChoiceField(queryset=Object.filter_permitted(user,
-                                                                                            field.related.parent_model.objects.all(), mode='x'))
+                                                                                            field.related.parent_model.objects.all(),
+                                                                                            mode='x'))
             fc = (('is', 'is'), ('not', 'is not'))
         elif field.get_internal_type() == 'DateTimeField':
             self.fields['choice'] = forms.DateTimeField()

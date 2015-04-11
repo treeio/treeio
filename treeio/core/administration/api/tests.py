@@ -15,7 +15,6 @@ from treeio.core.models import User, Group, ModuleSetting, Object, Perspective
 
 
 class CoreAPITest(TestCase):
-
     "Core api tests"
 
     username = "api_test"
@@ -71,14 +70,15 @@ class CoreAPITest(TestCase):
 
     def test_get_group(self):
         response = self.client.get(path=reverse('api_admin_groups', kwargs={
-                                   'accessentity_ptr': self.group.id}), **self.authentication_headers)
+            'accessentity_ptr': self.group.id}), **self.authentication_headers)
         self.assertEquals(response.status_code, 200)
 
     def test_update_group(self):
         updates = {'name': 'Api group name', 'details':
-                   '<p>api details</p>', 'perspective': self.perspective.id}
+            '<p>api details</p>', 'perspective': self.perspective.id}
         response = self.client.put(path=reverse('api_admin_groups', kwargs={'accessentity_ptr': self.group.id}),
-                                   content_type=self.content_type,  data=json.dumps(updates), **self.authentication_headers)
+                                   content_type=self.content_type, data=json.dumps(updates),
+                                   **self.authentication_headers)
         self.assertEquals(response.status_code, 200)
 
         data = json.loads(response.content)
@@ -94,25 +94,26 @@ class CoreAPITest(TestCase):
 
     def test_get_user(self):
         response = self.client.get(path=reverse('api_admin_users', kwargs={
-                                   'accessentity_ptr': self.user.id}), **self.authentication_headers)
+            'accessentity_ptr': self.user.id}), **self.authentication_headers)
         self.assertEquals(response.status_code, 200)
 
     def test_update_user(self):
         updates = {'name': 'Api user name', 'default_group': self.group.id, 'disabled': False,
                    'perspective': self.perspective.id}
         response = self.client.put(path=reverse('api_admin_users', kwargs={'accessentity_ptr': self.user.id}),
-                                   content_type=self.content_type, data=json.dumps(updates), **self.authentication_headers)
+                                   content_type=self.content_type, data=json.dumps(updates),
+                                   **self.authentication_headers)
         self.assertEquals(response.status_code, 405)
 
-        #data = json.loads(response.content)
-        #self.assertEquals(data['name'], updates['name'])
-        #self.assertEquals(data['disabled'], updates['disabled'])
-        #self.assertEquals(data['default_group']['id'], updates['default_group'])
-        #self.assertEquals(data['perspective']['id'], updates['perspective'])
+        # data = json.loads(response.content)
+        # self.assertEquals(data['name'], updates['name'])
+        # self.assertEquals(data['disabled'], updates['disabled'])
+        # self.assertEquals(data['default_group']['id'], updates['default_group'])
+        # self.assertEquals(data['perspective']['id'], updates['perspective'])
 
     def test_delete_self(self):
         response = self.client.delete(path=reverse('api_admin_users', kwargs={
-                                      'accessentity_ptr': self.user.id}), **self.authentication_headers)
+            'accessentity_ptr': self.user.id}), **self.authentication_headers)
         self.assertEquals(response.status_code, 401)
 
     def test_get_ticket_modules_list(self):
@@ -129,13 +130,14 @@ class CoreAPITest(TestCase):
 
     def test_get_perspective(self):
         response = self.client.get(path=reverse('api_admin_perspectives', kwargs={
-                                   'object_ptr': self.perspective.id}), **self.authentication_headers)
+            'object_ptr': self.perspective.id}), **self.authentication_headers)
         self.assertEquals(response.status_code, 200)
 
     def test_update_perspective(self):
         updates = {'name': 'Api perspective', 'details': 'Api details'}
         response = self.client.put(path=reverse('api_admin_perspectives', kwargs={'object_ptr': self.perspective.id}),
-                                   content_type=self.content_type, data=json.dumps(updates), **self.authentication_headers)
+                                   content_type=self.content_type, data=json.dumps(updates),
+                                   **self.authentication_headers)
         self.assertEquals(response.status_code, 200)
 
         data = json.loads(response.content)

@@ -146,7 +146,7 @@ def verification_user(id, user):
     :type user: basestring
     """
     conferences = get_memcached(get_key("conferences"))
-    if not user in conferences[id]["users"].keys():
+    if user not in conferences[id]["users"].keys():
         return False
     return True
 
@@ -325,9 +325,9 @@ def get_new_message_for_user(user, **kwargs):
         }
         return _new_data.copy()
 
-    if not "flag" in kwargs.keys():
+    if "flag" not in kwargs.keys():
         kwargs["flag"] = None
-    if not "long_polling" in kwargs.keys():
+    if "long_polling" not in kwargs.keys():
         kwargs["long_polling"] = False
     if "user_obj" in kwargs.keys() and "location" in kwargs.keys():
         _location = kwargs['location']

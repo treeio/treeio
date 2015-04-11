@@ -3,7 +3,7 @@
 # This file is part of Treeio.
 # License www.tree.io/license
 
-#-*- coding: utf-8 -*-
+# -*- coding: utf-8 -*-
 
 from __future__ import absolute_import, with_statement
 
@@ -20,7 +20,6 @@ from treeio.infrastructure.forms import ItemForm, ItemTypeForm, ItemStatusForm, 
 
 
 class InfrastructureCommonHandler(ObjectHandler):
-
     def check_create_permission(self, request, mode):
         return request.user.get_profile().is_admin('treeio.infrastructure')
 
@@ -92,7 +91,7 @@ class ItemHandler(ObjectHandler):
     form = ItemForm
 
     fields = ['id', ('itemvalue_set', ('name', 'value'))] + \
-        [i.name for i in Item._meta.local_fields if i.name != 'object_ptr']
+             [i.name for i in Item._meta.local_fields if i.name != 'object_ptr']
 
     @classmethod
     def resource_uri(cls, obj=None):

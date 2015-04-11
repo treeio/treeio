@@ -20,7 +20,6 @@ from treeio.identities.models import Contact, ContactType
 
 @override_settings(HARDTREE_API_AUTH_ENGINE='basic')
 class MessagingApiTest(TestCase):
-
     "Messaging functional tests for api"
 
     username = "api_test"
@@ -115,14 +114,15 @@ class MessagingApiTest(TestCase):
 
     def test_get_one_mlist(self):
         response = self.client.get(path=reverse('api_messaging_mlist', kwargs={
-                                   'object_ptr': self.mlist.id}), **self.authentication_headers)
+            'object_ptr': self.mlist.id}), **self.authentication_headers)
         self.assertEquals(response.status_code, 200)
 
     def test_update_mlist(self):
         updates = {"name": "API mailing list", "description": "API description update", "from_contact": self.contact.id,
                    "members": [self.contact.id, ]}
         response = self.client.put(path=reverse('api_messaging_mlist', kwargs={'object_ptr': self.mlist.id}),
-                                   content_type=self.content_type, data=json.dumps(updates), **self.authentication_headers)
+                                   content_type=self.content_type, data=json.dumps(updates),
+                                   **self.authentication_headers)
         self.assertEquals(response.status_code, 200)
 
         data = json.loads(response.content)
@@ -140,13 +140,14 @@ class MessagingApiTest(TestCase):
 
     def test_get_stream(self):
         response = self.client.get(path=reverse('api_messaging_streams', kwargs={
-                                   'object_ptr': self.stream.id}), **self.authentication_headers)
+            'object_ptr': self.stream.id}), **self.authentication_headers)
         self.assertEquals(response.status_code, 200)
 
     def test_update_stream(self):
         updates = {"name": "API stream", }
         response = self.client.put(path=reverse('api_messaging_streams', kwargs={'object_ptr': self.stream.id}),
-                                   content_type=self.content_type, data=json.dumps(updates), **self.authentication_headers)
+                                   content_type=self.content_type, data=json.dumps(updates),
+                                   **self.authentication_headers)
         self.assertEquals(response.status_code, 200)
 
         data = json.loads(response.content)
@@ -160,7 +161,7 @@ class MessagingApiTest(TestCase):
 
     def test_get_message(self):
         response = self.client.get(path=reverse('api_messaging_messages', kwargs={
-                                   'object_ptr': self.message.id}), **self.authentication_headers)
+            'object_ptr': self.message.id}), **self.authentication_headers)
         self.assertEquals(response.status_code, 200)
 
     def test_send_message(self):
@@ -179,7 +180,8 @@ class MessagingApiTest(TestCase):
         updates = {"title": "API test", "body": "Test body", "stream": self.stream.id,
                    "multicomplete_recipients": u'test@test.com'}
         response = self.client.put(path=reverse('api_messaging_messages', kwargs={'object_ptr': self.message.id}),
-                                   content_type=self.content_type, data=json.dumps(updates), **self.authentication_headers)
+                                   content_type=self.content_type, data=json.dumps(updates),
+                                   **self.authentication_headers)
         self.assertEquals(response.status_code, 200)
 
         data = json.loads(response.content)

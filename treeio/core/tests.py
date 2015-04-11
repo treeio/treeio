@@ -18,7 +18,6 @@ from treeio.core.models import User, Group, ModuleSetting, Module, Object, Persp
 
 
 class CoreModelsTest(TestCase):
-
     """Core Model Tests"""
 
     def test_model_AccessEntity(self):
@@ -137,10 +136,7 @@ class CoreModelsTest(TestCase):
         self.assertEqual(obj.get_absolute_url(), '/admin/perspective/view/{}'.format(obj.id))
 
 
-
-
 class CoreViewsTest(TestCase):
-
     "Core View tests"
     username = "test"
     password = "password"
@@ -449,7 +445,6 @@ class CoreViewsTest(TestCase):
 
 
 class MiddlewareChatTest(TestCase):
-
     "Midleware chat tests"
     username = "test"
     password = "password"
@@ -519,7 +514,8 @@ class MiddlewareChatTest(TestCase):
     def test_chat_add_new_message(self):
         "Test add_new_message"
         response = self.client.post(
-            '/chat', {'json': '{"cmd":"Message","data":{"id":"test_b5e6d0470a5f4656c3bc77f879c3dbbc","text":"test message"},"location":"#"}'})
+            '/chat', {
+                'json': '{"cmd":"Message","data":{"id":"test_b5e6d0470a5f4656c3bc77f879c3dbbc","text":"test message"},"location":"#"}'})
         self.assertEqual(response.status_code, 200)
 
     def test_chat_exit_from_conference(self):
@@ -531,7 +527,8 @@ class MiddlewareChatTest(TestCase):
     def test_chat_add_users_in_conference(self):
         "Test add_users_in_conference"
         response = self.client.post(
-            '/chat', {'json': '{"cmd":"Add","data":{"id":"guest_006f721c4a59a44d969b9f73fb6360a5","users":["test"]},"location":"#"}'})
+            '/chat', {
+                'json': '{"cmd":"Add","data":{"id":"guest_006f721c4a59a44d969b9f73fb6360a5","users":["test"]},"location":"#"}'})
         self.assertEqual(response.status_code, 200)
 
     def test_chat_create_conference(self):

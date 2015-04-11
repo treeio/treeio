@@ -23,7 +23,6 @@ preprocess_form()
 
 
 class MassActionForm(forms.Form):
-
     """ Mass action form for Reports """
 
     delete = forms.ChoiceField(label=_("With selected"), choices=(('', '-----'), ('delete', _('Delete Completely')),
@@ -38,8 +37,9 @@ class MassActionForm(forms.Form):
 
         super(MassActionForm, self).__init__(*args, **kwargs)
 
-        self.fields['delete'] = forms.ChoiceField(label=_("With selected"), choices=(('', '-----'), ('delete', _('Delete Completely')),
-                                                                                     ('trash', _('Move to Trash'))), required=False)
+        self.fields['delete'] = forms.ChoiceField(label=_("With selected"),
+                                                  choices=(('', '-----'), ('delete', _('Delete Completely')),
+                                                           ('trash', _('Move to Trash'))), required=False)
 
     def save(self, *args, **kwargs):
         "Process form"
@@ -55,7 +55,6 @@ class MassActionForm(forms.Form):
 
 
 class ContactFieldForm(forms.ModelForm):
-
     "Contact Field Form"
 
     def clean_name(self):
@@ -76,14 +75,12 @@ class ContactFieldForm(forms.ModelForm):
         self.fields['details'].label = _("Details")
 
     class Meta:
-
         "Fields Form"
         model = ContactField
         fields = ('name', 'label', 'field_type', 'required', 'details')
 
 
 class ContactTypeForm(forms.ModelForm):
-
     "Contact Type Form"
 
     def __init__(self, user, *args, **kwargs):
@@ -119,7 +116,6 @@ class ContactTypeForm(forms.ModelForm):
 
 
 class ContactForm(forms.Form):
-
     """ ContactForm """
 
     name = forms.CharField(
@@ -186,6 +182,7 @@ class ContactForm(forms.Form):
         "Returns an upload_to path to a new file"
         import hashlib
         import random
+
         while True:
             hasher = hashlib.md5()
             hasher.update(str(random.random()))
@@ -328,7 +325,6 @@ class ContactForm(forms.Form):
 
 
 class FilterForm(forms.ModelForm):
-
     """ Filter form definition """
 
     def __init__(self, user, skip=None, *args, **kwargs):
@@ -358,7 +354,6 @@ class FilterForm(forms.ModelForm):
 
 
 class SettingsForm(forms.Form):
-
     """ Administration settings form """
 
     default_contact_type = forms.ModelChoiceField(

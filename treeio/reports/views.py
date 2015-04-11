@@ -243,8 +243,7 @@ def _get_report_content(report, request=None):
     for field in model.fields:  # get fields and aggregate functions for them
         if field.display and getattr(field, 'aggregation', None):
             xfield = classobj._meta.get_field_by_name(field.name)[0]
-            if number_field_regex.match(xfield.get_internal_type()) \
-                    and aggregate_functions.has_key(field.aggregation):
+            if number_field_regex.match(xfield.get_internal_type()) and field.aggregation in aggregate_functions:
                 agg_funcs[field.name] = aggregate_functions[
                     field.aggregation]['function']
 
@@ -468,12 +467,10 @@ def report_add(request, response_format='html'):
 
         object_names.append("%s: %s" % (module_name, human_type))
 
-    form = ObjChoiceForm(request.user, object_types=object_types,
-        object_names=object_names)
+    form = ObjChoiceForm(request.user, object_types=object_types, object_names=object_names)
 
-    return render_to_response('reports/report_add', {'form': form},
-        context_instance=RequestContext(request),
-        response_format=response_format)
+    return render_to_response('reports/report_add', {'form': form}, context_instance=RequestContext(request),
+                              response_format=response_format)
 
 
 @treeio_login_required

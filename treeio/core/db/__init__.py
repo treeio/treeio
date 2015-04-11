@@ -3,7 +3,7 @@
 # This file is part of Treeio.
 # License www.tree.io/license
 
-#-*- encoding: utf-8 -*-
+# -*- encoding: utf-8 -*-
 """
 Database extension
 """

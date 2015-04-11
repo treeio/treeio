@@ -14,11 +14,11 @@ from treeio.core.models import Object, ModuleSetting
 from treeio.core.decorators import preprocess_form
 from jinja2 import filters
 from datetime import datetime
+
 preprocess_form()
 
 
 class MassActionForm(forms.Form):
-
     """ Mass action form for Reports """
 
     delete = forms.ChoiceField(label=_("Delete"), choices=(('', '-----'), ('delete', _('Delete Completely')),
@@ -35,7 +35,8 @@ class MassActionForm(forms.Form):
         self.fields['delete'] = forms.ChoiceField(label=_("Delete"), choices=(('', '-----'),
                                                                               ('delete', _(
                                                                                   'Delete Completely')),
-                                                                              ('trash', _('Move to Trash'))), required=False)
+                                                                              ('trash', _('Move to Trash'))),
+                                                  required=False)
 
     def save(self, *args, **kwargs):
         "Process form"
@@ -48,7 +49,6 @@ class MassActionForm(forms.Form):
 
 
 class ObjectModelChoiceField(forms.ModelChoiceField):
-
     "Object Model Choice Field"
 
     def label_from_instance(self, obj):
@@ -62,7 +62,6 @@ class ObjectModelChoiceField(forms.ModelChoiceField):
 
 
 class ChangeSetStatusForm(forms.ModelForm):
-
     """ ChangeSetStatus form """
 
     def __init__(self, user, *args, **kwargs):
@@ -74,14 +73,12 @@ class ChangeSetStatusForm(forms.ModelForm):
         self.fields['details'].label = _("Details")
 
     class Meta:
-
         "ChangeSetStatus"
         model = ChangeSetStatus
         fields = ['name', 'active', 'hidden', 'details']
 
 
 class ChangeSetForm(forms.ModelForm):
-
     """ ChangeSet form """
 
     def __init__(self, user, *args, **kwargs):
@@ -140,13 +137,13 @@ class ChangeSetForm(forms.ModelForm):
         model = ChangeSet
         fields = ['name', 'object', 'status', 'details']
 
+
 #
 # Filters
 #
 
 
 class FilterForm(forms.ModelForm):
-
     """ FilterForm definition """
 
     def __init__(self, user, skip=None, *args, **kwargs):
@@ -197,7 +194,6 @@ class FilterForm(forms.ModelForm):
 
 
 class SettingsForm(forms.Form):
-
     """ Administration settings form """
 
     default_changeset_status = forms.ModelChoiceField(

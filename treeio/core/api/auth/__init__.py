@@ -12,7 +12,6 @@ from treeio.core.api.auth.utils import get_oauth_request, verify_oauth_request, 
 
 
 class OAuthAuthentication(object):
-
     def __init__(self, realm='API', two_legged=False):
         self.realm = realm
         self.two_legged = two_legged
@@ -29,7 +28,7 @@ class OAuthAuthentication(object):
             return self._authenticate_three_legged(request, oauth_request)
 
     def _authenticate_two_legged(self, request, oauth_request):
-        #missing_params = require_params(oauth_request)
+        # missing_params = require_params(oauth_request)
         # if missing_params is not None:
         #   return missing_params
 
@@ -50,7 +49,7 @@ class OAuthAuthentication(object):
         return True
 
     def _authenticate_three_legged(self, request, oauth_request):
-        #missing_params = require_params(oauth_request, ('oauth_token',))
+        # missing_params = require_params(oauth_request, ('oauth_token',))
         # if missing_params is not None:
         #    return missing_params
 
@@ -103,4 +102,5 @@ if auth_engine_name == 'oauth':
     auth_engine = OAuthAuthentication()
 else:
     from piston.authentication import HttpBasicAuthentication
+
     auth_engine = HttpBasicAuthentication(realm='My sample API')

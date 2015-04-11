@@ -21,7 +21,6 @@ preprocess_form()
 
 
 class MassActionForm(forms.Form):
-
     """ Mass action form for Transactions & Liabilities """
 
     category = forms.ModelChoiceField(queryset=[], required=False)
@@ -39,7 +38,8 @@ class MassActionForm(forms.Form):
         self.fields['delete'] = forms.ChoiceField(label=_("Delete"), choices=(('', '-----'),
                                                                               ('delete', _(
                                                                                   'Delete Completely')),
-                                                                              ('trash', _('Move to Trash'))), required=False)
+                                                                              ('trash', _('Move to Trash'))),
+                                                  required=False)
 
         self.fields['category'].label = _("Category")
         self.fields['category'].queryset = Object.filter_permitted(
@@ -63,7 +63,6 @@ class MassActionForm(forms.Form):
 
 
 class CategoryForm(forms.ModelForm):
-
     """ Category form """
 
     def __init__(self, user, *args, **kwargs):
@@ -73,14 +72,12 @@ class CategoryForm(forms.ModelForm):
         self.fields['details'].label = _("Details")
 
     class Meta:
-
         "Category Form"
         model = Category
         fields = ('name', 'details')
 
 
 class AccountForm(forms.ModelForm):
-
     """ Account form """
 
     def __init__(self, user, *args, **kwargs):
@@ -117,7 +114,6 @@ class AccountForm(forms.ModelForm):
 
 
 class AccountFilterForm(forms.ModelForm):
-
     """ Filters definition """
 
     def __init__(self, user, skip=None, *args, **kwargs):
@@ -144,7 +140,6 @@ class AccountFilterForm(forms.ModelForm):
 
 
 class AssetForm(forms.ModelForm):
-
     """ Asset form """
 
     def __init__(self, user, *args, **kwargs):
@@ -168,7 +163,6 @@ class AssetForm(forms.ModelForm):
             {'popuplink': reverse('identities_contact_add')})
 
     class Meta:
-
         "Asset Form"
         model = Asset
         fields = ('name', 'asset_type', 'initial_value', 'lifetime', 'endlife_value',
@@ -176,7 +170,6 @@ class AssetForm(forms.ModelForm):
 
 
 class AssetFilterForm(forms.ModelForm):
-
     """ Filters definition """
 
     def __init__(self, user, skip=None, *args, **kwargs):
@@ -228,7 +221,6 @@ class AssetFilterForm(forms.ModelForm):
 
 
 class EquityForm(forms.ModelForm):
-
     """ Equity form """
 
     def __init__(self, user, *args, **kwargs):
@@ -274,7 +266,6 @@ class EquityForm(forms.ModelForm):
 
 
 class EquityFilterForm(forms.ModelForm):
-
     """ Filters definition """
 
     def __init__(self, user, skip=None, *args, **kwargs):
@@ -337,7 +328,6 @@ class EquityFilterForm(forms.ModelForm):
 
 
 class ReceivableForm(forms.ModelForm):
-
     """ Receivable form """
 
     def __init__(self, user, *args, **kwargs):
@@ -387,7 +377,6 @@ class ReceivableForm(forms.ModelForm):
 
 
 class TransactionForm(forms.ModelForm):
-
     """ Transaction form """
 
     def __init__(self, user, liability_id=None, order_id=None, *args, **kwargs):
@@ -479,7 +468,6 @@ class TransactionForm(forms.ModelForm):
 
 
 class TransactionFilterForm(forms.ModelForm):
-
     """ Filters definition """
 
     def __init__(self, user, skip=None, *args, **kwargs):
@@ -543,7 +531,6 @@ class TransactionFilterForm(forms.ModelForm):
 
 
 class LiabilityForm(forms.ModelForm):
-
     """ Folder form """
 
     def __init__(self, user, *args, **kwargs):
@@ -593,7 +580,6 @@ class LiabilityForm(forms.ModelForm):
 
 
 class LiabilityFilterForm(forms.ModelForm):
-
     """ Filters definition """
 
     def __init__(self, user, skip=None, *args, **kwargs):
@@ -665,7 +651,6 @@ class LiabilityFilterForm(forms.ModelForm):
 
 
 class SettingsForm(forms.Form):
-
     """ Administration settings form """
 
     default_currency = forms.ModelChoiceField(
@@ -759,13 +744,13 @@ class SettingsForm(forms.Form):
         except Exception:
             return False
 
+
 #
 # Currency
 #
 
 
 class CurrencyForm(forms.ModelForm):
-
     "Currency Form"
 
     code = forms.ChoiceField(
@@ -775,10 +760,10 @@ class CurrencyForm(forms.ModelForm):
         super(CurrencyForm, self).__init__(*args, **kwargs)
 
     class Meta:
-
         "Currency Form"
         model = Currency
         fields = ('name', 'code', 'symbol', 'factor')  # ,'is_active')
+
 
 #
 # Tax
@@ -786,14 +771,12 @@ class CurrencyForm(forms.ModelForm):
 
 
 class TaxForm(forms.ModelForm):
-
     "Tax Form"
 
     def __init__(self, user, *args, **kwargs):
         super(TaxForm, self).__init__(*args, **kwargs)
 
     class Meta:
-
         "Tax Form"
         model = Tax
         fields = ('name', 'rate', 'compound')
