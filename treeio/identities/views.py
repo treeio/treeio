@@ -436,7 +436,7 @@ def contact_me(request, attribute='', response_format='html'):
                 break
 
     return render_to_response('identities/contact_me',
-                              {'contact': contact, 'types': types,
+                              {'contact': contact,
                                'subcontacts': subcontacts,
                                'objects': objects,
                                'current_module': module,
