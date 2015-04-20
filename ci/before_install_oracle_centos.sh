@@ -34,3 +34,16 @@ export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:"$ORACLE_HOME/lib"
 pip install cx_Oracle
 
 sudo cp /usr/bin/free.original /usr/bin/free
+
+# Configure the server; provide the answers for the following questions:
+# The HTTP port for Oracle Application Express: 8080
+# A port for the database listener: 1521
+# The password for the SYS and SYSTEM database accounts: admin
+# Start the server on boot: yes
+sudo /etc/init.d/oracle-xe configure <<END
+8080
+1521
+admin
+admin
+y
+END
