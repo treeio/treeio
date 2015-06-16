@@ -21,7 +21,7 @@ def module_admin_required(module_name=None):
         def wrapped_f(cls, request, *args, **kwargs):
             "Wrapped"
 
-            if request.user.get_profile().is_admin(module_name):
+            if request.user.profile.is_admin(module_name):
                 return f(cls, request, *args, **kwargs)
             else:
                 return rc.FORBIDDEN

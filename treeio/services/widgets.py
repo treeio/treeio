@@ -20,7 +20,7 @@ def get_widgets(request):
     widgets.update(WIDGETS)
 
     try:
-        agent = request.user.get_profile().serviceagent_set.all()[0]
+        agent = request.user.profile.serviceagent_set.all()[0]
     except Exception:
         agent = None
 

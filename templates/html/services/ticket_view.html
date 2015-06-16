@@ -9,7 +9,7 @@
 {% block module_topmenu %}
 
 <a href="{% url services_ticket_view ticket.id %}" class="top-menu view-link-active">{% trans %}View{% endtrans %}</a>
-{% if user.get_profile().has_permission(ticket, mode='w') %}
+{% if user.profile.has_permission(ticket, mode='w') %}
 <a href="{% url services_ticket_edit ticket.id %}" class="top-menu edit-link">{% trans %}Edit{% endtrans %}</a>
 <a href="{% url services_ticket_delete ticket.id %}" class="top-menu delete-link">{% trans %}Delete{% endtrans %}</a>
     {{ last_updated(ticket) }}
@@ -19,7 +19,7 @@
 
 {% block sidebar_right %}
 
-{% if user.get_profile().has_permission(ticket, mode='w') %}
+{% if user.profile.has_permission(ticket, mode='w') %}
 <span class="sidebar-header-first">{% trans %}Quick Status{% endtrans %}</span>
 <div class="sidebar-block">
     {% for status in statuses %}

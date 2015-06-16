@@ -8,12 +8,12 @@
 {% block module_subtitle %}{% trans %}Folder{% endtrans %}{% endblock %}
 
 {% block module_topmenu %}
-{% if user.get_profile().has_permission(folder, mode='x') %}
+{% if user.profile.has_permission(folder, mode='x') %}
 <a href="{% url knowledge_item_add_folder folder.treepath %}" class="top-menu add-link">{% trans %}New Item{% endtrans %}</a>
 <a href="{% url knowledge_folder_add_folder folder.treepath %}" class="top-menu add-link">{% trans %}New Folder{% endtrans %}</a>
 {% endif %}
 <a href="{% url knowledge_folder_view folder.treepath %}" class="top-menu view-link">{% trans %}View{% endtrans %}</a>
-{% if user.get_profile().has_permission(folder, mode='w') %}
+{% if user.profile.has_permission(folder, mode='w') %}
 <a href="{% url knowledge_folder_edit folder.id %}" class="top-menu edit-link-active">{% trans %}Edit{% endtrans %}</a>
 <a href="{% url knowledge_folder_delete folder.id %}" class="top-menu delete-link">{% trans %}Delete{% endtrans %}</a>
 {% endif %}

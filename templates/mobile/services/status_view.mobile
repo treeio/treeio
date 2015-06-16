@@ -8,7 +8,7 @@
 {% block module_topmenu %}
 <a href="{% url services_ticket_add %}" class="top-menu add-link">{% trans %}New Ticket{% endtrans %}</a>
 <a href="{% url services_status_view status.id %}" class="top-menu view-link-active">{% trans %}View{% endtrans %}</a>
-{% if request.user.get_profile().is_admin('treeio.services') %}
+{% if request.user.profile.is_admin('treeio.services') %}
 <a href="{% url services_status_edit status.id %}" class="top-menu edit-link">{% trans %}Edit{% endtrans %}</a>
 <a href="{% url services_status_delete status.id %}" class="top-menu delete-link">{% trans %}Delete{% endtrans %}</a>
 {% endif %}

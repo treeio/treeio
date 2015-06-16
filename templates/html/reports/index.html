@@ -64,7 +64,7 @@
                 <td>{% if report.creator %} <a href="{% url identities_user_view report.creator.id %}" class="popup-link">{{ report.creator }}</a>{% endif %}</td>
 				<td>
 			        <span class="content-list-item-actions table-link">
-				    {% if user.get_profile().has_permission(report, mode='w') %}
+				    {% if user.profile.has_permission(report, mode='w') %}
 				    <a href="{% url reports_report_edit report.id %}" class="inline-link edit-link">{% trans %}Edit{% endtrans %}</a>
 				    {% endif %}
 					</span>

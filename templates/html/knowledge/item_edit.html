@@ -9,7 +9,7 @@
 
 {% block module_topmenu %}
 <a href="{% url knowledge_item_view item.folder.treepath, item.treepath %}" class="top-menu view-link">{% trans %}View{% endtrans %}</a>
-{% if user.get_profile().has_permission(item, mode='w') %}
+{% if user.profile.has_permission(item, mode='w') %}
 <a href="{% url knowledge_item_edit item.id %}" class="top-menu edit-link-active">{% trans %}Edit{% endtrans %}</a>
 <a href="{% url knowledge_item_delete item.id %}" class="top-menu delete-link">{% trans %}Delete{% endtrans %}</a>
 {% endif %}

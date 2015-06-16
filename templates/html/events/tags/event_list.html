@@ -20,7 +20,7 @@
         {%- endif %}
     </span>
     <span class="content-list-item-actions">
-        {% if user.get_profile().has_permission(event, mode='w') %}
+        {% if user.profile.has_permission(event, mode='w') %}
         <a href="{% url events_event_edit event.id %}" class="inline-link edit-link">{% trans %}Edit{% endtrans %}</a>
         {% endif %}
     </span>

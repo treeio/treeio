@@ -8,7 +8,7 @@
 
 {% block module_topmenu %}
 <a class="top-menu view-link" href="{% url documents_file_view file.id %}">{% trans %}View{% endtrans %}</a>
-{% if user.get_profile().has_permission(file, mode='w') %}
+{% if user.profile.has_permission(file, mode='w') %}
 <a class="top-menu edit-link-active" href="{% url documents_file_edit file.id %}">{% trans %}Edit{% endtrans %}</a>
 <a class="top-menu delete-link" href="{% url documents_file_delete file.id %}">{% trans %}Delete{% endtrans %}</a>
 {% endif %}

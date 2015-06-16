@@ -43,11 +43,11 @@ def _get_default_context(request):
         request, TicketQueue.objects.filter(active=True, parent__isnull=True))
     statuses = Object.filter_by_request(request, TicketStatus.objects)
     try:
-        agent = request.user.get_profile().serviceagent_set.all()[0]
+        agent = request.user.profile.serviceagent_set.all()[0]
     except Exception:
         agent = None
 
-    massform = MassActionForm(request.user.get_profile())
+    massform = MassActionForm(request.user.profile)
 
     context = {
         'statuses': statuses,
@@ -70,8 +70,8 @@ def _process_mass_form(f):
                     try:
                         ticket = Ticket.objects.get(pk=request.POST[key])
                         form = MassActionForm(
-                            request.user.get_profile(), request.POST, instance=ticket)
-                        if form.is_valid() and request.user.get_profile().has_permission(ticket, mode='w'):
+                            request.user.profile, request.POST, instance=ticket)
+                        if form.is_valid() and request.user.profile.has_permission(ticket, mode='w'):
                             form.save()
                     except Exception:
                         pass
@@ -101,7 +101,7 @@ def index(request, response_format='html'):
         tickets = Object.filter_by_request(
             request, Ticket.objects.filter(status__hidden=False))
 
-    filters = FilterForm(request.user.get_profile(), '', request.GET)
+    filters = FilterForm(request.user.profile, '', request.GET)
 
     context = _get_default_context(request)
     context.update({'tickets': tickets,
@@ -136,7 +136,7 @@ def index_assigned(request, response_format='html'):
     else:
         return user_denied(request, "You are not a Service Support Agent.", response_format=response_format)
 
-    filters = FilterForm(request.user.get_profile(), 'assigned', request.GET)
+    filters = FilterForm(request.user.profile, 'assigned', request.GET)
 
     context.update({'tickets': tickets,
                     'filters': filters})
@@ -153,7 +153,7 @@ def index_owned(request, response_format='html'):
 
     context = _get_default_context(request)
 
-    query = Q(caller__related_user=request.user.get_profile())
+    query = Q(caller__related_user=request.user.profile)
     if request.GET:
         if 'status' in request.GET and request.GET['status']:
             query = query & _get_filter_query(request.GET)
@@ -165,7 +165,7 @@ def index_owned(request, response_format='html'):
 
     tickets = Object.filter_by_request(request, Ticket.objects.filter(query))
 
-    filters = FilterForm(request.user.get_profile(), 'caller', request.GET)
+    filters = FilterForm(request.user.profile, 'caller', request.GET)
 
     context.update({'tickets': tickets,
                     'filters': filters})
@@ -185,7 +185,7 @@ def status_view(request, status_id, response_format='html'):
     "Tickets filtered by status"
 
     status = get_object_or_404(TicketStatus, pk=status_id)
-    if not request.user.get_profile().has_permission(status):
+    if not request.user.profile.has_permission(status):
         return user_denied(request, message="You don't have access to this Ticket Status")
 
     query = Q(status=status)
@@ -193,7 +193,7 @@ def status_view(request, status_id, response_format='html'):
         query = query & _get_filter_query(request.GET)
     tickets = Object.filter_by_request(request, Ticket.objects.filter(query))
 
-    filters = FilterForm(request.user.get_profile(), 'status', request.GET)
+    filters = FilterForm(request.user.profile, 'status', request.GET)
 
     context = _get_default_context(request)
     context.update({'status': status,
@@ -210,21 +210,21 @@ def status_edit(request, status_id, response_format='html'):
     "TicketStatus edit"
 
     status = get_object_or_404(TicketStatus, pk=status_id)
-    if not request.user.get_profile().has_permission(status, mode='w') \
-            and not request.user.get_profile().is_admin('treeio_services'):
+    if not request.user.profile.has_permission(status, mode='w') \
+            and not request.user.profile.is_admin('treeio_services'):
         return user_denied(request, "You don't have access to this Ticket Status", response_format)
 
     if request.POST:
         if 'cancel' not in request.POST:
             form = TicketStatusForm(
-                request.user.get_profile(), request.POST, instance=status)
+                request.user.profile, request.POST, instance=status)
             if form.is_valid():
                 status = form.save()
                 return HttpResponseRedirect(reverse('services_status_view', args=[status.id]))
         else:
             return HttpResponseRedirect(reverse('services_status_view', args=[status.id]))
     else:
-        form = TicketStatusForm(request.user.get_profile(), instance=status)
+        form = TicketStatusForm(request.user.profile, instance=status)
 
     context = _get_default_context(request)
     context.update({'form': form,
@@ -240,7 +240,7 @@ def status_delete(request, status_id, response_format='html'):
     "TicketStatus delete"
 
     status = get_object_or_404(TicketStatus, pk=status_id)
-    if not request.user.get_profile().has_permission(status, mode='w'):
+    if not request.user.profile.has_permission(status, mode='w'):
         return user_denied(request, "You don't have access to this Ticket Status", response_format)
 
     if request.POST:
@@ -266,7 +266,7 @@ def status_delete(request, status_id, response_format='html'):
 def status_add(request, response_format='html'):
     "TicketStatus add"
 
-    if not request.user.get_profile().is_admin('treeio.services'):
+    if not request.user.profile.is_admin('treeio.services'):
         return user_denied(request,
                            message="You don't have administrator access to the Service Support module")
 
@@ -274,7 +274,7 @@ def status_add(request, response_format='html'):
         if 'cancel' not in request.POST:
             status = TicketStatus()
             form = TicketStatusForm(
-                request.user.get_profile(), request.POST, instance=status)
+                request.user.profile, request.POST, instance=status)
             if form.is_valid():
                 status = form.save()
                 status.set_user_from_request(request)
@@ -282,7 +282,7 @@ def status_add(request, response_format='html'):
         else:
             return HttpResponseRedirect(reverse('services_settings_view'))
     else:
-        form = TicketStatusForm(request.user.get_profile())
+        form = TicketStatusForm(request.user.profile)
 
     context = _get_default_context(request)
     context.update({'form': form})
@@ -302,7 +302,7 @@ def queue_view(request, queue_id, response_format='html'):
     "Queue view"
 
     queue = get_object_or_404(TicketQueue, pk=queue_id)
-    if not request.user.get_profile().has_permission(queue):
+    if not request.user.profile.has_permission(queue):
         return user_denied(request, message="You don't have access to this Queue")
 
     query = Q(queue=queue)
@@ -316,7 +316,7 @@ def queue_view(request, queue_id, response_format='html'):
         query = query & Q(status__hidden=False)
     tickets = Object.filter_by_request(request, Ticket.objects.filter(query))
 
-    filters = FilterForm(request.user.get_profile(), 'queue', request.GET)
+    filters = FilterForm(request.user.profile, 'queue', request.GET)
     subqueues = Object.filter_by_request(
         request, TicketQueue.objects.filter(parent=queue))
 
@@ -336,20 +336,20 @@ def queue_edit(request, queue_id, response_format='html'):
     "Queue edit"
 
     queue = get_object_or_404(TicketQueue, pk=queue_id)
-    if not request.user.get_profile().has_permission(queue, mode='w'):
+    if not request.user.profile.has_permission(queue, mode='w'):
         return user_denied(request, message="You don't have access to this Queue")
 
     if request.POST:
         if 'cancel' not in request.POST:
             form = QueueForm(
-                request.user.get_profile(), request.POST, instance=queue)
+                request.user.profile, request.POST, instance=queue)
             if form.is_valid():
                 queue = form.save()
                 return HttpResponseRedirect(reverse('services_queue_view', args=[queue.id]))
         else:
             return HttpResponseRedirect(reverse('services_queue_view', args=[queue.id]))
     else:
-        form = QueueForm(request.user.get_profile(), instance=queue)
+        form = QueueForm(request.user.profile, instance=queue)
 
     context = _get_default_context(request)
     context.update({'queue': queue, 'form': form})
@@ -364,7 +364,7 @@ def queue_delete(request, queue_id, response_format='html'):
     "Queue delete"
 
     queue = get_object_or_404(TicketQueue, pk=queue_id)
-    if not request.user.get_profile().has_permission(queue, mode='w'):
+    if not request.user.profile.has_permission(queue, mode='w'):
         return user_denied(request, message="You don't have access to this Queue")
 
     if request.POST:
@@ -397,7 +397,7 @@ def queue_delete(request, queue_id, response_format='html'):
 def queue_add(request, response_format='html'):
     "Queue add"
 
-    if not request.user.get_profile().is_admin('treeio.services'):
+    if not request.user.profile.is_admin('treeio.services'):
         return user_denied(request,
                            message="You don't have administrator access to the Service Support module")
 
@@ -405,7 +405,7 @@ def queue_add(request, response_format='html'):
         if 'cancel' not in request.POST:
             queue = TicketQueue()
             form = QueueForm(
-                request.user.get_profile(), request.POST, instance=queue)
+                request.user.profile, request.POST, instance=queue)
             if form.is_valid():
                 queue = form.save()
                 queue.set_user_from_request(request)
@@ -413,7 +413,7 @@ def queue_add(request, response_format='html'):
         else:
             return HttpResponseRedirect(reverse('services_settings_view'))
     else:
-        form = QueueForm(request.user.get_profile())
+        form = QueueForm(request.user.profile)
 
     context = _get_default_context(request)
     context.update({'form': form})
@@ -433,7 +433,7 @@ def ticket_view(request, ticket_id, response_format='html'):
 
     context = _get_default_context(request)
     agent = context['agent']
-    profile = request.user.get_profile()
+    profile = request.user.profile
 
     ticket = get_object_or_404(Ticket, pk=ticket_id)
     if not profile.has_permission(ticket):
@@ -478,13 +478,13 @@ def ticket_edit(request, ticket_id, response_format='html'):
     agent = context['agent']
 
     ticket = get_object_or_404(Ticket, pk=ticket_id)
-    if not request.user.get_profile().has_permission(ticket, mode='w'):
+    if not request.user.profile.has_permission(ticket, mode='w'):
         return user_denied(request, message="You don't have access to this Ticket")
 
     if request.POST:
         if 'cancel' not in request.POST:
             form = TicketForm(
-                request.user.get_profile(), None, agent, request.POST, instance=ticket)
+                request.user.profile, None, agent, request.POST, instance=ticket)
             if form.is_valid():
                 ticket = form.save()
                 return HttpResponseRedirect(reverse('services_ticket_view', args=[ticket.id]))
@@ -492,7 +492,7 @@ def ticket_edit(request, ticket_id, response_format='html'):
             return HttpResponseRedirect(reverse('services_ticket_view', args=[ticket.id]))
     else:
         form = TicketForm(
-            request.user.get_profile(), None, agent, instance=ticket)
+            request.user.profile, None, agent, instance=ticket)
 
     context.update({'form': form,
                     'ticket': ticket})
@@ -506,11 +506,11 @@ def ticket_edit(request, ticket_id, response_format='html'):
 def ticket_set_status(request, ticket_id, status_id, response_format='html'):
     "Ticket quick set: Status"
     ticket = get_object_or_404(Ticket, pk=ticket_id)
-    if not request.user.get_profile().has_permission(ticket, mode='w'):
+    if not request.user.profile.has_permission(ticket, mode='w'):
         return user_denied(request, message="You don't have access to this Ticket")
 
     status = get_object_or_404(TicketStatus, pk=status_id)
-    if not request.user.get_profile().has_permission(status):
+    if not request.user.profile.has_permission(status):
         return user_denied(request, message="You don't have access to this Ticket Status")
 
     if not ticket.status == status:
@@ -526,7 +526,7 @@ def ticket_delete(request, ticket_id, response_format='html'):
     "Ticket delete"
 
     ticket = get_object_or_404(Ticket, pk=ticket_id)
-    if not request.user.get_profile().has_permission(ticket, mode='w'):
+    if not request.user.profile.has_permission(ticket, mode='w'):
         return user_denied(request, message="You don't have access to this Ticket")
 
     if request.POST:
@@ -554,7 +554,7 @@ def ticket_add(request, queue_id=None, response_format='html'):
 
     context = _get_default_context(request)
     agent = context['agent']
-    profile = request.user.get_profile()
+    profile = request.user.profile
 
     queue = None
     if queue_id:
@@ -620,7 +620,7 @@ def ticket_add(request, queue_id=None, response_format='html'):
         else:
             return HttpResponseRedirect(reverse('services'))
     else:
-        form = TicketForm(request.user.get_profile(), queue, agent)
+        form = TicketForm(request.user.profile, queue, agent)
 
     context.update({'form': form, 'queue': queue})
 
@@ -640,7 +640,7 @@ def service_catalogue(request, response_format='html'):
     services = Object.filter_by_request(
         request, Service.objects.filter(parent__isnull=True))
 
-    filters = FilterForm(request.user.get_profile(), '', request.GET)
+    filters = FilterForm(request.user.profile, '', request.GET)
 
     context = _get_default_context(request)
     context.update({'services': services, 'filters': filters})
@@ -655,8 +655,8 @@ def service_view(request, service_id, response_format='html'):
     "Service view"
 
     service = get_object_or_404(Service, pk=service_id)
-    if not request.user.get_profile().has_permission(service) \
-            and not request.user.get_profile().is_admin('treeio_services'):
+    if not request.user.profile.has_permission(service) \
+            and not request.user.profile.is_admin('treeio_services'):
         return user_denied(request, message="You don't have access to this Service")
 
     context = _get_default_context(request)
@@ -672,21 +672,21 @@ def service_edit(request, service_id, response_format='html'):
     "Service edit"
 
     service = get_object_or_404(Service, pk=service_id)
-    if not request.user.get_profile().has_permission(service, mode='w') \
-            and not request.user.get_profile().is_admin('treeio_services'):
+    if not request.user.profile.has_permission(service, mode='w') \
+            and not request.user.profile.is_admin('treeio_services'):
         return user_denied(request, message="You don't have access to this Service")
 
     if request.POST:
         if 'cancel' not in request.POST:
             form = ServiceForm(
-                request.user.get_profile(), request.POST, instance=service)
+                request.user.profile, request.POST, instance=service)
             if form.is_valid():
                 service = form.save()
                 return HttpResponseRedirect(reverse('services_service_view', args=[service.id]))
         else:
             return HttpResponseRedirect(reverse('services_service_view', args=[service.id]))
     else:
-        form = ServiceForm(request.user.get_profile(), instance=service)
+        form = ServiceForm(request.user.profile, instance=service)
 
     context = _get_default_context(request)
     context.update({'form': form, 'service': service})
@@ -701,8 +701,8 @@ def service_delete(request, service_id, response_format='html'):
     "Service delete"
 
     service = get_object_or_404(Service, pk=service_id)
-    if not request.user.get_profile().has_permission(service, mode='w') \
-            and not request.user.get_profile().is_admin('treeio_services'):
+    if not request.user.profile.has_permission(service, mode='w') \
+            and not request.user.profile.is_admin('treeio_services'):
         return user_denied(request, message="You don't have access to this Service")
 
     if request.POST:
@@ -728,7 +728,7 @@ def service_delete(request, service_id, response_format='html'):
 def service_add(request, response_format='html'):
     "Service add"
 
-    if not request.user.get_profile().is_admin('treeio.services'):
+    if not request.user.profile.is_admin('treeio.services'):
         return user_denied(request,
                            message="You don't have administrator access to the Service Support module")
 
@@ -736,7 +736,7 @@ def service_add(request, response_format='html'):
         if 'cancel' not in request.POST:
             service = Service()
             form = ServiceForm(
-                request.user.get_profile(), request.POST, instance=service)
+                request.user.profile, request.POST, instance=service)
             if form.is_valid():
                 service = form.save()
                 service.set_user_from_request(request)
@@ -744,7 +744,7 @@ def service_add(request, response_format='html'):
         else:
             return HttpResponseRedirect(reverse('services'))
     else:
-        form = ServiceForm(request.user.get_profile())
+        form = ServiceForm(request.user.profile)
 
     context = _get_default_context(request)
     context.update({'form': form})
@@ -770,7 +770,7 @@ def sla_index(request, response_format='html'):
         slas = Object.filter_by_request(request,
                                         ServiceLevelAgreement.objects)
 
-    filters = SLAFilterForm(request.user.get_profile(), '', request.GET)
+    filters = SLAFilterForm(request.user.profile, '', request.GET)
 
     context = _get_default_context(request)
     context.update({'slas': slas, 'filters': filters})
@@ -785,7 +785,7 @@ def sla_view(request, sla_id, response_format='html'):
     "ServiceLevelAgreement view"
 
     sla = get_object_or_404(ServiceLevelAgreement, pk=sla_id)
-    if not request.user.get_profile().has_permission(sla):
+    if not request.user.profile.has_permission(sla):
         return user_denied(request, message="You don't have access to this Service Level Agreement")
 
     context = _get_default_context(request)
@@ -801,13 +801,13 @@ def sla_edit(request, sla_id, response_format='html'):
     "ServiceLevelAgreement edit"
 
     sla = get_object_or_404(ServiceLevelAgreement, pk=sla_id)
-    if not request.user.get_profile().has_permission(sla, mode='w'):
+    if not request.user.profile.has_permission(sla, mode='w'):
         return user_denied(request, message="You don't have access to this Service Level Agreement")
 
     if request.POST:
         if 'cancel' not in request.POST:
             form = ServiceLevelAgreementForm(
-                request.user.get_profile(), request.POST, instance=sla)
+                request.user.profile, request.POST, instance=sla)
             if form.is_valid():
                 sla = form.save()
                 return HttpResponseRedirect(reverse('services_sla_view', args=[sla.id]))
@@ -815,7 +815,7 @@ def sla_edit(request, sla_id, response_format='html'):
             return HttpResponseRedirect(reverse('services_sla_view', args=[sla.id]))
     else:
         form = ServiceLevelAgreementForm(
-            request.user.get_profile(), instance=sla)
+            request.user.profile, instance=sla)
 
     context = _get_default_context(request)
     context.update({'sla': sla, 'form': form})
@@ -830,7 +830,7 @@ def sla_delete(request, sla_id, response_format='html'):
     "ServiceLevelAgreement delete"
 
     sla = get_object_or_404(ServiceLevelAgreement, pk=sla_id)
-    if not request.user.get_profile().has_permission(sla, mode='w'):
+    if not request.user.profile.has_permission(sla, mode='w'):
         return user_denied(request, message="You don't have access to this Service Level Agreement")
 
     if request.POST:
@@ -856,7 +856,7 @@ def sla_delete(request, sla_id, response_format='html'):
 def sla_add(request, response_format='html'):
     "ServiceLevelAgreement add"
 
-    if not request.user.get_profile().is_admin('treeio.services'):
+    if not request.user.profile.is_admin('treeio.services'):
         return user_denied(request,
                            message="You don't have administrator access to the Service Support module")
 
@@ -864,7 +864,7 @@ def sla_add(request, response_format='html'):
         if 'cancel' not in request.POST:
             sla = ServiceLevelAgreement()
             form = ServiceLevelAgreementForm(
-                request.user.get_profile(), request.POST, instance=sla)
+                request.user.profile, request.POST, instance=sla)
             if form.is_valid():
                 sla = form.save()
                 sla.set_user_from_request(request)
@@ -872,7 +872,7 @@ def sla_add(request, response_format='html'):
         else:
             return HttpResponseRedirect(reverse('services'))
     else:
-        form = ServiceLevelAgreementForm(request.user.get_profile())
+        form = ServiceLevelAgreementForm(request.user.profile)
 
     context = _get_default_context(request)
     context.update({'form': form})
@@ -889,7 +889,7 @@ def sla_add(request, response_format='html'):
 def settings_view(request, response_format='html'):
     "Settings"
 
-    if not request.user.get_profile().is_admin('treeio.services'):
+    if not request.user.profile.is_admin('treeio.services'):
         return user_denied(request,
                            message="You don't have administrator access to the Service Support module")
 
@@ -977,20 +977,20 @@ def settings_view(request, response_format='html'):
 def settings_edit(request, response_format='html'):
     "Settings"
 
-    if not request.user.get_profile().is_admin('treeio.services'):
+    if not request.user.profile.is_admin('treeio.services'):
         return user_denied(request,
                            message="You don't have administrator access to the Service Support module")
 
     if request.POST:
         if 'cancel' not in request.POST:
-            form = SettingsForm(request.user.get_profile(), request.POST)
+            form = SettingsForm(request.user.profile, request.POST)
             if form.is_valid():
                 form.save()
                 return HttpResponseRedirect(reverse('services_settings_view'))
         else:
             return HttpResponseRedirect(reverse('services_settings_view'))
     else:
-        form = SettingsForm(request.user.get_profile())
+        form = SettingsForm(request.user.profile)
 
     context = _get_default_context(request)
     context.update({'form': form})
@@ -1008,7 +1008,7 @@ def settings_edit(request, response_format='html'):
 def agent_index(request, response_format='html'):
     "All available Agents"
 
-    if not request.user.get_profile().is_admin('treeio.services'):
+    if not request.user.profile.is_admin('treeio.services'):
         return user_denied(request,
                            message="You don't have administrator access to the Service Support module")
 
@@ -1020,7 +1020,7 @@ def agent_index(request, response_format='html'):
         agents = Object.filter_by_request(request,
                                           ServiceAgent.objects)
 
-    filters = AgentFilterForm(request.user.get_profile(), '', request.GET)
+    filters = AgentFilterForm(request.user.profile, '', request.GET)
 
     context = _get_default_context(request)
     context.update({'agents': agents, 'filters': filters})
@@ -1035,7 +1035,7 @@ def agent_view(request, agent_id, response_format='html'):
     "Agent view"
 
     view_agent = get_object_or_404(ServiceAgent, pk=agent_id)
-    if not request.user.get_profile().has_permission(view_agent):
+    if not request.user.profile.has_permission(view_agent):
         return user_denied(request, message="You don't have access to this Service Agent")
 
     context = _get_default_context(request)
@@ -1051,20 +1051,20 @@ def agent_edit(request, agent_id, response_format='html'):
     "Agent edit"
 
     view_agent = get_object_or_404(ServiceAgent, pk=agent_id)
-    if not request.user.get_profile().has_permission(view_agent):
+    if not request.user.profile.has_permission(view_agent):
         return user_denied(request, message="You don't have access to this Service Agent")
 
     if request.POST:
         if 'cancel' not in request.POST:
             form = AgentForm(
-                request.user.get_profile(), request.POST, instance=view_agent)
+                request.user.profile, request.POST, instance=view_agent)
             if form.is_valid():
                 view_agent = form.save()
                 return HttpResponseRedirect(reverse('services_agent_view', args=[view_agent.id]))
         else:
             return HttpResponseRedirect(reverse('services_agent_view', args=[view_agent.id]))
     else:
-        form = AgentForm(request.user.get_profile(), instance=view_agent)
+        form = AgentForm(request.user.profile, instance=view_agent)
 
     context = _get_default_context(request)
     context.update({'form': form, 'view_agent': view_agent})
@@ -1079,7 +1079,7 @@ def agent_delete(request, agent_id, response_format='html'):
     "Agent delete"
 
     view_agent = get_object_or_404(ServiceAgent, pk=agent_id)
-    if not request.user.get_profile().has_permission(view_agent, mode='w'):
+    if not request.user.profile.has_permission(view_agent, mode='w'):
         return user_denied(request, message="You don't have access to this Service Agent")
 
     if request.POST:
@@ -1105,7 +1105,7 @@ def agent_delete(request, agent_id, response_format='html'):
 def agent_add(request, response_format='html'):
     "Agent add"
 
-    if not request.user.get_profile().is_admin('treeio.services'):
+    if not request.user.profile.is_admin('treeio.services'):
         return user_denied(request,
                            message="You don't have administrator access to the Service Support module")
 
@@ -1113,7 +1113,7 @@ def agent_add(request, response_format='html'):
         if 'cancel' not in request.POST:
             new_agent = ServiceAgent()
             form = AgentForm(
-                request.user.get_profile(), request.POST, instance=new_agent)
+                request.user.profile, request.POST, instance=new_agent)
             if form.is_valid():
                 new_agent = form.save()
                 new_agent.set_user_from_request(request)
@@ -1121,7 +1121,7 @@ def agent_add(request, response_format='html'):
         else:
             return HttpResponseRedirect(reverse('services_agent_index'))
     else:
-        form = AgentForm(request.user.get_profile())
+        form = AgentForm(request.user.profile)
 
     context = _get_default_context(request)
     context.update({'form': form})

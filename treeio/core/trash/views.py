@@ -28,7 +28,7 @@ def _process_mass_form(f):
                     object = Object.filter_by_request(request, manager=Object.objects.filter(trash=True),
                                                       mode='r', filter_trash=False)
                     form = MassActionForm(request.POST, instance=object)
-                    if form.is_valid() and request.user.get_profile().has_permission(object, mode='w'):
+                    if form.is_valid() and request.user.profile.has_permission(object, mode='w'):
                         form.save()
                 except:
                     pass
@@ -39,7 +39,7 @@ def _process_mass_form(f):
                             object = Object.objects.get(pk=request.POST[key])
                             form = MassActionForm(
                                 request.POST, instance=object)
-                            if form.is_valid() and request.user.get_profile().has_permission(object, mode='w'):
+                            if form.is_valid() and request.user.profile.has_permission(object, mode='w'):
                                 form.save()
                         except:
                             pass
@@ -74,7 +74,7 @@ def object_delete(request, object_id, response_format='html'):
     "Completely delete item"
 
     object = get_object_or_404(Object, pk=object_id)
-    if not request.user.get_profile().has_permission(object, mode='w'):
+    if not request.user.profile.has_permission(object, mode='w'):
         return user_denied(request, message="You don't have access to this Object")
 
     if request.POST:
@@ -95,7 +95,7 @@ def object_untrash(request, object_id, response_format='html'):
     "Untrash item"
 
     object = get_object_or_404(Object, pk=object_id)
-    if not request.user.get_profile().has_permission(object, mode='w'):
+    if not request.user.profile.has_permission(object, mode='w'):
         return user_denied(request, message="You don't have access to this Object")
 
     related = object.get_related_object()

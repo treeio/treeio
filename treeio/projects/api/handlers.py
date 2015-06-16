@@ -13,7 +13,7 @@ __all__ = ['ProjectHandler', 'TaskStatusHandler', 'MilestoneHandler',
 
 from datetime import datetime
 from treeio.core.api.utils import rc
-from piston.handler import BaseHandler
+from piston3.handler import BaseHandler
 from treeio.core.api.handlers import ObjectHandler
 from treeio.projects.models import Task, Project, Milestone, TaskStatus, TaskTimeSlot
 from treeio.projects.forms import ProjectForm, TaskForm, MilestoneForm, TaskStatusForm, TaskTimeSlotForm
@@ -22,7 +22,7 @@ from treeio.projects.forms import ProjectForm, TaskForm, MilestoneForm, TaskStat
 def check_parent_perm(request, model, pk, mode):
     try:
         parent_obj = model.objects.get(pk=pk)
-        return request.user.get_profile().has_permission(parent_obj, mode=mode)
+        return request.user.profile.has_permission(parent_obj, mode=mode)
     except model.DoesNotExist:
         pass
     return True
@@ -59,7 +59,7 @@ class TaskStatusHandler(ObjectHandler):
     form = TaskStatusForm
 
     def check_create_permission(self, request, mode):
-        return request.user.get_profile().is_admin('treeio.projects')
+        return request.user.profile.is_admin('treeio.projects')
 
     @classmethod
     def resource_uri(cls, obj=None):
@@ -137,12 +137,12 @@ class StartTaskTimeHandler(BaseHandler):
         except Task.DoesNotExist:
             return rc.NOT_FOUND
 
-        if not request.user.get_profile().has_permission(task, mode='x'):
+        if not request.user.profile.has_permission(task, mode='x'):
             return rc.FORBIDDEN
 
-        if not task.is_being_done_by(request.user.get_profile()):
+        if not task.is_being_done_by(request.user.profile):
             task_time_slot = TaskTimeSlot(
-                task=task, time_from=datetime.now(), user=request.user.get_profile())
+                task=task, time_from=datetime.now(), user=request.user.profile)
             task_time_slot.save()
             task_time_slot.set_user_from_request(request)
             return task_time_slot
@@ -168,7 +168,7 @@ class StopTaskTimeHandler(BaseHandler):
         except Task.DoesNotExist:
             return rc.NOT_FOUND
 
-        if not request.user.get_profile().has_permission(slot, mode='x'):
+        if not request.user.profile.has_permission(slot, mode='x'):
             return rc.FORBIDDEN
 
         slot.time_to = datetime.now()
@@ -197,21 +197,21 @@ class TaskTimeHandler(ObjectHandler):
         return dct
 
     def create_instance(self, request, *args, **kwargs):
-        return TaskTimeSlot(task=request.task, time_to=datetime.now(), user=request.user.get_profile())
+        return TaskTimeSlot(task=request.task, time_to=datetime.now(), user=request.user.profile)
 
     def check_create_permission(self, request, mode):
         if "task" in request.data:
             try:
                 parent_obj = Task.objects.get(pk=request.data["task"])
                 request.task = parent_obj
-                return request.user.get_profile().has_permission(parent_obj, mode=mode)
+                return request.user.profile.has_permission(parent_obj, mode=mode)
             except Task.DoesNotExist:
                 pass
         return False
 
     def check_instance_permission(self, request, task_time_slot, mode):
-        if not request.user.get_profile().has_permission(task_time_slot, mode=mode) \
-                and not request.user.get_profile().has_permission(task_time_slot.task, mode=mode):
+        if not request.user.profile.has_permission(task_time_slot, mode=mode) \
+                and not request.user.profile.has_permission(task_time_slot.task, mode=mode):
             return False
         return True
 

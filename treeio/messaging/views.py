@@ -41,7 +41,7 @@ def _get_default_context(request):
     "Returns default context as a dict()"
     streams = Object.filter_by_request(request, MessageStream.objects)
     mlists = MailingList.objects.all()
-    massform = MassActionForm(request.user.get_profile())
+    massform = MassActionForm(request.user.profile)
 
     context = {'streams': streams,
                'mlists': mlists,
@@ -55,7 +55,7 @@ def _process_mass_form(f):
 
     def wrap(request, *args, **kwargs):
         "Wrap"
-        user = request.user.get_profile()
+        user = request.user.profile
         if 'massform' in request.POST:
             for key in request.POST:
                 if 'mass-message' in key:
@@ -68,7 +68,7 @@ def _process_mass_form(f):
                     except Exception:
                         pass
             try:
-                form = MassActionForm(request.user.get_profile(), request.POST)
+                form = MassActionForm(request.user.profile, request.POST)
                 if form.is_valid():
                     form.save()
             except Exception:
@@ -97,7 +97,7 @@ def index(request, response_format='html'):
         objects = Object.filter_by_request(
             request, Message.objects.filter(query))
 
-    filters = FilterForm(request.user.get_profile(), 'title', request.GET)
+    filters = FilterForm(request.user.profile, 'title', request.GET)
 
     context = _get_default_context(request)
     context.update({'filters': filters,
@@ -115,7 +115,7 @@ def index_sent(request, response_format='html'):
     "Sent messages index page"
 
     query = Q(reply_to__isnull=True) & Q(
-        author=request.user.get_profile().get_contact())
+        author=request.user.profile.get_contact())
     if request.GET:
         query = query & _get_filter_query(request.GET)
         objects = Object.filter_by_request(
@@ -124,7 +124,7 @@ def index_sent(request, response_format='html'):
         objects = Object.filter_by_request(
             request, Message.objects.filter(query))
 
-    filters = FilterForm(request.user.get_profile(), 'title', request.GET)
+    filters = FilterForm(request.user.profile, 'title', request.GET)
 
     context = _get_default_context(request)
     context.update({'filters': filters,
@@ -142,7 +142,7 @@ def index_inbox(request, response_format='html'):
     "Received messages index page"
 
     query = Q(reply_to__isnull=True) & ~Q(
-        author=request.user.get_profile().get_contact())
+        author=request.user.profile.get_contact())
     if request.GET:
         query = query & _get_filter_query(request.GET)
         objects = Object.filter_by_request(
@@ -151,7 +151,7 @@ def index_inbox(request, response_format='html'):
         objects = Object.filter_by_request(
             request, Message.objects.filter(query))
 
-    filters = FilterForm(request.user.get_profile(), 'title', request.GET)
+    filters = FilterForm(request.user.profile, 'title', request.GET)
     context = _get_default_context(request)
     context.update({'filters': filters,
                     'messages': objects})
@@ -167,7 +167,7 @@ def index_inbox(request, response_format='html'):
 def index_unread(request, response_format='html'):
     "Messaging unread page"
 
-    user = request.user.get_profile()
+    user = request.user.profile
 
     query = Q(reply_to__isnull=True) & ~Q(read_by=user)
     if request.GET:
@@ -178,7 +178,7 @@ def index_unread(request, response_format='html'):
         objects = Object.filter_by_request(
             request, Message.objects.filter(query))
 
-    filters = FilterForm(request.user.get_profile(), 'title', request.GET)
+    filters = FilterForm(request.user.profile, 'title', request.GET)
 
     context = _get_default_context(request)
     context.update({'filters': filters,
@@ -193,7 +193,7 @@ def index_unread(request, response_format='html'):
 @treeio_login_required
 def stream_add(request, response_format='html'):
     "New message stream"
-    user = request.user.get_profile()
+    user = request.user.profile
 
     if request.POST:
         if 'cancel' not in request.POST:
@@ -222,14 +222,14 @@ def stream_add(request, response_format='html'):
 def stream_view(request, stream_id, response_format='html'):
     "Stream view page"
 
-    user = request.user.get_profile()
+    user = request.user.profile
 
     stream = get_object_or_404(MessageStream, pk=stream_id)
-    if not request.user.get_profile().has_permission(stream):
+    if not request.user.profile.has_permission(stream):
         return user_denied(request, message="You don't have access to this Stream",
                            response_format=response_format)
 
-    if request.user.get_profile().has_permission(stream, mode='x'):
+    if request.user.profile.has_permission(stream, mode='x'):
         if request.POST:
             message = Message()
             message.author = user.get_contact()
@@ -239,7 +239,7 @@ def stream_view(request, stream_id, response_format='html'):
                                    response_format=response_format)
 
             form = MessageForm(
-                request.user.get_profile(), None, None, request.POST, instance=message)
+                request.user.profile, None, None, request.POST, instance=message)
             if form.is_valid():
                 message = form.save()
                 message.recipients.add(user.get_contact())
@@ -272,7 +272,7 @@ def stream_view(request, stream_id, response_format='html'):
 
                 return HttpResponseRedirect(reverse('messaging_stream_view', args=[stream.id]))
         else:
-            form = MessageForm(request.user.get_profile(), stream_id)
+            form = MessageForm(request.user.profile, stream_id)
 
     else:
         form = None
@@ -293,10 +293,10 @@ def stream_view(request, stream_id, response_format='html'):
 @treeio_login_required
 def stream_edit(request, stream_id, response_format='html'):
     "Stream edit page"
-    user = request.user.get_profile()
+    user = request.user.profile
 
     stream = get_object_or_404(MessageStream, pk=stream_id)
-    if not request.user.get_profile().has_permission(stream, mode="w"):
+    if not request.user.profile.has_permission(stream, mode="w"):
         return user_denied(request, message="You don't have access to this Stream",
                            response_format=response_format)
 
@@ -324,7 +324,7 @@ def stream_edit(request, stream_id, response_format='html'):
 @treeio_login_required
 def stream_checkmail(request, stream_id, response_format='html'):
     "Stream check mail"
-    user = request.user.get_profile()
+    user = request.user.profile
 
     stream = get_object_or_404(MessageStream, pk=stream_id)
     if not user.has_permission(stream):
@@ -351,7 +351,7 @@ def stream_delete(request, stream_id, response_format='html'):
     "Delete stream page"
 
     stream = get_object_or_404(MessageStream, pk=stream_id)
-    if not request.user.get_profile().has_permission(stream, mode="w"):
+    if not request.user.profile.has_permission(stream, mode="w"):
         return user_denied(request, message="You don't have access to this Stream",
                            response_format=response_format)
 
@@ -379,7 +379,7 @@ def stream_delete(request, stream_id, response_format='html'):
 def messaging_compose(request, response_format='html'):
     "New message page"
 
-    user = request.user.get_profile()
+    user = request.user.profile
 
     if request.POST:
         if 'cancel' not in request.POST:
@@ -391,7 +391,7 @@ def messaging_compose(request, response_format='html'):
                                    response_format=response_format)
 
             form = MessageForm(
-                request.user.get_profile(), None, None, request.POST, instance=message)
+                request.user.profile, None, None, request.POST, instance=message)
             if form.is_valid():
                 message = form.save()
                 message.recipients.add(user.get_contact())
@@ -427,7 +427,7 @@ def messaging_compose(request, response_format='html'):
             return HttpResponseRedirect(reverse('messaging'))
 
     else:
-        form = MessageForm(request.user.get_profile(), None)
+        form = MessageForm(request.user.profile, None)
 
     context = _get_default_context(request)
     context.update({'form': form})
@@ -442,7 +442,7 @@ def messaging_view(request, message_id, response_format='html'):
     "Single message page"
 
     message = get_object_or_404(Message, pk=message_id)
-    user = request.user.get_profile()
+    user = request.user.profile
 
     if not user.has_permission(message):
         return user_denied(request, message="You don't have access to this Message",
@@ -503,7 +503,7 @@ def messaging_view(request, message_id, response_format='html'):
 
     else:
         form = MessageReplyForm(
-            request.user.get_profile(), message.stream_id, message)
+            request.user.profile, message.stream_id, message)
 
     replies = Object.filter_by_request(request,
                                        Message.objects.filter(reply_to=message).order_by('date_created'))
@@ -525,7 +525,7 @@ def messaging_delete(request, message_id, response_format='html'):
 
     message = get_object_or_404(Message, pk=message_id)
 
-    if not request.user.get_profile().has_permission(message, mode="w"):
+    if not request.user.profile.has_permission(message, mode="w"):
         return user_denied(request, message="You don't have access to this Message",
                            response_format=response_format)
 
@@ -556,7 +556,7 @@ Mailing Lists
 @treeio_login_required
 def mlist_add(request, response_format='html'):
     "New message mlist"
-    user = request.user.get_profile()
+    user = request.user.profile
 
     if request.POST:
 
@@ -584,30 +584,30 @@ def mlist_add(request, response_format='html'):
 def mlist_view(request, mlist_id, response_format='html'):
     "Mailing List view page"
 
-    user = request.user.get_profile()
+    user = request.user.profile
 
     mlist = get_object_or_404(MailingList, pk=mlist_id)
-    if not request.user.get_profile().has_permission(mlist):
+    if not request.user.profile.has_permission(mlist):
         return user_denied(request, message="You don't have access to this Mailing List",
                            response_format=response_format)
 
-    if request.user.get_profile().has_permission(mlist, mode='x'):
+    if request.user.profile.has_permission(mlist, mode='x'):
         if request.POST:
             message = Message()
-            message.author = request.user.get_profile().get_contact()
+            message.author = request.user.profile.get_contact()
             if not message.author:
                 return user_denied(request,
                                    message="You can't send message without a Contact Card assigned to you.",
                                    response_format=response_format)
             form = MessageForm(
-                request.user.get_profile(), mlist_id, None, request.POST, instance=message)
+                request.user.profile, mlist_id, None, request.POST, instance=message)
             if form.is_valid():
                 message = form.save()
                 message.set_user_from_request(request)
                 message.read_by.add(user)
                 return HttpResponseRedirect(reverse('messaging_mlist_view', args=[mlist.id]))
         else:
-            form = MessageForm(request.user.get_profile(), mlist_id)
+            form = MessageForm(request.user.profile, mlist_id)
 
     else:
         form = None
@@ -629,7 +629,7 @@ def mlist_view(request, mlist_id, response_format='html'):
 @treeio_login_required
 def mlist_edit(request, mlist_id, response_format='html'):
     "MailingList edit page"
-    user = request.user.get_profile()
+    user = request.user.profile
 
     mlist = get_object_or_404(MailingList, pk=mlist_id)
     if not user.has_permission(mlist, mode="w"):
@@ -650,7 +650,7 @@ def mlist_delete(request, mlist_id, response_format='html'):
     "Delete mlist page"
 
     mlist = get_object_or_404(MailingList, pk=mlist_id)
-    if not request.user.get_profile().has_permission(mlist, mode="w"):
+    if not request.user.profile.has_permission(mlist, mode="w"):
         return user_denied(request, message="You don't have access to this Mailing List",
                            response_format=response_format)
 
@@ -686,7 +686,7 @@ def settings_view(request, response_format='html'):
     # default content type
     try:
         conf = ModuleSetting.get_for_module('treeio.messaging', 'default_contact_type',
-                                            user=request.user.get_profile())[0]
+                                            user=request.user.profile)[0]
         default_contact_type = ContactType.objects.get(pk=long(conf.value))
     except:
         default_contact_type = None
@@ -703,7 +703,7 @@ def settings_view(request, response_format='html'):
     # signature
     try:
         conf = ModuleSetting.get_for_module('treeio.messaging', 'signature',
-                                            user=request.user.get_profile(), strict=True)[0]
+                                            user=request.user.profile, strict=True)[0]
         signature = conf.value
     except:
         signature = ''
@@ -729,14 +729,14 @@ def settings_edit(request, response_format='html'):
 
     if request.POST:
         if 'cancel' not in request.POST:
-            form = SettingsForm(request.user.get_profile(), request.POST)
+            form = SettingsForm(request.user.profile, request.POST)
             if form.is_valid():
                 form.save()
                 return HttpResponseRedirect(reverse('messaging_settings_view'))
         else:
             return HttpResponseRedirect(reverse('messaging_settings_view'))
     else:
-        form = SettingsForm(request.user.get_profile())
+        form = SettingsForm(request.user.profile)
 
     context = _get_default_context(request)
     context.update({'form': form})
@@ -754,7 +754,7 @@ def settings_edit(request, response_format='html'):
 def widget_new_messages(request, response_format='html'):
     "A list of new messages. Limit by 5."
 
-    query = Q(reply_to__isnull=True) & ~Q(read_by=request.user.get_profile())
+    query = Q(reply_to__isnull=True) & ~Q(read_by=request.user.profile)
 
     messages = Object.filter_by_request(
         request, Message.objects.filter(query))[:5]

@@ -27,7 +27,7 @@
 
 {% block module_topmenu %}
 <a href="{% url messaging_message_view message.id %}" class="top-menu view-link-active">{% trans %}View{% endtrans %}</a>
-{% if user.get_profile().has_permission(message, mode='w') %}
+{% if user.profile.has_permission(message, mode='w') %}
 <a href="{% url messaging_message_delete message.id %}" class="top-menu delete-link">{% trans %}Delete{% endtrans %}</a>
 {% endif %}
 {% endblock %}
@@ -54,7 +54,7 @@
         <div class="message-bubble">
             <a href="{% url identities_contact_view message.author.id %}" class="popup-link"><strong>{{ message.author }}</strong></a>
             <span class="message-time">{{ message.date_created|htdatetime }}</span>
-            {% if user.get_profile().has_permission(message, mode='w') %}
+            {% if user.profile.has_permission(message, mode='w') %}
             <span class="message-edit" style="float: right;">
                 <a href="{% url messaging_message_delete message.id %}">{% trans %}Delete{% endtrans %}</a> {% trans %}this message{% endtrans %}
             </span>
@@ -91,7 +91,7 @@
             <div class="message-bubble">
                 <a href="{% url identities_contact_view message.author.id %}" class="popup-link"><strong>{{ message.author }}</strong></a>
                 <span class="message-time">{{ message.date_created|htdatetime }}</span>
-                {% if user.get_profile().has_permission(message, mode='w') %}
+                {% if user.profile.has_permission(message, mode='w') %}
                 <span class="message-edit" style="float: right;">
                     <a href="{% url messaging_message_delete message.id %}">{% trans %}Delete{% endtrans %}</a> {% trans %}this message{% endtrans %}
                 </span>
@@ -113,7 +113,7 @@
     </div>
     <div class="message">
         <span class="message-picture">
-        {% set contact = request.user.get_profile().get_contact() %}
+        {% set contact = request.user.profile.get_contact() %}
         {% if contact %}
           {% set picture = contact.get_picture() %}
           <a href="{% url identities_contact_view contact.id %}" class="popup-link">
@@ -132,7 +132,7 @@
                 {% if contact %}
                 <a href="{% url identities_contact_view contact.id %}" class="popup-link"><strong>{{ contact }}</strong></a>
                 {% else %}
-                <strong>{{ request.user.get_profile() }}</strong>
+                <strong>{{ request.user.profile }}</strong>
                 {% endif %}
                 <br /><br />
                 <form action="" method="post" class="content-form">

@@ -67,7 +67,7 @@ class MessageHandler(ObjectHandler):
     def create(self, request, *args, **kwargs):
         "Send email to some recipients"
 
-        user = request.user.get_profile()
+        user = request.user.profile
 
         if request.data is None:
             return rc.BAD_REQUEST
@@ -129,7 +129,7 @@ class MessageHandler(ObjectHandler):
         if not pkfield:
             return rc.BAD_REQUEST
 
-        user = request.user.get_profile()
+        user = request.user.profile
 
         try:
             message = self.model.objects.get(pk=pkfield)

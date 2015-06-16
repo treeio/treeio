@@ -30,7 +30,7 @@
 {% else %}
 <a href="{% url messaging_message_view message.id %}" class="top-menu view-link">{% trans %}View{% endtrans %}</a>
 {% endif %}
-{% if user.get_profile().has_permission(message, mode='w') %}
+{% if user.profile.has_permission(message, mode='w') %}
 <a href="{% url messaging_message_delete message.id %}" class="top-menu delete-link-active">{% trans %}Delete{% endtrans %}</a>
 {% endif %}
 {% endblock %}

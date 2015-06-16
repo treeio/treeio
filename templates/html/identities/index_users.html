@@ -6,7 +6,7 @@
 {% block module_title %}{% trans %}Users{% endtrans %}{% endblock %}
 
 {% block module_topmenu %}
-{% if request.user.get_profile().is_admin('treeio.core') %}
+{% if request.user.profile.is_admin('treeio.core') %}
 <a href="{% url core_admin_user_invite %}" class="top-menu add-link popup-link">{% trans %}Invite People{% endtrans %}</a>
 {% endif %}
 {% endblock %}

@@ -53,45 +53,38 @@ class KnowledgeViewsTest(TestCase):
 
     username = "test"
     password = "password"
-    prepared = False
 
     def setUp(self):
-        "Initial Setup"
-        if not self.prepared:
-            self.group, created = Group.objects.get_or_create(name='test')
-            duser, created = DjangoUser.objects.get_or_create(
-                username=self.username)
-            duser.set_password(self.password)
-            duser.save()
-            self.user, created = User.objects.get_or_create(user=duser)
-            self.user.save()
-            perspective, created = Perspective.objects.get_or_create(
-                name='default')
-            perspective.set_default_user()
-            perspective.save()
-            ModuleSetting.set('default_perspective', perspective.id)
+        self.group, created = Group.objects.get_or_create(name='test')
+        duser, created = DjangoUser.objects.get_or_create(username=self.username)
+        duser.set_password(self.password)
+        duser.save()
+        self.user, created = User.objects.get_or_create(user=duser)
+        self.user.save()
+        perspective, created = Perspective.objects.get_or_create(name='default')
+        perspective.set_default_user()
+        perspective.save()
+        ModuleSetting.set('default_perspective', perspective.id)
 
-            self.folder = KnowledgeFolder(name='test', treepath='test')
-            self.folder.set_default_user()
-            self.folder.save()
+        self.folder = KnowledgeFolder(name='test', treepath='test')
+        self.folder.set_default_user()
+        self.folder.save()
 
-            self.category = KnowledgeCategory(name='test', treepath='test')
-            self.category.set_default_user()
-            self.category.save()
+        self.category = KnowledgeCategory(name='test', treepath='test')
+        self.category.set_default_user()
+        self.category.save()
 
-            self.item = KnowledgeItem(name='test', folder=self.folder,
-                                      category=self.category, treepath='test')
-            self.item.set_default_user()
-            self.item.save()
+        self.item = KnowledgeItem(name='test', folder=self.folder,
+                                  category=self.category, treepath='test')
+        self.item.set_default_user()
+        self.item.save()
 
-            # parent folder
-            self.parent = KnowledgeFolder(name='test', treepath='test')
-            self.parent.set_default_user()
-            self.parent.save()
+        # parent folder
+        self.parent = KnowledgeFolder(name='test', treepath='test')
+        self.parent.set_default_user()
+        self.parent.save()
 
-            self.client = Client()
-
-            self.prepared = True
+        self.client = Client()
 
     ######################################
     # Testing views when user is logged in

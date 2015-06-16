@@ -3,7 +3,7 @@
     <table class="generic_table">
         <tbody>
         {% for message in messages %}
-            {% set isread = message.is_read(user.get_profile()) %}
+            {% set isread = message.is_read(user.profile) %}
             <tr class="content-list-item content-list-item-{{ loop.cycle('odd', 'even') }} {% if not isread %}message-unread{% endif %}">
                 {% if not nomass %}
                 <td>

@@ -11,7 +11,7 @@
 
 {% block module_topmenu %}
 <a href="{% url sales_ordered_product_view ordered_product.id %}" class="top-menu view-link">{% trans %}View{% endtrans %}</a>
-{% if request.user.get_profile().has_permission(ordered_product.order, mode='w') %}
+{% if request.user.profile.has_permission(ordered_product.order, mode='w') %}
 <a href="{% url sales_ordered_product_edit ordered_product.id %}" class="top-menu edit-link-active">{% trans %}Edit{% endtrans %}</a>
 <a href="{% url sales_ordered_product_delete ordered_product.id %}" class="top-menu delete-link">{% trans %}Delete{% endtrans %}</a>
 {% endif %}
@@ -102,7 +102,7 @@
             </span>
         </span>
         <span class="content-list-item-actions">
-            {% if user.get_profile().has_permission(product, mode='w') %}
+            {% if user.profile.has_permission(product, mode='w') %}
             <a href="{% url sales_product_edit product.product_id %}" class="inline-link edit-link">{% trans %}Edit{% endtrans %}</a>
             {% endif %}
         </span>

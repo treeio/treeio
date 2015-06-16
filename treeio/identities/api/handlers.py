@@ -31,7 +31,7 @@ class ContactFieldHandler(ObjectHandler):
         return {'data': super(ObjectHandler, self).flatten_dict(request.data)}
 
     def check_create_permission(self, request, mode):
-        return request.user.get_profile().is_admin('treeio.identities')
+        return request.user.profile.is_admin('treeio.identities')
 
 
 class ContactTypeHandler(ObjectHandler):
@@ -48,7 +48,7 @@ class ContactTypeHandler(ObjectHandler):
         return ('api_identities_types', [object_id])
 
     def check_create_permission(self, request, mode):
-        return request.user.get_profile().is_admin('treeio.identities')
+        return request.user.profile.is_admin('treeio.identities')
 
 
 class ContactHandler(ObjectHandler):
@@ -72,7 +72,7 @@ class ContactHandler(ObjectHandler):
         type_pk = request.REQUEST.get('type')
         try:
             request.contact_type = ContactType.objects.get(pk=type_pk)
-            return request.user.get_profile().has_permission(request.contact_type, mode='x')
+            return request.user.profile.has_permission(request.contact_type, mode='x')
         except ContactType.DoesNotExist:
             return True
 
@@ -81,7 +81,7 @@ class ContactHandler(ObjectHandler):
             return rc.BAD_REQUEST
 
         contact_type = getOrNone(ContactType, request.data.get('contact_type'))
-        if not contact_type or not request.user.get_profile().has_permission(contact_type, mode='x'):
+        if not contact_type or not request.user.profile.has_permission(contact_type, mode='x'):
             return rc.FORBIDDEN
 
         attrs = self.flatten_dict(request)
@@ -109,7 +109,7 @@ class ContactHandler(ObjectHandler):
         if not item:
             return rc.NOT_FOUND
 
-        if not request.user.get_profile().has_permission(item, mode="w"):
+        if not request.user.profile.has_permission(item, mode="w"):
             return rc.FORBIDDEN
 
         attrs = self.flatten_dict(request)

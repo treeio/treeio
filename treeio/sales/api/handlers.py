@@ -22,11 +22,11 @@ from treeio.sales.forms import OrderForm, ProductForm, SaleStatusForm, LeadForm,
 
 class SaleCommonHandler(ObjectHandler):
     def check_create_permission(self, request, mode):
-        return request.user.get_profile().is_admin('treeio.sales')
+        return request.user.profile.is_admin('treeio.sales')
 
     def check_instance_permission(self, request, inst, mode):
-        return request.user.get_profile().has_permission(inst, mode=mode) \
-               or request.user.get_profile().is_admin('treeio.sales')
+        return request.user.profile.has_permission(inst, mode=mode) \
+               or request.user.profile.is_admin('treeio.sales')
 
 
 class SaleStatusHandler(SaleCommonHandler):
@@ -222,7 +222,7 @@ class SubscriptionHandler(SaleCommonHandler):
         if productset:
             subscription.product = productset
         form = SubscriptionForm(
-            request.user.get_profile(), request.data, instance=subscription)
+            request.user.profile, request.data, instance=subscription)
         if form.is_valid():
             subscription = form.save(commit=False)
             subscription.renew()
@@ -258,13 +258,13 @@ class OrderedProductHandler(SaleCommonHandler):
         if not order:
             return rc.NOT_FOUND
 
-        if not request.user.get_profile().has_permission(order, mode='x'):
+        if not request.user.profile.has_permission(order, mode='x'):
             return rc.FORBIDDEN
 
         ordered_product = OrderedProduct()
         ordered_product.order = order
         form = OrderedProductForm(
-            request.user.get_profile(), order, request.data, instance=ordered_product)
+            request.user.profile, order, request.data, instance=ordered_product)
         if form.is_valid():
             ordered_product = form.save(commit=False)
             convert(
@@ -281,12 +281,12 @@ class OrderedProductHandler(SaleCommonHandler):
             return rc.BAD_REQUEST
 
         ordered_product = getOrNone(OrderedProduct, pk=object_ptr)
-        if not request.user.get_profile().has_permission(ordered_product, mode='w'):
+        if not request.user.profile.has_permission(ordered_product, mode='w'):
             return rc.FORBIDDEN
 
         order = ordered_product.order
         form = OrderedProductForm(
-            request.user.get_profile(), order, request.data, instance=ordered_product)
+            request.user.profile, order, request.data, instance=ordered_product)
         if form.is_valid():
             ordered_product = form.save(commit=False)
             convert(

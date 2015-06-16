@@ -1,7 +1,7 @@
 {% load i18n %}
 <div class="attachment-record-block" object="{{ update_id }}">
     {% for attachment in attachments %}
-        {% if attachment.uploaded_by == request.user.get_profile() %}<a class="delete-attachment ajax-link-out" attachment="{{ attachment.id }}" title="{% trans %}Delete{% endtrans %}"><img class="margin-bottom" src="/static/icons/delete.png"/></a>{% endif %}
+        {% if attachment.uploaded_by == request.user.profile %}<a class="delete-attachment ajax-link-out" attachment="{{ attachment.id }}" title="{% trans %}Delete{% endtrans %}"><img class="margin-bottom" src="/static/icons/delete.png"/></a>{% endif %}
         <a class="attachment ajax-link-out" target="about:blank" href="{% url core_attachment_download attachment.id %}">
             <img class="margin-bottom" src="/static/icons/documents/{{ attachment.get_icon() }}.png"/>
             {{ attachment }}

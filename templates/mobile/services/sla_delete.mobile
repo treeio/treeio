@@ -8,7 +8,7 @@
 {% block module_topmenu %}
 
 <a href="{% url services_sla_view sla.id %}" class="top-menu view-link">{% trans %}View{% endtrans %}</a>
-{% if user.get_profile().has_permission(sla, mode='w') %}
+{% if user.profile.has_permission(sla, mode='w') %}
 <a href="{% url services_sla_edit sla.id %}" class="top-menu edit-link">{% trans %}Edit{% endtrans %}</a>
 <a href="{% url services_sla_delete sla.id %}" class="top-menu delete-link-active">{% trans %}Delete{% endtrans %}</a>
 {% endif %}

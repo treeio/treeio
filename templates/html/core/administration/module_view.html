@@ -60,7 +60,7 @@
         <br />
     </span>
     <span class="content-list-item-actions">
-        {% if user.get_profile().has_permission(perspective, mode='w') %}
+        {% if user.profile.has_permission(perspective, mode='w') %}
         <a href="{% url core_admin_perspective_edit perspective.id %}" class="inline-link edit-link">{% trans %}Edit{% endtrans %}</a>
         {% endif %}
     </span>

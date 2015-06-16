@@ -55,7 +55,7 @@ def _get_default_context(request):
     "Returns default context as a dict()"
 
     folders = Object.filter_by_request(request, Folder.objects, mode="r")
-    massform = MassActionForm(request.user.get_profile())
+    massform = MassActionForm(request.user.profile)
 
     context = {'folders': folders,
                'massform': massform}
@@ -68,7 +68,7 @@ def _process_mass_form(f):
 
     def wrap(request, *args, **kwargs):
         "Wrap"
-        user = request.user.get_profile()
+        user = request.user.profile
         if 'massform' in request.POST:
             for key in request.POST:
                 if 'mass-object' in key:
@@ -138,7 +138,7 @@ def index(request, response_format='html'):
         objects = Object.filter_by_request(
             request, Object.objects.filter(query).order_by('-last_updated'))
 
-    filters = FilterForm(request.user.get_profile(), 'title', request.GET)
+    filters = FilterForm(request.user.profile, 'title', request.GET)
 
     context = _get_default_context(request)
     context.update({'filters': filters,
@@ -163,7 +163,7 @@ def index_files(request, response_format='html'):
         files = Object.filter_by_request(
             request, File.objects.order_by('-last_updated'))
 
-    filters = FilterForm(request.user.get_profile(), 'title', request.GET)
+    filters = FilterForm(request.user.profile, 'title', request.GET)
 
     context = _get_default_context(request)
     context.update({'filters': filters,
@@ -188,7 +188,7 @@ def index_weblinks(request, response_format='html'):
         links = Object.filter_by_request(
             request, WebLink.objects.order_by('-last_updated'))
 
-    filters = FilterForm(request.user.get_profile(), 'title', request.GET)
+    filters = FilterForm(request.user.profile, 'title', request.GET)
 
     context = _get_default_context(request)
     context.update({'filters': filters,
@@ -213,7 +213,7 @@ def index_documents(request, response_format='html'):
         documents = Object.filter_by_request(
             request, Document.objects.order_by('-last_updated'))
 
-    filters = FilterForm(request.user.get_profile(), 'title', request.GET)
+    filters = FilterForm(request.user.profile, 'title', request.GET)
 
     context = _get_default_context(request)
     context.update({'filters': filters,
@@ -233,7 +233,7 @@ def folder_add(request, response_format='html'):
         if 'cancel' not in request.POST:
             folder = Folder()
             form = FolderForm(
-                request.user.get_profile(), None, request.POST, instance=folder)
+                request.user.profile, None, request.POST, instance=folder)
             if form.is_valid():
                 folder = form.save()
                 folder.set_user_from_request(request)
@@ -241,7 +241,7 @@ def folder_add(request, response_format='html'):
         else:
             return HttpResponseRedirect(reverse('document_index'))
     else:
-        form = FolderForm(request.user.get_profile(), None)
+        form = FolderForm(request.user.profile, None)
 
     context = _get_default_context(request)
     context.update({'form': form})
@@ -259,14 +259,14 @@ def folder_add_typed(request, folder_id=None, response_format='html'):
     folder = None
     if folder_id:
         folder = get_object_or_404(Folder, pk=folder_id)
-        if not request.user.get_profile().has_permission(folder, mode='x'):
+        if not request.user.profile.has_permission(folder, mode='x'):
             folder = None
 
     if request.POST:
         if 'cancel' not in request.POST:
             folder = Folder()
             form = FolderForm(
-                request.user.get_profile(), folder_id, request.POST, instance=folder)
+                request.user.profile, folder_id, request.POST, instance=folder)
             if form.is_valid():
                 folder = form.save()
                 folder.set_user_from_request(request)
@@ -274,7 +274,7 @@ def folder_add_typed(request, folder_id=None, response_format='html'):
         else:
             return HttpResponseRedirect(reverse('document_index'))
     else:
-        form = FolderForm(request.user.get_profile(), folder_id)
+        form = FolderForm(request.user.profile, folder_id)
 
     context = _get_default_context(request)
     context.update({'form': form,
@@ -293,7 +293,7 @@ def folder_view(request, folder_id, response_format='html'):
 
     folder = get_object_or_404(Folder, pk=folder_id)
 
-    if not request.user.get_profile().has_permission(folder):
+    if not request.user.profile.has_permission(folder):
         return user_denied(request, message="You don't have access to this Folder")
 
     query = Q(
@@ -314,7 +314,7 @@ def folder_view(request, folder_id, response_format='html'):
     #    objects = objects.order_by('-last_updated')
 
     subfolders = Folder.objects.filter(parent=folder)
-    filters = FilterForm(request.user.get_profile(), 'title', request.GET)
+    filters = FilterForm(request.user.profile, 'title', request.GET)
 
     context = _get_default_context(request)
     context.update({'folder': folder,
@@ -334,13 +334,13 @@ def folder_edit(request, folder_id, response_format='html'):
 
     folder = get_object_or_404(Folder, pk=folder_id)
 
-    if not request.user.get_profile().has_permission(folder, mode='w'):
+    if not request.user.profile.has_permission(folder, mode='w'):
         return user_denied(request, message="You don't have access to this Folder")
 
     if request.POST:
         if 'cancel' not in request.POST:
             form = FolderForm(
-                request.user.get_profile(), folder_id, request.POST, instance=folder)
+                request.user.profile, folder_id, request.POST, instance=folder)
             if form.is_valid():
                 folder = form.save()
                 return HttpResponseRedirect(reverse('documents_folder_view', args=[folder.id]))
@@ -349,7 +349,7 @@ def folder_edit(request, folder_id, response_format='html'):
 
     else:
         form = FolderForm(
-            request.user.get_profile(), folder_id, instance=folder)
+            request.user.profile, folder_id, instance=folder)
 
     context = _get_default_context(request)
     context.update({'form': form,
@@ -367,7 +367,7 @@ def folder_delete(request, folder_id, response_format='html'):
 
     folder = get_object_or_404(Folder, pk=folder_id)
 
-    if not request.user.get_profile().has_permission(folder, mode='w'):
+    if not request.user.profile.has_permission(folder, mode='w'):
         return user_denied(request, message="You don't have access to this Folder")
 
     if request.POST:
@@ -415,7 +415,7 @@ def document_add(request, response_format='html'):
         if 'cancel' not in request.POST:
             document = Document()
             form = DocumentForm(
-                request.user.get_profile(), None, request.POST, instance=document)
+                request.user.profile, None, request.POST, instance=document)
             if form.is_valid():
                 document = form.save()
                 document.set_user_from_request(request)
@@ -424,7 +424,7 @@ def document_add(request, response_format='html'):
             return HttpResponseRedirect(reverse('document_index'))
 
     else:
-        form = DocumentForm(request.user.get_profile(), None)
+        form = DocumentForm(request.user.profile, None)
 
     context = _get_default_context(request)
     context.update({'form': form})
@@ -442,14 +442,14 @@ def document_add_typed(request, folder_id=None, response_format='html'):
     folder = None
     if folder_id:
         folder = get_object_or_404(Folder, pk=folder_id)
-        if not request.user.get_profile().has_permission(folder, mode='x'):
+        if not request.user.profile.has_permission(folder, mode='x'):
             folder = None
 
     document = Document()
     if request.POST:
         if 'cancel' not in request.POST:
             form = DocumentForm(
-                request.user.get_profile(), folder_id, request.POST, instance=document)
+                request.user.profile, folder_id, request.POST, instance=document)
             if form.is_valid():
                 document = form.save()
                 document.set_user_from_request(request)
@@ -457,7 +457,7 @@ def document_add_typed(request, folder_id=None, response_format='html'):
         else:
             return HttpResponseRedirect(reverse('document_index'))
     else:
-        form = DocumentForm(request.user.get_profile(), folder_id)
+        form = DocumentForm(request.user.profile, folder_id)
 
     context = _get_default_context(request)
     context.update({'form': form,
@@ -475,7 +475,7 @@ def document_view(request, document_id, response_format='html'):
 
     document = get_object_or_404(Document, pk=document_id)
 
-    if not request.user.get_profile().has_permission(document):
+    if not request.user.profile.has_permission(document):
         return user_denied(request, message="You don't have access to this Document")
 
     context = _get_default_context(request)
@@ -493,13 +493,13 @@ def document_edit(request, document_id, response_format='html'):
 
     document = get_object_or_404(Document, pk=document_id)
 
-    if not request.user.get_profile().has_permission(document, mode='w'):
+    if not request.user.profile.has_permission(document, mode='w'):
         return user_denied(request, message="You don't have access to this Document")
 
     if request.POST:
         if 'cancel' not in request.POST:
             form = DocumentForm(
-                request.user.get_profile(), None, request.POST, instance=document)
+                request.user.profile, None, request.POST, instance=document)
             if form.is_valid():
                 document = form.save()
                 return HttpResponseRedirect(reverse('documents_document_view', args=[document.id]))
@@ -507,7 +507,7 @@ def document_edit(request, document_id, response_format='html'):
             return HttpResponseRedirect(reverse('documents_document_view', args=[document.id]))
     else:
         form = DocumentForm(
-            request.user.get_profile(), None, instance=document)
+            request.user.profile, None, instance=document)
 
     context = _get_default_context(request)
     context.update({'form': form,
@@ -525,7 +525,7 @@ def document_delete(request, document_id, response_format='html'):
 
     document = get_object_or_404(Document, pk=document_id)
 
-    if not request.user.get_profile().has_permission(document, mode='w'):
+    if not request.user.profile.has_permission(document, mode='w'):
         return user_denied(request, message="You don't have access to this Document")
 
     if request.POST:
@@ -556,7 +556,7 @@ def file_upload(request, response_format='html'):
         if 'cancel' not in request.POST:
             file = File()
             form = FileForm(
-                request.user.get_profile(), None, request.POST, request.FILES, instance=file)
+                request.user.profile, None, request.POST, request.FILES, instance=file)
             if form.is_valid():
                 file = form.save()
                 file.set_user_from_request(request)
@@ -564,7 +564,7 @@ def file_upload(request, response_format='html'):
         else:
             return HttpResponseRedirect(reverse('document_index'))
     else:
-        form = FileForm(request.user.get_profile(), None)
+        form = FileForm(request.user.profile, None)
 
     context = _get_default_context(request)
     context.update({'form': form})
@@ -582,13 +582,13 @@ def file_upload_typed(request, folder_id=None, response_format='html'):
     folder = None
     if folder_id:
         folder = get_object_or_404(Folder, pk=folder_id)
-        if not request.user.get_profile().has_permission(folder, mode='x'):
+        if not request.user.profile.has_permission(folder, mode='x'):
             folder = None
 
     if request.POST:
         if 'cancel' not in request.POST:
             form = FileForm(
-                request.user.get_profile(), folder_id, request.POST, request.FILES)
+                request.user.profile, folder_id, request.POST, request.FILES)
             if form.is_valid():
                 file = form.save()
                 file.set_user_from_request(request)
@@ -596,7 +596,7 @@ def file_upload_typed(request, folder_id=None, response_format='html'):
         else:
             return HttpResponseRedirect(reverse('document_index'))
     else:
-        form = FileForm(request.user.get_profile(), folder_id)
+        form = FileForm(request.user.profile, folder_id)
 
     context = _get_default_context(request)
     context.update({'form': form,
@@ -614,7 +614,7 @@ def file_view(request, file_id, response_format='html'):
 
     file = get_object_or_404(File, pk=file_id)
 
-    if not request.user.get_profile().has_permission(file):
+    if not request.user.profile.has_permission(file):
         return user_denied(request, message="You don't have access to this File")
 
     if request.GET and 'download' in request.GET:
@@ -647,7 +647,7 @@ def file_delete(request, file_id, response_format='html'):
     "File delete"
 
     file = get_object_or_404(File, pk=file_id)
-    if not request.user.get_profile().has_permission(file, mode='w'):
+    if not request.user.profile.has_permission(file, mode='w'):
         return user_denied(request, message="You don't have access to this File")
 
     if request.POST:
@@ -675,13 +675,13 @@ def file_edit(request, file_id, response_format='html'):
     "File edit page"
 
     file = get_object_or_404(File, pk=file_id)
-    if not request.user.get_profile().has_permission(file, mode='w'):
+    if not request.user.profile.has_permission(file, mode='w'):
         return user_denied(request, message="You don't have access to this File")
 
     if request.POST:
         if 'cancel' not in request.POST:
             form = FileForm(
-                request.user.get_profile(), None, request.POST, request.FILES, instance=file)
+                request.user.profile, None, request.POST, request.FILES, instance=file)
             if form.is_valid():
                 file = form.save()
                 return HttpResponseRedirect(reverse('documents_file_view', args=[file.id]))
@@ -689,7 +689,7 @@ def file_edit(request, file_id, response_format='html'):
             return HttpResponseRedirect(reverse('documents_file_view', args=[file.id]))
 
     else:
-        form = FileForm(request.user.get_profile(), None, instance=file)
+        form = FileForm(request.user.profile, None, instance=file)
 
     context = _get_default_context(request)
     context.update({'form': form,
@@ -710,7 +710,7 @@ def weblink_add(request, response_format='html'):
         if 'cancel' not in request.POST:
             link = WebLink()
             form = WebLinkForm(
-                request.user.get_profile(), None, request.POST, instance=link)
+                request.user.profile, None, request.POST, instance=link)
             if form.is_valid():
                 link = form.save()
                 link.set_user_from_request(request)
@@ -719,7 +719,7 @@ def weblink_add(request, response_format='html'):
             return HttpResponseRedirect(reverse('document_index'))
 
     else:
-        form = WebLinkForm(request.user.get_profile(), None)
+        form = WebLinkForm(request.user.profile, None)
 
     context = _get_default_context(request)
     context.update({'form': form,
@@ -738,14 +738,14 @@ def weblink_add_typed(request, folder_id=None, response_format='html'):
     folder = None
     if folder_id:
         folder = get_object_or_404(Folder, pk=folder_id)
-        if not request.user.get_profile().has_permission(folder, mode='x'):
+        if not request.user.profile.has_permission(folder, mode='x'):
             folder = None
 
     if request.POST:
         if 'cancel' not in request.POST:
             link = WebLink()
             form = WebLinkForm(
-                request.user.get_profile(), folder_id, request.POST, instance=link)
+                request.user.profile, folder_id, request.POST, instance=link)
             if form.is_valid():
                 link = form.save()
                 link.set_user_from_request(request)
@@ -753,7 +753,7 @@ def weblink_add_typed(request, folder_id=None, response_format='html'):
         else:
             return HttpResponseRedirect(reverse('document_index'))
     else:
-        form = WebLinkForm(request.user.get_profile(), folder_id)
+        form = WebLinkForm(request.user.profile, folder_id)
 
     context = _get_default_context(request)
     context.update({'form': form,
@@ -771,7 +771,7 @@ def weblink_view(request, weblink_id, response_format='html'):
 
     link = get_object_or_404(WebLink, pk=weblink_id)
 
-    if not request.user.get_profile().has_permission(link):
+    if not request.user.profile.has_permission(link):
         return user_denied(request, message="You don't have access to this Web Link")
 
     context = _get_default_context(request)
@@ -789,13 +789,13 @@ def weblink_edit(request, weblink_id, response_format='html'):
 
     link = get_object_or_404(WebLink, pk=weblink_id)
 
-    if not request.user.get_profile().has_permission(link, mode='w'):
+    if not request.user.profile.has_permission(link, mode='w'):
         return user_denied(request, message="You don't have access to this Web Link")
 
     if request.POST:
         if 'cancel' not in request.POST:
             form = WebLinkForm(
-                request.user.get_profile(), None, request.POST, instance=link)
+                request.user.profile, None, request.POST, instance=link)
             if form.is_valid():
                 link = form.save()
                 return HttpResponseRedirect(reverse('documents_weblink_view', args=[link.id]))
@@ -803,7 +803,7 @@ def weblink_edit(request, weblink_id, response_format='html'):
             return HttpResponseRedirect(reverse('documents_weblink_view', args=[link.id]))
 
     else:
-        form = WebLinkForm(request.user.get_profile(), None, instance=link)
+        form = WebLinkForm(request.user.profile, None, instance=link)
 
     context = _get_default_context(request)
     context.update({'form': form,
@@ -821,7 +821,7 @@ def weblink_delete(request, weblink_id, response_format='html'):
 
     link = get_object_or_404(WebLink, pk=weblink_id)
 
-    if not request.user.get_profile().has_permission(link, mode='w'):
+    if not request.user.profile.has_permission(link, mode='w'):
         return user_denied(request, message="You don't have access to this Web Link")
 
     if request.POST:

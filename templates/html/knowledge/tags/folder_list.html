@@ -12,7 +12,7 @@
         </span>
     </span>
     <span class="content-list-item-actions">
-        {% if user.get_profile().has_permission(subfolder, mode='w') %}
+        {% if user.profile.has_permission(subfolder, mode='w') %}
         <a href="{% url knowledge_folder_edit subfolder.id %}" class="inline-link edit-link">{% trans %}Edit{% endtrans %}</a>
         {% endif %}
     </span>

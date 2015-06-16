@@ -56,7 +56,7 @@
                 <td><a href="{% url identities_user_view report.user.id %}">{{chart.id}}</a></td>
                 <td>{{chart.date_created.strftime("%d %B %Y, %H:%M")}}</td>
         <td>
-              {% if user.get_profile().has_permission(report, mode='w') %}
+              {% if user.profile.has_permission(report, mode='w') %}
               <a href="{% url reports_chart_edit chart.id %}" class="inline-link edit-link popup-link">{% trans %}Edit{% endtrans %}</a>
               {% endif %}
           </td>

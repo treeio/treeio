@@ -23,9 +23,8 @@ def _get_default_context(request):
     "Preprocess context"
 
     query = Q(name__icontains='account') | Q(name__icontains='news')
-    modules = request.user.get_profile(
-    ).get_perspective().get_modules().exclude(query)
-    filters = UpdateRecordFilterForm(request.user.get_profile(), request.GET)
+    modules = request.user.profile.get_perspective().get_modules().exclude(query)
+    filters = UpdateRecordFilterForm(request.user.profile, request.GET)
 
     context = {'modules': modules, 'filters': filters}
 
@@ -79,7 +78,7 @@ def _get_filter_query(user, do_permissions=True, do_recipients=True, filters=Non
 def index(request, response_format='html'):
     "Default index page"
 
-    profile = request.user.get_profile()
+    profile = request.user.profile
     query = _get_filter_query(profile, filters=request.GET)
     updates = UpdateRecord.objects.filter(query).distinct()
 
@@ -116,7 +115,7 @@ def index(request, response_format='html'):
 def index_social(request, response_format='html'):
     "Social Activity"
 
-    profile = request.user.get_profile()
+    profile = request.user.profile
     query = _get_filter_query(
         profile, filters=request.GET) & Q(record_type='share')
     updates = UpdateRecord.objects.filter(query).distinct()
@@ -148,7 +147,7 @@ def index_social(request, response_format='html'):
 def top_news(request, response_format='html'):
     "Default index page - top news"
 
-    profile = request.user.get_profile()
+    profile = request.user.profile
     query = _get_filter_query(profile, filters=request.GET) & Q(score__gt=0)
     updates = UpdateRecord.objects.filter(query).distinct()
 
@@ -185,7 +184,7 @@ def top_news(request, response_format='html'):
 def my_watchlist(request, response_format='html'):
     "Displays news about all objects a User is subscribed to"
 
-    profile = request.user.get_profile()
+    profile = request.user.profile
     query = _get_filter_query(profile, do_recipients=False, filters=request.GET) & Q(
         about__in=profile.subscriptions.all()) & ~Q(author=profile)
     updates = UpdateRecord.objects.filter(query).distinct()
@@ -224,7 +223,7 @@ def my_watchlist(request, response_format='html'):
 def my_activity(request, response_format='html'):
     "Default index page"
 
-    profile = request.user.get_profile()
+    profile = request.user.profile
     updates = UpdateRecord.objects.filter(author=profile).distinct()
 
     if request.POST:
@@ -260,7 +259,7 @@ def my_activity(request, response_format='html'):
 def index_by_module(request, module_name, response_format='html'):
     "Default index page"
 
-    profile = request.user.get_profile()
+    profile = request.user.profile
     try:
         module = profile.get_perspective().get_modules().filter(
             name__icontains=module_name)[0]
@@ -310,7 +309,7 @@ def index_by_module(request, module_name, response_format='html'):
 def widget_news_index(request, response_format='html'):
     "Widget: All Activity"
 
-    profile = request.user.get_profile()
+    profile = request.user.profile
     query = _get_filter_query(profile) & (
         ~Q(author=profile) | Q(record_type='share') | Q(score__gt=0))
     updates = UpdateRecord.objects.filter(query).distinct()
@@ -348,7 +347,7 @@ def widget_news_index(request, response_format='html'):
 def widget_news_social(request, response_format='html'):
     "Widget: Social Activity"
 
-    profile = request.user.get_profile()
+    profile = request.user.profile
     query = _get_filter_query(profile) & Q(record_type='share')
     updates = UpdateRecord.objects.filter(query).distinct()
 
@@ -379,7 +378,7 @@ def widget_news_social(request, response_format='html'):
 def widget_my_watchlist(request, response_format='html'):
     "Displays news about all objects a User is subscribed to"
 
-    profile = request.user.get_profile()
+    profile = request.user.profile
     query = _get_filter_query(profile, do_recipients=False) & Q(
         about__in=profile.subscriptions.all()) & ~Q(author=profile)
     updates = UpdateRecord.objects.filter(query).distinct()

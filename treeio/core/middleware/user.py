@@ -52,7 +52,7 @@ class CommonMiddleware(object):
 
             user = None
             try:
-                user = request.user.get_profile()
+                user = request.user.profile
                 self.objects[unicode(user.id)] = {}
             except Exception:
                 pass
@@ -162,7 +162,7 @@ class CommonMiddleware(object):
         signals.pre_delete.disconnect(dispatch_uid=request)
 
         try:
-            user = request.user.get_profile()
+            user = request.user.profile
             self.objects[unicode[user.id]] = {}
         except:
             pass
@@ -248,7 +248,7 @@ class LanguageMiddleware(object):
 
         if request.user.username:
             try:
-                user = request.user.get_profile()
+                user = request.user.profile
                 conf = ModuleSetting.get('language', user=user)[0]
                 lang = conf.value
             except IndexError:

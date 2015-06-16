@@ -8,7 +8,7 @@
 {% block module_topmenu %}
 <a href="{% url services_ticket_add_by_queue queue.id %}" class="top-menu add-link">{% trans %}New Ticket{% endtrans %}</a>
 <a href="{% url services_queue_view queue.id %}" class="top-menu view-link">{% trans %}View{% endtrans %}</a>
-{% if user.get_profile().has_permission(queue, mode='w') %}
+{% if user.profile.has_permission(queue, mode='w') %}
 <a href="{% url services_queue_edit queue.id %}" class="top-menu edit-link">{% trans %}Edit{% endtrans %}</a>
 <a href="{% url services_queue_delete queue.id %}" class="top-menu delete-link-active">{% trans %}Delete{% endtrans %}</a>
 {% endif %}
@@ -84,7 +84,7 @@
         &nbsp;
     </span>
     <span class="content-list-item-actions">
-        {% if user.get_profile().has_permission(queue, mode='w') %}
+        {% if user.profile.has_permission(queue, mode='w') %}
         <a href="{% url services_queue_edit queue.id %}" class="inline-link edit-link">{% trans %}Edit{% endtrans %}</a>
         {% endif %}
     </span>
@@ -110,7 +110,7 @@
         &nbsp;
     </span>
     <span class="content-list-item-actions">
-        {% if user.get_profile().has_permission(ticket, mode='w') %}
+        {% if user.profile.has_permission(ticket, mode='w') %}
         <a href="{% url services_ticket_edit ticket.id %}" class="inline-link edit-link">{% trans %}Edit{% endtrans %}</a>
         {% endif %}
     </span>

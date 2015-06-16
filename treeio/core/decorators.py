@@ -24,7 +24,7 @@ def treeio_login_required(f):
     def wrap(request, *args, **kwargs):
         "Wrap"
         if request.user.is_authenticated():
-            user = request.user.get_profile()
+            user = request.user.profile
             user_modules = user.get_perspective().get_modules()
             all_modules = Module.objects.all()
             active = None
@@ -38,6 +38,7 @@ def treeio_login_required(f):
                     for regexp in urls:
                         if re.match(regexp, request.path):
                             active = module
+                            # todo: this is inneficient, after finding the active module it continues the loop
                 except ImportError:
                     pass
                 except AttributeError:
@@ -82,7 +83,7 @@ def module_admin_required(module_name=None):
         def wrapped_f(request, *args, **kwargs):
             "Wrapped"
 
-            if request.user.get_profile().is_admin(module_name):
+            if request.user.profile.is_admin(module_name):
                 return f(request, *args, **kwargs)
             else:
                 return HttpResponseRedirect(reverse('user_denied'))

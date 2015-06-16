@@ -30,7 +30,7 @@ END_HOUR = 23
 def _get_default_context(request):
     "Returns default context as a dict()"
 
-    massform = MassActionForm(request.user.get_profile())
+    massform = MassActionForm(request.user.profile)
 
     context = {'massform': massform}
 
@@ -58,7 +58,7 @@ def _process_mass_form(f):
 
     def wrap(request, *args, **kwargs):
         "Wrap"
-        user = request.user.get_profile()
+        user = request.user.profile
         if 'massform' in request.POST:
             for key in request.POST:
                 if 'mass-event' in key:
@@ -292,7 +292,7 @@ def event_view(request, event_id, response_format='html'):
     "Event view"
 
     event = get_object_or_404(Event, pk=event_id)
-    if not request.user.get_profile().has_permission(event):
+    if not request.user.profile.has_permission(event):
         return user_denied(request, message="You don't have access to this Event")
 
     return render_to_response('events/event_view',
@@ -306,20 +306,20 @@ def event_edit(request, event_id, response_format='html'):
     "Event edit"
 
     event = get_object_or_404(Event, pk=event_id)
-    if not request.user.get_profile().has_permission(event, mode='w'):
+    if not request.user.profile.has_permission(event, mode='w'):
         return user_denied(request, message="You don't have access to this Event")
 
     if request.POST:
         if 'cancel' not in request.POST:
             form = EventForm(
-                request.user.get_profile(), None, None, request.POST, instance=event)
+                request.user.profile, None, None, request.POST, instance=event)
             if form.is_valid():
                 event = form.save()
                 return HttpResponseRedirect(reverse('events_event_view', args=[event.id]))
         else:
             return HttpResponseRedirect(reverse('events'))
     else:
-        form = EventForm(request.user.get_profile(), instance=event)
+        form = EventForm(request.user.profile, instance=event)
 
     return render_to_response('events/event_edit',
                               {'event': event,
@@ -333,7 +333,7 @@ def event_delete(request, event_id, response_format='html'):
     "Event delete"
 
     event = get_object_or_404(Event, pk=event_id)
-    if not request.user.get_profile().has_permission(event, mode='w'):
+    if not request.user.profile.has_permission(event, mode='w'):
         return user_denied(request, message="You don't have access to this Event")
 
     if request.POST:
@@ -361,7 +361,7 @@ def event_add(request, date=None, hour=12, response_format='html'):
         if 'cancel' not in request.POST:
             event = Event()
             form = EventForm(
-                request.user.get_profile(), date, hour, request.POST, instance=event)
+                request.user.profile, date, hour, request.POST, instance=event)
             if form.is_valid():
                 event = form.save()
                 event.set_user_from_request(request)
@@ -369,7 +369,7 @@ def event_add(request, date=None, hour=12, response_format='html'):
         else:
             return HttpResponseRedirect(reverse('events'))
     else:
-        form = EventForm(request.user.get_profile(), date, hour)
+        form = EventForm(request.user.profile, date, hour)
 
     return render_to_response('events/event_add',
                               {'form': form},

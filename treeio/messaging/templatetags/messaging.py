@@ -25,7 +25,7 @@ def messaging_message_list(context, messages, skip_group=False, nomass=False):
     if 'response_format' in context:
         response_format = context['response_format']
 
-    profile = request.user.get_profile()
+    profile = request.user.profile
 
     return Markup(render_to_string('messaging/tags/message_list',
                                    {'messages': messages,
@@ -47,7 +47,7 @@ def messaging_unread(context):
     user = None
     if request.user.username:
         try:
-            user = request.user.get_profile()
+            user = request.user.profile
         except Exception:
             pass
 

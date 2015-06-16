@@ -96,7 +96,7 @@
                 {{ last_updated(ticket) }}
             </td>
             <td>
-                {% if user.get_profile().has_permission(ticket, mode='w') %}
+                {% if user.profile.has_permission(ticket, mode='w') %}
                 <span class="content-list-item-actions table-link">
                 <a href="{% url services_ticket_edit ticket.id %}" class="inline-link edit-link">{% trans %}Edit{% endtrans %}</a>
                 </span>
@@ -138,7 +138,7 @@
         </span>
     </span>
     <span class="content-list-item-actions">
-        {% if user.get_profile().has_permission(ticket, mode='w') %}
+        {% if user.profile.has_permission(ticket, mode='w') %}
         <a href="{% url services_ticket_edit ticket.id %}" class="inline-link edit-link">{% trans %}Edit{% endtrans %}</a>
         {% endif %}
     </span>

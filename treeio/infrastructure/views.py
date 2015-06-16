@@ -40,7 +40,7 @@ def _get_default_context(request):
         request, ItemType.objects.filter(parent__isnull=True))
     statuses = Object.filter_by_request(request, ItemStatus.objects)
     locations = Object.filter_by_request(request, Location.objects)
-    massform = MassActionForm(request.user.get_profile())
+    massform = MassActionForm(request.user.profile)
 
     context = {
         'statuses': statuses,
@@ -63,8 +63,8 @@ def _process_mass_form(f):
                     try:
                         item = Item.objects.get(pk=request.POST[key])
                         form = MassActionForm(
-                            request.user.get_profile(), request.POST, instance=item)
-                        if form.is_valid() and request.user.get_profile().has_permission(item, mode='w'):
+                            request.user.profile, request.POST, instance=item)
+                        if form.is_valid() and request.user.profile.has_permission(item, mode='w'):
                             form.save()
                     except Exception:
                         pass
@@ -95,7 +95,7 @@ def index(request, response_format='html'):
     items = Object.filter_by_request(
         request, Item.objects.filter(query).order_by('name'))
 
-    filters = FilterForm(request.user.get_profile(), '', request.GET)
+    filters = FilterForm(request.user.profile, '', request.GET)
 
     context = _get_default_context(request)
     context.update({'items': items,
@@ -111,13 +111,13 @@ def index(request, response_format='html'):
 def index_owned(request, response_format='html'):
     "Items owned by current user"
 
-    query = Q(owner=request.user.get_profile().get_contact())
+    query = Q(owner=request.user.profile.get_contact())
     if request.GET:
         query = query & _get_filter_query(request.GET)
     items = Object.filter_by_request(
         request, Item.objects.filter(query).order_by('-date_created'))
 
-    filters = FilterForm(request.user.get_profile(), ['owner'], request.GET)
+    filters = FilterForm(request.user.profile, ['owner'], request.GET)
 
     context = _get_default_context(request)
     context.update({'items': items,
@@ -138,7 +138,7 @@ def type_view(request, type_id, response_format='html'):
     "ItemType view"
 
     item_type = get_object_or_404(ItemType, pk=type_id)
-    if not request.user.get_profile().has_permission(item_type):
+    if not request.user.profile.has_permission(item_type):
         return user_denied(request, message="You don't have access to this Item Type",
                            response_format=response_format)
 
@@ -149,7 +149,7 @@ def type_view(request, type_id, response_format='html'):
         request, Item.objects.filter(query).order_by('name'))
 
     filters = FilterForm(
-        request.user.get_profile(), ['item_type'], request.GET)
+        request.user.profile, ['item_type'], request.GET)
 
     context = _get_default_context(request)
     context.update({'items': items,
@@ -166,7 +166,7 @@ def type_edit(request, type_id, response_format='html'):
     "ItemType edit"
 
     item_type = get_object_or_404(ItemType, pk=type_id)
-    if not request.user.get_profile().has_permission(item_type, mode='w'):
+    if not request.user.profile.has_permission(item_type, mode='w'):
         return user_denied(request, message="You don't have access to this Item Type",
                            response_format=response_format)
     infrastructure = Object.filter_by_request(request,
@@ -175,14 +175,14 @@ def type_edit(request, type_id, response_format='html'):
     if request.POST:
         if 'cancel' not in request.POST:
             form = ItemTypeForm(
-                request.user.get_profile(), request.POST, instance=item_type)
+                request.user.profile, request.POST, instance=item_type)
             if form.is_valid():
                 item_type = form.save(request)
                 return HttpResponseRedirect(reverse('infrastructure_type_view', args=[item_type.id]))
         else:
             return HttpResponseRedirect(reverse('infrastructure_type_view', args=[item_type.id]))
     else:
-        form = ItemTypeForm(request.user.get_profile(), instance=item_type)
+        form = ItemTypeForm(request.user.profile, instance=item_type)
 
     context = _get_default_context(request)
     context.update({'infrastructure': infrastructure,
@@ -198,7 +198,7 @@ def type_edit(request, type_id, response_format='html'):
 def type_add(request, response_format='html'):
     "ItemType add"
 
-    if not request.user.get_profile().is_admin('treeio.infrastructure'):
+    if not request.user.profile.is_admin('treeio.infrastructure'):
         return user_denied(request, message="You don't have administrator access to the Infrastructure module",
                            response_format=response_format)
 
@@ -206,7 +206,7 @@ def type_add(request, response_format='html'):
         if 'cancel' not in request.POST:
             item_type = ItemType()
             form = ItemTypeForm(
-                request.user.get_profile(), request.POST, instance=item_type)
+                request.user.profile, request.POST, instance=item_type)
             if form.is_valid():
                 item = form.save(request)
                 item_type.set_user_from_request(request)
@@ -214,7 +214,7 @@ def type_add(request, response_format='html'):
         else:
             return HttpResponseRedirect(reverse('infrastructure_settings_view'))
     else:
-        form = ItemTypeForm(request.user.get_profile())
+        form = ItemTypeForm(request.user.profile)
 
     context = _get_default_context(request)
     context.update({'form': form})
@@ -228,7 +228,7 @@ def type_add(request, response_format='html'):
 def type_delete(request, type_id, response_format='html'):
     "ItemType delete page"
     type = get_object_or_404(ItemType, pk=type_id)
-    if not request.user.get_profile().has_permission(type, mode="w"):
+    if not request.user.profile.has_permission(type, mode="w"):
         return user_denied(request, message="You don't have write access to this ItemType")
 
     if request.POST:
@@ -260,7 +260,7 @@ def field_view(request, field_id, response_format='html'):
     "ItemField view"
 
     field = get_object_or_404(ItemField, pk=field_id)
-    if not request.user.get_profile().has_permission(field):
+    if not request.user.profile.has_permission(field):
         return user_denied(request, message="You don't have access to this Field Type",
                            response_format=response_format)
 
@@ -277,7 +277,7 @@ def field_edit(request, field_id, response_format='html'):
     "ItemField edit"
 
     field = get_object_or_404(ItemField, pk=field_id)
-    if not request.user.get_profile().has_permission(field, mode='w'):
+    if not request.user.profile.has_permission(field, mode='w'):
         return user_denied(request, message="You don't have access to this Field Type",
                            response_format=response_format)
 
@@ -305,7 +305,7 @@ def field_edit(request, field_id, response_format='html'):
 def field_add(request, response_format='html'):
     "ItemField add"
 
-    if not request.user.get_profile().is_admin('treeio.infrastructure'):
+    if not request.user.profile.is_admin('treeio.infrastructure'):
         return user_denied(request,
                            message="You don't have administrator access to the Infrastructure module",
                            response_format=response_format)
@@ -335,7 +335,7 @@ def field_add(request, response_format='html'):
 def field_delete(request, field_id, response_format='html'):
     "ItemField delete page"
     field = get_object_or_404(ItemField, pk=field_id)
-    if not request.user.get_profile().has_permission(field, mode="w"):
+    if not request.user.profile.has_permission(field, mode="w"):
         return user_denied(request, message="You don't have write access to this ItemField")
 
     if request.POST:
@@ -366,7 +366,7 @@ def status_view(request, status_id, response_format='html'):
     "ItemStatus view"
 
     item_status = get_object_or_404(ItemStatus, pk=status_id)
-    if not request.user.get_profile().has_permission(item_status):
+    if not request.user.profile.has_permission(item_status):
         return user_denied(request, message="You don't have access to this Item Status",
                            response_format=response_format)
 
@@ -376,7 +376,7 @@ def status_view(request, status_id, response_format='html'):
     items = Object.filter_by_request(
         request, Item.objects.filter(query).order_by('name'))
 
-    filters = FilterForm(request.user.get_profile(), ['status'], request.GET)
+    filters = FilterForm(request.user.profile, ['status'], request.GET)
 
     context = _get_default_context(request)
     context.update({'items': items,
@@ -394,7 +394,7 @@ def status_edit(request, status_id, response_format='html'):
     "ItemStatus edit"
 
     item_status = get_object_or_404(ItemStatus, pk=status_id)
-    if not request.user.get_profile().has_permission(item_status, mode='w'):
+    if not request.user.profile.has_permission(item_status, mode='w'):
         return user_denied(request, message="You don't have access to this Item Status",
                            response_format=response_format)
 
@@ -423,7 +423,7 @@ def status_delete(request, status_id, response_format='html'):
     "ItemStatus delete"
 
     item_status = get_object_or_404(ItemStatus, pk=status_id)
-    if not request.user.get_profile().has_permission(item_status, mode='w'):
+    if not request.user.profile.has_permission(item_status, mode='w'):
         return user_denied(request, message="You don't have access to this Item Status",
                            response_format=response_format)
 
@@ -450,7 +450,7 @@ def status_delete(request, status_id, response_format='html'):
 def status_add(request, response_format='html'):
     "ItemStatus edit"
 
-    if not request.user.get_profile().is_admin('treeio.infrastructure'):
+    if not request.user.profile.is_admin('treeio.infrastructure'):
         return user_denied(request, message="You are not an Administrator of the Infrastructure module",
                            response_format=response_format)
 
@@ -494,21 +494,21 @@ def item_add_typed(request, type_id, response_format='html'):
     "Item add with preselected type"
 
     item_type = get_object_or_404(ItemType, pk=type_id)
-    if not request.user.get_profile().has_permission(item_type, mode='x'):
+    if not request.user.profile.has_permission(item_type, mode='x'):
         return user_denied(request, message="You don't have access to create " + unicode(item_type),
                            response_format=response_format)
 
     if request.POST:
         if 'cancel' not in request.POST:
             form = ItemForm(
-                request.user.get_profile(), item_type, request.POST, files=request.FILES)
+                request.user.profile, item_type, request.POST, files=request.FILES)
             if form.is_valid():
                 item = form.save(request)
                 return HttpResponseRedirect(reverse('infrastructure_item_view', args=[item.id]))
         else:
             return HttpResponseRedirect(reverse('infrastructure_index'))
     else:
-        form = ItemForm(request.user.get_profile(), item_type)
+        form = ItemForm(request.user.profile, item_type)
 
     context = _get_default_context(request)
     context.update({'item_type': item_type,
@@ -523,7 +523,7 @@ def item_add_typed(request, type_id, response_format='html'):
 def item_view(request, item_id, response_format='html'):
     "Item view"
     item = get_object_or_404(Item, pk=item_id)
-    if not request.user.get_profile().has_permission(item):
+    if not request.user.profile.has_permission(item):
         return user_denied(request, message="You don't have access to this Item",
                            response_format=response_format)
 
@@ -539,13 +539,13 @@ def item_view(request, item_id, response_format='html'):
 def item_edit(request, item_id, response_format='html'):
     "Item edit page"
     item = get_object_or_404(Item, pk=item_id)
-    if not request.user.get_profile().has_permission(item, mode="w"):
+    if not request.user.profile.has_permission(item, mode="w"):
         return user_denied(request, message="You don't have write access to this Item",
                            response_format=response_format)
 
     if request.POST:
         if 'cancel' not in request.POST:
-            form = ItemForm(request.user.get_profile(), item.item_type, request.POST,
+            form = ItemForm(request.user.profile, item.item_type, request.POST,
                             files=request.FILES, instance=item)
             if form.is_valid():
                 item = form.save(request)
@@ -554,7 +554,7 @@ def item_edit(request, item_id, response_format='html'):
             return HttpResponseRedirect(reverse('infrastructure_item_view', args=[item.id]))
     else:
         form = ItemForm(
-            request.user.get_profile(), item.item_type, instance=item)
+            request.user.profile, item.item_type, instance=item)
 
     context = _get_default_context(request)
     context.update({'item': item,
@@ -569,7 +569,7 @@ def item_edit(request, item_id, response_format='html'):
 def item_delete(request, item_id, response_format='html'):
     "Item delete page"
     item = get_object_or_404(Item, pk=item_id)
-    if not request.user.get_profile().has_permission(item, mode="w"):
+    if not request.user.profile.has_permission(item, mode="w"):
         return user_denied(request, message="You don't have write access to this Item")
 
     if request.POST:
@@ -602,7 +602,7 @@ def location_add(request, response_format='html'):
         if 'cancel' not in request.POST:
             location = Location()
             form = LocationForm(
-                request.user.get_profile(), None, request.POST, instance=location)
+                request.user.profile, None, request.POST, instance=location)
             if form.is_valid():
                 location = form.save()
                 location.set_user_from_request(request)
@@ -610,7 +610,7 @@ def location_add(request, response_format='html'):
         else:
             return HttpResponseRedirect(reverse('infrastructure_index'))
     else:
-        form = LocationForm(request.user.get_profile(), None)
+        form = LocationForm(request.user.profile, None)
 
     context = _get_default_context(request)
     context.update({'form': form})
@@ -625,7 +625,7 @@ def location_add(request, response_format='html'):
 def location_view(request, location_id, response_format='html'):
     "Location view"
     location = get_object_or_404(Location, pk=location_id)
-    if not request.user.get_profile().has_permission(location):
+    if not request.user.profile.has_permission(location):
         return user_denied(request, message="You don't have access to this Location",
                            response_format=response_format)
 
@@ -650,14 +650,14 @@ def location_view(request, location_id, response_format='html'):
 def location_edit(request, location_id, response_format='html'):
     "Location edit page"
     location = get_object_or_404(Location, pk=location_id)
-    if not request.user.get_profile().has_permission(location, mode="w"):
+    if not request.user.profile.has_permission(location, mode="w"):
         return user_denied(request, message="You don't have write access to this Location",
                            response_format=response_format)
 
     if request.POST:
         if 'cancel' not in request.POST:
             form = LocationForm(
-                request.user.get_profile(), None, request.POST, instance=location)
+                request.user.profile, None, request.POST, instance=location)
             if form.is_valid():
                 location = form.save(request)
                 return HttpResponseRedirect(reverse('infrastructure_location_view', args=[location.id]))
@@ -665,7 +665,7 @@ def location_edit(request, location_id, response_format='html'):
             return HttpResponseRedirect(reverse('infrastructure_location_view', args=[location.id]))
     else:
         form = LocationForm(
-            request.user.get_profile(), None, instance=location)
+            request.user.profile, None, instance=location)
 
     context = _get_default_context(request)
     context.update({'location': location,
@@ -680,7 +680,7 @@ def location_edit(request, location_id, response_format='html'):
 def location_delete(request, location_id, response_format='html'):
     "Location delete page"
     location = get_object_or_404(Location, pk=location_id)
-    if not request.user.get_profile().has_permission(location, mode="w"):
+    if not request.user.profile.has_permission(location, mode="w"):
         return user_denied(request, message="You don't have write access to this Location")
 
     if request.POST:
@@ -710,7 +710,7 @@ def location_delete(request, location_id, response_format='html'):
 def settings_view(request, response_format='html'):
     "Settings"
 
-    if not request.user.get_profile().is_admin('treeio.infrastructure'):
+    if not request.user.profile.is_admin('treeio.infrastructure'):
         return user_denied(request, message="You are not an Administrator of the Infrastructure module",
                            response_format=response_format)
 
@@ -745,14 +745,14 @@ def settings_edit(request, response_format='html'):
 
     if request.POST:
         if 'cancel' not in request.POST:
-            form = SettingsForm(request.user.get_profile(), request.POST)
+            form = SettingsForm(request.user.profile, request.POST)
             if form.is_valid():
                 form.save()
                 return HttpResponseRedirect(reverse('infrastructure_settings_view'))
         else:
             return HttpResponseRedirect(reverse('infrastructure_settings_view'))
     else:
-        form = SettingsForm(request.user.get_profile())
+        form = SettingsForm(request.user.profile)
 
     context = _get_default_context(request)
     context.update({'form': form})
@@ -776,7 +776,7 @@ def service_record_index(request, response_format='html'):
     service_records = Object.filter_by_request(
         request, ItemServicing.objects.filter(query))
 
-    filters = FilterForm(request.user.get_profile(), '', request.GET)
+    filters = FilterForm(request.user.profile, '', request.GET)
 
     context = _get_default_context(request)
     context.update({'service_records': service_records,
@@ -791,7 +791,7 @@ def service_record_index(request, response_format='html'):
 def service_record_add(request, response_format='html'):
     "New service_record form"
 
-    if not request.user.get_profile().is_admin('treeio.infrastructure'):
+    if not request.user.profile.is_admin('treeio.infrastructure'):
         return user_denied(request,
                            message="You don't have administrator access to the Infrastructure module")
 
@@ -800,14 +800,14 @@ def service_record_add(request, response_format='html'):
     if request.POST:
         if 'cancel' not in request.POST:
             form = ServiceRecordForm(
-                request.user.get_profile(), service_record, request.POST)
+                request.user.profile, service_record, request.POST)
             if form.is_valid():
                 record = form.save(request)
                 return HttpResponseRedirect(reverse('infrastructure_service_record_view', args=[record.id]))
         else:
             return HttpResponseRedirect(reverse('infrastructure_service_record_index'))
     else:
-        form = ServiceRecordForm(request.user.get_profile(), service_record)
+        form = ServiceRecordForm(request.user.profile, service_record)
 
     context = _get_default_context(request)
     context.update({'service_record': service_record,
@@ -822,7 +822,7 @@ def service_record_add(request, response_format='html'):
 def service_record_view(request, service_record_id, response_format='html'):
     "ServiceRecord view"
     service_record = get_object_or_404(ItemServicing, pk=service_record_id)
-    if not request.user.get_profile().has_permission(service_record):
+    if not request.user.profile.has_permission(service_record):
         return user_denied(request, message="You don't have access to this ServiceRecord",
                            response_format=response_format)
 
@@ -839,14 +839,14 @@ def service_record_edit(request, service_record_id, response_format='html'):
     "ServiceRecord edit page"
 
     service_record = get_object_or_404(ItemServicing, pk=service_record_id)
-    if not request.user.get_profile().has_permission(service_record, mode="w"):
+    if not request.user.profile.has_permission(service_record, mode="w"):
         return user_denied(request, message="You don't have write access to this ServiceRecord",
                            response_format=response_format)
 
     if request.POST:
         if 'cancel' not in request.POST:
             form = ServiceRecordForm(
-                request.user.get_profile(), None, request.POST, instance=service_record)
+                request.user.profile, None, request.POST, instance=service_record)
             if form.is_valid():
                 service_record = form.save(request)
                 return HttpResponseRedirect(reverse('infrastructure_service_record_view',
@@ -856,7 +856,7 @@ def service_record_edit(request, service_record_id, response_format='html'):
                                                 args=[service_record.id]))
     else:
         form = ServiceRecordForm(
-            request.user.get_profile(), None, instance=service_record)
+            request.user.profile, None, instance=service_record)
 
     context = _get_default_context(request)
     context.update({'service_record': service_record,
@@ -871,7 +871,7 @@ def service_record_edit(request, service_record_id, response_format='html'):
 def service_record_delete(request, service_record_id, response_format='html'):
     "ServiceRecord delete page"
     service_record = get_object_or_404(ItemServicing, pk=service_record_id)
-    if not request.user.get_profile().has_permission(service_record, mode="w"):
+    if not request.user.profile.has_permission(service_record, mode="w"):
         return user_denied(request, message="You don't have write access to this ServiceRecord")
 
     if request.POST:

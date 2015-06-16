@@ -58,7 +58,7 @@ def user_login(request, response_format='html'):
             if user is not None:
 
                 try:
-                    profile = user.get_profile()
+                    profile = user.profile
                 except:
                     profile = None
 
@@ -140,7 +140,7 @@ def user_denied(request, message='', response_format='html'):
 def user_perspective(request, response_format='html'):
     "Change user perspective"
 
-    user = request.user.get_profile()
+    user = request.user.profile
     if request.POST and 'core_perspective' in request.POST:
         id = request.POST['core_perspective']
         perspective = get_object_or_404(Perspective, pk=id)
@@ -213,7 +213,7 @@ def ajax_popup(request, popup_id='', url='/'):
 
     response = None
     if active:
-        if not request.user.get_profile().has_permission(active):
+        if not request.user.profile.has_permission(active):
             response = user_denied(request, "You do not have access to the %s module" % unicode(active),
                                    response_format='ajax')
 
@@ -352,7 +352,7 @@ def ajax_object_lookup(request, response_format='html'):
 
     objects = []
     if request.GET and 'term' in request.GET:
-        objects = Object.filter_permitted(request.user.get_profile(),
+        objects = Object.filter_permitted(request.user.profile,
             Object.objects.filter(
                 object_name__icontains=request.GET['term']),
             mode='x')[:10]
@@ -542,7 +542,7 @@ def ajax_upload(request, object_id=None, record=None):
 
             attachment = Attachment(filename=filename,
                                     mimetype=content_type,
-                                    uploaded_by=request.user.get_profile(),
+                                    uploaded_by=request.user.profile,
                                     attached_file=filehash)
 
             if record:

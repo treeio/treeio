@@ -37,7 +37,7 @@ class CommonHandler(ObjectHandler):
     def check_create_permission(self, request, mode):
         if 'folder' in request.data:
             folder = getOrNone(Folder, pk=request.data['folder'])
-            if not request.user.get_profile().has_permission(folder, mode='x'):
+            if not request.user.profile.has_permission(folder, mode='x'):
                 request.data['folder'] = None
         return True
 

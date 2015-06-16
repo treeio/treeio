@@ -9,7 +9,7 @@
 {% block module_topmenu %}
 <a href="{% url projects_task_add_to_milestone milestone.id %}" class="top-menu add-link">{% trans %}New Task{% endtrans %}</a>
 <a href="{% url projects_milestone_view milestone.id %}" class="top-menu view-link">{% trans %}View{% endtrans %}</a>
-{% if user.get_profile().has_permission(milestone, mode='w') %}
+{% if user.profile.has_permission(milestone, mode='w') %}
 <a href="{% url projects_milestone_edit milestone.id %}" class="top-menu edit-link">{% trans %}Edit{% endtrans %}</a>
 <a href="{% url projects_milestone_delete milestone.id %}" class="top-menu delete-link-active">{% trans %}Delete{% endtrans %}</a>
 {% endif %}

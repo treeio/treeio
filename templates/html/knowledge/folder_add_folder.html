@@ -11,7 +11,7 @@
 <a href="{% url knowledge_item_add_folder parent.treepath %}" class="top-menu add-link">{% trans %}New Item{% endtrans %}</a>
 <a href="{% url knowledge_folder_add_folder parent.treepath %}" class="top-menu add-link-active">{% trans %}New Folder{% endtrans %}</a>
 <a href="{% url knowledge_folder_view parent.treepath %}" class="top-menu view-link">{% trans %}View{% endtrans %}</a>
-{% if user.get_profile().has_permission(parent, mode='w') %}
+{% if user.profile.has_permission(parent, mode='w') %}
 <a href="{% url knowledge_folder_edit parent.id %}" class="top-menu edit-link">{% trans %}Edit{% endtrans %}</a>
 <a href="{% url knowledge_folder_delete parent.id %}" class="top-menu delete-link">{% trans %}Delete{% endtrans %}</a>
 {% endif %}

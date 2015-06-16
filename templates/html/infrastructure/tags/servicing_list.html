@@ -19,7 +19,7 @@
         </span>
     </span>
     <span class="content-list-item-actions">
-        {% if user.get_profile().has_permission(record, mode='w') %}
+        {% if user.profile.has_permission(record, mode='w') %}
         <a href="{% url infrastructure_service_record_edit record.id %}" class="inline-link edit-link">{% trans %}Edit{% endtrans %}</a>
         {% endif %}
     </span>

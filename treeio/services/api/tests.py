@@ -50,7 +50,7 @@ class ServicesViewsTest(TestCase):
                 self.user = DjangoUser.objects.get(username=self.username)
                 self.user.set_password(self.password)
                 try:
-                    self.profile = self.user.get_profile()
+                    self.profile = self.user.profile
                 except Exception:
                     User.objects.all().delete()
                     self.user = DjangoUser(username=self.username, password='')
@@ -67,7 +67,7 @@ class ServicesViewsTest(TestCase):
             except Perspective.DoesNotExist:
                 Perspective.objects.all().delete()
                 perspective = Perspective(name='default')
-                perspective.set_user(self.user.get_profile())
+                perspective.set_user(self.user.profile)
                 perspective.save()
 
             ModuleSetting.set('default_perspective', perspective.id)
@@ -94,7 +94,7 @@ class ServicesViewsTest(TestCase):
             self.ticket.set_default_user()
             self.ticket.save()
 
-            self.agent = ServiceAgent(related_user=self.user.get_profile(), available_from=datetime.time(9),
+            self.agent = ServiceAgent(related_user=self.user.profile, available_from=datetime.time(9),
                                       available_to=datetime.time(17))
             self.agent.set_default_user()
             self.agent.save()

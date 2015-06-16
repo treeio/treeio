@@ -45,7 +45,7 @@ class FinanceAPITest(TestCase):
                 self.user = DjangoUser.objects.get(username=self.username)
                 self.user.set_password(self.password)
                 try:
-                    self.profile = self.user.get_profile()
+                    self.profile = self.user.profile
                 except Exception:
                     User.objects.all().delete()
                     self.user = DjangoUser(username=self.username, password='')

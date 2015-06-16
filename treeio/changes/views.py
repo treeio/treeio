@@ -39,7 +39,7 @@ def _get_default_context(request):
     "Returns Default context applicable to all views"
 
     all_statuses = Object.filter_by_request(request, ChangeSetStatus.objects)
-    massform = MassActionForm(request.user.get_profile())
+    massform = MassActionForm(request.user.profile)
 
     context = {'all_statuses': all_statuses,
                'massform': massform}
@@ -52,14 +52,14 @@ def _process_mass_form(f):
 
     def wrap(request, *args, **kwargs):
         "Wrap"
-        user = request.user.get_profile()
+        user = request.user.profile
         if 'massform' in request.POST:
             for key in request.POST:
                 if 'mass-changeset' in key:
                     try:
                         changeset = ChangeSet.objects.get(pk=request.POST[key])
                         form = MassActionForm(
-                            request.user.get_profile(), request.POST, instance=changeset)
+                            request.user.profile, request.POST, instance=changeset)
                         if form.is_valid() and user.has_permission(changeset, mode='w'):
                             form.save()
                     except Exception:
@@ -82,10 +82,10 @@ def index(request, response_format='html'):
     query = Q(object__in=Object.filter_by_request(request, Object.objects))
     if request.GET:
         query = query & _get_filter_query(request.GET)
-        filters = FilterForm(request.user.get_profile(), [], request.GET)
+        filters = FilterForm(request.user.profile, [], request.GET)
     else:
         query = query & Q(status__hidden=False)
-        filters = FilterForm(request.user.get_profile())
+        filters = FilterForm(request.user.profile)
 
     changesets = ChangeSet.objects.filter(query)
 
@@ -103,13 +103,13 @@ def index_owned(request, response_format='html'):
     "Change Control owned by me page"
 
     query = Q(object__in=Object.filter_by_request(request,
-                                                  Object.objects)) & Q(author=request.user.get_profile())
+                                                  Object.objects)) & Q(author=request.user.profile)
     if request.GET:
         query = query & _get_filter_query(request.GET)
-        filters = FilterForm(request.user.get_profile(), 'author', request.GET)
+        filters = FilterForm(request.user.profile, 'author', request.GET)
     else:
         query = query & Q(status__hidden=False)
-        filters = FilterForm(request.user.get_profile(), 'author')
+        filters = FilterForm(request.user.profile, 'author')
 
     changesets = ChangeSet.objects.filter(query)
 
@@ -128,13 +128,13 @@ def index_resolved(request, response_format='html'):
     "Change Control resolved by me page"
 
     query = Q(object__in=Object.filter_by_request(request,
-                                                  Object.objects)) & Q(resolved_by=request.user.get_profile())
+                                                  Object.objects)) & Q(resolved_by=request.user.profile)
     if request.GET:
         query = query & _get_filter_query(request.GET)
         filters = FilterForm(
-            request.user.get_profile(), 'resolved_by', request.GET)
+            request.user.profile, 'resolved_by', request.GET)
     else:
-        filters = FilterForm(request.user.get_profile(), 'resolved_by')
+        filters = FilterForm(request.user.profile, 'resolved_by')
 
     changesets = ChangeSet.objects.filter(query)
 
@@ -159,8 +159,8 @@ def status_view(request, status_id, response_format='html'):
 
     status = get_object_or_404(ChangeSetStatus, pk=status_id)
 
-    if not request.user.get_profile().has_permission(status) \
-            and not request.user.get_profile().is_admin('treeio.changes'):
+    if not request.user.profile.has_permission(status) \
+            and not request.user.profile.is_admin('treeio.changes'):
         return user_denied(request, "You don't have access to this Change Set Status.",
                            response_format=response_format)
 
@@ -168,9 +168,9 @@ def status_view(request, status_id, response_format='html'):
         status=status)
     if request.GET:
         query = query & _get_filter_query(request.GET)
-        filters = FilterForm(request.user.get_profile(), 'status', request.GET)
+        filters = FilterForm(request.user.profile, 'status', request.GET)
     else:
-        filters = FilterForm(request.user.get_profile(), 'status')
+        filters = FilterForm(request.user.profile, 'status')
 
     changesets = ChangeSet.objects.filter(query)
 
@@ -193,12 +193,12 @@ def status_edit(request, status_id, response_format='html'):
 
     if request.POST:
         form = ChangeSetStatusForm(
-            request.user.get_profile(), request.POST, instance=status)
+            request.user.profile, request.POST, instance=status)
         if form.is_valid():
             status = form.save()
             return HttpResponseRedirect(reverse('changes_status_view', args=[status.id]))
     else:
-        form = ChangeSetStatusForm(request.user.get_profile(), instance=status)
+        form = ChangeSetStatusForm(request.user.profile, instance=status)
 
     context = _get_default_context(request)
     context.update({'status': status, 'form': form})
@@ -240,12 +240,12 @@ def status_add(request, response_format='html'):
     "Status add"
 
     if request.POST:
-        form = ChangeSetStatusForm(request.user.get_profile(), request.POST)
+        form = ChangeSetStatusForm(request.user.profile, request.POST)
         if form.is_valid():
             status = form.save()
             return HttpResponseRedirect(reverse('changes_status_view', args=[status.id]))
     else:
-        form = ChangeSetStatusForm(request.user.get_profile())
+        form = ChangeSetStatusForm(request.user.profile)
 
     context = _get_default_context(request)
     context.update({'form': form})
@@ -264,8 +264,8 @@ def set_view(request, set_id, response_format='html'):
 
     changeset = get_object_or_404(ChangeSet, pk=set_id)
 
-    if not request.user.get_profile().has_permission(changeset.object) \
-            and not request.user.get_profile().is_admin('treeio.changes'):
+    if not request.user.profile.has_permission(changeset.object) \
+            and not request.user.profile.is_admin('treeio.changes'):
         return user_denied(request, "You don't have access to this Change Set.",
                            response_format=response_format)
 
@@ -283,19 +283,19 @@ def set_edit(request, set_id, response_format='html'):
 
     changeset = get_object_or_404(ChangeSet, pk=set_id)
 
-    if not request.user.get_profile().has_permission(changeset.object, mode='w') \
-            and not request.user.get_profile().is_admin('treeio.changes'):
+    if not request.user.profile.has_permission(changeset.object, mode='w') \
+            and not request.user.profile.is_admin('treeio.changes'):
         return user_denied(request, "You don't have access to this Change Set.",
                            response_format=response_format)
 
     if request.POST:
         form = ChangeSetForm(
-            request.user.get_profile(), request.POST, instance=changeset)
+            request.user.profile, request.POST, instance=changeset)
         if form.is_valid():
             changeset = form.save()
             return HttpResponseRedirect(reverse('changes_set_view', args=[changeset.id]))
     else:
-        form = ChangeSetForm(request.user.get_profile(), instance=changeset)
+        form = ChangeSetForm(request.user.profile, instance=changeset)
 
     context = _get_default_context(request)
     context.update({'changeset': changeset,
@@ -312,8 +312,8 @@ def set_delete(request, set_id, response_format='html'):
 
     changeset = get_object_or_404(ChangeSet, pk=set_id)
 
-    if not request.user.get_profile().has_permission(changeset.object, mode='w') \
-            and not request.user.get_profile().is_admin('treeio.changes'):
+    if not request.user.profile.has_permission(changeset.object, mode='w') \
+            and not request.user.profile.is_admin('treeio.changes'):
         return user_denied(request, "You don't have access to this Change Set.",
                            response_format=response_format)
 
@@ -341,14 +341,14 @@ def set_add(request, response_format='html'):
     "ChangeSet add"
 
     if request.POST:
-        changeset = ChangeSet(author=request.user.get_profile())
+        changeset = ChangeSet(author=request.user.profile)
         form = ChangeSetForm(
-            request.user.get_profile(), request.POST, instance=changeset)
+            request.user.profile, request.POST, instance=changeset)
         if form.is_valid():
             set = form.save()
             return HttpResponseRedirect(reverse('changes_set_view', args=[set.id]))
     else:
-        form = ChangeSetForm(request.user.get_profile())
+        form = ChangeSetForm(request.user.profile)
 
     context = _get_default_context(request)
     context.update({'form': form})
@@ -398,12 +398,12 @@ def settings_edit(request, response_format='html'):
     "Settings"
 
     if request.POST:
-        form = SettingsForm(request.user.get_profile(), request.POST)
+        form = SettingsForm(request.user.profile, request.POST)
         if form.is_valid():
             form.save()
             return HttpResponseRedirect(reverse('changes_settings_view'))
     else:
-        form = SettingsForm(request.user.get_profile())
+        form = SettingsForm(request.user.profile)
 
     context = _get_default_context(request)
     context.update({'form': form})

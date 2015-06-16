@@ -34,7 +34,7 @@
         {% endif %}
     </span>
     <span class="content-list-item-actions">
-        {% if user.get_profile().has_permission(document, mode='w') %}
+        {% if user.profile.has_permission(document, mode='w') %}
         {% if document.object_type == 'treeio.documents.models.Document' %}
         <a href="{% url documents_document_edit document.id %}" class="inline-link edit-link">{% trans %}Edit{% endtrans %}</a>
         {% elif document.object_type == 'treeio.documents.models.File' %}

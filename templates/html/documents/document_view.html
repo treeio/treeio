@@ -9,7 +9,7 @@
 
 {% block module_topmenu %}
 <a class="top-menu view-link-active" href="{% url documents_document_view document.id %}">{% trans %}View{% endtrans %}</a>
-{% if user.get_profile().has_permission(document, mode='w') %}
+{% if user.profile.has_permission(document, mode='w') %}
 <a class="top-menu edit-link" href="{% url documents_document_edit document.id %}">{% trans %}Edit{% endtrans %}</a>
 <a class="top-menu delete-link" href="{% url documents_document_delete document.id %}">{% trans %}Delete{% endtrans %}</a>
 {% endif %}

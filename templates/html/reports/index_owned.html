@@ -62,7 +62,7 @@
                 <td>{{ last_updated(report) }}</td>
 				<td>
 			        <span class="content-list-item-actions table-link">
-				    {% if user.get_profile().has_permission(report, mode='w') %}
+				    {% if user.profile.has_permission(report, mode='w') %}
 				    <a href="{% url reports_report_edit report.id %}" class="inline-link edit-link">{% trans %}Edit{% endtrans %}</a>
 				    {% endif %}
 					</span>

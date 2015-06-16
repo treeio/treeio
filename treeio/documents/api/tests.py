@@ -39,25 +39,25 @@ class DocumentsViewsTest(TestCase):
         self.user.save()
 
         perspective = Perspective(name='default')
-        perspective.set_user(self.user)
+        perspective.set_user(self.user.profile)
         perspective.save()
 
         ModuleSetting.set('default_perspective', perspective.id)
 
         self.folder = Folder(name='test')
-        self.folder.set_user(self.user)
+        self.folder.set_user(self.user.profile)
         self.folder.save()
 
         self.document = Document(title='test_document', folder=self.folder)
-        self.document.set_user(self.user)
+        self.document.set_user(self.user.profile)
         self.document.save()
 
         self.file = File(name='test_file', folder=self.folder)
-        self.file.set_user(self.user)
+        self.file.set_user(self.user.profile)
         self.file.save()
 
         self.link = WebLink(title='test', folder=self.folder, url='test')
-        self.link.set_user(self.user)
+        self.link.set_user(self.user.profile)
         self.link.save()
 
         self.client = Client()

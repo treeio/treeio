@@ -10,7 +10,7 @@
 {% block module_topmenu %}
 <a href="{% url sales_source_add %}" class="top-menu add-link">{% trans %}New Source{% endtrans %}</a>
 <a href="{% url sales_source_view source.id %}" class="top-menu view-link-active">{% trans %}View{% endtrans %}</a>
-{% if request.user.get_profile().is_admin('treeio.sales') %}
+{% if request.user.profile.is_admin('treeio.sales') %}
 <a href="{% url sales_source_edit source.id %}" class="top-menu edit-link">{% trans %}Edit{% endtrans %}</a>
 <a href="{% url sales_source_delete source.id %}" class="top-menu delete-link">{% trans %}Delete{% endtrans %}</a>
 {% endif %}

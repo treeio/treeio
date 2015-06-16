@@ -11,7 +11,7 @@
 {% if stream.incoming_server_name %}
 <a href="{% url messaging_stream_checkmail stream.id %}" class="top-menu view-link">{% trans %}Check Mail{% endtrans %}</a>
 {% endif %}
-{% if user.get_profile().has_permission(stream, mode='w') %}
+{% if user.profile.has_permission(stream, mode='w') %}
 <a href="{% url messaging_stream_edit stream.id %}" class="top-menu edit-link">{% trans %}Edit{% endtrans %}</a>
 <a href="{% url messaging_stream_delete stream.id %}" class="top-menu delete-link">{% trans %}Delete{% endtrans %}</a>
 {% endif %}
@@ -69,7 +69,7 @@
 
 <div class="message">
         <span class="message-picture">
-        {% set contact = request.user.get_profile().get_contact() %}
+        {% set contact = request.user.profile.get_contact() %}
         {% if contact %}
           {% set picture = contact.get_picture() %}
           <a href="{% url identities_contact_view contact.id %}" class="popup-link">
@@ -88,7 +88,7 @@
                 {% if contact %}
                 <a href="{% url identities_contact_view contact.id %}" class="popup-link"><strong>{{ contact }}</strong></a>
                 {% else %}
-                <strong>{{ request.user.get_profile() }}</strong>
+                <strong>{{ request.user.profile }}</strong>
                 {% endif %}
                 <br /><br />
                 <form action="" method="post" class="content-form">

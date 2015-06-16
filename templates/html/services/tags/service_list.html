@@ -14,7 +14,7 @@
         {% endif %}
     </span>
     <span class="content-list-item-actions">
-        {% if user.get_profile().has_permission(service, mode='w') %}
+        {% if user.profile.has_permission(service, mode='w') %}
         <a href="{% url services_service_edit service.id %}" class="inline-link edit-link">{% trans %}Edit{% endtrans %}</a>
         {% endif %}
     </span>

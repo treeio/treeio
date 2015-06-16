@@ -247,7 +247,7 @@ class InvitationForm(forms.Form):
 
             # Crate profile
             try:
-                profile = django_user.get_profile()
+                profile = django_user.profile
             except:
                 profile = User()
                 profile.user = django_user

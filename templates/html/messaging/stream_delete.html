@@ -28,7 +28,7 @@
 {% if stream.incoming_server_name %}
 <a href="{% url messaging_stream_checkmail stream.id %}" class="top-menu view-link">{% trans %}Check Mail{% endtrans %}</a>
 {% endif %}
-{% if user.get_profile().has_permission(stream, mode='w') %}
+{% if user.profile.has_permission(stream, mode='w') %}
 <a href="{% url messaging_stream_edit stream.id %}" class="top-menu edit-link">{% trans %}Edit{% endtrans %}</a>
 <a href="{% url messaging_stream_delete stream.id %}" class="top-menu delete-link-active">{% trans %}Delete{% endtrans %}</a>
 {% endif %}

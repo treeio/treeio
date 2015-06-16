@@ -129,7 +129,7 @@ def render_to_response(template_name, context=None, context_instance=None, respo
     if response_format not in settings.HARDTREE_RESPONSE_FORMATS:
         response_format = 'html'
 
-    mimetype = settings.HARDTREE_RESPONSE_FORMATS[response_format]
+    content_type = settings.HARDTREE_RESPONSE_FORMATS[response_format]
 
     if 'pdf' in response_format:
         while True:
@@ -207,7 +207,7 @@ def render_to_response(template_name, context=None, context_instance=None, respo
         rendered_string = render_to_string(
             template_name, context, context_instance, response_format)
 
-    response = HttpResponse(rendered_string, mimetype=mimetype)
+    response = HttpResponse(rendered_string, content_type=content_type)
 
     return response
 

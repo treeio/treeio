@@ -10,7 +10,7 @@
 {% block module_topmenu %}
 <a href="{% url projects_task_add_subtask task.id %}" class="top-menu add-link">{% trans %}New Sub Task{% endtrans %}</a>
 <a href="{% url projects_task_view task.id %}" class="top-menu view-link">{% trans %}View{% endtrans %}</a>
-{% if user.get_profile().has_permission(task, mode='w') %}
+{% if user.profile.has_permission(task, mode='w') %}
 <a href="{% url projects_task_edit task.id %}" class="top-menu edit-link">{% trans %}Edit{% endtrans %}</a>
 <a href="{% url projects_task_delete task.id %}" class="top-menu delete-link-active">{% trans %}Delete{% endtrans %}</a>
 {% endif %}
@@ -128,7 +128,7 @@
         {%- endif %}
     </span>
     <span class="content-list-item-actions">
-        {% if user.get_profile().has_permission(subtask, mode='w') %}
+        {% if user.profile.has_permission(subtask, mode='w') %}
         <a href="{% url projects_task_edit subtask.id %}" class="inline-link edit-link">{% trans %}Edit{% endtrans %}</a>
         {% endif %}
     </span>

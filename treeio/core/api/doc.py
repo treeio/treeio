@@ -8,7 +8,7 @@
 import re
 import sys
 import inspect
-import piston.handler as handler
+import piston3.handler as handler
 
 from types import ModuleType
 from resource import CsrfExemptResource

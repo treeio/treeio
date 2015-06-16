@@ -43,7 +43,7 @@ def _get_default_context(request):
     context = {}
     types = Object.filter_by_request(
         request, ContactType.objects.order_by('name'))
-    massform = MassActionForm(request.user.get_profile())
+    massform = MassActionForm(request.user.profile)
     context.update({'types': types,
                     'massform': massform})
 
@@ -55,7 +55,7 @@ def _process_mass_form(f):
 
     def wrap(request, *args, **kwargs):
         "Wrap"
-        user = request.user.get_profile()
+        user = request.user.profile
         if 'massform' in request.POST:
             for key in request.POST:
                 if 'mass-contact' in key:
@@ -90,7 +90,7 @@ def index(request, response_format='html'):
         contacts = Object.filter_by_request(
             request, Contact.objects.order_by('name'))
 
-    filters = FilterForm(request.user.get_profile(), 'name', request.GET)
+    filters = FilterForm(request.user.profile, 'name', request.GET)
 
     context = _get_default_context(request)
     context.update({'contacts': contacts,
@@ -110,7 +110,7 @@ def type_view(request, type_id, response_format='html'):
     "Contacts by type"
 
     contact_type = get_object_or_404(ContactType, pk=type_id)
-    if not request.user.get_profile().has_permission(contact_type):
+    if not request.user.profile.has_permission(contact_type):
         return user_denied(request, message="You don't have access to this Contact Type")
     contacts = Object.filter_by_request(
         request, Contact.objects.filter(contact_type=contact_type))
@@ -129,7 +129,7 @@ def type_edit(request, type_id, response_format='html'):
     "ContactType edit"
 
     contact_type = get_object_or_404(ContactType, pk=type_id)
-    if not request.user.get_profile().has_permission(contact_type, mode='w'):
+    if not request.user.profile.has_permission(contact_type, mode='w'):
         return user_denied(request, message="You don't have access to this Contact Type",
                            response_format=response_format)
     identities = Object.filter_by_request(request,
@@ -138,7 +138,7 @@ def type_edit(request, type_id, response_format='html'):
     if request.POST:
         if 'cancel' not in request.POST:
             form = ContactTypeForm(
-                request.user.get_profile(), request.POST, instance=contact_type)
+                request.user.profile, request.POST, instance=contact_type)
             if form.is_valid():
                 contact_type = form.save(request)
                 return HttpResponseRedirect(reverse('identities_type_view', args=[contact_type.id]))
@@ -146,7 +146,7 @@ def type_edit(request, type_id, response_format='html'):
             return HttpResponseRedirect(reverse('identities_type_view', args=[contact_type.id]))
     else:
         form = ContactTypeForm(
-            request.user.get_profile(), instance=contact_type)
+            request.user.profile, instance=contact_type)
 
     context = _get_default_context(request)
     context.update({'identities': identities,
@@ -162,7 +162,7 @@ def type_edit(request, type_id, response_format='html'):
 def type_add(request, response_format='html'):
     "ContactType add"
 
-    if not request.user.get_profile().is_admin('treeio.identities'):
+    if not request.user.profile.is_admin('treeio.identities'):
         return user_denied(request,
                            message="You don't have administrator access to the Infrastructure module",
                            response_format=response_format)
@@ -171,7 +171,7 @@ def type_add(request, response_format='html'):
         if 'cancel' not in request.POST:
             contact_type = ContactType()
             form = ContactTypeForm(
-                request.user.get_profile(), request.POST, instance=contact_type)
+                request.user.profile, request.POST, instance=contact_type)
             if form.is_valid():
                 contact_type = form.save(request)
                 contact_type.set_user_from_request(request)
@@ -179,7 +179,7 @@ def type_add(request, response_format='html'):
         else:
             return HttpResponseRedirect(reverse('identities_settings_view'))
     else:
-        form = ContactTypeForm(request.user.get_profile())
+        form = ContactTypeForm(request.user.profile)
 
     context = _get_default_context(request)
     context.update({'form': form})
@@ -193,7 +193,7 @@ def type_add(request, response_format='html'):
 def type_delete(request, type_id, response_format='html'):
     "ContactType delete page"
     type = get_object_or_404(ContactType, pk=type_id)
-    if not request.user.get_profile().has_permission(type, mode="w"):
+    if not request.user.profile.has_permission(type, mode="w"):
         return user_denied(request, message="You don't have write access to this ContactType")
 
     if request.POST:
@@ -224,7 +224,7 @@ def field_view(request, field_id, response_format='html'):
     "ContactField view"
 
     field = get_object_or_404(ContactField, pk=field_id)
-    if not request.user.get_profile().has_permission(field):
+    if not request.user.profile.has_permission(field):
         return user_denied(request, message="You don't have access to this Field Type",
                            response_format=response_format)
 
@@ -241,7 +241,7 @@ def field_edit(request, field_id, response_format='html'):
     "ContactField edit"
 
     field = get_object_or_404(ContactField, pk=field_id)
-    if not request.user.get_profile().has_permission(field, mode='w'):
+    if not request.user.profile.has_permission(field, mode='w'):
         return user_denied(request, message="You don't have access to this Field Type",
                            response_format=response_format)
 
@@ -269,7 +269,7 @@ def field_edit(request, field_id, response_format='html'):
 def field_add(request, response_format='html'):
     "ContactField add"
 
-    if not request.user.get_profile().is_admin('treeio.identities'):
+    if not request.user.profile.is_admin('treeio.identities'):
         return user_denied(request,
                            message="You don't have administrator access to the Infrastructure module",
                            response_format=response_format)
@@ -299,7 +299,7 @@ def field_add(request, response_format='html'):
 def field_delete(request, field_id, response_format='html'):
     "ContactField delete page"
     field = get_object_or_404(ContactField, pk=field_id)
-    if not request.user.get_profile().has_permission(field, mode="w"):
+    if not request.user.profile.has_permission(field, mode="w"):
         return user_denied(request, message="You don't have write access to this ContactField")
 
     if request.POST:
@@ -339,13 +339,13 @@ def contact_add_typed(request, type_id, response_format='html'):
     "Contact add with preselected type"
 
     contact_type = get_object_or_404(ContactType, pk=type_id)
-    if not request.user.get_profile().has_permission(contact_type, mode='x'):
+    if not request.user.profile.has_permission(contact_type, mode='x'):
         return user_denied(request, message="You don't have access to create " + unicode(contact_type))
 
     if request.POST:
         if 'cancel' not in request.POST:
             form = ContactForm(
-                request.user.get_profile(), contact_type, request.POST, files=request.FILES)
+                request.user.profile, contact_type, request.POST, files=request.FILES)
             if form.is_valid():
                 contact = form.save(request, contact_type)
                 contact.set_user_from_request(request)
@@ -353,7 +353,7 @@ def contact_add_typed(request, type_id, response_format='html'):
         else:
             return HttpResponseRedirect(reverse('identities_index'))
     else:
-        form = ContactForm(request.user.get_profile(), contact_type)
+        form = ContactForm(request.user.profile, contact_type)
 
     types = Object.filter_by_request(
         request, ContactType.objects.order_by('name'))
@@ -370,7 +370,7 @@ def contact_view(request, contact_id, attribute='', response_format='html'):
     "Contact view"
 
     contact = get_object_or_404(Contact, pk=contact_id)
-    if not request.user.get_profile().has_permission(contact):
+    if not request.user.profile.has_permission(contact):
         return user_denied(request, message="You don't have access to this Contact")
     types = Object.filter_by_request(
         request, ContactType.objects.order_by('name'))
@@ -379,7 +379,7 @@ def contact_view(request, contact_id, attribute='', response_format='html'):
     contact_values = contact.contactvalue_set.order_by('field__name')
 
     objects = get_contact_objects(
-        request.user.get_profile(), contact, preformat=True)
+        request.user.profile, contact, preformat=True)
 
     module = None
     for key in objects:
@@ -408,8 +408,8 @@ def contact_view(request, contact_id, attribute='', response_format='html'):
 def contact_me(request, attribute='', response_format='html'):
     "My Contact card"
 
-    contact = request.user.get_profile().get_contact()
-    if not request.user.get_profile().has_permission(contact):
+    contact = request.user.profile.get_contact()
+    if not request.user.profile.has_permission(contact):
         return user_denied(request, message="You don't have access to this Contact")
     types = Object.filter_by_request(
         request, ContactType.objects.order_by('name'))
@@ -422,7 +422,7 @@ def contact_me(request, attribute='', response_format='html'):
     contact_values = contact.contactvalue_set.order_by('field__name')
 
     objects = get_contact_objects(
-        request.user.get_profile(), contact, preformat=True)
+        request.user.profile, contact, preformat=True)
 
     module = None
     for key in objects:
@@ -461,12 +461,12 @@ def contact_edit(request, contact_id, response_format='html'):
     "Contact edit"
 
     contact = get_object_or_404(Contact, pk=contact_id)
-    if not request.user.get_profile().has_permission(contact, mode='w'):
+    if not request.user.profile.has_permission(contact, mode='w'):
         return user_denied(request, message="You don't have write access to this Contact")
 
     if request.POST:
         if 'cancel' not in request.POST:
-            form = ContactForm(request.user.get_profile(), contact.contact_type, request.POST,
+            form = ContactForm(request.user.profile, contact.contact_type, request.POST,
                                files=request.FILES, instance=contact)
             if form.is_valid():
                 contact = form.save(request)
@@ -475,7 +475,7 @@ def contact_edit(request, contact_id, response_format='html'):
             return HttpResponseRedirect(reverse('identities_contact_view', args=[contact.id]))
     else:
         form = ContactForm(
-            request.user.get_profile(), contact.contact_type, instance=contact)
+            request.user.profile, contact.contact_type, instance=contact)
 
     types = Object.filter_by_request(
         request, ContactType.objects.order_by('name'))
@@ -493,7 +493,7 @@ def contact_delete(request, contact_id, response_format='html'):
     "Contact delete"
 
     contact = get_object_or_404(Contact, pk=contact_id)
-    if not request.user.get_profile().has_permission(contact, mode='w'):
+    if not request.user.profile.has_permission(contact, mode='w'):
         return user_denied(request, message="You don't have access to this Contact")
 
     if request.POST:
@@ -582,7 +582,7 @@ def group_view(request, group_id, response_format='html'):
 def location_index(request, location_id, response_format='html'):
     "Location index"
 
-    locations = Object.filter_permitted(request.user.get_profile(),
+    locations = Object.filter_permitted(request.user.profile,
                                         Location.objects)
 
     context = _get_default_context(request)
@@ -603,7 +603,7 @@ def location_add(request, response_format='html'):
         if 'cancel' not in request.POST:
             location = Location()
             form = LocationForm(
-                request.user.get_profile(), None, request.POST, instance=location)
+                request.user.profile, None, request.POST, instance=location)
             if form.is_valid():
                 location = form.save()
                 location.set_user_from_request(request)
@@ -611,7 +611,7 @@ def location_add(request, response_format='html'):
         else:
             return HttpResponseRedirect(reverse('identities_index'))
     else:
-        form = LocationForm(request.user.get_profile(), None)
+        form = LocationForm(request.user.profile, None)
 
     context = _get_default_context(request)
     context.update({'form': form})
@@ -625,7 +625,7 @@ def location_add(request, response_format='html'):
 def location_view(request, location_id, response_format='html'):
     "Location view"
     location = get_object_or_404(Location, pk=location_id)
-    if not request.user.get_profile().has_permission(location):
+    if not request.user.profile.has_permission(location):
         return user_denied(request, message="You don't have access to this Location",
                            response_format=response_format)
 
@@ -643,14 +643,14 @@ def location_view(request, location_id, response_format='html'):
 def location_edit(request, location_id, response_format='html'):
     "Location edit page"
     location = get_object_or_404(Location, pk=location_id)
-    if not request.user.get_profile().has_permission(location, mode="w"):
+    if not request.user.profile.has_permission(location, mode="w"):
         return user_denied(request, message="You don't have write access to this Location",
                            response_format=response_format)
 
     if request.POST:
         if 'cancel' not in request.POST:
             form = LocationForm(
-                request.user.get_profile(), None, request.POST, instance=location)
+                request.user.profile, None, request.POST, instance=location)
             if form.is_valid():
                 location = form.save(request)
                 return HttpResponseRedirect(reverse('identities_location_view', args=[location.id]))
@@ -658,7 +658,7 @@ def location_edit(request, location_id, response_format='html'):
             return HttpResponseRedirect(reverse('identities_location_view', args=[location.id]))
     else:
         form = LocationForm(
-            request.user.get_profile(), None, instance=location)
+            request.user.profile, None, instance=location)
 
     context = _get_default_context(request)
     context.update({'location': location,
@@ -673,7 +673,7 @@ def location_edit(request, location_id, response_format='html'):
 def location_delete(request, location_id, response_format='html'):
     "Location delete page"
     location = get_object_or_404(Location, pk=location_id)
-    if not request.user.get_profile().has_permission(location, mode="w"):
+    if not request.user.profile.has_permission(location, mode="w"):
         return user_denied(request, message="You don't have write access to this Location")
 
     if request.POST:
@@ -702,7 +702,7 @@ def location_delete(request, location_id, response_format='html'):
 def settings_view(request, response_format='html'):
     "Settings"
 
-    if not request.user.get_profile().is_admin('treeio.identities'):
+    if not request.user.profile.is_admin('treeio.identities'):
         return user_denied(request, message="You are not an Administrator of the Identities module",
                            response_format=response_format)
 
@@ -773,7 +773,7 @@ def ajax_contact_lookup(request, response_format='html'):
 
     contacts = []
     if request.GET and 'term' in request.GET:
-        user = request.user.get_profile()
+        user = request.user.profile
         contacts = Object.filter_permitted(user, Contact.objects,
                                            mode='x').filter(Q(name__icontains=request.GET['term']))[:10]
 
@@ -789,7 +789,7 @@ def ajax_location_lookup(request, response_format='html'):
 
     locations = []
     if request.GET and 'term' in request.GET:
-        user = request.user.get_profile()
+        user = request.user.profile
         locations = Object.filter_permitted(user, Location.objects,
                                             mode='x').filter(
             Q(name__icontains=request.GET['term'])
@@ -810,8 +810,8 @@ def ajax_location_lookup(request, response_format='html'):
 def widget_contact_me(request, response_format='html'):
     "My Contact card"
 
-    contact = request.user.get_profile().get_contact()
-    if not request.user.get_profile().has_permission(contact):
+    contact = request.user.profile.get_contact()
+    if not request.user.profile.has_permission(contact):
         return user_denied(request, message="You don't have access to this Contact")
     types = Object.filter_by_request(
         request, ContactType.objects.order_by('name'))

@@ -37,7 +37,7 @@
         <a href="{% url identities_user_view agent.related_user_id %}" class="author-link small popup-link">{{ agent.related_user.get_username() }}</a>
     </span>
     <span class="content-list-item-actions">
-        {% if user.get_profile().has_permission(agent, mode='w') %}
+        {% if user.profile.has_permission(agent, mode='w') %}
         <a href="{% url services_agent_edit agent.id %}" class="inline-link edit-link">{% trans %}Edit{% endtrans %}</a>
         {% endif %}
     </span>

@@ -33,7 +33,7 @@ ADMINS = (
 MANAGERS = ADMINS
 DATABASES = {}
 TESTING = 'test' in sys.argv or 'test_coverage' in sys.argv  # Covers regular testing and django-coverage
-SOUTH_TESTS_MIGRATE = False
+
 if TESTING:
     test_db = os.environ.get('DB', 'sqlite')
     if test_db == 'mysql':
@@ -230,7 +230,6 @@ INSTALLED_APPS = (
     'dajax',
     'coffin',
     'captcha',
-    'south',
     'markup_deprecated',
 )
 try:
@@ -584,3 +583,10 @@ ALLOWED_HOSTS = [
     # '.example.com', # Allow domain and subdomains
     # '.example.com.', # Also allow FQDN and subdomains
     ]
+
+TEST_RUNNER = 'django.test.runner.DiscoverRunner'
+
+# monkey patch because dajax still tries to import django simplejson
+import json
+import django.utils
+django.utils.simplejson = json

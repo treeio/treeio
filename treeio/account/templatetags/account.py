@@ -21,7 +21,7 @@ def account_notification_count(context):
     user = None
     if request.user.username:
         try:
-            user = request.user.get_profile()
+            user = request.user.profile
         except Exception:
             pass
 

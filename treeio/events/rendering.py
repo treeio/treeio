@@ -173,10 +173,10 @@ class EventCollection:
 
     def collect_events(self, request):
         "Gathers Events from all user modules where .get_events() callable is available"
-        modules = request.user.get_profile().get_perspective().get_modules()
+        modules = request.user.profile.get_perspective().get_modules()
 
         for module in modules:
-            if request.user.get_profile().has_permission(module):
+            if request.user.profile.has_permission(module):
                 try:
                     import_name = str(module.name) + ".events"
                     imodule = __import__(

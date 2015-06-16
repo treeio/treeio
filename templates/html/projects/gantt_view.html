@@ -13,7 +13,7 @@
 <a href="{% url projects_task_add_typed project.id %}" class="top-menu add-link">{% trans %}New Task{% endtrans %}</a>
 <a href="{% url projects_gantt_view project.id %}" class="top-menu gantt-link-active">{% trans %}Gantt Chart{% endtrans %}</a>
 <a href="{% url projects_project_view project.id %}" class="top-menu view-link">{% trans %}View{% endtrans %}</a>
-{% if user.get_profile().has_permission(project, mode='w') %}
+{% if user.profile.has_permission(project, mode='w') %}
 <a href="{% url projects_project_edit project.id %}" class="top-menu edit-link">{% trans %}Edit{% endtrans %}</a>
 <a href="{% url projects_project_delete project.id %}" class="top-menu delete-link">{% trans %}Delete{% endtrans %}</a>
 {% endif %}

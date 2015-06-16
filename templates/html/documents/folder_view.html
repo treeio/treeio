@@ -13,7 +13,7 @@
 <a class="top-menu add-link" href="{% url documents_weblink_add_typed folder.id %}">{% trans %}New Web Link{% endtrans %}</a>
 <a class="top-menu add-link" href="{% url documents_file_upload_typed folder.id %}">{% trans %}Upload File{% endtrans %}</a>
 <a class="top-menu view-link-active" href="{% url documents_folder_view folder.id %}">{% trans %}View{% endtrans %}</a>
-{% if user.get_profile().has_permission(folder, mode='w') %}
+{% if user.profile.has_permission(folder, mode='w') %}
 <a class="top-menu edit-link" href="{% url documents_folder_edit folder.id %}">{% trans %}Edit{% endtrans %}</a>
 <a class="top-menu delete-link" href="{% url documents_folder_delete folder.id %}">{% trans %}Delete{% endtrans %}</a>
 {% endif %}
@@ -61,7 +61,7 @@
         </a>
     </span>
     <span class="content-list-item-actions">
-        {% if user.get_profile().has_permission(folder, mode='w') %}
+        {% if user.profile.has_permission(folder, mode='w') %}
         <a href="{% url documents_folder_edit folder.id %}" class="inline-link edit-link">{% trans %}Edit{% endtrans %}</a>
         {% endif %}
     </span>

@@ -41,7 +41,7 @@ def _get_default_context(request):
 
     projects = Object.filter_by_request(request, Project.objects)
     statuses = Object.filter_by_request(request, TaskStatus.objects)
-    massform = MassActionForm(request.user.get_profile())
+    massform = MassActionForm(request.user.profile)
 
     context = {'projects': projects,
                'statuses': statuses,
@@ -61,8 +61,8 @@ def _process_mass_form(f):
                     try:
                         milestone = Milestone.objects.get(pk=request.POST[key])
                         form = MassActionForm(
-                            request.user.get_profile(), request.POST, instance=milestone)
-                        if form.is_valid() and request.user.get_profile().has_permission(milestone, mode='w'):
+                            request.user.profile, request.POST, instance=milestone)
+                        if form.is_valid() and request.user.profile.has_permission(milestone, mode='w'):
                             form.save()
                     except Exception:
                         pass
@@ -71,8 +71,8 @@ def _process_mass_form(f):
                     try:
                         task = Task.objects.get(pk=request.POST[key])
                         form = MassActionForm(
-                            request.user.get_profile(), request.POST, instance=task)
-                        if form.is_valid() and request.user.get_profile().has_permission(task, mode='w'):
+                            request.user.profile, request.POST, instance=task)
+                        if form.is_valid() and request.user.profile.has_permission(task, mode='w'):
                             form.save()
                     except Exception:
                         pass
@@ -104,7 +104,7 @@ def index(request, response_format='html'):
     tasks = Object.filter_by_request(request, Task.objects.filter(query))
     milestones = Object.filter_by_request(
         request, Milestone.objects.filter(status__hidden=False))
-    filters = FilterForm(request.user.get_profile(), '', request.GET)
+    filters = FilterForm(request.user.profile, '', request.GET)
 
     context = _get_default_context(request)
     context.update({'milestones': milestones,
@@ -122,7 +122,7 @@ def index_owned(request, response_format='html'):
     "Tasks owned by current user"
 
     query = Q(
-        parent__isnull=True, caller__related_user=request.user.get_profile())
+        parent__isnull=True, caller__related_user=request.user.profile)
     if request.GET:
         if 'status' in request.GET and request.GET['status']:
             query = query & _get_filter_query(request.GET)
@@ -135,7 +135,7 @@ def index_owned(request, response_format='html'):
     tasks = Object.filter_by_request(request, Task.objects.filter(query))
     milestones = Object.filter_by_request(
         request, Milestone.objects.filter(status__hidden=False))
-    filters = FilterForm(request.user.get_profile(), 'status', request.GET)
+    filters = FilterForm(request.user.profile, 'status', request.GET)
 
     context = _get_default_context(request)
     context.update({'milestones': milestones,
@@ -152,7 +152,7 @@ def index_owned(request, response_format='html'):
 def index_assigned(request, response_format='html'):
     "Tasks assigned to current user"
 
-    query = Q(parent__isnull=True, assigned=request.user.get_profile())
+    query = Q(parent__isnull=True, assigned=request.user.profile)
     if request.GET:
         if 'status' in request.GET and request.GET['status']:
             query = query & _get_filter_query(request.GET)
@@ -166,7 +166,7 @@ def index_assigned(request, response_format='html'):
 
     milestones = Object.filter_by_request(
         request, Milestone.objects.filter(status__hidden=False))
-    filters = FilterForm(request.user.get_profile(), 'assigned', request.GET)
+    filters = FilterForm(request.user.profile, 'assigned', request.GET)
 
     context = _get_default_context(request)
     context.update({'milestones': milestones,
@@ -185,7 +185,7 @@ def index_by_status(request, status_id, response_format='html'):
 
     status = get_object_or_404(TaskStatus, pk=status_id)
 
-    if not request.user.get_profile().has_permission(status):
+    if not request.user.profile.has_permission(status):
         return user_denied(request, message="You don't have access to this Task Status")
 
     query = Q(parent__isnull=True, status=status)
@@ -195,7 +195,7 @@ def index_by_status(request, status_id, response_format='html'):
 
     milestones = Object.filter_by_request(
         request, Milestone.objects.filter(task__status=status).distinct())
-    filters = FilterForm(request.user.get_profile(), 'status', request.GET)
+    filters = FilterForm(request.user.profile, 'status', request.GET)
 
     context = _get_default_context(request)
     context.update({'milestones': milestones,
@@ -224,7 +224,7 @@ def index_in_progress(request, response_format='html'):
 
     milestones = Object.filter_by_request(
         request, Milestone.objects.filter(status__hidden=False))
-    filters = FilterForm(request.user.get_profile(), 'status', request.GET)
+    filters = FilterForm(request.user.profile, 'status', request.GET)
     time_slots = Object.filter_by_request(
         request, TaskTimeSlot.objects.filter(time_from__isnull=False, time_to__isnull=True))
 
@@ -250,7 +250,7 @@ def project_add(request, response_format='html'):
         if 'cancel' not in request.POST:
             project = Project()
             form = ProjectForm(
-                request.user.get_profile(), None, request.POST, instance=project)
+                request.user.profile, None, request.POST, instance=project)
             if form.is_valid():
                 project = form.save()
                 project.set_user_from_request(request)
@@ -258,7 +258,7 @@ def project_add(request, response_format='html'):
         else:
             return HttpResponseRedirect(reverse('projects'))
     else:
-        form = ProjectForm(request.user.get_profile(), None)
+        form = ProjectForm(request.user.profile, None)
 
     context = _get_default_context(request)
     context.update({'form': form})
@@ -275,14 +275,14 @@ def project_add_typed(request, project_id=None, response_format='html'):
     parent_project = None
     if project_id:
         parent_project = get_object_or_404(Project, pk=project_id)
-        if not request.user.get_profile().has_permission(parent_project, mode='x'):
+        if not request.user.profile.has_permission(parent_project, mode='x'):
             parent_project = None
 
     if request.POST:
         if 'cancel' not in request.POST:
             project = Project()
             form = ProjectForm(
-                request.user.get_profile(), project_id, request.POST, instance=project)
+                request.user.profile, project_id, request.POST, instance=project)
             if form.is_valid():
                 project = form.save()
                 project.set_user_from_request(request)
@@ -290,7 +290,7 @@ def project_add_typed(request, project_id=None, response_format='html'):
         else:
             return HttpResponseRedirect(reverse('projects'))
     else:
-        form = ProjectForm(request.user.get_profile(), project_id)
+        form = ProjectForm(request.user.profile, project_id)
 
     context = _get_default_context(request)
     context.update({'form': form, 'project': parent_project})
@@ -306,7 +306,7 @@ def project_view(request, project_id, response_format='html'):
     "Single project view page"
 
     project = get_object_or_404(Project, pk=project_id)
-    if not request.user.get_profile().has_permission(project):
+    if not request.user.profile.has_permission(project):
         return user_denied(request, message="You don't have access to this Project")
 
     query = Q(parent__isnull=True, project=project)
@@ -319,12 +319,12 @@ def project_view(request, project_id, response_format='html'):
     else:
         query = query & Q(status__hidden=False)
 
-    if request.user.get_profile().has_permission(project, mode='r'):
+    if request.user.profile.has_permission(project, mode='r'):
         if request.POST:
             record = UpdateRecord()
             record.record_type = 'manual'
             form = TaskRecordForm(
-                request.user.get_profile(), request.POST, instance=record)
+                request.user.profile, request.POST, instance=record)
             if form.is_valid():
                 record = form.save()
                 record.set_user_from_request(request)
@@ -333,7 +333,7 @@ def project_view(request, project_id, response_format='html'):
                 project.set_last_updated()
                 return HttpResponseRedirect(reverse('projects_project_view', args=[project.id]))
         else:
-            form = TaskRecordForm(request.user.get_profile())
+            form = TaskRecordForm(request.user.profile)
     else:
         form = None
 
@@ -349,7 +349,7 @@ def project_view(request, project_id, response_format='html'):
         tasks_progress = (tasks_progress / len(tasks_progress_query)) * 100
         tasks_progress = round(tasks_progress, ndigits=1)
 
-    filters = FilterForm(request.user.get_profile(), 'project', request.GET)
+    filters = FilterForm(request.user.profile, 'project', request.GET)
 
     milestones = Object.filter_by_request(request,
                                           Milestone.objects.filter(project=project).filter(status__hidden=False))
@@ -374,20 +374,20 @@ def project_edit(request, project_id, response_format='html'):
     "Project edit page"
 
     project = get_object_or_404(Project, pk=project_id)
-    if not request.user.get_profile().has_permission(project, mode='w'):
+    if not request.user.profile.has_permission(project, mode='w'):
         return user_denied(request, message="You don't have access to this Project")
 
     if request.POST:
         if 'cancel' not in request.POST:
             form = ProjectForm(
-                request.user.get_profile(), None, request.POST, instance=project)
+                request.user.profile, None, request.POST, instance=project)
             if form.is_valid():
                 project = form.save()
                 return HttpResponseRedirect(reverse('projects_project_view', args=[project.id]))
         else:
             return HttpResponseRedirect(reverse('projects_project_view', args=[project.id]))
     else:
-        form = ProjectForm(request.user.get_profile(), None, instance=project)
+        form = ProjectForm(request.user.profile, None, instance=project)
 
     context = _get_default_context(request)
     context.update({'form': form, 'project': project})
@@ -402,7 +402,7 @@ def project_delete(request, project_id, response_format='html'):
     "Project delete"
 
     project = get_object_or_404(Project, pk=project_id)
-    if not request.user.get_profile().has_permission(project, mode='w'):
+    if not request.user.profile.has_permission(project, mode='w'):
         return user_denied(request, message="You don't have access to this Project")
 
     if request.POST:
@@ -436,7 +436,7 @@ def milestone_add(request, response_format='html'):
         if 'cancel' not in request.POST:
             milestone = Milestone()
             form = MilestoneForm(
-                request.user.get_profile(), None, request.POST, instance=milestone)
+                request.user.profile, None, request.POST, instance=milestone)
             if form.is_valid():
                 milestone = form.save()
                 milestone.set_user_from_request(request)
@@ -444,7 +444,7 @@ def milestone_add(request, response_format='html'):
         else:
             return HttpResponseRedirect(reverse('projects'))
     else:
-        form = MilestoneForm(request.user.get_profile(), None)
+        form = MilestoneForm(request.user.profile, None)
 
     context = _get_default_context(request)
     context.update({'form': form})
@@ -461,14 +461,14 @@ def milestone_add_typed(request, project_id=None, response_format='html'):
     project = None
     if project_id:
         project = get_object_or_404(Project, pk=project_id)
-        if not request.user.get_profile().has_permission(project, mode='x'):
+        if not request.user.profile.has_permission(project, mode='x'):
             project = None
 
     if request.POST:
         if 'cancel' not in request.POST:
             milestone = Milestone()
             form = MilestoneForm(
-                request.user.get_profile(), project_id, request.POST, instance=milestone)
+                request.user.profile, project_id, request.POST, instance=milestone)
             if form.is_valid():
                 milestone = form.save()
                 milestone.set_user_from_request(request)
@@ -476,7 +476,7 @@ def milestone_add_typed(request, project_id=None, response_format='html'):
         else:
             return HttpResponseRedirect(reverse('projects'))
     else:
-        form = MilestoneForm(request.user.get_profile(), project_id)
+        form = MilestoneForm(request.user.profile, project_id)
 
     context = _get_default_context(request)
     context.update({'form': form, 'project': project})
@@ -493,7 +493,7 @@ def milestone_view(request, milestone_id, response_format='html'):
 
     milestone = get_object_or_404(Milestone, pk=milestone_id)
     project = milestone.project
-    if not request.user.get_profile().has_permission(milestone):
+    if not request.user.profile.has_permission(milestone):
         return user_denied(request, message="You don't have access to this Milestone")
 
     query = Q(milestone=milestone, parent__isnull=True)
@@ -508,7 +508,7 @@ def milestone_view(request, milestone_id, response_format='html'):
         tasks = Object.filter_by_request(request,
                                          Task.objects.filter(query & Q(status__hidden=False)))
 
-    filters = FilterForm(request.user.get_profile(), 'milestone', request.GET)
+    filters = FilterForm(request.user.profile, 'milestone', request.GET)
 
     tasks_progress = float(0)
     tasks_progress_query = Object.filter_by_request(
@@ -538,13 +538,13 @@ def milestone_edit(request, milestone_id, response_format='html'):
 
     milestone = get_object_or_404(Milestone, pk=milestone_id)
     project = milestone.project
-    if not request.user.get_profile().has_permission(milestone, mode='w'):
+    if not request.user.profile.has_permission(milestone, mode='w'):
         return user_denied(request, message="You don't have access to this Milestone")
 
     if request.POST:
         if 'cancel' not in request.POST:
             form = MilestoneForm(
-                request.user.get_profile(), None, request.POST, instance=milestone)
+                request.user.profile, None, request.POST, instance=milestone)
             if form.is_valid():
                 milestone = form.save()
                 return HttpResponseRedirect(reverse('projects_milestone_view', args=[milestone.id]))
@@ -552,7 +552,7 @@ def milestone_edit(request, milestone_id, response_format='html'):
             return HttpResponseRedirect(reverse('projects_milestone_view', args=[milestone.id]))
     else:
         form = MilestoneForm(
-            request.user.get_profile(), None, instance=milestone)
+            request.user.profile, None, instance=milestone)
 
     context = _get_default_context(request)
     context.update({'form': form,
@@ -570,7 +570,7 @@ def milestone_delete(request, milestone_id, response_format='html'):
 
     milestone = get_object_or_404(Milestone, pk=milestone_id)
     project = milestone.project
-    if not request.user.get_profile().has_permission(milestone, mode='w'):
+    if not request.user.profile.has_permission(milestone, mode='w'):
         return user_denied(request, message="You don't have access to this Milestone")
 
     query = Q(milestone=milestone, parent__isnull=True)
@@ -604,11 +604,11 @@ def milestone_set_status(request, milestone_id, status_id, response_format='html
     "Milestone quick set: Status"
 
     milestone = get_object_or_404(Milestone, pk=milestone_id)
-    if not request.user.get_profile().has_permission(milestone, mode='x'):
+    if not request.user.profile.has_permission(milestone, mode='x'):
         return user_denied(request, message="You don't have access to this Milestone")
 
     status = get_object_or_404(TaskStatus, pk=status_id)
-    if not request.user.get_profile().has_permission(status):
+    if not request.user.profile.has_permission(status):
         return user_denied(request, message="You don't have access to this Milestone Status")
 
     if not milestone.status == status:
@@ -631,7 +631,7 @@ def task_add(request, response_format='html'):
         if 'cancel' not in request.POST:
             task = Task()
             form = TaskForm(
-                request.user.get_profile(), None, None, None, request.POST, instance=task)
+                request.user.profile, None, None, None, request.POST, instance=task)
             if form.is_valid():
                 task = form.save()
                 task.set_user_from_request(request)
@@ -639,7 +639,7 @@ def task_add(request, response_format='html'):
         else:
             return HttpResponseRedirect(reverse('projects'))
     else:
-        form = TaskForm(request.user.get_profile(), None, None, None)
+        form = TaskForm(request.user.profile, None, None, None)
 
     context = _get_default_context(request)
     context.update({'form': form})
@@ -656,14 +656,14 @@ def task_add_typed(request, project_id=None, response_format='html'):
     project = None
     if project_id:
         project = get_object_or_404(Project, pk=project_id)
-        if not request.user.get_profile().has_permission(project, mode='x'):
+        if not request.user.profile.has_permission(project, mode='x'):
             project = None
 
     if request.POST:
         if 'cancel' not in request.POST:
             task = Task()
             form = TaskForm(
-                request.user.get_profile(), None, project_id, None, request.POST, instance=task)
+                request.user.profile, None, project_id, None, request.POST, instance=task)
             if form.is_valid():
                 task = form.save()
                 task.set_user_from_request(request)
@@ -671,7 +671,7 @@ def task_add_typed(request, project_id=None, response_format='html'):
         else:
             return HttpResponseRedirect(reverse('projects_project_view', args=[project.id]))
     else:
-        form = TaskForm(request.user.get_profile(), None, project_id, None)
+        form = TaskForm(request.user.profile, None, project_id, None)
 
     context = _get_default_context(request)
     context.update({'form': form,
@@ -689,7 +689,7 @@ def task_add_to_milestone(request, milestone_id=None, response_format='html'):
     milestone = None
     if milestone_id:
         milestone = get_object_or_404(Milestone, pk=milestone_id)
-        if not request.user.get_profile().has_permission(milestone, mode='x'):
+        if not request.user.profile.has_permission(milestone, mode='x'):
             milestone = None
 
     project = milestone.project
@@ -698,7 +698,7 @@ def task_add_to_milestone(request, milestone_id=None, response_format='html'):
     if request.POST:
         if 'cancel' not in request.POST:
             task = Task()
-            form = TaskForm(request.user.get_profile(), None,
+            form = TaskForm(request.user.profile, None,
                             project_id, milestone_id, request.POST, instance=task)
             if form.is_valid():
                 task = form.save()
@@ -708,7 +708,7 @@ def task_add_to_milestone(request, milestone_id=None, response_format='html'):
             return HttpResponseRedirect(reverse('projects_milestone_view', args=[milestone.id]))
     else:
         form = TaskForm(
-            request.user.get_profile(), None, project_id, milestone_id)
+            request.user.profile, None, project_id, milestone_id)
 
     context = _get_default_context(request)
     context.update({'form': form,
@@ -727,14 +727,14 @@ def task_add_subtask(request, task_id=None, response_format='html'):
     parent = None
     if task_id:
         parent = get_object_or_404(Task, pk=task_id)
-        if not request.user.get_profile().has_permission(parent, mode='x'):
+        if not request.user.profile.has_permission(parent, mode='x'):
             parent = None
 
     if request.POST:
         if 'cancel' not in request.POST:
             task = Task()
             form = TaskForm(
-                request.user.get_profile(), parent, None, None, request.POST, instance=task)
+                request.user.profile, parent, None, None, request.POST, instance=task)
             if form.is_valid():
                 task = form.save()
                 task.set_user_from_request(request)
@@ -742,7 +742,7 @@ def task_add_subtask(request, task_id=None, response_format='html'):
         else:
             return HttpResponseRedirect(reverse('projects_task_view', args=[parent.id]))
     else:
-        form = TaskForm(request.user.get_profile(), parent, None, None)
+        form = TaskForm(request.user.profile, parent, None, None)
 
     context = _get_default_context(request)
     context.update({'form': form,
@@ -759,10 +759,10 @@ def task_view(request, task_id, response_format='html'):
     "Single task view page"
 
     task = get_object_or_404(Task, pk=task_id)
-    if not request.user.get_profile().has_permission(task):
+    if not request.user.profile.has_permission(task):
         return user_denied(request, message="You don't have access to this Task")
 
-    if request.user.get_profile().has_permission(task, mode='x'):
+    if request.user.profile.has_permission(task, mode='x'):
         if request.POST:
             if 'add-work' in request.POST:
                 return HttpResponseRedirect(reverse('projects_task_time_slot_add', args=[task.id]))
@@ -771,7 +771,7 @@ def task_view(request, task_id, response_format='html'):
             record = UpdateRecord()
             record.record_type = 'manual'
             form = TaskRecordForm(
-                request.user.get_profile(), request.POST, instance=record)
+                request.user.profile, request.POST, instance=record)
             if form.is_valid():
                 record = form.save()
                 record.set_user_from_request(request)
@@ -780,7 +780,7 @@ def task_view(request, task_id, response_format='html'):
                 task.set_last_updated()
                 return HttpResponseRedirect(reverse('projects_task_view', args=[task.id]))
         else:
-            form = TaskRecordForm(request.user.get_profile())
+            form = TaskRecordForm(request.user.profile)
     else:
         form = None
 
@@ -808,13 +808,13 @@ def task_edit(request, task_id, response_format='html'):
     "Task edit page"
 
     task = get_object_or_404(Task, pk=task_id)
-    if not request.user.get_profile().has_permission(task, mode='w'):
+    if not request.user.profile.has_permission(task, mode='w'):
         return user_denied(request, message="You don't have access to this Task")
 
     if request.POST:
         if 'cancel' not in request.POST:
             form = TaskForm(
-                request.user.get_profile(), None, None, None, request.POST, instance=task)
+                request.user.profile, None, None, None, request.POST, instance=task)
             if form.is_valid():
                 task = form.save()
                 return HttpResponseRedirect(reverse('projects_task_view', args=[task.id]))
@@ -822,7 +822,7 @@ def task_edit(request, task_id, response_format='html'):
             return HttpResponseRedirect(reverse('projects_task_view', args=[task.id]))
     else:
         form = TaskForm(
-            request.user.get_profile(), None, None, None, instance=task)
+            request.user.profile, None, None, None, instance=task)
 
     context = _get_default_context(request)
     context.update({'form': form,
@@ -838,7 +838,7 @@ def task_delete(request, task_id, response_format='html'):
     "Task delete"
 
     task = get_object_or_404(Task, pk=task_id)
-    if not request.user.get_profile().has_permission(task, mode='w'):
+    if not request.user.profile.has_permission(task, mode='w'):
         return user_denied(request, message="You don't have access to this Task")
 
     if request.POST:
@@ -872,11 +872,11 @@ def task_set_status(request, task_id, status_id, response_format='html'):
     "Task quick set: Status"
 
     task = get_object_or_404(Task, pk=task_id)
-    if not request.user.get_profile().has_permission(task, mode='x'):
+    if not request.user.profile.has_permission(task, mode='x'):
         return user_denied(request, message="You don't have access to this Task")
 
     status = get_object_or_404(TaskStatus, pk=status_id)
-    if not request.user.get_profile().has_permission(status):
+    if not request.user.profile.has_permission(status):
         return user_denied(request, message="You don't have access to this Task Status")
 
     if not task.status == status:
@@ -896,12 +896,12 @@ def task_time_slot_start(request, task_id, response_format='html'):
     "Start TaskTimeSlot for preselected Task"
 
     task = get_object_or_404(Task, pk=task_id)
-    if not request.user.get_profile().has_permission(task, mode='x'):
+    if not request.user.profile.has_permission(task, mode='x'):
         return user_denied(request, message="You don't have access to this Task")
 
-    if not task.is_being_done_by(request.user.get_profile()):
+    if not task.is_being_done_by(request.user.profile):
         task_time_slot = TaskTimeSlot(
-            task=task, time_from=datetime.now(), user=request.user.get_profile())
+            task=task, time_from=datetime.now(), user=request.user.profile)
         task_time_slot.save()
         task_time_slot.set_user_from_request(request)
 
@@ -914,7 +914,7 @@ def task_time_slot_stop(request, slot_id, response_format='html'):
     "Stop TaskTimeSlot for preselected Task"
 
     slot = get_object_or_404(TaskTimeSlot, pk=slot_id)
-    if not request.user.get_profile().has_permission(slot, mode='w'):
+    if not request.user.profile.has_permission(slot, mode='w'):
         return user_denied(request, message="You don't have access to this TaskTimeSlot")
 
     if request.POST and 'stop' in request.POST:
@@ -931,14 +931,14 @@ def task_time_slot_add(request, task_id, response_format='html'):
     "Time slot add to preselected task"
 
     task = get_object_or_404(Task, pk=task_id)
-    if not request.user.get_profile().has_permission(task, mode='x'):
+    if not request.user.profile.has_permission(task, mode='x'):
         return user_denied(request, message="You don't have access to this Task")
 
     if request.POST:
         task_time_slot = TaskTimeSlot(
-            task=task, time_to=datetime.now(), user=request.user.get_profile())
+            task=task, time_to=datetime.now(), user=request.user.profile)
         form = TaskTimeSlotForm(
-            request.user.get_profile(), task_id, request.POST, instance=task_time_slot)
+            request.user.profile, task_id, request.POST, instance=task_time_slot)
         if 'cancel' in request.POST:
             return HttpResponseRedirect(reverse('projects_task_view', args=[task.id]))
         elif form.is_valid():
@@ -946,7 +946,7 @@ def task_time_slot_add(request, task_id, response_format='html'):
             task_time_slot.set_user_from_request(request)
             return HttpResponseRedirect(reverse('projects_task_view', args=[task.id]))
     else:
-        form = TaskTimeSlotForm(request.user.get_profile(), task_id)
+        form = TaskTimeSlotForm(request.user.profile, task_id)
 
     subtasks = Object.filter_by_request(
         request, Task.objects.filter(parent=task))
@@ -970,8 +970,8 @@ def task_time_slot_view(request, time_slot_id, response_format='html'):
 
     task_time_slot = get_object_or_404(TaskTimeSlot, pk=time_slot_id)
     task = task_time_slot.task
-    if not request.user.get_profile().has_permission(task_time_slot) \
-            and not request.user.get_profile().has_permission(task):
+    if not request.user.profile.has_permission(task_time_slot) \
+            and not request.user.profile.has_permission(task):
         return user_denied(request, message="You don't have access to this Task Time Slot")
 
     context = _get_default_context(request)
@@ -990,13 +990,13 @@ def task_time_slot_edit(request, time_slot_id, response_format='html'):
     task_time_slot = get_object_or_404(TaskTimeSlot, pk=time_slot_id)
     task = task_time_slot.task
 
-    if not request.user.get_profile().has_permission(task_time_slot, mode='w') \
-            and not request.user.get_profile().has_permission(task, mode='w'):
+    if not request.user.profile.has_permission(task_time_slot, mode='w') \
+            and not request.user.profile.has_permission(task, mode='w'):
         return user_denied(request, message="You don't have access to this Task Time Slot")
 
     if request.POST:
         form = TaskTimeSlotForm(
-            request.user.get_profile(), None, request.POST, instance=task_time_slot)
+            request.user.profile, None, request.POST, instance=task_time_slot)
         if form.is_valid():
             task_time_slot = form.save()
             return HttpResponseRedirect(reverse('projects_task_view', args=[task.id]))
@@ -1005,7 +1005,7 @@ def task_time_slot_edit(request, time_slot_id, response_format='html'):
             return HttpResponseRedirect(reverse('projects_task_view', args=[task.id]))
     else:
         form = TaskTimeSlotForm(
-            request.user.get_profile(), None, instance=task_time_slot)
+            request.user.profile, None, instance=task_time_slot)
 
     context = _get_default_context(request)
     context.update({'form': form,
@@ -1024,8 +1024,8 @@ def task_time_slot_delete(request, time_slot_id, response_format='html'):
     task_time_slot = get_object_or_404(TaskTimeSlot, pk=time_slot_id)
     task = task_time_slot.task
 
-    if not request.user.get_profile().has_permission(task_time_slot, mode='w') \
-            and not request.user.get_profile().has_permission(task, mode='w'):
+    if not request.user.profile.has_permission(task_time_slot, mode='w') \
+            and not request.user.profile.has_permission(task, mode='w'):
         return user_denied(request, message="You don't have access to this Task Time Slot")
 
     if request.POST:
@@ -1056,14 +1056,14 @@ def task_time_slot_delete(request, time_slot_id, response_format='html'):
 def task_status_add(request, response_format='html'):
     "TaskStatus add"
 
-    if not request.user.get_profile().is_admin('treeio.projects'):
+    if not request.user.profile.is_admin('treeio.projects'):
         return user_denied(request, message="You don't have administrator access to the Projects module")
 
     if request.POST:
         if 'cancel' not in request.POST:
             status = TaskStatus()
             form = TaskStatusForm(
-                request.user.get_profile(), request.POST, instance=status)
+                request.user.profile, request.POST, instance=status)
             if form.is_valid():
                 status = form.save()
                 status.set_user_from_request(request)
@@ -1071,7 +1071,7 @@ def task_status_add(request, response_format='html'):
         else:
             return HttpResponseRedirect(reverse('projects_settings_view'))
     else:
-        form = TaskStatusForm(request.user.get_profile())
+        form = TaskStatusForm(request.user.profile)
 
     context = _get_default_context(request)
     context.update({'form': form})
@@ -1086,20 +1086,20 @@ def task_status_edit(request, status_id, response_format='html'):
     "TaskStatus edit"
 
     status = get_object_or_404(TaskStatus, pk=status_id)
-    if not request.user.get_profile().has_permission(status, mode='w'):
+    if not request.user.profile.has_permission(status, mode='w'):
         return user_denied(request, message="You don't have access to this Task Status")
 
     if request.POST:
         if 'cancel' not in request.POST:
             form = TaskStatusForm(
-                request.user.get_profile(), request.POST, instance=status)
+                request.user.profile, request.POST, instance=status)
             if form.is_valid():
                 status = form.save()
                 return HttpResponseRedirect(reverse('projects_index_by_status', args=[status.id]))
         else:
             return HttpResponseRedirect(reverse('projects_index_by_status', args=[status.id]))
     else:
-        form = TaskStatusForm(request.user.get_profile(), instance=status)
+        form = TaskStatusForm(request.user.profile, instance=status)
 
     context = _get_default_context(request)
     context.update({'form': form,
@@ -1115,7 +1115,7 @@ def task_status_delete(request, status_id, response_format='html'):
     "TaskStatus delete"
 
     status = get_object_or_404(TaskStatus, pk=status_id)
-    if not request.user.get_profile().has_permission(status, mode='w'):
+    if not request.user.profile.has_permission(status, mode='w'):
         return user_denied(request, message="You don't have access to this Task Status")
 
     if request.POST:
@@ -1148,7 +1148,7 @@ def task_status_delete(request, status_id, response_format='html'):
 def settings_view(request, response_format='html'):
     "Settings"
 
-    if not request.user.get_profile().is_admin('treeio.projects'):
+    if not request.user.profile.is_admin('treeio.projects'):
         return user_denied(request, message="You don't have administrator access to the Projects module")
 
     # default task status
@@ -1174,20 +1174,20 @@ def settings_view(request, response_format='html'):
 def settings_edit(request, response_format='html'):
     "Settings"
 
-    if not request.user.get_profile().is_admin('treeio.projects'):
+    if not request.user.profile.is_admin('treeio.projects'):
         return user_denied(request, message="You don't have administrator access to the Projects module")
 
     form = None
     if request.POST:
         if 'cancel' not in request.POST:
-            form = SettingsForm(request.user.get_profile(), request.POST)
+            form = SettingsForm(request.user.profile, request.POST)
             if form.is_valid():
                 form.save()
                 return HttpResponseRedirect(reverse('projects_settings_view'))
         else:
             return HttpResponseRedirect(reverse('projects_settings_view'))
     else:
-        form = SettingsForm(request.user.get_profile())
+        form = SettingsForm(request.user.profile)
 
     context = _get_default_context(request)
     context.update({'form': form})

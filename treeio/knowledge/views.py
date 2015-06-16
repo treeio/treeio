@@ -37,9 +37,9 @@ def _get_default_context(request):
     "Returns default context as a dict()"
 
     folders = Object.filter_permitted(manager=KnowledgeFolder.objects.filter(parent__isnull=True),
-                                      user=request.user.get_profile(), mode='r')
+                                      user=request.user.profile, mode='r')
 
-    massform = MassActionForm(request.user.get_profile())
+    massform = MassActionForm(request.user.profile)
     context = {'folders': folders,
                'massform': massform}
 
@@ -51,7 +51,7 @@ def _process_mass_form(f):
 
     def wrap(request, *args, **kwargs):
         "Wrap"
-        user = request.user.get_profile()
+        user = request.user.profile
         if 'massform' in request.POST:
             for key in request.POST:
                 if 'mass-item' in key:
@@ -84,7 +84,7 @@ def index(request, response_format='html'):
     else:
         items = Object.filter_by_request(request, KnowledgeItem.objects)
 
-    filters = FilterForm(request.user.get_profile(), 'name', request.GET)
+    filters = FilterForm(request.user.profile, 'name', request.GET)
 
     context = _get_default_context(request)
     context.update({'filters': filters,
@@ -107,7 +107,7 @@ def index_categories(request, response_format='html'):
     else:
         items = Object.filter_by_request(request, KnowledgeItem.objects)
 
-    filters = FilterForm(request.user.get_profile(), 'category', request.GET)
+    filters = FilterForm(request.user.profile, 'category', request.GET)
     categories = Object.filter_by_request(request, KnowledgeCategory.objects)
 
     context = _get_default_context(request)
@@ -129,7 +129,7 @@ def folder_add(request, response_format='html'):
         if 'cancel' not in request.POST:
             folder = KnowledgeFolder()
             form = KnowledgeFolderForm(
-                request.user.get_profile(), None, request.POST, instance=folder)
+                request.user.profile, None, request.POST, instance=folder)
             if form.is_valid():
                 folder = form.save()
                 folder.set_user_from_request(request)
@@ -137,7 +137,7 @@ def folder_add(request, response_format='html'):
         else:
             return HttpResponseRedirect(reverse('knowledge'))
     else:
-        form = KnowledgeFolderForm(request.user.get_profile(), None)
+        form = KnowledgeFolderForm(request.user.profile, None)
 
     context = _get_default_context(request)
     context.update({'form': form})
@@ -161,13 +161,13 @@ def folder_add_folder(request, folderPath, response_format='html'):
     parent = None
     if knowledgeType_id:
         parent = get_object_or_404(KnowledgeFolder, pk=knowledgeType_id)
-        if not request.user.get_profile().has_permission(parent, mode='x'):
+        if not request.user.profile.has_permission(parent, mode='x'):
             parent = None
 
     if request.POST:
         if not 'cancel' in request.POST:
             folder = KnowledgeFolder()
-            form = KnowledgeFolderForm(request.user.get_profile(), knowledgeType_id,
+            form = KnowledgeFolderForm(request.user.profile, knowledgeType_id,
                                        request.POST, instance=folder)
             if form.is_valid():
                 folder = form.save()
@@ -177,7 +177,7 @@ def folder_add_folder(request, folderPath, response_format='html'):
             return HttpResponseRedirect(reverse('knowledge'))
     else:
         form = KnowledgeFolderForm(
-            request.user.get_profile(), knowledgeType_id)
+            request.user.profile, knowledgeType_id)
 
     context = _get_default_context(request)
     context.update({'form': form,
@@ -198,7 +198,7 @@ def folder_view(request, folderPath, response_format='html'):
     if not folder:
         raise Http404
 
-    if not request.user.get_profile().has_permission(folder):
+    if not request.user.profile.has_permission(folder):
         return user_denied(request, message="You don't have access to this Knowledge Type")
 
     items = Object.filter_by_request(
@@ -224,13 +224,13 @@ def folder_edit(request, knowledgeType_id, response_format='html'):
     items = Object.filter_by_request(
         request, manager=KnowledgeItem.objects.filter(folder=folder))
 
-    if not request.user.get_profile().has_permission(folder, mode="w"):
+    if not request.user.profile.has_permission(folder, mode="w"):
         return user_denied(request, message="You don't have access to this Knowledge Type")
 
     if request.POST:
         if 'cancel' not in request.POST:
             form = KnowledgeFolderForm(
-                request.user.get_profile(), None, request.POST, instance=folder)
+                request.user.profile, None, request.POST, instance=folder)
             if form.is_valid():
                 folder = form.save()
                 return HttpResponseRedirect(reverse('knowledge_folder_view', args=[folder.treepath]))
@@ -238,7 +238,7 @@ def folder_edit(request, knowledgeType_id, response_format='html'):
             return HttpResponseRedirect(reverse('knowledge_folder_view', args=[folder.treepath]))
     else:
         form = KnowledgeFolderForm(
-            request.user.get_profile(), None, instance=folder)
+            request.user.profile, None, instance=folder)
 
     context = _get_default_context(request)
     context.update({'items': items,
@@ -259,7 +259,7 @@ def folder_delete(request, knowledgeType_id, response_format='html'):
     items = Object.filter_by_request(
         request, manager=KnowledgeItem.objects.filter(folder=folder))
 
-    if not request.user.get_profile().has_permission(folder, mode='w'):
+    if not request.user.profile.has_permission(folder, mode='w'):
         return user_denied(request, message="You don't have access to this Knowledge Type")
 
     if request.POST:
@@ -287,13 +287,13 @@ def folder_delete(request, knowledgeType_id, response_format='html'):
 def item_add(request, response_format='html'):
     "Add new knowledge item"
     items = Object.filter_permitted(
-        manager=KnowledgeItem.objects, user=request.user.get_profile(), mode='r')
+        manager=KnowledgeItem.objects, user=request.user.profile, mode='r')
 
     if request.POST:
         if 'cancel' not in request.POST:
             item = KnowledgeItem()
             form = KnowledgeItemForm(
-                request.user.get_profile(), None, request.POST, instance=item)
+                request.user.profile, None, request.POST, instance=item)
             if form.is_valid():
                 item = form.save()
                 item.set_user_from_request(request)
@@ -302,7 +302,7 @@ def item_add(request, response_format='html'):
         else:
             return HttpResponseRedirect(reverse('knowledge'))
     else:
-        form = KnowledgeItemForm(request.user.get_profile(), None)
+        form = KnowledgeItemForm(request.user.profile, None)
 
     context = _get_default_context(request)
     context.update({'items': items,
@@ -318,7 +318,7 @@ def item_add(request, response_format='html'):
 def item_add_folder(request, folderPath, response_format='html'):
     "Add new knowledge item to preselected folder"
     items = Object.filter_permitted(
-        manager=KnowledgeItem.objects, user=request.user.get_profile(), mode='r')
+        manager=KnowledgeItem.objects, user=request.user.profile, mode='r')
 
     try:
         folder = KnowledgeFolder.by_path(folderPath)
@@ -330,7 +330,7 @@ def item_add_folder(request, folderPath, response_format='html'):
         if 'cancel' not in request.POST:
             item = KnowledgeItem()
             form = KnowledgeItemForm(
-                request.user.get_profile(), knowledgeType_id, request.POST, instance=item)
+                request.user.profile, knowledgeType_id, request.POST, instance=item)
             if form.is_valid():
                 item = form.save()
                 item.set_user_from_request(request)
@@ -339,7 +339,7 @@ def item_add_folder(request, folderPath, response_format='html'):
         else:
             return HttpResponseRedirect(reverse('knowledge'))
     else:
-        form = KnowledgeItemForm(request.user.get_profile(), knowledgeType_id)
+        form = KnowledgeItemForm(request.user.profile, knowledgeType_id)
 
     context = _get_default_context(request)
     context.update({'items': items,
@@ -364,9 +364,9 @@ def item_view(request, folderPath, itemPath, response_format='html'):
         raise Http404
 
     items = Object.filter_permitted(
-        manager=KnowledgeItem.objects, user=request.user.get_profile(), mode='r')
+        manager=KnowledgeItem.objects, user=request.user.profile, mode='r')
 
-    if not request.user.get_profile().has_permission(item):
+    if not request.user.profile.has_permission(item):
         return user_denied(request, message="You don't have access to this Knowledge Item")
 
     context = _get_default_context(request)
@@ -384,15 +384,15 @@ def item_edit(request, knowledgeItem_id, response_format='html'):
     "Knowledge item edit page"
     item = get_object_or_404(KnowledgeItem, pk=knowledgeItem_id)
     items = Object.filter_permitted(
-        manager=KnowledgeItem.objects, user=request.user.get_profile(), mode='r')
+        manager=KnowledgeItem.objects, user=request.user.profile, mode='r')
 
-    if not request.user.get_profile().has_permission(item, mode="w"):
+    if not request.user.profile.has_permission(item, mode="w"):
         return user_denied(request, message="You don't have access to this Knowledge Item")
 
     if request.POST:
         if 'cancel' not in request.POST:
             form = KnowledgeItemForm(
-                request.user.get_profile(), None, request.POST, instance=item)
+                request.user.profile, None, request.POST, instance=item)
             if form.is_valid():
                 item = form.save()
                 return HttpResponseRedirect(reverse('knowledge_item_view',
@@ -402,7 +402,7 @@ def item_edit(request, knowledgeItem_id, response_format='html'):
                                                 args=[item.folder.treepath, item.treepath]))
     else:
         form = KnowledgeItemForm(
-            request.user.get_profile(), None, instance=item)
+            request.user.profile, None, instance=item)
 
     context = _get_default_context(request)
     context.update({'form': form,
@@ -421,9 +421,9 @@ def item_delete(request, knowledgeItem_id, response_format='html'):
 
     item = get_object_or_404(KnowledgeItem, pk=knowledgeItem_id)
     items = Object.filter_permitted(
-        manager=KnowledgeItem.objects, user=request.user.get_profile(), mode='r')
+        manager=KnowledgeItem.objects, user=request.user.profile, mode='r')
 
-    if not request.user.get_profile().has_permission(item, mode="w"):
+    if not request.user.profile.has_permission(item, mode="w"):
         return user_denied(request, message="You don't have access to this Knowledge Item")
 
     if request.POST:
@@ -485,9 +485,9 @@ def category_view(request, categoryPath, response_format='html'):
         raise Http404
 
     items = Object.filter_permitted(
-        manager=KnowledgeItem.objects, user=request.user.get_profile(), mode='r')
+        manager=KnowledgeItem.objects, user=request.user.profile, mode='r')
 
-    if not request.user.get_profile().has_permission(category):
+    if not request.user.profile.has_permission(category):
         return user_denied(request, message="You don't have access to this Knowledge Category")
 
     context = _get_default_context(request)
@@ -505,9 +505,9 @@ def category_edit(request, knowledgeCategory_id, response_format='html'):
     "Knowledge category edit page"
     category = get_object_or_404(KnowledgeCategory, pk=knowledgeCategory_id)
     items = Object.filter_permitted(
-        manager=KnowledgeItem.objects, user=request.user.get_profile(), mode='r')
+        manager=KnowledgeItem.objects, user=request.user.profile, mode='r')
 
-    if not request.user.get_profile().has_permission(category, mode="w"):
+    if not request.user.profile.has_permission(category, mode="w"):
         return user_denied(request, message="You don't have access to this Knowledge Category")
 
     if request.POST:
@@ -538,9 +538,9 @@ def category_delete(request, knowledgeCategory_id, response_format='html'):
 
     category = get_object_or_404(KnowledgeCategory, pk=knowledgeCategory_id)
     items = Object.filter_permitted(
-        manager=KnowledgeItem.objects, user=request.user.get_profile(), mode='r')
+        manager=KnowledgeItem.objects, user=request.user.profile, mode='r')
 
-    if not request.user.get_profile().has_permission(category, mode="w"):
+    if not request.user.profile.has_permission(category, mode="w"):
         return user_denied(request, message="You don't have access to this Knowledge Category")
 
     if request.POST:

@@ -9,7 +9,7 @@
 
 {% block module_topmenu %}
 <a href="{% url sales_opportunity_view opportunity.id %}" class="top-menu view-link-active">{% trans %}View{% endtrans %}</a>
-{% if request.user.get_profile().has_permission(opportunity, mode='w') %}
+{% if request.user.profile.has_permission(opportunity, mode='w') %}
 <a href="{% url sales_opportunity_edit opportunity.id %}" class="top-menu edit-link">{% trans %}Edit{% endtrans %}</a>
 <a href="{% url sales_opportunity_delete opportunity.id %}" class="top-menu delete-link">{% trans %}Delete{% endtrans %}</a>
 <a href="{% url sales_order_add_with_opportunity opportunity.id %}" class="top-menu add-link">{% trans %}Convert To Order{% endtrans %}</a>

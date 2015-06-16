@@ -2,7 +2,7 @@
 <div class="subscription-users">
     {% for subscription in subscriptions %}
     <a href="{% url identities_user_view subscription.id %}">{{ subscription }}</a>
-    {% if request.user.get_profile().has_permission(object, mode='w') or request.user.get_profile().id == subscription.id %}
+    {% if request.user.profile.has_permission(object, mode='w') or request.user.profile.id == subscription.id %}
     <a href="{{ request.path }}?unsubscribe={{ subscription.id }}" class="inline-link delete-link" style="padding-left: 8px;">&nbsp;</a>
     {% endif %}
     <br />

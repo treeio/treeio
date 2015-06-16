@@ -8,7 +8,7 @@
 
 {% block module_topmenu %}
 <a href="{% url projects_task_view task.id %}" class="top-menu view-link">{% trans %}View{% endtrans %}</a>
-{% if user.get_profile().has_permission(task, mode='w') %}
+{% if user.profile.has_permission(task, mode='w') %}
 <a href="{% url projects_task_edit task.id %}" class="top-menu edit-link">{% trans %}Edit{% endtrans %}</a>
 <a href="{% url projects_task_delete task.id %}" class="top-menu delete-link">{% trans %}Delete{% endtrans %}</a>
 {% endif %}
@@ -96,7 +96,7 @@
         </span>
     </span>
     <span class="content-list-item-actions">
-        {% if user.get_profile().has_permission(subtask, mode='w') %}
+        {% if user.profile.has_permission(subtask, mode='w') %}
         <a href="{% url projects_task_edit subtask.id %}" class="inline-link edit-link">{% trans %}Edit{% endtrans %}</a>
         {% endif %}
     </span>
@@ -110,7 +110,7 @@
     <span class="projects-task-time">{% trans %}Total Work Time{% endtrans %}:</span>
     <span class="imp heavy">{{ task.get_total_time_string() }}</span>
 </div>
-{% if user.get_profile().has_permission(task, mode='x') and not task.is_being_done_by(request.user.get_profile()) %}
+{% if user.profile.has_permission(task, mode='x') and not task.is_being_done_by(request.user.profile) %}
 <div class="spaced-h spaced-v">
     <form action="{% url projects_task_time_slot_start task.id %}" method="get" class="content-form content-form-inline">
         <input type="submit" value="Start Work">
@@ -121,7 +121,7 @@
 </div>
 {% endif %}
 
-{% if user.get_profile().has_permission(task, mode='x') %}
+{% if user.profile.has_permission(task, mode='x') %}
 <form action="{% url projects_task_time_slot_add task.id %}" method="post" class="content-form">
 {% csrf_token %}
     <ul class="content-form-fields">
@@ -162,7 +162,7 @@
             </div>
             {% endif %}
             {% else %}
-            {% if user.get_profile().has_permission(task, mode='x') or user.get_profile().has_permission(slot, mode='w') %}
+            {% if user.profile.has_permission(task, mode='x') or user.profile.has_permission(slot, mode='w') %}
             <form action="{% url projects_task_time_slot_stop slot.id %}" method="post" class="content-form">
 {% csrf_token %}
                 <ul class="content-form-fields">
@@ -183,7 +183,7 @@
         </span>
     </span>
     <span class="content-list-item-actions">
-        {% if user.get_profile().has_permission(task, mode='w') or user.get_profile().has_permission(slot, mode='w') %}
+        {% if user.profile.has_permission(task, mode='w') or user.profile.has_permission(slot, mode='w') %}
         <a href="{% url projects_task_time_slot_edit slot.id %}" class="inline-link edit-link">{% trans %}Edit{% endtrans %}</a>
         {% endif %}
     </span>

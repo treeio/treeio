@@ -10,7 +10,7 @@
 
 {% block module_topmenu %}
 <a href="{% url messaging_stream_view stream.id %}" class="top-menu view-link">{% trans %}View{% endtrans %}</a>
-{% if user.get_profile().has_permission(stream, mode='w') %}
+{% if user.profile.has_permission(stream, mode='w') %}
 <a href="{% url messaging_stream_edit stream.id %}" class="top-menu edit-link-active">{% trans %}Edit{% endtrans %}</a>
 <a href="{% url messaging_stream_delete stream.id %}" class="top-menu delete-link">{% trans %}Delete{% endtrans %}</a>
 {% endif %}

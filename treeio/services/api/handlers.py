@@ -12,7 +12,7 @@ __all__ = ['TicketStatusHandler', 'ServiceHandler',
            'TicketQueueHandler', 'TicketRecordHandler', 'TicketHandler']
 
 from treeio.core.api.utils import rc
-from piston.handler import BaseHandler
+from piston3.handler import BaseHandler
 from treeio.core.models import ModuleSetting
 from treeio.core.api.handlers import ObjectHandler
 from treeio.services.models import TicketStatus, Service, ServiceLevelAgreement, ServiceAgent, TicketQueue, Ticket, \
@@ -35,7 +35,7 @@ class TicketStatusHandler(ObjectHandler):
         return ('api_services_status', [object_id])
 
     def check_create_permission(self, request, mode):
-        return request.user.get_profile().is_admin('treeio.services')
+        return request.user.profile.is_admin('treeio.services')
 
 
 class ServiceHandler(ObjectHandler):
@@ -51,11 +51,11 @@ class ServiceHandler(ObjectHandler):
         return ('api_services', [object_id])
 
     def check_create_permission(self, request, mode):
-        return request.user.get_profile().is_admin('treeio.services')
+        return request.user.profile.is_admin('treeio.services')
 
     def check_instance_permission(self, request, inst, mode):
-        return request.user.get_profile().has_permission(inst, mode=mode) \
-               or request.user.get_profile().is_admin('treeio_services')
+        return request.user.profile.has_permission(inst, mode=mode) \
+               or request.user.profile.is_admin('treeio_services')
 
 
 class ServiceLevelAgreementHandler(ObjectHandler):
@@ -71,7 +71,7 @@ class ServiceLevelAgreementHandler(ObjectHandler):
         return ('api_services_sla', [object_id])
 
     def check_create_permission(self, request, mode):
-        return request.user.get_profile().is_admin('treeio.services')
+        return request.user.profile.is_admin('treeio.services')
 
 
 class ServiceAgentHandler(ObjectHandler):
@@ -87,7 +87,7 @@ class ServiceAgentHandler(ObjectHandler):
         return ('api_services_agents', [object_id])
 
     def check_create_permission(self, request, mode):
-        return request.user.get_profile().is_admin('treeio.services')
+        return request.user.profile.is_admin('treeio.services')
 
 
 class TicketQueueHandler(ObjectHandler):
@@ -103,7 +103,7 @@ class TicketQueueHandler(ObjectHandler):
         return ('api_services_queues', [object_id])
 
     def check_create_permission(self, request, mode):
-        return request.user.get_profile().is_admin('treeio.services')
+        return request.user.profile.is_admin('treeio.services')
 
 
 class TicketRecordHandler(BaseHandler):
@@ -128,7 +128,7 @@ class TicketRecordHandler(BaseHandler):
         except Ticket.DoesNotExist:
             return rc.NOT_FOUND
 
-        if not request.user.get_profile().has_permission(ticket):
+        if not request.user.profile.has_permission(ticket):
             return rc.FORBIDDEN
         return ticket
 
@@ -143,7 +143,7 @@ class TicketRecordHandler(BaseHandler):
     def create(self, request, *args, **kwargs):
         ticket = self.get_ticket(request, kwargs)
         if isinstance(ticket, Ticket):
-            profile = request.user.get_profile()
+            profile = request.user.profile
             if profile.has_permission(ticket, mode='x'):
                 context = _get_default_context(request)
                 agent = context['agent']
@@ -185,7 +185,7 @@ class TicketHandler(ObjectHandler):
     def check_create_permission(self, request, mode):
         request.context = _get_default_context(request)
         request.agent = request.context['agent']
-        request.profile = request.user.get_profile()
+        request.profile = request.user.profile
 
         request.queue = None
         if 'queue_id' in request.GET:
@@ -194,7 +194,7 @@ class TicketHandler(ObjectHandler):
                     pk=request.GET['queue_id'])
             except self.model.DoesNotExist:
                 return False
-            if not request.user.get_profile().has_permission(request.queue, mode='x'):
+            if not request.user.profile.has_permission(request.queue, mode='x'):
                 request.queue = None
         return True
 
@@ -202,7 +202,7 @@ class TicketHandler(ObjectHandler):
         context = _get_default_context(request)
         request.agent = context['agent']
         request.queue = None
-        return request.user.get_profile().has_permission(inst, mode=mode)
+        return request.user.profile.has_permission(inst, mode=mode)
 
     def flatten_dict(self, request):
         dct = super(TicketHandler, self).flatten_dict(request)
@@ -211,7 +211,7 @@ class TicketHandler(ObjectHandler):
         return dct
 
     def create_instance(self, request, *args, **kwargs):
-        ticket = Ticket(creator=request.user.get_profile())
+        ticket = Ticket(creator=request.user.profile)
         if not request.agent:
             if request.queue:
                 ticket.queue = request.queue
@@ -254,7 +254,7 @@ class TicketHandler(ObjectHandler):
                         except:
                             pass
             try:
-                ticket.caller = request.user.get_profile().get_contact()
+                ticket.caller = request.user.profile.get_contact()
             except:
                 pass
         return ticket

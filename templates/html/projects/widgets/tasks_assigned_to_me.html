@@ -5,7 +5,7 @@
 
 {% block widget_content %}
 
-{% set render_tasks = tasks.filter(assigned=request.user.get_profile()) %}
+{% set render_tasks = tasks.filter(assigned=request.user.profile) %}
 {% if render_tasks %}
 {{ projects_task_list(render_tasks, nomass=True, by_milestone=True, by_assigned=True, noheader=True) }}
 {% else %}

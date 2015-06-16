@@ -17,7 +17,7 @@
         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="small lightest" href="{% url documents_document_view document.id %}">{{ document.body|striptags|truncate(80, True) }}</a>
     </span>
     <span class="content-list-item-actions">
-        {% if user.get_profile().has_permission(document, mode='w') %}
+        {% if user.profile.has_permission(document, mode='w') %}
         <a href="{% url documents_document_edit document.id %}" class="inline-link edit-link">{% trans %}Edit{% endtrans %}</a>
         {% endif %}
     </span>

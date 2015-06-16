@@ -6,7 +6,7 @@ from django.core.exceptions import ObjectDoesNotExist, MultipleObjectsReturned
 from django.core.files.uploadedfile import InMemoryUploadedFile
 from django.db.models import Q
 
-from piston.handler import BaseHandler, HandlerMetaClass, typemapper
+from piston3.handler import BaseHandler, HandlerMetaClass, typemapper
 import base64
 from utils import rc
 from decorators import module_admin_required
@@ -52,7 +52,7 @@ class ObjectHandler(BaseHandler):
         return self.model()
 
     def check_instance_permission(self, request, inst, mode):
-        return request.user.get_profile().has_permission(inst, mode=mode)
+        return request.user.profile.has_permission(inst, mode=mode)
 
     def delete_instance(self, request, inst):
         if not self.check_instance_permission(request, inst, mode='w'):
@@ -82,7 +82,7 @@ class ObjectHandler(BaseHandler):
                 data[str(key)] = value
         return {'data': data,
                 'files': files,
-                'user': request.user.get_profile()}
+                'user': request.user.profile}
 
     def get_filter_query(self, args):
         query = Q()

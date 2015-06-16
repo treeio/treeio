@@ -22,7 +22,7 @@
         {% endblock %}
 
         <span class="sidebar-header">{% trans %}Administration{% endtrans %}</span>
-        {% if request.user.get_profile().is_admin('treeio.identities') %}
+        {% if request.user.profile.is_admin('treeio.identities') %}
         <a href="{% url identities_settings_view %}" class="sidebar-link {% block class_admin_settings %}{% endblock %}">{% trans %}Settings{% endtrans %}</a>
         {% endif %}
 

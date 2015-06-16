@@ -46,7 +46,7 @@ class KnowledgeViewsTest(TestCase):
                 self.user = DjangoUser.objects.get(username=self.username)
                 self.user.set_password(self.password)
                 try:
-                    self.profile = self.user.get_profile()
+                    self.profile = self.user.profile
                 except Exception:
                     User.objects.all().delete()
                     self.user = DjangoUser(username=self.username, password='')
@@ -159,10 +159,10 @@ class KnowledgeViewsTest(TestCase):
         response = self.client.put(path=reverse('api_knowledge_items', kwargs={'object_ptr': self.item.id}),
                                    content_type=self.content_type, data=json.dumps(updates),
                                    **self.authentication_headers)
-        self.assertEquals(response.status_code, 400)
+        self.assertEquals(response.status_code, 200)
 
-        # data = json.loads(response.content)
-        #self.assertEquals(updates["name"], data["name"])
-        #self.assertEquals(updates["body"], data["body"])
-        #self.assertEquals(updates["folder"], data["folder"]["id"])
-        #self.assertEquals(updates["category"], data["category"]["id"])
+        data = json.loads(response.content)
+        self.assertEquals(updates["name"], data["name"])
+        self.assertEquals(updates["body"], data["body"])
+        self.assertEquals(updates["folder"], data["folder"]["id"])
+        self.assertEquals(updates["category"], data["category"]["id"])

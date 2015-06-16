@@ -38,7 +38,7 @@
         </span>
     </span>
     <span class="content-list-item-actions">
-        {% if user.get_profile().has_permission(status, mode='w') %}
+        {% if user.profile.has_permission(status, mode='w') %}
         <a href="{% url projects_task_status_edit status.id %}" class="inline-link edit-link">{% trans %}Edit{% endtrans %}</a>
         {% endif %}
     </span>

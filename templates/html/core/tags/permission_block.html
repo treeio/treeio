@@ -4,7 +4,7 @@
     <div class="object-trash">
         Trashed
     </div>
-    {% if request.user.get_profile().has_permission(object, mode='w') %}
+    {% if request.user.profile.has_permission(object, mode='w') %}
     <div class="object-trash-links">
         <a href="{% url core_trash_object_untrash object.id %}" class="inline-link add-link">{% trans %}Untrash{% endtrans %}</a>
     </div>
@@ -32,7 +32,7 @@
 </div>
 {% endif %}
 
-{% if request.user.get_profile().has_permission(object, mode='w') %}
+{% if request.user.profile.has_permission(object, mode='w') %}
 <div class="permission-links">
     <a href="{{ path }}?permission" class="inline-link edit-link">{% trans %}Edit{% endtrans %}</a>
 </div>

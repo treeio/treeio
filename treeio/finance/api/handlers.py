@@ -25,11 +25,11 @@ from treeio.finance.forms import TransactionForm, LiabilityForm, AccountForm, Eq
 
 class FinanceCommonHandler(ObjectHandler):
     def check_create_permission(self, request, mode):
-        return True  # request.user.get_profile().is_admin('treeio.finance')
+        return True  # request.user.profile.is_admin('treeio.finance')
 
     def check_instance_permission(self, request, inst, mode):
-        return request.user.get_profile().has_permission(inst, mode=mode) \
-               or request.user.get_profile().is_admin('treeio.finance')
+        return request.user.profile.has_permission(inst, mode=mode) \
+               or request.user.profile.is_admin('treeio.finance')
 
 
 class CurrencyHandler(ObjectHandler):
@@ -54,7 +54,7 @@ class CurrencyHandler(ObjectHandler):
 
         currency = Currency()
         form = CurrencyForm(
-            request.user.get_profile(), request.data, instance=currency)
+            request.user.profile, request.data, instance=currency)
         if form.is_valid():
             currency = form.save(commit=False)
             cname = dict_currencies[currency.code]
@@ -124,7 +124,7 @@ class AccountHandler(FinanceCommonHandler):
 
         account = Account()
         form = AccountForm(
-            request.user.get_profile(), request.data, instance=account)
+            request.user.profile, request.data, instance=account)
         if form.is_valid():
             account = form.save(commit=False)
             convert(account, 'balance')
@@ -167,7 +167,7 @@ class LiabilityHandler(FinanceCommonHandler):
 
         liability = self.model()
         form = self.form(
-            request.user.get_profile(), request.data, instance=liability)
+            request.user.profile, request.data, instance=liability)
         if form.is_valid():
             liability = form.save(commit=False)
             liability.source = liability.account.owner
@@ -199,7 +199,7 @@ class TransactionHandler(FinanceCommonHandler):
 
         transaction = self.model()
         form = self.form(
-            request.user.get_profile(), None, None, request.POST, instance=transaction)
+            request.user.profile, None, None, request.POST, instance=transaction)
         if form.is_valid():
             transaction = form.save(commit=False)
             convert(transaction, 'value')
@@ -230,7 +230,7 @@ class TransactionHandler(FinanceCommonHandler):
             return rc.NOT_FOUND
 
         form = self.form(
-            request.user.get_profile(), None, None, request.data, instance=obj)
+            request.user.profile, None, None, request.data, instance=obj)
         if form.is_valid():
             transaction = form.save(commit=False)
             convert(transaction, 'value')

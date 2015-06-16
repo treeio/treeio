@@ -29,7 +29,7 @@ import re
 def _get_default_context(request):
     "Returns default context as a dict()"
 
-    massform = MassActionForm(request.user.get_profile())
+    massform = MassActionForm(request.user.profile)
 
     context = {'massform': massform}
 
@@ -41,7 +41,7 @@ def _process_mass_form(f):
 
     def wrap(request, *args, **kwargs):
         "Wrap"
-        user = request.user.get_profile()
+        user = request.user.profile
         if 'massform' in request.POST:
             for key in request.POST:
                 if 'mass-report' in key:
@@ -288,14 +288,14 @@ def chart_add(request, report_id=None, response_format='html'):
 
     if request.POST:
         form = ChartForm(
-            request.user.get_profile(), request.POST, report_id=report_id)
+            request.user.profile, request.POST, report_id=report_id)
         if form.is_valid():
             chart = form.save()
             chart.set_user_from_request(request)
             return HttpResponseRedirect(reverse('reports_report_view', args=[chart.report.id]))
 
     else:
-        form = ChartForm(request.user.get_profile(), report_id=report_id)
+        form = ChartForm(request.user.profile, report_id=report_id)
 
     context = {'form': form}
 
@@ -313,14 +313,14 @@ def chart_edit(request, chart_id=None, response_format='html'):
 
     if request.POST:
         form = ChartForm(
-            request.user.get_profile(), request.POST, chart_id=chart_id)
+            request.user.profile, request.POST, chart_id=chart_id)
         if form.is_valid():
             chart = form.save()
             chart.set_user_from_request(request)
             return HttpResponseRedirect(reverse('reports_report_view', args=[report_id]))
 
     else:
-        form = ChartForm(request.user.get_profile(), chart_id=chart_id)
+        form = ChartForm(request.user.profile, chart_id=chart_id)
 
     context = {
         'chart': chart,
@@ -351,7 +351,7 @@ def chart_delete(request, chart_id, response_format='html'):
 
     chart = get_object_or_404(Chart, pk=chart_id)
     report = chart.report
-    if not request.user.get_profile().has_permission(chart, mode='w'):
+    if not request.user.profile.has_permission(chart, mode='w'):
         return user_denied(request, message="You don't have access to this Event")
 
     if request.POST:
@@ -397,7 +397,7 @@ def index_owned(request, response_format='html'):
     "Reports owned by user"
 
     reports = Object.filter_by_request(
-        request, Report.objects.filter(creator=request.user.get_profile()))
+        request, Report.objects.filter(creator=request.user.profile))
 
     context = _get_default_context(request)
     context.update({'reports': reports})
@@ -442,13 +442,13 @@ def report_add(request, response_format='html'):
         report = Report()
         report.name = "Untitled %s Report" % (obj._meta.object_name)
         report.model = dumps(model)
-        report.creator = request.user.get_profile()
+        report.creator = request.user.profile
         report.save()
 
         return HttpResponseRedirect(reverse('reports_report_edit', args=[report.id]))
 
     # Initial Object Type Choice
-    user_modules = [mod.name for mod in request.user.get_profile().get_perspective().get_modules()]
+    user_modules = [mod.name for mod in request.user.profile.get_perspective().get_modules()]
     modules = [mod.name for mod in Module.objects.all()]
 
     query = Q(object_type__contains="core")
@@ -479,7 +479,7 @@ def report_edit(request, report_id=None, response_format='html'):
     "Create new report based on user choice"
     report = get_object_or_404(Report, pk=report_id)
 
-    if not request.user.get_profile().has_permission(report, mode='w'):
+    if not request.user.profile.has_permission(report, mode='w'):
         return user_denied(request, message="You don't have access to edit this Report")
     model = loads(report.model)
 
@@ -525,17 +525,17 @@ def report_filter(request, report_id, field_name, response_format='html'):
     "View to Filter over a given field for a Report"
 
     report = get_object_or_404(Report, pk=report_id)
-    if not request.user.get_profile().has_permission(report, mode='w'):
+    if not request.user.profile.has_permission(report, mode='w'):
         return user_denied(request, message="You don't have access to this Report")
 
     if request.POST:
-        FilterForm(request.user.get_profile(), request.POST,
+        FilterForm(request.user.profile, request.POST,
                    report=report, field_name=field_name).save()
         return HttpResponseRedirect(reverse('reports_report_edit', args=[report.id]))
 
     else:
         form = FilterForm(
-            request.user.get_profile(), report=report, field_name=field_name)
+            request.user.profile, report=report, field_name=field_name)
 
     return render_to_response('reports/report_filter',
                               {'form': form,
@@ -550,7 +550,7 @@ def report_filter_remove(request, report_id, field_name, filter_index, response_
     "Remove a Filter on a given field for a Report"
 
     report = get_object_or_404(Report, pk=report_id)
-    if not request.user.get_profile().has_permission(report, mode='w'):
+    if not request.user.profile.has_permission(report, mode='w'):
         return user_denied(request, message="You don't have write access to this Report")
 
     model = loads(report.model)
@@ -568,7 +568,7 @@ def report_group(request, report_id, field_name, response_format='html'):
     "View to Group by a given field in a report"
 
     t = get_object_or_404(Report, pk=report_id)
-    if not request.user.get_profile().has_permission(t, mode='w'):
+    if not request.user.profile.has_permission(t, mode='w'):
         return user_denied(request, message="You don't have access to this Report")
 
     model = loads(t.model)
@@ -634,7 +634,7 @@ def report_delete(request, report_id, response_format='html'):
     "Report delete"
 
     report = get_object_or_404(Report, pk=report_id)
-    if not request.user.get_profile().has_permission(report, mode='w'):
+    if not request.user.profile.has_permission(report, mode='w'):
         return user_denied(request, message="You don't have access to this Event")
 
     if request.POST:

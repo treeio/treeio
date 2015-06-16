@@ -33,7 +33,7 @@ def permission_block(context, object):
         response_format_tags = context['response_format_tags']
 
     if 'permission' in request.GET:
-        if request.user.get_profile().has_permission(object, mode='w'):
+        if request.user.profile.has_permission(object, mode='w'):
             if request.POST:
                 if 'cancel' in request.POST:
                     request.redirect = request.path
@@ -103,9 +103,9 @@ def link_block(context, object):
                                                response_format=response_format))
 
             form = ObjectLinksForm(
-                request.user.get_profile(), response_format_tags, object, request.POST)
+                request.user.profile, response_format_tags, object, request.POST)
 
-            if form.is_valid() and request.user.get_profile().has_permission(object, mode='w'):
+            if form.is_valid() and request.user.profile.has_permission(object, mode='w'):
                 object.links.add(form.cleaned_data['links'])
                 links = Object.filter_by_request(
                     context['request'], object.links)
@@ -118,7 +118,7 @@ def link_block(context, object):
 
         links = Object.filter_by_request(context['request'], object.links)
         form = ObjectLinksForm(
-            request.user.get_profile(), response_format_tags, instance=object)
+            request.user.profile, response_format_tags, instance=object)
 
         context = {'object': object, 'path': request.path,
                    'form': form, 'links': links}
@@ -135,7 +135,7 @@ def link_block(context, object):
 
     elif request.GET and 'link_delete' in request.GET:
 
-        if request.user.get_profile().has_permission(object, mode='w'):
+        if request.user.profile.has_permission(object, mode='w'):
             try:
                 link = Object.objects.get(pk=request.GET['link_delete'])
                 object.links.remove(link)
@@ -170,10 +170,10 @@ def subscription_block(context, object):
     subscriptions = object.subscribers.all()
 
     subscribed = False
-    if request.user.get_profile() in subscriptions:
+    if request.user.profile in subscriptions:
         subscribed = True
 
-    if 'subscribe_add' in request.GET and request.user.get_profile().has_permission(object, mode='w'):
+    if 'subscribe_add' in request.GET and request.user.profile.has_permission(object, mode='w'):
         if request.POST and 'subscriber' in request.POST:
             if 'cancel' in request.POST:
                 request.redirect = request.path
@@ -214,17 +214,17 @@ def subscription_block(context, object):
 
     if 'subscribe' in request.GET:
         if not subscribed:
-            object.subscribers.add(request.user.get_profile())
+            object.subscribers.add(request.user.profile)
             subscriptions = object.subscribers.all()
             subscribed = True
     elif 'unsubscribe' in request.GET and request.GET['unsubscribe']:
         user_id = int(request.GET['unsubscribe'])
         try:
-            if request.user.get_profile().id == user_id or \
-                    request.user.get_profile().has_permission(object, mode='w'):
+            if request.user.profile.id == user_id or \
+                    request.user.profile.has_permission(object, mode='w'):
                 object.subscribers.remove(subscriptions.get(pk=user_id))
                 subscriptions = object.subscribers.all()
-                if user_id == request.user.get_profile().id:
+                if user_id == request.user.profile.id:
                     subscribed = False
         except Exception:
             pass
@@ -250,7 +250,7 @@ def comments_likes(context, object, expand=True):
         response_format = context['response_format']
 
     update = isinstance(object, UpdateRecord)
-    profile = request.user.get_profile()
+    profile = request.user.profile
 
     if request.POST.get('like', 0) == unicode(object.id):
         object.likes.add(profile)
@@ -421,7 +421,7 @@ def core_watchlist(context, objects=None, skip_group=False, paginate=False):
     "Print a list of objects a user is subscribed to"
 
     request = context['request']
-    profile = request.user.get_profile()
+    profile = request.user.profile
 
     if not objects:
         objects = profile.subscriptions.all()
@@ -459,7 +459,7 @@ def attachments(context, object=None):
 
     request = context['request']
 
-    profile = request.user.get_profile()
+    profile = request.user.profile
 
     response_format = 'html'
     if 'response_format' in context:

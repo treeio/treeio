@@ -59,7 +59,7 @@
                     {{ last_updated(product) }}
                 </td>
                 <td>
-                  {% if user.get_profile().has_permission(product, mode='w') %}
+                  {% if user.profile.has_permission(product, mode='w') %}
                   <span class="content-list-item-actions table-link"><a href="{% url sales_product_edit product.id %}" class="inline-link edit-link popup-link">{% trans %}Edit{% endtrans %}</a></span>
                   {% endif %}
                 </td>

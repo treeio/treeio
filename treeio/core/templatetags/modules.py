@@ -34,7 +34,7 @@ def _get_modules(request):
     user = None
     if request.user.username:
         try:
-            user = request.user.get_profile()
+            user = request.user.profile
         except Exception:
             pass
 
@@ -319,7 +319,7 @@ def htform(context, form):
     user = None
     if request.user.username:
         try:
-            user = request.user.get_profile()
+            user = request.user.profile
         except Exception:
             pass
 
@@ -394,7 +394,7 @@ def htdate(context, date, dateformat='DATE_FORMAT'):
     user = None
     if request.user.username:
         try:
-            user = request.user.get_profile()
+            user = request.user.profile
         except Exception:
             pass
 
@@ -455,7 +455,7 @@ def htdatetime(context, date, dateformat='DATETIME_FORMAT'):
     user = None
     if request.user.username:
         try:
-            user = request.user.get_profile()
+            user = request.user.profile
         except Exception:
             pass
 
@@ -517,7 +517,7 @@ def httime(context, time, timeformat='TIME_FORMAT'):
     user = None
     if request.user.username:
         try:
-            user = request.user.get_profile()
+            user = request.user.profile
         except Exception:
             pass
 
@@ -614,7 +614,7 @@ def humanize_datetime(context, value):
     user = None
     if request.user.username:
         try:
-            user = request.user.get_profile()
+            user = request.user.profile
         except:
             pass
 
@@ -809,7 +809,7 @@ def show_hint(context, hint=None, object=None):
     user = None
     if request.user.username:
         try:
-            user = request.user.get_profile()
+            user = request.user.profile
         except Exception:
             pass
 

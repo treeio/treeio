@@ -51,7 +51,7 @@ class ProjectsAPITest(TestCase):
                 self.user = DjangoUser.objects.get(username=self.username)
                 self.user.set_password(self.password)
                 try:
-                    self.profile = self.user.get_profile()
+                    self.profile = self.user.profile
                 except Exception:
                     User.objects.all().delete()
                     self.user = DjangoUser(username=self.username, password='')
@@ -102,7 +102,7 @@ class ProjectsAPITest(TestCase):
             self.task.save()
 
             self.time_slot = TaskTimeSlot(
-                task=self.task, details='api_test', time_from=datetime.now(), user=self.user.get_profile())
+                task=self.task, details='api_test', time_from=datetime.now(), user=self.user.profile)
             self.time_slot.set_default_user()
             self.time_slot.save()
 

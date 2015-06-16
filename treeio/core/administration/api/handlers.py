@@ -13,7 +13,7 @@ __all__ = ['GroupHandler', 'UserHandler', 'ModuleHandler',
 from django.utils.translation import ugettext as _
 
 from treeio.core.api.utils import rc
-from piston.handler import BaseHandler
+from piston3.handler import BaseHandler
 from django.db.models import Q
 from treeio.core.api.handlers import AccessHandler, ObjectHandler
 from treeio.core.api.decorators import module_admin_required
@@ -72,7 +72,7 @@ class UserHandler(AccessHandler):
             try:
                 profile = self.model.objects.get(pk=kwargs.get(pkfield))
 
-                if profile == request.user.get_profile():
+                if profile == request.user.profile:
                     self.status = 401
                     return _("This is you!")
                 else:
@@ -117,10 +117,10 @@ class PerspectiveHandler(ObjectHandler):
         return ('api_admin_perspectives', [object_id])
 
     def check_create_permission(self, request, mode):
-        return request.user.get_profile().is_admin('treeio.core')
+        return request.user.profile.is_admin('treeio.core')
 
     def check_instance_permission(self, request, inst, mode):
-        return request.user.get_profile().is_admin('treeio.core')
+        return request.user.profile.is_admin('treeio.core')
 
     @module_admin_required()
     def delete_instance(self, request, inst):
@@ -192,7 +192,7 @@ class PageFolderHandler(ObjectHandler):
         return ('api_admin_folders', [object_id])
 
     def check_instance_permission(self, request, inst, mode):
-        return request.user.get_profile().is_admin('treeio.core')
+        return request.user.profile.is_admin('treeio.core')
 
     def flatten_dict(self, request):
         return {'data': super(ObjectHandler, self).flatten_dict(request.data)}
@@ -211,7 +211,7 @@ class PageHandler(ObjectHandler):
         return ('api_admin_pages', [object_id])
 
     def check_instance_permission(self, request, inst, mode):
-        return request.user.get_profile().is_admin('treeio.core')
+        return request.user.profile.is_admin('treeio.core')
 
     def flatten_dict(self, request):
         return {'data': super(ObjectHandler, self).flatten_dict(request.data)}

@@ -23,7 +23,7 @@ from jinja2 import Markup
 def account_view(request, response_format='html'):
     "Account view"
 
-    profile = request.user.get_profile()
+    profile = request.user.profile
     try:
         contacts = profile.contact_set.exclude(trash=True)
     except:
@@ -39,7 +39,7 @@ def account_view(request, response_format='html'):
 def watchlist(request, response_format='html'):
     "Displays all objects a User is subscribed to"
 
-    profile = request.user.get_profile()
+    profile = request.user.profile
     watchlist = profile.subscriptions.all()
 
     context = {'profile': profile, 'watchlist': watchlist}
@@ -53,7 +53,7 @@ def watchlist(request, response_format='html'):
 def account_edit(request, response_format='html'):
     "Account edit"
 
-    profile = request.user.get_profile()
+    profile = request.user.profile
     if request.POST:
         form = AccountForm(request.POST, instance=profile)
         if form.is_valid():
@@ -73,7 +73,7 @@ def account_edit(request, response_format='html'):
 def account_password(request, response_format='html'):
     "Change password form"
 
-    profile = request.user.get_profile()
+    profile = request.user.profile
     if request.POST:
         if 'cancel' not in request.POST:
             form = AccountPasswordForm(request.user, request.POST)
@@ -97,7 +97,7 @@ def account_password(request, response_format='html'):
 @treeio_login_required
 def settings_view(request, response_format='html'):
     "Settings view"
-    user = request.user.get_profile()
+    user = request.user.profile
 
     # default permissions
     try:
@@ -178,14 +178,14 @@ def settings_edit(request, response_format='html'):
 
     if request.POST:
         if 'cancel' not in request.POST:
-            form = SettingsForm(request.user.get_profile(), request.POST)
+            form = SettingsForm(request.user.profile, request.POST)
             if form.is_valid():
                 form.save()
                 return HttpResponseRedirect(reverse('account_settings_view'))
         else:
             return HttpResponseRedirect(reverse('account_settings_view'))
     else:
-        form = SettingsForm(request.user.get_profile())
+        form = SettingsForm(request.user.profile)
 
     return render_to_response('account/settings_edit',
                               {'form': Markup(form.as_ul())},
@@ -201,7 +201,7 @@ def _process_mass_form(f):
 
     def wrap(request, *args, **kwargs):
         "Wrap"
-        user = request.user.get_profile()
+        user = request.user.profile
         if 'massform' in request.POST:
             for key in request.POST:
                 if 'mass-setting' in key:

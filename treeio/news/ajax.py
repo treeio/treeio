@@ -20,7 +20,7 @@ from treeio.news.views import _get_filter_query
 def get_more(request, target='#more-news', skip=20):
     dajax = Dajax()
 
-    profile = request.user.get_profile()
+    profile = request.user.profile
     query = _get_filter_query(profile) & (
         ~Q(author=profile) | Q(record_type='share') | Q(score__gt=0))
     updates = UpdateRecord.objects.filter(query).distinct()[skip:skip + 20]

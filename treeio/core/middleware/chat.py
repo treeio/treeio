@@ -114,7 +114,7 @@ def update_user(user, location):
     """
     try:
         listeners = get_memcached(get_key("listeners"))
-        _user_profile = str(user.get_profile())
+        _user_profile = str(user.profile)
         _user = str(user)
         listeners[_user] = {
             "datetime": datetime.now(), "locations": location, "profile": _user_profile}
@@ -419,7 +419,7 @@ def cmd(message, user):
     """
     try:
         user_obj = user
-        user_profile = str(user.get_profile())
+        user_profile = str(user.profile)
         user = str(user).lower()
         data = json.loads(message["json"])
     except:
@@ -508,7 +508,7 @@ class ChatAjaxMiddleware(object):
         if not request.user.is_authenticated():
             data = json.dumps(
                 {"cmd": "Error", "data": "User is not authenticated"})
-            response = HttpResponse(mimetype='application/json')
+            response = HttpResponse(content_type='application/json')
             response.write(data)
             return response
 

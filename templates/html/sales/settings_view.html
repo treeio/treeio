@@ -89,7 +89,7 @@
         </span>
     </span>
     <span class="content-list-item-actions">
-        {% if user.get_profile().has_permission(source, mode='w') %}
+        {% if user.profile.has_permission(source, mode='w') %}
         <a href="{% url sales_source_edit source.id %}" class="inline-link edit-link">{% trans %}Edit{% endtrans %}</a>
         {% endif %}
     </span>
@@ -120,7 +120,7 @@
     		</span>
     </span>
     <span class="content-list-item-actions">
-        {% if user.get_profile().has_permission(status, mode='w') %}
+        {% if user.profile.has_permission(status, mode='w') %}
         <a href="{% url sales_status_edit status.id %}" class="inline-link edit-link">{% trans %}Edit{% endtrans %}</a>
         {% endif %}
     </span>
@@ -145,7 +145,7 @@
         </span>
     </span>
     <span class="content-list-item-actions">
-        {% if user.get_profile().has_permission(product, mode='w') %}
+        {% if user.profile.has_permission(product, mode='w') %}
         <a href="{% url finance_currency_edit c.id %}" class="inline-link edit-link">{% trans %}Edit{% endtrans %}</a>
         {% endif %}
     </span>

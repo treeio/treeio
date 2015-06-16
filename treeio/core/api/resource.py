@@ -10,7 +10,7 @@ import utils
 
 sys.modules['piston.utils'] = utils
 
-from piston.resource import Resource
+from piston3.resource import Resource
 
 
 class CsrfExemptResource(Resource):

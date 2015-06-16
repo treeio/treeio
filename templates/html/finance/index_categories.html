@@ -35,7 +35,7 @@
         {% endif %}
     </span>
     <span class="content-list-item-actions">
-        {% if user.get_profile().has_permission(category, mode='w') %}
+        {% if user.profile.has_permission(category, mode='w') %}
         <a href="{% url finance_category_edit category.id %}" class="inline-link edit-link">{% trans %}Edit{% endtrans %}</a>
         {% endif %}
     </span>

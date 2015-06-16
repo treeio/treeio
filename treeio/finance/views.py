@@ -115,14 +115,14 @@ def category_edit(request, category_id, response_format='html'):
     if request.POST:
         if not 'cancel' in request.POST:
             form = CategoryForm(
-                request.user.get_profile(), request.POST, instance=category)
+                request.user.profile, request.POST, instance=category)
             if form.is_valid():
                 category = form.save()
                 return HttpResponseRedirect(reverse('finance_category_view', args=[category.id]))
         else:
             return HttpResponseRedirect(reverse('finance_category_view', args=[category.id]))
     else:
-        form = CategoryForm(request.user.get_profile(), instance=category)
+        form = CategoryForm(request.user.profile, instance=category)
     return render_to_response('finance/category_edit',
                               {'form': form, 'category': category},
                               context_instance=RequestContext(request), response_format=response_format)
@@ -137,7 +137,7 @@ def category_add(request, response_format='html'):
         if 'cancel' not in request.POST:
             category = Category()
             form = CategoryForm(
-                request.user.get_profile(), request.POST, instance=category)
+                request.user.profile, request.POST, instance=category)
             if form.is_valid():
                 category = form.save()
                 category.set_user_from_request(request)
@@ -145,7 +145,7 @@ def category_add(request, response_format='html'):
         else:
             return HttpResponseRedirect(reverse('finance_categories'))
     else:
-        form = CategoryForm(request.user.get_profile())
+        form = CategoryForm(request.user.profile)
     return render_to_response('finance/category_add', {'form': form, 'categories': categories},
                               context_instance=RequestContext(request), response_format=response_format)
 
@@ -156,7 +156,7 @@ def category_view(request, category_id, response_format='html'):
     "Single category view page"
     category = get_object_or_404(Category, pk=category_id)
 
-    if not request.user.get_profile().has_permission(category):
+    if not request.user.profile.has_permission(category):
         return user_denied(request, message="You don't have access to this Category")
 
     if 'massform1' in request.POST:
@@ -165,13 +165,13 @@ def category_view(request, category_id, response_format='html'):
                 try:
                     transaction = Transaction.objects.get(pk=request.POST[key])
                     form = MassActionForm(
-                        request.user.get_profile(), request.POST, instance=transaction)
-                    if form.is_valid() and request.user.get_profile().has_permission(transaction, mode='w'):
+                        request.user.profile, request.POST, instance=transaction)
+                    if form.is_valid() and request.user.profile.has_permission(transaction, mode='w'):
                         form.save()
                 except Exception:
                     pass
 
-    massform_transaction = MassActionForm(request.user.get_profile())
+    massform_transaction = MassActionForm(request.user.profile)
 
     if 'massform2' in request.POST:
         for key in request.POST:
@@ -179,13 +179,13 @@ def category_view(request, category_id, response_format='html'):
                 try:
                     liability = Liability.objects.get(pk=request.POST[key])
                     form = MassActionForm(
-                        request.user.get_profile(), request.POST, instance=liability)
-                    if form.is_valid() and request.user.get_profile().has_permission(liability, mode='w'):
+                        request.user.profile, request.POST, instance=liability)
+                    if form.is_valid() and request.user.profile.has_permission(liability, mode='w'):
                         form.save()
                 except Exception:
                     pass
 
-    massform_liability = MassActionForm(request.user.get_profile())
+    massform_liability = MassActionForm(request.user.profile)
 
     transactions = Object.filter_by_request(request, Transaction.objects)
     liabilities = Object.filter_by_request(request, Liability.objects)
@@ -205,7 +205,7 @@ def category_delete(request, category_id, response_format='html'):
     "Category delete"
 
     category = get_object_or_404(Category, pk=category_id)
-    if not request.user.get_profile().has_permission(category, mode='w'):
+    if not request.user.profile.has_permission(category, mode='w'):
         return user_denied(request, "You don't have access to this Category", response_format)
 
     if request.POST:
@@ -237,7 +237,7 @@ def account_edit(request, account_id, response_format='html'):
     if request.POST:
         if 'cancel' not in request.POST:
             form = AccountForm(
-                request.user.get_profile(), request.POST, instance=account)
+                request.user.profile, request.POST, instance=account)
             if form.is_valid():
                 account = form.save(commit=False)
                 convert(account, 'balance')
@@ -246,7 +246,7 @@ def account_edit(request, account_id, response_format='html'):
             return HttpResponseRedirect(reverse('finance_account_view', args=[account.id]))
 
     else:
-        form = AccountForm(request.user.get_profile(), instance=account)
+        form = AccountForm(request.user.profile, instance=account)
     return render_to_response('finance/account_edit',
                               {'form': form, 'account': account},
                               context_instance=RequestContext(request), response_format=response_format)
@@ -260,7 +260,7 @@ def account_add(request, response_format='html'):
         if 'cancel' not in request.POST:
             account = Account()
             form = AccountForm(
-                request.user.get_profile(), request.POST, instance=account)
+                request.user.profile, request.POST, instance=account)
             if form.is_valid():
                 account = form.save(commit=False)
                 convert(account, 'balance')
@@ -269,7 +269,7 @@ def account_add(request, response_format='html'):
         else:
             return HttpResponseRedirect(reverse('finance_index_accounts'))
     else:
-        form = AccountForm(request.user.get_profile())
+        form = AccountForm(request.user.profile)
     return render_to_response('finance/account_add', {'form': form},
                               context_instance=RequestContext(request), response_format=response_format)
 
@@ -290,7 +290,7 @@ def account_delete(request, account_id, response_format='html'):
     "Account delete"
 
     account = get_object_or_404(Account, pk=account_id)
-    if not request.user.get_profile().has_permission(account, mode='w'):
+    if not request.user.profile.has_permission(account, mode='w'):
         return user_denied(request, "You don't have access to this Account", response_format)
 
     if request.POST:
@@ -324,7 +324,7 @@ def index_assets(request, response_format='html'):
     else:
         query = Q()
 
-    filters = AssetFilterForm(request.user.get_profile(), 'title', request.GET)
+    filters = AssetFilterForm(request.user.profile, 'title', request.GET)
 
     assets = Object.filter_by_request(
         request, Asset.objects.filter(query), mode="r")
@@ -344,14 +344,14 @@ def asset_edit(request, asset_id, response_format='html'):
     if request.POST:
         if 'cancel' not in request.POST:
             form = AssetForm(
-                request.user.get_profile(), request.POST, instance=asset)
+                request.user.profile, request.POST, instance=asset)
             if form.is_valid():
                 asset = form.save()
                 return HttpResponseRedirect(reverse('finance_asset_view', args=[asset.id]))
         else:
             return HttpResponseRedirect(reverse('finance_asset_view', args=[asset.id]))
     else:
-        form = AssetForm(request.user.get_profile(), instance=asset)
+        form = AssetForm(request.user.profile, instance=asset)
     return render_to_response('finance/asset_edit',
                               {'form': form, 'asset': asset},
                               context_instance=RequestContext(request), response_format=response_format)
@@ -366,7 +366,7 @@ def asset_add(request, response_format='html'):
         if 'cancel' not in request.POST:
             asset = Asset()
             form = AssetForm(
-                request.user.get_profile(), request.POST, instance=asset)
+                request.user.profile, request.POST, instance=asset)
             if form.is_valid():
                 asset = form.save()
                 asset.set_user_from_request(request)
@@ -374,7 +374,7 @@ def asset_add(request, response_format='html'):
         else:
             return HttpResponseRedirect(reverse('finance_index_assets'))
     else:
-        form = AssetForm(request.user.get_profile())
+        form = AssetForm(request.user.profile)
     return render_to_response('finance/asset_add', {'form': form, 'assets': assets},
                               context_instance=RequestContext(request), response_format=response_format)
 
@@ -395,7 +395,7 @@ def asset_delete(request, asset_id, response_format='html'):
     "Asset delete"
 
     asset = get_object_or_404(Asset, pk=asset_id)
-    if not request.user.get_profile().has_permission(asset, mode='w'):
+    if not request.user.profile.has_permission(asset, mode='w'):
         return user_denied(request, "You don't have access to this Asset", response_format)
 
     if request.POST:
@@ -429,7 +429,7 @@ def index_equities(request, response_format='html'):
         query = Q()
 
     filters = EquityFilterForm(
-        request.user.get_profile(), 'title', request.GET)
+        request.user.profile, 'title', request.GET)
 
     equities = Object.filter_by_request(
         request, Equity.objects.filter(query), mode="r")
@@ -449,14 +449,14 @@ def equity_edit(request, equity_id, response_format='html'):
     if request.POST:
         if 'cancel' not in request.POST:
             form = EquityForm(
-                request.user.get_profile(), request.POST, instance=equity)
+                request.user.profile, request.POST, instance=equity)
             if form.is_valid():
                 equity = form.save()
                 return HttpResponseRedirect(reverse('finance_equity_view', args=[equity.id]))
         else:
             return HttpResponseRedirect(reverse('finance_equity_view', args=[equity.id]))
     else:
-        form = EquityForm(request.user.get_profile(), instance=equity)
+        form = EquityForm(request.user.profile, instance=equity)
     return render_to_response('finance/equity_edit',
                               {'form': form, 'equity': equity},
                               context_instance=RequestContext(request), response_format=response_format)
@@ -471,7 +471,7 @@ def equity_add(request, response_format='html'):
         if 'cancel' not in request.POST:
             equity = Equity()
             form = EquityForm(
-                request.user.get_profile(), request.POST, instance=equity)
+                request.user.profile, request.POST, instance=equity)
             if form.is_valid():
                 equity = form.save()
                 equity.set_user_from_request(request)
@@ -479,7 +479,7 @@ def equity_add(request, response_format='html'):
         else:
             return HttpResponseRedirect(reverse('finance_index_equities'))
     else:
-        form = EquityForm(request.user.get_profile())
+        form = EquityForm(request.user.profile)
     return render_to_response('finance/equity_add', {'form': form, 'equities': equities},
                               context_instance=RequestContext(request), response_format=response_format)
 
@@ -500,7 +500,7 @@ def equity_delete(request, equity_id, response_format='html'):
     "Equity delete"
 
     equity = get_object_or_404(Equity, pk=equity_id)
-    if not request.user.get_profile().has_permission(equity, mode='w'):
+    if not request.user.profile.has_permission(equity, mode='w'):
         return user_denied(request, "You don't have access to this Equity", response_format)
 
     if request.POST:
@@ -539,19 +539,19 @@ def index_transactions(request, response_format='html'):
                 try:
                     transaction = Transaction.objects.get(pk=request.POST[key])
                     form = MassActionForm(
-                        request.user.get_profile(), request.POST, instance=transaction)
-                    if form.is_valid() and request.user.get_profile().has_permission(transaction, mode='w'):
+                        request.user.profile, request.POST, instance=transaction)
+                    if form.is_valid() and request.user.profile.has_permission(transaction, mode='w'):
                         form.save()
                 except:
                     pass
 
-    massform = MassActionForm(request.user.get_profile())
+    massform = MassActionForm(request.user.profile)
 
     transactions = Object.filter_by_request(
         request, Transaction.objects.filter(query), mode="r")
 
     filters = TransactionFilterForm(
-        request.user.get_profile(), 'title', request.GET)
+        request.user.profile, 'title', request.GET)
 
     return render_to_response('finance/index_transactions',
                               {'transactions': transactions,
@@ -571,7 +571,7 @@ def transaction_add(request, liability_id=None, order_id=None, response_format='
         if 'cancel' not in request.POST:
             transaction = Transaction()
             form = TransactionForm(
-                request.user.get_profile(), None, None, request.POST, instance=transaction)
+                request.user.profile, None, None, request.POST, instance=transaction)
             if form.is_valid():
                 transaction = form.save(commit=False)
                 convert(transaction, 'value')
@@ -588,7 +588,7 @@ def transaction_add(request, liability_id=None, order_id=None, response_format='
             return HttpResponseRedirect(reverse('finance_index_transactions'))
     else:
         form = TransactionForm(
-            request.user.get_profile(), liability_id=liability_id, order_id=order_id)
+            request.user.profile, liability_id=liability_id, order_id=order_id)
     return render_to_response('finance/transaction_add', {'form': form, 'transactions': transactions},
                               context_instance=RequestContext(request), response_format=response_format)
 
@@ -601,7 +601,7 @@ def transaction_edit(request, transaction_id, response_format='html'):
     if request.POST:
         if 'cancel' not in request.POST:
             form = TransactionForm(
-                request.user.get_profile(), None, None, request.POST, instance=transaction)
+                request.user.profile, None, None, request.POST, instance=transaction)
             if form.is_valid():
                 transaction = form.save(commit=False)
                 convert(transaction, 'value')
@@ -610,7 +610,7 @@ def transaction_edit(request, transaction_id, response_format='html'):
             return HttpResponseRedirect(reverse('finance_transaction_view', args=[transaction.id]))
     else:
         form = TransactionForm(
-            request.user.get_profile(), None, None, instance=transaction)
+            request.user.profile, None, None, instance=transaction)
     return render_to_response('finance/transaction_edit',
                               {'form': form, 'transaction': transaction},
                               context_instance=RequestContext(request), response_format=response_format)
@@ -632,7 +632,7 @@ def transaction_delete(request, transaction_id, response_format='html'):
     "Transaction delete"
 
     transaction = get_object_or_404(Transaction, pk=transaction_id)
-    if not request.user.get_profile().has_permission(transaction, mode='w'):
+    if not request.user.profile.has_permission(transaction, mode='w'):
         return user_denied(request, "You don't have access to this Transaction", response_format)
 
     if request.POST:
@@ -671,16 +671,16 @@ def index_liabilities(request, response_format='html'):
                 try:
                     liability = Liability.objects.get(pk=request.POST[key])
                     form = MassActionForm(
-                        request.user.get_profile(), request.POST, instance=liability)
-                    if form.is_valid() and request.user.get_profile().has_permission(liability, mode='w'):
+                        request.user.profile, request.POST, instance=liability)
+                    if form.is_valid() and request.user.profile.has_permission(liability, mode='w'):
                         form.save()
                 except Exception:
                     pass
 
-    massform = MassActionForm(request.user.get_profile())
+    massform = MassActionForm(request.user.profile)
 
     filters = LiabilityFilterForm(
-        request.user.get_profile(), 'title', request.GET)
+        request.user.profile, 'title', request.GET)
 
     liabilities = Object.filter_by_request(
         request, Liability.objects.filter(query), mode="r")
@@ -706,7 +706,7 @@ def liability_edit(request, liability_id, response_format='html'):
     if request.POST:
         if 'cancel' not in request.POST:
             form = LiabilityForm(
-                request.user.get_profile(), request.POST, instance=liability)
+                request.user.profile, request.POST, instance=liability)
             if form.is_valid():
                 liability = form.save(commit=False)
                 convert(liability, 'value')
@@ -714,7 +714,7 @@ def liability_edit(request, liability_id, response_format='html'):
         else:
             return HttpResponseRedirect(reverse('finance_liability_view', args=[liability.id]))
     else:
-        form = LiabilityForm(request.user.get_profile(), instance=liability)
+        form = LiabilityForm(request.user.profile, instance=liability)
     return render_to_response('finance/liability_edit',
                               {'form': form, 'liability': liability},
                               context_instance=RequestContext(request), response_format=response_format)
@@ -730,7 +730,7 @@ def liability_add(request, response_format='html'):
         if 'cancel' not in request.POST:
             liability = Liability()
             form = LiabilityForm(
-                request.user.get_profile(), request.POST, instance=liability)
+                request.user.profile, request.POST, instance=liability)
             if form.is_valid():
                 liability = form.save(commit=False)
                 liability.source = liability.account.owner
@@ -740,7 +740,7 @@ def liability_add(request, response_format='html'):
         else:
             return HttpResponseRedirect(reverse('finance_index_liabilities'))
     else:
-        form = LiabilityForm(request.user.get_profile())
+        form = LiabilityForm(request.user.profile)
     return render_to_response('finance/liability_add', {'form': form, 'liabilities': liabilities},
                               context_instance=RequestContext(request), response_format=response_format)
 
@@ -765,7 +765,7 @@ def liability_delete(request, liability_id, response_format='html'):
     "Liability delete"
 
     liability = get_object_or_404(Liability, pk=liability_id)
-    if not request.user.get_profile().has_permission(liability, mode='w'):
+    if not request.user.profile.has_permission(liability, mode='w'):
         return user_denied(request, "You don't have access to this Liability", response_format)
 
     if request.POST:
@@ -803,16 +803,16 @@ def index_receivables(request, response_format='html'):
                 try:
                     liability = Liability.objects.get(pk=request.POST[key])
                     form = MassActionForm(
-                        request.user.get_profile(), request.POST, instance=liability)
-                    if form.is_valid() and request.user.get_profile().has_permission(liability, mode='w'):
+                        request.user.profile, request.POST, instance=liability)
+                    if form.is_valid() and request.user.profile.has_permission(liability, mode='w'):
                         form.save()
                 except Exception:
                     pass
 
-    massform = MassActionForm(request.user.get_profile())
+    massform = MassActionForm(request.user.profile)
 
     filters = LiabilityFilterForm(
-        request.user.get_profile(), 'title', request.GET)
+        request.user.profile, 'title', request.GET)
 
     receivables = Object.filter_by_request(
         request, Liability.objects.filter(query), mode="r")
@@ -837,7 +837,7 @@ def receivable_add(request, response_format='html'):
         if 'cancel' not in request.POST:
             receivable = Liability()
             form = ReceivableForm(
-                request.user.get_profile(), request.POST, instance=receivable)
+                request.user.profile, request.POST, instance=receivable)
             if form.is_valid():
                 receivable = form.save(commit=False)
                 receivable.target = receivable.account.owner
@@ -847,7 +847,7 @@ def receivable_add(request, response_format='html'):
         else:
             return HttpResponseRedirect(reverse('finance_index_receivables'))
     else:
-        form = ReceivableForm(request.user.get_profile())
+        form = ReceivableForm(request.user.profile)
     return render_to_response('finance/receivable_add', {'form': form},
                               context_instance=RequestContext(request), response_format=response_format)
 
@@ -860,7 +860,7 @@ def receivable_edit(request, receivable_id, response_format='html'):
     if request.POST:
         if 'cancel' not in request.POST:
             form = ReceivableForm(
-                request.user.get_profile(), request.POST, instance=receivable)
+                request.user.profile, request.POST, instance=receivable)
             if form.is_valid():
                 receivable = form.save(commit=False)
                 convert(receivable, 'value')
@@ -868,7 +868,7 @@ def receivable_edit(request, receivable_id, response_format='html'):
         else:
             return HttpResponseRedirect(reverse('finance_receivable_view', args=[receivable.id]))
     else:
-        form = ReceivableForm(request.user.get_profile(), instance=receivable)
+        form = ReceivableForm(request.user.profile, instance=receivable)
     return render_to_response('finance/receivable_edit',
                               {'form': form, 'liability': receivable},
                               context_instance=RequestContext(request), response_format=response_format)
@@ -893,7 +893,7 @@ def receivable_delete(request, receivable_id, response_format='html'):
     "Receivable delete"
 
     receivable = get_object_or_404(Liability, pk=receivable_id)
-    if not request.user.get_profile().has_permission(receivable, mode='w'):
+    if not request.user.profile.has_permission(receivable, mode='w'):
         return user_denied(request, "You don't have access to this Receivable", response_format)
 
     if request.POST:
@@ -1109,7 +1109,7 @@ def balance_sheet(request, response_format='html'):
 def index_accounts(request, response_format='html'):
     "Settings"
 
-    if not request.user.get_profile().is_admin('treeio.finance'):
+    if not request.user.profile.is_admin('treeio.finance'):
         return user_denied(request, message="You don't have administrator access to the Finance module")
 
     if request.GET:
@@ -1118,7 +1118,7 @@ def index_accounts(request, response_format='html'):
         query = Q()
 
     filters = AccountFilterForm(
-        request.user.get_profile(), 'title', request.GET)
+        request.user.profile, 'title', request.GET)
 
     all_accounts = Object.filter_by_request(
         request, Account.objects.filter(query))
@@ -1142,7 +1142,7 @@ def settings_view(request, response_format='html'):
     "Settings"
 
     # default currency
-    if not request.user.get_profile().is_admin('treeio.finance'):
+    if not request.user.profile.is_admin('treeio.finance'):
         return user_denied(request, message="You don't have administrator access to the Finance module")
 
     try:
@@ -1212,19 +1212,19 @@ def settings_view(request, response_format='html'):
 def settings_edit(request, response_format='html'):
     "Settings"
 
-    if not request.user.get_profile().is_admin('treeio.finance'):
+    if not request.user.profile.is_admin('treeio.finance'):
         return user_denied(request, message="You don't have administrator access to the Finance module")
 
     if request.POST:
         if 'cancel' not in request.POST:
-            form = SettingsForm(request.user.get_profile(), request.POST)
+            form = SettingsForm(request.user.profile, request.POST)
             if form.is_valid():
                 form.save()
                 return HttpResponseRedirect(reverse('finance_settings_view'))
         else:
             return HttpResponseRedirect(reverse('finance_settings_view'))
     else:
-        form = SettingsForm(request.user.get_profile())
+        form = SettingsForm(request.user.profile)
 
     return render_to_response('finance/settings_edit',
                               {
@@ -1242,14 +1242,14 @@ def settings_edit(request, response_format='html'):
 def currency_add(request, response_format='html'):
     "Currency add"
 
-    if not request.user.get_profile().is_admin('treeio.finance'):
+    if not request.user.profile.is_admin('treeio.finance'):
         return user_denied(request, message="You don't have administrator access to the Finance module")
 
     if request.POST:
         if 'cancel' not in request.POST:
             currency = Currency()
             form = CurrencyForm(
-                request.user.get_profile(), request.POST, instance=currency)
+                request.user.profile, request.POST, instance=currency)
             if form.is_valid():
                 currency = form.save(commit=False)
                 cname = dict_currencies[currency.code]
@@ -1261,7 +1261,7 @@ def currency_add(request, response_format='html'):
         else:
             return HttpResponseRedirect(reverse('finance_settings_view'))
     else:
-        form = CurrencyForm(request.user.get_profile())
+        form = CurrencyForm(request.user.profile)
 
     return render_to_response('finance/currency_add',
                               {'form': form,
@@ -1275,21 +1275,21 @@ def currency_edit(request, currency_id, response_format='html'):
     "Currency edit"
 
     currency = get_object_or_404(Currency, pk=currency_id)
-    if not request.user.get_profile().has_permission(currency, mode='w') \
-            and not request.user.get_profile().is_admin('treeio_finance'):
+    if not request.user.profile.has_permission(currency, mode='w') \
+            and not request.user.profile.is_admin('treeio_finance'):
         return user_denied(request, "You don't have access to this Currency", response_format)
 
     if request.POST:
         if 'cancel' not in request.POST:
             form = CurrencyForm(
-                request.user.get_profile(), request.POST, instance=currency)
+                request.user.profile, request.POST, instance=currency)
             if form.is_valid():
                 currency = form.save()
                 return HttpResponseRedirect(reverse('finance_currency_view', args=[currency.id]))
         else:
             return HttpResponseRedirect(reverse('finance_currency_view', args=[currency.id]))
     else:
-        form = CurrencyForm(request.user.get_profile(), instance=currency)
+        form = CurrencyForm(request.user.profile, instance=currency)
 
     return render_to_response('finance/currency_edit',
                               {'form': form,
@@ -1303,8 +1303,8 @@ def currency_view(request, currency_id, response_format='html'):
     "View a currency"
 
     currency = get_object_or_404(Currency, pk=currency_id)
-    if not request.user.get_profile().has_permission(currency, mode='r') \
-            and not request.user.get_profile().is_admin('treeio_finance'):
+    if not request.user.profile.has_permission(currency, mode='r') \
+            and not request.user.profile.is_admin('treeio_finance'):
         return user_denied(request, "You don't have access to this Currency", response_format)
 
     return render_to_response('finance/currency_view',
@@ -1318,7 +1318,7 @@ def currency_delete(request, currency_id, response_format='html'):
     "Currency delete"
 
     currency = get_object_or_404(Currency, pk=currency_id)
-    if not request.user.get_profile().has_permission(currency, mode='w'):
+    if not request.user.profile.has_permission(currency, mode='w'):
         return user_denied(request, "You don't have access to this Currency", response_format)
 
     if currency.is_default:
@@ -1350,14 +1350,14 @@ def currency_delete(request, currency_id, response_format='html'):
 def tax_add(request, response_format='html'):
     "Tax add"
 
-    if not request.user.get_profile().is_admin('treeio.finance'):
+    if not request.user.profile.is_admin('treeio.finance'):
         return user_denied(request, message="You don't have administrator access to the Finance module")
 
     if request.POST:
         if 'cancel' not in request.POST:
             tax = Tax()
             form = TaxForm(
-                request.user.get_profile(), request.POST, instance=tax)
+                request.user.profile, request.POST, instance=tax)
             if form.is_valid():
                 tax = form.save()
                 tax.set_user_from_request(request)
@@ -1365,7 +1365,7 @@ def tax_add(request, response_format='html'):
         else:
             return HttpResponseRedirect(reverse('finance_settings_view'))
     else:
-        form = TaxForm(request.user.get_profile())
+        form = TaxForm(request.user.profile)
 
     return render_to_response('finance/tax_add',
                               {'form': form,
@@ -1379,21 +1379,21 @@ def tax_edit(request, tax_id, response_format='html'):
     "Tax edit"
 
     tax = get_object_or_404(Tax, pk=tax_id)
-    if not request.user.get_profile().has_permission(tax, mode='w') \
-            and not request.user.get_profile().is_admin('treeio_finance'):
+    if not request.user.profile.has_permission(tax, mode='w') \
+            and not request.user.profile.is_admin('treeio_finance'):
         return user_denied(request, "You don't have access to this Tax", response_format)
 
     if request.POST:
         if 'cancel' not in request.POST:
             form = TaxForm(
-                request.user.get_profile(), request.POST, instance=tax)
+                request.user.profile, request.POST, instance=tax)
             if form.is_valid():
                 tax = form.save()
                 return HttpResponseRedirect(reverse('finance_tax_view', args=[tax.id]))
         else:
             return HttpResponseRedirect(reverse('finance_tax_view', args=[tax.id]))
     else:
-        form = TaxForm(request.user.get_profile(), instance=tax)
+        form = TaxForm(request.user.profile, instance=tax)
 
     return render_to_response('finance/tax_edit',
                               {'form': form,
@@ -1407,8 +1407,8 @@ def tax_view(request, tax_id, response_format='html'):
     "View a tax"
 
     tax = get_object_or_404(Tax, pk=tax_id)
-    if not request.user.get_profile().has_permission(tax, mode='r') \
-            and not request.user.get_profile().is_admin('treeio_finance'):
+    if not request.user.profile.has_permission(tax, mode='r') \
+            and not request.user.profile.is_admin('treeio_finance'):
         return user_denied(request, "You don't have access to this Tax", response_format)
 
     return render_to_response('finance/tax_view',
@@ -1422,7 +1422,7 @@ def tax_delete(request, tax_id, response_format='html'):
     "Tax delete"
 
     tax = get_object_or_404(Tax, pk=tax_id)
-    if not request.user.get_profile().has_permission(tax, mode='w'):
+    if not request.user.profile.has_permission(tax, mode='w'):
         return user_denied(request, "You don't have access to this Tax", response_format)
 
     if request.POST:

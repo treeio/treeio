@@ -19,7 +19,7 @@
         <span class="sidebar-header">{% trans %}Reports{% endtrans %}</span>
         <a href="{% url finance_income_view %}" class="sidebar-link {% block class_income %}{% endblock %}">{% trans %}Income Statement{% endtrans %}</a>
         <a href="{% url finance_balance_sheet %}" class="sidebar-link {% block class_balance %}{% endblock %}">{% trans %}Balance Sheet{% endtrans %}</a>
-        {% if request.user.get_profile().is_admin('treeio.finance') %}
+        {% if request.user.profile.is_admin('treeio.finance') %}
         <span class="sidebar-header">{% trans %}Administration{% endtrans %}</span>
         <a href="{% url finance_index_accounts %}" class="sidebar-link {% block class_accounts %}{% endblock %}">{% trans %}Accounts{% endtrans %}</a>
         <a href="{% url finance_settings_view %}" class="sidebar-link {% block class_admin_settings %}{% endblock %}">{% trans %}Settings{% endtrans %}</a>

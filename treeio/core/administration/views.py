@@ -49,7 +49,7 @@ def index_perspectives(request, response_format='html'):
     perspectives = Perspective.objects.filter(query).order_by('name')
 
     filters = FilterForm(
-        request.user.get_profile(), 'perspective', request.GET)
+        request.user.profile, 'perspective', request.GET)
 
     message = request.session.pop('message', '')
 
@@ -108,7 +108,7 @@ def perspective_edit(request, perspective_id, response_format='html'):
     if request.POST:
         if 'cancel' not in request.POST:
             form = PerspectiveForm(
-                request.user.get_profile(), request.POST, instance=perspective)
+                request.user.profile, request.POST, instance=perspective)
             if form.is_valid():
                 perspective = form.save()
                 modules = perspective.modules.all()
@@ -122,7 +122,7 @@ def perspective_edit(request, perspective_id, response_format='html'):
             return HttpResponseRedirect(reverse('core_admin_perspective_view', args=[perspective.id]))
     else:
         form = PerspectiveForm(
-            request.user.get_profile(), instance=perspective)
+            request.user.profile, instance=perspective)
 
     request.session.pop('message', '')
 
@@ -180,7 +180,7 @@ def perspective_add(request, response_format='html'):
         if 'cancel' not in request.POST:
             perspective = Perspective()
             form = PerspectiveForm(
-                request.user.get_profile(), request.POST, instance=perspective)
+                request.user.profile, request.POST, instance=perspective)
             if form.is_valid():
                 perspective = form.save()
                 perspective.set_user_from_request(request)
@@ -188,7 +188,7 @@ def perspective_add(request, response_format='html'):
         else:
             return HttpResponseRedirect(reverse('core_admin_index_perspectives'))
     else:
-        form = PerspectiveForm(request.user.get_profile())
+        form = PerspectiveForm(request.user.profile)
 
     return render_to_response('core/administration/perspective_add',
                               {'form': form.as_ul()},
@@ -234,16 +234,16 @@ def index_users(request, response_format='html'):
 def user_view(request, user_id, response_format='html'):
     "User view"
 
-    user = get_object_or_404(User, pk=user_id)
+    profile = get_object_or_404(User, pk=user_id)
     try:
-        contacts = user.contact_set.exclude(trash=True)
+        contacts = profile.contact_set.exclude(trash=True)
     except:
         contacts = []
 
-    modules = user.get_perspective().get_modules()
+    modules = profile.get_perspective().get_modules()
 
     return render_to_response('core/administration/user_view',
-                              {'profile': user, 'contacts': contacts,
+                              {'profile': profile, 'contacts': contacts,
                                   'modules': modules},
                               context_instance=RequestContext(request), response_format=response_format)
 
@@ -277,7 +277,7 @@ def user_edit(request, user_id, response_format='html'):
 @module_admin_required()
 def contact_setup(request, response_format='html'):
 
-    profile = request.user.get_profile()
+    profile = request.user.profile
     contact = profile.get_contact()
 
     def get_contact_type(description):
@@ -356,7 +356,7 @@ def user_delete(request, user_id, response_format='html'):
     profile = get_object_or_404(User, pk=user_id)
     message = ""
 
-    if profile == request.user.get_profile():
+    if profile == request.user.profile:
         message = _("This is you!")
     else:
         if request.POST:
@@ -424,7 +424,7 @@ def user_invite(request, emails=None, response_format='html'):
 
     invited = []
     if request.POST or emails:
-        sender = request.user.get_profile()
+        sender = request.user.profile
         default_group = sender.default_group
         domain = RequestSite(request).domain
         if not emails:
@@ -442,7 +442,7 @@ def user_invite(request, emails=None, response_format='html'):
                 if user_limit > 0 and user_number >= user_limit:
                     break
                 invitation = Invitation(
-                    sender=request.user.get_profile(), email=email, default_group=default_group)
+                    sender=request.user.profile, email=email, default_group=default_group)
                 invitation.save()
                 EmailInvitation(
                     invitation=invitation, sender=sender, domain=domain).send_email()
@@ -831,7 +831,7 @@ def settings_edit(request, response_format='html'):
     if request.POST:
         if 'cancel' not in request.POST:
             form = SettingsForm(
-                request.user.get_profile(), request.POST, request.FILES)
+                request.user.profile, request.POST, request.FILES)
             if form.is_valid():
                 form.save()
                 return HttpResponseRedirect(reverse('core_settings_view'))
@@ -839,7 +839,7 @@ def settings_edit(request, response_format='html'):
             return HttpResponseRedirect(reverse('core_settings_view'))
 
     else:
-        form = SettingsForm(request.user.get_profile())
+        form = SettingsForm(request.user.profile)
 
     return render_to_response('core/administration/settings_edit',
                               {

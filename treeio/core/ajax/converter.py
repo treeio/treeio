@@ -8,6 +8,7 @@ Converter for AJAX response
 
 Takes HTML rendered response from Django and return JSON-serializable dict
 """
+from collections import OrderedDict
 from django.forms import BaseForm, TextInput, CharField, HiddenInput, MultiValueField, MultiWidget
 from django.utils.safestring import mark_safe
 
@@ -194,10 +195,11 @@ def preprocess_context(context):
                                                   initial=initial_name)
 
                             # hidden fields
+                            choices = getattr(field, 'choices', None)
                             hidden_field = MultiHiddenField(fields=[field],
                                                             required=field.required,
                                                             initial=field.initial,
-                                                            choices=field.choices)
+                                                            choices=choices)
 
                             # update fields in context
                             form.fields.update(
@@ -207,11 +209,16 @@ def preprocess_context(context):
                                     "multicomplete_" + fname] = form.errors[fname]
                                 del form.errors[fname]
 
-                            # restore original field order
-                            order = form.fields.keyOrder
-                            order.insert(order.index(fname),
-                                         order.pop(order.index("multicomplete_" + fname)))
+                            # todo: the code below was commented out because on django 1.7 it uses a OrderedDict,
+                            # the SortedDict class was removed from django, this needs further investigation to check
+                            #  if everything is working as it should, as you can see the code was inserting in a
+                            # specific index and I don't know how to do it on OrderedDict
 
+                            # restore original field order
+                            # order = form.fields.keys()
+                            # order.insert(order.index(fname),
+                            #              order.pop(order.index("multicomplete_" + fname)))
+                            form.fields.pop("multicomplete_" + fname)
                     except:
                         raise
 

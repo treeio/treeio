@@ -101,6 +101,6 @@ auth_engine_name = getattr(settings, 'HARDTREE_API_AUTH_ENGINE', 'oauth')
 if auth_engine_name == 'oauth':
     auth_engine = OAuthAuthentication()
 else:
-    from piston.authentication import HttpBasicAuthentication
+    from piston3.authentication import HttpBasicAuthentication
 
     auth_engine = HttpBasicAuthentication(realm='My sample API')

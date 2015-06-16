@@ -3,7 +3,7 @@
 
 {% block widget_content %}
 <div class="welcome">
-		<h3>{{ user.get_profile() }}, {% trans %}welcome to Tree.io{% endtrans %}!</h3>
+		<h3>{{ user.profile }}, {% trans %}welcome to Tree.io{% endtrans %}!</h3>
 		<hr />
 		
 		<script type="text/javascript">
@@ -52,7 +52,7 @@
   		</div>
 		</div>
 
-		{% if request.user.get_profile().is_admin() %}
+		{% if request.user.profile.is_admin() %}
 		
 		<div class="highlight-column">
 		 

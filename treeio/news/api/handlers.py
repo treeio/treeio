@@ -10,7 +10,7 @@ from __future__ import absolute_import, with_statement
 __all__ = ['UpdateRecordHandler']
 
 from treeio.core.api.utils import rc
-from piston.handler import BaseHandler
+from piston3.handler import BaseHandler
 from treeio.core.models import UpdateRecord
 from treeio.news.forms import UpdateRecordForm
 from treeio.news.views import _get_filter_query
@@ -33,7 +33,7 @@ class UpdateRecordHandler(BaseHandler):
 
     def read(self, request, record_id=None, *args, **kwargs):
         "Function shows messages in the news"
-        profile = request.user.get_profile()
+        profile = request.user.profile
         query = _get_filter_query(profile, filters=request.GET)
         try:
             if record_id:

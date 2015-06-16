@@ -51,8 +51,8 @@ def _process_mass_form(f):
                     try:
                         order = SaleOrder.objects.get(pk=request.POST[key])
                         form = MassActionForm(
-                            request.user.get_profile(), request.POST, instance=order)
-                        if form.is_valid() and request.user.get_profile().has_permission(order, mode='w'):
+                            request.user.profile, request.POST, instance=order)
+                        if form.is_valid() and request.user.profile.has_permission(order, mode='w'):
                             form.save()
                     except:
                         pass
@@ -76,8 +76,8 @@ def _process_mass_lead_form(f):
                     try:
                         lead = Lead.objects.get(pk=request.POST[key])
                         form = LeadMassActionForm(
-                            request.user.get_profile(), request.POST, instance=lead)
-                        if form.is_valid() and request.user.get_profile().has_permission(lead, mode='w'):
+                            request.user.profile, request.POST, instance=lead)
+                        if form.is_valid() and request.user.profile.has_permission(lead, mode='w'):
                             form.save()
                     except:
                         pass
@@ -101,9 +101,9 @@ def _process_mass_opportunity_form(f):
                     try:
                         opportunity = Opportunity.objects.get(
                             pk=request.POST[key])
-                        form = OpportunityMassActionForm(request.user.get_profile(),
+                        form = OpportunityMassActionForm(request.user.profile,
                                                          request.POST, instance=opportunity)
-                        if form.is_valid() and request.user.get_profile().has_permission(opportunity,
+                        if form.is_valid() and request.user.profile.has_permission(opportunity,
                                                                                          mode='w'):
                             form.save()
                     except:
@@ -152,10 +152,10 @@ def index(request, response_format='html'):
             query = query & _get_filter_query(request.GET)
     orders = Object.filter_by_request(
         request, SaleOrder.objects.filter(query), mode="r")
-    filters = OrderFilterForm(request.user.get_profile(), '', request.GET)
+    filters = OrderFilterForm(request.user.profile, '', request.GET)
     statuses = Object.filter_by_request(request, SaleStatus.objects, mode="r")
 
-    massform = MassActionForm(request.user.get_profile())
+    massform = MassActionForm(request.user.profile)
 
     return render_to_response('sales/index',
                               {'orders': orders,
@@ -172,7 +172,7 @@ def index(request, response_format='html'):
 def index_assigned(request, response_format='html'):
     "Orders assigned to current user"
 
-    query = Q(status__hidden=False, assigned=request.user.get_profile())
+    query = Q(status__hidden=False, assigned=request.user.profile)
     if request.GET:
         if 'status' in request.GET and request.GET['status']:
             query = _get_filter_query(request.GET)
@@ -182,10 +182,10 @@ def index_assigned(request, response_format='html'):
     orders = Object.filter_by_request(
         request, SaleOrder.objects.filter(query), mode="r")
     filters = OrderFilterForm(
-        request.user.get_profile(), 'assigned', request.GET)
+        request.user.profile, 'assigned', request.GET)
     statuses = Object.filter_by_request(request, SaleStatus.objects, mode="r")
 
-    massform = MassActionForm(request.user.get_profile())
+    massform = MassActionForm(request.user.profile)
 
     return render_to_response('sales/index_assigned',
                               {'orders': orders,
@@ -209,7 +209,7 @@ def index_status(request, response_format='html'):
     orders = Object.filter_by_request(
         request, SaleOrder.objects.filter(query), mode="r")
     statuses = Object.filter_by_request(request, SaleStatus.objects, mode="r")
-    filters = OrderFilterForm(request.user.get_profile(), '', request.GET)
+    filters = OrderFilterForm(request.user.profile, '', request.GET)
 
     total = 0
 
@@ -251,9 +251,9 @@ def index_open(request, response_format='html'):
     orders = Object.filter_by_request(
         request, SaleOrder.objects.filter(query), mode="r")
     statuses = Object.filter_by_request(request, SaleStatus.objects)
-    filters = OrderFilterForm(request.user.get_profile(), '', request.GET)
+    filters = OrderFilterForm(request.user.profile, '', request.GET)
 
-    massform = MassActionForm(request.user.get_profile())
+    massform = MassActionForm(request.user.profile)
 
     return render_to_response('sales/index_open',
                               {'orders': orders,
@@ -269,7 +269,7 @@ def ordered_product_add(request, order_id=None, response_format='html'):
     "Add new Ordered Product"
 
     order = get_object_or_404(SaleOrder, pk=order_id)
-    if not request.user.get_profile().has_permission(order, mode='x'):
+    if not request.user.profile.has_permission(order, mode='x'):
         return user_denied("Sorry, you don't have access to this Sale Order")
 
     if request.POST:
@@ -277,7 +277,7 @@ def ordered_product_add(request, order_id=None, response_format='html'):
             ordered_product = OrderedProduct()
             ordered_product.order = order
             form = OrderedProductForm(
-                request.user.get_profile(), order, request.POST, instance=ordered_product)
+                request.user.profile, order, request.POST, instance=ordered_product)
             if form.is_valid():
                 ordered_product = form.save(commit=False)
                 convert(
@@ -290,7 +290,7 @@ def ordered_product_add(request, order_id=None, response_format='html'):
         else:
             return HttpResponseRedirect(reverse('sales_order_view', args=[order.id]))
     else:
-        form = OrderedProductForm(request.user.get_profile(), order)
+        form = OrderedProductForm(request.user.profile, order)
 
     return render_to_response('sales/ordered_product_add',
                               {'form': form,
@@ -303,8 +303,8 @@ def ordered_product_add(request, order_id=None, response_format='html'):
 def ordered_product_view(request, ordered_product_id, response_format='html'):
     "Ordered product view"
     ordered_product = get_object_or_404(OrderedProduct, pk=ordered_product_id)
-    if not request.user.get_profile().has_permission(ordered_product) \
-            and not request.user.get_profile().is_admin('treeio.sales'):
+    if not request.user.profile.has_permission(ordered_product) \
+            and not request.user.profile.is_admin('treeio.sales'):
         return user_denied(request, message="You don't have access to this Ordered Product")
 
     return render_to_response('sales/ordered_product_view',
@@ -318,15 +318,15 @@ def ordered_product_edit(request, ordered_product_id, response_format='html'):
     "OrderedProduct edit"
 
     ordered_product = get_object_or_404(OrderedProduct, pk=ordered_product_id)
-    if not request.user.get_profile().has_permission(ordered_product, mode='w') \
-            and not request.user.get_profile().is_admin('treeio.sales'):
+    if not request.user.profile.has_permission(ordered_product, mode='w') \
+            and not request.user.profile.is_admin('treeio.sales'):
         return user_denied(request, "You don't have access to this OrderedProduct", response_format)
 
     order = ordered_product.order
     if request.POST:
         if 'cancel' not in request.POST:
             form = OrderedProductForm(
-                request.user.get_profile(), order, request.POST, instance=ordered_product)
+                request.user.profile, order, request.POST, instance=ordered_product)
             if form.is_valid():
                 ordered_product = form.save(commit=False)
                 convert(
@@ -337,7 +337,7 @@ def ordered_product_edit(request, ordered_product_id, response_format='html'):
             return HttpResponseRedirect(reverse('sales_ordered_product_view', args=[ordered_product.id]))
     else:
         form = OrderedProductForm(
-            request.user.get_profile(), order, instance=ordered_product)
+            request.user.profile, order, instance=ordered_product)
 
     return render_to_response('sales/ordered_product_edit',
                               {'form': form,
@@ -353,8 +353,8 @@ def ordered_product_delete(request, ordered_product_id, response_format='html'):
     "OrderedProduct delete"
 
     ordered_product = get_object_or_404(OrderedProduct, pk=ordered_product_id)
-    if not request.user.get_profile().has_permission(ordered_product, mode='w') \
-            and not request.user.get_profile().is_admin('treeio.sales'):
+    if not request.user.profile.has_permission(ordered_product, mode='w') \
+            and not request.user.profile.is_admin('treeio.sales'):
         return user_denied(request, "You don't have access to this Sale Status", response_format)
 
     if request.POST:
@@ -392,7 +392,7 @@ def subscription_index(request, response_format='html'):
 
     subscriptions = Object.filter_by_request(
         request, Subscription.objects.filter(query), mode="r")
-    filters = OrderFilterForm(request.user.get_profile(), '', request.GET)
+    filters = OrderFilterForm(request.user.profile, '', request.GET)
     ordered_products = subscriptions.orderedproduct_set.all()
     orders = ordered_products.order_set.all()
     # orders = Object.filter_by_request(request, SaleOrder.objects, mode = "r")
@@ -429,7 +429,7 @@ def subscription_add(request, order_id=None, product_id=None, productset_id=None
     if request.POST:
         if 'cancel' not in request.POST:
             form = SubscriptionForm(
-                request.user.get_profile(), request.POST, instance=subscription)
+                request.user.profile, request.POST, instance=subscription)
             if form.is_valid():
                 subscription = form.save(commit=False)
                 subscription.renew()
@@ -446,7 +446,7 @@ def subscription_add(request, order_id=None, product_id=None, productset_id=None
             return HttpResponseRedirect(reverse('sales_product_index'))
     else:
         form = SubscriptionForm(
-            request.user.get_profile(), instance=subscription)
+            request.user.profile, instance=subscription)
 
     return render_to_response('sales/subscription_add',
                               {'form': form},
@@ -459,7 +459,7 @@ def subscription_view(request, subscription_id, response_format='html'):
     "Subscription view"
 
     subscription = get_object_or_404(Subscription, pk=subscription_id)
-    if not request.user.get_profile().has_permission(subscription):
+    if not request.user.profile.has_permission(subscription):
         return user_denied(request, message="You don't have access to this Subscription")
 
     query = Q(subscription=subscription)
@@ -489,16 +489,16 @@ def subscription_edit(request, subscription_id, response_format='html'):
     "Subscription edit"
 
     subscription = get_object_or_404(Subscription, pk=subscription_id)
-    if not request.user.get_profile().has_permission(subscription, mode='w') \
-            and not request.user.get_profile().is_admin('treeio.sales'):
+    if not request.user.profile.has_permission(subscription, mode='w') \
+            and not request.user.profile.is_admin('treeio.sales'):
         return user_denied(request, "You don't have access to this Subscription", response_format)
 
     if request.POST:
         form = SubscriptionForm(
-            request.user.get_profile(), request.POST, instance=subscription)
+            request.user.profile, request.POST, instance=subscription)
     else:
         form = SubscriptionForm(
-            request.user.get_profile(), instance=subscription)
+            request.user.profile, instance=subscription)
     if form.is_valid():
         subscription = form.save()
         return HttpResponseRedirect(reverse('sales_subscription_view', args=[subscription.id]))
@@ -516,8 +516,8 @@ def subscription_delete(request, subscription_id, response_format='html'):
     "Subscription delete"
 
     subscription = get_object_or_404(Subscription, pk=subscription_id)
-    if not request.user.get_profile().has_permission(subscription, mode='w') \
-            and not request.user.get_profile().is_admin('treeio.sales'):
+    if not request.user.profile.has_permission(subscription, mode='w') \
+            and not request.user.profile.is_admin('treeio.sales'):
         return user_denied(request, "You don't have access to this Sale Status", response_format)
 
     if request.POST:
@@ -555,13 +555,13 @@ def product_index(request, response_format='html'):
                 try:
                     product = Product.objects.get(pk=request.POST[key])
                     form = ProductMassActionForm(
-                        request.user.get_profile(), request.POST, instance=product)
-                    if form.is_valid() and request.user.get_profile().has_permission(product, mode='w'):
+                        request.user.profile, request.POST, instance=product)
+                    if form.is_valid() and request.user.profile.has_permission(product, mode='w'):
                         form.save()
                 except:
                     pass
 
-    massform = ProductMassActionForm(request.user.get_profile())
+    massform = ProductMassActionForm(request.user.profile)
 
     query = Q(parent__isnull=True)
     if request.GET:
@@ -570,7 +570,7 @@ def product_index(request, response_format='html'):
     statuses = Object.filter_by_request(request, SaleStatus.objects, mode="r")
     products = Object.filter_by_request(
         request, Product.objects.filter(query), mode="r")
-    filters = ProductFilterForm(request.user.get_profile(), '', request.GET)
+    filters = ProductFilterForm(request.user.profile, '', request.GET)
 
     return render_to_response('sales/product_index',
                               {'products': products,
@@ -594,7 +594,7 @@ def product_add(request, parent_id=None, response_format='html'):
         if 'cancel' not in request.POST:
             product = Product()
             form = ProductForm(
-                request.user.get_profile(), None, request.POST, instance=product)
+                request.user.profile, None, request.POST, instance=product)
             if form.is_valid():
                 product = form.save()
                 product.set_user_from_request(request)
@@ -602,7 +602,7 @@ def product_add(request, parent_id=None, response_format='html'):
         else:
             return HttpResponseRedirect(reverse('sales_product_index'))
     else:
-        form = ProductForm(request.user.get_profile(), parent_id)
+        form = ProductForm(request.user.profile, parent_id)
 
     return render_to_response('sales/product_add',
                               {'form': form,
@@ -616,21 +616,21 @@ def product_edit(request, product_id, response_format='html'):
     "Product edit"
 
     product = get_object_or_404(Product, pk=product_id)
-    if not request.user.get_profile().has_permission(product, mode='w') \
-            and not request.user.get_profile().is_admin('treeio.sales'):
+    if not request.user.profile.has_permission(product, mode='w') \
+            and not request.user.profile.is_admin('treeio.sales'):
         return user_denied(request, "You don't have access to this Product", response_format)
 
     if request.POST:
         if 'cancel' not in request.POST:
             form = ProductForm(
-                request.user.get_profile(), None, request.POST, instance=product)
+                request.user.profile, None, request.POST, instance=product)
             if form.is_valid():
                 product = form.save()
                 return HttpResponseRedirect(reverse('sales_product_view', args=[product.id]))
         else:
             return HttpResponseRedirect(reverse('sales_product_view', args=[product.id]))
     else:
-        form = ProductForm(request.user.get_profile(), None, instance=product)
+        form = ProductForm(request.user.profile, None, instance=product)
 
     all_products = Object.filter_by_request(
         request, Product.objects.filter(parent__isnull=True))
@@ -648,8 +648,8 @@ def product_view(request, product_id, response_format='html'):
     "Product view"
 
     product = get_object_or_404(Product, pk=product_id)
-    if not request.user.get_profile().has_permission(product) \
-            and not request.user.get_profile().is_admin('treeio.sales'):
+    if not request.user.profile.has_permission(product) \
+            and not request.user.profile.is_admin('treeio.sales'):
         return user_denied(request, message="You don't have access to this Product")
 
     query = Q(product=product)
@@ -680,8 +680,8 @@ def product_delete(request, product_id, response_format='html'):
     "Product delete"
 
     product = get_object_or_404(Product, pk=product_id)
-    if not request.user.get_profile().has_permission(product, mode='w') \
-            and not request.user.get_profile().is_admin('treeio.sales'):
+    if not request.user.profile.has_permission(product, mode='w') \
+            and not request.user.profile.is_admin('treeio.sales'):
         return user_denied(request, "You don't have access to this Sale Status", response_format)
 
     if request.POST:
@@ -722,13 +722,13 @@ def lead_index(request, response_format='html'):
         else:
             query = query & _get_filter_query(request.GET)
 
-    filters = LeadFilterForm(request.user.get_profile(), '', request.GET)
+    filters = LeadFilterForm(request.user.profile, '', request.GET)
 
     statuses = Object.filter_by_request(request, SaleStatus.objects, mode="r")
     leads = Object.filter_by_request(
         request, Lead.objects.filter(query), mode="r")
 
-    massform = LeadMassActionForm(request.user.get_profile())
+    massform = LeadMassActionForm(request.user.profile)
 
     return render_to_response('sales/lead_index',
                               {'leads': leads,
@@ -745,7 +745,7 @@ def lead_index(request, response_format='html'):
 def lead_index_assigned(request, response_format='html'):
     "Leads owned by current user"
 
-    query = Q(status__hidden=False, assigned=request.user.get_profile())
+    query = Q(status__hidden=False, assigned=request.user.profile)
     if request.GET:
         if 'status' in request.GET and request.GET['status']:
             query = _get_filter_query(request.GET)
@@ -755,9 +755,9 @@ def lead_index_assigned(request, response_format='html'):
     statuses = Object.filter_by_request(request, SaleStatus.objects, mode="r")
     leads = Object.filter_by_request(
         request, Lead.objects.filter(query), mode="r")
-    filters = LeadFilterForm(request.user.get_profile(), '', request.GET)
+    filters = LeadFilterForm(request.user.profile, '', request.GET)
 
-    massform = LeadMassActionForm(request.user.get_profile())
+    massform = LeadMassActionForm(request.user.profile)
 
     return render_to_response('sales/lead_index_assigned',
                               {'leads': leads,
@@ -779,7 +779,7 @@ def lead_add(request, lead_id=None, response_format='html'):
         if 'cancel' not in request.POST:
             lead = Lead()
             form = LeadForm(
-                request.user.get_profile(), request.POST, instance=lead)
+                request.user.profile, request.POST, instance=lead)
             if form.is_valid():
                 lead = form.save()
                 lead.set_user_from_request(request)
@@ -787,7 +787,7 @@ def lead_add(request, lead_id=None, response_format='html'):
         else:
             return HttpResponseRedirect(reverse('sales_lead_index'))
     else:
-        form = LeadForm(request.user.get_profile())
+        form = LeadForm(request.user.profile)
 
     return render_to_response('sales/lead_add',
                               {'form': form,
@@ -801,15 +801,15 @@ def lead_edit(request, lead_id, response_format='html'):
     "Lead edit"
 
     lead = get_object_or_404(Lead, pk=lead_id)
-    if not request.user.get_profile().has_permission(lead, mode='w') \
-            and not request.user.get_profile().is_admin('treeio.sales'):
+    if not request.user.profile.has_permission(lead, mode='w') \
+            and not request.user.profile.is_admin('treeio.sales'):
         return user_denied(request, "You don't have access to this Lead", response_format)
 
     if request.POST:
         form = LeadForm(
-            request.user.get_profile(), request.POST, instance=lead)
+            request.user.profile, request.POST, instance=lead)
     else:
-        form = LeadForm(request.user.get_profile(), instance=lead)
+        form = LeadForm(request.user.profile, instance=lead)
     if form.is_valid():
         lead = form.save()
         return HttpResponseRedirect(reverse('sales_lead_view', args=[lead.id]))
@@ -825,7 +825,7 @@ def lead_edit(request, lead_id, response_format='html'):
 @handle_response_format
 def lead_view(request, lead_id, response_format='html'):
     "Queue view"
-    profile = request.user.get_profile()
+    profile = request.user.profile
     lead = get_object_or_404(Lead, pk=lead_id)
 
     if not profile.has_permission(lead) \
@@ -850,8 +850,8 @@ def lead_delete(request, lead_id, response_format='html'):
     "Lead delete"
 
     lead = get_object_or_404(Lead, pk=lead_id)
-    if not request.user.get_profile().has_permission(lead, mode='w') \
-            and not request.user.get_profile().is_admin('treeio.sales'):
+    if not request.user.profile.has_permission(lead, mode='w') \
+            and not request.user.profile.is_admin('treeio.sales'):
         return user_denied(request, "You don't have access to this Sale Status", response_format)
 
     if request.POST:
@@ -890,13 +890,13 @@ def opportunity_index(request, response_format='html'):
             query = query & _get_filter_query(request.GET)
 
     filters = OpportunityFilterForm(
-        request.user.get_profile(), '', request.GET)
+        request.user.profile, '', request.GET)
 
     statuses = Object.filter_by_request(request, SaleStatus.objects, mode="r")
     opportunities = Object.filter_by_request(
         request, Opportunity.objects.filter(query), mode="r")
 
-    massform = OpportunityMassActionForm(request.user.get_profile())
+    massform = OpportunityMassActionForm(request.user.profile)
 
     return render_to_response('sales/opportunity_index',
                               {'opportunities': opportunities,
@@ -913,7 +913,7 @@ def opportunity_index(request, response_format='html'):
 def opportunity_index_assigned(request, response_format='html'):
     "Opportunities owned by current user"
 
-    query = Q(status__hidden=False, assigned=request.user.get_profile())
+    query = Q(status__hidden=False, assigned=request.user.profile)
     if request.GET:
         if 'status' in request.GET and request.GET['status']:
             query = _get_filter_query(request.GET)
@@ -924,9 +924,9 @@ def opportunity_index_assigned(request, response_format='html'):
     opportunities = Object.filter_by_request(
         request, Opportunity.objects.filter(query), mode="r")
     filters = OpportunityFilterForm(
-        request.user.get_profile(), '', request.GET)
+        request.user.profile, '', request.GET)
 
-    massform = OpportunityMassActionForm(request.user.get_profile())
+    massform = OpportunityMassActionForm(request.user.profile)
 
     return render_to_response('sales/opportunity_index_assigned',
                               {'opportunities': opportunities,
@@ -948,7 +948,7 @@ def opportunity_add(request, lead_id=None, response_format='html'):
     if request.POST:
         if 'cancel' not in request.POST:
             form = OpportunityForm(
-                request.user.get_profile(), lead, request.POST)
+                request.user.profile, lead, request.POST)
             if form.is_valid():
                 opportunity = form.save(commit=False)
                 convert(opportunity, 'amount')
@@ -957,7 +957,7 @@ def opportunity_add(request, lead_id=None, response_format='html'):
         else:
             return HttpResponseRedirect(reverse('sales_opportunity_index'))
     else:
-        form = OpportunityForm(request.user.get_profile(), lead)
+        form = OpportunityForm(request.user.profile, lead)
 
     return render_to_response('sales/opportunity_add',
                               {'form': form},
@@ -970,14 +970,14 @@ def opportunity_edit(request, opportunity_id, response_format='html'):
     "Opportunity edit"
 
     opportunity = get_object_or_404(Opportunity, pk=opportunity_id)
-    if not request.user.get_profile().has_permission(opportunity, mode='w') \
-            and not request.user.get_profile().is_admin('treeio.sales'):
+    if not request.user.profile.has_permission(opportunity, mode='w') \
+            and not request.user.profile.is_admin('treeio.sales'):
         return user_denied(request, "You don't have access to this Opportunity", response_format)
 
     if request.POST:
         if 'cancel' not in request.POST:
             form = OpportunityForm(
-                request.user.get_profile(), None, request.POST, instance=opportunity)
+                request.user.profile, None, request.POST, instance=opportunity)
             if form.is_valid():
                 opportunity = form.save()
                 convert(opportunity, 'amount')
@@ -986,7 +986,7 @@ def opportunity_edit(request, opportunity_id, response_format='html'):
             return HttpResponseRedirect(reverse('sales_opportunity_view', args=[opportunity.id]))
     else:
         form = OpportunityForm(
-            request.user.get_profile(), None, instance=opportunity)
+            request.user.profile, None, instance=opportunity)
 
     all_opportunities = Object.filter_by_request(request, Opportunity.objects)
 
@@ -1003,7 +1003,7 @@ def opportunity_edit(request, opportunity_id, response_format='html'):
 def opportunity_view(request, opportunity_id, response_format='html'):
     "Opportunity view"
 
-    profile = request.user.get_profile()
+    profile = request.user.profile
     opportunity = get_object_or_404(Opportunity, pk=opportunity_id)
     if not profile.has_permission(opportunity) \
             and not profile.is_admin('treeio.sales'):
@@ -1023,8 +1023,8 @@ def opportunity_delete(request, opportunity_id, response_format='html'):
     "Opportunity delete"
 
     opportunity = get_object_or_404(Opportunity, pk=opportunity_id)
-    if not request.user.get_profile().has_permission(opportunity, mode='w') \
-            and not request.user.get_profile().is_admin('treeio.sales'):
+    if not request.user.profile.has_permission(opportunity, mode='w') \
+            and not request.user.profile.is_admin('treeio.sales'):
         return user_denied(request, "You don't have access to this Sale Status", response_format)
 
     if request.POST:
@@ -1063,7 +1063,7 @@ def order_add(request, lead_id=None, opportunity_id=None, response_format='html'
         if 'cancel' not in request.POST:
             order = SaleOrder()
             form = OrderForm(
-                request.user.get_profile(), lead, opportunity, request.POST, instance=order)
+                request.user.profile, lead, opportunity, request.POST, instance=order)
             if form.is_valid():
                 order = form.save()
                 order.set_user_from_request(request)
@@ -1071,7 +1071,7 @@ def order_add(request, lead_id=None, opportunity_id=None, response_format='html'
         else:
             return HttpResponseRedirect(reverse('sales'))
     else:
-        form = OrderForm(request.user.get_profile(), lead, opportunity)
+        form = OrderForm(request.user.profile, lead, opportunity)
 
     all_products = Object.filter_by_request(
         request, Product.objects.filter(parent__isnull=True))
@@ -1088,14 +1088,14 @@ def order_edit(request, order_id, response_format='html'):
     "SaleOrder edit"
 
     order = get_object_or_404(SaleOrder, pk=order_id)
-    if not request.user.get_profile().has_permission(order, mode='w') \
-            and not request.user.get_profile().is_admin('treeio.sales'):
+    if not request.user.profile.has_permission(order, mode='w') \
+            and not request.user.profile.is_admin('treeio.sales'):
         return user_denied(request, "You don't have access to this SaleOrder", response_format)
 
     if request.POST:
         if 'cancel' not in request.POST:
             form = OrderForm(
-                request.user.get_profile(), None, None, request.POST, instance=order)
+                request.user.profile, None, None, request.POST, instance=order)
             if form.is_valid():
                 order = form.save()
                 return HttpResponseRedirect(reverse('sales_order_view', args=[order.id]))
@@ -1103,7 +1103,7 @@ def order_edit(request, order_id, response_format='html'):
             return HttpResponseRedirect(reverse('sales_order_view', args=[order.id]))
     else:
         form = OrderForm(
-            request.user.get_profile(), None, None, instance=order)
+            request.user.profile, None, None, instance=order)
 
     all_orders = Object.filter_by_request(request, SaleOrder.objects)
 
@@ -1119,7 +1119,7 @@ def order_edit(request, order_id, response_format='html'):
 @handle_response_format
 def order_view(request, order_id, response_format='html'):
     "SaleOrder view"
-    profile = request.user.get_profile()
+    profile = request.user.profile
     order = get_object_or_404(SaleOrder, pk=order_id)
 
     form = _do_update_record(profile, request, order)
@@ -1146,8 +1146,8 @@ def order_view(request, order_id, response_format='html'):
 def order_invoice_view(request, order_id, response_format='html'):
     "Order view as Invoice"
     order = get_object_or_404(SaleOrder, pk=order_id)
-    if not request.user.get_profile().has_permission(order) \
-            and not request.user.get_profile().is_admin('treeio.sales'):
+    if not request.user.profile.has_permission(order) \
+            and not request.user.profile.is_admin('treeio.sales'):
         return user_denied(request, message="You don't have access to this Sale")
 
     ordered_products = order.orderedproduct_set.filter(trash=False)
@@ -1173,8 +1173,8 @@ def order_delete(request, order_id, response_format='html'):
     "SaleOrder delete"
 
     order = get_object_or_404(SaleOrder, pk=order_id)
-    if not request.user.get_profile().has_permission(order, mode='w') \
-            and not request.user.get_profile().is_admin('treeio.sales'):
+    if not request.user.profile.has_permission(order, mode='w') \
+            and not request.user.profile.is_admin('treeio.sales'):
         return user_denied(request, "You don't have access to this Sale Status", response_format)
 
     if request.POST:
@@ -1206,7 +1206,7 @@ def order_delete(request, order_id, response_format='html'):
 def settings_view(request, response_format='html'):
     "Settings"
 
-    if not request.user.get_profile().is_admin('treeio.sales'):
+    if not request.user.profile.is_admin('treeio.sales'):
         return user_denied(request, message="You don't have administrator access to the Sales module")
 
     all_products = Object.filter_by_request(
@@ -1316,7 +1316,7 @@ def settings_view(request, response_format='html'):
 def settings_edit(request, response_format='html'):
     "Settings"
 
-    if not request.user.get_profile().is_admin('treeio.sales'):
+    if not request.user.profile.is_admin('treeio.sales'):
         return user_denied(request, message="You don't have administrator access to the Sales module")
 
     all_products = Object.filter_by_request(
@@ -1324,14 +1324,14 @@ def settings_edit(request, response_format='html'):
 
     if request.POST:
         if 'cancel' not in request.POST:
-            form = SettingsForm(request.user.get_profile(), request.POST)
+            form = SettingsForm(request.user.profile, request.POST)
             if form.is_valid():
                 form.save()
                 return HttpResponseRedirect(reverse('sales_settings_view'))
         else:
             return HttpResponseRedirect(reverse('sales_settings_view'))
     else:
-        form = SettingsForm(request.user.get_profile())
+        form = SettingsForm(request.user.profile)
 
     return render_to_response('sales/settings_edit',
                               {
@@ -1347,7 +1347,7 @@ def settings_edit(request, response_format='html'):
 def status_add(request, response_format='html'):
     "TicketStatus add"
 
-    if not request.user.get_profile().is_admin('treeio.sales'):
+    if not request.user.profile.is_admin('treeio.sales'):
         return user_denied(request, message="You don't have administrator access to the Sales module")
 
     status = None
@@ -1355,7 +1355,7 @@ def status_add(request, response_format='html'):
         if 'cancel' not in request.POST:
             status = SaleStatus()
             form = SaleStatusForm(
-                request.user.get_profile(), request.POST, instance=status)
+                request.user.profile, request.POST, instance=status)
             if form.is_valid():
                 status = form.save()
                 status.set_user_from_request(request)
@@ -1363,7 +1363,7 @@ def status_add(request, response_format='html'):
         else:
             return HttpResponseRedirect(reverse('sales_settings_view'))
     else:
-        form = SaleStatusForm(request.user.get_profile())
+        form = SaleStatusForm(request.user.profile)
 
     all_products = Object.filter_by_request(
         request, Product.objects.filter(parent__isnull=True))
@@ -1382,8 +1382,8 @@ def status_view(request, status_id, response_format='html'):
     "Tickets filtered by status"
 
     status = get_object_or_404(SaleStatus, pk=status_id)
-    if not request.user.get_profile().has_permission(status) \
-            and not request.user.get_profile().is_admin('treeio.sales'):
+    if not request.user.profile.has_permission(status) \
+            and not request.user.profile.is_admin('treeio.sales'):
         return user_denied(request, message="You don't have access to this Sale Status")
 
     query = Q(status=status)
@@ -1403,21 +1403,21 @@ def status_edit(request, status_id, response_format='html'):
     "SaleStatus edit"
 
     status = get_object_or_404(SaleStatus, pk=status_id)
-    if not request.user.get_profile().has_permission(status, mode='w') \
-            and not request.user.get_profile().is_admin('treeio.sales'):
+    if not request.user.profile.has_permission(status, mode='w') \
+            and not request.user.profile.is_admin('treeio.sales'):
         return user_denied(request, "You don't have access to this Sale Status", response_format)
 
     if request.POST:
         if 'cancel' not in request.POST:
             form = SaleStatusForm(
-                request.user.get_profile(), request.POST, instance=status)
+                request.user.profile, request.POST, instance=status)
             if form.is_valid():
                 status = form.save()
                 return HttpResponseRedirect(reverse('sales_status_view', args=[status.id]))
         else:
             return HttpResponseRedirect(reverse('sales_status_view', args=[status.id]))
     else:
-        form = SaleStatusForm(request.user.get_profile(), instance=status)
+        form = SaleStatusForm(request.user.profile, instance=status)
 
     return render_to_response('sales/status_edit',
                               {'form': form,
@@ -1431,8 +1431,8 @@ def status_delete(request, status_id, response_format='html'):
     "SaleStatus delete"
 
     status = get_object_or_404(SaleStatus, pk=status_id)
-    if not request.user.get_profile().has_permission(status, mode='w') \
-            and not request.user.get_profile().is_admin('treeio.sales'):
+    if not request.user.profile.has_permission(status, mode='w') \
+            and not request.user.profile.is_admin('treeio.sales'):
         return user_denied(request, "You don't have access to this Sale Status", response_format)
 
     if request.POST:
@@ -1460,14 +1460,14 @@ def status_delete(request, status_id, response_format='html'):
 def source_add(request, response_format='html'):
     "TicketStatus add"
 
-    if not request.user.get_profile().is_admin('treeio.sales'):
+    if not request.user.profile.is_admin('treeio.sales'):
         return user_denied(request, message="You don't have administrator access to the Sales module")
 
     if request.POST:
         if 'cancel' not in request.POST:
             source = SaleSource()
             form = SaleSourceForm(
-                request.user.get_profile(), request.POST, instance=source)
+                request.user.profile, request.POST, instance=source)
             if form.is_valid():
                 source = form.save()
                 source.set_user_from_request(request)
@@ -1475,7 +1475,7 @@ def source_add(request, response_format='html'):
         else:
             return HttpResponseRedirect(reverse('sales_settings_view'))
     else:
-        form = SaleSourceForm(request.user.get_profile())
+        form = SaleSourceForm(request.user.profile)
 
     all_products = Object.filter_by_request(
         request, Product.objects.filter(parent__isnull=True))
@@ -1495,8 +1495,8 @@ def source_view(request, source_id, response_format='html'):
     "Orders filtered by source"
 
     source = get_object_or_404(SaleSource, pk=source_id)
-    if not request.user.get_profile().has_permission(source) \
-            and not request.user.get_profile().is_admin('treeio.sales'):
+    if not request.user.profile.has_permission(source) \
+            and not request.user.profile.is_admin('treeio.sales'):
         return user_denied(request, message="You don't have access to this Sale Status")
 
     query = Q(source=source)
@@ -1522,21 +1522,21 @@ def source_edit(request, source_id, response_format='html'):
     "SaleSource edit"
 
     source = get_object_or_404(SaleSource, pk=source_id)
-    if not request.user.get_profile().has_permission(source, mode='w') \
-            and not request.user.get_profile().is_admin('treeio.sales'):
+    if not request.user.profile.has_permission(source, mode='w') \
+            and not request.user.profile.is_admin('treeio.sales'):
         return user_denied(request, "You don't have access to this Sale Status", response_format)
 
     if request.POST:
         if 'cancel' not in request.POST:
             form = SaleSourceForm(
-                request.user.get_profile(), request.POST, instance=source)
+                request.user.profile, request.POST, instance=source)
             if form.is_valid():
                 source = form.save()
                 return HttpResponseRedirect(reverse('sales_source_view', args=[source.id]))
         else:
             return HttpResponseRedirect(reverse('sales_source_view', args=[source.id]))
     else:
-        form = SaleSourceForm(request.user.get_profile(), instance=source)
+        form = SaleSourceForm(request.user.profile, instance=source)
 
     all_products = Object.filter_by_request(
         request, Product.objects.filter(parent__isnull=True))
@@ -1556,8 +1556,8 @@ def source_delete(request, source_id, response_format='html'):
     "SaleSource delete"
 
     source = get_object_or_404(SaleSource, pk=source_id)
-    if not request.user.get_profile().has_permission(source, mode='w') \
-            and not request.user.get_profile().is_admin('treeio.sales'):
+    if not request.user.profile.has_permission(source, mode='w') \
+            and not request.user.profile.is_admin('treeio.sales'):
         return user_denied(request, "You don't have access to this Sale Status", response_format)
 
     if request.POST:

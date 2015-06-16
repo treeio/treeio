@@ -49,7 +49,7 @@ class MessagingApiTest(TestCase):
                 self.user = DjangoUser.objects.get(username=self.username)
                 self.user.set_password(self.password)
                 try:
-                    self.profile = self.user.get_profile()
+                    self.profile = self.user.profile
                 except Exception:
                     User.objects.all().delete()
                     self.user = DjangoUser(username=self.username, password='')
@@ -79,8 +79,8 @@ class MessagingApiTest(TestCase):
             self.contact.save()
 
             self.user_contact = Contact(
-                name='test', related_user=self.user.get_profile(), contact_type=self.contact_type)
-            self.user_contact.set_user(self.user)
+                name='test', related_user=self.user.profile, contact_type=self.contact_type)
+            self.user_contact.set_user(self.user.profile)
             self.user_contact.save()
 
             self.stream = MessageStream(name='test')

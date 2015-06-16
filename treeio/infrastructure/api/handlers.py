@@ -21,7 +21,7 @@ from treeio.infrastructure.forms import ItemForm, ItemTypeForm, ItemStatusForm, 
 
 class InfrastructureCommonHandler(ObjectHandler):
     def check_create_permission(self, request, mode):
-        return request.user.get_profile().is_admin('treeio.infrastructure')
+        return request.user.profile.is_admin('treeio.infrastructure')
 
 
 class ItemFieldHandler(InfrastructureCommonHandler):
@@ -105,7 +105,7 @@ class ItemHandler(ObjectHandler):
             return rc.BAD_REQUEST
 
         item_type = getOrNone(ItemType, request.data.get('type'))
-        if not item_type or not request.user.get_profile().has_permission(item_type, mode='x'):
+        if not item_type or not request.user.profile.has_permission(item_type, mode='x'):
             return rc.FORBIDDEN
 
         attrs = self.flatten_dict(request)
@@ -132,7 +132,7 @@ class ItemHandler(ObjectHandler):
         if not item:
             return rc.NOT_FOUND
 
-        if not request.user.get_profile().has_permission(item, mode="w"):
+        if not request.user.profile.has_permission(item, mode="w"):
             return rc.FORBIDDEN
 
         attrs = self.flatten_dict(request)

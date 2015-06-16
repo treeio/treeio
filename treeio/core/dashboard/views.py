@@ -42,7 +42,7 @@ def _preprocess_widget(widget, name):
 def _get_all_widgets(request):
     "Retrieve widgets from all available modules"
 
-    user = request.user.get_profile()
+    user = request.user.profile
     perspective = user.get_perspective()
     modules = perspective.get_modules()
 
@@ -100,7 +100,7 @@ def _get_widget(request, module, widget_name):
 def _create_widget_object(request, module_name, widget_name):
     "Create a Widget object if one is available for the current user Perspective"
 
-    user = request.user.get_profile()
+    user = request.user.profile
     perspective = user.get_perspective()
     modules = perspective.get_modules()
 
@@ -152,7 +152,7 @@ def index(request, response_format='html'):
     "Homepage"
     trash = Object.filter_by_request(request, manager=Object.objects.filter(trash=True),
                                      mode='r', filter_trash=False).count()
-    user = request.user.get_profile()
+    user = request.user.profile
     perspective = user.get_perspective()
     widget_objects = Widget.objects.filter(user=user, perspective=perspective)
     clean_widgets = []
@@ -211,7 +211,7 @@ def dashboard_widget_add(request, module_name=None, widget_name=None, response_f
 def dashboard_widget_edit(request, widget_id, response_format='html'):
     "Edit an existing Widget on the Dashboard"
 
-    user = request.user.get_profile()
+    user = request.user.profile
 
     widget_object = get_object_or_404(Widget, pk=widget_id)
     if widget_object.user == user:
@@ -251,7 +251,7 @@ def dashboard_widget_delete(request, widget_id, response_format='html'):
 
     widget = get_object_or_404(Widget, pk=widget_id)
 
-    if widget.user == request.user.get_profile():
+    if widget.user == request.user.profile:
         widget.delete()
 
     return HttpResponseRedirect(reverse('core_dashboard_index'))
@@ -261,7 +261,7 @@ def dashboard_widget_delete(request, widget_id, response_format='html'):
 @treeio_login_required
 def dashboard_widget_arrange(request, panel='left', response_format='html'):
     "Arrange widgets with AJAX request"
-    user = request.user.get_profile()
+    user = request.user.profile
 
     if panel == 'left' or not panel:
         shift = -100

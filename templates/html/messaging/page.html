@@ -17,14 +17,14 @@
         <a href="{% url messaging_sent %}" class="sidebar-link {% block index_sent %}{% endblock %}">{% trans %}Sent{% endtrans %}</a>
         <span class="sidebar-header">{% trans %}Streams{% endtrans %}</span>
         {% for istream in streams %}
-        {% if user.get_profile().has_permission(istream, mode='x') %}
+        {% if user.profile.has_permission(istream, mode='x') %}
         <a href="{% url messaging_stream_view istream.id %}" class="sidebar-link {% if istream == stream %}sidebar-link-active{% endif %}">{{ istream.name|truncate(length=20) }}</a>
         {% endif %}
         {% endfor %}
         {# 
         <span class="sidebar-header">{% trans %}Mailing Lists{% endtrans %}</span>
         {% for ilist in mlists %}
-        {% if user.get_profile().has_permission(ilist, mode='x') %}
+        {% if user.profile.has_permission(ilist, mode='x') %}
         <a href="{% url messaging_mlist_view ilist.id %}" class="sidebar-link {% if ilist == mlist %}sidebar-link-active{% endif %}">{{ ilist.name|truncate(length=20) }}</a>
         {% endif %}
         {% endfor %}

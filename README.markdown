@@ -1,4 +1,4 @@
-[![Build Status](https://secure.travis-ci.org/treeio/treeio.png?branch=master)](http://travis-ci.org/treeio/treeio)
+    [![Build Status](https://secure.travis-ci.org/treeio/treeio.png?branch=master)](http://travis-ci.org/treeio/treeio)
 [![Coverage Status](https://coveralls.io/repos/treeio/treeio/badge.svg?branch=2.0)](https://coveralls.io/r/treeio/treeio?branch=2.0)
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/treeio/treeio/badges/quality-score.png?b=2.0)](https://scrutinizer-ci.com/g/treeio/treeio/?branch=2.0)
 [![Code Health](https://landscape.io/github/treeio/treeio/master/landscape.svg?style=flat)](https://landscape.io/github/treeio/treeio/master)

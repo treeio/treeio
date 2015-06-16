@@ -42,7 +42,7 @@
         </span>
     </span>
     <span class="content-list-item-actions">
-        {% if user.get_profile().has_permission(itype, mode='w') %}
+        {% if user.profile.has_permission(itype, mode='w') %}
         <a href="{% url infrastructure_type_edit itype.id %}" class="inline-link edit-link">{% trans %}Edit{% endtrans %}</a>
         {% endif %}
     </span>
@@ -67,7 +67,7 @@
         </span>
     </span>
     <span class="content-list-item-actions">
-        {% if user.get_profile().has_permission(ifield, mode='w') %}
+        {% if user.profile.has_permission(ifield, mode='w') %}
         <a href="{% url infrastructure_field_edit ifield.id %}" class="inline-link edit-link">{% trans %}Edit{% endtrans %}</a>
         {% endif %}
     </span>
@@ -91,7 +91,7 @@
         {% if istatus.hidden %}<span class="lighter small">{% trans %}Hidden{% endtrans %}</span>{% endif %}
     </span>
     <span class="content-list-item-actions">
-        {% if user.get_profile().has_permission(istatus, mode='w') %}
+        {% if user.profile.has_permission(istatus, mode='w') %}
         <a href="{% url infrastructure_status_edit istatus.id %}" class="inline-link edit-link">{% trans %}Edit{% endtrans %}</a>
         {% endif %}
     </span>

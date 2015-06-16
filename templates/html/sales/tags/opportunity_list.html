@@ -57,7 +57,7 @@
                 </td>
                 <td>{{ last_updated(opportunity) }}</td>
                 <td>
-                {% if user.get_profile().has_permission(opportunity, mode='w') %}
+                {% if user.profile.has_permission(opportunity, mode='w') %}
                 <span class="content-list-item-actions table-link">
                 <a href="{% url sales_opportunity_edit opportunity.id %}" class="inline-link edit-link">{% trans %}Edit{% endtrans %}</a>
                 </span>

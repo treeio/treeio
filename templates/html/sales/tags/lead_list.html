@@ -53,7 +53,7 @@
                     {{ last_updated(lead) }}
                 </td>
                 <td>
-                {% if user.get_profile().has_permission(lead, mode='w') %}
+                {% if user.profile.has_permission(lead, mode='w') %}
                 <span class="content-list-item-actions table-link">
                 <a href="{% url sales_lead_edit lead.id %}" class="inline-link edit-link">{% trans %}Edit{% endtrans %}</a>
                 </span>

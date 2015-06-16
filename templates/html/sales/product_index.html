@@ -8,7 +8,7 @@
 {% block module_title %}{% trans %}Products{% endtrans %}{% endblock %}
 
 {% block module_topmenu %}
-{% if request.user.get_profile().is_admin('treeio.sales') %}
+{% if request.user.profile.is_admin('treeio.sales') %}
 <a href="{% url sales_product_add %}" class="top-menu add-link">{% trans %}New Product{% endtrans %}</a>
 <a href="{% url sales_subscription_add %}" class="top-menu add-link">{% trans %}New Subscription{% endtrans %}</a>
 {% endif %}

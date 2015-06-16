@@ -10,7 +10,7 @@
 {% block module_topmenu %}
 
 <a href="{% url services_service_view service.id %}" class="top-menu view-link-active">{% trans %}View{% endtrans %}</a>
-{% if user.get_profile().has_permission(service, mode='w') %}
+{% if user.profile.has_permission(service, mode='w') %}
 <a href="{% url services_service_edit service.id %}" class="top-menu edit-link">{% trans %}Edit{% endtrans %}</a>
 <a href="{% url services_service_delete service.id %}" class="top-menu delete-link">{% trans %}Delete{% endtrans %}</a>
 {% endif %}
@@ -63,7 +63,7 @@
         </span>
     </span>
     <span class="content-list-item-actions">
-        {% if user.get_profile().has_permission(service, mode='w') %}
+        {% if user.profile.has_permission(service, mode='w') %}
         <a href="{% url services_sla_edit sla.id %}" class="inline-link edit-link">{% trans %}Edit{% endtrans %}</a>
         {% endif %}
     </span>

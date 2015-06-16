@@ -16,7 +16,7 @@
         </span>
     </span>
     <span class="content-list-item-actions">
-        {% if request.user.get_profile().is_admin() %}
+        {% if request.user.profile.is_admin() %}
         <a href="{% url core_admin_user_edit user.id %}" class="inline-link edit-link">{% trans %}Edit{% endtrans %}</a>
         {% endif %}
     </span>

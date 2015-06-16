@@ -13,7 +13,7 @@
 
 {% block module_topmenu %}
 <a href="{% url identities_field_view field.id %}" class="top-menu view-link-active">{% trans %}View{% endtrans %}</a>
-{% if user.get_profile().has_permission(field, mode='w') %}
+{% if user.profile.has_permission(field, mode='w') %}
 <a href="{% url identities_field_edit field.id %}" class="top-menu edit-link">{% trans %}Edit{% endtrans %}</a>
 <a href="{% url identities_field_delete field.id %}" class="top-menu delete-link">{% trans %}Delete{% endtrans %}</a>
 {% endif %}

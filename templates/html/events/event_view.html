@@ -9,7 +9,7 @@
 
 {% block module_topmenu %}
 <a class="top-menu view-link-active" href="{% url events_event_view event.id %}">{% trans %}View{% endtrans %}</a>
-{% if user.get_profile().has_permission(event, mode='w') %}
+{% if user.profile.has_permission(event, mode='w') %}
 <a class="top-menu edit-link" href="{% url events_event_edit event.id %}">{% trans %}Edit{% endtrans %}</a>
 <a class="top-menu delete-link" href="{% url events_event_delete event.id %}">{% trans %}Delete{% endtrans %}</a>
 {% endif %}

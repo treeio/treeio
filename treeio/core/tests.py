@@ -19,6 +19,7 @@ from treeio.core.models import User, Group, ModuleSetting, Module, Object, Persp
 
 class CoreModelsTest(TestCase):
     """Core Model Tests"""
+    fixtures = ['myinitial_data.json']
 
     def test_model_AccessEntity(self):
         obj = AccessEntity()
@@ -60,7 +61,7 @@ class CoreModelsTest(TestCase):
         user.save()
         self.assertEquals(user.username, username)
         self.assertIsNotNone(user.id)
-        profile = user.get_profile()
+        profile = user.profile
         self.assertEquals(profile.name, username)
         self.assertEquals(profile.default_group, Group.objects.all()[0])
         self.assertQuerysetEqual(profile.other_groups.all(), [])
@@ -80,7 +81,7 @@ class CoreModelsTest(TestCase):
         username = "testusername"
         user = DjangoUser(username=username)
         user.save()
-        profile = user.get_profile()
+        profile = user.profile
         group = Group(name='testgroupname')
         group.save()
         profile.default_group = group
@@ -155,8 +156,8 @@ class CoreViewsTest(TestCase):
                 username=self.username)
             duser.set_password(self.password)
             duser.save()
-            self.user, created = User.objects.get_or_create(user=duser)
-            self.user.save()
+            # self.user, created = User.objects.get_or_create(user=duser)
+            # self.user.save()
 
             self.perspective = Perspective(name='test')
             self.perspective.set_default_user()
@@ -250,9 +251,10 @@ class CoreViewsTest(TestCase):
         self.login()
         response = self.client.post(path=reverse('core_admin_user_add'), data=data)
         self.assertEquals(response.status_code, 302)
-        user = User.objects.get(name=name)
-        self.assertEquals(user.name, name)
-        self.assertRedirects(response, reverse('core_admin_user_view', args=[user.id]))
+        profile = User.objects.get(name=name)
+        profiles = User.objects.all()
+        self.assertEquals(profile.name, name)
+        self.assertRedirects(response, reverse('core_admin_user_view', args=[profile.id]))
         self.assertEquals(self.client.login(username=name, password=password), True)
         self.client.logout()
         response = self.client.post('/accounts/login', {'username': name, 'password': password})
@@ -267,7 +269,7 @@ class CoreViewsTest(TestCase):
             user.set_password(password)
             user.save()
         self.login()
-        response = self.client.post(path=reverse('core_admin_user_delete', args=[user.get_profile().id]),
+        response = self.client.post(path=reverse('core_admin_user_delete', args=[user.profile.id]),
                                     data={'delete': ''})
         self.assertRedirects(response, reverse('core_admin_index_users'))
         with self.assertRaises(User.DoesNotExist):
@@ -468,7 +470,7 @@ class MiddlewareChatTest(TestCase):
                 self.user = DjangoUser.objects.get(username=self.username)
                 self.user.set_password(self.password)
                 try:
-                    self.profile = self.user.get_profile()
+                    self.profile = self.user.profile
                 except Exception:
                     User.objects.all().delete()
                     self.user = DjangoUser(username=self.username, password='')

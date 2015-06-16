@@ -8,7 +8,7 @@
     {{ link }}
     {% endif %}
     <span class="smaller lighter">{{ link.get_human_type() }}</span>
-    {% if request.user.get_profile().has_permission(object, mode='w') or request.user.get_profile().id == subscription.id %}
+    {% if request.user.profile.has_permission(object, mode='w') or request.user.profile.id == subscription.id %}
     <a href="{{ request.path }}?link_delete={{ link.id }}" class="inline-link delete-link" style="padding-left: 8px;">&nbsp;</a>
     {% endif %}
     <br />

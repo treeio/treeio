@@ -79,7 +79,7 @@
         {%- endif %}
     </span>
     <span class="content-list-item-actions">
-        {% if user.get_profile().has_permission(order, mode='w') %}
+        {% if user.profile.has_permission(order, mode='w') %}
         <a href="{% url sales_order_edit order.id %}" class="inline-link edit-link">{% trans %}Edit{% endtrans %}</a>
         {% endif %}
     </span>

@@ -49,7 +49,7 @@ class SalesAPITest(TestCase):
                 self.user = DjangoUser.objects.get(username=self.username)
                 self.user.set_password(self.password)
                 try:
-                    self.profile = self.user.get_profile()
+                    self.profile = self.user.profile
                 except Exception:
                     User.objects.all().delete()
                     self.user = DjangoUser(username=self.username, password='')
@@ -100,7 +100,7 @@ class SalesAPITest(TestCase):
             self.source = SaleSource()
             self.source.active = True
             self.source.save()
-            self.source.set_user(self.user)
+            self.source.set_user(self.user.profile)
             self.assertNotEquals(self.source.id, None)
 
             self.product = Product(name="Test")

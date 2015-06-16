@@ -17,7 +17,7 @@
         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="small lightest" href="{% url documents_file_view file.id %}">{{ file.get_file_type() }} {% trans %}File{% endtrans %}</a>
     </span>
     <span class="content-list-item-actions">
-        {% if user.get_profile().has_permission(file, mode='w') %}
+        {% if user.profile.has_permission(file, mode='w') %}
         <a href="{% url documents_file_edit file.id %}" class="inline-link edit-link">{% trans %}Edit{% endtrans %}</a>
         {% endif %}
     </span>

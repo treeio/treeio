@@ -34,7 +34,7 @@ def comments_likes(request, target, form, expand=True):
     else:
         object = Object.objects.get(pk=object_id)
 
-    profile = request.user.get_profile()
+    profile = request.user.profile
 
     if object:
         if form.get('like', 0) == unicode(object.id):
@@ -204,7 +204,7 @@ def attachment_delete(request, attachment_id):
     except Attachment.DoesNotExist:
         return
 
-    profile = request.user.get_profile()
+    profile = request.user.profile
 
     if a.attached_object:
         object_id = a.attached_object.id
@@ -237,7 +237,7 @@ def easy_invite(request, emails=None):
         emails_original = emails
         emails = emails.split(',')
 
-        sender = request.user.get_profile()
+        sender = request.user.profile
         default_group = sender.default_group
         domain = RequestSite(request).domain
 
@@ -247,7 +247,7 @@ def easy_invite(request, emails=None):
             email = email.strip()
             if len(email) > 7 and re.match("^.+\\@(\\[?)[a-zA-Z0-9\\-\\.]+\\.([a-zA-Z]{2,3}|[0-9]{1,3})(\\]?)$", email) is not None:
                 invitation = Invitation(
-                    sender=request.user.get_profile(), email=email, default_group=default_group)
+                    sender=request.user.profile, email=email, default_group=default_group)
                 invitation.save()
                 EmailInvitation(
                     invitation=invitation, sender=sender, domain=domain).send_email()

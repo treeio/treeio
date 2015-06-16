@@ -192,7 +192,7 @@ class Group(AccessEntity):
 class User(AccessEntity):
     """A record about a user registered within the system"""
     name = models.CharField(max_length=256)
-    user = models.ForeignKey(django_auth.User)
+    user = models.OneToOneField(django_auth.User, related_name='profile')
     default_group = models.ForeignKey(
         Group, related_name='default_user_set', blank=True, null=True)
     other_groups = models.ManyToManyField(Group, blank=True, null=True)
@@ -383,7 +383,7 @@ def user_autocreate_handler(sender, instance, created, **kwargs):
     """When a Django User is created, automatically create a treeio User"""
     if created:
         try:
-            profile = instance.get_profile()
+            profile = instance.profile
         except:
             profile = User(user=instance)
             profile.save()
@@ -512,7 +512,7 @@ class Object(models.Model):
         user = None
         if request.user.username:
             try:
-                user = request.user.get_profile()
+                user = request.user.profile
             except MultipleObjectsReturned:
                 user = User.objects.filter(user__id=request.user.id)[0]
         if user:
@@ -859,7 +859,7 @@ class Object(models.Model):
             default_permissions = settings.HARDTREE_DEFAULT_PERMISSIONS
 
         if hasattr(user, 'get_profile'):
-            user = user.get_profile()
+            user = user.profile
 
         if not self.creator:
             self.creator = user
@@ -957,7 +957,7 @@ class Object(models.Model):
 
     def set_user_from_request(self, request, mode=None):
         """Sets the user to the current in request and default mode for the user"""
-        user = request.user.get_profile()
+        user = request.user.profile
         self.set_user(user)
         return self
 
@@ -1073,7 +1073,7 @@ class UpdateRecord(models.Model):
 
     def set_user_from_request(self, request):
         """Sets .author to current user and .sender to user's Contact (if available)"""
-        user = request.user.get_profile()
+        user = request.user.profile
         self.author = user
         self.recipients.add(user)
         contact = user.get_contact()
