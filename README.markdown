@@ -94,7 +94,7 @@ Create a clone of this repository
 2.  Create a virtual environment to keep your packages & versions thereof separate from the rest of the system `virtualenv venv`
 3.  Activate the virtual environment `source ./venv/bin/activate`
 4.  Install system prerequisites for image processing module according to [instuctions](https://github.com/python-imaging/Pillow#platform-specific-instructions)
-1.  Install dependencies: `pip install -r requirements.pip`
+1.  Install dependencies: `pip install -r requirements.txt`
 2.  ```DJANGO_DIR=`python -c "import django; import os; print os.path.dirname(django.__file__)"` ```
 1.  Run the patch: `python related_fields_patch.py $DJANGO_DIR`
 
