@@ -20,7 +20,7 @@ class ProcessTransactions(object):
     def export_transactions(self, transactions):
         "Export transactions into CSV file"
 
-        response = HttpResponse(mimetype='text/csv')
+        response = HttpResponse(content_type='text/csv')
         response[
             'Content-Disposition'] = 'attachment; filename=Transactions_%s.csv' % datetime.date.today().isoformat()
 

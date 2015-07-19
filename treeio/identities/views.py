@@ -450,7 +450,7 @@ def contact_me(request, attribute='', response_format='html'):
 @cache_control(private=True, max_age=31536000)
 def contact_view_picture(request, contact_id, response_format='html'):
     "Contact view Picture"
-    response = HttpResponse(mimetype="image/png")
+    response = HttpResponse(content_type="image/png")
     render_identicon(contact_id * 5000).save(response, "PNG")
     return response
 

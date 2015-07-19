@@ -75,7 +75,7 @@ class ContactType(Object):
 
 
 class Contact(Object):
-    "Information about a company, group or user. By design allows custom fields defined in ContactField"
+    """Information about a company, group or user. By design allows custom fields defined in ContactField"""
     contact_type = models.ForeignKey(ContactType)
     name = models.CharField(max_length=256)
     parent = models.ForeignKey(

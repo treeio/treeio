@@ -363,7 +363,7 @@ def get_new_message_for_user(user, **kwargs):
                 data = _temp_data.copy()
 
     data = json.dumps(data)
-    return HttpResponse(data, mimetype='application/json', status=200)
+    return HttpResponse(data, content_type='application/json', status=200)
 
 
 def add_new_message(id, user, user_profile, text):
@@ -392,7 +392,7 @@ def add_new_message(id, user, user_profile, text):
     except:
         data = json.dumps(
             {"cmd": "Error", "data": {"msg": str(sys.exc_info())}})
-        return HttpResponse(data, mimetype='application/json', status=200)
+        return HttpResponse(data, content_type='application/json', status=200)
 
     return get_new_message_for_user(user)
 
@@ -407,7 +407,7 @@ def disconnect(user):
     listeners = get_memcached(get_key("listeners"))
     del listeners[user]
     set_memcached(get_key("listeners"), listeners)
-    return HttpResponse(json.dumps({"cmd": "Disconnect"}), mimetype='application/json', status=200)
+    return HttpResponse(json.dumps({"cmd": "Disconnect"}), content_type='application/json', status=200)
 
 
 def cmd(message, user):
@@ -426,7 +426,7 @@ def cmd(message, user):
         print "error: ", sys.exc_info()
         data = json.dumps(
             {"cmd": "Error", "data": {"msg": str(sys.exc_info())}})
-        return HttpResponse(data, mimetype='application/json', status=200)
+        return HttpResponse(data, content_type='application/json', status=200)
 
     try:
 
@@ -463,9 +463,10 @@ def cmd(message, user):
         print "Error: ", sys.exc_info()
         data = json.dumps(
             {"cmd": "Error", "data": {"msg": str(sys.exc_info())}})
-        return HttpResponse(data, mimetype='application/json', status=200)
+        return HttpResponse(data, content_type='application/json', status=200)
 
-    return HttpResponse(json.dumps({"cmd": "Error", "data": {"msg": "unknown command"}}), mimetype='application/json', status=200)
+    return HttpResponse(json.dumps({"cmd": "Error", "data": {"msg": "unknown command"}}),
+                        content_type='application/json', status=200)
 
 
 class Search_Inactive_Users(threading.Thread):

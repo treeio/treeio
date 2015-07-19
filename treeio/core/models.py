@@ -15,7 +15,7 @@ from django.contrib.messages.storage.base import Message
 from django.db import models
 from django.core.exceptions import MultipleObjectsReturned
 from django.contrib.sites.models import RequestSite
-from django.core.urlresolvers import reverse
+from django.core.urlresolvers import reverse, NoReverseMatch
 from django.utils.translation import ugettext as _
 from django.utils.html import strip_tags
 from django.shortcuts import get_object_or_404
@@ -82,12 +82,12 @@ class Group(AccessEntity):
         if not module or module == 'identities':
             try:
                 return reverse('identities_group_view', args=[self.id])
-            except Exception:
+            except NoReverseMatch:
                 return ""
         else:
             try:
                 return reverse('core_administration_group_view', args=[self.id])
-            except Exception:
+            except NoReverseMatch:
                 return ""
 
     def get_root(self):
@@ -128,7 +128,7 @@ class Group(AccessEntity):
         """Returns first available Contact"""
         try:
             return self.contact_set.all()[0]
-        except IndexError as e:
+        except IndexError:
             return None
 
     def has_contact(self):
@@ -150,8 +150,8 @@ class Group(AccessEntity):
         try:
             for setting in ModuleSetting.get_for_module('treeio.core', name='default_perspective', group=self):
                 ids.append(long(setting.value))
-            id = ids[0]
-            perspective = get_object_or_404(Perspective, pk=id)
+            _id = ids[0]
+            perspective = get_object_or_404(Perspective, pk=_id)
         except:
             try:
                 conf = ModuleSetting.get_for_module(
@@ -208,8 +208,7 @@ class User(AccessEntity):
         contact = self.get_contact()
         if contact:
             return unicode(contact)
-        else:  # todo remove useless else
-            return unicode(self.name)
+        return unicode(self.name)
 
     def save(self, *args, **kwargs):
         """Override to automatically set User.name from attached Django User"""

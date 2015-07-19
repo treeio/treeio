@@ -182,7 +182,7 @@ def render_to_response(template_name, context=None, context_instance=None, respo
         x.wait()
 
         f = open(output)
-        response = HttpResponse(f.read(), mimetype='application/pdf')
+        response = HttpResponse(f.read(), content_type='application/pdf')
         f.close()
 
         os.remove(output)

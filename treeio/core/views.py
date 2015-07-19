@@ -184,7 +184,7 @@ def logo_image(request, gif=False, response_format='html'):
         except:
             pass
 
-    return HttpResponse(logofile.read(), mimetype=mimetype)
+    return HttpResponse(logofile.read(), content_type=mimetype)
 
 
 def ajax_popup(request, popup_id='', url='/'):

@@ -409,7 +409,7 @@ X-WR-TIMEZONE:London/UK
 END:VCALENDAR
 """
 
-    response = HttpResponse(icalstream, mimetype='text/calendar')
+    response = HttpResponse(icalstream, content_type='text/calendar')
     response['Filename'] = 'events.ics'  # IE needs this
     response['Content-Disposition'] = 'attachment; filename=events.ics'
     return response

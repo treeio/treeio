@@ -13,7 +13,7 @@ from django.test import TestCase
 from django.test.client import Client
 from django.core.urlresolvers import reverse
 from django.contrib.auth.models import User as DjangoUser
-from treeio import identities
+from treeio.identities.models import Contact
 from treeio.core.models import User, Group, ModuleSetting, Module, Object, Perspective, AccessEntity
 
 
@@ -24,9 +24,8 @@ class CoreModelsTest(TestCase):
     def test_model_AccessEntity(self):
         obj = AccessEntity()
         obj.save()
-        self.assertIsNotNone(obj.id)
-        obj = AccessEntity.objects.get(id=obj.id)
         self.assertTrue(obj.last_updated - datetime.datetime.now() < datetime.timedelta(seconds=1))
+
         self.assertIsNone(obj.get_entity())
         self.assertFalse(obj.is_user())
         self.assertEqual(obj.__unicode__(), str(obj.id))
@@ -37,9 +36,6 @@ class CoreModelsTest(TestCase):
         name = 'testgroup'
         obj = Group(name=name)
         obj.save()
-        self.assertIsNotNone(obj.id)
-        obj = Group.objects.get(id=obj.id)
-        self.assertEqual(obj.name, name)
         self.assertIsNone(obj.parent)
         self.assertIsNone(obj.details)
         self.assertQuerysetEqual(obj.child_set.all(), [])
@@ -74,8 +70,10 @@ class CoreModelsTest(TestCase):
         self.assertTrue(profile.is_admin())
         self.assertEqual(profile.get_username(), username)
         self.assertEqual(profile.get_perspective(), Perspective.objects.get(name='Default'))
-        self.assertEqual(profile.get_contact(), identities.models.Contact.objects.get(related_user=profile))
+        self.assertEqual(profile.get_contact(), Contact.objects.get(related_user=profile))
         self.assertTrue(profile.has_contact())
+
+        self.assertEqual(profile.__unicode__(), username)
 
     def test_model_User_profile_change_default_group(self):
         username = "testusername"
@@ -166,6 +164,12 @@ class CoreViewsTest(TestCase):
             self.client = Client()
 
             self.prepared = True
+
+    def test_logo(self):
+        """Just test that the logo view works
+        """
+        response = self.client.get(reverse('core_logo_image'))
+        self.assertEquals(response.status_code, 200)
 
     ######################################
     # Testing views when user is logged in

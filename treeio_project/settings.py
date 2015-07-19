@@ -56,8 +56,7 @@ if TESTING:
             'NAME': 'treeio',
             'USER': 'treeio',
             'PASSWORD': 'treeio',
-    }
-}
+        }}
 
     if os.environ.get('MC') == '1':
         CACHES = {
@@ -537,14 +536,13 @@ if not TESTING:
                 }
         }
     except ImportError:
-        if 'rosetta' in INSTALLED_APPS:
-            import tempfile
-            CACHES = {
-                'default': {
-                    'BACKEND': 'django.core.cache.backends.filebased.FileBasedCache',
-                    'LOCATION': tempfile.mkdtemp('django_cache'),
-                    }
-            }
+        import tempfile
+        CACHES = {
+            'default': {
+                'BACKEND': 'django.core.cache.backends.filebased.FileBasedCache',
+                'LOCATION': tempfile.mkdtemp('django_cache'),
+                }
+        }
 
 # CACHE_BACKEND="johnny.backends.locmem://"
 

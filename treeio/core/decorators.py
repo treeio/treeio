@@ -129,23 +129,23 @@ def handle_response_format(f):
                         location = response['Location']
                         if not _is_full_redirect(location):
                             response = HttpResponse(json.dumps({'redirect': location}),
-                                                    mimetype=settings.HARDTREE_RESPONSE_FORMATS['ajax'])
+                                                    content_type=settings.HARDTREE_RESPONSE_FORMATS['ajax'])
                         else:
                             if '.ajax' in location:
                                 location = str(location).replace('.ajax', '')
                             response = HttpResponse(json.dumps({'redirect_out': location}),
-                                                    mimetype=settings.HARDTREE_RESPONSE_FORMATS['ajax'])
+                                                    content_type=settings.HARDTREE_RESPONSE_FORMATS['ajax'])
                     elif hasattr(request, 'redirect'):
                         location = request.redirect
                         response = HttpResponse(json.dumps({'redirect': location}),
-                                                mimetype=settings.HARDTREE_RESPONSE_FORMATS['ajax'])
+                                                content_type=settings.HARDTREE_RESPONSE_FORMATS['ajax'])
                     elif 'Content-Disposition' in response and \
                             response['Content-Type'] not in settings.HARDTREE_RESPONSE_FORMATS.values():
                         location = request.get_full_path()
                         if '.ajax' in location:
                             location = str(location).replace('.ajax', '')
                         response = HttpResponse(json.dumps({'redirect_out': location}),
-                                                mimetype=settings.HARDTREE_RESPONSE_FORMATS['ajax'])
+                                                content_type=settings.HARDTREE_RESPONSE_FORMATS['ajax'])
 
                 return response
             else:
