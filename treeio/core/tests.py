@@ -135,128 +135,88 @@ class CoreModelsTest(TestCase):
         self.assertEqual(obj.get_absolute_url(), '/admin/perspective/view/{}'.format(obj.id))
 
 
-class CoreViewsTest(TestCase):
-    "Core View tests"
+class CoreViewsTestLoggedIn(TestCase):
+    """Core View tests when logged in"""
     username = "test"
     password = "password"
-    prepared = False
 
     def setUp(self):
-        "Initial Setup"
+        self.group, created = Group.objects.get_or_create(name='test')
+        duser, created = DjangoUser.objects.get_or_create(username=self.username)
+        duser.set_password(self.password)
+        duser.save()
+        self.user = duser
 
-        if not self.prepared:
-            Object.objects.all().delete()
+        self.perspective = Perspective(name='test')
+        self.perspective.set_default_user()
+        self.perspective.save()
 
-            # Create objects
+        self.client.login(username=self.username, password=self.password)
 
-            self.group, created = Group.objects.get_or_create(name='test')
-            duser, created = DjangoUser.objects.get_or_create(
-                username=self.username)
-            duser.set_password(self.password)
-            duser.save()
-            # self.user, created = User.objects.get_or_create(user=duser)
-            # self.user.save()
+    def test_user_logout(self):
+        """Test logout page at /logout"""
+        response = self.client.get(reverse('user_logout'))
+        self.assertRedirects(response, reverse('user_login'))
+        self.assertNotIn('_auth_user_id', self.client.session)
 
-            self.perspective = Perspective(name='test')
-            self.perspective.set_default_user()
-            self.perspective.save()
+    def test_user_login(self):
+        """Test login page at /login"""
+        response = self.client.post(reverse('user_login'), {'username': self.username, 'password': self.password})
+        self.assertRedirects(response, reverse('user_denied'))
 
-            self.client = Client()
-
-            self.prepared = True
-
-    def test_logo(self):
-        """Just test that the logo view works
-        """
-        response = self.client.get(reverse('core_logo_image'))
-        self.assertEquals(response.status_code, 200)
-
-    ######################################
-    # Testing views when user is logged in
-    ######################################
     def test_home_login(self):
-        "Test home page with login at /"
-        response = self.client.post('/accounts/login', {'username': self.username,
-                                                        'password': self.password})
-        self.assertRedirects(response, '/')
+        """Test home page with login at /"""
         response = self.client.get('/')
         self.assertEquals(response.status_code, 200)
+        self.assertEqual(self.client.session['_auth_user_id'], self.user.pk)
 
     # Perspectives
     def test_index_perspectives_login(self):
-        "Test page with login at /admin/perspectives/"
-        response = self.client.post('/accounts/login', {'username': self.username,
-                                                        'password': self.password})
-        self.assertRedirects(response, '/')
+        """Test page with login at /admin/perspectives/"""
         response = self.client.get(reverse('core_admin_index_perspectives'))
         self.assertEquals(response.status_code, 200)
 
     def test_perspective_add(self):
-        "Test index page with login at /admin/perspective/add"
-        response = self.client.post('/accounts/login',
-                                    {'username': self.username, 'password': self.password})
-        self.assertRedirects(response, '/')
+        """Test index page with login at /admin/perspective/add"""
         response = self.client.get(reverse('core_admin_perspective_add'))
         self.assertEquals(response.status_code, 200)
 
     def test_perspective_view(self):
-        "Test index page with login at /admin/perspective/view/<perspective_id>"
-        response = self.client.post('/accounts/login',
-                                    {'username': self.username, 'password': self.password})
-        self.assertRedirects(response, '/')
-        response = self.client.get(
-            reverse('core_admin_perspective_view', args=[self.perspective.id]))
+        """Test index page with login at /admin/perspective/view/<perspective_id>"""
+        response = self.client.get(reverse('core_admin_perspective_view', args=[self.perspective.id]))
         self.assertEquals(response.status_code, 200)
 
     def test_perspective_edit(self):
-        "Test index page with login at /admin/perspective/edit/<perspective_id>"
-        response = self.client.post('/accounts/login',
-                                    {'username': self.username, 'password': self.password})
-        self.assertRedirects(response, '/')
-        response = self.client.get(
-            reverse('core_admin_perspective_edit', args=[self.perspective.id]))
+        """Test index page with login at /admin/perspective/edit/<perspective_id>"""
+        response = self.client.get(reverse('core_admin_perspective_edit', args=[self.perspective.id]))
         self.assertEquals(response.status_code, 200)
 
     def test_perspective_delete(self):
-        "Test index page with login at /admin/perspective/delete/<perspective_id>"
-        response = self.client.post('/accounts/login',
-                                    {'username': self.username, 'password': self.password})
-        self.assertRedirects(response, '/')
-        response = self.client.get(
-            reverse('core_admin_perspective_delete', args=[self.perspective.id]))
+        """Test index page with login at /admin/perspective/delete/<perspective_id>"""
+        response = self.client.get(reverse('core_admin_perspective_delete', args=[self.perspective.id]))
         self.assertEquals(response.status_code, 200)
 
     # Modules
     def test_index_modules_login(self):
-        "Test page with login at /admin/modules/"
-        response = self.client.post('/accounts/login', {'username': self.username,
-                                                        'password': self.password})
-        self.assertRedirects(response, '/')
+        """Test page with login at /admin/modules/"""
         response = self.client.get(reverse('core_admin_index_modules'))
         self.assertEquals(response.status_code, 200)
 
     # Users
     def test_index_users_login(self):
-        "Test page with login at /admin/users/"
-        response = self.client.post('/accounts/login', {'username': self.username,
-                                                        'password': self.password})
-        self.assertRedirects(response, '/')
+        """Test page with login at /admin/users/"""
         response = self.client.get(reverse('core_admin_index_users'))
         self.assertEquals(response.status_code, 200)
 
-    def login(self):
-        self.assertEquals(self.client.login(username=self.username, password=self.password), True)
-
     def test_core_user_add(self):
-        "Test page with login at /admin/user/add"
+        """Test page with login at /admin/user/add"""
         name = 'newuser'
         password = 'newuserpsw'
         data = {'name': name, 'password': password, 'password_again': password}
-        self.login()
         response = self.client.post(path=reverse('core_admin_user_add'), data=data)
         self.assertEquals(response.status_code, 302)
         profile = User.objects.get(name=name)
-        profiles = User.objects.all()
+
         self.assertEquals(profile.name, name)
         self.assertRedirects(response, reverse('core_admin_user_view', args=[profile.id]))
         self.assertEquals(self.client.login(username=name, password=password), True)
@@ -265,14 +225,13 @@ class CoreViewsTest(TestCase):
         self.assertRedirects(response, '/')
 
     def test_core_user_delete(self):
-        "Test page with login at /admin/user/delete"
+        """Test page with login at /admin/user/delete"""
         name = 'newuser'
         password = 'newuserpsw'
         user, created = DjangoUser.objects.get_or_create(username=name)
         if created:
             user.set_password(password)
             user.save()
-        self.login()
         response = self.client.post(path=reverse('core_admin_user_delete', args=[user.profile.id]),
                                     data={'delete': ''})
         self.assertRedirects(response, reverse('core_admin_index_users'))
@@ -282,263 +241,228 @@ class CoreViewsTest(TestCase):
             DjangoUser.objects.get(username=name)
 
     def test_core_user_invite(self):
-        "Test page with login at /admin/user/invite"
-        response = self.client.post('/accounts/login', {'username': self.username,
-                                                        'password': self.password})
-        self.assertRedirects(response, '/')
+        """Test page with login at /admin/user/invite"""
         response = self.client.get(reverse('core_admin_user_invite'))
         self.assertEquals(response.status_code, 200)
 
     # Groups
     def test_index_groups_login(self):
-        "Test page with login at /admin/groups/"
-        response = self.client.post('/accounts/login', {'username': self.username,
-                                                        'password': self.password})
-        self.assertRedirects(response, '/')
+        """Test page with login at /admin/groups/"""
         response = self.client.get(reverse('core_admin_index_groups'))
         self.assertEquals(response.status_code, 200)
 
     def test_core_group_add(self):
-        "Test page with login at /admin/group/add"
-        response = self.client.post('/accounts/login', {'username': self.username,
-                                                        'password': self.password})
-        self.assertRedirects(response, '/')
+        """Test page with login at /admin/group/add"""
         response = self.client.get(reverse('core_admin_group_add'))
         self.assertEquals(response.status_code, 200)
 
     def test_core_group_view(self):
-        "Test index page with login at /admin/group/view/<group_id>"
-        response = self.client.post('/accounts/login',
-                                    {'username': self.username, 'password': self.password})
-        self.assertRedirects(response, '/')
-        response = self.client.get(
-            reverse('core_admin_group_view', args=[self.group.id]))
+        """Test index page with login at /admin/group/view/<group_id>"""
+        response = self.client.get(reverse('core_admin_group_view', args=[self.group.id]))
         self.assertEquals(response.status_code, 200)
 
     def test_core_group_edit(self):
-        "Test index page with login at /admin/group/edit/<group_id>"
-        response = self.client.post('/accounts/login',
-                                    {'username': self.username, 'password': self.password})
-        self.assertRedirects(response, '/')
-        response = self.client.get(
-            reverse('core_admin_group_edit', args=[self.group.id]))
+        """Test index page with login at /admin/group/edit/<group_id>"""
+        response = self.client.get(reverse('core_admin_group_edit', args=[self.group.id]))
         self.assertEquals(response.status_code, 200)
 
     def test_core_group_delete(self):
-        "Test index page with login at /admin/group/delete/<group_id>"
-        response = self.client.post('/accounts/login',
-                                    {'username': self.username, 'password': self.password})
-        self.assertRedirects(response, '/')
-        response = self.client.get(
-            reverse('core_admin_group_delete', args=[self.group.id]))
+        """Test index page with login at /admin/group/delete/<group_id>"""
+        response = self.client.get(reverse('core_admin_group_delete', args=[self.group.id]))
         self.assertEquals(response.status_code, 200)
 
     # Settings
     def test_core_settings_view(self):
-        "Test index page with login at /admin/settings/view/"
-        response = self.client.post('/accounts/login',
-                                    {'username': self.username, 'password': self.password})
-        self.assertRedirects(response, '/')
+        """Test index page with login at /admin/settings/view/"""
         response = self.client.get(reverse('core_settings_view'))
         self.assertEquals(response.status_code, 200)
 
     def test_core_settings_edit(self):
-        "Test index page with login at /admin/settings/edit/"
-        response = self.client.post('/accounts/login',
-                                    {'username': self.username, 'password': self.password})
-        self.assertRedirects(response, '/')
+        """Test index page with login at /admin/settings/edit/"""
         response = self.client.get(reverse('core_settings_edit'))
         self.assertEquals(response.status_code, 200)
 
-    ######################################
-    # Testing views when user is not logged in
-    ######################################
+
+class CoreViewsTestNoLogin(TestCase):
+    """Core View tests when not logged in"""
+    username = "test"
+    password = "password"
+
+    def setUp(self):
+        self.group, created = Group.objects.get_or_create(name='test')
+        duser, created = DjangoUser.objects.get_or_create(username=self.username)
+        duser.set_password(self.password)
+        duser.save()
+        self.user = duser
+
+        self.perspective = Perspective(name='test')
+        self.perspective.set_default_user()
+        self.perspective.save()
+
+    def test_user_logout(self):
+        """A logout request from an already logged out user should be harmless
+        """
+        response = self.client.get(reverse('user_logout'))
+        self.assertRedirects(response, reverse('user_login'))
+        self.assertNotIn('_auth_user_id', self.client.session)
+
+    def test_user_login(self):
+        """Test login page at /login"""
+        response = self.client.post(reverse('user_login'), {'username': self.username, 'password': self.password})
+        self.assertRedirects(response, '/')
+        self.assertEqual(self.client.session['_auth_user_id'], self.user.pk)
+
+    def test_logo(self):
+        """Just test that the logo view works"""
+        response = self.client.get(reverse('core_logo_image'))
+        self.assertEquals(response.status_code, 200)
+
     def test_home(self):
-        "Test home page at /"
+        """Test home page at /"""
         response = self.client.get('/')
         # Redirects as unauthenticated
         self.assertRedirects(response, reverse('user_login'))
 
     def test_index_perspectives_out(self):
-        "Test page at /admin/perspectives/"
+        """Test page at /admin/perspectives/"""
         response = self.client.get(reverse('core_admin_index_perspectives'))
         self.assertRedirects(response, reverse('user_login'))
 
     def test_perspective_add_out(self):
-        "Test add perspective page at /admin/perspective/add"
+        """Test add perspective page at /admin/perspective/add"""
         response = self.client.get(reverse('core_admin_perspective_add'))
         self.assertRedirects(response, reverse('user_login'))
 
     def test_perspective_view_out(self):
-        "Test perspective view at /admin/perspective/view/<perspective_id>"
-        response = self.client.get(
-            reverse('core_admin_perspective_view', args=[self.perspective.id]))
+        """Test perspective view at /admin/perspective/view/<perspective_id>"""
+        response = self.client.get(reverse('core_admin_perspective_view', args=[self.perspective.id]))
         self.assertRedirects(response, reverse('user_login'))
 
     def test_perspective_edit_out(self):
-        "Test perspective add at /admin/perspective/edit/<perspective_id>"
-        response = self.client.get(
-            reverse('core_admin_perspective_edit', args=[self.perspective.id]))
+        """Test perspective add at /admin/perspective/edit/<perspective_id>"""
+        response = self.client.get(reverse('core_admin_perspective_edit', args=[self.perspective.id]))
         self.assertRedirects(response, reverse('user_login'))
 
     def test_perspective_delete_out(self):
-        "Test perspective delete at /admin/perspective/delete/<perspective_id>"
-        response = self.client.get(
-            reverse('core_admin_perspective_delete', args=[self.perspective.id]))
+        """Test perspective delete at /admin/perspective/delete/<perspective_id>"""
+        response = self.client.get(reverse('core_admin_perspective_delete', args=[self.perspective.id]))
         self.assertRedirects(response, reverse('user_login'))
 
     # Modules
     def test_index_modules_out(self):
-        "Test index modules page at /admin/modules/"
+        """Test index modules page at /admin/modules/"""
         response = self.client.get(reverse('core_admin_index_modules'))
         self.assertRedirects(response, reverse('user_login'))
 
     # Users
     def test_index_users_out(self):
-        "Test index users page at /admin/users/"
+        """Test index users page at /admin/users/"""
         response = self.client.get(reverse('core_admin_index_users'))
         self.assertRedirects(response, reverse('user_login'))
 
     def test_core_user_add_out(self):
-        "Test user add at /admin/user/add"
+        """Test user add at /admin/user/add"""
         response = self.client.get(reverse('core_admin_user_add'))
         self.assertRedirects(response, reverse('user_login'))
 
     def test_core_user_invite_out(self):
-        "Test user invite at /admin/user/invite"
+        """Test user invite at /admin/user/invite"""
         response = self.client.get(reverse('core_admin_user_invite'))
         self.assertRedirects(response, reverse('user_login'))
 
     # Groups
     def test_index_groups_out(self):
-        "Test index groups at /admin/groups/"
+        """Test index groups at /admin/groups/"""
         response = self.client.get(reverse('core_admin_index_groups'))
         self.assertRedirects(response, reverse('user_login'))
 
     def test_core_group_add_out(self):
-        "Test group add at /admin/group/add"
+        """Test group add at /admin/group/add"""
         response = self.client.get(reverse('core_admin_group_add'))
         self.assertRedirects(response, reverse('user_login'))
 
     def test_core_group_view_out(self):
-        "Test group view at /admin/group/view/<group_id>"
-        response = self.client.get(
-            reverse('core_admin_group_view', args=[self.group.id]))
+        """Test group view at /admin/group/view/<group_id>"""
+        response = self.client.get(reverse('core_admin_group_view', args=[self.group.id]))
         self.assertRedirects(response, reverse('user_login'))
 
     def test_core_group_edit_out(self):
-        "Test group edit at /admin/group/edit/<group_id>"
-        response = self.client.get(
-            reverse('core_admin_group_edit', args=[self.group.id]))
+        """Test group edit at /admin/group/edit/<group_id>"""
+        response = self.client.get(reverse('core_admin_group_edit', args=[self.group.id]))
         self.assertRedirects(response, reverse('user_login'))
 
     def test_core_group_delete_out(self):
         "Test group delete at /admin/group/delete/<group_id>"
-        response = self.client.get(
-            reverse('core_admin_group_delete', args=[self.group.id]))
+        response = self.client.get(reverse('core_admin_group_delete', args=[self.group.id]))
         self.assertRedirects(response, reverse('user_login'))
 
     # Settings
     def test_core_settings_view_out(self):
-        "Test isettings view at /admin/settings/view/"
+        """Test isettings view at /admin/settings/view/"""
         response = self.client.get(reverse('core_settings_view'))
         self.assertRedirects(response, reverse('user_login'))
 
     def test_core_settings_edit_out(self):
-        "Test settings edit at /admin/settings/edit/"
+        """Test settings edit at /admin/settings/edit/"""
         response = self.client.get(reverse('core_settings_edit'))
         self.assertRedirects(response, reverse('user_login'))
 
 
 class MiddlewareChatTest(TestCase):
-    "Midleware chat tests"
+    """Midleware chat tests"""
     username = "test"
     password = "password"
-    prepared = False
 
     def setUp(self):
-        "Initial Setup"
+        self.group, created = Group.objects.get_or_create(name='test')
+        duser, created = DjangoUser.objects.get_or_create(username=self.username)
+        duser.set_password(self.password)
+        duser.save()
 
-        if not self.prepared:
-            Object.objects.all().delete()
-
-            # Create objects
-            try:
-                self.group = Group.objects.get(name='test')
-            except Group.DoesNotExist:
-                Group.objects.all().delete()
-                self.group = Group(name='test')
-                self.group.save()
-
-            try:
-                self.user = DjangoUser.objects.get(username=self.username)
-                self.user.set_password(self.password)
-                try:
-                    self.profile = self.user.profile
-                except Exception:
-                    User.objects.all().delete()
-                    self.user = DjangoUser(username=self.username, password='')
-                    self.user.set_password(self.password)
-                    self.user.save()
-            except DjangoUser.DoesNotExist:
-                User.objects.all().delete()
-                self.user = DjangoUser(username=self.username, password='')
-                self.user.set_password(self.password)
-                self.user.save()
-
-            try:
-                perspective = Perspective.objects.get(name='default')
-            except Perspective.DoesNotExist:
-                Perspective.objects.all().delete()
-                perspective = Perspective(name='default')
-                perspective.set_default_user()
-                perspective.save()
-            ModuleSetting.set('default_perspective', perspective.id)
-
-            self.client = Client()
-
-            self.prepared = True
+        self.perspective = Perspective(name='test')
+        self.perspective.set_default_user()
+        self.perspective.save()
 
     def test_chat_get_new_messages(self):
-        "Test get_new_messages"
+        """Test get_new_messages"""
         response = self.client.post(
             '/chat', {'json': '{"cmd":"Get", "location":"#"}'})
         self.assertEqual(response.status_code, 200)
 
     def test_chat_connect(self):
-        "Test connect"
+        """Test connect"""
         response = self.client.post(
             '/chat', {'json': '{"cmd":"Connect", "location":"#"}'})
         self.assertEqual(response.status_code, 200)
 
     def test_chat_disconnect(self):
-        "Test disconnect"
+        """Test disconnect"""
         response = self.client.post(
             '/chat', {'json': '{"cmd":"Disconnect", "location":"#"}'})
         self.assertEqual(response.status_code, 200)
 
     def test_chat_add_new_message(self):
-        "Test add_new_message"
+        """Test add_new_message"""
         response = self.client.post(
             '/chat', {
                 'json': '{"cmd":"Message","data":{"id":"test_b5e6d0470a5f4656c3bc77f879c3dbbc","text":"test message"},"location":"#"}'})
         self.assertEqual(response.status_code, 200)
 
     def test_chat_exit_from_conference(self):
-        "Test exit_from_conference"
+        """Test exit_from_conference"""
         response = self.client.post(
             '/chat', {'json': '{"cmd":"Exit","data":{"id":"test_b5e6d0470a5f4656c3bc77f879c3dbbc"},"location":"#"}'})
         self.assertEqual(response.status_code, 200)
 
     def test_chat_add_users_in_conference(self):
-        "Test add_users_in_conference"
+        """Test add_users_in_conference"""
         response = self.client.post(
             '/chat', {
                 'json': '{"cmd":"Add","data":{"id":"guest_006f721c4a59a44d969b9f73fb6360a5","users":["test"]},"location":"#"}'})
         self.assertEqual(response.status_code, 200)
 
     def test_chat_create_conference(self):
-        "Test create_conference"
+        """Test create_conference"""
         response = self.client.post(
             '/chat', {'json': '{"cmd":"Create","data":{"title":["Admin"],"users":["admin"]},"location":"#"}'})
         self.assertEqual(response.status_code, 200)

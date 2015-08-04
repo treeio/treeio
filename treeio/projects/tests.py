@@ -14,34 +14,58 @@ from django.contrib.auth.models import User as DjangoUser
 from treeio.core.models import User, Group, Perspective, ModuleSetting, Object
 from treeio.projects.models import Project, Milestone, Task, TaskStatus, TaskTimeSlot
 from treeio.identities.models import Contact, ContactType
-from datetime import datetime
+from datetime import datetime, timedelta
 
 
 class ProjectsModelsTest(TestCase):
+    """ Documents models tests"""
+    def setUp(self):
+        self.project = Project(name='test')
+        self.project.save()
 
-    " Documents models tests"
+        self.taskstatus = TaskStatus(name='test')
+        self.taskstatus.save()
 
-    def test_model_project(self):
-        "Test project"
-        obj = Project(name='test')
-        obj.save()
-        self.assertEquals('test', obj.name)
-        self.assertNotEquals(obj.id, None)
-        obj.delete()
+        self.task = Task(name='test', project=self.project, status=self.taskstatus)
+        self.task.save()
 
-    def test_model_task(self):
-        "Test task"
-        project = Project(name='test')
-        project.save()
+    def test_get_absolute_url(self):
+        """Test if get_absolute_url works without raising any exception"""
+        self.project.get_absolute_url()
 
-        status = TaskStatus(name='test')
-        status.save()
+    def test_task_priority_human(self):
+        """Default priority should be 3, text representation should be 'Normal'
+        """
+        self.assertEqual(self.task.priority, 3)
+        self.assertEqual(self.task.priority_human(), 'Normal')
 
-        obj = Task(name='test', project=project, status=status, priority=3)
-        obj.save()
-        self.assertEquals(project, obj.project)
-        self.assertNotEquals(obj.id, None)
-        obj.delete()
+    def test_get_estimated_time_default(self):
+        """Default estimated time is None, string representation is empty string """
+        self.assertIsNone(self.task.estimated_time)
+        self.assertEqual(self.task.get_estimated_time(), '')
+
+    def test_get_estimated_time_one_min(self):
+        self.task.estimated_time = 1
+        self.assertEqual(self.task.get_estimated_time(), ' 1 minutes')
+
+    def test_get_estimated_time_zero_min(self):
+        self.task.estimated_time = 0
+        self.assertEqual(self.task.get_estimated_time(), 'Less than 1 minute')
+
+    def test_get_estimated_time_60_min(self):
+        self.task.estimated_time = 60
+        self.assertEqual(self.task.get_estimated_time(), ' 1 hours ')
+
+    def test_get_estimated_time_61_min(self):
+        self.task.estimated_time = 61
+        self.assertEqual(self.task.get_estimated_time(), ' 1 hours  1 minutes')
+
+    # def test_save TODO: save is overridden and has some extra logic
+
+    def test_get_total_time_default(self):
+        self.assertEqual(self.task.get_total_time(), timedelta())
+
+    # def test_get_total_time  TODO: make a test case using timeslots
 
     def test_model_task_status(self):
         "Test task status"

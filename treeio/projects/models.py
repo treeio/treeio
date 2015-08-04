@@ -17,7 +17,6 @@ from datetime import datetime, timedelta
 
 
 class Project(Object):
-
     """ Project model """
     name = models.CharField(max_length=255)
     parent = models.ForeignKey(
@@ -29,19 +28,15 @@ class Project(Object):
     details = models.TextField(max_length=255, null=True, blank=True)
 
     class Meta:
-
-        "Project"
+        """Project"""
         ordering = ['name']
 
     def __unicode__(self):
         return self.name
 
     def get_absolute_url(self):
-        "Returns absolute URL for the Project"
-        try:
-            return reverse('projects_project_view', args=[self.id])
-        except Exception:
-            pass
+        """Returns absolute URL for the Project"""
+        return reverse('projects_project_view', args=[self.id])
 
 
 # TaskStatus model
@@ -129,31 +124,30 @@ class Task(Object):
         Contact, blank=True, null=True, on_delete=models.SET_NULL)
     start_date = models.DateTimeField(null=True, blank=True)
     end_date = models.DateTimeField(null=True, blank=True)
+    PRIORITY_CHOICES = ((5, _('Highest')), (4, _('High')), (3, _('Normal')), (2, _('Low')), (1, _('Lowest')))
     priority = models.IntegerField(default=3,
-                                   choices=((5, _('Highest')), (4, _('High')), (3, _('Normal')),
-                                            (2, _('Low')), (1, _('Lowest'))))
+                                   choices=PRIORITY_CHOICES)
     estimated_time = models.IntegerField(null=True, blank=True)
 
     access_inherit = ('parent', 'milestone', 'project', '*module', '*user')
 
     class Meta:
-
-        "Task"
+        """Task"""
         ordering = ('-priority', 'name')
 
     def __unicode__(self):
         return self.name
 
     def priority_human(self):
-        "Returns a Human-friendly priority name"
-        choices = ((5, _('Highest')), (4, _('High')), (
-            3, _('Normal')), (2, _('Low')), (1, _('Lowest')))
-        for choice in choices:
+        """Returns a Human-friendly priority name"""
+        for choice in Task.PRIORITY_CHOICES:
             if choice[0] == self.priority:
                 return choice[1]
 
     def get_estimated_time(self):
-        "Converts minutes to Human-friendly time format"
+        """Converts minutes to Human-friendly time format"""
+        if self.estimated_time is None:
+            return ''
         time = timedelta(minutes=self.estimated_time)
         days = time.days
         seconds = time.seconds
@@ -165,15 +159,15 @@ class Task(Object):
         string = ""
         if hours or minutes:
             if hours:
-                string += _("%2i hours ") % (hours)
+                string += _("%2i hours ") % (hours,)
             if minutes:
-                string += _("%2i minutes") % (minutes)
+                string += _("%2i minutes") % (minutes,)
         else:
             string = _("Less than 1 minute")
         return string
 
     def save(self, *args, **kwargs):
-        "Override save method to check for Milestone-Project links and auto-Status child Tasks"
+        """Override save method to check for Milestone-Project links and auto-Status child Tasks"""
 
         original = None
         if self.id:
@@ -216,14 +210,11 @@ class Task(Object):
         super(Task, self).save(*args, **kwargs)
 
     def get_absolute_url(self):
-        "Returns absolute URL"
-        try:
-            return reverse('projects_task_view', args=[self.id])
-        except Exception:
-            pass
+        """Returns absolute URL"""
+        return reverse('projects_task_view', args=[self.id])
 
     def get_total_time(self):
-        "Returns total time spent on the task, based on assigned TimeSlots"
+        """Returns total time spent on the task, based on assigned TimeSlots"""
         total = timedelta()
         for slot in self.tasktimeslot_set.all():
             total += slot.get_time()
@@ -240,7 +231,7 @@ class Task(Object):
         seconds %= (60 * 60)
         minutes = seconds // 60
         seconds %= 60
-        return (hours, minutes, seconds)
+        return hours, minutes, seconds
 
     def get_total_time_string(self):
         "Returns total time as a string with number of full hours and minutes"

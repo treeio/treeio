@@ -35,7 +35,7 @@ import random
 @handle_response_format
 @treeio_login_required
 def user_logout(request, response_format='html'):
-    "User logout"
+    """User logout"""
     logout(request)
     return HttpResponseRedirect(reverse('user_login'))
 
