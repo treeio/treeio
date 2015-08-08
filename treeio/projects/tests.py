@@ -15,6 +15,7 @@ from treeio.core.models import User, Group, Perspective, ModuleSetting, Object
 from treeio.projects.models import Project, Milestone, Task, TaskStatus, TaskTimeSlot
 from treeio.identities.models import Contact, ContactType
 from datetime import datetime, timedelta
+from freezegun import freeze_time
 
 
 class ProjectsModelsTest(TestCase):
@@ -28,10 +29,6 @@ class ProjectsModelsTest(TestCase):
 
         self.task = Task(name='test', project=self.project, status=self.taskstatus)
         self.task.save()
-
-    def test_get_absolute_url(self):
-        """Test if get_absolute_url works without raising any exception"""
-        self.project.get_absolute_url()
 
     def test_task_priority_human(self):
         """Default priority should be 3, text representation should be 'Normal'
@@ -62,10 +59,71 @@ class ProjectsModelsTest(TestCase):
 
     # def test_save TODO: save is overridden and has some extra logic
 
+    def test_get_absolute_url(self):
+        """Test if get_absolute_url works without raising any exception"""
+        self.project.get_absolute_url()
+
+    def add_time_slot(self, total_time):
+        duser, created = DjangoUser.objects.get_or_create(username='testuser')
+        time_from = datetime(year=2015, month=8, day=3)
+        time_to = time_from + total_time
+        timeslot = TaskTimeSlot(task=self.task, user=duser.profile, time_from=time_from, time_to=time_to)
+        timeslot.save()
+
     def test_get_total_time_default(self):
         self.assertEqual(self.task.get_total_time(), timedelta())
 
-    # def test_get_total_time  TODO: make a test case using timeslots
+    def test_get_total_time_with_timeslots1(self):
+        total_time = timedelta(hours=3)
+        self.add_time_slot(total_time)
+        self.assertEqual(self.task.get_total_time(), total_time)
+
+    def test_get_total_time_tuple_default(self):
+        self.assertIsNone(self.task.get_total_time_tuple())
+
+    def test_get_total_time_tuple(self):
+        total_time = timedelta(hours=3)
+        self.add_time_slot(total_time)
+        h, m, s = self.task.get_total_time_tuple()
+        self.assertEqual((h, m, s), (3, 0, 0))
+
+    def test_get_total_time_string_default(self):
+        self.assertEqual(self.task.get_total_time_string(), '0 minutes')
+
+    def test_get_total_time_string_one_min(self):
+        total_time = timedelta(minutes=1)
+        self.add_time_slot(total_time)
+        self.assertEqual(self.task.get_total_time_string(), ' 1 minutes')
+
+    def test_get_total_time_string_zero_min(self):
+        total_time = timedelta(minutes=0)
+        self.add_time_slot(total_time)
+        self.assertEqual(self.task.get_total_time_string(), '0 minutes')
+
+    def test_get_total_time_string_30_secs(self):
+        total_time = timedelta(seconds=30)
+        self.add_time_slot(total_time)
+        self.assertEqual(self.task.get_total_time_string(), 'Less than 1 minute')
+
+    def test_get_total_time_string_60_min(self):
+        total_time = timedelta(minutes=60)
+        self.add_time_slot(total_time)
+        self.assertEqual(self.task.get_total_time_string(), ' 1 hours ')
+
+    def test_get_total_time_string_61_min(self):
+        total_time = timedelta(minutes=61)
+        self.add_time_slot(total_time)
+        self.assertEqual(self.task.get_total_time_string(), ' 1 hours  1 minutes')
+
+    def test_is_being_done_by(self):
+        duser, created = DjangoUser.objects.get_or_create(username='testuser')
+        self.assertFalse(self.task.is_being_done_by(duser))
+
+        time_from = datetime(year=2015, month=8, day=3)
+        timeslot = TaskTimeSlot(task=self.task, user=duser.profile, time_from=time_from)
+        timeslot.save()
+
+        self.assertTrue(self.task.is_being_done_by(duser))
 
     def test_model_task_status(self):
         "Test task status"
@@ -74,6 +132,76 @@ class ProjectsModelsTest(TestCase):
         self.assertEquals('test', obj.name)
         self.assertNotEquals(obj.id, None)
         obj.delete()
+
+
+class TestModelTaskTimeSlot(TestCase):
+    def setUp(self):
+        self.project = Project(name='test')
+        self.project.save()
+
+        self.taskstatus = TaskStatus(name='test')
+        self.taskstatus.save()
+
+        self.task = Task(name='test', project=self.project, status=self.taskstatus)
+        self.task.save()
+
+        duser, created = DjangoUser.objects.get_or_create(username='testuser')
+        self.user = duser
+        self.time_from = datetime(year=2015, month=8, day=3)
+        self.total_time = timedelta(minutes=61)
+        self.time_to = self.time_from + self.total_time
+        self.timeslot = TaskTimeSlot(task=self.task, user=duser.profile, time_from=self.time_from, time_to=self.time_to)
+        self.timeslot.save()
+
+    def test_get_absolute_url(self):
+        self.timeslot.get_absolute_url()
+
+    def test_get_time_secs(self):
+        with freeze_time(datetime(year=2015, month=8, day=4)):
+            self.assertEqual(self.timeslot.get_time_secs(), 86400)
+
+    def test_get_time(self):
+        """A time slot without a time from or time to will return a delta of 0"""
+        timeslot2 = TaskTimeSlot(task=self.task, user=self.user.profile, time_from=self.time_from)
+        timeslot3 = TaskTimeSlot(task=self.task, user=self.user.profile, time_to=self.time_to)
+        self.assertEqual(timeslot2.get_time(), timedelta(0))
+        self.assertEqual(timeslot3.get_time(), timedelta(0))
+        self.assertEqual(self.timeslot.get_time(), self.total_time)
+
+    def test_get_time_tuple(self):
+        h, m, s = self.timeslot.get_time_tuple()
+        self.assertEqual((h, m, s), (1, 1, 0))
+        timeslot2 = TaskTimeSlot(task=self.task, user=self.user.profile, time_to=self.time_to)
+        self.assertIsNone(timeslot2.get_time_tuple())
+
+    def test_get_time_string(self):
+        self.assertEqual(self.timeslot.get_time_string(), ' 1 hours  1 minutes')
+
+        total_time = timedelta(minutes=1)
+        self.timeslot.time_to = self.time_from + total_time
+        self.assertEqual(self.timeslot.get_time_string(), ' 1 minutes')
+
+        # if it has a timedelta of zero it will use now-time_from
+        total_time = timedelta(minutes=0)
+        self.timeslot.time_to = self.time_from + total_time
+        with freeze_time(datetime(year=2015, month=8, day=4)):
+            self.assertEqual(self.timeslot.get_time_string(), '24 hours ')
+
+        total_time = timedelta(seconds=30)
+        self.timeslot.time_to = self.time_from + total_time
+        self.assertEqual(self.timeslot.get_time_string(), 'Less than 1 minute')
+
+        total_time = timedelta(minutes=60)
+        self.timeslot.time_to = self.time_from + total_time
+        self.assertEqual(self.timeslot.get_time_string(), ' 1 hours ')
+
+        self.timeslot.time_from = None
+        self.assertEqual(self.timeslot.get_time_string(), '')
+
+        self.timeslot.time_from = self.time_from
+        self.timeslot.time_to = None
+        with freeze_time(datetime(year=2015, month=8, day=4)):
+            self.assertEqual(self.timeslot.get_time_string(), '24 hours ')
 
 
 class ProjectsViewsTest(TestCase):

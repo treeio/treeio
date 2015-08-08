@@ -19,3 +19,4 @@ johnny-cache==1.6.1.a
 django-pandora
 dj_database_url
 django-markup-deprecated
+freezegun==0.3.5

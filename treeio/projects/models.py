@@ -35,7 +35,9 @@ class Project(Object):
         return self.name
 
     def get_absolute_url(self):
-        """Returns absolute URL for the Project"""
+        """Returns absolute URL for the Project
+        :rtype str
+        """
         return reverse('projects_project_view', args=[self.id])
 
 
@@ -139,13 +141,17 @@ class Task(Object):
         return self.name
 
     def priority_human(self):
-        """Returns a Human-friendly priority name"""
+        """Returns a Human-friendly priority name
+        :rtype str
+        """
         for choice in Task.PRIORITY_CHOICES:
             if choice[0] == self.priority:
                 return choice[1]
 
     def get_estimated_time(self):
-        """Converts minutes to Human-friendly time format"""
+        """Converts minutes to Human-friendly time format
+        :rtype str
+        """
         if self.estimated_time is None:
             return ''
         time = timedelta(minutes=self.estimated_time)
@@ -210,18 +216,24 @@ class Task(Object):
         super(Task, self).save(*args, **kwargs)
 
     def get_absolute_url(self):
-        """Returns absolute URL"""
+        """Returns absolute URL
+        :rtype str
+        """
         return reverse('projects_task_view', args=[self.id])
 
     def get_total_time(self):
-        """Returns total time spent on the task, based on assigned TimeSlots"""
+        """Returns total time spent on the task, based on assigned TimeSlots
+        :rtype timedelta
+        """
         total = timedelta()
         for slot in self.tasktimeslot_set.all():
             total += slot.get_time()
         return total
 
     def get_total_time_tuple(self):
-        "Returns total time as a tuple with number of full hours and minutes"
+        """Returns total time as a tuple with number of full hours and minutes
+        :rtype tuple(int, int, int) or None
+        """
         time = self.get_total_time()
         if not time:
             return None
@@ -234,7 +246,9 @@ class Task(Object):
         return hours, minutes, seconds
 
     def get_total_time_string(self):
-        "Returns total time as a string with number of full hours and minutes"
+        """Returns total time as a string with number of full hours and minutes
+        :rtype str
+        """
         time = self.get_total_time_tuple()
         if not time:
             return _("0 minutes")
@@ -251,16 +265,15 @@ class Task(Object):
         return string
 
     def is_being_done_by(self, user):
-        "Returns true if the task is in progress"
+        """Returns true if the task is in progress
+        :rtype bool
+        """
         if self.tasktimeslot_set.filter(user=user, time_to__isnull=True).exists():
             return True
-        else:
-            return False
+        return False
 
 
-# TaskTimeSlot model
 class TaskTimeSlot(Object):
-
     """ Task time slot """
     task = models.ForeignKey(Task)
     user = models.ForeignKey(User)
@@ -275,35 +288,38 @@ class TaskTimeSlot(Object):
     attached = True
 
     class Meta:
-
-        "TaskTimeSlot"
+        """TaskTimeSlot"""
         ordering = ['-date_created']
 
     def __unicode__(self):
         return unicode(self.task)
 
     def get_absolute_url(self):
-        "Returns absolute URL"
-        try:
-            return reverse('projects_task_view', args=[self.task_id])
-        except Exception:
-            pass
+        """Returns absolute URL
+        :rtype str
+        """
+        return reverse('projects_task_view', args=[self.task_id])
 
     def get_time_secs(self):
-        "Return time from epoch"
+        """Return time from epoch
+        :rtype int
+        """
         time = datetime.now() - self.time_from
         seconds = time.days * 24 * 3600 + time.seconds
         return seconds
 
     def get_time(self):
-        "Returns time"
+        """Returns time
+        :rtype timedelta
+        """
         if self.time_from and self.time_to:
             return self.time_to - self.time_from
-        else:
-            return timedelta()
+        return timedelta()
 
     def get_time_tuple(self, time=None):
-        "Returns time as a tuple with number of full hours and minutes"
+        """Returns time as a tuple with number of full hours and minutes
+        :rtype tuple or None
+        """
         if not time:
             time = self.get_time()
         if not time:
@@ -317,7 +333,9 @@ class TaskTimeSlot(Object):
         return (hours, minutes, seconds)
 
     def get_time_string(self, time=None):
-        "Returns time in string format"
+        """Returns time in string format
+        :rtype str
+        """
         time = self.get_time_tuple(time)
         if not time and self.time_from:
             return self.get_time_string(datetime.now() - self.time_from)
