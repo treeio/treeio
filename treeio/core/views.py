@@ -184,7 +184,7 @@ def logo_image(request, gif=False, response_format='html'):
         except:
             pass
 
-    return HttpResponse(logofile.read(), mimetype=mimetype)
+    return HttpResponse(logofile.read(), content_type=mimetype)
 
 
 def ajax_popup(request, popup_id='', url='/'):
@@ -541,7 +541,7 @@ def ajax_upload(request, object_id=None, record=None):
             success = save_upload(upload, savefile, is_raw)
 
             attachment = Attachment(filename=filename,
-                                    mimetype=content_type,
+                                    content_type=content_type,
                                     uploaded_by=request.user.profile,
                                     attached_file=filehash)
 
