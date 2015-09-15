@@ -89,15 +89,14 @@ def _process_mass_form(f):
 @treeio_login_required
 @_process_mass_form
 def index(request, response_format='html'):
-    "Project Management index page"
+    """Project Management index page"""
 
     query = Q(parent__isnull=True)
     if request.GET:
         if 'status' in request.GET and request.GET['status']:
             query = query & _get_filter_query(request.GET)
         else:
-            query = query & Q(
-                status__hidden=False) & _get_filter_query(request.GET)
+            query = query & Q(status__hidden=False) & _get_filter_query(request.GET)
     else:
         query = query & Q(status__hidden=False)
 
@@ -119,7 +118,7 @@ def index(request, response_format='html'):
 @treeio_login_required
 @_process_mass_form
 def index_owned(request, response_format='html'):
-    "Tasks owned by current user"
+    """Tasks owned by current user"""
 
     query = Q(
         parent__isnull=True, caller__related_user=request.user.profile)
@@ -150,7 +149,7 @@ def index_owned(request, response_format='html'):
 @treeio_login_required
 @_process_mass_form
 def index_assigned(request, response_format='html'):
-    "Tasks assigned to current user"
+    """Tasks assigned to current user"""
 
     query = Q(parent__isnull=True, assigned=request.user.profile)
     if request.GET:
@@ -181,7 +180,7 @@ def index_assigned(request, response_format='html'):
 @treeio_login_required
 @_process_mass_form
 def index_by_status(request, status_id, response_format='html'):
-    "Sort tasks by status"
+    """Sort tasks by status"""
 
     status = get_object_or_404(TaskStatus, pk=status_id)
 
@@ -211,7 +210,7 @@ def index_by_status(request, status_id, response_format='html'):
 @treeio_login_required
 @_process_mass_form
 def index_in_progress(request, response_format='html'):
-    "A page with a list of tasks in progress"
+    """A page with a list of tasks in progress"""
 
     query = Q(parent__isnull=True)
     if request.GET:
@@ -244,7 +243,7 @@ def index_in_progress(request, response_format='html'):
 @handle_response_format
 @treeio_login_required
 def project_add(request, response_format='html'):
-    "New project form"
+    """New project form"""
 
     if request.POST:
         if 'cancel' not in request.POST:
@@ -269,8 +268,8 @@ def project_add(request, response_format='html'):
 
 @handle_response_format
 @treeio_login_required
-def project_add_typed(request, project_id=None, response_format='html'):
-    "Project add to preselected parent project"
+def project_add_typed(request, project_id, response_format='html'):
+    """Project add to preselected parent project"""
 
     parent_project = None
     if project_id:
@@ -303,7 +302,7 @@ def project_add_typed(request, project_id=None, response_format='html'):
 @treeio_login_required
 @_process_mass_form
 def project_view(request, project_id, response_format='html'):
-    "Single project view page"
+    """Single project view page"""
 
     project = get_object_or_404(Project, pk=project_id)
     if not request.user.profile.has_permission(project):
@@ -371,7 +370,7 @@ def project_view(request, project_id, response_format='html'):
 @handle_response_format
 @treeio_login_required
 def project_edit(request, project_id, response_format='html'):
-    "Project edit page"
+    """Project edit page"""
 
     project = get_object_or_404(Project, pk=project_id)
     if not request.user.profile.has_permission(project, mode='w'):
@@ -399,7 +398,7 @@ def project_edit(request, project_id, response_format='html'):
 @handle_response_format
 @treeio_login_required
 def project_delete(request, project_id, response_format='html'):
-    "Project delete"
+    """Project delete"""
 
     project = get_object_or_404(Project, pk=project_id)
     if not request.user.profile.has_permission(project, mode='w'):
@@ -430,7 +429,7 @@ def project_delete(request, project_id, response_format='html'):
 @handle_response_format
 @treeio_login_required
 def milestone_add(request, response_format='html'):
-    "New milestone form"
+    """New milestone form"""
 
     if request.POST:
         if 'cancel' not in request.POST:
@@ -456,7 +455,7 @@ def milestone_add(request, response_format='html'):
 @handle_response_format
 @treeio_login_required
 def milestone_add_typed(request, project_id=None, response_format='html'):
-    "Milestone add to preselected project"
+    """Milestone add to preselected project"""
 
     project = None
     if project_id:
@@ -489,7 +488,7 @@ def milestone_add_typed(request, project_id=None, response_format='html'):
 @treeio_login_required
 @_process_mass_form
 def milestone_view(request, milestone_id, response_format='html'):
-    "Single milestone view page"
+    """Single milestone view page"""
 
     milestone = get_object_or_404(Milestone, pk=milestone_id)
     project = milestone.project
@@ -534,7 +533,7 @@ def milestone_view(request, milestone_id, response_format='html'):
 @handle_response_format
 @treeio_login_required
 def milestone_edit(request, milestone_id, response_format='html'):
-    "Milestone edit page"
+    """Milestone edit page"""
 
     milestone = get_object_or_404(Milestone, pk=milestone_id)
     project = milestone.project
@@ -566,7 +565,7 @@ def milestone_edit(request, milestone_id, response_format='html'):
 @handle_response_format
 @treeio_login_required
 def milestone_delete(request, milestone_id, response_format='html'):
-    "Milestone delete"
+    """Milestone delete"""
 
     milestone = get_object_or_404(Milestone, pk=milestone_id)
     project = milestone.project
@@ -601,7 +600,7 @@ def milestone_delete(request, milestone_id, response_format='html'):
 @handle_response_format
 @treeio_login_required
 def milestone_set_status(request, milestone_id, status_id, response_format='html'):
-    "Milestone quick set: Status"
+    """Milestone quick set: Status"""
 
     milestone = get_object_or_404(Milestone, pk=milestone_id)
     if not request.user.profile.has_permission(milestone, mode='x'):
@@ -625,7 +624,7 @@ def milestone_set_status(request, milestone_id, status_id, response_format='html
 @handle_response_format
 @treeio_login_required
 def task_add(request, response_format='html'):
-    "New task form"
+    """New task form"""
 
     if request.POST:
         if 'cancel' not in request.POST:
@@ -651,7 +650,7 @@ def task_add(request, response_format='html'):
 @handle_response_format
 @treeio_login_required
 def task_add_typed(request, project_id=None, response_format='html'):
-    "Task add to preselected project"
+    """Task add to preselected project"""
 
     project = None
     if project_id:
@@ -684,7 +683,7 @@ def task_add_typed(request, project_id=None, response_format='html'):
 @handle_response_format
 @treeio_login_required
 def task_add_to_milestone(request, milestone_id=None, response_format='html'):
-    "Task add to preselected project"
+    """Task add to preselected project"""
 
     milestone = None
     if milestone_id:
@@ -722,7 +721,7 @@ def task_add_to_milestone(request, milestone_id=None, response_format='html'):
 @handle_response_format
 @treeio_login_required
 def task_add_subtask(request, task_id=None, response_format='html'):
-    "New subtask form"
+    """New subtask form"""
 
     parent = None
     if task_id:
@@ -756,7 +755,7 @@ def task_add_subtask(request, task_id=None, response_format='html'):
 @treeio_login_required
 @_process_mass_form
 def task_view(request, task_id, response_format='html'):
-    "Single task view page"
+    """Single task view page"""
 
     task = get_object_or_404(Task, pk=task_id)
     if not request.user.profile.has_permission(task):
@@ -805,7 +804,7 @@ def task_view(request, task_id, response_format='html'):
 @handle_response_format
 @treeio_login_required
 def task_edit(request, task_id, response_format='html'):
-    "Task edit page"
+    """Task edit page"""
 
     task = get_object_or_404(Task, pk=task_id)
     if not request.user.profile.has_permission(task, mode='w'):
@@ -835,7 +834,7 @@ def task_edit(request, task_id, response_format='html'):
 @handle_response_format
 @treeio_login_required
 def task_delete(request, task_id, response_format='html'):
-    "Task delete"
+    """Task delete"""
 
     task = get_object_or_404(Task, pk=task_id)
     if not request.user.profile.has_permission(task, mode='w'):
@@ -869,7 +868,7 @@ def task_delete(request, task_id, response_format='html'):
 @handle_response_format
 @treeio_login_required
 def task_set_status(request, task_id, status_id, response_format='html'):
-    "Task quick set: Status"
+    """Task quick set: Status"""
 
     task = get_object_or_404(Task, pk=task_id)
     if not request.user.profile.has_permission(task, mode='x'):
@@ -893,7 +892,7 @@ def task_set_status(request, task_id, status_id, response_format='html'):
 @handle_response_format
 @treeio_login_required
 def task_time_slot_start(request, task_id, response_format='html'):
-    "Start TaskTimeSlot for preselected Task"
+    """Start TaskTimeSlot for preselected Task"""
 
     task = get_object_or_404(Task, pk=task_id)
     if not request.user.profile.has_permission(task, mode='x'):
@@ -911,7 +910,7 @@ def task_time_slot_start(request, task_id, response_format='html'):
 @handle_response_format
 @treeio_login_required
 def task_time_slot_stop(request, slot_id, response_format='html'):
-    "Stop TaskTimeSlot for preselected Task"
+    """Stop TaskTimeSlot for preselected Task"""
 
     slot = get_object_or_404(TaskTimeSlot, pk=slot_id)
     if not request.user.profile.has_permission(slot, mode='w'):
@@ -928,7 +927,7 @@ def task_time_slot_stop(request, slot_id, response_format='html'):
 @handle_response_format
 @treeio_login_required
 def task_time_slot_add(request, task_id, response_format='html'):
-    "Time slot add to preselected task"
+    """Time slot add to preselected task"""
 
     task = get_object_or_404(Task, pk=task_id)
     if not request.user.profile.has_permission(task, mode='x'):
@@ -966,7 +965,7 @@ def task_time_slot_add(request, task_id, response_format='html'):
 @handle_response_format
 @treeio_login_required
 def task_time_slot_view(request, time_slot_id, response_format='html'):
-    "Task time slot edit page"
+    """Task time slot view page"""
 
     task_time_slot = get_object_or_404(TaskTimeSlot, pk=time_slot_id)
     task = task_time_slot.task
@@ -985,7 +984,7 @@ def task_time_slot_view(request, time_slot_id, response_format='html'):
 @handle_response_format
 @treeio_login_required
 def task_time_slot_edit(request, time_slot_id, response_format='html'):
-    "Task time slot edit page"
+    """Task time slot edit page"""
 
     task_time_slot = get_object_or_404(TaskTimeSlot, pk=time_slot_id)
     task = task_time_slot.task
@@ -1019,7 +1018,7 @@ def task_time_slot_edit(request, time_slot_id, response_format='html'):
 @handle_response_format
 @treeio_login_required
 def task_time_slot_delete(request, time_slot_id, response_format='html'):
-    "Task time slot delete"
+    """Task time slot delete"""
 
     task_time_slot = get_object_or_404(TaskTimeSlot, pk=time_slot_id)
     task = task_time_slot.task
@@ -1054,7 +1053,7 @@ def task_time_slot_delete(request, time_slot_id, response_format='html'):
 @handle_response_format
 @treeio_login_required
 def task_status_add(request, response_format='html'):
-    "TaskStatus add"
+    """TaskStatus add"""
 
     if not request.user.profile.is_admin('treeio.projects'):
         return user_denied(request, message="You don't have administrator access to the Projects module")
@@ -1083,7 +1082,7 @@ def task_status_add(request, response_format='html'):
 @handle_response_format
 @treeio_login_required
 def task_status_edit(request, status_id, response_format='html'):
-    "TaskStatus edit"
+    """TaskStatus edit"""
 
     status = get_object_or_404(TaskStatus, pk=status_id)
     if not request.user.profile.has_permission(status, mode='w'):
@@ -1112,7 +1111,7 @@ def task_status_edit(request, status_id, response_format='html'):
 @handle_response_format
 @treeio_login_required
 def task_status_delete(request, status_id, response_format='html'):
-    "TaskStatus delete"
+    """TaskStatus delete"""
 
     status = get_object_or_404(TaskStatus, pk=status_id)
     if not request.user.profile.has_permission(status, mode='w'):
@@ -1146,7 +1145,7 @@ def task_status_delete(request, status_id, response_format='html'):
 @handle_response_format
 @treeio_login_required
 def settings_view(request, response_format='html'):
-    "Settings"
+    """Settings"""
 
     if not request.user.profile.is_admin('treeio.projects'):
         return user_denied(request, message="You don't have administrator access to the Projects module")
@@ -1172,7 +1171,7 @@ def settings_view(request, response_format='html'):
 @handle_response_format
 @treeio_login_required
 def settings_edit(request, response_format='html'):
-    "Settings"
+    """Settings"""
 
     if not request.user.profile.is_admin('treeio.projects'):
         return user_denied(request, message="You don't have administrator access to the Projects module")
@@ -1202,11 +1201,12 @@ def settings_edit(request, response_format='html'):
 
 @treeio_login_required
 def ajax_task_lookup(request, response_format='html'):
-    "Returns a list of matching tasks"
+    """Returns a list of matching tasks"""
 
-    tasks = []
     if request.GET and 'term' in request.GET:
         tasks = Task.objects.filter(name__icontains=request.GET['term'])[:10]
+    else:
+        tasks = []
 
     return render_to_response('projects/ajax_task_lookup',
                               {'tasks': tasks},

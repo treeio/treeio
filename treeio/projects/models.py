@@ -43,7 +43,6 @@ class Project(Object):
 
 # TaskStatus model
 class TaskStatus(Object):
-
     """ Tasks and milestones have task statuses """
     name = models.CharField(max_length=255)
     details = models.TextField(max_length=255, null=True, blank=True)
@@ -51,24 +50,19 @@ class TaskStatus(Object):
     hidden = models.BooleanField(default=False)
 
     class Meta:
-
-        "TaskStatus"
+        """TaskStatus"""
         ordering = ('hidden', '-active', 'name')
 
     def __unicode__(self):
         return self.name
 
     def get_absolute_url(self):
-        "Returns absolute URL for the Task Status"
-        try:
-            return reverse('projects_index_by_status', args=[self.id])
-        except Exception:
-            pass
+        """Returns absolute URL for the Task Status
+        :rtype str"""
+        return reverse('projects_index_by_status', args=[self.id])
 
 
-# Milestone model
 class Milestone(Object):
-
     """ Tasks may have milestones """
     project = models.ForeignKey(Project)
     name = models.CharField(max_length=255)
@@ -80,16 +74,14 @@ class Milestone(Object):
     access_inherit = ('project', '*module', '*user')
 
     class Meta:
-
-        "Milestone"
+        """Milestone"""
         ordering = ['start_date', 'name']
 
     def __unicode__(self):
         return self.name
 
     def save(self, *args, **kwargs):
-        "Override save to update all included tickets if Milestone.project changed"
-
+        """Override save to update all included tickets if Milestone.project changed"""
         if self.id:
             original = Milestone.objects.get(pk=self.id)
             super(Milestone, self).save(*args, **kwargs)
@@ -101,11 +93,9 @@ class Milestone(Object):
             super(Milestone, self).save(*args, **kwargs)
 
     def get_absolute_url(self):
-        "Returns absolute URL for the Milestone"
-        try:
-            return reverse('projects_milestone_view', args=[self.id])
-        except Exception:
-            pass
+        """Returns absolute URL for the Milestone
+        :rtype str"""
+        return reverse('projects_milestone_view', args=[self.id])
 
 
 # Task model
@@ -257,9 +247,9 @@ class Task(Object):
         string = ""
         if hours or minutes:
             if hours:
-                string += _("%2i hours ") % (hours)
+                string += _("%2i hours ") % (hours,)
             if minutes:
-                string += _("%2i minutes") % (minutes)
+                string += _("%2i minutes") % (minutes,)
         else:
             string = _("Less than 1 minute")
         return string
@@ -330,7 +320,7 @@ class TaskTimeSlot(Object):
         seconds %= (60 * 60)
         minutes = seconds // 60
         seconds %= 60
-        return (hours, minutes, seconds)
+        return hours, minutes, seconds
 
     def get_time_string(self, time=None):
         """Returns time in string format
@@ -346,15 +336,15 @@ class TaskTimeSlot(Object):
         string = ""
         if hours or minutes:
             if hours:
-                string += _("%2i hours ") % (hours)
+                string += _("%2i hours ") % (hours,)
             if minutes:
-                string += _("%2i minutes") % (minutes)
+                string += _("%2i minutes") % (minutes,)
         else:
             string = _("Less than 1 minute")
         return string
 
     def is_open(self):
-        "If task is open"
+        """If task is open"""
         if self.time_from and self.time_to:
             return False
         return True
