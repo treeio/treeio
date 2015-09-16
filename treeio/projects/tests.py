@@ -127,7 +127,7 @@ class ProjectsModelsTest(TestCase):
         timeslot.save()
         self.task.save()
 
-        self.assertTrue(self.task.is_being_done_by(duser))
+        self.assertTrue(self.task.is_being_done_by(duser.profile))
 
     def test_model_task_status(self):
         """Test task status"""

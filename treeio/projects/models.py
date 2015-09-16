@@ -256,11 +256,10 @@ class Task(Object):
 
     def is_being_done_by(self, user):
         """Returns true if the task is in progress
+        :param core.models.User user:
         :rtype bool
         """
-        if self.tasktimeslot_set.filter(user=user, time_to__isnull=True).exists():
-            return True
-        return False
+        return self.tasktimeslot_set.filter(user=user, time_to__isnull=True).exists()
 
 
 class TaskTimeSlot(Object):
