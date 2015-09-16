@@ -268,7 +268,7 @@ class TaskTimeSlot(Object):
     task = models.ForeignKey(Task)
     user = models.ForeignKey(User)
     time_from = models.DateTimeField()
-    time_to = models.DateTimeField(null=True, blank=True, default=None)
+    time_to = models.DateTimeField(null=True, blank=True)
     timezone = models.IntegerField(default=0)
     details = models.TextField(max_length=255, null=True, blank=True)
 

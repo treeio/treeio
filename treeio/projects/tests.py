@@ -120,7 +120,7 @@ class ProjectsModelsTest(TestCase):
 
     def test_is_being_done_by(self):
         duser, created = DjangoUser.objects.get_or_create(username='testuser')
-        self.assertFalse(self.task.is_being_done_by(duser))
+        self.assertFalse(self.task.is_being_done_by(duser.profile))
 
         time_from = datetime(year=2015, month=8, day=3)
         timeslot = TaskTimeSlot(task=self.task, user=duser.profile, time_from=time_from)
