@@ -541,7 +541,7 @@ def ajax_upload(request, object_id=None, record=None):
             success = save_upload(upload, savefile, is_raw)
 
             attachment = Attachment(filename=filename,
-                                    mimetype=content_type,
+                                    content_type=content_type,
                                     uploaded_by=request.user.profile,
                                     attached_file=filehash)
 
