@@ -320,18 +320,16 @@ class User(AccessEntity):
         """String username, picked up from attached Django User or self.name string otherwise"""
         if self.user:
             return self.user.username
-        else:  # todo: remove useless else
-            return self.name
+        return self.name
 
     def get_perspective(self):
         """Returns currently set Perspective for the User"""
-
         ids = []
         try:
             for setting in ModuleSetting.get_for_module('treeio.core', name='default_perspective', user=self):
                 ids.append(long(setting.value))
-            id = ids[0]  # todo: rename variable shadowing
-            perspective = get_object_or_404(Perspective, pk=id)
+            perspective_id = ids[0]
+            perspective = get_object_or_404(Perspective, pk=perspective_id)
         except:
             try:
                 perspective = self.default_group.get_perspective()
@@ -437,7 +435,7 @@ class Comment(models.Model):
 
 
 class Object(models.Model):
-    """Generic Hardtree object"""
+    """Generic Treeio object"""
     creator = models.ForeignKey(
         User, blank=True, null=True, related_name='objects_created', on_delete=models.SET_NULL)
     read_access = models.ManyToManyField(
@@ -540,9 +538,7 @@ class Object(models.Model):
         if types:
             self.object_type = types[0]
 
-        object = super(Object, self).save(*args, **kwargs)  # todo: rename variable shadowing
-
-        return object
+        return super(Object, self).save(*args, **kwargs)
 
     def get_object_module(self):
         """Returns the module for this object, e.g. 'projects'"""
@@ -655,27 +651,27 @@ class Object(models.Model):
     def get_search_item(self):
         """Constructs a search item as a dictionary with title, content and URL"""
 
-        object = self.get_related_object()  # todo: rename variable shadowing
-        if not object:
-            object = self
+        obj = self.get_related_object()
+        if not obj:
+            obj = self
 
         item = {
             'id': u'',
             'name': u'',
-            'type': unicode(object.get_human_type()),
+            'type': unicode(obj.get_human_type()),
             'content': u'',
-            'url': unicode(object.get_absolute_url())
+            'url': unicode(obj.get_absolute_url())
         }
 
-        if object.id:
-            item['id'] = unicode(object.id)
+        if obj.id:
+            item['id'] = unicode(obj.id)
 
-        if hasattr(object, 'title'):
-            item['name'] = unicode(object.title)
-        elif hasattr(object, 'name'):
-            item['name'] = unicode(object.name)
+        if hasattr(obj, 'title'):
+            item['name'] = unicode(obj.title)
+        elif hasattr(obj, 'name'):
+            item['name'] = unicode(obj.name)
         else:
-            item['name'] = unicode(object)
+            item['name'] = unicode(obj)
 
         if hasattr(self, 'body'):
             item['content'] = unicode(self.body)
@@ -847,7 +843,16 @@ class Object(models.Model):
         return notification
 
     def set_user(self, user):
-        """Sets owner of the Object to the given user"""
+        """Sets owner of the Object to the given user
+        :param User:
+        """
+        # TODO: check every call that it send only treeio.core.User model
+        if user is None:
+            return self
+        if isinstance(user, django_auth.User):
+            user = user.profile
+        elif not isinstance(user, User):
+            raise ValueError('user argument should be either a django_auth.User or treeio.core.User object got %s' % type(user))
 
         # get default permissions from settings
         try:
@@ -856,9 +861,6 @@ class Object(models.Model):
             default_permissions = conf.value
         except:
             default_permissions = settings.HARDTREE_DEFAULT_PERMISSIONS
-
-        if hasattr(user, 'get_profile'):
-            user = user.profile
 
         if not self.creator:
             self.creator = user
@@ -1279,21 +1281,19 @@ class ModuleSetting(models.Model):
     def get(name='', strict=False, **kwargs):
         """Setting getter"""
         if name:
-            settings = ModuleSetting.objects.filter(name=name)   # todo: rename shadowing
+            settings_qs = ModuleSetting.objects.filter(name=name)
         else:
-            settings = ModuleSetting.objects.all()
+            settings_qs = ModuleSetting.objects.all()
         if strict:
-            settings = settings.filter(**kwargs)
-        elif settings:
-            new_settings = settings
+            settings_qs = settings_qs.filter(**kwargs)
+        elif settings_qs:
+            new_settings = settings_qs
             for arg in kwargs:
                 new_settings = new_settings.filter(**{arg: kwargs[arg]})
                 if new_settings:
-                    settings = new_settings
-                else:
-                    new_settings = settings
+                    settings_qs = new_settings
 
-        return settings
+        return settings_qs
     get = staticmethod(get)
 
     def get_for_module(module_name, name='', strict=False, **kwargs):

@@ -18,19 +18,14 @@ register = template.Library()
 
 @contextfunction
 def user_block(context):
-    "User block"
+    """User block
+    :param Context context:
+    """
     request = context['request']
-    user = None
-    if request.user.username:
-        try:
-            user = request.user.profile
-        except Exception:
-            pass
 
+    user = request.user.profile
     modules = user.get_perspective().get_modules()
-
     account = modules.filter(name='treeio.account')
-
     admin = modules.filter(name='treeio.core')
     if admin:
         admin = admin[0]

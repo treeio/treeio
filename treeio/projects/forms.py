@@ -137,8 +137,7 @@ class ProjectForm(ModelForm):
         self.fields['details'].widget.attrs.update({'class': 'full-editor'})
 
     class Meta:
-
-        "Project"
+        """Project"""
         model = Project
         fields = ('name', 'parent', 'manager', 'client', 'details')
 

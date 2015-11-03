@@ -15,6 +15,7 @@ from django.core.files.storage import default_storage
 import django.contrib.auth.models as django_auth
 from django.utils.translation import ugettext as _
 from treeio.core.decorators import preprocess_form
+from treeio.identities.forms import ContactForm
 from treeio.core.models import User, Group, Perspective, ModuleSetting, Page, PageFolder, user_autocreate_handler
 import hashlib
 import random
@@ -429,8 +430,6 @@ class FilterForm(forms.ModelForm):
         "Filter"
         model = Perspective
         fields = ('name', 'modules')
-
-from treeio.identities.forms import ContactForm  # todo: move import to top of file
 
 
 class ContactSetupForm(ContactForm):

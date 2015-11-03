@@ -30,15 +30,11 @@ register = template.Library()
 
 
 def _get_modules(request):
-    "Returns set of current modules and active module"
-    user = None
-    if request.user.username:
-        try:
-            user = request.user.profile
-        except Exception:
-            pass
+    """Returns set of current modules and active module
+    :param WSGIRequest request:
+    """
 
-    perspective = user.get_perspective()
+    perspective = request.user.profile.get_perspective()
 
     modules = perspective.modules.filter(display=True).order_by('title')
     if not modules:

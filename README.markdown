@@ -9,7 +9,7 @@ Tree.io Business Management Platform
 
 *Version 2.0 is under development, help appreciated, create issues and pull requests*
 
-join our mailing list:
+join our mailing list: https://groups.google.com/forum/#!forum/treeio
 
 Already done:
 =============
@@ -18,13 +18,13 @@ Already done:
 
 Wishlist:
 =========
-- Django 1.7 support
+- Django 1.7 support - beta, tests are running on 1.7 already, please test and let me know if something don't work
 - Django 1.8 support
 - Get to 100% test coverage
 - Resolve scrutinizer and landscape issues
 - Documentation
 - Help putting the site back online
-- Exapanding travis test scenarios
+- Expanding travis test scenarios
 - Selenium tests
 - setup.py
 - Leave django-piston to tastypie or DRF

@@ -19,8 +19,7 @@ from datetime import datetime, timedelta
 class Project(Object):
     """ Project model """
     name = models.CharField(max_length=255)
-    parent = models.ForeignKey(
-        'self', blank=True, null=True, related_name='child_set')
+    parent = models.ForeignKey('self', blank=True, null=True, related_name='child_set')
     manager = models.ForeignKey(
         Contact, related_name='manager', null=True, blank=True, on_delete=models.SET_NULL)
     client = models.ForeignKey(
