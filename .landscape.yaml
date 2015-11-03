@@ -5,5 +5,3 @@ max-line-length: 120
 uses:
     - django
 autodetect: yes
-ignore-patterns:
-    - .*migrations.*
