@@ -5,6 +5,5 @@ max-line-length: 120
 uses:
     - django
 autodetect: yes
-ignore-paths:
-    - */migrations
-    - */south_migrations
+ignore-patterns:
+    - .*migrations.*
