@@ -12,6 +12,7 @@ from django.test.client import Client
 from django.core.urlresolvers import reverse
 from django.contrib.auth.models import User as DjangoUser
 from treeio.core.models import User, Group, Perspective, ModuleSetting, Object
+from treeio.projects.forms import FilterForm, ProjectForm
 from treeio.projects.models import Project, Milestone, Task, TaskStatus, TaskTimeSlot
 from treeio.identities.models import Contact, ContactType
 from datetime import datetime, timedelta
@@ -353,14 +354,10 @@ class ProjectsViewsTest(TestCase):
         # Create objects
 
         self.group, created = Group.objects.get_or_create(name='test')
-        duser, created = DjangoUser.objects.get_or_create(
-            username=self.username)
-        duser.set_password(self.password)
-        duser.save()
-        self.user, created = User.objects.get_or_create(user=duser)
+        self.user, created = DjangoUser.objects.get_or_create(username=self.username)
+        self.user.set_password(self.password)
         self.user.save()
-        perspective, created = Perspective.objects.get_or_create(
-            name='default')
+        perspective, created = Perspective.objects.get_or_create(name='default')
         perspective.set_default_user()
         perspective.save()
 
@@ -371,11 +368,11 @@ class ProjectsViewsTest(TestCase):
         self.contact_type.save()
 
         self.contact = Contact(name='test', contact_type=self.contact_type)
+        self.contact.related_user = self.user.profile
         self.contact.set_default_user()
         self.contact.save()
 
-        self.project = Project(
-            name='test', manager=self.contact, client=self.contact)
+        self.project = Project(name='test', manager=self.contact, client=self.contact)
         self.project.set_default_user()
         self.project.save()
 
@@ -383,18 +380,19 @@ class ProjectsViewsTest(TestCase):
         self.status.set_default_user()
         self.status.save()
 
-        self.milestone = Milestone(
-            name='test', project=self.project, status=self.status)
+        self.milestone = Milestone(name='test', project=self.project, status=self.status)
         self.milestone.set_default_user()
         self.milestone.save()
 
-        self.task = Task(
-            name='test', project=self.project, status=self.status, priority=3)
+        self.task = Task(name='test', project=self.project, status=self.status, caller=self.contact)
         self.task.set_default_user()
         self.task.save()
 
-        self.time_slot = TaskTimeSlot(
-            task=self.task, details='test', time_from=datetime.now(), user=self.user)
+        self.task_assigned = Task(name='test', project=self.project, status=self.status)
+        self.task_assigned.save()
+        self.task_assigned.assigned.add(self.user.profile)
+
+        self.time_slot = TaskTimeSlot(task=self.task, details='test', time_from=datetime.now(), user=self.user.profile)
         self.time_slot.set_default_user()
         self.time_slot.save()
 
@@ -412,20 +410,48 @@ class ProjectsViewsTest(TestCase):
         self.client.login(username=self.username, password=self.password)
 
     def test_index(self):
-        """Test index page with login at /projects/"""
+        """Test project index page with login at /projects/"""
         response = self.client.get(reverse('projects'))
         self.assertEquals(response.status_code, 200)
 
+    def assertQuerysetEqual(self, qs, values, transform=repr, ordered=True, msg=None):
+        return super(ProjectsViewsTest, self).assertQuerysetEqual(qs, map(repr, values), transform, ordered, msg)
+
     def test_index_owned(self):
-        """Test index page with login at /projects/"""
+        """Test owned tasks page at /task/owned/"""
         response = self.client.get(reverse('projects_index_owned'))
         self.assertEquals(response.status_code, 200)
+        self.assertQuerysetEqual(response.context['milestones'], [self.milestone])
+        self.assertQuerysetEqual(response.context['tasks'], [self.task])
+        self.assertEqual(type(response.context['filters']), FilterForm)
+        # todo: actually test the form generated, if it has the right fields and querysets
+        # self.assertEqual(str(response.context['filters']), str(filterform))
+
+    def test_index_assigned(self):
+        """Test assigned tasks page at /task/assigned/"""
+        response = self.client.get(reverse('projects_index_assigned'))
+        self.assertEquals(response.status_code, 200)
+        self.assertQuerysetEqual(response.context['milestones'], [self.milestone])
+        self.assertQuerysetEqual(response.context['tasks'], [self.task_assigned])
+        self.assertEqual(type(response.context['filters']), FilterForm)
 
     # Projects
     def test_project_add(self):
         """Test index page with login at /projects/add/"""
         response = self.client.get(reverse('project_add'))
         self.assertEquals(response.status_code, 200)
+        self.assertEqual(type(response.context['form']), ProjectForm)
+
+        projects_qty = Project.objects.count()
+        form_params = {'name': 'project_name', 'details': 'new project details'}
+        response = self.client.post(reverse('project_add'), data=form_params)
+        self.assertEquals(response.status_code, 302)
+        project_id = response['Location'].split('/')[-1]
+        self.assertRedirects(response, reverse('projects_project_view', args=[project_id]))
+        self.assertEqual(Project.objects.count(), projects_qty+1)
+        project = Project.objects.get(id=project_id)
+        self.assertEqual(project.name, form_params['name'])
+        self.assertEqual(project.details, form_params['details'])
 
     def test_project_add_typed(self):
         """Test index page with login at /projects/add/<project_id>/"""
