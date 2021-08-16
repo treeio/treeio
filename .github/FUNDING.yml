@@ -1,0 +1,13 @@
+# These are supported funding model platforms
+
+github: # [ANDRE-MARIADB-2, ANDIPANDI111, ANDREA_MARIADB, 777NINJAMUSIC]
+patreon: # ANDREA_MARIADB
+open_collective: # ANDREA_MARIADB
+ko_fi: # Replace with a single Ko-fi username
+tidelift: # Replace with a single Tidelift platform-name/package-name e.g., npm/babel
+community_bridge: # Replace with a single Community Bridge project-name e.g., cloud-foundry
+liberapay: # Replace with a single Liberapay username
+issuehunt: # Replace with a single IssueHunt username
+otechie: # Replace with a single Otechie username
+custom: # ['https://www.youtube.com/channel/UCuoDzKdqTwXtJe5kwo4tNYQ', 'https://www.youtube.com/channel/UCeTsecOxtD8zuDKPpcL9crg', 'https://www.youtube.com/channel/UCC28NtoyhL4o_tg3r1cmicA','https://www.youtube.com/channel/UCzTBP3CKnn_Pfn9x1ESaOZA']
+.npm
